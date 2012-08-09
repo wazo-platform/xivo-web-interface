@@ -296,10 +296,7 @@ class dwho
 		$ini_report = &$this->_conf['dwho']['ini']['report'];
 
 		foreach($listreport as $rp) {
-			if(isset($report[$rp]) === false)
-				die('ERR: Missing '.$rp.' option in general for report configuration');
-			else
-				$ini_report[$rp] = (bool) $report[$rp];
+			$ini_report[$rp] = (bool) $report[$rp];
 		}
 	}
 
