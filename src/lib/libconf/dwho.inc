@@ -41,4 +41,11 @@ $array['ini']['session'] = array(
                 'path'        => '/',
                 'save_path'    => null);
 
+$array['ini']['report'] = array(
+                'error'     => 1,
+                'warning'   => 1,
+                'info'      => 1,
+                'notice'    => 1,
+                'debug'     => 0);
+
 ?>

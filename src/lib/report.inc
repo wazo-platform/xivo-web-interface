@@ -143,7 +143,15 @@ abstract class dwho_report {
 		$return .= '</ul>';
 		$return .= '</div>';
 
+		self::flush($type);
+
 		return($return);
+	}
+
+	public static function flush($type) {
+		$_SESSION['_report'][$type] = array();
+		$_SESSION['_report_bloc_export'][$type] = array();
+		self::${$type} = array();
 	}
 
 	public static function has($type) {
@@ -203,7 +211,6 @@ abstract class dwho_report {
 
 		$listtype = get_class_vars('dwho_report');
 		$arr = $_SESSION['_report'];
-
 		$_SESSION['_report_bloc_export'] = array();
 
 		foreach($arr as $type => $value) {
@@ -216,14 +223,12 @@ abstract class dwho_report {
 					$_SESSION['_report_bloc_export'][$type][$k] = $v;
 					$key = base64_decode($k);
 					foreach($v as $submessage)
-					self::push($type,$submessage,$key);
+						self::push($type,$submessage,$key);
 				} else {
 					self::push($type,$v);
 				}
 			}
 		}
-
-		$_SESSION['_report'] = array();
 	}
 }
 

@@ -89,6 +89,9 @@ class xivo extends dwho
 		$this->_conf['template']['json']['path'] = XIVO_PATH_ROOT.DIRECTORY_SEPARATOR.'tpl/json';
 		$this->_conf['template']['ui']['path'] = XIVO_PATH_ROOT.DIRECTORY_SEPARATOR.'tpl/ui';
 
+		foreach($this->_conf['dwho']['ini']['report'] as $type => $rp)
+			define('REPORT_'.strtoupper($type),(bool) $rp);
+
 		ini_set('include_path',XIVO_PATH_ROOT.DWHO_SEP_PATH.ini_get('include_path'));
 
 		if(dwho_constant('XIVO_WEBI_CONFIGURED',true) === false)

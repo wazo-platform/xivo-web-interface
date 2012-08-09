@@ -102,8 +102,6 @@ class dwho_query
     {
         $location = (string) $location;
 
-        $_SESSION['_report'] = dwho_report::encode();
-
         if($query === true)
         {
             $q = $this->qstring_raw_str();

@@ -159,7 +159,9 @@ class dwho_session_abstract_sql
 						null,
 						true);
 
-			}    else    {
+			}
+			else
+			{
 				$rs = $this->_dso->insert($this->_param['table'],
 						array('identifier'    => $this->_attrib['identifier'],
 								'sessid'  => $sessid,
@@ -188,6 +190,7 @@ class dwho_session_abstract_sql
 	function write_close()
 	{
 		dwho_clean_cmd_list_to_process();
+		$_SESSION['_report'] = dwho_report::encode();
 		$this->gc();
 		session_write_close();
 		return(true);

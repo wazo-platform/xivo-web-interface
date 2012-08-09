@@ -293,14 +293,13 @@ class dwho
 			die('ERR: Invalid report configuration');
 
 		$listreport = array('error','warning','info','notice','debug');
+		$ini_report = &$this->_conf['dwho']['ini']['report'];
 
-		while($listreport)
-		{
-			$rp = array_shift($listreport);
+		foreach($listreport as $rp) {
 			if(isset($report[$rp]) === false)
 				die('ERR: Missing '.$rp.' option in general for report configuration');
 			else
-				define('REPORT_'.strtoupper($rp),(bool) $report[$rp]);
+				$ini_report[$rp] = (bool) $report[$rp];
 		}
 	}
 
