@@ -229,7 +229,7 @@ abstract class dwho_date
 		for ($i=0;$i<=23;$i++)
 		{
 			if ((!is_null($start) && $i < $start)
-			|| (!is_null($end) && $i > $end))
+			|| (!is_null($end) && $i >= $end))
 				continue;
 
 			$tmp = array();
