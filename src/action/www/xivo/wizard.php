@@ -62,26 +62,6 @@ switch($step)
 
 		$_TPL->set_var('license',$license);
 		break;
-	case 'dbconfig':
-		if($previous === true
-		|| $trysave === false
-		|| $_QRY->get('step') !== $step)
-			$info = $appwizard->step_dbconfig();
-		else
-			$info = $appwizard->get_result('dbconfig');
-
-		$is_autocreate = isset($_QR['dbconfig']['create_auto']) ?
-								$_QR['dbconfig']['create_auto'] : null;
-
-		$element = $appwizard->get_step_element();
-		$dbbackend = dwho_array_intersect_key(array_flip($element['backend']['value']),
-						      dwho_gat::get('datastorage'));
-
-		$_TPL->set_var('info',$info);
-		$_TPL->set_var('element',$element);
-		$_TPL->set_var('dbbackend',$dbbackend);
-		$_TPL->set_var('dbconfig_is_autocreate',$is_autocreate);
-		break;
 	case 'checkcomponents':
 		if(($info = $appwizard->step_checkcomponents($verify)) === false)
 		{
@@ -138,7 +118,6 @@ switch($step)
 		}
 
 		$_TPL->set_var('info',$appwizard->step_validate());
-		$_TPL->set_var('ipbxengine',$appwizard->step_ipbxengine());
 		$_TPL->set_var('dbbackend',dwho_gat::get('datastorage'));
 		$_TPL->load_i18n_file('tpl/www/struct/page/redirect.i18n', 'global');
 
