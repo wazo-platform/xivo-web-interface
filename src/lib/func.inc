@@ -26,21 +26,17 @@ function dwho_clean_cmd_list_to_process()
 		$ipbx = &$_SRE->get('ipbx');
 		$cmds = &$_SESSION['cmd_list_to_process'];
 
-		foreach ($cmds as $type => $cmd)
-		{
-			switch ($type)
-			{
-				case 'dird':
-					$ipbx->discuss_dird($cmd);
-					break;
-				case 'ctibus':
-					$ipbx->discuss($cmd);
-					break;
-				case 'ipbx':
-					$ipbx->exec_cmd_ast($cmd);
-					break;
-			}
-		}
+		if (isset($cmds['ipbx']))
+			$ipbx->exec_cmd_ast($cmds['ipbx']);
+
+		sleep(1);
+
+		if (isset($cmds['ctibus']))
+			$ipbx->discuss($cmds['ctibus']);
+
+		if (isset($cmds['dird']))
+			$ipbx->discuss_dird($cmds['dird']);
+
 		$_SESSION['cmd_list_to_process'] = array();
 	}
 }

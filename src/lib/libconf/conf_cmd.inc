@@ -11,6 +11,10 @@ $array['groupfeatures'] = array();
 $array['groupfeatures']['ctibus'] = array('xivo[group,%s,%s]');
 $array['groupfeatures']['ipbx'] = array('dialplan reload', 'module reload app_queue.so', 'sip reload');
 
+$array['queue'] = array();
+$array['queue']['ctibus'] = array('xivo[group,%s,%s]');
+$array['queue']['ipbx'] = array('dialplan reload', 'module reload app_queue.so', 'sip reload');
+
 $array['linefeatures'] = array();
 $array['linefeatures']['ctibus'] = array('xivo[phone,%s,%s]');
 $array['linefeatures']['ipbx'] = array('dialplan reload', 'sip reload');

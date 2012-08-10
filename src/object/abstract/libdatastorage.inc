@@ -498,12 +498,12 @@ abstract class xivo_libdatastorage_abstract extends xivo_libconfig_abstract
 		if ($name === 'realstatic')
 			$name = $this->_dso->_param['filename'];
 
-		if (!isset($cmds['dird']))
-			$cmds['dird'] = array();
-		if (!isset($cmds['ctibus']))
-			$cmds['ctibus'] = array();
 		if (!isset($cmds['ipbx']))
 			$cmds['ipbx'] = array();
+		if (!isset($cmds['ctibus']))
+			$cmds['ctibus'] = array();
+		if (!isset($cmds['dird']))
+			$cmds['dird'] = array();
 
 		if(($cmd_repartition = dwho_gat::load_get('conf_cmd',DWHO_PATH_CONF)) === false)
 			trigger_error('Failed to load conf_cmd configuration',E_USER_ERROR);
