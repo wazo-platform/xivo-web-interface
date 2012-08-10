@@ -41,7 +41,10 @@ if (($type = $table1->get_data_custom('listtype')) !== null
 			<?=$tbl_identity?> </span> <span class="span-right">&nbsp;</span>
 	</h3>
 	<div class="sb-content">
-		<?php
+<?php
+	if (($msg = $table1->get_error()) !== false):
+		echo $msg;
+	else :
 		if ($periods != false):
 			foreach ($periods as $k => $v):
 				echo $this->bbf('col_t'.$k);
@@ -66,6 +69,9 @@ if (($type = $table1->get_data_custom('listtype')) !== null
 			$xivo_jqplot->get_result('chart2');
 			?>
 		</div>
+<?php
+	endif;
+?>
 	</div>
 	<div class="sb-foot xspan">
 		<span class="span-left">&nbsp;</span> <span class="span-center">&nbsp;</span>

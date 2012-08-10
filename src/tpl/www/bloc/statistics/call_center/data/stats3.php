@@ -65,7 +65,7 @@ if (($type = $table1->get_data_custom('listtype')) !== null
 	endif;
 ?>
 		</div>
-    </div>
+	</div>
 	<div class="sb-foot xspan">
 		<span class="span-left">&nbsp;</span>
 		<span class="span-center">&nbsp;</span>
