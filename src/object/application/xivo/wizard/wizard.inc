@@ -57,6 +57,23 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 		$this->_load_config(dirname(__FILE__));
 
 		$this->_wizsess = &$_SESSION['_wizard'];
+
+		if (empty($this->_wizsess))
+			$this->_prepare_data();
+	}
+
+	private function _prepare_data()
+	{
+		// step ipbx
+		$this->_wizsess['ipbxengine'] = array();
+		$this->_wizsess['ipbxengine']['engine'] = 'asterisk';
+
+		// step dbconfig
+		$this->_wizsess['dbconfig'] = array(
+			'xivo'        => 'postgresql://xivo:proformatique@localhost/xivo',
+			'ipbx'        => 'postgresql://asterisk:proformatique@localhost/asterisk',
+			'backend'     => 'postgresql'
+		);
 	}
 
 	function _load_xivo_dso()
@@ -64,12 +81,11 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 		if($this->_xivo_dso_loaded === true)
 			return(true);
 		else if(dwho_issa('dbconfig',$this->_wizsess) === false
-		|| dwho_issa('save',$this->_wizsess['dbconfig']) === false
-		|| isset($this->_wizsess['dbconfig']['save']['xivo']) === false)
+		|| isset($this->_wizsess['dbconfig']['xivo']) === false)
 			return(false);
 
 		$_XIVO = dwho_gct::get('xivo');
-		$_XIVO->load_datastorage($this->_wizsess['dbconfig']['save']['xivo']);
+		$_XIVO->load_datastorage($this->_wizsess['dbconfig']['xivo']);
 		$this->_xivo_dso_loaded = true;
 
 		return(true);
@@ -86,8 +102,7 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 		else if(dwho_issa('ipbxengine',$this->_wizsess) === false
 		|| isset($this->_wizsess['ipbxengine']['engine']) === false
 		|| dwho_issa('dbconfig',$this->_wizsess) === false
-		|| dwho_issa('save',$this->_wizsess['dbconfig']) === false
-		|| isset($this->_wizsess['dbconfig']['save']['ipbx']) === false)
+		|| isset($this->_wizsess['dbconfig']['ipbx']) === false)
 			return(false);
 
 		$_SRE = dwho_gct::get('xivo_service');
@@ -97,7 +112,7 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 			define('XIVO_SRE_IPBX_LABEL', $engines[$this->_wizsess['ipbxengine']['engine']]['label']);
 
 		$config['general'] = array();
-		$config['general']['datastorage'] = $this->_wizsess['dbconfig']['save']['ipbx'];
+		$config['general']['datastorage'] = $this->_wizsess['dbconfig']['ipbx'];
 
 		$_SRE->set_engine_config('ipbx',$this->_wizsess['ipbxengine']['engine'],$config);
 
@@ -241,8 +256,6 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 
 		switch($step)
 		{
-			case 'dbconfig':
-				return($this->_conf['element'][$step]);
 			case 'mainconfig':
 				// read system dns
 				$resolvconf = $this->_conf['element']['resolvconf'];
@@ -295,31 +308,6 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 			$scheme .= 's';
 
 		return($scheme.'://'.$uri);
-	}
-
-	function step_ipbxengine()
-	{
-		$r = array();
-
-		if(dwho_issa('ipbxengine',$this->_wizsess) === true
-		&& isset($this->_wizsess['engine']) === true)
-			$r['selected'] = $this->_wizsess['engine'];
-		else
-			$r['selected'] = null;
-
-		$_SRE = dwho_gct::get('xivo_service');
-		$r['engines'] = $_SRE->get_engines('ipbx');
-
-		return($r);
-	}
-
-	function step_dbconfig()
-	{
-		if(dwho_issa('dbconfig',$this->_wizsess) === true
-		&& dwho_issa('result',$this->_wizsess['dbconfig']) === true)
-			return($this->_wizsess['dbconfig']['result']);
-
-		return(null);
 	}
 
 	function _build_lshw($o)
@@ -460,12 +448,11 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 		if(dwho_issa('ipbxengine',$this->_wizsess) === false
 		|| isset($this->_wizsess['ipbxengine']['engine']) === false
 		|| dwho_issa('dbconfig',$this->_wizsess) === false
-		|| dwho_issa('result',$this->_wizsess['dbconfig']) === false
-		|| isset($this->_wizsess['dbconfig']['result']['backend']) === false)
+		|| isset($this->_wizsess['dbconfig']['backend']) === false)
 			return(false);
 
 		$ipbxengine = $this->_wizsess['ipbxengine']['engine'];
-		$dbbackend = $this->_wizsess['dbconfig']['result']['backend'];
+		$dbbackend = $this->_wizsess['dbconfig']['backend'];
 
 		if(isset($this->_wizsess['aptcache_update']) === false
 		|| (bool) $force_aptcache_update === true)
@@ -639,195 +626,6 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 		$this->_wizsess['license']['agree'] = true;
 
 		$this->_wizsess['step'] = $this->get_next_step('license');
-
-		// step ipbx
-		$this->_wizsess['ipbxengine'] = array();
-		$this->_wizsess['ipbxengine']['engine'] = 'asterisk';
-
-		// step dbconfig
-		$this->_wizsess['dbconfig'] = array(
-			'save'	=> array(
-				'xivo'	=> 'postgresql://xivo:proformatique@localhost/xivo',
-				'ipbx'	=> 'postgresql://asterisk:proformatique@localhost/asterisk'
-			),
-			'result' => array(
-				'backend'		=> 'postgresql',
-				'create_auto'	=> false,
-				'postgresql'	=> array(
-					'host'			=> 'localhost',
-					'port'			=> '',
-					'xivouser'		=> 'xivo',
-					'xivopass'		=> 'proformatique',
-					'xivodbname'	=> 'xivo',
-					'ipbxuser'		=> 'asterisk',
-					'ipbxpass'		=> 'proformatique',
-					'ipbxdbname'	=> 'asterisk'
-				),
-			)
-		);
-
-		return(true);
-	}
-
-	function save_step_dbconfig($data)
-	{
-		$this->_wizsess['prevstep'] = $this->get_current_step();
-
-		if(dwho_issa('dbconfig',$data) === false
-		|| isset($data['dbconfig']['backend']) === false)
-		{
-			$this->_set_error('dbconfig','backend','missing');
-			return(false);
-		}
-
-		$this->_filter->reset_all();
-		$this->_filter->set_validator(array('backend' => $this->_conf['filter']['dbconfig']['backend']));
-
-		if(($backend = $this->_filter->chk_value('backend',$data['dbconfig']['backend'])) === false
-		|| isset($this->_conf['filter']['dbconfig'][$backend], $data['dbconfig'][$backend]) === false) {
-			$this->_set_error('dbconfig','backend','invalid');
-		}
-
-		$create_auto = false;
-		if (isset($data['dbconfig']['create_auto']) === true)
-		{
-			$this->_filter->set_validator(array('create_auto' => $this->_conf['filter']['dbconfig']['create_auto']));
-
-			if(($create_auto = $this->_filter->chk_value('create_auto',$data['dbconfig']['create_auto'])) === false)
-			$this->_set_error('dbconfig','create_auto','invalid');
-		}
-
-		$result = array();
-		$result['backend'] = $backend;
-		$result['create_auto'] = $create_auto;
-
-		if($this->get_errnb() > 0)
-		{
-			$this->_set_result('dbconfig',$result);
-			return(false);
-		}
-
-		$this->_filter->set_validator($this->_conf['filter']['dbconfig'][$backend]);
-
-		if($this->_filter->chk($data['dbconfig'][$backend]) === false)
-		$this->_set_errors('dbconfig',$backend,$this->_filter->get_error());
-
-		$result[$backend] = $this->_filter->get_result();
-
-		if($this->get_errnb() > 0)
-		{
-			$this->_set_result('dbconfig',$result);
-			return(false);
-		}
-
-		if (((bool) $result['create_auto']) === true)
-		{
-			$base_config_path = dwho_file::joinpath('usr','share','pf-xivo-base-config');
-
-			switch($result['backend'])
-			{
-				case 'postgresql':
-					$ipbxdbpathfile = dwho_file::joinpath($base_config_path,'asterisk.sql');
-					$xivodbpathfile = dwho_file::joinpath($base_config_path,'xivo.sql');
-					break;
-				default:
-					$this->_set_error('dbconfig','backend','invalid');
-			}
-
-			if (dwho_file::is_f_r($ipbxdbpathfile) === true)
-				$this->_set_error('dbconfig','ipbxdb','invalid file');
-
-			if (dwho_file::is_f_r($xivodbpathfile) === true)
-				$this->_set_error('dbconfig','xivodb','invalid file');
-
-			$result[$result['backend']]['xivouser'] = 'xivo';
-			$result[$result['backend']]['xivopass'] = 'proformatique';
-
-			$result[$result['backend']]['ipbxuser'] = 'asterisk';
-			$result[$result['backend']]['ipbxpass'] = 'proformatique';
-		}
-
-		$ipbxdburi = $xivodburi = array('scheme' => $result['backend']);
-
-		$ref = &$result[$result['backend']];
-
-		switch($result['backend'])
-		{
-			case 'postgresql':
-				$xivodburi['host'] = $ref['host'];
-				$xivodburi['port'] = $ref['port'];
-				$xivodburi['authority'] = array();
-				$xivodburi['authority']['user'] = $ref['xivouser'];
-				$xivodburi['authority']['passwd'] = $ref['xivopass'];
-				$xivodburi['path'] = '/'.$ref['xivodbname'];
-
-				$ipbxdburi['host'] = $ref['host'];
-				$ipbxdburi['port'] = $ref['port'];
-				$ipbxdburi['authority'] = array();
-				$ipbxdburi['authority']['user'] = $ref['ipbxuser'];
-				$ipbxdburi['authority']['passwd'] = $ref['ipbxpass'];
-				$ipbxdburi['path'] = '/'.$ref['ipbxdbname'];
-				break;
-			default:
-				$this->_set_error('dbconfig','backend','invalid');
-		}
-
-		if(($xivodburistr = $this->_uri->build_uri($xivodburi)) === false)
-			$this->_set_error('dbconfig',$backend,'xivodb','invalid');
-
-		if(($ipbxdburistr = $this->_uri->build_uri($ipbxdburi)) === false)
-			$this->_set_error('dbconfig',$backend,'ipbxdb','invalid');
-
-		$this->_set_result('dbconfig',$result);
-
-		if (((bool) $result['create_auto']) === true)
-		{
-			$dbfile = array();
-			$dbfile['backend'] = $result['backend'];
-			$dbfile['xivoscript'] = $xivodbpathfile;
-			$dbfile['xivodb'] = $xivodburi['path'];
-			$dbfile['ipbxscript'] = $ipbxdbpathfile;
-			$dbfile['ipbxdb'] = $ipbxdburi['path'];
-
-			if($this->_sysconfd->request_post('/exec_db_file',$dbfile) === false)
-				$this->_set_error('dbconfig',$backend,'Can\'t exec DB script file');
-		}
-
-		if($this->get_errnb() > 0)
-			return(false);
-
-		dwho::load_class('dwho_datastorage');
-
-		if(($xivoparamdso = dwho_datastorage::get_param_from_uri($xivodburistr)) === false
-		|| ($xivodso = @dwho_datastorage::factory($xivoparamdso['type'],$xivoparamdso)) === false)
-			$this->_set_error('dbconfig',$xivoparamdso['type'],'xivodb','invalid');
-
-		if(($ipbxparamdso = dwho_datastorage::get_param_from_uri($ipbxdburistr)) === false
-		|| ($ipbxdso = @dwho_datastorage::factory($ipbxparamdso['type'],$ipbxparamdso)) === false)
-			$this->_set_error('dbconfig',$xivoparamdso['type'],'ipbxdb','invalid');
-
-		if($this->get_errnb() > 0)
-			return(false);
-
-		if($xivodso->is_open() === false)
-			$this->_set_error('dbconfig',$xivoparamdso['type'],'xivodb','connection');
-
-		if($ipbxdso->is_open() === false)
-			$this->_set_error('dbconfig',$xivoparamdso['type'],'ipbxdb','connection');
-
-		$xivodso->close();
-		$ipbxdso->close();
-
-		if($this->get_errnb() > 0)
-			return(false);
-
-		$this->_wizsess['dbconfig'] = array();
-		$this->_wizsess['dbconfig']['save'] = array();
-		$this->_wizsess['dbconfig']['save']['xivo'] = $xivodburistr;
-		$this->_wizsess['dbconfig']['save']['ipbx'] = $ipbxdburistr;
-		$this->_wizsess['dbconfig']['result'] = $result;
-
-		$this->_wizsess['step'] = $this->get_next_step('dbconfig');
 
 		return(true);
 	}
@@ -1338,13 +1136,13 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 		$module = &$this->_xobj->get_module('resolvconf');
 
 		$data = array(
-            'hostname'    => $this->_wizsess['mainconfig']['hostname'],
-            'domain'      => $this->_wizsess['mainconfig']['domain'],
-            'nameserver1' => $resolvconf['nameservers'][0],
-            'nameserver2' => $resolvconf['nameservers'][1],
-            'nameserver3' => '',
-            'search'      => $resolvconf['search'],
-            'description' => 'wizard configuration'
+			'hostname'    => $this->_wizsess['mainconfig']['hostname'],
+			'domain'      => $this->_wizsess['mainconfig']['domain'],
+			'nameserver1' => $resolvconf['nameservers'][0],
+			'nameserver2' => $resolvconf['nameservers'][1],
+			'nameserver3' => '',
+			'search'      => $resolvconf['search'],
+			'description' => 'wizard configuration'
 		);
 
 		if($module->save($data) === false)
@@ -1454,8 +1252,8 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 	function _commit_dbconfig()
 	{
 		$dbconfig = array();
-		$dbconfig['xivo'] = $this->_wizsess['dbconfig']['save']['xivo'];
-		$dbconfig['ipbx'] = $this->_wizsess['dbconfig']['save']['ipbx'];
+		$dbconfig['xivo'] = $this->_wizsess['dbconfig']['xivo'];
+		$dbconfig['ipbx'] = $this->_wizsess['dbconfig']['ipbx'];
 		$dbconfig['ipbxengine'] = $this->_wizsess['ipbxengine']['engine'];
 
 		if($this->_sysconfd->request_post('/set_db_backends',$dbconfig) === false)
@@ -1479,19 +1277,6 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 			return(false);
 		}
 
-		/*
-		 * $args must be validate this schema
-		* MODIFY_ETH_IPV4_SCHEMA
-		address:    !~ipv4_address 192.168.0.1
-		netmask:    !~netmask 255.255.255.0
-		broadcast?: !~ipv4_address 192.168.0.255
-		gateway?:   !~ipv4_address 192.168.0.254
-		mtu?:       !~~between(68,1500) 1500
-		auto?:      !!bool True
-		up?:        !!bool True
-		options?:   !~~seqlen(0,64) [ !~~seqlen(2,2) ['dns-search', 'toto.tld tutu.tld'],
-		!~~seqlen(2,2) ['dns-nameservers', '127.0.0.1 192.168.0.254'] ]
-		*/
 		$args = array();
 		$args['address'] = $voip_iface['address'];
 		$args['netmask'] = $voip_iface['netmask'];
@@ -1538,19 +1323,19 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 		$uuid = $this->_sysconfd->request_get('/xivo_uuid');
 
 		$data = array(
-        	'uuid'        => $uuid['uuid'],
-            'name'        => $name,
-            'ifname'      => $name,
-            'hwtypeid'    => 1,
-            'networktype' => 'voip',
-            'type'        => 'iface',
-            'method'      => 'static',
-            'address'     => $netiface['address'],
-            'netmask'     => $netiface['netmask'],
-            'broadcast'   => $bcast,
-            'gateway'     => $netiface['gateway'],
-            'mtu'         => 1500,
-            'description' => 'wizard configuration');
+			'uuid'        => $uuid['uuid'],
+			'name'        => $name,
+			'ifname'      => $name,
+			'hwtypeid'    => 1,
+			'networktype' => 'voip',
+			'type'        => 'iface',
+			'method'      => 'static',
+			'address'     => $netiface['address'],
+			'netmask'     => $netiface['netmask'],
+			'broadcast'   => $bcast,
+			'gateway'     => $netiface['gateway'],
+			'mtu'         => 1500,
+			'description' => 'wizard configuration');
 
 		if(($data = $module->chk_values($data)) === false)
 		{
@@ -1574,15 +1359,6 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 		$this->_load_ipbx_service();
 
 		$netiface = $wizsess['netiface'];
-		/*
-		 should not explicitly specify provd bind address in webi by default
-		To simplify HA implementation and also to simplify the common case
-		where the provd daemon listen on the VoIP network interface,
-		there should not be an IP explicitly set in the web-i
-		configuration/provisioning/general/ip server field.
-		*/
-		#$modprov = &$this->_xobj->get_module('provisioning');
-		#$modprov->edit(1, array('net4_ip' => $voip_iface['address']));
 
 		$rs = array();
 		$rs['commented'] = 0;
@@ -1601,9 +1377,7 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 
 		$provdconfig = &$this->_xobj->get_module('provdconfig');
 		if ($provdconfig->eval_required_config($netiface['address'],true) === false)
-		{
 			return false;
-		}
 
 		return(true);
 	}
@@ -1720,9 +1494,7 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 		$step = $this->get_current_step();
 
 		if(isset($this->_conf['step'][$step]) === false)
-		{
 			return(null);
-		}
 
 		$save_step_function_name = 'save_step_'.$step;
 
