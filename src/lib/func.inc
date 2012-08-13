@@ -25,6 +25,7 @@ function dwho_clean_cmd_list_to_process()
 	$ctimain = &$ipbx->get_module('ctimain');
 
 	if (isset($_SESSION['cmd_list_to_process']) === false
+	|| empty($_SESSION['cmd_list_to_process']) === true
 	|| ($cti_data = $ctimain->get(1)) === false
 	|| (bool) $cti_data['live_reload_conf'] === false)
 	{
@@ -35,9 +36,10 @@ function dwho_clean_cmd_list_to_process()
 	$cmds = &$_SESSION['cmd_list_to_process'];
 
 	if (isset($cmds['ipbx']))
+	{
 		$ipbx->exec_cmd_ast($cmds['ipbx']);
-
-	sleep(1);
+		sleep(1);
+	}
 
 	if (isset($cmds['ctibus']))
 		$ipbx->discuss($cmds['ctibus']);
