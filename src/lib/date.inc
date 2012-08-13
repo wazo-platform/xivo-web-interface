@@ -223,15 +223,15 @@ abstract class dwho_date
 		return(date('W',self::all_to_unixtime($date)));
 	}
 
-	public static function get_listhour($start=null,$end=null)
+	public static function get_listhour($start,$end)
 	{
+		if (!is_numeric($start) || !is_numeric($end))
+			return(false);
+		$start = (int) $start;
+		$end = (int) $end;
 		$rs = array();
-		for ($i=0;$i<=23;$i++)
+		for ($i=$start;$i<$end;$i++)
 		{
-			if ((!is_null($start) && $i < $start)
-			|| (!is_null($end) && $i >= $end))
-				continue;
-
 			$tmp = array();
 			$tmp['identity'] = dwho_i18n::babelfish('hour-opt',$i);
 			$tmp['name'] = $i;
