@@ -111,7 +111,7 @@ endif;
 ?>
 			</label>
 		</td>
-		<td title="<!--?=dwho_alttitle($destination);?-->">
+		<td><!-- title="<?=dwho_alttitle($destination);?>"-->
 			<!--?=dwho_htmlen(dwho_trunc($destination,15,'...',false));?-->
 		</td>
 		<td class="td-right" colspan="2">
