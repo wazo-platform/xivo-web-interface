@@ -29,8 +29,14 @@ $(function() {
 			populateqos('it-group', 'group');
 		}
 	});
-	$('#it-stats_conf-hour_start').timepicker({});
-	$('#it-stats_conf-hour_end').timepicker({});
+	timepicker_config = {
+			showMinute: false, 
+			timeFormat: 'hh:ss',
+			hourMin: 00,
+			hourMax: 24
+		};
+	$('#it-stats_conf-hour_start').timepicker(timepicker_config);
+	$('#it-stats_conf-hour_end').timepicker(timepicker_config);
 });
 
 function populateqos(selectid, type) {

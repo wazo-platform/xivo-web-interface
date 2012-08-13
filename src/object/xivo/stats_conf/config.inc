@@ -34,31 +34,21 @@ $array['element']['hour_start']['default'] = '00:00';
 $array['element']['hour_end'] = array();
 $array['element']['hour_end']['default'] = '00:00';
 
+
+$array['element']['dbegcache'] = array();
 $_SRE = &dwho_gct::get('xivo_service');
 $ipbx = &$_SRE->get('ipbx');
 $stat_queue_periodic = &$ipbx->get_module('stat_queue_periodic');
 if (($interval = $stat_queue_periodic->get_min_and_max_time()) === false)
-	$dbegcachedefault = null;
+	$array['element']['dbegcache']['default'] = '';
 else
-	$dbegcachedefault = strtotime($interval['min']);
-
-$array['element']['dbegcache'] = array();
-$array['element']['dbegcache']['default'] = date('Y-m',$dbegcachedefault);
+	$array['element']['dbegcache']['default'] = date('Y-m', strtotime($interval['min']));
 
 $array['element']['dendcache'] = array();
 $array['element']['dendcache']['default'] = 0;
 
 $array['element']['default_delta'] = array();
 $array['element']['default_delta']['default'] = 0;
-
-$array['element']['workhour']['h'] = array();
-$array['element']['workhour']['h']['value'] = array('00','01','02','03','04','05','06',
-					      '07','08','09',10,11,12,13,14,15,16,17,18,19,20,21,22,23);
-$array['element']['workhour']['h']['default'] = '00';
-
-$array['element']['workhour']['m'] = array();
-$array['element']['workhour']['m']['value'] = array('00',15,30,45);
-$array['element']['workhour']['m']['default'] = '00';
 
 $array['element']['monday'] = array();
 $array['element']['monday']['default'] = 0;
@@ -115,8 +105,8 @@ $array['filter']['name'] = array('regexp' => '/^[a-z0-9_\.-]+$/','minlen' => 1,'
 $array['filter']['timezone'] = array('set' => false,'chk' => 2);
 $array['filter']['dbegcache'] = array('set' => true,'regexp' => '/^([0-9]{4})-([0-9]{2})$/');
 $array['filter']['dendcache'] = array('set' => true,'regexp' => '/^(([0-9]{4})-([0-9]{2}))|0$/');
-$array['filter']['hour_start'] = array('set' => true,'regexp' => '/^(([0-1]?[0-9])|([2][0-3])):([0-5]?[0-9])?$/');
-$array['filter']['hour_end'] = array('set' => true,'regexp' => '/^(([0-1]?[0-9])|([2][0-3])):([0-5]?[0-9])?$/');
+$array['filter']['hour_start'] = array('set' => true,'regexp' => '/^(([0-1]?[0-9])|([2][0-4])):([0-5]?[0-9])?$/');
+$array['filter']['hour_end'] = array('set' => true,'regexp' => '/^(([0-1]?[0-9])|([2][0-4])):([0-5]?[0-9])?$/');
 $array['filter']['default_delta'] = array('set' => true,'regexp' => '/^(-([0-9]{1,3}) ([day|week|month])s?)|0$/');
 $array['filter']['monday'] = array('bool' => true);
 $array['filter']['tuesday'] = array('bool' => true);

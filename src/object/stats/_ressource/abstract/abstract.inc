@@ -140,8 +140,8 @@ class xivo_stats_ressource_abstract
 		switch ($axetype)
 		{
 			case 'day':
-				$key_data = $this->_xs->get_listhour();
-				foreach ($key_data as $data)
+				$this->full_itl = $this->_xs->get_listhour();
+				foreach ($this->full_itl as $data)
 					$this->_build_stat($obj_process, $data['key'], $this->_build_hours_for_day($data['key'], $dbeg));
 				break;
 			case 'week':
@@ -151,13 +151,13 @@ class xivo_stats_ressource_abstract
 					$this->_build_stat($obj_process, $key, $interval);
 				break;
 			case 'year':
-				$key_data = dwho_date::get_listmonth();
-				foreach ($key_data as $data)
+				$this->full_itl = dwho_date::get_listmonth();
+				foreach ($this->full_itl as $data)
 					$this->_build_stat($obj_process, $data['key'], $this->_build_interval_days_for_month(date('Y', $dbeg), $data['key']));
 				break;
 			case 'type':
-				$key_data = $this->get_list_by_type();
-				foreach ($key_data as $data)
+				$this->full_itl = $this->get_list_by_type();
+				foreach ($this->full_itl as $data)
 					$this->_build_stat($data, $data['keyfile'], $interval);
 				break;
 		}
