@@ -20,25 +20,32 @@
 
 function dwho_clean_cmd_list_to_process()
 {
-	if (isset($_SESSION['cmd_list_to_process']))
+	$_SRE = dwho_gct::get('xivo_service');
+	$ipbx = &$_SRE->get('ipbx');
+	$ctimain = &$ipbx->get_module('ctimain');
+
+	if (isset($_SESSION['cmd_list_to_process']) === false
+	|| ($cti_data = $ctimain->get(1)) === false
+	|| (bool) $cti_data['live_reload_conf'] === false)
 	{
-		$_SRE = dwho_gct::get('xivo_service');
-		$ipbx = &$_SRE->get('ipbx');
-		$cmds = &$_SESSION['cmd_list_to_process'];
-
-		if (isset($cmds['ipbx']))
-			$ipbx->exec_cmd_ast($cmds['ipbx']);
-
-		sleep(1);
-
-		if (isset($cmds['ctibus']))
-			$ipbx->discuss($cmds['ctibus']);
-
-		if (isset($cmds['dird']))
-			$ipbx->discuss_dird($cmds['dird']);
-
 		$_SESSION['cmd_list_to_process'] = array();
+		return(false);
 	}
+
+	$cmds = &$_SESSION['cmd_list_to_process'];
+
+	if (isset($cmds['ipbx']))
+		$ipbx->exec_cmd_ast($cmds['ipbx']);
+
+	sleep(1);
+
+	if (isset($cmds['ctibus']))
+		$ipbx->discuss($cmds['ctibus']);
+
+	if (isset($cmds['dird']))
+		$ipbx->discuss_dird($cmds['dird']);
+
+	$_SESSION['cmd_list_to_process'] = array();
 }
 
 function dwho_logw($str,$login,$act)
