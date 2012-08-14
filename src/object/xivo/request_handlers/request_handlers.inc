@@ -18,38 +18,40 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-xivo_service_asterisk::required(array('abstract','abstract.inc'),true);
+xivo_object::required(array('abstract','provd.inc'),true);
 
-class xivo_service_asterisk_dirdbus extends xivo_service_asterisk_abstract
+class xivo_object_request_handlers extends xivo_object_provd_abstract
 {
-	var $_name		= 'dirdbus';
-	var $_socket	= null;
+	protected $_name      = 'request_handlers';
+	protected $_sysconfd  = false;
 
-	public function __construct(&$sre)
+	public function __construct(&$xobj,$param=array())
 	{
-		$this->_load_config();
+		if(($this->_sysconfd = &$xobj->get_module('sysconfd')) === false)
+			return(false);
+
+		$this->_load_config(true);
+		$this->_load_init();
 	}
 
-	function _load_socket()
+	function exec_cmd($cmds, $ask_answer=false)
 	{
-		if($this->_socket !== null)
-			return($this->_socket->open());
-
-		dwho::load_class('dwho_socket');
-		$this->_socket = new dwho_socket($this->_conf['socket']);
-
+		$ret = $this->_sysconfd->request_post('/exec_request_handlers', $cmds);
+		if ($ask_answer)
+			return($this->_parse_cmd_recv($ret));
 		return(true);
 	}
 
-	function cmd($cmd)
+	function _parse_cmd_recv($recv)
 	{
-		if(dwho_is_sgraph($cmd) === false
-		|| $this->_load_socket() === false)
+		$recv = (string) $recv;
+		$recv = str_replace("\r",'',$recv);
+		$recv = explode("\n",$recv);
+
+		if(($nb = count($recv)) === 0)
 			return(false);
 
-		$r = $this->_socket->write($cmd);
-
-		return($r);
+		return($recv);
 	}
 }
 

@@ -61,20 +61,23 @@ $array['module']['resolvconf']['datastorage'] = true;
 $array['module']['server'] = array();
 $array['module']['server']['datastorage'] = true;
 
-$array['module']['provisioning'] = array();
-$array['module']['provisioning']['datastorage'] = true;
-
 $array['module']['provdconfig'] = array();
 $array['module']['provdconfig']['datastorage'] = false;
 
-$array['module']['provdplugin'] = array();
-$array['module']['provdplugin']['datastorage'] = false;
+$array['module']['provdconfigure'] = array();
+$array['module']['provdconfigure']['datastorage'] = false;
 
 $array['module']['provddevice'] = array();
 $array['module']['provddevice']['datastorage'] = false;
 
-$array['module']['provdconfigure'] = array();
-$array['module']['provdconfigure']['datastorage'] = false;
+$array['module']['provdplugin'] = array();
+$array['module']['provdplugin']['datastorage'] = false;
+
+$array['module']['provisioning'] = array();
+$array['module']['provisioning']['datastorage'] = true;
+
+$array['module']['request_handlers'] = array();
+$array['module']['request_handlers']['datastorage'] = false;
 
 $array['module']['stats_conf'] = array();
 $array['module']['stats_conf']['datastorage'] = true;

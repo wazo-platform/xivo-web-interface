@@ -22,15 +22,13 @@ require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'service','abstract.inc'));
 
 class xivo_service_asterisk extends xivo_service_abstract
 {
-	var $_ini			= array();
-	var $_type			= 'ipbx';
-	var $_name			= 'asterisk';
-	var $_identity		= array();
-	var $_realstatic	= array();
-	var $_apprealstatic	= array();
-	var $_discuss		= null;
-	var $_discuss_dird		= null;
-	var $_cmd_asterisk   = null;
+	var $_ini                = array();
+	var $_type               = 'ipbx';
+	var $_name               = 'asterisk';
+	var $_identity           = array();
+	var $_realstatic         = array();
+	var $_apprealstatic      = array();
+	var $_request_handlers   = null;
 
 	function xivo_service_asterisk($ini)
 	{
@@ -61,60 +59,25 @@ class xivo_service_asterisk extends xivo_service_abstract
 		return(dwho_file::required($arr,$once,$includable));
 	}
 
-	function exec_cmd_ast($cmd,$ask_cmd_answer=false)
+	public function discuss_ipbx($cmd, $ask_answer=false)
 	{
-		if($this->_cmd_asterisk === false
-		|| (is_object($this->_cmd_asterisk) === false
-			&& ($this->_cmd_asterisk = &$this->get_module('cmd_asterisk')) === false) === true)
-			return(($this->_cmd_asterisk = false));
+		if($this->_request_handlers === false
+		|| is_object($this->_request_handlers) === false
+		|| (($_XOBJ = &dwho_gct::get('xivo_object')) === false
+			&& ($this->_request_handlers = &$_XOBJ->get_module('request_handlers')) === false))
+			return(($this->_request_handlers = false));
 
 		if (is_scalar($cmd) === true)
 			$cmd = array($cmd);
 
 		$ret = array();
 		foreach($cmd as $one_cmd)
-			array_push($ret, $this->_cmd_asterisk->exec_cmd($one_cmd,$ask_cmd_answer));
+			array_push($ret, $this->_request_handlers->exec_cmd($one_cmd,$ask_answer));
 
 		if (count($ret) === 1)
 			return $ret[0];
 
 		return($ret);
-	}
-
-	function discuss($cmd,$ask_cti_answer=false)
-	{
-		if($this->_discuss === false
-		|| (is_object($this->_discuss) === false
-			&& ($this->_discuss = &$this->get_module('ctibus')) === false) === true)
-			return(($this->_discuss = false));
-
-		if (is_scalar($cmd) === true)
-			$cmd = array($cmd);
-
-		$ret = array();
-		foreach($cmd as $one_cmd)
-			array_push($ret, $this->_discuss->cmd($one_cmd, $ask_cti_answer));
-
-		if (count($ret) === 1)
-			return $ret[0];
-
-		return($ret);
-	}
-
-	function discuss_dird($cmd)
-	{
-		if($this->_discuss_dird === false
-		|| (is_object($this->_discuss_dird) === false
-			&& ($this->_discuss_dird = &$this->get_module('dirdbus')) === false) === true)
-			return(($this->_discuss_dird = false));
-
-		if (is_scalar($cmd) === true)
-			$cmd = array($cmd);
-
-		foreach($cmd as $one_cmd)
-		{
-			$this->_discuss_dird->cmd($one_cmd);
-		}
 	}
 
 	function _load_identity_class($module)
@@ -392,7 +355,7 @@ class xivo_service_asterisk extends xivo_service_abstract
 	{
 		if((defined('DWHO_SESS_ENABLE') === true
 			&& (bool) DWHO_SESS_ENABLE === false) === true
-		|| ($info = $this->exec_cmd_ast('core show version',true)) === false
+		|| ($info = $this->discuss_ipbx('core show version',true)) === false
 		|| is_array($info) === false
 		|| isset($info[0]) === false)
 			return(false);

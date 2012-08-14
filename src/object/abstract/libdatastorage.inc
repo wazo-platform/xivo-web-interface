@@ -487,16 +487,12 @@ abstract class xivo_libdatastorage_abstract extends xivo_libconfig_abstract
 			$cmd = sprintf($cmd, $state, $id);
 	}
 
-	private function _asterisk_conf_manager($state, $id=null)
+	private function _append_queue($state, $id=null)
 	{
 		if (!isset($_SESSION['cmd_list_to_process']))
 			$_SESSION['cmd_list_to_process'] = array();
 
 		$cmds = &$_SESSION['cmd_list_to_process'];
-		$name = $this->_name;
-
-		if ($name === 'realstatic')
-			$name = $this->_dso->_param['filename'];
 
 		if (!isset($cmds['ipbx']))
 			$cmds['ipbx'] = array();
@@ -504,6 +500,11 @@ abstract class xivo_libdatastorage_abstract extends xivo_libconfig_abstract
 			$cmds['ctibus'] = array();
 		if (!isset($cmds['dird']))
 			$cmds['dird'] = array();
+
+		$name = $this->_name;
+
+		if ($name === 'realstatic')
+			$name = $this->_dso->_param['filename'];
 
 		if(($cmd_repartition = dwho_gat::load_get('conf_cmd',DWHO_PATH_CONF)) === false)
 			trigger_error('Failed to load conf_cmd configuration',E_USER_ERROR);
@@ -552,7 +553,7 @@ abstract class xivo_libdatastorage_abstract extends xivo_libconfig_abstract
 		}
 
 		if (($ret = $this->_dso->add($arr,$autoid)) !== false)
-			$this->_asterisk_conf_manager('add', $ret);
+			$this->_append_queue('add', $this->get_id($ret));
 
 		return($ret);
 	}
@@ -560,11 +561,10 @@ abstract class xivo_libdatastorage_abstract extends xivo_libconfig_abstract
 	function edit($id,$arr,$disable=null,$chkunique=true)
 	{
 		if(is_array($arr) === false
-		|| ($id = $this->_chk_primary_key($id)) === false) {
+		|| ($id = $this->_chk_primary_key($id)) === false)
 			return(false);
-		}
 		if (($ret = $this->_dso->edit($id,$arr,$disable,$chkunique)) !== false)
-			$this->_asterisk_conf_manager('edit', $this->get_id($id));
+			$this->_append_queue('edit', $this->get_id($id));
 
 		return($ret);
 	}
@@ -583,10 +583,8 @@ abstract class xivo_libdatastorage_abstract extends xivo_libconfig_abstract
 			$where = array_merge($where,$id);
 		}
 
-		$id = $this->get_id($where);
-
 		if (($ret = $this->_dso->edit($where,$arr,$disable,$chkunique)) !== false)
-			$this->_asterisk_conf_manager('edit', $id);
+			$this->_append_queue('edit', $this->get_id($where));
 
 		return($ret);
 	}
@@ -597,7 +595,7 @@ abstract class xivo_libdatastorage_abstract extends xivo_libconfig_abstract
 			return(false);
 
 		if (($ret = $this->_dso->delete($id,$disable)) !== false)
-			$this->_asterisk_conf_manager('delete', $this->get_id($id));
+			$this->_append_queue('delete', $this->get_id($id));
 
 		return($ret);
 	}
@@ -615,10 +613,8 @@ abstract class xivo_libdatastorage_abstract extends xivo_libconfig_abstract
 			$where = array_merge($where,$id);
 		}
 
-		$id = $this->get_id($where);
-
 		if (($ret = $this->_dso->delete($where,$disable)) !== false)
-			$this->_asterisk_conf_manager('delete', $id);
+			$this->_append_queue('delete', $this->get_id($where));
 
 		return($ret);
 	}
@@ -626,7 +622,7 @@ abstract class xivo_libdatastorage_abstract extends xivo_libconfig_abstract
 	function delete_all()
 	{
 		if (($ret = $this->_dso->delete_all()) !== false)
-			$this->_asterisk_conf_manager('deleteall');
+			$this->_append_queue('deleteall');
 
 		return($ret);
 	}
@@ -638,7 +634,7 @@ abstract class xivo_libdatastorage_abstract extends xivo_libconfig_abstract
 			return(false);
 
 		if (($ret = $this->_dso->edit($id,array($disable => intval((bool) $value)))) !== false)
-			$this->_asterisk_conf_manager('enable', $id);
+			$this->_append_queue('enable', $this->get_id($id));
 
 		return($ret);
 	}
@@ -650,7 +646,7 @@ abstract class xivo_libdatastorage_abstract extends xivo_libconfig_abstract
 			return(false);
 
 		if (($ret = $this->_dso->edit($id,array($disable => intval((bool) $value)))) !== false)
-			$this->_asterisk_conf_manager('disable', $id);
+			$this->_append_queue('disable', $this->get_id($id));
 
 		return($ret);
 	}
@@ -663,7 +659,7 @@ abstract class xivo_libdatastorage_abstract extends xivo_libconfig_abstract
 			return(false);
 
 		if (($ret = $this->_dso->edit($where,array($disable => intval((bool) $value)))) !== false)
-			$this->_asterisk_conf_manager('enable', $this->get_id($where));
+			$this->_append_queue('enable', $this->get_id($where));
 
 		return($ret);
 	}
@@ -676,7 +672,7 @@ abstract class xivo_libdatastorage_abstract extends xivo_libconfig_abstract
 			return(false);
 
 		if (($ret = $this->_dso->edit($where,array($disable => intval((bool) $value)))) !== false)
-			$this->_asterisk_conf_manager('disable', $this->get_id($where));
+			$this->_append_queue('disable', $this->get_id($where));
 
 		return($ret);
 	}
