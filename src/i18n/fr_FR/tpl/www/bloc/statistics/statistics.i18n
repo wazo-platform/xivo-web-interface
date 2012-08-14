@@ -71,7 +71,7 @@ Appels traités
 <acronym title="Abandonnés">Abandonnés</acronym>
 
 ; col_ringnoanswer
-<acronym title="Sur non réponse">Sur NR</acronym>
+<acronym title="Sur non réponse"> NR </acronym>
 
 ; col_outgoing
 <acronym title="Sortants">Sort.</acronym>
@@ -89,10 +89,10 @@ Appels traités
 Dissuadés
 
 ; col_on_close
-<acronym title="Sur fermeture">Sur fermeture</acronym>
+<acronym title="Sur fermeture"> Fermeture </acronym>
 
 ; col_on_saturation
-<acronym title="Sur saturatin">Sur saturation</acronym>
+<acronym title="Sur saturation"> Saturation </acronym>
 
 ; colstruct_lost
 Perdus
@@ -103,8 +103,12 @@ Perdus
 ; col_on_leaveempty
 <acronym title="Blocage passant">Sur blocage (sortant)</acronym>
 
+; col_on_blocking
+<acronym title="Sur Blocage"> Blocage </acronym>
+
+
 ; col_on_timeout
-<acronym title="Sur non réponse">Sur NR</acronym>
+<acronym title="Sur non réponse"> NR </acronym>
 
 ; col_average_time_waiting
 <acronym title="Temps moyen d'attente">TMA</acronym>

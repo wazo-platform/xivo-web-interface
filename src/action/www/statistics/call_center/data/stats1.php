@@ -73,18 +73,16 @@ $tpl_statistics->set_col_struct('redistributed');
 $tpl_statistics->add_col('on_close',
 		'direct',
 		'custom:queue,[key],deterred_on_close');
-$tpl_statistics->add_col('on_timeout',
-		'direct',
-		'custom:queue,[key],timeout');
 $tpl_statistics->add_col('on_saturation',
 		'direct',
 		'custom:queue,[key],deterred_on_saturation');
-$tpl_statistics->add_col('on_joinempty',
+$tpl_statistics->add_col('on_timeout',
 		'direct',
-		'custom:queue,[key],joinempty');
-$tpl_statistics->add_col('on_leaveempty',
+		'custom:queue,[key],timeout');
+$tpl_statistics->add_col('on_blocking',
 		'direct',
-		'custom:queue,[key],leaveempty');
+		'custom:queue,[key],blocking');
+
 
 $tpl_statistics->set_col_struct(null);
 $tpl_statistics->add_col('average_time_waiting',

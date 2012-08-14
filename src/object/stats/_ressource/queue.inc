@@ -44,6 +44,8 @@ class stats_ressource_queue extends xivo_stats_ressource_abstract
 		$leaveempty = $this->_stat_queue_periodic->get_event_leaveempty($interval, $queue_id);
 		$timeout = $this->_stat_queue_periodic->get_event_timeout($interval, $queue_id);
 		$total_wait_time = $this->_stat_call_on_queue->get_queue_wait_time($interval, $queue_id);
+		$divert_waittime = 0;
+		$divert_agent = 0;
 
 		$qos = $answered > 0 ? 100 * $answered_in_qos / $answered : null;
 
@@ -53,15 +55,17 @@ class stats_ressource_queue extends xivo_stats_ressource_abstract
 		$waited_call = $answered + $abandon + $leaveempty + $timeout;
 		$awt = $waited_call > 0 ? $total_wait_time / $waited_call : null;
 
+		$blocking = $joinempty + $leaveempty;
+		$saturated = $full + $divert_waittime + $divert_agent;
+
 		$this->_result[$key]['presented']['result'] = $total;
 		$this->_result[$key]['connect']['result'] = $answered;
 		$this->_result[$key]['average_wait_time']['result'] = $awt;
 		$this->_result[$key]['qos']['result'] = $qos;
 		$this->_result[$key]['deterred_on_close']['result'] = $closed;
-		$this->_result[$key]['deterred_on_saturation']['result'] = $full;
+		$this->_result[$key]['deterred_on_saturation']['result'] = $saturated;
 		$this->_result[$key]['abandon']['result'] = $abandon;
-		$this->_result[$key]['joinempty']['result'] = $joinempty;
-		$this->_result[$key]['leaveempty']['result'] = $leaveempty;
+		$this->_result[$key]['blocking']['result'] = $blocking;
 		$this->_result[$key]['timeout']['result'] = $timeout;
 		$this->_result[$key]['home_rated']['result'] = $hr;
 	}

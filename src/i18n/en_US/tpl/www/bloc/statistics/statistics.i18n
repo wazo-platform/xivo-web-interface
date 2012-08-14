@@ -97,6 +97,10 @@ Ratios
 ; col_on_leaveempty
 <acronym title="Blocking (leave empty)">Blocking (passing)</acronym>
 
+; col_on_blocking
+<acronym title="Blocking calls">Blocking</acronym>
+
+
 ; col_on_timeout
 <acronym title="No answer">NA</acronym>
 
