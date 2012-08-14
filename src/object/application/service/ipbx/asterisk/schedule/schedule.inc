@@ -76,9 +76,7 @@ class xivo_application_service_asterisk_schedule extends xivo_application_asteri
 		if($this->_components === false)
 			return($this->_info);
 
-		list($actiontype, $action) = split(':', $this->_info['schedule']['fallback_action']);
-		if(is_null($action))
-			$action = $actiontype;
+		list($actiontype, $action) = $this->_explode_action($this->_info['schedule']['fallback_action']);
 
 		$arg2 = $this->_info['schedule']['fallback_actionargs'];
 		if(strstr($arg2, ';') !== false)
@@ -107,6 +105,21 @@ class xivo_application_service_asterisk_schedule extends xivo_application_asteri
 		return($this->_info);
 	}
 
+	function _explode_action($action)
+	{
+		$tokens = explode(':', $action, 2);
+		$actiontype = $tokens[0];
+		if (isset($tokens[1]))
+		{
+			$action = $tokens[1];
+		}
+		else
+		{
+			$action = $actiontype;
+		}
+		return array($actiontype, $action);
+	}
+
 	function _get_opened($scheduleid)
 	{
 		$this->_info['opened'] = $this->_schedule_time->get_all_where(array('schedule_id' => $scheduleid, 'mode' =>	'opened'));
@@ -119,9 +132,7 @@ class xivo_application_service_asterisk_schedule extends xivo_application_asteri
 		for($i = 0; $i < count($this->_info['closed']); $i++)
 		{
 			$rs = $this->_info['closed'][$i];
-			list($actiontype, $action) = split(':', $rs['action']);
-			if(is_null($action))
-				$action = $actiontype;
+			list($actiontype, $action) = $this->_explode_action($rs['action']);
 
 		if(strstr($rs['actionargs'], ';') !== false)
 				$rs['actionargs'] = array_fill_keys(explode(';', $rs['actionargs']),1);
