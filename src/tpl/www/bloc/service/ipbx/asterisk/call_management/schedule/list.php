@@ -54,7 +54,6 @@ $page = $url->pager($pager['pages'],
 	<tr class="sb-top">
 		<th class="th-left xspan"><span class="span-left">&nbsp;</span></th>
 		<th class="th-center"><?=$this->bbf('col_name');?></th>
-		<th class="th-center"><?=$this->bbf('col_destination');?></th>
 		<th class="th-center col-action"><?=$this->bbf('col_action');?></th>
 		<th class="th-right xspan"><span class="span-right">&nbsp;</span></th>
 	</tr>
@@ -76,21 +75,6 @@ $page = $url->pager($pager['pages'],
 				$icon = 'enable';
 			endif;
 
-
-			//$destination = $this->bbf('schedule_destination-'.$ref['destination']);
-
-			/*
-			if($ref['linked'] === false):
-				$icon = 'unavailable';
-				$destination = '-';
-			elseif($ref['destination'] === 'endcall'):
-				$destination = $this->bbf('schedule_destination-endcall-'.$ref['destidentity']);
-			elseif($ref['destination'] === 'application'):
-				$destination = $this->bbf('schedule_destination-application-'.$ref['destidentity']);
-			else:
-				$destination = $ref['destidentity'];
-endif;
-			 */
 ?>
 	<tr onmouseover="this.tmp = this.className; this.className = 'sb-content l-infos-over';"
 	    onmouseout="this.className = this.tmp;"
@@ -110,9 +94,6 @@ endif;
 					dwho_trunc($ref['name'],15,'...',false);
 ?>
 			</label>
-		</td>
-		<td><!-- title="<?=dwho_alttitle($destination);?>"-->
-			<!--?=dwho_htmlen(dwho_trunc($destination,15,'...',false));?-->
 		</td>
 		<td class="td-right" colspan="2">
 <?php
@@ -142,7 +123,7 @@ endif;
 ?>
 	<tr class="sb-foot">
 		<td class="td-left xspan b-nosize"><span class="span-left b-nosize">&nbsp;</span></td>
-		<td class="td-center" colspan="3"><span class="b-nosize">&nbsp;</span></td>
+		<td class="td-center" colspan="2"><span class="b-nosize">&nbsp;</span></td>
 		<td class="td-right xspan b-nosize"><span class="span-right b-nosize">&nbsp;</span></td>
 	</tr>
 </table>
