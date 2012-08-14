@@ -21,8 +21,10 @@
 function dwho_clean_cmd_list_to_process()
 {
 	$_SRE = dwho_gct::get('xivo_service');
+	$_XOBJ = &dwho_gct::get('xivo_object');
 	$ipbx = &$_SRE->get('ipbx');
 	$ctimain = &$ipbx->get_module('ctimain');
+	$request_handlers = &$_XOBJ->get_module('request_handlers');
 
 	if (isset($_SESSION['cmd_list_to_process']) === false
 	|| empty($_SESSION['cmd_list_to_process']) === true
@@ -33,20 +35,7 @@ function dwho_clean_cmd_list_to_process()
 		return(false);
 	}
 
-	$cmds = &$_SESSION['cmd_list_to_process'];
-
-	if (isset($cmds['ipbx']))
-	{
-		$ipbx->exec_cmd_ast($cmds['ipbx']);
-		sleep(1);
-	}
-
-	if (isset($cmds['ctibus']))
-		$ipbx->discuss($cmds['ctibus']);
-
-	if (isset($cmds['dird']))
-		$ipbx->discuss_dird($cmds['dird']);
-
+	$request_handlers->exec_cmd($_SESSION['cmd_list_to_process']);
 	$_SESSION['cmd_list_to_process'] = array();
 }
 

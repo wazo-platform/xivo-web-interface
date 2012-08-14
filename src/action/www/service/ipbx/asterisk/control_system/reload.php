@@ -23,7 +23,7 @@ require_once('xivo.php');
 if(xivo_user::chk_acl(true) === false)
 	$_QRY->go($_TPL->url('xivo'));
 
-$ipbx->exec_cmd_ast(array('core reload'),true);
+$ipbx->discuss_ipbx(array('core reload'),true);
 
 if(isset($_SERVER['HTTP_REFERER']) === true)
 	$_QRY->go($_SERVER['HTTP_REFERER'],false);

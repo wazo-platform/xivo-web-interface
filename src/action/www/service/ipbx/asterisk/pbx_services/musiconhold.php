@@ -77,7 +77,7 @@ switch($act)
 include(dirname(__FILE__).'/musiconhold/'.$action.'.php');
 
 if (isset($_QR['doreload']))
-	$ipbx->exec_cmd_ast('moh reload');
+	$ipbx->discuss_ipbx('moh reload');
 
 $_TPL->set_var('act',$act);
 $_TPL->set_var('cat',$cat);

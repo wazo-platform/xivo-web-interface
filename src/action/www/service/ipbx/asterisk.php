@@ -29,7 +29,7 @@ $sipstat['enable'] = $sipstat['disable'] = $sipstat['total'] = 0;
 $iaxstat['enable'] = $iaxstat['disable'] = $iaxstat['total'] = 0;
 $live['activecalls'] = $live['activechannels'] = $live['callsprocessed'] = 0;
 
-if(($recvactivecalls = $ipbx->exec_cmd_ast('core show channels',true)) !== false
+if(($recvactivecalls = $ipbx->discuss_ipbx('core show channels',true)) !== false
 		&& ($nb = count($recvactivecalls)) > 0)
 {
 	for ($i=0;$i<$nb;$i++)
