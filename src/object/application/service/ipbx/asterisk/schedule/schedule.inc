@@ -134,7 +134,7 @@ class xivo_application_service_asterisk_schedule extends xivo_application_asteri
 			$rs = $this->_info['closed'][$i];
 			list($actiontype, $action) = $this->_explode_action($rs['action']);
 
-		if(strstr($rs['actionargs'], ';') !== false)
+			if(strstr($rs['actionargs'], ';') !== false)
 				$rs['actionargs'] = array_fill_keys(explode(';', $rs['actionargs']),1);
 
 			$this->_info['dialaction'][$i+1] = array(
@@ -401,7 +401,7 @@ class xivo_application_service_asterisk_schedule extends xivo_application_asteri
 		$r = true;
 		$arr['commented'] = false;
 
-		$arr['fallback_action']     = $dialaction['actiontype'] . 
+		$arr['fallback_action']     = $dialaction['actiontype'] .
 			(array_key_exists('action',$dialaction)?':'.$dialaction['action']:'');
 		$arr['fallback_actionid']   = $dialaction['actionarg1'];
 		$arr['fallback_actionargs'] = is_array($dialaction['actionarg2']) ? implode(';',array_keys($dialaction['actionarg2'])).';':$dialaction['actionarg2'];
@@ -438,7 +438,7 @@ class xivo_application_service_asterisk_schedule extends xivo_application_asteri
 		foreach($arr as &$rs)
 		{
 			$rs['mode']   = 'closed';
-			$rs['action'] = $rs['dialaction']['actiontype'] . 
+			$rs['action'] = $rs['dialaction']['actiontype'] .
 				(array_key_exists('action',$rs['dialaction'])?':'.$rs['dialaction']['action']:'');
 			$rs['actionid']   = $rs['dialaction']['actionarg1'];
 			$arg2 = $rs['dialaction']['actionarg2'];
