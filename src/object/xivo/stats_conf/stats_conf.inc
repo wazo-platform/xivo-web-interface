@@ -18,6 +18,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+dwho::load_class('date');
 xivo_object::required(array('abstract','abstract.inc'),true);
 
 class xivo_object_stats_conf extends xivo_object_abstract
@@ -41,8 +42,8 @@ class xivo_object_stats_conf extends xivo_object_abstract
 	public function _prepare($data)
 	{
 		$data['id'] = (int) $data['id'];
-		$data['hour_start'] = date('H:i',strtotime($data['hour_start']));
-		$data['hour_end'] = date('H:i',strtotime($data['hour_end']));
+		$data['hour_start'] = substr($data['hour_start'], 0, 5);
+		$data['hour_end'] = substr($data['hour_end'], 0, 5);
 		$data['monday'] = (bool) $data['monday'];
 		$data['tuesday'] = (bool) $data['tuesday'];
 		$data['wednesday'] = (bool) $data['wednesday'];
@@ -51,18 +52,25 @@ class xivo_object_stats_conf extends xivo_object_abstract
 		$data['saturday'] = (bool) $data['saturday'];
 		$data['sunday'] = (bool) $data['sunday'];
 		$data['dbegcache'] = date('Y-m',$data['dbegcache']);
-		if ($data['dendcache'] != 0)
+		if ($data['dendcache'] !== 0)
 			$data['dendcache'] = date('Y-m',$data['dendcache']);
 		$data['homepage'] = (bool) $data['homepage'];
 		$data['disable'] = (bool) $data['disable'];
 
 		return($data);
 	}
-	
-	public function update_date_genercache($id)
+
+	private function _prepare_to_db(&$arr)
 	{
-		$arr['dgenercache'] = time();
-		return(parent::edit($id,$arr,null));
+		if(isset($arr['name']) === true)
+			$arr['name'] = strtolower($arr['name']);
+
+		$arr['dbegcache'] = strtotime($arr['dbegcache']);
+		if ($arr['dendcache'] !== 0)
+			$arr['dendcache'] = strtotime($arr['dendcache']);
+
+		$arr['hour_start'] = dwho_date::normalize_time($arr['hour_start']);
+		$arr['hour_end'] = dwho_date::normalize_time($arr['hour_end']);
 	}
 
 	public function add($arr,$id=0)
@@ -70,13 +78,8 @@ class xivo_object_stats_conf extends xivo_object_abstract
 		if(is_array($arr) === false)
 			return(false);
 
-		if(isset($arr['name']) === true)
-			$arr['name'] = strtolower($arr['name']);
-			
 		$arr['dcreate'] = time();
-		$arr['dbegcache'] = strtotime($arr['dbegcache']);
-		if ($arr['dendcache'] !== 0)
-			$arr['dendcache'] = strtotime($arr['dendcache']);
+		$this->_prepare_to_db($arr);
 
 		return(parent::add($arr,$id));
 	}
@@ -85,13 +88,9 @@ class xivo_object_stats_conf extends xivo_object_abstract
 	{
 		if(is_array($arr) === false)
 			return(false);
-		else if(isset($arr['name']) === true)
-			$arr['name'] = strtolower($arr['name']);
-			
+
 		$arr['dupdate'] = time();
-		$arr['dbegcache'] = strtotime($arr['dbegcache']);
-		if ($arr['dendcache'] !== 0)
-			$arr['dendcache'] = strtotime($arr['dendcache']);
+		$this->_prepare_to_db($arr);
 
 		return(parent::edit($id,$arr,$disable));
 	}

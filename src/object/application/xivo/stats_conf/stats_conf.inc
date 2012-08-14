@@ -52,11 +52,6 @@ class xivo_application_xivo_object_stats_conf extends xivo_application_xivo_obje
 		return(true);
 	}
 
-	public function update_date_genercache($id)
-	{
-		return($this->_stats_conf->update_date_genercache($id));
-	}
-
 	public function load_components()
 	{
 		$this->_components = true;

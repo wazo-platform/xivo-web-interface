@@ -182,6 +182,17 @@ abstract class dwho_date
 		return($rs);
 	}
 
+	public static function normalize_time($str)
+	{
+		$rs = $str;
+		if (preg_match('/^(\d{2})[-|:](\d{2})$/',$str) === 1)
+			$rs = $str.':00';
+		elseif (preg_match('/^(\d{2})$/',$str) === 1)
+			$rs = $str.':00:00';
+
+		return($rs);
+	}
+
 	public static function get_year_range($date)
 	{
 		$date = self::all_to_unixtime($date);
@@ -376,52 +387,6 @@ abstract class dwho_date
 				return(date('Y-m-d',$i));
 		}
 		return(null);
-	}
-
-	private static function eval_during_time($key,$eventprocess,$eventstart,$eventend,$time)
-	{
-		if (isset(self::$_counter[$key]) === false)
-			self::$_counter[$key] = array();
-
-		if (isset(self::$_counter[$key][$eventstart]) === false)
-		{
-			self::$_counter[$key][$eventstart] = array();
-			self::$_counter[$key][$eventstart]['start'] = 0;
-			self::$_counter[$key][$eventstart]['token'] = 0;
-			self::$_counter[$key][$eventstart]['total'] = 0;
-		}
-
-		$counter = &self::$_counter[$key][$eventstart];
-		$timearr = explode('.',$time);
-
-		if (preg_match(self::$_regex['datetime'],$timearr[0]) !== 1)
-			return(false);
-
-		$timeprocess = self::all_to_unixtime($timearr[0]);
-
-		$rs = 0;
-		switch ($eventprocess)
-		{
-			case $eventstart:
-				if ($counter['token'] === 1
-				&& $counter['start'] !== 0)
-					$rs = ($timeprocess - $counter['start']);
-				$counter['token'] = 1;
-				$counter['start'] = $timeprocess;
-				break;
-			case $eventend:
-				if ($counter['token'] === 0)
-					continue;
-				$rs = ($timeprocess - $counter['start']);
-				$counter['token'] = 0;
-				$counter['start'] = 0;
-				break;
-			default:
-		}
-
-		$counter['total'] += $rs;
-
-		return($rs);
 	}
 }
 
