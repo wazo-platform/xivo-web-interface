@@ -109,9 +109,6 @@ class xivo_application_service_asterisk_queue extends xivo_application_asterisk_
 		if(dwho_ak('user',$nocomponents,true) === false)
 			$this->_get_user();
 
-		if(dwho_ak('agentgroup',$nocomponents,true) === false)
-			$this->_get_agentgroup();
-
 		if(dwho_ak('agent',$nocomponents,true) === false)
 			$this->_get_agent();
 
@@ -169,11 +166,6 @@ class xivo_application_service_asterisk_queue extends xivo_application_asterisk_
 		return($this->_get_user_type('user'));
 	}
 
-	function _get_agentgroup()
-	{
-		return($this->_get_user_type('agentgroup'));
-	}
-
 	function _get_agent()
 	{
 		return($this->_get_user_type('agent'));
@@ -184,21 +176,13 @@ class xivo_application_service_asterisk_queue extends xivo_application_asterisk_
 		$this->_info[$type] = false;
 		$this->_origin[$type] = false;
 
-		if($type !== 'user' && $type !== 'agent' && $type !== 'agentgroup')
+		if($type !== 'user' && $type !== 'agent')
 			return(false);
 
 		$where = array();
 
-		if($type === 'agentgroup')
-		{
-			$where['usertype'] = 'agent';
-			$where['category'] = 'group';
-		}
-		else
-		{
-			$where['usertype'] = $type;
-			$where['category'] = 'queue';
-		}
+		$where['usertype'] = $type;
+		$where['category'] = 'queue';
 
 		$where['queue_name'] = $this->_info['queuefeatures']['name'];
 
@@ -365,9 +349,6 @@ class xivo_application_service_asterisk_queue extends xivo_application_asterisk_
 
 		if(dwho_issa('user',$arr) === true)
 			$this->set_user($action,$arr['user'],$name);
-
-		if(dwho_issa('agentgroup',$arr) === true)
-			$this->set_agentgroup($action,$arr['agentgroup'],$name);
 
 		if(dwho_issa('agent',$arr) === true)
 			$this->set_agent($action,$arr['agent'],$name);
@@ -544,11 +525,6 @@ class xivo_application_service_asterisk_queue extends xivo_application_asterisk_
 		return($this->_set_user_type('user',$action,$list,$name));
 	}
 
-	function set_agentgroup($action,$list,$name)
-	{
-		return($this->_set_user_type('agentgroup',$action,$list,$name));
-	}
-
 	function set_agent($action,$list,$name)
 	{
 		return($this->_set_user_type('agent',$action,$list,$name));
@@ -556,7 +532,7 @@ class xivo_application_service_asterisk_queue extends xivo_application_asterisk_
 
 	function _set_user_type($type,$action,$list,$name)
 	{
-		if(($type !== 'user' && $type !== 'agent' && $type !== 'agentgroup') === true
+		if(($type !== 'user' && $type !== 'agent') === true
 		|| ($action !== 'add' && $action !== 'edit') === true
 		|| is_array($list) === false
 		|| is_scalar($name) === false
@@ -566,18 +542,9 @@ class xivo_application_service_asterisk_queue extends xivo_application_asterisk_
 		$where = array();
 		$where['userid'] = 0;
 
-		if($type === 'agentgroup')
-		{
-			$modulename = 'agentgroup';
-			$where['usertype'] = 'agent';
-			$where['category'] = 'group';
-		}
-		else
-		{
-			$modulename = $type.'features';
-			$where['usertype'] = $type;
-			$where['category'] = 'queue';
-		}
+		$modulename = $type.'features';
+		$where['usertype'] = $type;
+		$where['category'] = 'queue';
 
 		if(($module = &$this->_service->get_module($modulename)) === false)
 			return(false);
@@ -628,8 +595,6 @@ class xivo_application_service_asterisk_queue extends xivo_application_asterisk_
 			{
 				if($type === 'agent')
 					$interface = $this->mk_agent_interface($uinfo['number']);
-				else if($type === 'agentgroup')
-					$interface = $this->mk_agent_interface($uinfo['id'],true);
 				else
 					$interface = $this->mk_interface($uinfo['name'],
 									 null,
@@ -647,8 +612,8 @@ class xivo_application_service_asterisk_queue extends xivo_application_asterisk_
 			$info['queue_name'] = $name;
 			$info['skills']	    = '';
 			// set user queueskill
-			if($type === 'agent'      && $this->_agentskill->exists(array('agentid' => $uinfo['id'])) !== false
-			|| $type !== 'agentgroup' && $this->_userskill->exists(array('userid' => $uinfo['id'])) !== false)
+			if($type === 'agent' && $this->_agentskill->exists(array('agentid' => $uinfo['id'])) !== false
+			|| $this->_userskill->exists(array('userid' => $uinfo['id'])) !== false)
 				$info['skills'] = $type . '-' . $uinfo['id'];
 
 			if(($rs = $this->_queuemember->chk_values($info)) === false
@@ -694,7 +659,6 @@ class xivo_application_service_asterisk_queue extends xivo_application_asterisk_
 		|| $this->add_queuemacro($queuefeaturesid) === false
 		|| $this->add_extenumbers($queuefeaturesid) === false
 		|| $this->add_user() === false
-		|| $this->add_agentgroup() === false
 		|| $this->add_agent() === false
 		|| $this->add_dialaction($queuefeaturesid) === false
 		|| $this->add_contextnummember($queuefeaturesid) === false
@@ -748,11 +712,6 @@ class xivo_application_service_asterisk_queue extends xivo_application_asterisk_
 		return($this->_add_user_type('user'));
 	}
 
-	function add_agentgroup()
-	{
-		return($this->_add_user_type('agentgroup'));
-	}
-
 	function add_agent()
 	{
 		return($this->_add_user_type('agent'));
@@ -762,7 +721,7 @@ class xivo_application_service_asterisk_queue extends xivo_application_asterisk_
 	{
 		$rs = false;
 
-		if(($type !== 'user' && $type !== 'agent' && $type !== 'agentgroup') === true
+		if(($type !== 'user' && $type !== 'agent') === true
 		|| ($rs = $this->get_result($type)) === null
 		|| $rs === false)
 			return($rs);
@@ -824,7 +783,6 @@ class xivo_application_service_asterisk_queue extends xivo_application_asterisk_
 					$this->_extenumbers->reverse_add();
 					break;
 				case 'user':
-				case 'agentgroup':
 				case 'agent':
 					if(is_array($val) === false)
 						continue;
@@ -894,7 +852,6 @@ class xivo_application_service_asterisk_queue extends xivo_application_asterisk_
 		}
 
 		if($this->edit_user($this->_info['queuefeatures']['name']) === false
-		|| $this->edit_agentgroup($this->_info['queuefeatures']['name']) === false
 		|| $this->edit_agent($this->_info['queuefeatures']['name']) === false
 		|| $this->edit_dialaction() === false
 		|| $this->edit_contextnummember() === false
@@ -960,21 +917,6 @@ class xivo_application_service_asterisk_queue extends xivo_application_asterisk_
 		return($this->_edit_user_type('user'));
 	}
 
-	function edit_agentgroup($name)
-	{
-		if(is_scalar($name) === false)
-			return(false);
-		else if(dwho_issa('agentgroup',$this->_info) === false)
-			return($this->add_agentgroup());
-
-		$this->_return['agentgroup'] = $this->delete_agentgroup($name);
-
-		if(($rs = $this->get_result('agentgroup')) === null)
-			return($this->_return['agentgroup']);
-
-		return($this->_edit_user_type('agentgroup'));
-	}
-
 	function edit_agent($name)
 	{
 		if(is_scalar($name) === false)
@@ -992,7 +934,7 @@ class xivo_application_service_asterisk_queue extends xivo_application_asterisk_
 
 	function _edit_user_type($type)
 	{
-		if($type !== 'user' && $type !== 'agent' && $type !== 'agentgroup')
+		if($type !== 'user' && $type !== 'agent')
 			return(false);
 		else if(($rs = $this->get_result($type)) === null || $rs === false)
 			return($rs);
@@ -1092,7 +1034,6 @@ class xivo_application_service_asterisk_queue extends xivo_application_asterisk_
 					$this->_extenumbers->reverse_edit($this->_status);
 					break;
 				case 'user':
-				case 'agentgroup':
 				case 'agent':
 					if(dwho_issa('queuefeatures',$this->_info) === false)
 						continue;
@@ -1133,7 +1074,6 @@ class xivo_application_service_asterisk_queue extends xivo_application_asterisk_
 		|| $this->delete_macro('queuemacro') === false
 		|| $this->delete_extenumbers() === false
 		|| $this->delete_user($this->_info['queuefeatures']['name']) === false
-		|| $this->delete_agentgroup($this->_info['queuefeatures']['name']) === false
 		|| $this->delete_agent($this->_info['queuefeatures']['name']) === false
 		|| $this->delete_dialaction() === false
 		|| $this->delete_contextnummember() === false
@@ -1183,11 +1123,6 @@ class xivo_application_service_asterisk_queue extends xivo_application_asterisk_
 		return($this->_delete_user_type('user',$name));
 	}
 
-	function delete_agentgroup($name)
-	{
-		return($this->_delete_user_type('agentgroup',$name));
-	}
-
 	function delete_agent($name)
 	{
 		return($this->_delete_user_type('agent',$name));
@@ -1195,7 +1130,7 @@ class xivo_application_service_asterisk_queue extends xivo_application_asterisk_
 
 	function _delete_user_type($type,$name)
 	{
-		if(($type !== 'user' && $type !== 'agent' && $type !== 'agentgroup') === true
+		if(($type !== 'user' && $type !== 'agent') === true
 		|| dwho_issa($type,$this->_info) === false)
 			return(null);
 		else if(dwho_issa('queuefeatures',$this->_info) === false
@@ -1205,17 +1140,8 @@ class xivo_application_service_asterisk_queue extends xivo_application_asterisk_
 
 		$where = array();
 
-		if($type === 'agentgroup')
-		{
-			$where['usertype'] = 'agent';
-			$where['category'] = 'group';
-		}
-		else
-		{
-			$where['usertype'] = $type;
-			$where['category'] = 'queue';
-		}
-
+		$where['usertype'] = $type;
+		$where['category'] = 'queue';
 		$where['queue_name'] = $name;
 
 		$r = $this->_queuemember->delete_where($where);
@@ -1267,7 +1193,6 @@ class xivo_application_service_asterisk_queue extends xivo_application_asterisk_
 						$this->_extenumbers->add_origin($this->_origin['extenumbers']);
 					break;
 				case 'user':
-				case 'agentgroup':
 				case 'agent':
 					if(isset($this->_origin[$key]) === true
 					&& $this->_origin[$key] !== false)

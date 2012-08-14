@@ -38,10 +38,9 @@ $info = $result = array();
 switch($act)
 {
 	case 'add':
-		$amember = $qmember = array();
-		$amember['list'] = $qmember['list'] = false;
-		$qmember['info'] = false;
-		$amember['slt'] = $qmember['slt'] = array();
+		$amember = array();
+		$amember['list'] = false;
+		$amember['slt'] = array();
 
 		$appagent = &$ipbx->get_application('agent',null,false);
 
@@ -52,14 +51,6 @@ switch($act)
 								'context'	=> SORT_ASC),
 								null,
 								true);
-
-		$appqueue = &$ipbx->get_application('queue',null,false);
-
-		if(($queues = $appqueue->get_queues_list(null,
-							array('name'		=> SORT_ASC),
-							null,
-							true)) !== false)
-			$qmember['list'] = $queues;
 
 		$appagentgroup = &$ipbx->get_application('agentgroup');
 
@@ -85,26 +76,6 @@ switch($act)
 		&& ($amember['slt'] = dwho_array_intersect_key($result['agentmember'],$amember['list'],'id')) !== false)
 			$amember['slt'] = array_keys($amember['slt']);
 
-		if($qmember['list'] !== false && dwho_ak('queuememer',$result) === true)
-		{
-			$qmember['slt'] = dwho_array_intersect_key($result['queuemember'],
-								$qmember['list'],
-								'queuefeaturesid');
-
-			if($qmember['slt'] !== false)
-			{
-				$qmember['info'] = dwho_array_copy_intersect_key($result['queuemember'],
-										$qmember['slt'],
-										'queuefeaturesid');
-
-				$qmember['list'] = dwho_array_diff_key($qmember['list'],$qmember['slt']);
-
-				$queuesort = new dwho_sort(array('key'	=> 'name'));
-
-				uasort($qmember['slt'],array(&$queuesort,'str_usort'));
-			}
-		}
-
 		$agentgroup_list = $appagentgroup->get_agentgroups_list(null,
 									array('name'	=> SORT_ASC));
 
@@ -113,12 +84,9 @@ switch($act)
 		$_TPL->set_var('fm_save',$fm_save);
 		$_TPL->set_var('element',$appagentgroup->get_elements());
 		$_TPL->set_var('amember',$amember);
-		$_TPL->set_var('queues',$queues);
-		$_TPL->set_var('qmember',$qmember);
 		$_TPL->set_var('agentgroup_list',$agentgroup_list);
 
 		$dhtml = &$_TPL->get_module('dhtml');
-		$dhtml->set_js('js/dwho/submenu.js');
 		$dhtml->load_js_multiselect_files();
 		break;
 	case 'edit':
@@ -128,10 +96,9 @@ switch($act)
 		|| ($info = $appagentgroup->get($_QR['group'])) === false)
 			$_QRY->go($_TPL->url('callcenter/settings/agents'),$param);
 
-		$amember = $qmember = array();
-		$amember['list'] = $qmember['list'] = false;
-		$qmember['info'] = false;
-		$amember['slt'] = $qmember['slt'] = array();
+		$amember = array();
+		$amember['list'] = false;
+		$amember['slt'] = array();
 
 		$appagent = &$ipbx->get_application('agent',null,false);
 
@@ -142,13 +109,6 @@ switch($act)
 								    'context'	=> SORT_ASC),
 							      null,
 							      true);
-		$appqueue = &$ipbx->get_application('queue',null,false);
-
-		if(($queues = $appqueue->get_queues_list(null,
-							 array('name'		=> SORT_ASC),
-							 null,
-							 true)) !== false)
-			$qmember['list'] = $queues;
 
 		$result = $fm_save = $error = null;
 		$return = &$info;
@@ -175,25 +135,6 @@ switch($act)
 		&& ($amember['slt'] = dwho_array_intersect_key($return['agentmember'],$amember['list'],'id')) !== false)
 			$amember['slt'] = array_keys($amember['slt']);
 
-		if($qmember['list'] !== false && dwho_ak('queuemember',$return) === true)
-		{
-			$qmember['slt'] = dwho_array_intersect_key($return['queuemember'],
-								   $qmember['list'],
-								   'queuefeaturesid');
-
-			if($qmember['slt'] !== false)
-			{
-				$qmember['info'] = dwho_array_copy_intersect_key($return['queuemember'],
-										 $qmember['slt'],
-										 'queuefeaturesid');
-				$qmember['list'] = dwho_array_diff_key($qmember['list'],$qmember['slt']);
-
-				$queuesort = new dwho_sort(array('key'	=> 'name'));
-
-				uasort($qmember['slt'],array(&$queuesort,'str_usort'));
-			}
-		}
-
 		$agentgroup_list = $appagentgroup->get_agentgroups_list(null,
 									array('name'	=> SORT_ASC));
 
@@ -203,12 +144,9 @@ switch($act)
 		$_TPL->set_var('fm_save',$fm_save);
 		$_TPL->set_var('element',$appagentgroup->get_elements());
 		$_TPL->set_var('amember',$amember);
-		$_TPL->set_var('queues',$queues);
-		$_TPL->set_var('qmember',$qmember);
 		$_TPL->set_var('agentgroup_list',$agentgroup_list);
 
 		$dhtml = &$_TPL->get_module('dhtml');
-		$dhtml->set_js('js/dwho/submenu.js');
 		$dhtml->load_js_multiselect_files();
 		break;
 	case 'delete':

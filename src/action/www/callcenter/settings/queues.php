@@ -47,8 +47,8 @@ switch($act)
 		$pannounce['list'] = $appqueue->get_announce();
 		$pannounce['slt'] = array();
 
-		$user = $agentgroup = $agent = array();
-		$user['slt'] = $agentgroup['slt'] = $agent['slt'] = array();
+		$user = $agent = array();
+		$user['slt'] = $agent['slt'] = array();
 
 		$userorder = array();
 		$userorder['firstname'] = SORT_ASC;
@@ -56,12 +56,6 @@ switch($act)
 
 		$appuser = &$ipbx->get_application('user',null,false);
 		$user['list'] = $appuser->get_users_list(null,$userorder,null,true);
-
-		$appagentgroup = &$ipbx->get_application('agentgroup',null,false);
-		$agentgroup['list'] = $appagentgroup->get_agentgroups_list(null,
-									   array('name'	=> SORT_ASC),
-									   null,
-									   true);
 
 		$appagent = &$ipbx->get_application('agent',null,false);
 		$agent['list'] = $appagent->get_agents_list(null,
@@ -122,10 +116,6 @@ switch($act)
 		&& ($user['slt'] = dwho_array_intersect_key($result['user'],$user['list'],'userid')) !== false)
 			$user['slt'] = array_keys($user['slt']);
 
-		if($agentgroup['list'] !== false && dwho_issa('agentgroup',$result) === true
-		&& ($agentgroup['slt'] = dwho_array_intersect_key($result['agentgroup'],$agentgroup['list'],'userid')) !== false)
-			$agentgroup['slt'] = array_keys($agentgroup['slt']);
-
 		if($agent['list'] !== false && dwho_issa('agent',$result) === true
 		&& ($agent['slt'] = dwho_array_intersect_key($result['agent'],$agent['list'],'userid')) !== false)
 			$agent['slt'] = array_keys($agent['slt']);
@@ -166,7 +156,6 @@ switch($act)
 		$_TPL->set_var('dialaction_from','queue');
 		$_TPL->set_var('element',$appqueue->get_elements());
 		$_TPL->set_var('user',$user);
-		$_TPL->set_var('agentgroup',$agentgroup);
 		$_TPL->set_var('agent',$agent);
 		$_TPL->set_var('pannounce',$pannounce);
 		$_TPL->set_var('destination_list',$appqueue->get_dialaction_destination_list());
@@ -190,8 +179,8 @@ switch($act)
 		$pannounce['list'] = $appqueue->get_announce();
 		$pannounce['slt'] = array();
 
-		$user = $agentgroup = $agent = array();
-		$user['slt'] = $agentgroup['slt'] = $agent['slt'] = array();
+		$user = $agent = array();
+		$user['slt'] = $agent['slt'] = array();
 
 		$userorder = array();
 		$userorder['firstname'] = SORT_ASC;
@@ -199,12 +188,6 @@ switch($act)
 
 		$appuser = &$ipbx->get_application('user',null,false);
 		$user['list'] = $appuser->get_users_list(null,$userorder,null,true);
-
-		$appagentgroup = &$ipbx->get_application('agentgroup',null,false);
-		$agentgroup['list'] = $appagentgroup->get_agentgroups_list(null,
-									   array('name'	=> SORT_ASC),
-									   null,
-									   true);
 
 		$appagent = &$ipbx->get_application('agent',null,false);
 		$agent['list'] = $appagent->get_agents_list(null,
@@ -266,10 +249,6 @@ switch($act)
 		&& ($user['slt'] = dwho_array_intersect_key($return['user'],$user['list'],'userid')) !== false)
 			$user['slt'] = array_keys($user['slt']);
 
-		if($agentgroup['list'] !== false && dwho_issa('agentgroup',$return) === true
-		&& ($agentgroup['slt'] = dwho_array_intersect_key($return['agentgroup'],$agentgroup['list'],'userid')) !== false)
-			$agentgroup['slt'] = array_keys($agentgroup['slt']);
-
 		if($agent['list'] !== false && dwho_issa('agent',$return) === true
 		&& ($agent['slt'] = dwho_array_intersect_key($return['agent'],$agent['list'],'userid')) !== false)
 			$agent['slt'] = array_keys($agent['slt']);
@@ -307,7 +286,6 @@ switch($act)
 		$_TPL->set_var('dialaction_from','queue');
 		$_TPL->set_var('element',$appqueue->get_elements());
 		$_TPL->set_var('user',$user);
-		$_TPL->set_var('agentgroup',$agentgroup);
 		$_TPL->set_var('agent',$agent);
 		$_TPL->set_var('pannounce',$pannounce);
 		$_TPL->set_var('destination_list',$appqueue->get_dialaction_destination_list());

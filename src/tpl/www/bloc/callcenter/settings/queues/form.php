@@ -24,7 +24,6 @@ $url = &$this->get_module('url');
 $element         = $this->get_var('element');
 $info            = $this->get_var('info');
 $user            = $this->get_var('user');
-$agentgroup      = $this->get_var('agentgroup');
 $agent           = $this->get_var('agent');
 $pannounce       = $this->get_var('pannounce');
 $moh_list        = $this->get_var('moh_list');
@@ -441,29 +440,9 @@ endif;
 	<fieldset id="fld-agent">
 		<legend><?=$this->bbf('fld-agents');?></legend>
 <?php
-	if($agentgroup['list'] !== false):
+	if($agent['list'] !== false):
 ?>
-    <div id="agentgrouplist" class="fm-paragraph fm-description">
-			<p>
-				<label id="lb-agentlist" for="it-agentlist">
-					<?=$this->bbf('fm_agentgroup');?>
-				</label>
-			</p>
-    		<?=$form->jq_select(array('paragraph'	=> false,
-    					 	'label'		=> false,
-                			'name'    	=> 'agentgroup[]',
-    						'id' 		=> 'it-agentgroup',
-						    'browse'	=> 'agentgroup',
-    						'key'		=> 'name',
-    				       	'altkey'	=> 'id',
-                			'selected'  => $agentgroup['slt']),
-    					$agentgroup['list']);?>
-    </div>
-    <div class="clearboth"></div>
-<?php
-		if($agent['list'] !== false):
-?>
-    <div id="agentlist" class="fm-paragraph fm-description">
+	<div id="agentlist" class="fm-paragraph fm-description">
 			<p>
 				<label id="lb-agentlist" for="it-agentlist">
 					<?=$this->bbf('fm_agent');?>
@@ -481,19 +460,11 @@ endif;
     </div>
     <div class="clearboth"></div>
 <?php
-		else:
-			echo	'<div id="create-agent" class="txt-center">',
-					$url->href_htmln($this->bbf('create_agent'),
-							'callcenter/settings/agents',
-							'act=addagent'),
-				'</div>';
-		endif;
-
 	else:
-		echo	'<div class="txt-center">',
-				$url->href_htmln($this->bbf('create_agent-group'),
+		echo	'<div id="create-agent" class="txt-center">',
+				$url->href_htmln($this->bbf('create_agent'),
 						'callcenter/settings/agents',
-						'act=add'),
+						'act=addagent'),
 			'</div>';
 	endif;
 ?>

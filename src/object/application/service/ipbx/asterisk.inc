@@ -75,12 +75,12 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		return($r);
 	}
 
-	function mk_agent_interface($number,$group=false)
+	function mk_agent_interface($number)
 	{
 		$r = array();
 		$r['channel'] = XIVO_SRE_IPBX_AST_CHAN_AGENT;
 
-		if(($r['interface'] = $this->_service->mk_agent_interface($number,$group)) === false)
+		if(($r['interface'] = $this->_service->mk_agent_interface($number)) === false)
 			return(false);
 
 		return($r);

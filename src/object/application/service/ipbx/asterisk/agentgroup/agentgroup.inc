@@ -24,7 +24,6 @@ class xivo_application_service_asterisk_agentgroup extends xivo_application_aste
 {
 	var $_agentgroup	= false;
 	var $_agentmember	= null;
-	var $_queuemember	= null;
 	var $_contextlist	= array();
 	var $_musiconhold	= array();
 
@@ -44,8 +43,7 @@ class xivo_application_service_asterisk_agentgroup extends xivo_application_aste
 	{
 		$this->_components = true;
 
-		if(($this->_agentmember = &$this->get_abstract('agentmember')) === false
-		|| ($this->_queuemember = &$this->_service->get_module('queuemember')) === false)
+		if(($this->_agentmember = &$this->get_abstract('agentmember')) === false)
 			return(false);
 
 		return(true);
@@ -64,7 +62,6 @@ class xivo_application_service_asterisk_agentgroup extends xivo_application_aste
 			return($this->_info);
 
 		$this->_get_agentmember();
-		$this->_get_queuemember();
 
 		return($this->_info);
 	}
@@ -87,52 +84,11 @@ class xivo_application_service_asterisk_agentgroup extends xivo_application_aste
 		return($this->_info['agentmember']);
 	}
 
-	function _get_queuemember()
-	{
-		$this->_info['queuemember'] = false;
-		$this->_origin['queuemember'] = false;
-
-		$where = array();
-		$where['usertype'] = 'agent';
-		$where['category'] = 'group';
-		$where['userid'] = $this->_info['agentgroup']['id'];
-
-		if(is_object($this->_queuemember) === false
-		|| ($queuefeatures = &$this->_service->get_module('queuefeatures')) === false
-		|| ($this->_info['queuemember'] = $this->_queuemember->get_all_where($where)) === false
-		|| ($nb = count($this->_info['queuemember'])) === 0)
-		{
-			$this->_info['queuemember'] = false;
-			return(false);
-		}
-
-		$ref = &$this->_info['queuemember'];
-
-		$where = array();
-
-		for($i = 0;$i < $nb;$i++)
-		{
-			$where['name'] = $ref[$i]['queue_name'];
-
-			if(($id = $queuefeatures->get_primary($where)) !== false)
-				$ref[$i]['queuefeaturesid'] = $id;
-		}
-
-		$this->_origin['queuemember'] = $this->_queuemember->get_origin_list();
-
-		return($this->_info['queuemember']);
-	}
-
 	function get_elements()
 	{
 		$r = array();
 
 		$r['agentgroup'] = $this->_agentgroup->get_element();
-
-		if(is_object($this->_queuemember) === true)
-			$r['qmember'] = $this->_queuemember->get_element();
-		else
-			$r['qmember'] = false;
 
 		return($r);
 	}
@@ -196,8 +152,6 @@ class xivo_application_service_asterisk_agentgroup extends xivo_application_aste
 		if(dwho_issa('agent-select',$arr) === true)
 			$this->set_agentmember($arr['agent-select']);
 
-		if(dwho_issa('queue',$arr) === true && dwho_issa('queue-select',$arr) === true)
-			$this->set_queuemember($arr['queue'],$arr['queue-select'],0);
 		return(($this->get_errnb() < 1));
 	}
 
@@ -233,62 +187,6 @@ class xivo_application_service_asterisk_agentgroup extends xivo_application_aste
 		return($r);
 	}
 
-	function set_queuemember($list,$select)
-	{
-		if(is_array($list) === false
-		|| is_array($select) === false
-		|| ($queuefeatures = &$this->_service->get_module('queuefeatures')) === false
-		|| is_object($this->_queuemember) === false)
-			return(false);
-
-		$slt = array_values($select);
-
-		if(($nb = count($slt)) === 0)
-			return(null);
-
-		$info = array();
-		$info['usertype'] = 'agent';
-		$info['userid'] = 0;
-		$info['category'] = 'group';
-		$info['call-limit'] = 0;
-
-		$tmp = $reslist = array();
-
-		for($i = 0;$i < $nb;$i++)
-		{
-			$qname = &$slt[$i];
-
-			if(isset($tmp[$qname]) === true
-			|| isset($list[$qname]) === false
-			|| ($interface = $this->mk_agent_interface(0,true)) === false
-			|| ($typeid = $queuefeatures->get_primary(array('name' => $qname))) === false)
-				continue;
-
-			$info['queue_name'] = $qname;
-			$info['interface'] = $interface['interface'];
-			$info['channel'] = $interface['channel'];
-
-			$values = array_merge($list[$qname],$info);
-
-			if(($rs = $this->_queuemember->chk_values($values)) === false)
-				continue;
-
-			$rs['queuefeaturesid'] = $typeid;
-			$tmp[$qname] = 1;
-			$reslist[] = $rs;
-		}
-
-		if(isset($reslist[0]) === false)
-		{
-			$this->_set_result('queuemember',false);
-			$this->_set_error('queuemember','empty');
-			return(false);
-		}
-
-		$this->_set_result('queuemember',$reslist);
-		return(true);
-	}
-
 	function add()
 	{
 		$r = true;
@@ -299,8 +197,7 @@ class xivo_application_service_asterisk_agentgroup extends xivo_application_aste
 		if($this->get_errnb() > 0
 		|| ($agentgroupid = $this->add_agentgroup()) === false
 		|| $this->update_agentgroup($agentgroupid) === false
-		|| $this->add_agentmember($agentgroupid) === false
-		|| $this->add_queuemember($agentgroupid) === false)
+		|| $this->add_agentmember($agentgroupid) === false)
 		{
 			$r = false;
 			if($agentgroupid !== null)
@@ -345,45 +242,6 @@ class xivo_application_service_asterisk_agentgroup extends xivo_application_aste
 		return($r);
 	}
 
-	function add_queuemember($agentgroupid)
-	{
-		$rs = false;
-
-		if(($agentgroupid = dwho_ulongint($agentgroupid)) === 0
-		|| ($rs = $this->get_result('queuemember')) === null
-		|| $rs === false)
-			return($rs);
-
-		$ret = $this->_return['queuemember'] = array();
-
-		$nb = count($rs);
-
-		for($i = 0;$i < $nb;$i++)
-		{
-			$rs[$i]['userid'] = $agentgroupid;
-
-			unset($rs[$i]['queuefeaturesid']);
-
-			if(($interface = $this->mk_agent_interface($agentgroupid,true)) === false)
-				return(false);
-
-			$rs[$i]['interface'] = $interface['interface'];
-
-			if($this->_queuemember->add($rs[$i]) === false)
-				return(false);
-
-			$ret['queue_name'] = $rs[$i]['queue_name'];
-			$ret['interface'] = $rs[$i]['interface'];
-
-			$this->_return['queuemember'][] = $ret;
-		}
-
-		if(isset($this->_return['queuemember'][0]) === false)
-			$this->_return['queuemember'] = false;
-
-		return(true);
-	}
-
 	function _reverse_add()
 	{
 		if($this->get_errnb() > 0
@@ -405,13 +263,6 @@ class xivo_application_service_asterisk_agentgroup extends xivo_application_aste
 				case 'agentmember':
 					$this->_agentmember->reverse_save($this->_status);
 					break;
-				case 'queuemember':
-					if(is_array($val) === false)
-						continue;
-
-					foreach($val as $memberval)
-						$this->_queuemember->delete($memberval);
-					break;
 			}
 		}
 
@@ -427,8 +278,7 @@ class xivo_application_service_asterisk_agentgroup extends xivo_application_aste
 
 		if($this->get_errnb() > 0
 		|| $this->edit_agentgroup() === false
-		|| $this->edit_agentmember() === false
-		|| $this->edit_queuemember() === false)
+		|| $this->edit_agentmember() === false)
 		{
 			$r = false;
 			$this->_reverse_edit();
@@ -464,52 +314,6 @@ class xivo_application_service_asterisk_agentgroup extends xivo_application_aste
 		return($r);
 	}
 
-	function edit_queuemember()
-	{
-		if(dwho_issa('agentgroup',$this->_info) === false)
-			return(false);
-		else if(dwho_issa('queuemember',$this->_info) === false)
-			return($this->add_queuemember($this->_info['agentgroup']['id']));
-
-		$agentgroupid = $this->_info['agentgroup']['id'];
-
-		$this->_return['queuemember'] = $this->delete_queuemember();
-
-		if(($rs = $this->get_result('queuemember')) === null)
-			return($this->_return['queuemember']);
-		else if($rs === false)
-			return($rs);
-
-		$ret = $this->_return['queuemember'] = array();
-
-		$nb = count($rs);
-
-		for($i = 0;$i < $nb;$i++)
-		{
-			$rs[$i]['userid'] = $agentgroupid;
-
-			unset($rs[$i]['queuefeaturesid']);
-
-			if(($interface = $this->mk_agent_interface($agentgroupid,true)) === false)
-				return(false);
-
-			$rs[$i]['interface'] = $interface['interface'];
-
-			if($this->_queuemember->add($rs[$i]) === false)
-				return(false);
-
-			$ret['queue_name'] = $rs[$i]['queue_name'];
-			$ret['interface'] = $rs[$i]['interface'];
-
-			$this->_return['queuemember'][] = $ret;
-		}
-
-		if(isset($this->_return['queuemember'][0]) === false)
-			$this->_return['queuemember'] = false;
-
-		return(true);
-	}
-
 	function _reverse_edit()
 	{
 		if($this->get_errnb() > 0
@@ -535,13 +339,6 @@ class xivo_application_service_asterisk_agentgroup extends xivo_application_aste
 				case 'agentmember':
 					$this->_agentmember->reverse_save($this->_status);
 					break;
-				case 'queuemember':
-					$this->delete_queuemember();
-
-					if(isset($this->_origin['queuemember']) === true
-					&& $this->_origin['queuemember'] !== false)
-						$this->_queuemember->add_origin_list($this->_origin['queuemember']);
-					break;
 			}
 		}
 
@@ -557,8 +354,7 @@ class xivo_application_service_asterisk_agentgroup extends xivo_application_aste
 
 		if($this->get_errnb() > 0
 		|| $this->delete_agentgroup() === false
-		|| $this->delete_agentmember() === false
-		|| $this->delete_queuemember() === false)
+		|| $this->delete_agentmember() === false)
 		{
 			$r = false;
 			$this->_reverse_delete();
@@ -597,27 +393,6 @@ class xivo_application_service_asterisk_agentgroup extends xivo_application_aste
 		return($r);
 	}
 
-	function delete_queuemember()
-	{
-		if(dwho_issa('queuemember',$this->_info) === false)
-			return(null);
-		else if(dwho_issa('agentgroup',$this->_info) === false
-		|| is_object($this->_queuemember) === false)
-			return(false);
-
-		$where = array();
-		$where['usertype'] = 'agent';
-		$where['category'] = 'group';
-		$where['userid'] = $this->_info['agentgroup']['id'];
-
-		$r = $this->_queuemember->delete_where($where);
-
-		if($this->_status === 'delete')
-			$this->_return['queuemember'] = $r;
-
-		return($r);
-	}
-
 	function _reverse_delete()
 	{
 		if($this->_status !== 'delete'
@@ -638,11 +413,6 @@ class xivo_application_service_asterisk_agentgroup extends xivo_application_aste
 					break;
 				case 'agentmember':
 					$this->_agentmember->reverse_delete($this->_status);
-					break;
-				case 'queuemember':
-					if(isset($this->_origin['queuemember']) === true
-					&& $this->_origin['queuemember'] !== false)
-						$this->_queuemember->add_origin_list($this->_origin['queuemember']);
 					break;
 			}
 		}

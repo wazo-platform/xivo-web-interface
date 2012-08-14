@@ -579,14 +579,12 @@ class xivo_service_asterisk extends xivo_service_abstract
 		return($r);
 	}
 
-	function mk_agent_interface($number,$group=false)
+	function mk_agent_interface($number)
 	{
 		$number = strval($number);
 
 		if(ctype_digit($number) === false)
 			return(false);
-		else if((bool) $group === true)
-			$number = '@'.$number;
 
 		return($this->mk_interface($number,null,null,null,XIVO_SRE_IPBX_AST_CHAN_AGENT));
 	}
