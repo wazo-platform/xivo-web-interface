@@ -23,11 +23,13 @@ dwho_file::required(array(XIVO_PATH_OBJECT,'application','service','ipbx','aster
 class xivo_application_service_asterisk_ctiprofiles extends xivo_application_asterisk_abstract
 {
 	var $_ctiprofiles = false;
+	var $_userfeatures = false;
 
 	function xivo_application_service_asterisk_ctiprofiles(&$service,$param=null,$components=true)
 	{
 		$this->xivo_application_asterisk_abstract(&$service);
-		if(($this->_ctiprofiles = &$this->_service->get_module('ctiprofiles')) === false)
+		if(($this->_ctiprofiles = &$this->_service->get_module('ctiprofiles')) === false
+		|| ($this->_userfeatures = &$this->_service->get_module('userfeatures')) === false)
 			return(false);
 		else if((bool) $components === true)
 			$this->load_components();
@@ -407,6 +409,73 @@ class xivo_application_service_asterisk_ctiprofiles extends xivo_application_ast
 		}
 
 		return(true);
+	}
+
+	function update_users_with_profile($name)
+	{
+		$r = true;
+
+		$this->_profiles = 'update-profiles';
+		$this->_return = array();
+
+		if($this->get_errnb() > 0
+		   || $this->update_users_profile($name) === false)
+		{
+			$r = false;
+			$this->_reverse_update($name);
+		}
+
+		$this->_profiles = '';
+		return($r);
+	}
+
+	function update_users_profile($name)
+	{
+	    dwho_var_dump($h);
+
+	    if(dwho_issa('ctiprofiles',$this->_info) === false
+	    || ($rs = $this->get_result('profiles')) === null
+	    || $rs === false)
+		return(false);
+
+	    $from = array();
+	    $from['profileclient'] = $name;
+
+	    $to = array();
+	    $to['profileclient'] = $rs['name'];
+
+	    $this->_return['profiles'] = $this->_userfeatures->edit_where($from, $to);
+
+	    return($this->_return['profiles']);
+	}
+
+	function _reverse_update($name)
+	{
+	    $from = array();
+	    $from['profileclient'] = $rs['name'];
+
+	    $to = array();
+	    $to['profileclient'] = $name;
+
+	    return($this->_userfeatures->edit_where($from, $to));
+	}
+
+	function disable_users_with_profile($name)
+	{
+	    if(dwho_issa('ctiprofiles',$this->_info) === false)
+	       return false;
+
+	    $from = array();
+	    $from['profileclient'] = $this->_info['ctiprofiles']['name'];
+
+	    $to = array();
+	    $to['profileclient'] = '';
+	    $to['enableclient'] = 0;
+
+	    $this->_return['profiles'] = $this->_userfeatures->edit_where($from, $to);
+
+	    return($this->_return['profiles']);
+
 	}
 }
 ?>

@@ -256,6 +256,8 @@ switch($act)
 			else
 				$_QR['profiles']['preferences'] = '';
 
+			$profileinfo = $app->get($_QR['idprofiles']);
+			$name = $profileinfo['ctiprofiles']['name'];
 			$return = &$result;
 			if($app->set_edit($_QR) === false
 			|| $app->edit() === false)
@@ -266,7 +268,10 @@ switch($act)
 				$info['ctiprofiles'] = $result['profiles'];
 			}
 			else
+			    {
+				$app->update_users_with_profile($name);
 				$_QRY->go($_TPL->url('cti/profiles'),$param);
+			    }
 		}
 
 
@@ -329,6 +334,8 @@ switch($act)
 		|| ($info = $app->get($_QR['idprofiles'])) === false)
 			$_QRY->go($_TPL->url('cti/profiles'),$param);
 
+		$name = $info['ctiprofiles']['name'];
+		$app->disable_users_with_profile($name);
 		$app->delete();
 
 		$_QRY->go($_TPL->url('cti/profiles'),$param);
