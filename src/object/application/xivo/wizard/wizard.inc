@@ -70,8 +70,8 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 
 		// step dbconfig
 		$this->_wizsess['dbconfig'] = array(
-			'xivo'        => 'postgresql://xivo:proformatique@localhost/xivo',
-			'ipbx'        => 'postgresql://asterisk:proformatique@localhost/asterisk',
+			'xivo'        => 'postgresql://xivo:proformatique@localhost/xivo?encoding=utf8',
+			'ipbx'        => 'postgresql://asterisk:proformatique@localhost/asterisk?charset=utf8',
 			'backend'     => 'postgresql'
 		);
 	}
