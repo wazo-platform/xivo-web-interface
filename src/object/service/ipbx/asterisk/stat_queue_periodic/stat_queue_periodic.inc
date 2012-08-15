@@ -91,6 +91,12 @@ class xivo_service_asterisk_stat_queue_periodic extends xivo_service_asterisk_ab
 		return($this->_dso->queue_sum_by_event('timeout', $interval, $queue_id));
 	}
 
+	function get_event_divert_ca_ratio($interval, $queue_id)
+	{
+		return($this->_dso->queue_sum_by_event('divert_ca_ratio', $interval, $queue_id));
+	}
+
+
 	function get_event_total($interval, $queue_id)
 	{
 		return($this->_dso->queue_sum_by_event('total', $interval, $queue_id));
