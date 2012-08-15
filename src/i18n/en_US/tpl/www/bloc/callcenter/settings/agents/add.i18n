@@ -4,9 +4,6 @@ Agents > Add a group
 ; smenu_general
 General
 
-; smenu_queues
-Queues
-
 ; fm_agentgroup_name
 Name:
 
@@ -21,27 +18,3 @@ Add one or more agents ->
 
 ; fm_agentgroup_description
 Description:
-
-; bt_upagent
-Up one or more agents
-
-; bt_downagent
-Down one or more agents
-
-; bt_inqueue
-Add one or more queues ->
-
-; bt_outqueue
-<- Remove one or more queues ->
-
-; col_queue-name
-Name
-
-; col_queue-penalty
-Penalty
-
-; no_queue
-No queues
-
-; create_queue
-Create a queue

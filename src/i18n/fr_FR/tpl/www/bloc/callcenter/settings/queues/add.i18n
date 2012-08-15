@@ -34,18 +34,6 @@ Ajouter un ou plusieurs utilisateurs ->
 ; bt_outuser
 <- Enlever un ou plusieurs utilisateurs
 
-; create_agent-group
-Créer un groupe d'agent
-
-; fm_agentgroup
-Groupes:
-
-; bt_inagentgroup
-Ajouter un ou plusieurs groupes d'agents ->
-
-; bt_outagentgroup
-<- Enlever un ou plusieurs groupes d'agents
-
 ; create_agent
 Créer un agent
 
