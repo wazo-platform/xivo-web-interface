@@ -36,22 +36,19 @@ class xivo_object_request_handlers extends xivo_object_provd_abstract
 
 	function exec_cmd($cmds, $ask_answer=false)
 	{
-		$ret = $this->_sysconfd->request_post('/exec_request_handlers', $cmds);
+		$answer = $this->_sysconfd->request_post('/exec_request_handlers', $cmds);
 		if ($ask_answer)
-			return($this->_parse_cmd_recv($ret));
+			return($this->_parse_answer($answer));
 		return(true);
 	}
 
-	function _parse_cmd_recv($recv)
+	function _parse_answer($answer)
 	{
-		$recv = (string) $recv;
-		$recv = str_replace("\r",'',$recv);
-		$recv = explode("\n",$recv);
-
-		if(($nb = count($recv)) === 0)
-			return(false);
-
-		return($recv);
+		if (dwho_issa('ipbx', $answer)) {
+			return $answer['ipbx'];
+		} else {
+			return array();
+		}
 	}
 }
 

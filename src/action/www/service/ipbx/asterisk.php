@@ -29,13 +29,14 @@ $sipstat['enable'] = $sipstat['disable'] = $sipstat['total'] = 0;
 $iaxstat['enable'] = $iaxstat['disable'] = $iaxstat['total'] = 0;
 $live['activecalls'] = $live['activechannels'] = $live['callsprocessed'] = 0;
 
-if(($recvactivecalls = $ipbx->discuss_ipbx('core show channels',true)) !== false
-		&& ($nb = count($recvactivecalls)) > 0)
+if(($channels_info = $ipbx->discuss_ipbx('core show channels',true)) !== false)
 {
+	$channels_info = explode("\n",$channels_info[0]);
+	$nb = count($channels_info);
 	for ($i=0;$i<$nb;$i++)
 	{
-		$ref = &$recvactivecalls[$i];
-		if(preg_match('/^([0-9]+) ([a-z ]+)$/i',$ref,$out) === 0)
+		$line = &$channels_info[$i];
+		If(preg_match('/^([0-9]+) ([a-z ]+)$/i',$line,$out) === 0)
 			continue;
 
 		$count = (int) $out[1];
