@@ -44,12 +44,13 @@ $urilist = array();
 
 xivo::load_class('xivo_directories',XIVO_PATH_OBJECT,null,false);
 $dir = new xivo_directories();
-foreach($dir->get_all(null,true) as $v)
-	$urilist[] = $v['uri'];
+foreach($dir->get_all(null,true) as $directory)
+	$urilist[] = $directory['uri'];
 
 $appldapfilter = &$ipbx->get_application('ldapfilter');
-foreach($appldapfilter->get_ldapfilters_list() as $v)
-	$urilist[] = "ldapfilter://".$v['ldapfilter']['name'];
+if(($ldapfilters = $appldapfilter->get_ldapfilters_list()) !== false)
+	foreach($ldapfilters as $ldapfilter)
+		$urilist[] = "ldapfilter://".$ldapfilter['ldapfilter']['name'];
 
 
 $param = array();
