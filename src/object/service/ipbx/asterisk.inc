@@ -61,23 +61,27 @@ class xivo_service_asterisk extends xivo_service_abstract
 
 	public function discuss_ipbx($cmd, $ask_answer=false)
 	{
-		if($this->_request_handlers === false
-		|| is_object($this->_request_handlers) === false
-		|| (($_XOBJ = &dwho_gct::get('xivo_object')) === false
-			&& ($this->_request_handlers = &$_XOBJ->get_module('request_handlers')) === false))
-			return(($this->_request_handlers = false));
+		if (! is_object($this->_request_handlers)) {
+			$_XOBJ = &dwho_gct::get('xivo_object');
+			if ($_XOBJ) {
+				$this->_request_handlers = &$_XOBJ->get_module('request_handlers');
+				if(! $this->_request_handlers) {
+					return(($this->_request_handlers = false));
+				}
+			} else {
+				return(($this->_request_handlers = false));
+			}
+		}
 
-		if (is_scalar($cmd) === true)
-			$cmd = array($cmd);
+		$commands = array();
+		$commands['ipbx'] = array($cmd);
+		$commands['ctibus'] = array();
+		$commands['dird'] = array();
 
-		$ret = array();
-		foreach($cmd as $one_cmd)
-			array_push($ret, $this->_request_handlers->exec_cmd($one_cmd,$ask_answer));
+		$answer = array();
+		$answer = $this->_request_handlers->exec_cmd($commands,true);
 
-		if (count($ret) === 1)
-			return $ret[0];
-
-		return($ret);
+		return($answer);
 	}
 
 	function _load_identity_class($module)
