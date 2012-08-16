@@ -513,7 +513,7 @@ abstract class xivo_libdatastorage_abstract extends xivo_libconfig_abstract
 		{
 			if (preg_match('/\*/', $module))
 			{
-				$pattern_mod = '/'.preg_replace('/\*/','(.*)',$module).'/i';
+				$pattern_mod = '/^'.preg_replace('/\*/','(.*)',$module).'/i';
 				if (preg_match($pattern_mod, $name, $out) > 0)
 				{
 					foreach ($types as $type => $cmd)

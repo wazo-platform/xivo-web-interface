@@ -63,8 +63,9 @@ if(isset($_QR['fm_send']) === true
 		$return = array_merge($return,$result);
 		$error = $appuser->get_error();
 	}
-	else
+	else {
 		$_QRY->go($_TPL->url('service/ipbx/pbx_settings/users'),$param);
+    }
 }
 
 dwho::load_class('dwho_sort');
