@@ -18,9 +18,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-xivo_object::required(array('abstract','provd.inc'),true);
+xivo_object::required(array('abstract','abstract.inc'),true);
 
-class xivo_object_request_handlers extends xivo_object_provd_abstract
+class xivo_object_request_handlers extends xivo_object_abstract
 {
 	protected $_name      = 'request_handlers';
 	protected $_sysconfd  = false;
@@ -30,8 +30,6 @@ class xivo_object_request_handlers extends xivo_object_provd_abstract
 		if(($this->_sysconfd = &$xobj->get_module('sysconfd')) === false)
 			return(false);
 
-		$this->_load_config(true);
-		$this->_load_init();
 	}
 
 	function exec_cmd($cmds, $ask_answer=false)
