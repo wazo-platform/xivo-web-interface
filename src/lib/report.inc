@@ -78,6 +78,8 @@ abstract class dwho_report {
 			}
 		}
 
+		error_log($msg);
+
 		return(true);
 	}
 
