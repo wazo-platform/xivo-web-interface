@@ -511,21 +511,9 @@ abstract class xivo_libdatastorage_abstract extends xivo_libconfig_abstract
 
 		foreach ($cmd_repartition as $module => $types)
 		{
-			if (preg_match('/\*/', $module))
-			{
-				$pattern_mod = '/^'.preg_replace('/\*/','(.*)',$module).'/i';
-				if (preg_match($pattern_mod, $name, $out) > 0)
-				{
-					foreach ($types as $type => $cmd)
-					{
-						if ($type === 'ctibus')
-							$this->_parse_ctibus_cmd($cmd, $state, $id);
-						$cmds[$type] = array_merge($cmds[$type], $cmd);
-						$cmds[$type] = array_unique($cmds[$type]);
-					}
-				}
-			}
-			elseif ($name === $module)
+			$pattern_mod = '/^'.preg_replace('/\*/','.*',$module).'$/i';
+
+			if (preg_match($pattern_mod, $name) > 0)
 			{
 				foreach ($types as $type => $cmd)
 				{
@@ -533,6 +521,7 @@ abstract class xivo_libdatastorage_abstract extends xivo_libconfig_abstract
 						$this->_parse_ctibus_cmd($cmd, $state, $id);
 					$cmds[$type] = array_merge($cmds[$type], $cmd);
 					$cmds[$type] = array_unique($cmds[$type]);
+					$cmds[$type] = array_values($cmds[$type]);
 				}
 			}
 		}
