@@ -76,7 +76,10 @@ class dwho_datastorage_adapter_ldap extends dwho_datastorage_adapter_abstract
             $this->_param['pass'] = null;
 
         if(isset($param['user']) === true)
+        {
             $this->_param['user'] = (string) $param['user'];
+            $this->_param['user'] = str_replace('\\', '\\\\', $this->_param['user']);
+        }
         else if(isset($param['binddn']) === true)
             $this->_param['user'] = (string) $param['binddn'];
         else
