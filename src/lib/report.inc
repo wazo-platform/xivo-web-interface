@@ -78,7 +78,9 @@ abstract class dwho_report {
 			}
 		}
 
-		error_log($msg);
+		if ($type === 'error')
+			foreach ($self as $msg)
+				error_log($msg);
 
 		return(true);
 	}
