@@ -39,13 +39,13 @@ class stats_ressource_queue extends xivo_stats_ressource_abstract
 		$answered_in_qos = $this->_stat_call_on_queue->get_count_under_qos($interval, $queue_id, $obj_process['qos']);
 		$closed = $this->_stat_queue_periodic->get_event_closed($interval, $queue_id);
 		$divert_ca_ratio = $this->_stat_queue_periodic->get_event_divert_ca_ratio($interval, $queue_id);
+		$divert_waittime = $this->_stat_queue_periodic->get_event_divert_waittime($interval, $queue_id);
 		$full = $this->_stat_queue_periodic->get_event_full($interval, $queue_id);
 		$abandon = $this->_stat_queue_periodic->get_event_abandon($interval, $queue_id);
 		$joinempty = $this->_stat_queue_periodic->get_event_joinempty($interval, $queue_id);
 		$leaveempty = $this->_stat_queue_periodic->get_event_leaveempty($interval, $queue_id);
 		$timeout = $this->_stat_queue_periodic->get_event_timeout($interval, $queue_id);
 		$total_wait_time = $this->_stat_call_on_queue->get_queue_wait_time($interval, $queue_id);
-		$divert_waittime = 0;
 
 		$qos = $answered > 0 ? 100 * $answered_in_qos / $answered : null;
 
