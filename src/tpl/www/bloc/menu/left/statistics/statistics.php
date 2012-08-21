@@ -53,7 +53,7 @@ $listobject = $this->get_var('listobject');
 ?>
 	var dp_max_date = '<?=date('Y-m-d',$lastday)?>';
 <?php else: ?>
-	var dp_max_date = null;
+	var dp_max_date = '<?=date('Y-m-d')?>';
 <?php endif; ?>
 //-->
 </script>
@@ -210,7 +210,7 @@ if($this->get_var('showdashboard_call_center') === true):
 		echo $form->hidden(array('name' => 'axetype','value' => 'type'));
 	endif;
 
-	if(is_null($conf) === false && $conf !== false):
+	if($infocal):
 ?>
 			<div id="it-cal-type" class="b-nodisplay">
 				<div class="fm-paragraph fm-multifield">

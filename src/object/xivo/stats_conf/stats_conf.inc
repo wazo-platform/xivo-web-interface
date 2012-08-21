@@ -52,7 +52,7 @@ class xivo_object_stats_conf extends xivo_object_abstract
 		$data['saturday'] = (bool) $data['saturday'];
 		$data['sunday'] = (bool) $data['sunday'];
 		$data['dbegcache'] = date('Y-m',$data['dbegcache']);
-		if ($data['dendcache'] !== 0)
+		if ($data['dendcache'] != 0)
 			$data['dendcache'] = date('Y-m',$data['dendcache']);
 		$data['homepage'] = (bool) $data['homepage'];
 		$data['disable'] = (bool) $data['disable'];

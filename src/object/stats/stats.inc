@@ -497,6 +497,8 @@ class xivo_stats_lib
 		switch ($type)
 		{
 			case 'agent':
+				if (!$this->_conf['agent'])
+					break;
 				$agents = array_values($this->_conf['agent']);
 				$nb_agents = count($agents);
 				for($i=0; $i<$nb_agents; $i++)
@@ -507,6 +509,8 @@ class xivo_stats_lib
 				break;
 			case 'period':
 			case 'queue':
+				if (!$this->_conf['queue'])
+					break;
 				$queues = array_values($this->_conf['queue']);
 				$nb_queues = count($queues);
 				for($i=0; $i<$nb_queues; $i++)
