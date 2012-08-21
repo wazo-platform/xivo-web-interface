@@ -216,48 +216,65 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 
 	function _get_ipbx_infos()
 	{
-		$protocols = array(
+		$show_peer_command = array(
 			'sip'  => 'sip show peer',
 			'iax'  => 'iax2 show peer',
 		);
 
 		$this->_info['ipbx'] = false;
 
-		if (!array_key_exists($this->_info['linefeatures']['protocol'], $protocols))
+		$line_protocol = $this->_info['linefeatures']['protocol'];
+		if (!array_key_exists($line_protocol, $show_peer_command))
 			return false;
 
-		$q = sprintf("%s %s load",
-			$protocols[$this->_info['linefeatures']['protocol']],
-			$this->_info['protocol']['name']
+		$peer_name = $this->_info['protocol']['name'];
+		$ipbx_query = sprintf("%s %s load",
+			$show_peer_command[$line_protocol],
+			$peer_name
 		);
 
-		$infos = $this->_service->discuss_ipbx($q, true);
+		$ipbx_response = $this->_service->discuss_ipbx($ipbx_query, true);
+		$ipbx_infos = $this->_parse_ipbx_infos($ipbx_response[0]);
 
-		if(!is_array($infos))
-			return false;
+		$this->_info['ipbx'] = $ipbx_infos;
+		return true;
+	}
 
-		$res = array();
-		foreach($infos as $line)
+	function _parse_ipbx_infos($ipbx_response)
+	{
+		$ipbx_response_lines = explode("\n", $ipbx_response);
+
+		$ipbx_infos = array();
+		foreach($ipbx_response_lines as $line)
 		{
 			if (strstr($line, 'XIVO_USERID = '))
 			{
 				$item = explode('=',$line);
-				$res['xivo_userid'] = trim($item[1]);
+				$ipbx_infos['xivo_userid'] = trim($item[1]);
 			} else {
 				if (strpos($line,':'))
 				{
 					$item = explode(':',$line,2);
+
 					// Remove bad characters and normalize the key values
 					$item[0] = str_replace(array('.'),'',$item[0]);
 					$item[0] = trim(str_replace(array('*','=','->'),' ',$item[0]));
 					$item[0] = strtolower(str_replace(array(' ','-'),'_',$item[0]));
-					$res[$item[0]] = trim($item[1]);
+
+					$info_key = $item[0];
+					$info_value = trim($item[1]);
+
+					if (empty($info_value)) {
+						$info_value = '&nbsp;';
+					} else {
+						$info_value = htmlspecialchars($info_value);
+					}
+
+					$ipbx_infos[$info_key] = $info_value;
 				}
 			}
 		}
-
-		$this->_info['ipbx'] = $res;
-		return true;
+		return $ipbx_infos;
 	}
 
 	public function get_elements()

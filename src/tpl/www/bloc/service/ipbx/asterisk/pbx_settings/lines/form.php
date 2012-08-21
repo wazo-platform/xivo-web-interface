@@ -79,14 +79,14 @@ endif;
 $i = 0;
 if($ipbxinfos !== false
 && ($nb = count($ipbxinfos)) !== 0):
-	foreach($ipbxinfos as $k => $v):
+	foreach($ipbxinfos as $info_key => $info_value):
 ?>
 	<tbody>
 	<tr onmouseover="this.tmp = this.className; this.className = 'sb-content l-infos-over';"
 	    onmouseout="this.className = this.tmp;"
 	    class="fm-paragraph l-infos-<?=(($i++ % 2) + 1)?>on2">
-		<td class="td-left"><?=$k?></td>
-		<td class="td-right"><?=$v?></td>
+		<td class="td-left"><?=$info_key?></td>
+		<td class="td-right"><?=$info_value?></td>
 	</tr>
 <?php
 	endforeach;
