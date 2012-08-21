@@ -73,11 +73,12 @@ switch($act)
 		if (isset($config['user'],$config['user']['readonly-idpwd']))
 		{
 			$ro = !($config['user']['readonly-idpwd'] == 'false');
-			$lol = 1;
-			while ($lol === 1)
+			$regen_name = true;
+			while ($regen_name)
 			{
 				$name = $appline->gen_password(6,true);
-				$lol = $appline->get_nb(array('name' => $name));
+				$nb_lines_with_name = $appline->get_nb(array('name' => $name));
+				$regen_name = $nb_lines_with_name > 0;
 			}
 			$element['protocol']['name']   = array(
 				'default'  => $name,
