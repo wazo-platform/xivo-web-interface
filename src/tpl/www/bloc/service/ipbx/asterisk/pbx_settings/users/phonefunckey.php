@@ -49,7 +49,8 @@ endif;
 							'#',
 							null,
 							'onclick="xivo_phonefunckey_add(this);
-								  return(dwho.dom.free_focus());"',
+								  return(dwho.dom.free_focus());" 
+                                                        id="add_funckey_button"',
 							$this->bbf('col_phonefunckey-add'));?></th>
 	</tr>
 	</thead>
