@@ -54,7 +54,7 @@ Terminaison réinitialisée en mode "Autoprov"
 %s à rencontré une erreur durant la désinstallation
 
 ; error_during_update
-Une erreur est survenu durant la mise a jour
+Une erreur est survenue durant la mise a jour
 
 ; successfully_updated
 Mise à jour réussi
@@ -63,7 +63,7 @@ Mise à jour réussi
 Synchronisation de la terminaison réussie
 
 ; error_during_synchronize
-Une erreur est survenu durant la synchronisation de la terminaison
+Une erreur est survenue durant la synchronisation de la terminaison
 
 ; img_loading
 Chargement...
