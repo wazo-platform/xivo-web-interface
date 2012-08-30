@@ -374,7 +374,7 @@ $array['pickup']['primary'] = array('id' => '');
 
 $array['pickupmember'] = array();
 $array['pickupmember']['table'] = 'pickupmember';
-$array['pickupmember']['primary'] = array('pickupid' => '', 'category' => '', 'membertype' => '', 'member' => '');
+$array['pickupmember']['primary'] = array('pickupid' => '', 'category' => '', 'membertype' => '', 'memberid' => '');
 
 $array['operator'] = array();
 $array['operator']['table'] = 'operator';
