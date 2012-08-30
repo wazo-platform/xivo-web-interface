@@ -60,7 +60,6 @@ case 'add':
 					'months'     => $_QR['closed']['months'][$i],
 					'dialaction' => array_shift($cdialaction)
 				);
-
 			}
 			$_QR['closed'] = $closed;
 
