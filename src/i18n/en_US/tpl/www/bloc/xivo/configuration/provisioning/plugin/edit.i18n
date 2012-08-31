@@ -1,4 +1,3 @@
-
 ; title_content_name
 Edit plugin %s v. %s
 
@@ -21,7 +20,7 @@ Version
 Username:
 
 ; fm_configure_password
-Password: 
+Password:
 
 ; no_package
 No package
