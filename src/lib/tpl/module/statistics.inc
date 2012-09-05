@@ -178,7 +178,7 @@ class dwho_tpl_statistics extends dwho_tpl_module
 		array_push($this->_struct,$arr);
 	}
 
-	public function add_col($label,$type,$expression,$format='int',$ttotal='total')
+	public function add_col($label,$type,$expression,$format='int')
 	{
 		$nbstruct = count($this->_struct);
 		$refstruct = &$this->_struct[$nbstruct-1];
@@ -191,7 +191,6 @@ class dwho_tpl_statistics extends dwho_tpl_module
 		$arr['type'] = $type;
 		$arr['expression'] = trim($expression, "\x00..\x20");
 		$arr['format'] = $format;
-		$arr['ttotal'] = $ttotal;
 		array_push($ref, $arr);
 		return(true);
 	}
@@ -232,7 +231,6 @@ class dwho_tpl_statistics extends dwho_tpl_module
 				$type = $col['type'];
 				$expression = $col['expression'];
 				$format = $col['format'];
-				$ttotal = $col['ttotal'];
 
 				if (isset($row_data_table[$label]) === false)
 					$row_data_table[$label] = array();
@@ -254,7 +252,6 @@ class dwho_tpl_statistics extends dwho_tpl_module
 					$row_data_foot['total'] = true;
 					$row_data_foot['result'] = 0;
 					$row_data_foot['format'] = $format;
-					$row_data_foot['ttotal'] = $ttotal;
 					$row_data_foot['counter'] = 0;
 					$row_data_foot['operation'] = null;
 				}
@@ -308,23 +305,6 @@ class dwho_tpl_statistics extends dwho_tpl_module
 
 				$row_data['result'] = $result;
 				$row_data['operation'] = $op.' '.$row_data['operation'];
-
-				if ($rs === 0)
-					continue;
-
-				switch ($ttotal)
-				{
-					case 'average':
-						$nb_row_with_value++;
-						$row_data_foot['counter'] += $rs;
-						$row_data_foot['result'] = $row_data_foot['counter'] / $nb_row_with_value;
-						$row_data_foot['operation'] = $row_data_foot['counter'].' / '.$nb_row_with_value;
-						break;
-					case 'total':
-					default:
-						$row_data_foot['result'] += $rs;
-						$row_data_foot['operation'] = $rs .'+'. $row_data_foot['operation'];
-				}
 			}
 		}
 		return(true);
@@ -518,8 +498,7 @@ class dwho_tpl_statistics extends dwho_tpl_module
 				$str = (float) $result;
 				break;
 			case 'percent':
-				if (isset($arr['total']) === false)
-					$str = (intval($result)).' %';
+				$str = (intval($result)).' %';
 				break;
 			case 'time':
 				$str = dwho_sec_to_time($result);
@@ -587,7 +566,6 @@ class dwho_tpl_statistics extends dwho_tpl_module
 		$return .= '</thead>';
 
 		$divtoken = '';
-		$total = 0;
 		for($i=0;$i<count($result);$i++)
 		{
 			$ref = &$result[$i];
@@ -634,18 +612,8 @@ class dwho_tpl_statistics extends dwho_tpl_module
 			$return .= '</td>';
 			$return .= '</tr>';
 			$return .= '</tbody>';
-			$total += $val;
 			$divtoken .= $divinfos;
 		}
-
-		$return .= '<tfoot>';
-		$return .= '<tr> ';
-		$return .= '<td class="td-left" colspan="2">'.$this->bbf('total').'</td>';
-		$eval = array('format' => $format,'result' => $total);
-		$return .= '<td class="td-right">'.$this->eval_result_data($eval).'</td>';
-		$return .= '</tr>';
-		$return .= '</tfoot>';
-
 		$return .= '</table>';
 
 		$url = &$this->_tpl->get_module('url');
@@ -655,7 +623,7 @@ class dwho_tpl_statistics extends dwho_tpl_module
 		return($return);
 	}
 
-	public function render_html($chkbox=true,$rowname=true,$total=true,$colstruct=true)
+	public function render_html($chkbox=true,$rowname=true,$colstruct=true)
 	{
 		$url = &$this->_tpl->get_module('url');
 		if (isset($this->_data_custom['axetype']) === false)
@@ -879,28 +847,6 @@ class dwho_tpl_statistics extends dwho_tpl_module
 			$c++;
 		}
 
-		if ($total === true)
-		{
-			$return .= '<tfoot>';
-			$return .= '<tr> ';
-			$return .= '<td class="txt-left">'.$this->bbf('total').'</td>';
-
-			$i = 0;
-			foreach ($this->_data_foot as $colname => $colvalue)
-			{
-				if (in_array($colname,$this->_ignore_col) === true)
-					continue;
-				$i++;
-				if ($i < ($nb_cols - 3))
-					$return .= '<td class="td-center">'.$this->eval_result_data($colvalue).'</td>';
-				else
-					$return .= '<td class="td-right">'.$this->eval_result_data($colvalue).'</td>';
-			}
-
-			$return .= '</tr>';
-			$return .= '</tfoot>';
-		}
-
 		$return .= '</table>';
 
 		$query = array_merge($url->_query->raw,array('act' => 'exportcsv'));
@@ -987,21 +933,6 @@ class dwho_tpl_statistics extends dwho_tpl_module
 			}
 			$return .= "\n";
 		}
-		/*
-		 * total
-		*
-
-		if ($rowname === true)
-			$return .= '"'.str_replace('"','""','total: ').'";';
-
-		foreach ($this->_data_foot as $colname => $colvalue)
-		{
-		if (in_array($colname,$this->_ignore_col) === true)
-			continue;
-		$return .= '"'.str_replace('"','""',$this->eval_result_data($colvalue)).'";';
-		}
-		$return .= "\n";
-		*/
 		return( $return );
 	}
 
