@@ -47,10 +47,13 @@ switch($act)
 		$apptrunk = &$ipbx->get_application('trunk',
 						    array('protocol' => XIVO_SRE_IPBX_AST_PROTO_IAX));
 
-		$status = $apptrunk->add_from_json() === true ? 200 : 400;
-
-		$http_response->set_status_line($status);
-		$http_response->send(true);
+		if(($trunkid = $apptrunk->add_from_json()) !== false)
+			$_TPL->set_var('list',$trunkid);
+		else
+		{
+			$http_response->set_status_line(400);
+			$http_response->send(true);
+		}
 		break;
 	case 'delete':
 		$apptrunk = &$ipbx->get_application('trunk',

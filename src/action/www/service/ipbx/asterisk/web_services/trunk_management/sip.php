@@ -47,13 +47,13 @@ switch($act)
 		$apptrunk = &$ipbx->get_application('trunk',
 						    array('protocol' => XIVO_SRE_IPBX_AST_PROTO_SIP));
 
-		$insert_id = $apptrunk->add_from_json();
-		if ($insert_id === false) {
+		if(($trunkid = $apptrunk->add_from_json()) !== false)
+			$_TPL->set_var('list',$trunkid);
+		else
+		{
 			$http_response->set_status_line(400);
 			$http_response->send(true);
 		}
-
-		$_TPL->set_var('list',$insert_id);
 
 		break;
 	case 'delete':
