@@ -32,6 +32,7 @@ class xivo_stats_ressource_abstract
 	protected	$_queuefeatures        = null;
 	protected	$_stat_queue           = null;
 	protected	$_stat_agent           = null;
+	protected	$full_itl              = false;
 
 	public function __construct(&$_XS)
 	{
@@ -69,6 +70,8 @@ class xivo_stats_ressource_abstract
 
 	public function get_rows()
 	{
+		if (!$this->full_itl)
+			return;
 		$days = $this->full_itl;
 		$rs = array();
 		foreach ($days as $day => $data)

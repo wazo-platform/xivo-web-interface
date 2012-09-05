@@ -23,6 +23,7 @@ $(function() {
 		changeYear : true,
 		firstDay : 1,
 		selectOtherMonths : true,
+		showOtherMonths: true,
 		dayNamesMin : xivo_date_day_min,
 		ayNamesShort : xivo_date_day_short,
 		dayNames : xivo_date_day,

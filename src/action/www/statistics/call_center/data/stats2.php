@@ -31,29 +31,29 @@ $tpl_statistics->set_data_custom('axetype',$axetype);
 $tpl_statistics->set_data_custom('listtype',$stats_agent->get_list_by_type());
 $itl = $_XS->get_datecal();
 
+
 switch ($axetype)
 {
 	case 'day':
-		$tpl_statistics->set_rows('hour',$_XS->get_listhour(),'key');
-		$tpl_statistics->set_data_custom('day_process',$_XS->get_datecal());
+		$tpl_statistics->set_rows('hour', $_XS->get_listhour(), 'key');
+		$tpl_statistics->set_row_total('hour');
 		break;
 	case 'week':
-		$tpl_statistics->set_rows('day',$_XS->get_listday_for_week(),'key');
+		$tpl_statistics->set_rows('day',$stats_agent->get_rows(),'key');
+		$tpl_statistics->set_row_total('day');
 		break;
 	case 'month':
-		$date = dwho_date::all_to_unixtime($itl['dmonth']);
-		$year = date('Y',$date);
-		$month = date('m',$date);
-		$tpl_statistics->set_rows('day',$_XS->get_listday_for_month($year,$month),'key');
-		$tpl_statistics->set_data_custom('month_process',$_XS->get_datecal());
+		$tpl_statistics->set_rows('day', $stats_agent->get_rows(),'key');
+		$tpl_statistics->set_row_total('day');
 		break;
 	case 'year':
 		$tpl_statistics->set_rows('month',dwho_date::get_listmonth(),'key');
+		$tpl_statistics->set_row_total('month');
 		break;
 	case 'type':
 	default:
 		$tpl_statistics->set_rows('agent',$stats_agent->get_agent_list(),'keyfile',true);
-		$tpl_statistics->set_data_custom('date_process',$_XS->get_datecal());
+		$tpl_statistics->set_row_total('agent');
 }
 
 $tpl_statistics->set_data_custom('agent',$stats_agent->_result);
