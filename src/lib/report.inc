@@ -18,6 +18,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+dwho::load_class('dwho_json');
+
 /*
  * EXAMPLES
 dwho_report::push('error',array('error'));
@@ -77,10 +79,6 @@ abstract class dwho_report {
 				array_push($self[$keyencode], $msg);
 			}
 		}
-
-		if ($type === 'error')
-			foreach ($self as $msg)
-				error_log($msg);
 
 		return(true);
 	}
@@ -146,6 +144,9 @@ abstract class dwho_report {
 		}
 		$return .= '</ul>';
 		$return .= '</div>';
+
+		if ($type === 'error')
+			error_log(dwho_json::encode($self));
 
 		self::flush($type);
 
