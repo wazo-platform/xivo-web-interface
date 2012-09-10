@@ -24,6 +24,7 @@ class xivo_ldapserver extends xivo_libdatastorage_abstract
 {
 	var $_conf		= array();
 	var $_dso		= null;
+	var $_name		= 'ldapserver';
 	var $_filter		= false;
 	var $_origin		= false;
 	var $_origin_list	= false;

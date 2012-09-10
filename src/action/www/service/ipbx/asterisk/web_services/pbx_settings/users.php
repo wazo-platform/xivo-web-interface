@@ -87,6 +87,8 @@ switch($act)
 		else
 			$status = 400;
 
+		error_log(dwho_json::encode($appuser->get_error()));
+
 		$http_response->set_status_line($status);
 		$http_response->send(true);
 		break;
