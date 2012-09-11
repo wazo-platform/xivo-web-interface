@@ -109,7 +109,6 @@ $ca_authorities = $this->get_var('ca_authorities');
 			  'name'	=> 'validity-end',
 			  'labelid'	=> 'validity-end',
 			  'size'	=> 8,
-			  'readonly'	=> true,
 			  'default'	=> $element['validity-end']['default'],
 			  'value'	=> $this->get_var('info','validity-end'),
 			  'error'	=> $this->bbf_args('error',
