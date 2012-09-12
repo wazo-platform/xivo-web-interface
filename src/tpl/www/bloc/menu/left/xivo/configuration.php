@@ -49,6 +49,13 @@ $dhtml = &$this->get_module('dhtml');
 				'</dd>';
 		endif;
 
+		if(xivo_user::chk_acl('manage','general') === true):
+			echo	'<dd id="mn-manage--general">',
+				$url->href_html($this->bbf('mn_left_manage-general'),
+						'xivo/configuration/manage/general'),
+				'</dd>';
+		endif;
+
 		if(xivo_user::chk_acl('manage','directories') === true):
 			echo	'<dd id="mn-manage--directories">',
 				$url->href_html($this->bbf('mn_left_manage-directories'),

@@ -121,9 +121,6 @@ Login timeout help
 ; fm_cti_context_separation
 Contexts Separation:
 
-; fm_cti_live_reload_conf
-Live reload configuration: 
-
 ; fm_tlsprivkeyfile
 Private Key:
 

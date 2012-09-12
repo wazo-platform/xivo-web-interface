@@ -334,12 +334,6 @@ if(isset($error_js[0]) === true)
 							'labelid' => 'context_separation',
 							'checked' => $info['ctimain']['context_separation']));
 ?>
-<?php
-	echo	$form->checkbox(array('desc' => $this->bbf('fm_cti_live_reload_conf'),
-							'name' => 'cti[live_reload_conf]',
-							'labelid' => 'live_reload_conf',
-							'checked' => $info['ctimain']['live_reload_conf']));
-?>
 </div>
 
 <?php

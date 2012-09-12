@@ -121,9 +121,6 @@ aide délai exp login
 ; fm_cti_context_separation
 Séparation par contexte:
 
-; fm_cti_live_reload_conf
-Rechargement de la configuration dynamique: 
-
 ; fm_tlsprivkeyfile
 Clé privée : 
 

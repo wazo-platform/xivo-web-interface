@@ -313,6 +313,9 @@ Users
 ; acl(xivo-configuration-manage-ha)
 High Availability
 
+; acl(xivo-configuration-manage-general)
+General Settings
+
 ; acl(xivo-configuration-network)
 Network
 

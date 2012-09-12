@@ -22,6 +22,8 @@ $ctimain = &$ipbx->get_module('ctimain');
 $ctipresences = &$ipbx->get_module('ctipresences');
 
 $fm_save = null;
+$info = array();
+$info['ctimain'] = $ctimain->get(1);
 
 if(isset($_QR['fm_send']) === true)
 {
@@ -33,20 +35,19 @@ if(isset($_QR['fm_send']) === true)
 	if (!isset($_QR['cti']['context_separation']))
 		$_QR['cti']['context_separation'] = 0;
 
-	if (!isset($_QR['cti']['live_reload_conf']))
-		$_QR['cti']['live_reload_conf'] = 0;
+	$_QR['cti']['live_reload_conf'] = $info['ctimain']['live_reload_conf'];
 
 	if(($rs = $ctimain->chk_values($_QR['cti'])) === false)
 		dwho_report::push('error', $ctimain->get_filter_error());
 	else
 		$ret = $ctimain->edit(1, $rs);
 
+	$info['ctimain'] = $rs;
+
 	if($ret == 1)
 		$fm_save = true;
 }
 
-$info = array();
-$info['ctimain'] = $ctimain->get(1);
 $element = array();
 $element['ctimain'] = $ctimain->get_element();
 

@@ -134,6 +134,7 @@ $array['tree']['xivo']['configuration']['manage']['accesswebservice'] = true;
 $array['tree']['xivo']['configuration']['manage']['certificate'] = true;
 $array['tree']['xivo']['configuration']['manage']['ha'] = true;
 $array['tree']['xivo']['configuration']['manage']['ldapserver'] = true;
+$array['tree']['xivo']['configuration']['manage']['general'] = true;
 
 $array['tree']['xivo']['configuration']['network'] = array();
 $array['tree']['xivo']['configuration']['network']['interface'] = true;

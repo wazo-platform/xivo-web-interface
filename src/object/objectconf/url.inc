@@ -57,6 +57,7 @@ $array['xivo/configuration/manage/directories'] = 'xivo/configuration/index.php/
 $array['xivo/configuration/manage/accesswebservice'] = 'xivo/configuration/index.php/manage/accesswebservice/';
 $array['xivo/configuration/manage/certificate'] = 'xivo/configuration/index.php/manage/certificate/';
 $array['xivo/configuration/manage/ha'] = 'xivo/configuration/index.php/manage/ha/';
+$array['xivo/configuration/manage/general'] = 'xivo/configuration/index.php/manage/general/';
 
 $array['xivo/configuration/json/restricted/manage/entity'] = 'xivo/configuration/json.php/restricted/manage/entity/';
 
