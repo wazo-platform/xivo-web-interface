@@ -28,18 +28,6 @@ $array['element']['firstname']['default'] = '';
 $array['element']['lastname'] = array();
 $array['element']['lastname']['default'] = '';
 
-/*
-$array['element']['pitch'] = array();
-$array['element']['pitch']['value'] = array('highest','higher','high','low','lower','lowest');
-$array['element']['pitch']['default'] = '';
-$array['element']['pitch']['null'] = true;
-
-$array['element']['pitchdirection'] = array();
-$array['element']['pitchdirection']['value'] = array('rx','tx','both');
-$array['element']['pitchdirection']['default'] = '';
-$array['element']['pitchdirection']['null'] = true;
-*/
-
 $array['element']['voicemailtype'] = array();
 $array['element']['voicemailtype']['value'] = array('asterisk');
 $array['element']['voicemailtype']['default'] = '';

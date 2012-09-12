@@ -451,43 +451,6 @@ endif;
 	<fieldset id="fld-services">
 		<legend><?=$this->bbf('fld-services');?></legend>
 <?php
-/*
-	echo	$form->text(array('desc'	=> $this->bbf('fm_userfeatures_ringintern'),
-				  'name'	=> 'userfeatures[ringintern]',
-				  'labelid'	=> 'userfeatures-ringintern',
-				  'size'	=> 15,
-				  'default'	=> $element['userfeatures']['ringintern']['default'],
-				  'value'	=> $info['userfeatures']['ringintern'],
-				  'error'	=> $this->bbf_args('error',
-				$this->get_var('error', 'userfeatures', 'ringintern')) )),
-
-		$form->text(array('desc'	=> $this->bbf('fm_userfeatures_ringextern'),
-				  'name'	=> 'userfeatures[ringextern]',
-				  'labelid'	=> 'userfeatures-ringextern',
-				  'size'	=> 15,
-				  'default'	=> $element['userfeatures']['ringextern']['default'],
-				  'value'	=> $info['userfeatures']['ringextern'],
-				  'error'	=> $this->bbf_args('error',
-				$this->get_var('error', 'userfeatures', 'ringextern')) )),
-
-		$form->text(array('desc'	=> $this->bbf('fm_userfeatures_ringgroup'),
-				  'name'	=> 'userfeatures[ringgroup]',
-				  'labelid'	=> 'userfeatures-ringgroup',
-				  'size'	=> 15,
-				  'default'	=> $element['userfeatures']['ringgroup']['default'],
-				  'value'	=> $info['userfeatures']['ringgroup'],
-				  'error'	=> $this->bbf_args('error',
-				$this->get_var('error', 'userfeatures', 'ringgroup')) )),
-
-		$form->text(array('desc'	=> $this->bbf('fm_userfeatures_ringforward'),
-				  'name'	=> 'userfeatures[ringforward]',
-				  'labelid'	=> 'userfeatures-ringforward',
-				  'size'	=> 15,
-				  'default'	=> $element['userfeatures']['ringforward']['default'],
-				  'value'	=> $info['userfeatures']['ringforward'],
-				  'error'	=> $this->bbf_args('error',
-				$this->get_var('error', 'userfeatures', 'ringforward')) )),
-*/
 /* hide alarm clock
 	echo	$form->text(array('desc'	=> $this->bbf('fm_userfeatures_alarmclock'),
 				  'name'	=> 'userfeatures[alarmclock]',
