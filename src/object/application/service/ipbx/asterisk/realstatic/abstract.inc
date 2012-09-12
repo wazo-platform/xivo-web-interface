@@ -274,6 +274,8 @@ class xivo_application_service_asterisk_realstatic_abstract extends xivo_applica
 
 			$rs['var_val'] = $value;
 			$this->_set_result($this->_name,$rs);
+			if (method_exists($this,'_chk_pre_save'))
+				$this->_chk_pre_save($rs);
 		}
 		else
 		{
@@ -384,7 +386,6 @@ class xivo_application_service_asterisk_realstatic_abstract extends xivo_applica
 		else if(($rs = $this->get_result($this->_name)) === null
 		|| $rs === false)
 			return(false);
-
 
 		$where = array();
 		$where['category'] = $this->_category;
