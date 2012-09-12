@@ -70,7 +70,7 @@ if(isset($_QR['fm_send']) === true)
 		if(($rs = $appgeneralsip->set_save_all($_QR)) !== false)
 		{
 			$info = $rs['result'];
-			$error = $rs['error'];
+			$error = $appgeneralsip->get_filter_error();
 			$fm_save = empty($error);
 		}
 	}
@@ -83,10 +83,7 @@ if(dwho_issa('allow',$element) === true
 && dwho_issa('value',$element['allow']) === true
 && isset($info['allow']) === true
 && dwho_has_len($info['allow'],'var_val') === true)
-{
 	$info['allow']['var_val'] = explode(',',$info['allow']['var_val']);
-	$element['allow']['value'] = array_diff($element['allow']['value'],$info['allow']['var_val']);
-}
 
 if(dwho_issa('localnet',$info) === true
 && array_key_exists('var_val',$info['localnet']) === true
@@ -96,6 +93,8 @@ if(dwho_issa('localnet',$info) === true
 $dhtml = &$_TPL->get_module('dhtml');
 $dhtml->set_js('js/dwho/submenu.js');
 $dhtml->set_js('js/service/ipbx/asterisk/general/sip.js');
+$dhtml->set_js('js/utils/codeclist.js');
+$dhtml->load_js_multiselect_files();
 
 $_TPL->set_var('fm_save',$fm_save);
 $_TPL->set_var('info',$info);

@@ -469,6 +469,9 @@ Activer le support du G.726 non standard :
 ; hlp_fm_g726nonstandard
 Config asterisk: g726nonstandard
 
+; fm_codec-custom
+Personnaliser les codecs:
+
 ; fm_codec-disallow
 Codecs désactivés :
 

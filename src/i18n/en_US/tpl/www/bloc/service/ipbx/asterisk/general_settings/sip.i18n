@@ -577,6 +577,9 @@ Asterisk config: g726nonstandard
 ; hlp_fm_g726nonstandard
 Asterisk config: g726nonstandard
 
+; fm_codec-custom
+Customize codecs:
+
 ; fm_codec-disallow
 Disabled codecs:
 

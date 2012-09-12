@@ -22,12 +22,18 @@ $form = &$this->get_module('form');
 $url = &$this->get_module('url');
 $dhtml = &$this->get_module('dhtml');
 
+$info = $this->get_var('info');
 $element = $this->get_var('element');
 
 $auth = $this->get_var('auth');
 $moh_list = $this->get_var('moh_list');
 $context_list = $this->get_var('context_list');
 //$parking_list = $this->get_var('parking_list');
+
+$allow = array();
+if (isset($info['allow']) === true)
+	$allow = $info['allow']['var_val'];
+$codec_active = empty($allow) === false;
 
 ?>
 <div class="b-infos b-form">
@@ -1218,64 +1224,38 @@ endif;
 			      $element['disallow']['value']);
 ?>
 
-<div id="codeclist" class="fm-paragraph fm-multilist">
-	<p>
-		<label id="lb-codeclist" for="it-codeclist">
-			<?=$this->bbf('fm_codec-allow');?>
-		</label>
-		<?=$form->input_for_ms('codeclist',$this->bbf('ms_seek'))?>
-	</p>
-	<div class="slt-outlist">
+<fieldset id="fld-codeclist">
+	<legend><?=$this->bbf('fld-codeclist');?></legend>
 <?php
-	echo	$form->select(array('name'	=> 'codeclist',
-				    'label'	=> false,
-				    'id'	=> 'it-codeclist',
-				    'multiple'	=> true,
-				    'size'	=> 5,
-				    'paragraph'	=> false,
-				    'key'	=> false,
-				    'bbf'	=> 'ast_codec_name_type',
-				    'bbfopt'	=> array('argmode' => 'paramvalue')),
-			       $element['allow']['value']);
+	echo	$form->checkbox(array('desc'	=> $this->bbf('fm_codec-custom'),
+							'name'		=> 'codec-active',
+							'labelid'	=> 'codec-active',
+							'checked'	=> $codec_active));
 ?>
-	</div>
-	<div class="inout-list">
-		<a href="#" onclick="dwho.form.move_selected('it-codeclist', 'it-codec'); return(dwho.dom.free_focus());"
-		   title="<?=$this->bbf('bt_incodec');?>">
-			<?=$url->img_html('img/site/button/arrow-left.gif',
-					  $this->bbf('bt_incodec'),
-					  'class="bt-inlist" id="bt-incodec" border="0"');?></a><br />
-		<a href="#" onclick="dwho.form.move_selected('it-codec', 'it-codeclist'); return(dwho.dom.free_focus());"
-		   title="<?=$this->bbf('bt_outcodec');?>">
-			<?=$url->img_html('img/site/button/arrow-right.gif',
-					  $this->bbf('bt_outcodec'),
-					  'class="bt-outlist" id="bt-outcodec" border="0"');?></a>
-	</div>
-	<div class="slt-inlist">
-		<?=$form->select(array('name'		=> 'allow[]',
-				       'label'		=> false,
-				       'id'		=> 'it-codec',
-				       'multiple'	=> true,
-				       'size'		=> 5,
-				       'paragraph'		=> false,
-				       'key'		=> false,
-				       'bbf'		=> 'ast_codec_name_type',
-				       'bbfopt'		=> array('argmode' => 'paramvalue')),
-				 $this->get_var('info','allow','var_val'));?>
-		<div class="bt-updown">
-			<a href="#" onclick="dwho.form.order_selected('it-codec',1); return(dwho.dom.free_focus());"
-			   title="<?=$this->bbf('bt_upcodec');?>">
-				<?=$url->img_html('img/site/button/arrow-up.gif',
-						  $this->bbf('bt_upcodec'),
-						  'class="bt-uplist" id="bt-upcodec" border="0"');?></a><br />
-			<a href="#" onclick="dwho.form.order_selected('it-codec',-1); return(dwho.dom.free_focus());"
-			   title="<?=$this->bbf('bt_downcodec');?>">
-				<?=$url->img_html('img/site/button/arrow-down.gif',
-						  $this->bbf('bt_downcodec'),
-						  'class="bt-downlist" id="bt-downcodec" border="0"');?></a>
-		</div>
+<div id="codeclist">
+<?php
+	echo	$form->select(array('desc'	=> $this->bbf('fm_codec-disallow'),
+							'name'		=> 'disallow',
+							'labelid'	=> 'disallow',
+							'key'		=> false,
+							'bbf'		=> 'fm_codec-disallow-opt',
+							'bbfopt'	=> array('argmode' => 'paramvalue')),
+					$element['disallow']['value']);
+?>
+	<div class="fm-paragraph fm-description">
+		<?=$form->jq_select(array('paragraph'	=> false,
+							'label'		=> false,
+							'name'		=> 'allow[]',
+							'id' 		=> 'it-allow',
+							'key'		=> false,
+							'bbf'		=> 'ast_codec_name_type',
+							'bbfopt'	=> array('argmode' => 'paramvalue'),
+							'selected'  => $allow),
+					$element['allow']['value']);?>
+	<div class="clearboth"></div>
 	</div>
 </div>
+</fieldset>
 <div class="clearboth"></div>
 </div>
 
