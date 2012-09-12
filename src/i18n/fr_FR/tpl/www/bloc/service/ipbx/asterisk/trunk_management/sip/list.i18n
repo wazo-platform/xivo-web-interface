@@ -26,13 +26,13 @@ Trier par nombre d'appels
 Hôte inconnu
 
 ; protocol_type(user)
-Entrant
+User
 
 ; protocol_type(peer)
-Sortant
+Peer
 
 ; protocol_type(friend)
-Entrant/Sortant
+Friend
 
 ; protocol_call-unlimited
 Appels illimités

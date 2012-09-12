@@ -81,6 +81,19 @@ $page = $url->pager($pager['pages'],
 ?>
 		</th>
 		<th class="th-center">
+			<span class="title <?= $sort[1]=='type'?'underline':''?>">
+				<?=$this->bbf('col_type');?>
+			</span>
+<?php
+	echo	$url->href_html(
+					$url->img_html('img/updown.png', $this->bbf('col_sort_type'), 'border="0"'),
+					'service/ipbx/trunk_management/sip',
+					array('act'	=> 'list', 'sort' => 'type'),
+					null,
+					$this->bbf('col_sort_type'));
+?>
+		</th>
+		<th class="th-center">
 			<span class="title <?= $sort[1]=='call-limit'?'underline':''?>">
 				<?=$this->bbf('col_call-limit');?>
 			</span>
@@ -100,7 +113,7 @@ $page = $url->pager($pager['pages'],
 	if(($list = $this->get_var('list')) === false || ($nb = count($list)) === 0):
 ?>
 	<tr class="sb-content">
-		<td colspan="6" class="td-single"><?=$this->bbf('no_trunk');?></td>
+		<td colspan="7" class="td-single"><?=$this->bbf('no_trunk');?></td>
 	</tr>
 <?php
 	else:
@@ -136,6 +149,7 @@ $page = $url->pager($pager['pages'],
 			</label>
 		</td>
 		<td><?=($ref['host'] === 'dynamic' ? $this->bbf('protocol_host-unknown') : $ref['host'])?></td>
+		<td><?=$this->bbf('protocol_type',$ref['type']);?></td>
 		<td><?=($calllimit === 0 ? $this->bbf('protocol_call-unlimited') : $calllimit)?></td>
 		<td class="td-right" colspan="2">
 <?php
@@ -165,7 +179,7 @@ $page = $url->pager($pager['pages'],
 ?>
 	<tr class="sb-foot">
 		<td class="td-left xspan b-nosize"><span class="span-left b-nosize">&nbsp;</span></td>
-		<td class="td-center" colspan="4"><span class="b-nosize">&nbsp;</span></td>
+		<td class="td-center" colspan="5"><span class="b-nosize">&nbsp;</span></td>
 		<td class="td-right xspan b-nosize"><span class="span-right b-nosize">&nbsp;</span></td>
 	</tr>
 </table>

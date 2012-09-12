@@ -23,13 +23,13 @@ Number of calls
 Unknown host
 
 ; protocol_type(user)
-Incoming
+User
 
 ; protocol_type(peer)
-Outgoing
+Peer
 
 ; protocol_type(friend)
-Incoming/Outgoing
+Friend
 
 ; protocol_call-unlimited
 Unlimited calls
