@@ -33,7 +33,7 @@ class xivo_service_asterisk_cel_sql extends xivo_service_asterisk_abstract_sql
 		if($this->_search_where($arr) === false)
 			return(false);
 
-		$this->_dso->new_order($order);
+		$this->_dso->new_order($order, SORT_DESC);
 		$this->_dso->limit($limit);
 
 		$r = $this->_dso->select_all();
