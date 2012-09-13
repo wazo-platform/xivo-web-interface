@@ -54,34 +54,18 @@ class xivo_service_asterisk_cel_sql extends xivo_service_asterisk_abstract_sql
 			return(false);
 
 		if(isset($arr['idbeg']) === true)
-		{
-			$this->_dso->where('id > '.$arr['idbeg']);
-		}
+			$this->_dso->where('"id" > '.$arr['idbeg']);
 
 		if(isset($arr['dbeg']) === true)
 		{
-			$dbeg = $arr['dbeg'];
-			$len = strlen($dbeg);
-
-			if($len === 4)
-				$format = '%Y';
-			else if($len === 7)
-				$format = '%Y-%m';
-			else if($len === 10)
-				$format = '%Y-%m-%d';
-			else
-				$format = '%Y-%m-%d %H:%i:%s';
+			$dbeg = $arr['dbeg'] . " 00:00:00.000001";
 
 			if(isset($arr['dend']) === true)
-			{
-				$dend = $arr['dend'];
-				if ($dbeg === $dend)
-					$dend = '';
-			}
+				$dend = $arr['dend']." 23:59:59.999999";
 			else
-				$dend = date('Y-m-d');
+				$dend = date('Y-m-d')." 23:59:59.999999";
 
-			$this->_dso->wheredate('eventtime',$dbeg,$dend,null,$format);
+			$this->_dso->andwhere('"eventtime" BETWEEN \''.$dbeg.'\' AND \''.$dend.'\'');
 		}
 
 		if(isset($arr['channel']) === true)
