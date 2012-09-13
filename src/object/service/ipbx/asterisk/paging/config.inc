@@ -46,7 +46,7 @@ $array['element']['quiet']['set'] = true;
 
 $array['element']['callnotbusy'] = array();
 $array['element']['callnotbusy']['value'] = array(0,1);
-$array['element']['callnotbusy']['default'] = 0;
+$array['element']['callnotbusy']['default'] = 1;
 $array['element']['callnotbusy']['set'] = true;
 
 $array['element']['timeout'] = array();
