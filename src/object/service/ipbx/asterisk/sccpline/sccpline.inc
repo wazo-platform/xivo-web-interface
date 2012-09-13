@@ -61,6 +61,9 @@ class xivo_service_asterisk_sccpline extends xivo_service_asterisk_abstract
 		if(is_array($arr) === false)
 			return(false);
 
+		if (isset($arr['cid_num']) === true)
+			$arr['name'] = $arr['cid_num'];
+
 		return(parent::edit($id,$arr,$disable));
 	}
 
