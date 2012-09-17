@@ -2206,6 +2206,11 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		{
 			unset($mergewith['linefeatures']);
 			$arr = $this->array_merge_recursive($mergewith,$arr);
+			if(is_array($arr['rightcall'])) {
+			    $rightcall = array();
+			    $rightcall[0] = strval($arr['rightcall'][0]['rightcallid']);
+			    $arr['rightcall'] = $rightcall;
+			}
 		}
 
 		if($this->set_edit($arr) === false
