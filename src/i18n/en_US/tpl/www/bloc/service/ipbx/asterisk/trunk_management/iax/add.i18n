@@ -53,13 +53,13 @@ DTMF:
 ; fm_protocol_type
 Connection type:
 
-; fm_protocol_type-user
+; fm_protocol_type-opt(user)
 User
 
-; fm_protocol_type-peer
+; fm_protocol_type-opt(peer)
 Peer
 
-; fm_protocol_type-friend
+; fm_protocol_type-opt(friend)
 Friend
 
 ; fm_protocol_nat
@@ -124,15 +124,6 @@ Forbid transfers:
 
 ; fm_protocol_trunk
 Trunk mode activation:
-
-; fm_protocol_type-opt(peer)
-Peer
-
-; fm_protocol_type-opt(user)
-User
-
-; fm_protocol_type-opt(friend)
-Friend
 
 ; fm_protocol_language
 Language:
