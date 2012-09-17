@@ -103,6 +103,20 @@ class xivo_service_asterisk_userfeatures extends xivo_service_asterisk_abstract
 		return($r);
 	}
 
+	public function users_has_profile($profile_name)
+	{
+		if(dwho_has_len($profile_name) === false)
+			return(null);
+
+		$arr = array();
+		$arr['profileclient'] = strtolower($profile_name);
+
+		if($this->get_nb($arr) > 0)
+			return(true);
+
+		return(false);
+	}
+
 	function loginclient_exists($loginclient,$id=null)
 	{
 		if(dwho_has_len($loginclient) === false)

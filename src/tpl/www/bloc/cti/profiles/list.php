@@ -101,7 +101,7 @@ $page = $url->pager($pager['pages'],
 					null,
 					$this->bbf('opt_modify')),"\n";
 
-		if($ref['ctiprofiles']['deletable'] == 1):
+		if($ref['ctiprofiles']['deletable']):
 			echo	$url->href_html($url->img_html('img/site/button/delete.gif',
 							       $this->bbf('opt_delete'),
 							       'border="0"'),

@@ -29,45 +29,46 @@ $_TPL->load_i18n_file('tpl/www/bloc/cti/profiles/list-values.i18n', 'global');
 
 /** list values */
 $servicesavail = array(
-    'enablevm'      => $_TPL->bbf('enablevm'),
-    // DISABLING CALL RECORDS
-    //'callrecord'    => $_TPL->bbf('callrecord'),
-    //'incallrec'     => $_TPL->bbf('incallrec'),
-    'incallfilter'  => $_TPL->bbf('incallfilter'),
-    'enablednd'     => $_TPL->bbf('enablednd'),
-    'fwdunc'        => $_TPL->bbf('fwdunc'),
-    'fwdbusy'       => $_TPL->bbf('fwdbusy'),
-    'fwdrna'        => $_TPL->bbf('fwdrna'),
+		'enablevm'      => $_TPL->bbf('enablevm'),
+		'callrecord'    => $_TPL->bbf('callrecord'),
+		'incallrec'     => $_TPL->bbf('incallrec'),
+		'incallfilter'  => $_TPL->bbf('incallfilter'),
+		'enablednd'     => $_TPL->bbf('enablednd'),
+		'fwdunc'        => $_TPL->bbf('fwdunc'),
+		'fwdbusy'       => $_TPL->bbf('fwdbusy'),
+		'fwdrna'        => $_TPL->bbf('fwdrna'),
 );
 
 $preferencesavail = array(
-    'loginwindow.url'                 => $_TPL->bbf('pref-loginwindow-url'),
-    'xlet.identity.logagent'          => $_TPL->bbf('pref-xlet-identity-logagent'),
-    'xlet.identity.pauseagent'        => $_TPL->bbf('pref-xlet-identity-pauseagent'),
-    'xlet.agentsnext.fontname'        => $_TPL->bbf('pref-xlet-agentsnext-fontname'),
-    'xlet.agentsnext.fontsize'        => $_TPL->bbf('pref-xlet-agentsnext-fontsize'),
-    'xlet.agentsnext.blinktime'       => $_TPL->bbf('pref-xlet-agentsnext-blinktime'),
-    'xlet.agentdetails.noqueueaction' => $_TPL->bbf('pref-xlet-agentdetails-noqueueaction'),
-    'xlet.agentdetails.hideastid'     => $_TPL->bbf('pref-xlet-agentdetails-hideastid'),
-    'xlet.agentdetails.hidecontext'   => $_TPL->bbf('pref-xlet-agentdetails-hidecontext'),
-    'xlet.agents.fontname'            => $_TPL->bbf('pref-xlet-agents-fontname'),
-    'xlet.agents.fontsize'            => $_TPL->bbf('pref-xlet-agents-fontsize'),
-    'xlet.agents.iconsize'            => $_TPL->bbf('pref-xlet-agents-iconsize'),
-    'xlet.queues.statsfetchperiod'    => $_TPL->bbf('pref-xlet-queues-statsfetchperiod'),
-    'presence.autochangestate'        => $_TPL->bbf('pref-presence-autochangestate'),
-    'adlibitum'                       => $_TPL->bbf('pref-adlibitum')
+		'loginwindow.url'                 => $_TPL->bbf('pref-loginwindow-url'),
+		'xlet.identity.logagent'          => $_TPL->bbf('pref-xlet-identity-logagent'),
+		'xlet.identity.pauseagent'        => $_TPL->bbf('pref-xlet-identity-pauseagent'),
+		'xlet.agentsnext.fontname'        => $_TPL->bbf('pref-xlet-agentsnext-fontname'),
+		'xlet.agentsnext.fontsize'        => $_TPL->bbf('pref-xlet-agentsnext-fontsize'),
+		'xlet.agentsnext.blinktime'       => $_TPL->bbf('pref-xlet-agentsnext-blinktime'),
+		'xlet.agentdetails.noqueueaction' => $_TPL->bbf('pref-xlet-agentdetails-noqueueaction'),
+		'xlet.agentdetails.hideastid'     => $_TPL->bbf('pref-xlet-agentdetails-hideastid'),
+		'xlet.agentdetails.hidecontext'   => $_TPL->bbf('pref-xlet-agentdetails-hidecontext'),
+		'xlet.agents.fontname'            => $_TPL->bbf('pref-xlet-agents-fontname'),
+		'xlet.agents.fontsize'            => $_TPL->bbf('pref-xlet-agents-fontsize'),
+		'xlet.agents.iconsize'            => $_TPL->bbf('pref-xlet-agents-iconsize'),
+		'xlet.queues.statsfetchperiod'    => $_TPL->bbf('pref-xlet-queues-statsfetchperiod'),
+		'presence.autochangestate'        => $_TPL->bbf('pref-presence-autochangestate'),
+		'adlibitum'                       => $_TPL->bbf('pref-adlibitum')
 );
 
 $ctixlets = array_keys(dwho_json::decode(file_get_contents('/etc/pf-xivo/xivo-ctid/allowedxlets.json'), true));
 
 $xletsavail = array();
 foreach ($ctixlets as $xlet)
-{ $xletsavail[$xlet] = $_TPL->bbf("xlet-$xlet"); }
+{
+	$xletsavail[$xlet] = $_TPL->bbf("xlet-$xlet");
+}
 
 $xletslocavail = array(
-    'dock',
-    'grid',
-    'tab'
+		'dock',
+		'grid',
+		'tab'
 );
 
 
@@ -100,7 +101,7 @@ switch($act)
 		$result = $fm_save = null;
 
 		if(isset($_QR['fm_send']) === true
-		&& dwho_issa('profiles',$_QR) === true)
+				&& dwho_issa('profiles',$_QR) === true)
 		{
 			$_QR['profiles']['deletable'] = 1;
 			$_QR['profiles']['presence'] = $_QR['presence'];
@@ -144,7 +145,9 @@ switch($act)
 			{
 				$pres = array();
 				for($i = 0; $i < count($_QR['preferenceslist'])-1; $i++)
-				{ $pres[$_QR['preferenceslist'][$i]] = $_QR['preferencesargs'][$i]; }
+				{
+					$pres[$_QR['preferenceslist'][$i]] = $_QR['preferencesargs'][$i];
+				}
 
 				$_QR['profiles']['preferences'] = dwho_json::encode($pres);
 			}
@@ -152,7 +155,7 @@ switch($act)
 				$_QR['profiles']['preferences'] = '';
 
 			if($app->set_add($_QR) === false
-			|| $app->add() === false)
+					|| $app->add() === false)
 			{
 				$fm_save = false;
 				$result = $app->get_result();
@@ -198,13 +201,13 @@ switch($act)
 		}
 
 		if(isset($_QR['idprofiles']) === false
-		|| ($info = $app->get($_QR['idprofiles'])) === false)
+				|| ($info = $app->get($_QR['idprofiles'])) === false)
 			$_QRY->go($_TPL->url('cti/profiles'),$param);
 
 		$result = $fm_save = null;
 		$return = &$info;
 		if(isset($_QR['fm_send']) === true
-		&& dwho_issa('profiles',$_QR) === true)
+				&& dwho_issa('profiles',$_QR) === true)
 		{
 
 			$_QR['profiles']['deletable'] = 1;
@@ -249,7 +252,9 @@ switch($act)
 			{
 				$pres = array();
 				for($i = 0; $i < count($_QR['preferenceslist'])-1; $i++)
-				{ $pres[$_QR['preferenceslist'][$i]] = $_QR['preferencesargs'][$i]; }
+				{
+					$pres[$_QR['preferenceslist'][$i]] = $_QR['preferencesargs'][$i];
+				}
 
 				$_QR['profiles']['preferences'] = dwho_json::encode($pres);
 			}
@@ -260,7 +265,7 @@ switch($act)
 			$name = $profileinfo['ctiprofiles']['name'];
 			$return = &$result;
 			if($app->set_edit($_QR) === false
-			|| $app->edit() === false)
+					|| $app->edit() === false)
 			{
 				$fm_save = false;
 				$result = $app->get_result();
@@ -268,19 +273,17 @@ switch($act)
 				$info['ctiprofiles'] = $result['profiles'];
 			}
 			else
-			    {
+			{
 				$app->update_users_with_profile($name);
 				$_QRY->go($_TPL->url('cti/profiles'),$param);
-			    }
+			}
 		}
 
-
-
-        // we go here ONLY IF:
-        //  . 1st time editing the profile
-        //  . error after saving changes
+		// we go here ONLY IF:
+		//  . 1st time editing the profile
+		//  . error after saving changes
 		$info['services']['slt'] = array();
-        $info['services']['list'] = $servicesavail;
+		$info['services']['list'] = $servicesavail;
 
 		if(isset($info['ctiprofiles']['services']) && dwho_has_len($info['ctiprofiles']['services']))
 		{
@@ -331,7 +334,7 @@ switch($act)
 		$app = &$ipbx->get_application('ctiprofiles');
 
 		if(isset($_QR['idprofiles']) === false
-		|| ($info = $app->get($_QR['idprofiles'])) === false)
+				|| ($info = $app->get($_QR['idprofiles'])) === false)
 			$_QRY->go($_TPL->url('cti/profiles'),$param);
 
 		$name = $info['ctiprofiles']['name'];
