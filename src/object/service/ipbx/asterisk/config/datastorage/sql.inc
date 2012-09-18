@@ -36,6 +36,10 @@ $array['agentgroup'] = array();
 $array['agentgroup']['table'] = 'agentgroup';
 $array['agentgroup']['primary'] = array('id' => '');
 
+$array['agentqueueskill'] = array();
+$array['agentqueueskill']['table'] = 'agentqueueskill';
+$array['agentqueueskill']['primary'] = array('agentid' => '', 'skillid' => '');
+
 $array['attachment'] = array();
 $array['attachment']['table'] = 'attachment';
 $array['attachment']['primary'] = array('id' => '');
@@ -55,6 +59,22 @@ $array['callfilter']['primary'] = array('id' => '');
 $array['callfiltermember'] = array();
 $array['callfiltermember']['table'] = 'callfiltermember';
 $array['callfiltermember']['primary'] = array('id' => '');
+
+$array['campaign_general'] = array();
+$array['campaign_general']['table'] = 'callcenter_campaigns_general';
+$array['campaign_general']['primary'] = array('id' => '');
+
+$array['campaign_tag'] = array();
+$array['campaign_tag']['table'] = 'callcenter_campaigns_tag';
+$array['campaign_tag']['primary'] = array('name' => '');
+
+$array['campaign_campaign'] = array();
+$array['campaign_campaign']['table'] = 'callcenter_campaigns_campaign';
+$array['campaign_campaign']['primary'] = array('id' => '');
+
+$array['campaign_campaign_filter'] = array();
+$array['campaign_campaign_filter']['table'] = 'callcenter_campaigns_campaign_filter';
+$array['campaign_campaign_filter']['primary'] = array('campaign_id' => '', 'type' => '', 'value' => '');
 
 $array['cel'] = array();
 $array['cel']['table'] = 'cel';
@@ -79,6 +99,10 @@ $array['contextnumbers']['primary'] = array('context' => '','type' => '','number
 $array['contextnummember'] = array();
 $array['contextnummember']['table'] = 'contextnummember';
 $array['contextnummember']['primary'] = array('context' => '','type' => '','typeval' => '');
+
+$array['contexttype'] = array();
+$array['contexttype']['table'] = 'contexttype';
+$array['contexttype']['primary'] = array('id' => '');
 
 $array['cticontexts'] = array();
 $array['cticontexts']['table'] = 'cticontexts';
@@ -136,6 +160,10 @@ $array['ctistatus'] = array();
 $array['ctistatus']['table'] = 'ctistatus';
 $array['ctistatus']['primary'] = array('id' => '');
 
+$array['devicefeatures'] = array();
+$array['devicefeatures']['table'] = 'devicefeatures';
+$array['devicefeatures']['primary'] = array('id' => '');
+
 $array['dialaction'] = array();
 $array['dialaction']['table'] = 'dialaction';
 $array['dialaction']['primary'] = array('event' => '','category' => '','categoryval' => '');
@@ -143,6 +171,18 @@ $array['dialaction']['primary'] = array('event' => '','category' => '','category
 $array['dialpattern'] = array();
 $array['dialpattern']['table'] = 'dialpattern';
 $array['dialpattern']['primary'] = array('id' => '');
+
+$array['dundi'] = array();
+$array['dundi']['table'] = 'dundi';
+$array['dundi']['primary'] = array('id' => '');
+
+$array['dundipeer'] = array();
+$array['dundipeer']['table'] = 'dundi_peer';
+$array['dundipeer']['primary'] = array('id' => '');
+
+$array['dundimapping'] = array();
+$array['dundimapping']['table'] = 'dundi_mapping';
+$array['dundimapping']['primary'] = array('id' => '');
 
 $array['extensions'] = array();
 $array['extensions']['table'] = 'extensions';
@@ -156,13 +196,25 @@ $array['features'] = array();
 $array['features']['table'] = 'features';
 $array['features']['primary'] = array('id' => '');
 
+$array['general'] = array();
+$array['general']['table'] = 'general';
+$array['general']['primary'] = array('id' => '');
+
 $array['groupfeatures'] = array();
 $array['groupfeatures']['table'] = 'groupfeatures';
 $array['groupfeatures']['primary'] = array('id' => '');
 
+$array['iaxcallnumberlimits'] = array();
+$array['iaxcallnumberlimits']['table'] = 'iaxcallnumberlimits';
+$array['iaxcallnumberlimits']['primary'] = array('id' => '');
+
 $array['incall'] = array();
 $array['incall']['table'] = 'incall';
 $array['incall']['primary'] = array('id' => '');
+
+$array['linefeatures'] = array();
+$array['linefeatures']['table'] = 'linefeatures';
+$array['linefeatures']['primary'] = array('id' => '');
 
 $array['ldapfilter'] = array();
 $array['ldapfilter']['table'] = 'ldapfilter';
@@ -179,6 +231,18 @@ $array['meetmeguest']['primary'] = array('id' => '');
 $array['musiconhold'] = array();
 $array['musiconhold']['table'] = 'musiconhold';
 $array['musiconhold']['primary'] = array('id' => '');
+
+$array['operator'] = array();
+$array['operator']['table'] = 'operator';
+$array['operator']['primary'] = array('id' => '');
+
+$array['operator_destination'] = array();
+$array['operator_destination']['table'] = 'operator_destination';
+$array['operator_destination']['primary'] = array('id' => '');
+
+$array['operator_trunk'] = array();
+$array['operator_trunk']['table'] = 'operator_trunk';
+$array['operator_trunk']['primary'] = array('operator_id' => '','trunk_id' => '');
 
 $array['outcall'] = array();
 $array['outcall']['table'] = 'outcall';
@@ -215,6 +279,14 @@ $array['phonebooknumber']['primary'] = array('id' => '');
 $array['phonefunckey'] = array();
 $array['phonefunckey']['table'] = 'phonefunckey';
 $array['phonefunckey']['primary'] = array('iduserfeatures' => '','fknum' => '');
+
+$array['pickup'] = array();
+$array['pickup']['table'] = 'pickup';
+$array['pickup']['primary'] = array('id' => '');
+
+$array['pickupmember'] = array();
+$array['pickupmember']['table'] = 'pickupmember';
+$array['pickupmember']['primary'] = array('pickupid' => '', 'category' => '', 'membertype' => '', 'memberid' => '');
 
 $array['queue'] = array();
 $array['queue']['table'] = 'queue';
@@ -260,13 +332,61 @@ $array['rightcallmember'] = array();
 $array['rightcallmember']['table'] = 'rightcallmember';
 $array['rightcallmember']['primary'] = array('id' => '');
 
+$array['sccpline'] = array();
+$array['sccpline']['table'] = 'sccpline';
+$array['sccpline']['primary'] = array('id' => '');
+
+$array['sccpdevice'] = array();
+$array['sccpdevice']['table'] = 'sccpdevice';
+$array['sccpdevice']['primary'] = array('id' => '');
+
 $array['schedule'] = array();
 $array['schedule']['table'] = 'schedule';
 $array['schedule']['primary'] = array('id' => '');
 
+$array['schedule_path'] = array();
+$array['schedule_path']['table'] = 'schedule_path';
+$array['schedule_path']['primary'] = array('schedule_id' => '', 'path' => '', 'pathid' => '');
+
+$array['schedule_time'] = array();
+$array['schedule_time']['table'] = 'schedule_time';
+$array['schedule_time']['primary'] = array('id' => '');
+
+$array['servicesgroup'] = array();
+$array['servicesgroup']['table'] = 'servicesgroup';
+$array['servicesgroup']['primary'] = array('id' => '');
+
+$array['servicesgroup_user'] = array();
+$array['servicesgroup_user']['table'] = 'servicesgroup_user';
+$array['servicesgroup_user']['primary'] = array('servicesgroup_id' => '','userfeatures_id' => '');
+
 $array['serverfeatures'] = array();
 $array['serverfeatures']['table'] = 'serverfeatures';
 $array['serverfeatures']['primary'] = array('id' => '');
+
+$array['sipauthentication'] = array();
+$array['sipauthentication']['table'] = 'sipauthentication';
+$array['sipauthentication']['primary'] = array('id' => '');
+
+$array['stat_agent'] = array();
+$array['stat_agent']['table'] = 'stat_agent';
+$array['stat_agent']['primary'] = array('id' => '');
+
+$array['stat_agent_periodic'] = array();
+$array['stat_agent_periodic']['table'] = 'stat_agent_periodic';
+$array['stat_agent_periodic']['primary'] = array('id' => '');
+
+$array['stat_call_on_queue'] = array();
+$array['stat_call_on_queue']['table'] = 'stat_call_on_queue';
+$array['stat_call_on_queue']['primary'] = array('callid' => '', 'time' => '');
+
+$array['stat_queue'] = array();
+$array['stat_queue']['table'] = 'stat_queue';
+$array['stat_queue']['primary'] = array('id' => '');
+
+$array['stat_queue_periodic'] = array();
+$array['stat_queue_periodic']['table'] = 'stat_queue_periodic';
+$array['stat_queue_periodic']['primary'] = array('id' => '');
 
 $array['staticiax'] = array();
 $array['staticiax']['table'] = 'staticiax';
@@ -335,125 +455,5 @@ $array['voicemailfeatures']['primary'] = array('id' => '');
 $array['voicemenu'] = array();
 $array['voicemenu']['table'] = 'voicemenu';
 $array['voicemenu']['primary'] = array('id' => '');
-
-$array['agentqueueskill'] = array();
-$array['agentqueueskill']['table'] = 'agentqueueskill';
-$array['agentqueueskill']['primary'] = array('agentid' => '', 'skillid' => '');
-
-$array['general'] = array();
-$array['general']['table'] = 'general';
-$array['general']['primary'] = array('id' => '');
-
-$array['sipauthentication'] = array();
-$array['sipauthentication']['table'] = 'sipauthentication';
-$array['sipauthentication']['primary'] = array('id' => '');
-
-$array['iaxcallnumberlimits'] = array();
-$array['iaxcallnumberlimits']['table'] = 'iaxcallnumberlimits';
-$array['iaxcallnumberlimits']['primary'] = array('id' => '');
-
-$array['sccpline'] = array();
-$array['sccpline']['table'] = 'sccpline';
-$array['sccpline']['primary'] = array('id' => '');
-
-$array['sccpdevice'] = array();
-$array['sccpdevice']['table'] = 'sccpdevice';
-$array['sccpdevice']['primary'] = array('id' => '');
-
-$array['schedule_path'] = array();
-$array['schedule_path']['table'] = 'schedule_path';
-$array['schedule_path']['primary'] = array('schedule_id' => '', 'path' => '', 'pathid' => '');
-
-$array['schedule_time'] = array();
-$array['schedule_time']['table'] = 'schedule_time';
-$array['schedule_time']['primary'] = array('id' => '');
-
-$array['pickup'] = array();
-$array['pickup']['table'] = 'pickup';
-$array['pickup']['primary'] = array('id' => '');
-
-$array['pickupmember'] = array();
-$array['pickupmember']['table'] = 'pickupmember';
-$array['pickupmember']['primary'] = array('pickupid' => '', 'category' => '', 'membertype' => '', 'memberid' => '');
-
-$array['operator'] = array();
-$array['operator']['table'] = 'operator';
-$array['operator']['primary'] = array('id' => '');
-
-$array['operator_destination'] = array();
-$array['operator_destination']['table'] = 'operator_destination';
-$array['operator_destination']['primary'] = array('id' => '');
-
-$array['operator_trunk'] = array();
-$array['operator_trunk']['table'] = 'operator_trunk';
-$array['operator_trunk']['primary'] = array('operator_id' => '','trunk_id' => '');
-
-$array['servicesgroup'] = array();
-$array['servicesgroup']['table'] = 'servicesgroup';
-$array['servicesgroup']['primary'] = array('id' => '');
-
-$array['servicesgroup_user'] = array();
-$array['servicesgroup_user']['table'] = 'servicesgroup_user';
-$array['servicesgroup_user']['primary'] = array('servicesgroup_id' => '','userfeatures_id' => '');
-
-$array['devicefeatures'] = array();
-$array['devicefeatures']['table'] = 'devicefeatures';
-$array['devicefeatures']['primary'] = array('id' => '');
-
-$array['linefeatures'] = array();
-$array['linefeatures']['table'] = 'linefeatures';
-$array['linefeatures']['primary'] = array('id' => '');
-
-$array['parkinglot'] = array();
-$array['parkinglot']['table'] = 'parkinglot';
-$array['parkinglot']['primary'] = array('id' => '');
-
-$array['contexttype'] = array();
-$array['contexttype']['table'] = 'contexttype';
-$array['contexttype']['primary'] = array('id' => '');
-
-$array['dundi'] = array();
-$array['dundi']['table'] = 'dundi';
-$array['dundi']['primary'] = array('id' => '');
-
-$array['dundipeer'] = array();
-$array['dundipeer']['table'] = 'dundi_peer';
-$array['dundipeer']['primary'] = array('id' => '');
-
-$array['dundimapping'] = array();
-$array['dundimapping']['table'] = 'dundi_mapping';
-$array['dundimapping']['primary'] = array('id' => '');
-
-$array['campaign_general'] = array();
-$array['campaign_general']['table'] = 'callcenter_campaigns_general';
-$array['campaign_general']['primary'] = array('id' => '');
-
-$array['campaign_tag'] = array();
-$array['campaign_tag']['table'] = 'callcenter_campaigns_tag';
-$array['campaign_tag']['primary'] = array('name' => '');
-
-$array['campaign_campaign'] = array();
-$array['campaign_campaign']['table'] = 'callcenter_campaigns_campaign';
-$array['campaign_campaign']['primary'] = array('id' => '');
-
-$array['campaign_campaign_filter'] = array();
-$array['campaign_campaign_filter']['table'] = 'callcenter_campaigns_campaign_filter';
-$array['campaign_campaign_filter']['primary'] = array('campaign_id' => '', 'type' => '', 'value' => '');
-
-$array['stat_queue_periodic'] = array();
-$array['stat_queue_periodic']['table'] = 'stat_queue_periodic';
-$array['stat_queue_periodic']['primary'] = array('id' => '');
-
-$array['stat_call_on_queue'] = array();
-$array['stat_call_on_queue']['table'] = 'stat_call_on_queue';
-$array['stat_call_on_queue']['primary'] = array('callid' => '', 'time' => '');
-
-$array['stat_queue'] = array();
-$array['stat_queue']['table'] = 'stat_queue';
-$array['stat_queue']['primary'] = array('id' => '');
-
-$array['stat_agent'] = array();
-$array['stat_agent']['table'] = 'stat_agent';
-$array['stat_agent']['primary'] = array('id' => '');
 
 ?>

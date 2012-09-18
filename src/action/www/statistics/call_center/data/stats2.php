@@ -89,11 +89,12 @@ $tpl_statistics->add_col('conversation',
 			 'custom:agent,[key],conversationtime',
 			 'time');
 
-/*
+
 $tpl_statistics->add_col('login',
 					'direct',
-					'custom:agent,[key],logintime',
-					'time');
+					'custom:agent,[key],login_time',
+					'direct');
+/*
 $tpl_statistics->add_col('available',
 					'expression',
 					'{custom:agent,[key],logintime}-{custom:agent,[key],calltime}',

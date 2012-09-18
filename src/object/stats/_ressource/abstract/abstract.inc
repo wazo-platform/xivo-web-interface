@@ -28,6 +28,7 @@ class xivo_stats_ressource_abstract
 	public 		$_counter              = array();
 	public		$_result               = array();
 	protected	$_stat_queue_periodic  = null;
+	protected	$_stat_agent_periodic  = null;
 	protected	$_stat_call_on_queue   = null;
 	protected	$_queuefeatures        = null;
 	protected	$_stat_queue           = null;
@@ -41,6 +42,7 @@ class xivo_stats_ressource_abstract
 		$_SRE = dwho_gct::get('xivo_service');
 		$ipbx = &$_SRE->get('ipbx');
 		$this->_stat_queue_periodic = $ipbx->get_module('stat_queue_periodic');
+		$this->_stat_agent_periodic = $ipbx->get_module('stat_agent_periodic');
 		$this->_stat_call_on_queue = $ipbx->get_module('stat_call_on_queue');
 		$this->_queuefeatures = $ipbx->get_module('queuefeatures');
 		$this->_stat_queue = $ipbx->get_module('stat_queue');
@@ -127,6 +129,8 @@ class xivo_stats_ressource_abstract
 		$dbeg = strtotime($itl['dbeg']);
 		$dend = strtotime($itl['dend']);
 
+		$this->_stat_agent_periodic->set_dso_param('hour_itl',$this->_xs->get_dip_hour());
+		$this->_stat_agent_periodic->set_dso_param('days',$this->_xs->get_valid_list_day());
 		$this->_stat_queue_periodic->set_dso_param('hour_itl',$this->_xs->get_dip_hour());
 		$this->_stat_queue_periodic->set_dso_param('days',$this->_xs->get_valid_list_day());
 		$this->_stat_call_on_queue->set_dso_param('hour_itl',$this->_xs->get_dip_hour());
