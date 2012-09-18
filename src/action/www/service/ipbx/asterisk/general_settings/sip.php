@@ -67,6 +67,9 @@ if(isset($_QR['fm_send']) === true)
 
 		unset($_QR['auth']);
 
+		if (isset($_QR['codec-active']) === false)
+			$_QR['allow'] = array();
+
 		if(($rs = $appgeneralsip->set_save_all($_QR)) !== false)
 		{
 			$info = $rs['result'];
