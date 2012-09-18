@@ -318,8 +318,8 @@ class xivo_service_asterisk extends xivo_service_abstract
 		$label = $version = false;
 
 		if(dwho_issa('info',$sess_sre) === true
-		&& isset($sess_sre['info']['label'],
-			 $sess_sre['info']['version']) === true)
+		&& (isset($sess_sre['info']['label'], $sess_sre['info']['version']) === true)
+		&& ($sess_sre['info']['label'] !== 'No' && $sess_sre['info']['label'] !== 'such'))
 		{
 			$label		= $sess_sre['info']['label'];
 			$version	= $sess_sre['info']['version'];
