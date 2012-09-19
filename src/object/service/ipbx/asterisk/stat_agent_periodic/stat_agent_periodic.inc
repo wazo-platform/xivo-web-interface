@@ -58,7 +58,17 @@ class xivo_service_asterisk_stat_agent_periodic extends xivo_service_asterisk_ab
 
 	function get_login_time($interval, $agent_id)
 	{
-		return($this->_dso->agent_login_time_interval($interval, $agent_id));
+		$login_time = $this->_dso->agent_login_time_interval($interval, $agent_id);
+		if ($login_time === null) {
+			$login_time = '00:00:00';
+		} else {
+			$login_time = $this->strip_microseconds($login_time);
+		}
+		return $login_time;
+	}
+
+	function strip_microseconds($time_string) {
+		return substr($time_string, 0, 8);
 	}
 }
 
