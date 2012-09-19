@@ -27,7 +27,7 @@ class xivo_service_monit extends xivo_service_abstract
 	var $_name	= 'monit';
 	var $_instance	= null;
 
-	function xivo_service_monit($ini)
+	public function __construct($ini)
 	{
 		if(dwho::load_class('dwho_monit') === false)
 			trigger_error('Unable to load class dwho_monit',E_USER_ERROR);

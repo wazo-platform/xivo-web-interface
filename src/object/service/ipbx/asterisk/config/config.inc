@@ -61,6 +61,9 @@ $array['module']['agentgroup']['datastorage'] = true;
 $array['module']['agentglobalparams'] = array();
 $array['module']['agentglobalparams']['datastorage'] = true;
 
+$array['module']['agentqueueskill'] = array();
+$array['module']['agentqueueskill']['datastorage'] = true;
+
 $array['module']['attachment'] = array();
 $array['module']['attachment']['datastorage'] = true;
 
@@ -78,6 +81,18 @@ $array['module']['callfilter']['datastorage'] = true;
 
 $array['module']['callfiltermember'] = array();
 $array['module']['callfiltermember']['datastorage'] = true;
+
+$array['module']['campaign_general'] = array();
+$array['module']['campaign_general']['datastorage'] = true;
+
+$array['module']['campaign_tag'] = array();
+$array['module']['campaign_tag']['datastorage'] = true;
+
+$array['module']['campaign_campaign'] = array();
+$array['module']['campaign_campaign']['datastorage'] = true;
+
+$array['module']['campaign_campaign_filter'] = array();
+$array['module']['campaign_campaign_filter']['datastorage'] = true;
 
 $array['module']['configfiles'] = array();
 $array['module']['configfiles']['datastorage'] = false;
@@ -99,6 +114,9 @@ $array['module']['contextnumbers']['datastorage'] = true;
 
 $array['module']['contextnummember'] = array();
 $array['module']['contextnummember']['datastorage'] = true;
+
+$array['module']['contexttype'] = array();
+$array['module']['contexttype']['datastorage'] = true;
 
 $array['module']['ctidirectories'] = array();
 $array['module']['ctidirectories']['datastorage'] = true;
@@ -145,11 +163,23 @@ $array['module']['ctisheetevents']['datastorage'] = true;
 $array['module']['ctistatus'] = array();
 $array['module']['ctistatus']['datastorage'] = true;
 
+$array['module']['devicefeatures'] = array();
+$array['module']['devicefeatures']['datastorage'] = true;
+
 $array['module']['dialaction'] = array();
 $array['module']['dialaction']['datastorage'] = true;
 
 $array['module']['dialpattern'] = array();
 $array['module']['dialpattern']['datastorage'] = true;
+
+$array['module']['dundi'] = array();
+$array['module']['dundi']['datastorage'] = true;
+
+$array['module']['dundipeer'] = array();
+$array['module']['dundipeer']['datastorage'] = true;
+
+$array['module']['dundimapping'] = array();
+$array['module']['dundimapping']['datastorage'] = true;
 
 $array['module']['extensions'] = array();
 $array['module']['extensions']['datastorage'] = true;
@@ -157,14 +187,23 @@ $array['module']['extensions']['datastorage'] = true;
 $array['module']['extenumbers'] = array();
 $array['module']['extenumbers']['datastorage'] = true;
 
+$array['module']['general'] = array();
+$array['module']['general']['datastorage'] = true;
+
 $array['module']['groupfeatures'] = array();
 $array['module']['groupfeatures']['datastorage'] = true;
+
+$array['module']['iaxcallnumberlimits'] = array();
+$array['module']['iaxcallnumberlimits']['datastorage'] = true;
 
 $array['module']['incall'] = array();
 $array['module']['incall']['datastorage'] = true;
 
 $array['module']['ldapfilter'] = array();
 $array['module']['ldapfilter']['datastorage'] = true;
+
+$array['module']['linefeatures'] = array();
+$array['module']['linefeatures']['datastorage'] = true;
 
 $array['module']['logfiles'] = array();
 $array['module']['logfiles']['datastorage'] = false;
@@ -177,6 +216,15 @@ $array['module']['meetmeguest']['datastorage'] = true;
 
 $array['module']['musiconhold'] = array();
 $array['module']['musiconhold']['datastorage'] = true;
+
+$array['module']['operator'] = array();
+$array['module']['operator']['datastorage'] = true;
+
+$array['module']['operator_destination'] = array();
+$array['module']['operator_destination']['datastorage'] = true;
+
+$array['module']['operator_trunk'] = array();
+$array['module']['operator_trunk']['datastorage'] = true;
 
 $array['module']['outcall'] = array();
 $array['module']['outcall']['datastorage'] = true;
@@ -193,6 +241,9 @@ $array['module']['paging']['datastorage'] = true;
 $array['module']['paginguser'] = array();
 $array['module']['paginguser']['datastorage'] = true;
 
+$array['module']['parkinglot'] = array();
+$array['module']['parkinglot']['datastorage'] = true;
+
 $array['module']['phonebook'] = array();
 $array['module']['phonebook']['datastorage'] = true;
 
@@ -204,6 +255,12 @@ $array['module']['phonebooknumber']['datastorage'] = true;
 
 $array['module']['phonefunckey'] = array();
 $array['module']['phonefunckey']['datastorage'] = true;
+
+$array['module']['pickup'] = array();
+$array['module']['pickup']['datastorage'] = true;
+
+$array['module']['pickupmember'] = array();
+$array['module']['pickupmember']['datastorage'] = true;
 
 $array['module']['queue'] = array();
 $array['module']['queue']['datastorage'] = true;
@@ -238,11 +295,47 @@ $array['module']['rightcallexten']['datastorage'] = true;
 $array['module']['rightcallmember'] = array();
 $array['module']['rightcallmember']['datastorage'] = true;
 
+$array['module']['sccpline'] = array();
+$array['module']['sccpline']['datastorage'] = true;
+
+$array['module']['sccpdevice'] = array();
+$array['module']['sccpdevice']['datastorage'] = true;
+
 $array['module']['schedule'] = array();
 $array['module']['schedule']['datastorage'] = true;
 
+$array['module']['schedule_path'] = array();
+$array['module']['schedule_path']['datastorage'] = true;
+
+$array['module']['schedule_time'] = array();
+$array['module']['schedule_time']['datastorage'] = true;
+
+$array['module']['servicesgroup'] = array();
+$array['module']['servicesgroup']['datastorage'] = true;
+
+$array['module']['servicesgroup_user'] = array();
+$array['module']['servicesgroup_user']['datastorage'] = true;
+
 $array['module']['serverfeatures'] = array();
 $array['module']['serverfeatures']['datastorage'] = true;
+
+$array['module']['sipauthentication'] = array();
+$array['module']['sipauthentication']['datastorage'] = true;
+
+$array['module']['stat_agent'] = array();
+$array['module']['stat_agent']['datastorage'] = true;
+
+$array['module']['stat_agent_periodic'] = array();
+$array['module']['stat_agent_periodic']['datastorage'] = true;
+
+$array['module']['stat_call_on_queue'] = array();
+$array['module']['stat_call_on_queue']['datastorage'] = true;
+
+$array['module']['stat_queue'] = array();
+$array['module']['stat_queue']['datastorage'] = true;
+
+$array['module']['stat_queue_periodic'] = array();
+$array['module']['stat_queue_periodic']['datastorage'] = true;
 
 $array['module']['sounds'] = array();
 $array['module']['sounds']['datastorage'] = false;
@@ -283,98 +376,6 @@ $array['module']['voicemailfeatures']['datastorage'] = true;
 $array['module']['voicemenu'] = array();
 $array['module']['voicemenu']['datastorage'] = true;
 
-$array['module']['agentqueueskill'] = array();
-$array['module']['agentqueueskill']['datastorage'] = true;
-
-$array['module']['general'] = array();
-$array['module']['general']['datastorage'] = true;
-
-$array['module']['sipauthentication'] = array();
-$array['module']['sipauthentication']['datastorage'] = true;
-
-$array['module']['iaxcallnumberlimits'] = array();
-$array['module']['iaxcallnumberlimits']['datastorage'] = true;
-
-$array['module']['schedule_path'] = array();
-$array['module']['schedule_path']['datastorage'] = true;
-
-$array['module']['schedule_time'] = array();
-$array['module']['schedule_time']['datastorage'] = true;
-
-$array['module']['pickup'] = array();
-$array['module']['pickup']['datastorage'] = true;
-
-$array['module']['pickupmember'] = array();
-$array['module']['pickupmember']['datastorage'] = true;
-
-$array['module']['operator'] = array();
-$array['module']['operator']['datastorage'] = true;
-
-$array['module']['operator_destination'] = array();
-$array['module']['operator_destination']['datastorage'] = true;
-
-$array['module']['operator_trunk'] = array();
-$array['module']['operator_trunk']['datastorage'] = true;
-
-$array['module']['sccpline'] = array();
-$array['module']['sccpline']['datastorage'] = true;
-
-$array['module']['sccpdevice'] = array();
-$array['module']['sccpdevice']['datastorage'] = true;
-
-$array['module']['servicesgroup'] = array();
-$array['module']['servicesgroup']['datastorage'] = true;
-
-$array['module']['servicesgroup_user'] = array();
-$array['module']['servicesgroup_user']['datastorage'] = true;
-
-$array['module']['stat_agent'] = array();
-$array['module']['stat_agent']['datastorage'] = true;
-
-$array['module']['stat_agent_periodic'] = array();
-$array['module']['stat_agent_periodic']['datastorage'] = true;
-
-$array['module']['stat_call_on_queue'] = array();
-$array['module']['stat_call_on_queue']['datastorage'] = true;
-
-$array['module']['stat_queue'] = array();
-$array['module']['stat_queue']['datastorage'] = true;
-
-$array['module']['stat_queue_periodic'] = array();
-$array['module']['stat_queue_periodic']['datastorage'] = true;
-
-$array['module']['devicefeatures'] = array();
-$array['module']['devicefeatures']['datastorage'] = true;
-
-$array['module']['linefeatures'] = array();
-$array['module']['linefeatures']['datastorage'] = true;
-
-$array['module']['parkinglot'] = array();
-$array['module']['parkinglot']['datastorage'] = true;
-
-$array['module']['contexttype'] = array();
-$array['module']['contexttype']['datastorage'] = true;
-
-$array['module']['dundi'] = array();
-$array['module']['dundi']['datastorage'] = true;
-
-$array['module']['dundipeer'] = array();
-$array['module']['dundipeer']['datastorage'] = true;
-
-$array['module']['dundimapping'] = array();
-$array['module']['dundimapping']['datastorage'] = true;
-
-$array['module']['campaign_general'] = array();
-$array['module']['campaign_general']['datastorage'] = true;
-
-$array['module']['campaign_tag'] = array();
-$array['module']['campaign_tag']['datastorage'] = true;
-
-$array['module']['campaign_campaign'] = array();
-$array['module']['campaign_campaign']['datastorage'] = true;
-
-$array['module']['campaign_campaign_filter'] = array();
-$array['module']['campaign_campaign_filter']['datastorage'] = true;
 
 $array['protocol'] = array();
 $array['protocol'][XIVO_SRE_IPBX_AST_PROTO_SIP]    = array('module' => 'usersip');

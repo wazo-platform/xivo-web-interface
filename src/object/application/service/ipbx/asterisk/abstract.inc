@@ -20,11 +20,11 @@
 
 require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'application','helper.inc'));
 
-class xivo_application_service_asterisk_abstract extends xivo_application_helper
+abstract class xivo_application_service_asterisk_abstract extends xivo_application_helper
 {
 	var $_service	= null;
 
-	function xivo_application_service_asterisk_abstract(&$ipbx)
+	public function __construct(&$ipbx)
 	{
 		if(dwho_is_instance($ipbx,'xivo_service_asterisk') === false)
 			trigger_error('Invalid service in '.__CLASS__,E_USER_ERROR);

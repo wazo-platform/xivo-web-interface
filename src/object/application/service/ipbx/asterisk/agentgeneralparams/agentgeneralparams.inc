@@ -29,10 +29,9 @@ class xivo_application_service_asterisk_agentgeneralparams extends xivo_applicat
 	var $_name		= 'agentgeneralparams';
 	var $_agentgeneralparams	= false;
 
-
-	function xivo_application_service_asterisk_agentgeneralparams(&$service,$param=null,$components=true)
+	public function __construct(&$service,$param=null,$components=true)
 	{
-		$this->xivo_application_asterisk_abstract(&$service);
+		parent::__construct($service);
 
 		if(($this->_agentglobalparams = &$this->_service->get_module('agentglobalparams')) === false)
 			return(false);

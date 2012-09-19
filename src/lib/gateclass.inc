@@ -20,76 +20,76 @@
 
 abstract class dwho_gateclass
 {
-    private static $_class = array();
+	private static $_class = array();
 
-    public static function set($obj,$name='')
-    {
-        $name = (string) $name;
+	public static function set($obj,$name='')
+	{
+		$name = (string) $name;
 
-        if(is_object($obj) === false)
-            return(false);
-        else if($name === '')
-            $name = get_class($obj);
+		if(is_object($obj) === false)
+			return(false);
+		else if($name === '')
+			$name = get_class($obj);
 
-        if($name !== '' && preg_match('/^[a-z0-9\-_]+$/i',$name) !== 1)
-            return(false);
-        #else if(isset(self::$_class[$name]) === false)
-        self::$_class[$name] = &$obj;
+		if($name !== '' && preg_match('/^[a-z0-9\-_]+$/i',$name) !== 1)
+			return(false);
+		#else if(isset(self::$_class[$name]) === false)
+		self::$_class[$name] = &$obj;
 
-        return(true);
-    }
+		return(true);
+	}
 
-    public static function &get($name)
-    {
-        $r = false;
+	public static function &get($name)
+	{
+		$r = false;
 
-        $name = (string) $name;
+		$name = (string) $name;
 
-        if(isset(self::$_class[$name]) === true)
-            $r = &self::$_class[$name];
+		if(isset(self::$_class[$name]) === true)
+			$r = &self::$_class[$name];
 
-        return(($ref = &$r));
-    }
+		return(($ref = &$r));
+	}
 
-    public static function &set_get($obj,$name='')
-    {
-        $r = false;
+	public static function &set_get($obj,$name='')
+	{
+		$r = false;
 
-        $name = (string) $name;
+		$name = (string) $name;
 
-        if(self::set($obj,$name) === true)
-            $r = &self::get(($name === '' ? get_class($obj) : $name));
+		if(self::set($obj,$name) === true)
+			$r = &self::get(($name === '' ? get_class($obj) : $name));
 
-        return(($ref = &$r));
-    }
+		return(($ref = &$r));
+	}
 
-    public static function is_valid($name)
-    {
-        return((isset(self::$_class[$name]) === true && is_object(self::$_class[$name]) === true));
-    }
+	public static function is_valid($name)
+	{
+		return((isset(self::$_class[$name]) === true && is_object(self::$_class[$name]) === true));
+	}
 }
 
 abstract class dwho_gct
 {
-    public static function set($obj,$name='')
-    {
-        return(dwho_gateclass::set($obj,$name));
-    }
+	public static function set($obj,$name='')
+	{
+		return(dwho_gateclass::set($obj,$name));
+	}
 
-    public static function get($name)
-    {
-        return(dwho_gateclass::get($name));
-    }
+	public static function get($name)
+	{
+		return(dwho_gateclass::get($name));
+	}
 
-    public static function set_get($obj,$name='')
-    {
-        return(dwho_gateclass::set_get($obj,$name));
-    }
+	public static function set_get($obj,$name='')
+	{
+		return(dwho_gateclass::set_get($obj,$name));
+	}
 
-    public static function is_valid($name)
-    {
-        return(dwho_gateclass::is_valid($name));
-    }
+	public static function is_valid($name)
+	{
+		return(dwho_gateclass::is_valid($name));
+	}
 }
 
 ?>

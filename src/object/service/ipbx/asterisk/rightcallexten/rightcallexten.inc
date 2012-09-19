@@ -28,7 +28,7 @@ class xivo_service_asterisk_rightcallexten extends xivo_service_asterisk_abstrac
 	var $_origin		= false;
 	var $_origin_list	= false;
 
-	function xivo_service_asterisk_rightcallexten(&$sre,&$dso)
+	public function __construct(&$sre,&$dso)
 	{
 		if(is_object($sre) === false)
 			trigger_error('Invalid service in '.__CLASS__,E_USER_ERROR);
@@ -46,7 +46,7 @@ class xivo_service_asterisk_rightcallexten extends xivo_service_asterisk_abstrac
 	{
 		if(dwho_has_len($data,'exten') === true && $data['exten']{0} === '_')
 			$data['exten'] = substr($data['exten'],1);
-			
+
 		$data['id'] = (int) $data['id'];
 		$data['rightcallid'] = (int) $data['rightcallid'];
 

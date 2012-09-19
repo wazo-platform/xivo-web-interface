@@ -49,9 +49,9 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 	var $_schedule_path = false;
 	var $_attachment 	= false;
 
-	function xivo_application_service_asterisk_user(&$service,&$dso,$param=array(),$components=true)
+	public function __construct(&$service,&$dso,$param=null,$components=true)
 	{
-		$this->xivo_application_asterisk_abstract(&$service);
+		parent::__construct($service);
 
 		if(is_object($dso) === false)
 			trigger_error('Invalid Datastorage object',E_USER_ERROR);

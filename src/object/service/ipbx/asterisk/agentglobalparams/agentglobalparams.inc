@@ -27,7 +27,7 @@ class xivo_service_asterisk_agentglobalparams extends xivo_service_asterisk_abst
 	var $_filter	= false;
 	var $_origin	= false;
 
-	function xivo_service_asterisk_agentglobalparams(&$sre,&$dso)
+	public function __construct(&$sre,&$dso)
 	{
 		if(is_object($sre) === false)
 			trigger_error('Invalid service in '.__CLASS__,E_USER_ERROR);

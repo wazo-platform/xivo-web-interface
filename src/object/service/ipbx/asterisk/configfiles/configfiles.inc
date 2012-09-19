@@ -30,7 +30,7 @@ class xivo_service_asterisk_configfiles extends xivo_service_asterisk_abstract
 	var $_error	= array();
 	var $_conf	= array();
 
-	function xivo_service_asterisk_configfiles(&$sre)
+	public function __construct(&$sre)
 	{
 		if(is_object($sre) === false)
 			trigger_error('Invalid service in '.__CLASS__,E_USER_ERROR);

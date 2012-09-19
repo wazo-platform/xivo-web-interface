@@ -22,9 +22,9 @@ dwho_file::required(array(XIVO_PATH_OBJECT,'user','authent','abstract','sql.inc'
 
 class xivo_authent_postgresql extends xivo_authent_abstract_sql
 {
-	function xivo_authent_postgresql(&$dso,$param=array())
+	public function __construct(&$dso,$param=array())
 	{
-		$this->_init(&$dso,$param);
+		parent::_init($dso,$param);
 	}
 }
 

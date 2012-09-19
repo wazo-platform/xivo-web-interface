@@ -25,9 +25,9 @@ class xivo_application_service_asterisk_accessfeatures extends xivo_application_
 	var $_accessfeatures	= false;
 	var $_param		= array('feature'	=> '');
 
-	function xivo_application_service_asterisk_accessfeatures(&$service,$param=array())
+	public function __construct(&$service,$param=null,$components=true)
 	{
-		$this->xivo_application_asterisk_abstract(&$service);
+		parent::__construct($service);
 
 		if(($this->_accessfeatures = &$this->_service->get_module('accessfeatures')) === false)
 			return(false);

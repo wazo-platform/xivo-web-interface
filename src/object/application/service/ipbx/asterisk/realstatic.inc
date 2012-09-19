@@ -22,7 +22,7 @@ class xivo_application_service_asterisk_realstatic
 {
 	var $_service	= null;
 
-	function xivo_application_service_asterisk_realstatic(&$service)
+	public function __construct(&$service)
 	{
 		if(dwho_is_instance($service,'xivo_service_asterisk') === false)
 			trigger_error('Invalid service in '.__CLASS__,E_USER_ERROR);
@@ -30,7 +30,7 @@ class xivo_application_service_asterisk_realstatic
 		$this->_service = &$service;
 	}
 
-	function _load_module_class($name)
+	private function _load_module_class($name)
 	{
 		$name = (string) $name;
 
@@ -56,7 +56,7 @@ class xivo_application_service_asterisk_realstatic
 		return(false);
 	}
 
-	function _load_module($name)
+	private function _load_module($name)
 	{
 		$name = (string) $name;
 
@@ -76,7 +76,7 @@ class xivo_application_service_asterisk_realstatic
 		return(true);
 	}
 
-	function &get_module($name)
+	public function &get_module($name)
 	{
 		$r = false;
 
@@ -88,7 +88,7 @@ class xivo_application_service_asterisk_realstatic
 		return(($ref = &$r));
 	}
 
-	function is_valid($name)
+	private function is_valid($name)
 	{
 		$name = (string) $name;
 

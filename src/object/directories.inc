@@ -28,7 +28,7 @@ class xivo_directories extends xivo_libdatastorage_abstract
 	var $_origin		= false;
 	var $_origin_list	= false;
 
-	function xivo_directories()
+	public function __construct()
 	{
 		$this->_load_config(dirname(__FILE__).DWHO_SEP_DIR.'directories');
 		$this->_load_dso();

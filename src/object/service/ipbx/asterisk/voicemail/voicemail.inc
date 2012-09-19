@@ -29,7 +29,7 @@ class xivo_service_asterisk_voicemail extends xivo_service_asterisk_abstract
 	var $_origin_list	= false;
 	var $_identity		= false;
 
-	function xivo_service_asterisk_voicemail(&$sre,&$dso)
+	public function __construct(&$sre,&$dso)
 	{
 		if(is_object($sre) === false)
 			trigger_error('Invalid service in '.__CLASS__,E_USER_ERROR);

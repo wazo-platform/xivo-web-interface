@@ -28,7 +28,7 @@ class xivo_service_asterisk_callfiltermember extends xivo_service_asterisk_abstr
 	var $_origin		= false;
 	var $_origin_list	= false;
 
-	function xivo_service_asterisk_callfiltermember(&$sre,&$dso)
+	public function __construct(&$sre,&$dso)
 	{
 		if(is_object($sre) === false)
 			trigger_error('Invalid service in '.__CLASS__,E_USER_ERROR);
@@ -68,7 +68,7 @@ class xivo_service_asterisk_callfiltermember extends xivo_service_asterisk_abstr
 
 		return(parent::edit($id,$arr,$disable));
 	}
-	
+
 	function is_valid($type,$typeval,$disable=null)
 	{
 		$type = strval($type);

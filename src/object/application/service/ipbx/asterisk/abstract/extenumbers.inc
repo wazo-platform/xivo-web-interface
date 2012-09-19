@@ -25,9 +25,9 @@ class xivo_application_service_asterisk_extenumbers_abstract extends xivo_applic
 	var $_extenumbers	= false;
 	var $_param			= array('type'	=> '');
 
-	function xivo_application_service_asterisk_extenumbers_abstract(&$service,$param=array())
+	public function __construct(&$service,$param=array())
 	{
-		$this->xivo_application_service_asterisk_abstract(&$service);
+		parent::__construct($service);
 
 		if(($this->_extenumbers = &$this->_service->get_module('extenumbers')) === false)
 			return(false);

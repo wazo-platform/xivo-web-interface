@@ -25,7 +25,7 @@ abstract class xivo_object_abstract extends xivo_libdatastorage_abstract
 	var $_conf	= array();
 	var $_xobj	= null;
 
-	function xivo_object_abstract(&$xobj)
+	public function __construct(&$xobj)
 	{
 		if(dwho_is_instance($xobj,'xivo_object') === false)
 			trigger_error('Invalid XIVO Object in '.__CLASS__,E_USER_ERROR);
@@ -52,7 +52,7 @@ abstract class xivo_object_abstract extends xivo_libdatastorage_abstract
 
 		if(($this->_conf = dwho_gat::get_file($dir)) === false)
 			$this->_conf = array();
-			
+
 		if ($merge_abstract === true
 		&& ($conf = $this->_get_config_abstract()) !== false)
 			$this->_conf = array_merge($this->_conf,$conf);
@@ -67,7 +67,7 @@ abstract class xivo_object_abstract extends xivo_libdatastorage_abstract
 
 		if(($conf = dwho_gat::get_file($dir)) === false)
 			$conf = false;
-			
+
 		return($conf);
 	}
 }

@@ -25,9 +25,10 @@ class xivo_application_service_asterisk_ctiprofiles extends xivo_application_ast
 	var $_ctiprofiles = false;
 	var $_userfeatures = false;
 
-	function xivo_application_service_asterisk_ctiprofiles(&$service,$param=null,$components=true)
+	public function __construct(&$service,$param=null,$components=true)
 	{
-		$this->xivo_application_asterisk_abstract(&$service);
+		parent::__construct($service);
+
 		if(($this->_ctiprofiles = &$this->_service->get_module('ctiprofiles')) === false
 				|| ($this->_userfeatures = &$this->_service->get_module('userfeatures')) === false)
 			return(false);

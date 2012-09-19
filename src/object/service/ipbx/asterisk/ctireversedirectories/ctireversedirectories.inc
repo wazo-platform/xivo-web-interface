@@ -26,7 +26,7 @@ class xivo_service_asterisk_ctireversedirectories extends xivo_service_asterisk_
 	var $_name		= 'ctireversedirectories';
 	var $_filter	= false;
 
-	function xivo_service_asterisk_ctireversedirectories(&$sre,&$dso)
+	public function __construct(&$sre,&$dso)
 	{
 		if(is_object($sre) === false)
 			trigger_error('Invalid service in '.__CLASS__,E_USER_ERROR);

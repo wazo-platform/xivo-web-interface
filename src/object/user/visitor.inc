@@ -27,7 +27,7 @@ class xivo_user_visitor extends xivo_user_abstract
 	var $_dso	= null;
 	var $_ini	= array();
 
-	function xivo_user_visitor($factory=true)
+	public function __construct($factory=true)
 	{
 		$factory = false;
 

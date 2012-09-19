@@ -18,13 +18,13 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-class xivo_authent_abstract_sql
+abstract class xivo_authent_abstract_sql
 {
 	var $_param	= array('table' => 'user');
 	var $_attrib	= array();
 	var $_dso	= null;
 
-	function _init(&$dso,$param=array())
+	protected function _init(&$dso,$param=array())
 	{
 		if(is_object($dso) === false)
 			trigger_error('Invalid Datastorage object',E_USER_ERROR);

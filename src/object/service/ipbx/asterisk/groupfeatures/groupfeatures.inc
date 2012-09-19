@@ -29,7 +29,7 @@ class xivo_service_asterisk_groupfeatures extends xivo_service_asterisk_abstract
 	var $_origin_list	= false;
 	var $_identity		= false;
 
-	function xivo_service_asterisk_groupfeatures(&$sre,&$dso)
+	public function __construct(&$sre,&$dso)
 	{
 		if(is_object($sre) === false)
 			trigger_error('Invalid service in '.__CLASS__,E_USER_ERROR);
@@ -53,14 +53,14 @@ class xivo_service_asterisk_groupfeatures extends xivo_service_asterisk_abstract
 
 		return($data);
 	}
-	
+
 	function add($arr,$id=0)
 	{
 		if(is_array($arr) === false)
 			return(false);
 		else if(isset($arr['name']) === true)
 			$arr['name'] = strtolower($arr['name']);
-	
+
 		return(parent::add($arr,$id));
 	}
 

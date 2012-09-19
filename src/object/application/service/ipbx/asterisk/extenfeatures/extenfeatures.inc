@@ -29,9 +29,9 @@ class xivo_application_service_asterisk_extenfeatures extends xivo_application_a
 	var $_filter		= false;
 	var $_context		= XIVO_SRE_IPBX_AST_CONTEXT_FEATURES;
 
-	function xivo_application_service_asterisk_extenfeatures(&$service)
+	public function __construct(&$service)
 	{
-		$this->xivo_application_asterisk_abstract(&$service);
+		parent::__construct($service);
 
 		if(($this->_extensions = &$this->_service->get_module('extensions')) === false
 		|| ($this->_extenumbers = $this->get_abstract('extenumbers',array('type' => 'extenfeatures'))) === false)

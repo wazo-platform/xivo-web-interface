@@ -26,7 +26,7 @@ class xivo_user_acl extends xivo_acl_abstract
 	var $_dso	= null;
 	var $_param	= array('factory' => true);
 
-	function xivo_user_acl(&$dso,$factory=true)
+	public function __construct(&$dso,$factory=true)
 	{
 
 		if(defined('XIVO_USER_ACL_FILE') === true)

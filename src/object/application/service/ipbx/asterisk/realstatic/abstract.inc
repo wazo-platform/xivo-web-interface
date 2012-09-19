@@ -20,16 +20,16 @@
 
 dwho_file::required(array(XIVO_PATH_OBJECT,'application','service','ipbx','asterisk.inc'),true);
 
-class xivo_application_service_asterisk_realstatic_abstract extends xivo_application_asterisk_abstract
+abstract class xivo_application_service_asterisk_realstatic_abstract extends xivo_application_asterisk_abstract
 {
 	var $_conf		= array();
 	var $_filter		= false;
 	var $_realstatic	= null;
 	var $_multi		= false;
 
-	function _init(&$service)
+	protected function _init(&$service)
 	{
-		$this->xivo_application_asterisk_abstract(&$service);
+		parent::__construct(&$service);
 
 		$param = array();
 

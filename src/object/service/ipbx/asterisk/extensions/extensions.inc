@@ -31,7 +31,7 @@ class xivo_service_asterisk_extensions extends xivo_service_asterisk_abstract
 	var $_context		= array();
 	var $_filter_appdata	= false;
 
-	function xivo_service_asterisk_extensions(&$sre,&$dso)
+	public function __construct(&$sre,&$dso)
 	{
 		if(is_object($sre) === false)
 			trigger_error('Invalid service in '.__CLASS__,E_USER_ERROR);

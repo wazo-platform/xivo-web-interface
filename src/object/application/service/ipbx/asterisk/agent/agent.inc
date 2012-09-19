@@ -31,9 +31,9 @@ class xivo_application_service_asterisk_agent extends xivo_application_asterisk_
 	var $_contextlist	= array();
 	var $_musiconhold	= array();
 
-	function xivo_application_service_asterisk_agent(&$service,$param=null,$components=true)
+	public function __construct(&$service,$param=null,$components=true)
 	{
-		$this->xivo_application_asterisk_abstract(&$service);
+		parent::__construct($service);
 
 		if(($this->_agentfeatures = &$this->_service->get_module('agentfeatures')) === false
 		|| ($this->_agentgroup = &$this->_service->get_module('agentgroup')) === false

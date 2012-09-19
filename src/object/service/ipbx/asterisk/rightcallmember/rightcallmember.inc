@@ -28,7 +28,7 @@ class xivo_service_asterisk_rightcallmember extends xivo_service_asterisk_abstra
 	var $_origin		= false;
 	var $_origin_list	= false;
 
-	function xivo_service_asterisk_rightcallmember(&$sre,&$dso)
+	public function __construct(&$sre,&$dso)
 	{
 		if(is_object($sre) === false)
 			trigger_error('Invalid service in '.__CLASS__,E_USER_ERROR);

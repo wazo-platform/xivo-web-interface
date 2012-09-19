@@ -40,7 +40,7 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 	var $_xivo_dso_loaded  = false;
 	var $_savetmpfile      = '/tmp/wizard';
 
-	function __construct(&$xobj,$param=null,$components=true)
+	public function __construct(&$xobj,$param=null,$components=true)
 	{
 		parent::__construct(&$xobj);
 

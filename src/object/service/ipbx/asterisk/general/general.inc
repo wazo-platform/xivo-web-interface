@@ -27,7 +27,7 @@ class xivo_service_asterisk_general extends xivo_service_asterisk_abstract
 	var $_filter  = false;
 	var $_origin  = false;
 
-	function xivo_service_asterisk_general(&$sre,&$dso)
+	public function __construct(&$sre,&$dso)
 	{
 		if(is_object($sre) === false)
 			trigger_error('Invalid service in '.__CLASS__,E_USER_ERROR);

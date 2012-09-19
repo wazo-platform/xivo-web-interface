@@ -25,9 +25,9 @@ class xivo_application_service_asterisk_pickup extends xivo_application_asterisk
 	var $_pickup		   = false;
 	var $_pickupmember = false;
 
-	function xivo_application_service_asterisk_pickup(&$service,&$dso,$param=null,$components=true)
+	public function __construct(&$service,&$dso,$param=null,$components=true)
 	{
-		$this->xivo_application_asterisk_abstract(&$service);
+		parent::__construct($service);
 
 		if(is_object($dso) === false)
 			trigger_error('Invalid Datastorage object',E_USER_ERROR);

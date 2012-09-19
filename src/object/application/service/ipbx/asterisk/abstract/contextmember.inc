@@ -26,9 +26,9 @@ class xivo_application_service_asterisk_contextmember_abstract extends xivo_appl
 	var $_contextmember	= false;
 	var $_param		= array('type'	=> '');
 
-	function xivo_application_service_asterisk_contextmember_abstract(&$service,$param=array())
+	public function __construct(&$service,$param=array())
 	{
-		$this->xivo_application_service_asterisk_abstract(&$service);
+		parent::__construct($service);
 
 		if(($this->_context = &$this->_service->get_module('context')) === false
 		|| ($this->_contextmember = &$this->_service->get_module('contextmember')) === false)

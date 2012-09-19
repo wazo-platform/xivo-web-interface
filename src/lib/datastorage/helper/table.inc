@@ -29,9 +29,9 @@ class dwho_datastorage_helper_table extends dwho_datastorage_helper_abstract
 	var $_disable        = null;
 	var $_forcecolumn    = null;
 
-	function _init(&$dso,$param=array())
+	protected function _init(&$dso,$param=array())
 	{
-		parent::_init(&$dso);
+		parent::_init($dso);
 
 		$param = (array) $param;
 

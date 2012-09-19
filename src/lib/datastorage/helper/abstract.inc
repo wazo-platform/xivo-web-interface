@@ -23,7 +23,7 @@ class dwho_datastorage_helper_abstract
 	var $_dso      = null;
 	var $_param    = array();
 
-	function _init(&$dso)
+	protected function _init(&$dso)
 	{
 		if(is_object($dso) === false)
 			trigger_error('Invalid Datastorage object',E_USER_ERROR);

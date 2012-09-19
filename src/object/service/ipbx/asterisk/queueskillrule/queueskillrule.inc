@@ -32,10 +32,9 @@ class xivo_service_asterisk_queueskillrule extends xivo_service_asterisk_abstrac
 {
 	var $_dso		= null;
 	var $_name		= 'queueskillrule';
-
 	var $_filter		= false;
-	
-	function xivo_service_asterisk_queueskillrule(&$sre,&$dso)
+
+	public function __construct(&$sre,&$dso)
 	{
 		if(is_object($sre) === false)
 			trigger_error('Invalid service in '.__CLASS__,E_USER_ERROR);
@@ -56,29 +55,29 @@ class xivo_service_asterisk_queueskillrule extends xivo_service_asterisk_abstrac
 		return($data);
 	}
 
-	/** 
+	/**
 		Parser & Lexer to check a rule string
-	*/
+		*/
 
 	function check_rule($rule)
 	{
-	    $elts = split(',', $rule);
-	    if(count($elts) > 2)
-	        return false;
-	        
-	    foreach($elts as $elt)
-	    {
-    		$tokens = $this->_tokenize($elt);
-    		if($this->_validate($tokens) === false)
-    		    return false;
-    	}
+		$elts = split(',', $rule);
+		if(count($elts) > 2)
+			return false;
 
-        return true;
+		foreach($elts as $elt)
+		{
+			$tokens = $this->_tokenize($elt);
+			if($this->_validate($tokens) === false)
+				return false;
+		}
+
+		return true;
 	}
 
 	/**
 		lexer. transform string into tokens array
-	*/		
+		*/
 	function _tokenize($rule)
 	{
 		$_space  = " \t";
@@ -88,7 +87,7 @@ class xivo_service_asterisk_queueskillrule extends xivo_service_asterisk_abstrac
 		$tokens = array();
 
 		$len = strlen($rule);
-		$start = 0;	
+		$start = 0;
 		$value = null;
 
 		for($i = 0; $i < $len; $i++)
@@ -97,15 +96,25 @@ class xivo_service_asterisk_queueskillrule extends xivo_service_asterisk_abstrac
 
 			// space
 			if(strpos($_space, $rule[$i]) 		!== false)
-			{ $value = TOK_SPACE; }
+			{
+				$value = TOK_SPACE;
+			}
 			else if($rule[$i] == '(')
-			{ $value = TOK_PAROP; }
+			{
+				$value = TOK_PAROP;
+			}
 			else if($rule[$i] == ')')
-			{ $value = TOK_PARCL; }
+			{
+				$value = TOK_PARCL;
+			}
 			else if(strpos($_opcmp, $rule[$i])	!== false)
-			{ $value = TOK_CMP; }
+			{
+				$value = TOK_CMP;
+			}
 			else if(strpos($_opbool, $rule[$i])	!== false)
-			{ $value = TOK_BOOL; }
+			{
+				$value = TOK_BOOL;
+			}
 
 			if(!is_null($value))
 			{
@@ -113,7 +122,9 @@ class xivo_service_asterisk_queueskillrule extends xivo_service_asterisk_abstrac
 				{
 					$literal = substr($rule, $start, $i - $start);
 					if(ctype_digit($literal))
-					{ $tokens[] = array(TOK_WEIGHT, (int) $literal); }
+					{
+						$tokens[] = array(TOK_WEIGHT, (int) $literal);
+					}
 					else
 					{
 						// check this skill exist
@@ -122,11 +133,15 @@ class xivo_service_asterisk_queueskillrule extends xivo_service_asterisk_abstrac
 				}
 
 				if($value == TOK_CMP && $i < $len-1 && $rule[$i+1] == '=')
-				{ $tokens[] = array(TOK_CMP, $rule[$i] . '='); $i++; }
+				{
+					$tokens[] = array(TOK_CMP, $rule[$i] . '='); $i++;
+				}
 				else if($value != TOK_SPACE)
-				{ $tokens[] = array($value, $rule[$i]); }
+				{
+					$tokens[] = array($value, $rule[$i]);
+				}
 
-				$start = $i+1;				
+				$start = $i+1;
 			}
 		}
 
@@ -135,10 +150,13 @@ class xivo_service_asterisk_queueskillrule extends xivo_service_asterisk_abstrac
 			$literal = substr($rule, $start, $i - $start);
 			// check this skill exist
 
-			if(ctype_digit($literal))	
-			{ $tokens[] = array(TOK_WEIGHT, (int) $literal); }
+			if(ctype_digit($literal))
+			{
+				$tokens[] = array(TOK_WEIGHT, (int) $literal);
+			}
 			else
-			{ $tokens[] = array(TOK_SKILL, $literal); }
+			{ $tokens[] = array(TOK_SKILL, $literal);
+			}
 		}
 
 		return($tokens);
@@ -149,7 +167,7 @@ class xivo_service_asterisk_queueskillrule extends xivo_service_asterisk_abstrac
 		validate the rule syntax
 
 		@returns bool valid rule or not
-	*/
+		*/
 	function _validate($tokens)
 	{
 		$i = 0;
@@ -158,76 +176,96 @@ class xivo_service_asterisk_queueskillrule extends xivo_service_asterisk_abstrac
 
 	/**
 
-		CMPEXP: TOK_SKILL 
-		      | TOK_SKILL TOK_CMP TOK_WEIGHT
+	CMPEXP: TOK_SKILL
+	| TOK_SKILL TOK_CMP TOK_WEIGHT
 	*/
 	function _match_cmpexp($tokens, &$i)
 	{
 		if($this->_eos($tokens, $i))
-		{ return false; }
+		{
+			return false;
+		}
 
 		// 1st token must be a skillname
 		if(!$this->_isa($tokens, $i, TOK_SKILL))
-		{ return false; }
+		{
+			return false;
+		}
 
-		// the 2d token is facultative. If present, must be a comparison operator		
+		// the 2d token is facultative. If present, must be a comparison operator
 		if(!$this->_isa($tokens, ++$i, TOK_CMP))
-		{ return true; }
+		{
+			return true;
+		}
 
 		// 3d token must be a weight
 		$isaweight = $this->_isa($tokens, ++$i, TOK_WEIGHT);
 		if($isaweight)
-		{ $i++; }
+		{
+			$i++;
+		}
 
 		return $isaweight;
 	}
 
 	/**
 		BOOLEXP: CMPEXP
-		       | '(' BOOLEXP ')'
-		       | CMPEXP BOOLOP BOOLEXP
+		| '(' BOOLEXP ')'
+		| CMPEXP BOOLOP BOOLEXP
 
-	*/
+		*/
 	function _match_boolexp($tokens, &$i, $inpar=false)
 	{
 		//if($this->_eos($tokens, $i) || ($inpar && $this->_isa($tokens, $i, TOK_PARCL)))
 		if($inpar && $this->_isa($tokens, $i, TOK_PARCL))
-		{ return true; }
-	
+		{
+			return true;
+		}
+
 		// expression with parenthesis
 		if($this->_isa($tokens, $i, TOK_PAROP))
 		{
 			if(!$this->_match_boolexp($tokens, ++$i, true) ||
-			   !$this->_isa($tokens, $i++, TOK_PARCL))
-			{ return false; }
+					!$this->_isa($tokens, $i++, TOK_PARCL))
+			{
+				return false;
+			}
 
-		// simple comparison expression.
-		} else {	
+			// simple comparison expression.
+		} else {
 			if(!$this->_match_cmpexp($tokens, $i))
-			{ return false; }
+			{
+				return false;
+			}
 		}
 
 		//
 		if($this->_eos($tokens, $i) || ($inpar && $this->_isa($tokens, $i, TOK_PARCL)))
-		{ return true; }
+		{
+			return true;
+		}
 
 		// the comparison expression, if not alone, must be followed
 		// by a boolean operator then a boolean expression
-		return($this->_isa($tokens, $i, TOK_BOOL) && 
-		       $this->_match_boolexp($tokens, ++$i, $inpar));	
+		return($this->_isa($tokens, $i, TOK_BOOL) &&
+				$this->_match_boolexp($tokens, ++$i, $inpar));
 	}
 
 	/**
 		end-of-expression
-	*/
+		*/
 	function _eos($tokens, $i)
-	{ return($i >= count($tokens)); }
+	{
+		return($i >= count($tokens));
+	}
 
 	/**
 		match a token
-	*/		
+		*/
 	function _isa($tokens, $i, $token)
-	{ return($i < count($tokens) && $tokens[$i][0] == $token); }
-}	
+	{
+		return($i < count($tokens) && $tokens[$i][0] == $token);
+	}
+}
 
 ?>

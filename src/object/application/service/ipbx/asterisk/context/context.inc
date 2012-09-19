@@ -33,9 +33,9 @@ class xivo_application_service_asterisk_context extends xivo_application_asteris
 	var $_modules			= array();
 	var $_param				= array('type' => '');
 
-	function xivo_application_service_asterisk_context(&$service,&$dso,$param=array(),$components=false)
+	public function __construct(&$service,&$dso,$param=null,$components=true)
 	{
-		$this->xivo_application_asterisk_abstract(&$service);
+		parent::__construct($service);
 
 		if(is_object($dso) === false)
 			trigger_error('Invalid Datastorage object',E_USER_ERROR);

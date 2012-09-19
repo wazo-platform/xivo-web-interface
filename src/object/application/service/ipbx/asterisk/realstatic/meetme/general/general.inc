@@ -28,9 +28,9 @@ class xivo_application_service_asterisk_realstatic_meetme_general extends xivo_a
 	var $_cat_metric	= 0;
 	var $_filename		= 'meetme.conf';
 
-	function xivo_application_service_asterisk_realstatic_meetme_general(&$service)
+	public function __construct(&$service)
 	{
-		return($this->_init(&$service));
+		return(parent::_init($service));
 	}
 
 	function _load_config()

@@ -32,7 +32,7 @@ class xivo_application_service_asterisk_agentglobalparams extends xivo_applicati
 
 	function xivo_application_service_asterisk_agentglobalparams(&$service,$param=null,$components=true)
 	{
-		$this->xivo_application_asterisk_abstract(&$service);
+		$this->xivo_application_asterisk_abstract($service);
 
 		if(($this->_agentglobalparams = &$this->_service->get_module('agentglobalparams')) === false)
 			return(false);

@@ -31,7 +31,7 @@ class xivo_application_service_asterisk_servicesgroup extends xivo_application_a
 
 	public function __construct(&$service,&$dso,$param=null,$components=true)
 	{
-		$this->xivo_application_asterisk_abstract(&$service);
+		parent::__construct($service);
 
 		if(is_object($dso) === false)
 			trigger_error('Invalid Datastorage object',E_USER_ERROR);
@@ -257,7 +257,7 @@ class xivo_application_service_asterisk_servicesgroup extends xivo_application_a
 				$error[$i] = 'bad_user';
 			}
 			else
-			{				
+			{
 				for($l = 0;$l < $nblinesfeautres;$l++)
 				{
 					$protoline = &$linefeatures[$l];
@@ -334,10 +334,10 @@ class xivo_application_service_asterisk_servicesgroup extends xivo_application_a
 			$arr['userfeatures_id'] = (int) $ref['id'];
 			if ($ref['protocol'] === XIVO_SRE_IPBX_AST_PROTO_CUSTOM)
 				continue;
-		
+
 			if ($this->_servicesgroup_user->get_nb($arr) === 0)
 				$this->_servicesgroup_user->add($arr);
-			
+
 			if(($proto = $this->_service->get_module('user'.$ref['protocol'])) === false
 			|| $proto->edit($ref['protocolid'],$wac) === false)
 			{
@@ -347,7 +347,7 @@ class xivo_application_service_asterisk_servicesgroup extends xivo_application_a
 
 			$this->_return['user'][] = $arr['userfeatures_id'];
 		}
-		
+
 		if(isset($this->_return['user'][0]) === false)
 			$this->_return['user'] = false;
 
@@ -528,17 +528,17 @@ class xivo_application_service_asterisk_servicesgroup extends xivo_application_a
 		{
 			$ref = &$rs[$i];
 			$arr['userfeatures_id'] = (int) $ref['id'];
-		
+
 			if(($linefeatures = $this->_line->get_lines_user($arr['userfeatures_id'])) === false
 			| ($nblinesfeautres = count($linefeatures)) === 0)
 				dwho_report::push('error','bad_user: '.$arr['userfeatures_id']);
 			else
-			{				
+			{
 				for($l = 0;$l < $nblinesfeautres;$l++)
 				{
 					$protoline = &$linefeatures[$l];
 					if ($protoline['protocol'] === XIVO_SRE_IPBX_AST_PROTO_CUSTOM)
-						continue;		
+						continue;
 					if (($proto = $this->_service->get_module('user'.$protoline['protocol'])) === false
 					|| $proto->edit($protoline['protocolid'],$wac) === false)
 					{

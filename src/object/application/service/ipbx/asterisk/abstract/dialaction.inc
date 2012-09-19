@@ -26,9 +26,9 @@ class xivo_application_service_asterisk_dialaction_abstract extends xivo_applica
 	var $_sound		= array();
 	var $_param		= array('category'	=> '');
 
-	function xivo_application_service_asterisk_dialaction_abstract(&$service,$param=array())
+	public function __construct(&$service,$param=array())
 	{
-		$this->xivo_application_service_asterisk_abstract(&$service);
+		parent::__construct($service);
 
 		if(($this->_dialaction = &$this->_service->get_module('dialaction')) === false)
 			return(false);

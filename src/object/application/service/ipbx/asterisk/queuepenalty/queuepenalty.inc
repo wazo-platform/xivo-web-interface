@@ -25,9 +25,9 @@ class xivo_application_service_asterisk_queuepenalty extends xivo_application_as
 	var $_queuepenaltys		   = false;
 	var $_queuepenaltychange = false;
 
-	function xivo_application_service_asterisk_queuepenalty(&$service,&$dso,$param=null,$components=true)
+	public function __construct(&$service,&$dso,$param=null,$components=true)
 	{
-		$this->xivo_application_asterisk_abstract(&$service);
+		parent::__construct($service);
 
 		if(is_object($dso) === false)
 			trigger_error('Invalid Datastorage object',E_USER_ERROR);
@@ -48,7 +48,7 @@ class xivo_application_service_asterisk_queuepenalty extends xivo_application_as
 
 		if(($this->_info['queuepenalty'] = $this->_queuepenalty->get($id,$disable)) === false)
 			return(false);
-		
+
 		$this->_info['changes'] = $this->_queuepenaltychange->get_all_where(array('queuepenalty_id' => $id));
 
 		$this->_origin['queuepenalty'] = $this->_queuepenalty->get_origin();

@@ -30,9 +30,9 @@ class xivo_application_service_asterisk_realstatic_features_general extends xivo
 	var $_cat_metric	= 0;
 	var $_filename		= 'features.conf';
 
-	function xivo_application_service_asterisk_realstatic_features_general(&$service)
+	public function __construct(&$service)
 	{
-		if($this->_init(&$service) === false
+		if(parent::_init($service) === false
 		|| ($this->_extenumbers = $this->get_abstract('extenumbers',array('type' => $this->_name))) === false)
 			return(false);
 

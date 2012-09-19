@@ -29,7 +29,7 @@ class dwho_tpl_url extends dwho_tpl_module
 	var $_query  = null;
 	var $_uri    = null;
 
-	function dwho_tpl_url(&$tpl)
+	public function __construct(&$tpl)
 	{
 		$this->_tpl        = &$tpl;
 		$this->_query      = &dwho_gct::set_get(new dwho_query());

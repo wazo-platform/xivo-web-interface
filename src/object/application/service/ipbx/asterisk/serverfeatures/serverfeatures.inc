@@ -27,9 +27,9 @@ class xivo_application_service_asterisk_serverfeatures extends xivo_application_
 	var $_param		= array('feature'	=> '',
 					'type'		=> '');
 
-	function xivo_application_service_asterisk_serverfeatures(&$service,$param=array())
+	public function __construct(&$service,$param=null)
 	{
-		$this->xivo_application_asterisk_abstract(&$service);
+		parent::__construct($service);
 
 		if(($this->_serverfeatures = &$this->_service->get_module('serverfeatures')) === false)
 			return(false);

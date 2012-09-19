@@ -18,7 +18,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-class xivo_stats_ressource_abstract
+abstract class xivo_stats_ressource_abstract
 {
 
 	protected 	$_table                = '';

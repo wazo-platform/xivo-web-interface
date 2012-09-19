@@ -20,16 +20,16 @@
 
 require_once(dwho_file::joinpath(DWHO_PATH_ROOT,'datastorage','helper','table.inc'));
 
-class xivo_server_abstract_sql extends dwho_datastorage_helper_table
+abstract class xivo_server_abstract_sql extends dwho_datastorage_helper_table
 {
 	var $_table      = 'server';
 	var $_primary    = array('id' => 0);
 	var $_disable    = 'disable';
 	var $_unique     = array('name',array('host'));
 
-	function xivo_server_abstract_sql(&$dso,$param=array())
+	public function __construct(&$dso,$param=array())
 	{
-	    parent::_init(&$dso,$param);
+		parent::_init($dso,$param);
 	}
 }
 

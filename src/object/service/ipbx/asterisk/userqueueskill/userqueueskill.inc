@@ -28,7 +28,7 @@ class xivo_service_asterisk_userqueueskill extends xivo_service_asterisk_abstrac
 	var $_origin	= false;
 	var $_identity	= false;
 
-	function xivo_service_asterisk_userqueueskill(&$sre,&$dso)
+	public function __construct(&$sre,&$dso)
 	{
 		if(is_object($sre) === false)
 			trigger_error('Invalid service in '.__CLASS__,E_USER_ERROR);
@@ -49,7 +49,7 @@ class xivo_service_asterisk_userqueueskill extends xivo_service_asterisk_abstrac
 
 		return($data);
 	}
-	
+
 	function get_skills($userid)
 	{
 	    return $this->_dso->get_skills($userid);

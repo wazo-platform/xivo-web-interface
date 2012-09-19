@@ -30,9 +30,9 @@ class xivo_application_service_asterisk_realstatic_voicemail_general extends xiv
 	var $_contextmember	= false;
 	var $_contextlist	= array();
 
-	function xivo_application_service_asterisk_realstatic_voicemail_general(&$service)
+	public function __construct(&$service)
 	{
-		return($this->_init(&$service));
+		return(parent::_init($service));
 	}
 
 	function _load_config()

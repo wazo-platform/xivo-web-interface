@@ -32,7 +32,7 @@ class xivo_service_asterisk_musiconhold extends xivo_service_asterisk_staticconf
 	var $_musiconhold	= array();
 	var $_fileoption	= array();
 
-	function xivo_service_asterisk_musiconhold(&$sre,&$dso)
+	public function __construct(&$sre,&$dso)
 	{
 		$this->_load_staticconf_config();
 

@@ -25,7 +25,7 @@ class xivo_user_user extends xivo_user_abstract
 	var $_param	= array('factory' => true);
 	var $_authent	= null;
 
-	function xivo_user_user($factory=true)
+	public function __construct($factory=true)
 	{
 		$this->_ini = xivo_user::load_get_init();
 

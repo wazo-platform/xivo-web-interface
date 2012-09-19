@@ -30,9 +30,9 @@ class xivo_application_service_asterisk_skill extends xivo_application_asterisk_
 	var $_skillcat	= false;
 	var $_skill			= false;
 
-	function xivo_application_service_asterisk_skill(&$service,&$dso,$param=array(),$components=true)
+	public function __construct(&$service,&$dso,$param=null,$components=true)
 	{
-		$this->xivo_application_asterisk_abstract(&$service);
+		parent::__construct($service);
 
 		if(is_object($dso) === false)
 			trigger_error('Invalid Datastorage object',E_USER_ERROR);
@@ -44,15 +44,6 @@ class xivo_application_service_asterisk_skill extends xivo_application_asterisk_
 			return(false);
 		else if((bool) $components === true)
 			$this->load_components();
-
-		$this->_load_config(dirname(__FILE__));
-
-/*
-		if(($size = $this->_verify_can_upload_file()) === false)
-			die();
-
-		$this->_conf['import']['file']['size'] = $size;
-*/
 
 		return(true);
 	}
@@ -119,7 +110,7 @@ class xivo_application_service_asterisk_skill extends xivo_application_asterisk_
 			{
 				//print_r($v);
 				$value = array(
-					'id' 					=> null, 
+					'id' 					=> null,
 					'catid' 			=> $catid,
 					'name'				=> $v[0],
 					'description'	=> $v[1],
@@ -140,7 +131,7 @@ class xivo_application_service_asterisk_skill extends xivo_application_asterisk_
 	function get($id)
 	{
 		$this->_info = $this->_origin = array();
-		
+
 		return $this->_dso->get($id);
 	}
 }

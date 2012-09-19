@@ -28,17 +28,17 @@ abstract class xivo_service_abstract
 	var $_dsocustom		= array();
 	var $_dsoconf		= array();
 
-	function get_name()
+	public function get_name()
 	{
 		return($this->_name);
 	}
 
-	function get_type()
+	public function get_type()
 	{
 		return($this->_type);
 	}
 
-	function _chk_exists_cfg($type,$name,$ret=false)
+	protected function _chk_exists_cfg($type,$name,$ret=false)
 	{
 		$r = false;
 
@@ -53,7 +53,7 @@ abstract class xivo_service_abstract
 		return($r);
 	}
 
-	function load_module_class($module)
+	public function load_module_class($module)
 	{
 		if($this->chk_module_enable($module) === false)
 		{
@@ -64,7 +64,7 @@ abstract class xivo_service_abstract
 		return($this->_load_module_class($module));
 	}
 
-	function _load_module_class($module)
+	private function _load_module_class($module)
 	{
 		$module = (string) $module;
 
@@ -84,7 +84,7 @@ abstract class xivo_service_abstract
 		return(false);
 	}
 
-	function _load_application_class($application)
+	private function _load_application_class($application)
 	{
 		$application = (string) $application;
 
@@ -105,7 +105,7 @@ abstract class xivo_service_abstract
 		return(false);
 	}
 
-	function _load_appcustom_class($type,$name)
+	private function _load_appcustom_class($type,$name)
 	{
 		$type = (string) $type;
 		$name = (string) $name;
@@ -128,7 +128,7 @@ abstract class xivo_service_abstract
 		return(false);
 	}
 
-	function _load_config()
+	protected function _load_config()
 	{
 		if(empty($this->_conf) === false)
 			return(null);
@@ -144,7 +144,7 @@ abstract class xivo_service_abstract
 			trigger_error('Failed to load '.$this->_name.' configuration',E_USER_ERROR);
 	}
 
-	function _load_dso_config($type)
+	private function _load_dso_config($type)
 	{
 		if(isset($this->_dsoconf[$type]) === true)
 			return(true);
@@ -163,7 +163,7 @@ abstract class xivo_service_abstract
 		return(true);
 	}
 
-	function get_dso_config_by_name($type,$name)
+	public function get_dso_config_by_name($type,$name)
 	{
 		if($this->_load_dso_config($type) === true
 		&& isset($this->_dsoconf[$type][$name]) === true
@@ -173,7 +173,7 @@ abstract class xivo_service_abstract
 		return(false);
 	}
 
-	function &get_module($name,$param=null)
+	public function &get_module($name,$param=null)
 	{
 		$r = false;
 
@@ -185,7 +185,7 @@ abstract class xivo_service_abstract
 		return(($ref = &$r));
 	}
 
-	function &get_application($name,$param=null,$components=true)
+	public function &get_application($name,$param=null,$components=true)
 	{
 		$r = false;
 
@@ -197,7 +197,7 @@ abstract class xivo_service_abstract
 		return(($ref = &$r));
 	}
 
-	function &get_appcustom($type,$name)
+	public function &get_appcustom($type,$name)
 	{
 		$r = false;
 
@@ -210,12 +210,12 @@ abstract class xivo_service_abstract
 		return(($ref = &$r));
 	}
 
-	function chk_module_enable($name)
+	public function chk_module_enable($name)
 	{
 		return($this->_chk_exists_cfg('module',$name));
 	}
 
-	function chk_appcustom_enable($type,$name)
+	public function chk_appcustom_enable($type,$name)
 	{
 		if($this->_chk_exists_cfg('appcustom',$type) === true
 		&& isset($this->_conf['appcustom'][$type][$name]) === true)
@@ -224,7 +224,7 @@ abstract class xivo_service_abstract
 		return(false);
 	}
 
-	function _load_module($name,$param=null)
+	private function _load_module($name,$param=null)
 	{
 		$name = (string) $name;
 
@@ -254,7 +254,7 @@ abstract class xivo_service_abstract
 		return(true);
 	}
 
-	function _load_application($name,$param=null,$components=true)
+	private function _load_application($name,$param=null,$components=true)
 	{
 		$name = (string) $name;
 		if(isset($this->_application[$name]) === true)
@@ -279,7 +279,7 @@ abstract class xivo_service_abstract
 		return(true);
 	}
 
-	function _load_appcustom($type,$name)
+	private function _load_appcustom($type,$name)
 	{
 		$type = (string) $type;
 		$name = (string) $name;
@@ -302,7 +302,7 @@ abstract class xivo_service_abstract
 		return(true);
 	}
 
-	function _load_dso_application($name)
+	private function _load_dso_application($name)
 	{
 		if(($conf = $this->_chk_exists_cfg('application',$name,true)) === true
 		&& isset($conf['datastorage']) === true
@@ -352,7 +352,7 @@ abstract class xivo_service_abstract
 		return(false);
 	}
 
-	function _load_dso_appcustom($type,$name)
+	private function _load_dso_appcustom($type,$name)
 	{
 		$type = (string) $type;
 		$name = (string) $name;
@@ -393,7 +393,7 @@ abstract class xivo_service_abstract
 		return(false);
 	}
 
-	function _load_dso_application_class($name,$dir,$dsotype,&$dso,$meta=false,$param=false,$custom=false)
+	private function _load_dso_application_class($name,$dir,$dsotype,&$dso,$meta=false,$param=false,$custom=false)
 	{
 		if($meta === false)
 			$metatype = $dsotype;
@@ -411,10 +411,10 @@ abstract class xivo_service_abstract
 		if($param === false || xivo::load_class($class,$dir,$metatype,false) === false)
 			return($param);
 
-		return(new $class($dso,&$param));
+		return(new $class($dso,$param));
 	}
 
-	function _load_dso($name='',$custom=false)
+	protected function _load_dso($name='',$custom=false)
 	{
 		$name = (string) $name;
 		$custom = (bool) $custom;
@@ -496,7 +496,7 @@ abstract class xivo_service_abstract
 		return(false);
 	}
 
-	function _load_dso_class($name,$type,$dir,$custom,$datastorage,$datastoragemod,$meta=false,$param=false)
+	private function _load_dso_class($name,$type,$dir,$custom,$datastorage,$datastoragemod,$meta=false,$param=false)
 	{
 
 		if($meta === false)

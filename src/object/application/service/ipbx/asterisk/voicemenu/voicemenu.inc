@@ -34,9 +34,9 @@ class xivo_application_service_asterisk_voicemenu extends xivo_application_aster
 	var $_conf		= array();
 	var $_schedule_path = false;
 
-	function xivo_application_service_asterisk_voicemenu(&$service,$param=null,$components=true)
+	public function __construct(&$service,$param=null,$components=true)
 	{
-		$this->xivo_application_asterisk_abstract(&$service);
+		parent::__construct($service);
 
 		if(($this->_voicemenu = &$this->_service->get_module('voicemenu')) === false)
 			return(false);
@@ -389,7 +389,7 @@ class xivo_application_service_asterisk_voicemenu extends xivo_application_aster
 
 			$this->set_extenumbers($action,$number,$context);
 		}
-	
+
 		// schedule
 		if(array_key_exists('schedule_id', $arr))
 			$this->_set_result('schedule_id', intval($arr['schedule_id']));

@@ -20,13 +20,13 @@
 
 require_once(dwho_file::joinpath(DWHO_PATH_ROOT,'datastorage','helper','table.inc'));
 
-class xivo_service_asterisk_abstract_sql extends dwho_datastorage_helper_table
+abstract class xivo_service_asterisk_abstract_sql extends dwho_datastorage_helper_table
 {
 	var $_disable	= 'commented';
 
 	public function __construct(&$dso,$param=array())
 	{
-		parent::_init(&$dso,$param);
+		parent::_init($dso,$param);
 	}
 
 	protected function _stat_common_where($interval)

@@ -23,7 +23,7 @@ class dwho_prefs
 	var $_section = null;
 	var $_QR      = null;
 
-	function dwho_prefs($section)
+	public function __construct($section)
 	{
 		if(!array_key_exists('_WEBI', $_SESSION))
 			$_SESSION['_WEBI'] = array();

@@ -26,9 +26,9 @@ class xivo_application_service_asterisk_paging extends xivo_application_asterisk
 	var $_paging		= false;
 	var $_paginguser	= false;
 
-	function xivo_application_service_asterisk_paging(&$service,&$dso,$param=null,$components=true)
+	public function __construct(&$service,&$dso,$param=null,$components=true)
 	{
-		$this->xivo_application_asterisk_abstract(&$service);
+		parent::__construct($service);
 
 		if(is_object($dso) === false)
 			trigger_error('Invalid Datastorage object',E_USER_ERROR);
@@ -61,7 +61,7 @@ class xivo_application_service_asterisk_paging extends xivo_application_asterisk
 			return(false);
 
 		$this->_origin['paging'] = $this->_paging->get_origin();
-		
+
 		if($this->_components === false)
 			return($this->_info);
 
@@ -73,7 +73,7 @@ class xivo_application_service_asterisk_paging extends xivo_application_asterisk
 
 		return($this->_info);
 	}
-	
+
 	function _get_paginguser()
 	{
 		$this->_info['paginguser'] = false;
@@ -84,7 +84,7 @@ class xivo_application_service_asterisk_paging extends xivo_application_asterisk
 
 		return($this->_info['paginguser']);
 	}
-	
+
 	function _get_pagingcaller()
 	{
 		$this->_info['pagingcaller'] = false;
@@ -206,7 +206,7 @@ class xivo_application_service_asterisk_paging extends xivo_application_asterisk
 
 		return(true);
 	}
-	
+
 	function set_paginguser($arr)
 	{
 		if(is_array($arr) === false || ($nb = count($arr)) === 0)
@@ -247,7 +247,7 @@ class xivo_application_service_asterisk_paging extends xivo_application_asterisk
 		$this->_set_result('paginguser',$reslist);
 		return(true);
 	}
-	
+
 	function set_pagingcaller($arr)
 	{
 		if(is_array($arr) === false || ($nb = count($arr)) === 0)
@@ -325,7 +325,7 @@ class xivo_application_service_asterisk_paging extends xivo_application_asterisk
 	{
 		if(($rs = $this->get_result('paginguser')) === null)
 			return($rs);
-		
+
 		if(($pagingid = dwho_ulongint($pagingid)) === 0
 		|| $rs === false)
 			return(false);
@@ -361,7 +361,7 @@ class xivo_application_service_asterisk_paging extends xivo_application_asterisk
 	{
 		if(($rs = $this->get_result('pagingcaller')) === null)
 			return($rs);
-			
+
 		if(($pagingid = dwho_ulongint($pagingid)) === 0
 		|| $rs === false)
 			return(false);
@@ -428,7 +428,7 @@ class xivo_application_service_asterisk_paging extends xivo_application_asterisk
 
 		$this->_status = 'edit';
 		$this->_return = array();
-		
+
 		if($this->get_errnb() > 0
 		|| $this->edit_paging() === false
 		|| $this->edit_paginguser() === false
@@ -554,7 +554,7 @@ class xivo_application_service_asterisk_paging extends xivo_application_asterisk
 			return(null);
 		else if(dwho_issa('paging',$this->_info) === false)
 			return(false);
-			
+
 		$w = array();
 		$w['pagingid'] = $this->_info['paging']['id'];
 		$w['caller'] = 0;
@@ -566,14 +566,14 @@ class xivo_application_service_asterisk_paging extends xivo_application_asterisk
 
 		return($r);
 	}
-	
+
 	function delete_pagingcaller()
 	{
 		if(dwho_issa('paginguser',$this->_info) === false)
 			return(null);
 		else if(dwho_issa('paging',$this->_info) === false)
 			return(false);
-			
+
 		$w = array();
 		$w['pagingid'] = $this->_info['paging']['id'];
 		$w['caller'] = 1;

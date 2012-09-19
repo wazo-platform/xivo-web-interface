@@ -28,14 +28,14 @@ class xivo_object_provisioning extends xivo_object_abstract
 	var $_origin		= false;
 	var $_origin_list	= false;
 
-	function xivo_object_provisioning(&$xobj,&$dso)
+	public function __construct(&$xobj,&$dso)
 	{
-		$this->xivo_object_abstract(&$xobj);
-		
+		parent::__construct($xobj);
+
 		if(is_object($dso) === false)
 			trigger_error('Invalid datastorage in '.__CLASS__,E_USER_ERROR);
 
-    	$this->_dso = &$dso;
+		$this->_dso = &$dso;
 	}
 }
 

@@ -849,7 +849,7 @@ function dwho_array_diff_key($arr1,$arr2)
 
 	$r = array();
 
-	$diff = array_values(array_diff(array_keys(&$arr1),array_keys(&$arr2)));
+	$diff = array_values(array_diff(array_keys($arr1),array_keys($arr2)));
 
 	if(($nb = count($diff)) === 0)
 		return($r);
@@ -875,12 +875,12 @@ function dwho_array_reduce_level($arr,$t=false)
 	if((bool) $t === false)
 	{
 		for($i = 0;$i < $nb;$i++)
-			$r = array_merge(array_keys(&$arr[$i]),$r);
+			$r = array_merge(array_keys($arr[$i]),$r);
 	}
 	else
 	{
 		for($i = 0;$i < $nb;$i++)
-			$r = array_merge(array_keys(array_flip(&$arr[$i])),$r);
+			$r = array_merge(array_keys(array_flip($arr[$i])),$r);
 	}
 
 	return($r);
@@ -888,7 +888,7 @@ function dwho_array_reduce_level($arr,$t=false)
 
 function dwho_array_change_value_case($arr,$case=CASE_LOWER)
 {
-	return(array_flip(array_change_key_case(array_flip(&$arr),intval((bool) $case))));
+	return(array_flip(array_change_key_case(array_flip($arr),intval((bool) $case))));
 }
 
 function dwho_build_array_ref(&$a)
@@ -896,7 +896,7 @@ function dwho_build_array_ref(&$a)
 	if(is_array($a) === false)
 		return(false);
 
-	$arr = array_values(&$a);
+	$arr = array_values($a);
 
 	if(($nb = count($arr)) === 0)
 		return(false);
@@ -1050,7 +1050,7 @@ function dwho_last_key(&$a,$sort=SORT_NUMERIC)
 	if(is_array($a) === false)
 		return(false);
 
-	$ak = array_keys(&$a);
+	$ak = array_keys($a);
 	ksort($ak,$sort);
 
 	return(end($ak));

@@ -27,9 +27,9 @@ class xivo_application_service_asterisk_agentmember_abstract extends xivo_applic
 	var $_agentorigin	= array();
 	var $_defgroup		= XIVO_SRE_IPBX_AST_AGENT_GROUP_DEFAULT;
 
-	function xivo_application_service_asterisk_agentmember_abstract(&$service)
+	public function __construct(&$service,$param=array())
 	{
-		$this->xivo_application_service_asterisk_abstract(&$service);
+		parent::__construct($service);
 
 		if(($this->_agentfeatures = &$this->_service->get_module('agentfeatures')) === false)
 			return(false);

@@ -28,7 +28,7 @@ class xivo_service_asterisk_schedule_path extends xivo_service_asterisk_abstract
 	var $_origin	  = false;
 	var $_identity	= false;
 
-	function xivo_service_asterisk_schedule_path(&$sre,&$dso)
+	public function __construct(&$sre,&$dso)
 	{
 		if(is_object($sre) === false)
 			trigger_error('Invalid service in '.__CLASS__,E_USER_ERROR);
@@ -58,9 +58,9 @@ class xivo_service_asterisk_schedule_path extends xivo_service_asterisk_abstract
 			return true;
 
 		$arr = array(
-			'schedule_id' => $schedule_id, 
-			'path'        => $path, 
-			'pathid'      => intval($pathid), 
+			'schedule_id' => $schedule_id,
+			'path'        => $path,
+			'pathid'      => intval($pathid),
 			'order'       => 0
 		);
 

@@ -29,9 +29,9 @@ class xivo_application_service_asterisk_realstatic_meetme_room extends xivo_appl
 	var $_var_name		= 'conf';
 	var $_filename		= 'meetme.conf';
 
-	function xivo_application_service_asterisk_realstatic_meetme_room(&$service)
+	public function __construct(&$service)
 	{
-		return($this->_init(&$service));
+		return(parent::_init($service));
 	}
 
 	function _load_config()

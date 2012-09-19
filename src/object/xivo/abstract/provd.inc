@@ -51,7 +51,6 @@ abstract class xivo_object_provd_abstract extends xivo_object_abstract
 		$this->_url = array('scheme' => 'http',
 				    'host' => $this->_conf['provd']['host'],
 				    'port' => $this->_conf['provd']['port']);
-
 		$this->_uri = new dwho_uri();
 		$this->_curl = new dwho_curl();
 	}

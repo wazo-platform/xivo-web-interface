@@ -43,9 +43,9 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 	protected $_conf			= array();
 	protected $_param			= array('internal'	=> false);
 
-	public function __construct(&$service,&$dso,$param=array(),$components=true)
+	public function __construct(&$service,&$dso,$param=null,$components=true)
 	{
-		$this->xivo_application_asterisk_abstract(&$service);
+		parent::__construct($service);
 
 		if(is_object($dso) === false)
 			trigger_error('Invalid Datastorage object',E_USER_ERROR);

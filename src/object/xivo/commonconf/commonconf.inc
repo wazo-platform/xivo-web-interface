@@ -31,9 +31,9 @@ class xivo_object_commonconf extends xivo_object_abstract
 	var $_resolvconf = false;
 	var $_provisioning = false;
 
-	function xivo_object_commonconf(&$xobj)
+	public function __construct(&$xobj)
 	{
-		$this->xivo_object_abstract(&$xobj);
+		parent::__construct($xobj);
 
 		if(($this->_sysconfd    = &$this->_xobj->get_module('sysconfd'))     === false
 		|| ($this->_dhcp        = &$this->_xobj->get_module('dhcp'))         === false

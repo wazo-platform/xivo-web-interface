@@ -29,9 +29,9 @@ class xivo_application_service_asterisk_realstatic_iax_register extends xivo_app
 	var $_filename		= 'iax.conf';
 	var $_var_name		= 'register';
 
-	function xivo_application_service_asterisk_realstatic_iax_register(&$service)
+	public function __construct(&$service)
 	{
-		return($this->_init(&$service));
+		return(parent::_init($service));
 	}
 
 	function _load_config()

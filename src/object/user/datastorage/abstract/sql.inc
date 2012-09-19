@@ -20,16 +20,16 @@
 
 require_once(DWHO_PATH_ROOT.DWHO_SEP_DIR.'datastorage'.DWHO_SEP_DIR.'helper'.DWHO_SEP_DIR.'table.inc');
 
-class xivo_user_abstract_sql extends dwho_datastorage_helper_table
+abstract class xivo_user_abstract_sql extends dwho_datastorage_helper_table
 {
 	var $_table	= 'user';
 	var $_primary	= array('id' => 0);
 	var $_disable	= 'valid';
 	var $_unique	= array(array('login','meta'));
 
-	function xivo_user_abstract_sql(&$dso,$param=array())
+	public function __construct(&$dso,$param=array())
 	{
-		parent::_init(&$dso,$param);
+		parent::_init($dso,$param);
 	}
 
 	function get($id,$disable=null)

@@ -29,8 +29,8 @@ class xivo_application_xivo_object_dhcp extends xivo_application_xivo_object_abs
 	{
 		parent::__construct(&$xobj);
 
-		if(($this->_commonconf  = &$this->_xobj->get_module('commonconf'))    === false
-		|| ($this->_dhcp        = &$this->_xobj->get_module('dhcp'))          === false)
+		if(($this->_commonconf  = &$this->_xobj->get_module('commonconf')) === false
+				|| ($this->_dhcp = &$this->_xobj->get_module('dhcp')) === false)
 			return(false);
 
 		return(true);
@@ -38,36 +38,36 @@ class xivo_application_xivo_object_dhcp extends xivo_application_xivo_object_abs
 
 	function get()
 	{
-	    $data = $this->_dhcp->get(1);
-        return $data;
+		$data = $this->_dhcp->get(1);
+		return $data;
 	}
 
 	function set($arr)
-    {
-        $this->_reset();
+	{
+		$this->_reset();
 
-        if($this->_dhcp->chk_values($arr) === false)
-            $this->_set_errors($this->_dhcp->get_filter_error());
+		if($this->_dhcp->chk_values($arr) === false)
+			$this->_set_errors($this->_dhcp->get_filter_error());
 
-        if($this->get_errnb() > 0)
-            return false;
+		if($this->get_errnb() > 0)
+			return false;
 
-        $keys = array('active', 'pool_start', 'pool_end', 'extra_ifaces');
-        foreach(array_keys($arr) as $key)
-        {
-            if(!in_array($key, $keys))
-                unset($arr[$key]);
-        }
+		$keys = array('active', 'pool_start', 'pool_end', 'extra_ifaces');
+		foreach(array_keys($arr) as $key)
+		{
+			if(!in_array($key, $keys))
+				unset($arr[$key]);
+		}
 
-        if(!array_key_exists('active', $arr))
-            $arr['active'] = 0;
+		if(!array_key_exists('active', $arr))
+			$arr['active'] = 0;
 
-        if($this->_dhcp->edit(1, $arr) === false)
-            return false;
+		if($this->_dhcp->edit(1, $arr) === false)
+			return false;
 
-        // notify commonconf needs to be updated
-        return $this->_commonconf->notify_changes();
-    }
+		// notify commonconf needs to be updated
+		return $this->_commonconf->notify_changes();
+	}
 }
 
 ?>

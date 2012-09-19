@@ -26,7 +26,7 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 	var $_service_type	= 'ipbx';
 	var $_service_name	= 'asterisk';
 
-	function xivo_application_asterisk_abstract(&$service)
+	public function __construct(&$service)
 	{
 		if(dwho_is_instance($service,'xivo_service_asterisk') === false)
 			trigger_error('Invalid service in '.__CLASS__,E_USER_ERROR);
@@ -34,7 +34,7 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		$this->_service = &$service;
 	}
 
-	function mk_interface($name,$chantype,$context='',$number='',$protocol='')
+	public function mk_interface($name,$chantype,$context='',$number='',$protocol='')
 	{
 		$chantype = strval($chantype);
 		$number = strval($number);
@@ -75,7 +75,7 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		return($r);
 	}
 
-	function mk_agent_interface($number)
+	public function mk_agent_interface($number)
 	{
 		$r = array();
 		$r['channel'] = XIVO_SRE_IPBX_AST_CHAN_AGENT;
@@ -86,7 +86,7 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		return($r);
 	}
 
-	function get_context_list($disable=null,$order=null,$limit=null,$assoc=false,$type=null)
+	public function get_context_list($disable=null,$order=null,$limit=null,$assoc=false,$type=null)
 	{
 		if(isset($this->_contextlist) === false)
 			return(false);
@@ -105,7 +105,7 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		return(($this->_contextlist = $context->get_all($disable,$order,$limit,$assoc,$type)));
 	}
 
-	function get_trunk_list($disable=null,$order=null,$limit=null,$assoc=false)
+	public function get_trunk_list($disable=null,$order=null,$limit=null,$assoc=false)
 	{
 		if(isset($this->_trunklist) === false)
 			return(false);
@@ -123,7 +123,7 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		return(($this->_trunklist = $apptrunk->get_trunks_list(null,$disable,$order,$limit,$assoc)));
 	}
 
-	function get_musiconhold()
+	public function get_musiconhold()
 	{
 		if(isset($this->_musiconhold) === false)
 			return(false);
@@ -137,7 +137,7 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		return($this->_musiconhold);
 	}
 
-	function _get_extenumbers($typeval)
+	public function _get_extenumbers($typeval)
 	{
 		$this->_info['extenumbers'] = false;
 		$this->_origin['extenumbers'] = false;
@@ -150,7 +150,7 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		return($this->_info['extenumbers']);
 	}
 
-	function _get_rightcall($typeval)
+	public function _get_rightcall($typeval)
 	{
 		$this->_info['rightcall'] = false;
 		$this->_origin['rightcall'] = false;
@@ -163,7 +163,7 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		return($this->_info['rightcall']);
 	}
 
-	function _get_dialaction($categoryval)
+	public function _get_dialaction($categoryval)
 	{
 		$this->_info['dialaction'] = false;
 		$this->_origin['dialaction'] = false;
@@ -174,7 +174,7 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		return($this->_info['dialaction']);
 	}
 
-	function _get_contextnummember($typeval)
+	public function _get_contextnummember($typeval)
 	{
 		$this->_info['contextnummember'] = false;
 		$this->_origin['contextnummember'] = false;
@@ -187,7 +187,7 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		return($this->_info['contextnummember']);
 	}
 
-	function _get_contextmember($typeval='',$varname='')
+	public function _get_contextmember($typeval='',$varname='')
 	{
 		$this->_info['contextmember'] = false;
 		$this->_origin['contextmember'] = false;
@@ -200,7 +200,7 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		return($this->_info['contextmember']);
 	}
 
-	function _get_callerid($typeval)
+	public function _get_callerid($typeval)
 	{
 		$this->_info['callerid'] = false;
 		$this->_origin['callerid'] = false;
@@ -213,7 +213,7 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		return($this->_info['callerid']);
 	}
 
-	function set_extenumbers($action,$number,$context='',$typeval='')
+	public function set_extenumbers($action,$number,$context='',$typeval='')
 	{
 		if(($r = $this->_extenumbers->set($action,$number,$context,$typeval)) === false)
 			$this->_set_error('extenumbers',$this->_extenumbers->get_error());
@@ -223,7 +223,7 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		return($r);
 	}
 
-	function chk_macro($name,$exten,$arr,$context)
+	public function chk_macro($name,$exten,$arr,$context)
 	{
 		if(($r = $this->_extensions->chk_exten($exten,$context,'macro',$arr)) !== false)
 			return($r);
@@ -235,7 +235,7 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		return($r);
 	}
 
-	function set_macro($action,$name,$exten,$arr,$context)
+	public function set_macro($action,$name,$exten,$arr,$context)
 	{
 		if(($action !== 'add' && $action !== 'edit') === true
 		|| dwho_has_len($name) === false)
@@ -255,7 +255,7 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		return($r);
 	}
 
-	function set_rightcall($list)
+	public function set_rightcall($list)
 	{
 		if(($r = $this->_rightcall->set($list)) === false)
 			$this->_set_error('rightcall',$this->_rightcall->get_error());
@@ -265,7 +265,7 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		return($r);
 	}
 
-	function set_dialaction($list)
+	public function set_dialaction($list)
 	{
 		if(($r = $this->_dialaction->set($list)) === false)
 			$this->_set_error('dialaction',$this->_dialaction->get_error());
@@ -275,7 +275,7 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		return($r);
 	}
 
-	function set_contextnummember($context,$number='')
+	public function set_contextnummember($context,$number='')
 	{
 		if(($r = $this->_contextnummember->set($context,$number)) === false)
 		{
@@ -288,7 +288,7 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		return($r);
 	}
 
-	function set_contextmember($list)
+	public function set_contextmember($list)
 	{
 		if(($r = $this->_contextmember->set($list)) === false)
 			$this->_set_error('contextmember',$this->_contextmember->get_error());
@@ -298,7 +298,7 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		return($r);
 	}
 
-	function set_callerid($arr)
+	public function set_callerid($arr)
 	{
 		if(($r = $this->_callerid->set($arr)) === false)
 			$this->_set_error('callerid',$this->_callerid->get_error());
@@ -308,7 +308,7 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		return($r);
 	}
 
-	function add_extenumbers($typeval)
+	public function add_extenumbers($typeval)
 	{
 		if(($rs = $this->_extenumbers->add((string) $typeval)) === null || $rs === false)
 			return($rs);
@@ -316,7 +316,7 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		return(($this->_return['extenumbers'] = $this->_extenumbers->get_return()));
 	}
 
-	function add_macro($name)
+	public function add_macro($name)
 	{
 		if(($rs = $this->get_result($name)) === null || $rs === false)
 			return($rs);
@@ -324,7 +324,7 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		return(($this->_return[$name] = $this->_extensions->add_exten($rs)));
 	}
 
-	function add_rightcall($typeval)
+	public function add_rightcall($typeval)
 	{
 		$r = $this->_rightcall->add((string) $typeval);
 
@@ -333,7 +333,7 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		return($r);
 	}
 
-	function add_dialaction($categoryval)
+	public function add_dialaction($categoryval)
 	{
 		$r = $this->_dialaction->add($categoryval);
 
@@ -342,7 +342,7 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		return($r);
 	}
 
-	function add_contextnummember($typeval)
+	public function add_contextnummember($typeval)
 	{
 		$r = $this->_contextnummember->add((string) $typeval);
 
@@ -351,7 +351,7 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		return($r);
 	}
 
-	function add_contextmember($typeval='')
+	public function add_contextmember($typeval='')
 	{
 		$r = $this->_contextmember->add((string) $typeval);
 
@@ -360,7 +360,7 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		return($r);
 	}
 
-	function add_callerid($typeval)
+	public function add_callerid($typeval)
 	{
 		$r = $this->_callerid->add((string) $typeval);
 
@@ -369,7 +369,7 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		return($r);
 	}
 
-	function edit_extenumbers()
+	public function edit_extenumbers()
 	{
 		if(($rs = $this->_extenumbers->edit()) === null || $rs === false)
 			return($rs);
@@ -377,7 +377,7 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		return(($this->_return['extenumbers'] = $this->_extenumbers->get_return()));
 	}
 
-	function edit_macro($name)
+	public function edit_macro($name)
 	{
 		$rs = false;
 
@@ -391,7 +391,7 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		return($this->_return[$name]);
 	}
 
-	function edit_rightcall($typeval)
+	public function edit_rightcall($typeval)
 	{
 		$r = $this->_rightcall->edit($this->_status,$typeval);
 
@@ -400,7 +400,7 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		return($r);
 	}
 
-	function edit_dialaction($categoryval)
+	public function edit_dialaction($categoryval)
 	{
 		$r = $this->_dialaction->edit($this->_status,$categoryval);
 
@@ -409,7 +409,7 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		return($r);
 	}
 
-	function edit_contextnummember($typeval)
+	public function edit_contextnummember($typeval)
 	{
 		$r = $this->_contextnummember->edit($this->_status,$typeval);
 
@@ -418,7 +418,7 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		return($r);
 	}
 
-	function edit_contextmember($typeval='')
+	public function edit_contextmember($typeval='')
 	{
 		$r = $this->_contextmember->edit($this->_status,$typeval);
 
@@ -427,7 +427,7 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		return($r);
 	}
 
-	function edit_callerid($typeval)
+	public function edit_callerid($typeval)
 	{
 		$r = $this->_callerid->edit($this->_status,$typeval);
 
@@ -436,7 +436,7 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		return($r);
 	}
 
-	function save_extenumbers($typeval)
+	public function save_extenumbers($typeval)
 	{
 		if(($rs = $this->_extenumbers->save($this->_status,$typeval)) === null || $rs === false)
 			return($rs);
@@ -444,7 +444,7 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		return(($this->_return['extenumbers'] = $this->_extenumbers->get_return()));
 	}
 
-	function delete_extenumbers()
+	public function delete_extenumbers()
 	{
 		if(($rs = $this->_extenumbers->delete($this->_status)) === null
 		|| $rs === false)
@@ -456,7 +456,7 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		return($rs);
 	}
 
-	function delete_macro($name)
+	public function delete_macro($name)
 	{
 		if(dwho_issa($name,$this->_info) === false)
 			return(null);
@@ -469,7 +469,7 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		return($r);
 	}
 
-	function delete_rightcall()
+	public function delete_rightcall()
 	{
 		$r = $this->_rightcall->delete($this->_status);
 
@@ -479,7 +479,7 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		return($r);
 	}
 
-	function delete_dialaction()
+	public function delete_dialaction()
 	{
 		$r = $this->_dialaction->delete($this->_status);
 
@@ -489,7 +489,7 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		return($r);
 	}
 
-	function delete_contextnummember()
+	public function delete_contextnummember()
 	{
 		$r = $this->_contextnummember->delete($this->_status);
 
@@ -499,7 +499,7 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		return($r);
 	}
 
-	function delete_contextmember()
+	public function delete_contextmember()
 	{
 		$r = $this->_contextmember->delete($this->_status);
 
@@ -509,7 +509,7 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		return($r);
 	}
 
-	function delete_callerid()
+	public function delete_callerid()
 	{
 		$r = $this->_callerid->delete($this->_status);
 
@@ -519,7 +519,7 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		return($r);
 	}
 
-	function get_destination_list($type='',$id=0,$number=false)
+	public function get_destination_list($type='',$id=0,$number=false)
 	{
 		$r = array();
 
@@ -550,7 +550,7 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		return($r);
 	}
 
-	function get_destination_users($id=0,$number=false)
+	public function get_destination_users($id=0,$number=false)
 	{
 		$order = array();
 		$order['firstname'] = SORT_ASC;
@@ -564,7 +564,7 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		return(false);
 	}
 
-	function get_destination_groups($id=0,$number=false)
+	public function get_destination_groups($id=0,$number=false)
 	{
 		$order = array();
 		$order['name'] = SORT_ASC;
@@ -578,7 +578,7 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		return(false);
 	}
 
-	function get_destination_queues($id=0,$number=false)
+	public function get_destination_queues($id=0,$number=false)
 	{
 		$order = array();
 		$order['name'] = SORT_ASC;
@@ -592,7 +592,7 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		return(false);
 	}
 
-	function get_destination_meetme($id=0,$number=false)
+	public function get_destination_meetme($id=0,$number=false)
 	{
 		$order = array();
 		$order['name']    = SORT_ASC;
@@ -606,7 +606,7 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		return(false);
 	}
 
-	function get_destination_voicemail()
+	public function get_destination_voicemail()
 	{
 		$order = array();
 		$order['fullname'] = SORT_ASC;
@@ -620,7 +620,7 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		return(false);
 	}
 
-	function get_destination_schedule($id=0)
+	public function get_destination_schedule($id=0)
 	{
 		$order = array();
 		$order['name'] = SORT_ASC;
@@ -633,7 +633,7 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		return(false);
 	}
 
-	function get_destination_voicemenu()
+	public function get_destination_voicemenu()
 	{
 		$order = array();
 		$order['name'] = SORT_ASC;
@@ -647,7 +647,7 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		return(false);
 	}
 
-	function get_destination_outcall()
+	public function get_destination_outcall()
 	{
 		$order = array();
 		$order['name'] = SORT_ASC;
@@ -659,7 +659,7 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		return(false);
 	}
 
-	function get_destination_trunk($protocols=null)
+	public function get_destination_trunk($protocols=null)
 	{
 		$order = array();
 		$order['name'] = SORT_ASC;

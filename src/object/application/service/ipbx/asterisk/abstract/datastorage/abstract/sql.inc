@@ -20,15 +20,15 @@
 
 require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'application','abstract','datastorage','sql.inc'));
 
-class xivo_application_service_asterisk_abstract_sql extends dwho_datastorage_helper_abstract
+abstract class xivo_application_service_asterisk_abstract_sql extends dwho_datastorage_helper_abstract
 {
 	var $_cnt	= 0;
 	var $_dsoconf	= array();
 	var $_table	= array();
 
-	function xivo_application_service_asterisk_abstract_sql(&$dso,&$dsoconf)
+	public function __construct(&$dso,&$dsoconf)
 	{
-		parent::_init(&$dso);
+		parent::_init($dso);
 
 		if(is_array($dsoconf) === false)
 			trigger_error('Invalid Datastorage configuration array',E_USER_ERROR);

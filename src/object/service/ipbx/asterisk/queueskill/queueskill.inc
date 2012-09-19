@@ -28,7 +28,7 @@ class xivo_service_asterisk_queueskill extends xivo_service_asterisk_abstract
 	var $_origin		= false;
 	var $_identity	= false;
 
-	function xivo_service_asterisk_queueskill(&$sre,&$dso)
+	public function __construct(&$sre,&$dso)
 	{
 		if(is_object($sre) === false)
 			trigger_error('Invalid service in '.__CLASS__,E_USER_ERROR);

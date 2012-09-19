@@ -18,6 +18,14 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+$appqueue = &$ipbx->get_application('queue');
+$apprightcall = &$ipbx->get_application('rightcall',null,false);
+$appgroup = &$ipbx->get_application('group',null,false);
+$modpark = &$ipbx->get_module('parkinglot');
+$general_module   = &$ipbx->get_module('general');
+
+$general = $general_module->get(1);
+
 $result = $fm_save = $error = null;
 
 $gmember = $qmember = $rightcall = array();
@@ -25,15 +33,12 @@ $gmember['list'] = $qmember['list'] = false;
 $gmember['info'] = $qmember['info'] = false;
 $gmember['slt'] = $qmember['slt'] = $rightcall['slt'] = array();
 
-$appgroup = &$ipbx->get_application('group',null,false);
-
 if(($groups = $appgroup->get_groups_list(null,
 					 array('name' => SORT_ASC),
 					 null,
 					 true)) !== false)
 	$gmember['list'] = $groups;
 
-$appqueue = &$ipbx->get_application('queue',null,false);
 
 if(($queues = $appqueue->get_queues_list(null,
 					 array('name' => SORT_ASC),
@@ -41,7 +46,6 @@ if(($queues = $appqueue->get_queues_list(null,
 					 true)) !== false)
 	$qmember['list'] = $queues;
 
-$apprightcall = &$ipbx->get_application('rightcall',null,false);
 
 $rightcall['list'] = $apprightcall->get_rightcalls_list(null,
 							array('name' => SORT_ASC),
@@ -55,7 +59,6 @@ if(isset($_QR['fm_send']) === true
 && dwho_issa('queueskill-skill',$_QR) === true
 && dwho_issa('queueskill-weight',$_QR) === true)
 {
-	$appqueue = &$ipbx->get_application('queue');
 	$queueskills = array();
 
 	// skipping the last one (empty entry)
@@ -84,8 +87,6 @@ if(isset($_QR['fm_send']) === true
 	}
 	else
 		$_QRY->go($_TPL->url('service/ipbx/pbx_settings/users'),$param);
-
-
 }
 
 dwho::load_class('dwho_sort');
@@ -126,15 +127,13 @@ if($qmember['list'] !== false && dwho_ak('queuemember',$result) === true)
 	}
 }
 
-	if($rightcall['list'] !== false && dwho_issa('rightcall',$result) === true
-	&& ($rightcall['slt'] = dwho_array_intersect_key($result['rightcall'],$rightcall['list'],'rightcallid')) !== false)
-		$rightcall['slt'] = array_keys($rightcall['slt']);
+if($rightcall['list'] !== false && dwho_issa('rightcall',$result) === true
+&& ($rightcall['slt'] = dwho_array_intersect_key($result['rightcall'],$rightcall['list'],'rightcallid')) !== false)
+	$rightcall['slt'] = array_keys($rightcall['slt']);
 
 $element = $appuser->get_elements();
-
-$general_module   = &$ipbx->get_module('general');
-$general = $general_module->get(1);
 $element['userfeatures']['timezone']['default'] = $general['timezone'];
+$element['queueskills'] =  $appqueue->skills_gettree();
 
 if(empty($result) === false)
 {
@@ -179,10 +178,6 @@ $softkeys_list = array(
 	'backjoin'      => $_TPL->bbf('softkey_backjoin'),
 );
 
-$appqueue = &$ipbx->get_application('queue');
-$element['queueskills'] =  $appqueue->skills_gettree();
-
-$modpark = &$ipbx->get_module('parkinglot');
 
 $_TPL->set_var('queueskills', $queueskills);
 $_TPL->set_var('info',$result);

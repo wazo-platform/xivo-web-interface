@@ -30,7 +30,7 @@ class xivo_service_asterisk extends xivo_service_abstract
 	var $_apprealstatic      = array();
 	var $_request_handlers   = null;
 
-	function xivo_service_asterisk($ini)
+	public function __construct($ini)
 	{
 		$this->_load_config();
 
@@ -42,7 +42,7 @@ class xivo_service_asterisk extends xivo_service_abstract
 		$this->_load_service_information();
 	}
 
-	function datastorage_general_config()
+	public function datastorage_general_config()
 	{
 		if(dwho_issa('datastorage',$this->_ini['general']) === false)
 			return(false);
@@ -50,7 +50,7 @@ class xivo_service_asterisk extends xivo_service_abstract
 		return($this->_ini['general']['datastorage']);
 	}
 
-	function required($arr,$once=false,$includable=false)
+	public function required($arr,$once=false,$includable=false)
 	{
 		$arr = (array) $arr;
 
@@ -84,7 +84,7 @@ class xivo_service_asterisk extends xivo_service_abstract
 		return($answer);
 	}
 
-	function _load_identity_class($module)
+	private function _load_identity_class($module)
 	{
 		$dir = dwho_file::joinpath(XIVO_PATH_OBJECT,
 					   'service',
@@ -101,7 +101,7 @@ class xivo_service_asterisk extends xivo_service_abstract
 		return($class);
 	}
 
-	function _load_identity($module)
+	private function _load_identity($module)
 	{
 		if($this->chk_module_enable($module) === false)
 		{
@@ -121,7 +121,7 @@ class xivo_service_asterisk extends xivo_service_abstract
 		return(true);
 	}
 
-	function &get_identity($module)
+	public function &get_identity($module)
 	{
 		$r = false;
 
@@ -131,7 +131,7 @@ class xivo_service_asterisk extends xivo_service_abstract
 		return(($ref = &$r));
 	}
 
-	function identity($module,$arr,$full=true)
+	public function identity($module,$arr,$full=true)
 	{
 		if(($identity = &$this->get_identity($module)) === false)
 			return(false);
@@ -139,7 +139,7 @@ class xivo_service_asterisk extends xivo_service_abstract
 		return($identity->mk_identity($arr,$full));
 	}
 
-	function load_realstatic_class($module)
+	public function load_realstatic_class($module)
 	{
 		if($this->chk_realstatic_enable($module) === false)
 		{
@@ -150,7 +150,7 @@ class xivo_service_asterisk extends xivo_service_abstract
 		return($this->_load_realstatic_class($module));
 	}
 
-	function _load_realstatic_class($name)
+	private function _load_realstatic_class($name)
 	{
 		$file = $name.'.inc';
 
@@ -176,12 +176,12 @@ class xivo_service_asterisk extends xivo_service_abstract
 		return(false);
 	}
 
-	function chk_realstatic_enable($name)
+	public function chk_realstatic_enable($name)
 	{
 		return($this->_chk_exists_cfg('realstatic',$name));
 	}
 
-	function _load_realstatic($name,$param=null)
+	private function _load_realstatic($name,$param=null)
 	{
 		if($this->chk_realstatic_enable($name) === false)
 		{
@@ -213,7 +213,7 @@ class xivo_service_asterisk extends xivo_service_abstract
 		return(true);
 	}
 
-	function &get_realstatic($name,$param=null)
+	public function &get_realstatic($name,$param=null)
 	{
 		$r = false;
 
@@ -223,7 +223,7 @@ class xivo_service_asterisk extends xivo_service_abstract
 		return(($ref = &$r));
 	}
 
-	function _load_apprealstatic_class($application)
+	private function _load_apprealstatic_class($application)
 	{
 		$application = (string) $application;
 
@@ -244,7 +244,7 @@ class xivo_service_asterisk extends xivo_service_abstract
 		return(false);
 	}
 
-	function &call_apprealstatic($name,$func,$args=null)
+	public function &call_apprealstatic($name,$func,$args=null)
 	{
 		$name = (string) $name;
 		$func = (string) $func;
@@ -262,7 +262,7 @@ class xivo_service_asterisk extends xivo_service_abstract
 		return(($ref = &$r));
 	}
 
-	function &get_apprealstatic($name)
+	public function &get_apprealstatic($name)
 	{
 		$r = false;
 
@@ -272,7 +272,7 @@ class xivo_service_asterisk extends xivo_service_abstract
 		return(($ref = &$r));
 	}
 
-	function _load_apprealstatic($name)
+	private function _load_apprealstatic($name)
 	{
 		$name = (string) $name;
 
@@ -289,7 +289,7 @@ class xivo_service_asterisk extends xivo_service_abstract
 		return(true);
 	}
 
-	function _load_service_information()
+	private function _load_service_information()
 	{
 		$uppertype	= strtoupper($this->_type);
 		$define_label	= 'XIVO_SRE_'.$uppertype.'_LABEL';
@@ -355,7 +355,7 @@ class xivo_service_asterisk extends xivo_service_abstract
 		define($define_version,$version);
 	}
 
-	function _get_service_info_from_discuss()
+	private function _get_service_info_from_discuss()
 	{
 		if((defined('DWHO_SESS_ENABLE') === true
 			&& (bool) DWHO_SESS_ENABLE === false) === true
@@ -382,17 +382,17 @@ class xivo_service_asterisk extends xivo_service_abstract
 		return($r);
 	}
 
-	function get_protocol()
+	public function get_protocol()
 	{
 		return($this->_conf['protocol']);
 	}
 
-	function chk_protocol($name)
+	public function chk_protocol($name)
 	{
 		return($this->_chk_exists_cfg('protocol',strval($name)));
 	}
 
-	function get_protocol_module_name($name)
+	public function get_protocol_module_name($name)
 	{
 		$r = false;
 		if($this->chk_protocol($name) === true)
@@ -401,7 +401,7 @@ class xivo_service_asterisk extends xivo_service_abstract
 		return($r);
 	}
 
-	function &get_protocol_module($name)
+	public function &get_protocol_module($name)
 	{
 		$r = false;
 
@@ -411,7 +411,7 @@ class xivo_service_asterisk extends xivo_service_abstract
 		return(($ref = &$r));
 	}
 
-	function get_element($modules=array())
+	public function get_element($modules=array())
 	{
 		$modules = (array) $modules;
 
@@ -436,7 +436,7 @@ class xivo_service_asterisk extends xivo_service_abstract
 		return($r);
 	}
 
-	function get_application_element($appname)
+	public function get_application_element($appname)
 	{
 		if(($app = &$this->get_application($appname)) === false
 		|| ($list = $app->get_element()) === false)
@@ -445,7 +445,7 @@ class xivo_service_asterisk extends xivo_service_abstract
 		return(array($list));
 	}
 
-	function get_protocol_element($protocols=array(),$module=false)
+	public function get_protocol_element($protocols=array(),$module=false)
 	{
 		$protocols = (array) $protocols;
 		$module = (bool) $module;
@@ -486,18 +486,18 @@ class xivo_service_asterisk extends xivo_service_abstract
 		return($r);
 	}
 
-	function get_formats()
+	public function get_formats()
 	{
 		return($this->_conf['format']);
 	}
 
-	function chk_channel($channel)
+	public function chk_channel($channel)
 	{
 		return($this->_chk_exists_cfg('channel',
 					      strtolower(strval($channel))));
 	}
 
-	function chk_channel_by_protocol($protocol)
+	public function chk_channel_by_protocol($protocol)
 	{
 		$r = false;
 
@@ -510,7 +510,7 @@ class xivo_service_asterisk extends xivo_service_abstract
 		return($r);
 	}
 
-	function get_channel_by_protocol($protocol)
+	public function get_channel_by_protocol($protocol)
 	{
 		$protocol = strtolower(strval($protocol));
 
@@ -520,7 +520,7 @@ class xivo_service_asterisk extends xivo_service_abstract
 		return(false);
 	}
 
-	function chk_channel_by_interface($interface)
+	public function chk_channel_by_interface($interface)
 	{
 		$interface = strtolower(strval($interface));
 
@@ -534,7 +534,7 @@ class xivo_service_asterisk extends xivo_service_abstract
 		return($interface);
 	}
 
-	function get_channel($channel)
+	public function get_channel($channel)
 	{
 		$r = false;
 
@@ -546,7 +546,7 @@ class xivo_service_asterisk extends xivo_service_abstract
 		return($r);
 	}
 
-	function mk_agent_interface($number)
+	public function mk_agent_interface($number)
 	{
 		$number = strval($number);
 
@@ -556,7 +556,7 @@ class xivo_service_asterisk extends xivo_service_abstract
 		return($this->mk_interface($number,null,null,null,XIVO_SRE_IPBX_AST_CHAN_AGENT));
 	}
 
-	function mk_interface($name,$protocol='',$number='',$context='',$channel='')
+	public function mk_interface($name,$protocol='',$number='',$context='',$channel='')
 	{
 		$r = false;
 		$name     = strtolower(strval($name));
@@ -594,7 +594,7 @@ class xivo_service_asterisk extends xivo_service_abstract
 		return($channel.'/'.$name);
 	}
 
-	function display_extension($str)
+	public function display_extension($str)
 	{
 		if(isset($str{0}) === true && $str{0} === '_')
 			$str = substr($str,1);
@@ -602,7 +602,7 @@ class xivo_service_asterisk extends xivo_service_abstract
 		return($str);
 	}
 
-	function clean_extension($str)
+	public function clean_extension($str)
 	{
 		$str = preg_replace('/\[(\d)\]/','\\1',strval($str));
 
@@ -621,7 +621,7 @@ class xivo_service_asterisk extends xivo_service_abstract
 		return($str);
 	}
 
-	function chk_extension($str)
+	public function chk_extension($str)
 	{
 		$str = strval($str);
 
@@ -713,7 +713,7 @@ class xivo_service_asterisk extends xivo_service_abstract
 		return($r);
 	}
 
-	function realexten_pattern($str)
+	public function realexten_pattern($str)
 	{
 		$str = preg_replace('/\[(\d)\]/','\\1',$str);
 		$pat = array('_','X','Z','N');
@@ -722,7 +722,7 @@ class xivo_service_asterisk extends xivo_service_abstract
 		return(str_replace($pat,$rep,$str));
 	}
 
-	function exten2regexp($str)
+	public function exten2regexp($str)
 	{
 		$pat = array('_','X','Z','N','\.','\!');
 		$rep = array('','[0-9]','[1-9]','[2-9]','[0-9#\*]+','[0-9#\*]*');
@@ -730,7 +730,7 @@ class xivo_service_asterisk extends xivo_service_abstract
 		return(str_replace($pat,$rep,preg_quote($str)));
 	}
 
-	function valid_exten_pattern_in_interval($min,$pattern,$max)
+	public function valid_exten_pattern_in_interval($min,$pattern,$max)
 	{
 		if(dwho_digit($min) === false
 		|| dwho_digit($max) === false)
@@ -802,7 +802,7 @@ class xivo_service_asterisk extends xivo_service_abstract
 		return(($min === false && $max === false));
 	}
 
-	function valid_exten_number_in_interval($min,$number,$max)
+	public function valid_exten_number_in_interval($min,$number,$max)
 	{
 		if(dwho_has_len($max) === false)
 			$max = $min;
@@ -814,7 +814,7 @@ class xivo_service_asterisk extends xivo_service_abstract
 		return(true);
 	}
 
-	function valid_exten_in_interval($min,$number,$max)
+	public function valid_exten_in_interval($min,$number,$max)
 	{
 		$min		= strval($min);
 		$number		= strval($number);
@@ -834,7 +834,7 @@ class xivo_service_asterisk extends xivo_service_abstract
 		return(xivo_service_asterisk::valid_exten_number_in_interval($min,$number,$max));
 	}
 
-	function mk_callerid($calleridname,$calleridnum='', $protocol=XIVO_SRE_IPBX_AST_PROTO_SIP)
+	public function mk_callerid($calleridname,$calleridnum='', $protocol=XIVO_SRE_IPBX_AST_PROTO_SIP)
 	{
 		$calleridnum = strval($calleridnum);
 		// if calleridnum is already set by the user (calleridname looks like "name <num>")
@@ -859,7 +859,7 @@ class xivo_service_asterisk extends xivo_service_abstract
 		return(trim($calleridname));
 	}
 
-	function get_contexts_list($arr=null)
+	public function get_contexts_list($arr=null)
 	{
 		$r = array(XIVO_SRE_IPBX_AST_CONTEXT_FEATURES,
 			   XIVO_SRE_IPBX_AST_CONTEXT_GENERAL,
@@ -873,7 +873,7 @@ class xivo_service_asterisk extends xivo_service_abstract
 		return($r);
 	}
 
-	function get_codecs_list()
+	public function get_codecs_list()
 	{
 		return(array(XIVO_SRE_IPBX_AST_CODEC_AUDIO_G723,
 			     XIVO_SRE_IPBX_AST_CODEC_AUDIO_GSM,
@@ -897,7 +897,7 @@ class xivo_service_asterisk extends xivo_service_abstract
 			     XIVO_SRE_IPBX_AST_CODEC_VIDEO_H264));
 	}
 
-	function get_amaflags_list($onlymeta=true)
+	public function get_amaflags_list($onlymeta=true)
 	{
 		if((bool) $onlymeta === true)
 			return(array(XIVO_SRE_IPBX_AST_CDR_AMAFLAGS_META_DEFAULT,
@@ -912,7 +912,7 @@ class xivo_service_asterisk extends xivo_service_abstract
 			XIVO_SRE_IPBX_AST_CDR_AMAFLAGS_DOCUMENTATION	=> XIVO_SRE_IPBX_AST_CDR_AMAFLAGS_META_DOCUMENTATION));
 	}
 
-	function chk_context($context,$arr=null)
+	public function chk_context($context,$arr=null)
 	{
 		$_reserved_context = xivo_service_asterisk::get_contexts_list($arr);
 		if(is_scalar($context) === false

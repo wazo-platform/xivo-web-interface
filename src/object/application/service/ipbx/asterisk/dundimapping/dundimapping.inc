@@ -24,9 +24,9 @@ class xivo_application_service_asterisk_dundimapping extends xivo_application_as
 {
 	var $_dundimapping		   = false;
 
-	function xivo_application_service_asterisk_dundimapping(&$service,&$dso,$param=null,$components=true)
+	public function __construct(&$service,&$dso,$param=null,$components=true)
 	{
-		$this->xivo_application_asterisk_abstract(&$service);
+		parent::__construct($service);
 
 		if(is_object($dso) === false)
 			trigger_error('Invalid Datastorage object',E_USER_ERROR);
@@ -45,7 +45,7 @@ class xivo_application_service_asterisk_dundimapping extends xivo_application_as
 
 		if(($this->_info['dundimapping'] = $this->_dundimapping->get($id,$disable)) === false)
 			return(false);
-		
+
 		$this->_origin['dundimapping'] = $this->_dundimapping->get_origin();
 
 		if($this->_components === false)

@@ -25,7 +25,7 @@ abstract class xivo_service_asterisk_abstract extends xivo_libdatastorage_abstra
 	var $_conf	= array();
 	var $_sre	= null;
 
-	function get_name()
+	public function get_name()
 	{
 		return($this->_name);
 	}
@@ -46,7 +46,7 @@ abstract class xivo_service_asterisk_abstract extends xivo_libdatastorage_abstra
 			$this->_conf = array();
 	}
 
-	function mk_identity($arr)
+	public function mk_identity($arr)
 	{
 		if(isset($this->_identity) === false
 		|| is_object($this->_identity) === false)
@@ -55,7 +55,7 @@ abstract class xivo_service_asterisk_abstract extends xivo_libdatastorage_abstra
 		return($this->_identity->mk_identity($arr));
 	}
 
-	function rebuild_device_config($deviceid)
+	public function rebuild_device_config($deviceid)
 	{
 		if (($_XOBJ = &dwho_gct::get('xivo_object')) === false
 		|| ($modprovdconfig = &$_XOBJ->get_module('provdconfig')) === false)
@@ -64,7 +64,7 @@ abstract class xivo_service_asterisk_abstract extends xivo_libdatastorage_abstra
 		return($modprovdconfig->rebuild_device_config($deviceid));
 	}
 
-	function chk_dest_endcall($action,$actionarg1=null)
+	public function chk_dest_endcall($action,$actionarg1=null)
 	{
 		$r = array();
 
@@ -85,7 +85,7 @@ abstract class xivo_service_asterisk_abstract extends xivo_libdatastorage_abstra
 		return(false);
 	}
 
-	function chk_dest_application($action,$actionarg1,$actionarg2=null)
+	public function chk_dest_application($action,$actionarg1,$actionarg2=null)
 	{
 		$r = array();
 
@@ -138,7 +138,7 @@ abstract class xivo_service_asterisk_abstract extends xivo_libdatastorage_abstra
 		return(false);
 	}
 
-	function chk_dest_extension($actionarg1,$actionarg2)
+	public function chk_dest_extension($actionarg1,$actionarg2)
 	{
 		if(is_scalar($actionarg1) === false
 		|| is_scalar($actionarg2) === false
@@ -154,7 +154,7 @@ abstract class xivo_service_asterisk_abstract extends xivo_libdatastorage_abstra
 		return($r);
 	}
 
-	function chk_dest_sound($dir,$actionarg1,$actionarg2,$getinfo=false)
+	public function chk_dest_sound($dir,$actionarg1,$actionarg2,$getinfo=false)
 	{
 		if(($sounds = &$this->_sre->get_module('sounds')) === false)
 			return(false);
@@ -186,7 +186,7 @@ abstract class xivo_service_asterisk_abstract extends xivo_libdatastorage_abstra
 		return($r);
 	}
 
-	function chk_dest_custom($val)
+	public function chk_dest_custom($val)
 	{
 		if(preg_match('/^(?!(try)?system\()[a-z]{3,}\((.*)\)$/i',$val,$match) !== 1)
 			return(false);
@@ -196,7 +196,7 @@ abstract class xivo_service_asterisk_abstract extends xivo_libdatastorage_abstra
 		return(false);
 	}
 
-	function chk_dest_agent($actionarg1,$actionarg2='',$id=null,$disable=null,$chknumber=false,$chkcontext=false,$context=null)
+	public function chk_dest_agent($actionarg1,$actionarg2='',$id=null,$disable=null,$chknumber=false,$chkcontext=false,$context=null)
 	{
 		$actionarg2 = dwho_has_len($actionarg2) === true ? dwho_ufloat($actionarg2) : '';
 
@@ -211,7 +211,7 @@ abstract class xivo_service_asterisk_abstract extends xivo_libdatastorage_abstra
 					$context));
 	}
 
-	function chk_dest_user($actionarg1,$actionarg2='',$id=null,$disable=null,$chknumber=false,$chkcontext=false,$context=null)
+	public function chk_dest_user($actionarg1,$actionarg2='',$id=null,$disable=null,$chknumber=false,$chkcontext=false,$context=null)
 	{
 		$actionarg2 = dwho_has_len($actionarg2) === true ? dwho_ufloat($actionarg2) : '';
 
@@ -226,7 +226,7 @@ abstract class xivo_service_asterisk_abstract extends xivo_libdatastorage_abstra
 					$context));
 	}
 
-	function chk_dest_group($actionarg1,$actionarg2='',$id=null,$disable=null,$chknumber=false,$chkcontext=false,$context=null)
+	public function chk_dest_group($actionarg1,$actionarg2='',$id=null,$disable=null,$chknumber=false,$chkcontext=false,$context=null)
 	{
 		return($this->_chk_dest_group_queue('group',
 						    $actionarg1,
@@ -238,7 +238,7 @@ abstract class xivo_service_asterisk_abstract extends xivo_libdatastorage_abstra
 						    $context));
 	}
 
-	function chk_dest_queue($actionarg1,$actionarg2='',$id=null,$disable=null,$chknumber=false,$chkcontext=false,$context=null)
+	public function chk_dest_queue($actionarg1,$actionarg2='',$id=null,$disable=null,$chknumber=false,$chkcontext=false,$context=null)
 	{
 		return($this->_chk_dest_group_queue('queue',
 						    $actionarg1,
@@ -250,7 +250,7 @@ abstract class xivo_service_asterisk_abstract extends xivo_libdatastorage_abstra
 						    $context));
 	}
 
-	function _chk_dest_group_queue($action,$actionarg1,$actionarg2='',$id=null,$disable=null,$chknumber=false,$chkcontext=false,$context=null)
+	public function _chk_dest_group_queue($action,$actionarg1,$actionarg2='',$id=null,$disable=null,$chknumber=false,$chkcontext=false,$context=null)
 	{
 		$actionarg1 = intval($actionarg1);
 		$actionarg2 = dwho_has_len($actionarg2) === true ? dwho_ufloat($actionarg2) : '';
@@ -281,7 +281,7 @@ abstract class xivo_service_asterisk_abstract extends xivo_libdatastorage_abstra
 		return($info);
 	}
 
-	function chk_dest_meetme($actionarg1,$id=null,$disable=null,$chknumber=false,$chkcontext=false,$context=null)
+	public function chk_dest_meetme($actionarg1,$id=null,$disable=null,$chknumber=false,$chkcontext=false,$context=null)
 	{
 		return($this->_chk_dest('meetmefeatures',
 					'meetme',
@@ -294,7 +294,7 @@ abstract class xivo_service_asterisk_abstract extends xivo_libdatastorage_abstra
 					$context));
 	}
 
-	function chk_dest_voicemail($actionarg1,$actionarg2='',$id=null,$disable=null)
+	public function chk_dest_voicemail($actionarg1,$actionarg2='',$id=null,$disable=null)
 	{
 		if($id !== null)
 			$id = dwho_ulongint($id);
@@ -327,7 +327,7 @@ abstract class xivo_service_asterisk_abstract extends xivo_libdatastorage_abstra
 		return($r);
 	}
 
-	function chk_dest_schedule($actionarg1,$id=null,$disable=null)
+	public function chk_dest_schedule($actionarg1,$id=null,$disable=null)
 	{
 		return($this->_chk_dest('schedule',
 					'schedule',
@@ -340,7 +340,7 @@ abstract class xivo_service_asterisk_abstract extends xivo_libdatastorage_abstra
 					null));
 	}
 
-	function chk_dest_voicemenu($actionarg1,$actionarg2=1,$id=null,$disable=null)
+	public function chk_dest_voicemenu($actionarg1,$actionarg2=1,$id=null,$disable=null)
 	{
 		return($this->_chk_dest('voicemenu',
 					'voicemenu',
@@ -353,7 +353,7 @@ abstract class xivo_service_asterisk_abstract extends xivo_libdatastorage_abstra
 					null));
 	}
 
-	function chk_dest_outcall($actionarg1,$actionarg2='',$id=null,$disable=null,$chknumber=false,$chkcontext=false,$context=null)
+	public function chk_dest_outcall($actionarg1,$actionarg2='',$id=null,$disable=null,$chknumber=false,$chkcontext=false,$context=null)
 	{
 		$actionarg2 = dwho_has_len($actionarg2) === true ? dwho_ufloat($actionarg2) : '';
 
@@ -368,7 +368,7 @@ abstract class xivo_service_asterisk_abstract extends xivo_libdatastorage_abstra
 					$context));
 	}
 
-	function chk_dest_trunk($actionarg1,$actionarg2='',$id=null,$disable=null,$chknumber=false,$chkcontext=false,$context=null)
+	public function chk_dest_trunk($actionarg1,$actionarg2='',$id=null,$disable=null,$chknumber=false,$chkcontext=false,$context=null)
 	{
 		$actionarg2 = dwho_has_len($actionarg2) === true ? dwho_ufloat($actionarg2) : '';
 
@@ -383,7 +383,7 @@ abstract class xivo_service_asterisk_abstract extends xivo_libdatastorage_abstra
 					$context));
 	}
 
-	function _chk_dest($type,$action,$actionarg1,$actionarg2=null,$id=null,$disable=null,$chknumber=false,$chkcontext=false,$context=null)
+	public function _chk_dest($type,$action,$actionarg1,$actionarg2=null,$id=null,$disable=null,$chknumber=false,$chkcontext=false,$context=null)
 	{
 		if($id !== null)
 			$id = dwho_ulongint($id);

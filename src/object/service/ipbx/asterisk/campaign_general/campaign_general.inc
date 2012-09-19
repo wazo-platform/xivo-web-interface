@@ -27,7 +27,7 @@ class xivo_service_asterisk_campaign_general extends xivo_service_asterisk_abstr
 	var $_filter	= false;
 	var $_origin	= false;
 
-	function xivo_service_asterisk_campaign_general(&$sre,&$dso)
+	public function __construct(&$sre,&$dso)
 	{
 		if(is_object($sre) === false)
 			trigger_error('Invalid service in '.__CLASS__,E_USER_ERROR);
@@ -52,7 +52,7 @@ class xivo_service_asterisk_campaign_general extends xivo_service_asterisk_abstr
 
 				if(!is_null($r[$key]) and strlen($r[$key]) > 0) {
 					foreach(split(';', $r[$key]) as $item)
-					{ 
+					{
 						$item = split('=', $item);
 						$items[$item[0]] = $item[1];
 					}
@@ -78,7 +78,7 @@ class xivo_service_asterisk_campaign_general extends xivo_service_asterisk_abstr
 	{
 		foreach(array('svichoices','svientries','svivariables') as $key)
 		{
-			$items = array();			
+			$items = array();
 			foreach($arr[$key] as $k => $v)
 				$items[] = "$k=$v";
 

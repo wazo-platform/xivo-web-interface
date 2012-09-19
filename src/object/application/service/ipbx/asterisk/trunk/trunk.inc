@@ -30,9 +30,9 @@ class xivo_application_service_asterisk_trunk extends xivo_application_asterisk_
 	var $_contextlist	= array();
 	var $_timezones		= array();
 
-	function xivo_application_service_asterisk_trunk(&$service,&$dso,$param=array(),$components=true)
+	public function __construct(&$service,&$dso,$param=null,$components=true)
 	{
-		$this->xivo_application_asterisk_abstract(&$service);
+		parent::__construct($service);
 
 		if(is_object($dso) === false)
 			trigger_error('Invalid Datastorage object',E_USER_ERROR);

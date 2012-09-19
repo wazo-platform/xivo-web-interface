@@ -22,7 +22,7 @@ require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'application','abstract.inc'))
 
 abstract class xivo_application_service_abstract extends xivo_application_abstract
 {
-	function _load_abstract_class($abstract)
+	public function _load_abstract_class($abstract)
 	{
 		$file = $abstract.'.inc';
 
@@ -41,7 +41,7 @@ abstract class xivo_application_service_abstract extends xivo_application_abstra
 		return(false);
 	}
 
-	function _load_abstract($name,$param)
+	public function _load_abstract($name,$param)
 	{
 		$name = (string) $name;
 

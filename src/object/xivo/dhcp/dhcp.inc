@@ -28,13 +28,14 @@ class xivo_object_dhcp extends xivo_object_abstract
 	var $_origin		= false;
 	var $_origin_list	= false;
 
-	function xivo_object_dhcp(&$xobj,&$dso)
+	public function __construct(&$xobj,&$dso)
 	{
-		$this->xivo_object_abstract(&$xobj);
-        if(is_object($dso) === false)
-            trigger_error('Invalid datastorage in '.__CLASS__,E_USER_ERROR);
+		parent::__construct($xobj);
 
-        $this->_dso = &$dso;
+		if(is_object($dso) === false)
+			trigger_error('Invalid datastorage in '.__CLASS__,E_USER_ERROR);
+
+		$this->_dso = &$dso;
 	}
 }
 

@@ -26,9 +26,10 @@ class xivo_application_service_asterisk_ctidirectories extends xivo_application_
 	var $_ctidirectories     = false;
 	var $_ctidirectoryfields = false;
 
-	function xivo_application_service_asterisk_ctidirectories(&$service,$param=null,$components=true)
+	public function __construct(&$service,$param=null,$components=true)
 	{
-		$this->xivo_application_asterisk_abstract(&$service);
+		parent::__construct($service);
+
 		if(($this->_ctidirectories = &$this->_service->get_module('ctidirectories')) === false
 		|| ($this->_ctidirectoryfields = &$this->_service->get_module('ctidirectoryfields')) === false)
 			return(false);

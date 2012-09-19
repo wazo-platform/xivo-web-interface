@@ -28,7 +28,7 @@ class xivo_service_asterisk_meetmeguest extends xivo_service_asterisk_abstract
 	var $_origin	= false;
 	var $_identity	= false;
 
-	function xivo_service_asterisk_meetmeguest(&$sre,&$dso)
+	public function __construct(&$sre,&$dso)
 	{
 		if(is_object($sre) === false)
 			trigger_error('Invalid service in '.__CLASS__,E_USER_ERROR);
@@ -46,7 +46,7 @@ class xivo_service_asterisk_meetmeguest extends xivo_service_asterisk_abstract
 	function _prepare($data)
 	{
 		$this->_identity->_prepare_identity($data);
-		
+
 		$data['id'] = (int) $data['id'];
 		$data['meetmefeaturesid'] = (int) $data['meetmefeaturesid'];
 

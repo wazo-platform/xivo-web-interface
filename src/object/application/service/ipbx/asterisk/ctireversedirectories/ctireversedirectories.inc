@@ -24,9 +24,9 @@ class xivo_application_service_asterisk_ctireversedirectories extends xivo_appli
 {
 	var $_ctireversedirectories = false;
 
-	function xivo_application_service_asterisk_ctireversedirectories(&$service)
+	public function __construct(&$service,$param=null,$components=true)
 	{
-		$this->xivo_application_asterisk_abstract(&$service);
+		parent::__construct($service);
 
 		if(($this->_ctireversedirectories = &$this->_service->get_module('ctireversedirectories')) === false)
 			return false;

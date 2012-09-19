@@ -32,7 +32,7 @@ class xivo_application_service_asterisk_webservices_phonebook extends xivo_appli
 	var $_curl		= null;
 	var $_uri		= null;
 
-	function xivo_application_service_asterisk_webservices_phonebook(&$service,&$dso)
+	public function __construct(&$service,&$dso)
 	{
 		if(is_object($dso) === false)
 		{
@@ -42,7 +42,7 @@ class xivo_application_service_asterisk_webservices_phonebook extends xivo_appli
 
 		$this->_dso = &$dso;
 
-		if($this->_init(&$service) === false
+		if(parent::_init($service) === false
 		|| ($this->_accessfeatures = &$this->_service->get_module('accessfeatures')) === false)
 			return(false);
 

@@ -25,9 +25,9 @@ class xivo_application_service_asterisk_dundipeer extends xivo_application_aster
 	var $_dso          = null;
 	var $_dundipeer    = false;
 
-	function xivo_application_service_asterisk_dundipeer(&$service,&$dso,$param=null,$components=true)
+	public function __construct(&$service,&$dso,$param=null,$components=true)
 	{
-		$this->xivo_application_asterisk_abstract(&$service);
+		parent::__construct($service);
 
 		if(is_object($dso) === false)
 			trigger_error('Invalid Datastorage object',E_USER_ERROR);
@@ -46,7 +46,7 @@ class xivo_application_service_asterisk_dundipeer extends xivo_application_aster
 
 		if(($this->_info['dundipeer'] = $this->_dundipeer->get($id,$disable)) === false)
 			return(false);
-		
+
 		$this->_origin['dundipeer'] = $this->_dundipeer->get_origin();
 
 		if($this->_components === false)

@@ -26,9 +26,9 @@ class xivo_application_service_asterisk_rightcall extends xivo_application_aster
 	var $_rightcallmember	= false;
 	var $_rightcallexten	= false;
 
-	function xivo_application_service_asterisk_rightcall(&$service,$param=null,$components=true)
+	public function __construct(&$service,$param=null,$components=true)
 	{
-		$this->xivo_application_asterisk_abstract(&$service);
+		parent::__construct($service);
 
 		if(($this->_rightcall = &$this->_service->get_module('rightcall')) === false
 		|| ((bool) $components === true && $this->load_components() === false) === true)

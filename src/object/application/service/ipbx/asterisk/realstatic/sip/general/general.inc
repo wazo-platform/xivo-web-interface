@@ -34,13 +34,13 @@ class xivo_application_service_asterisk_realstatic_sip_general extends xivo_appl
 	var $_tlscadir      = '';
 	var $_tlscertdir    = '';
 
-	function xivo_application_service_asterisk_realstatic_sip_general(&$service)
+	public function __construct(&$service)
 	{
 		$_config = dwho::load_init(XIVO_PATH_CONF.DWHO_SEP_DIR.'ipbx.ini');
 		$this->_tlscadir   = $_config['tls']['cadir'];
 		$this->_tlscertdir = $_config['tls']['certdir'];
 
-		return($this->_init(&$service));
+		return(parent::_init($service));
 	}
 
 	function _load_config()

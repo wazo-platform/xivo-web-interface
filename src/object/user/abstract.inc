@@ -46,7 +46,7 @@ class xivo_user_abstract extends xivo_libdatastorage_abstract
 			$this->_info[$name] = $value;
 	}
 
-	function _prepare($data)
+	function _prepare(&$data)
 	{
 		$data['valid'] = (bool) $data['valid'];
 
@@ -271,7 +271,7 @@ class xivo_user_abstract extends xivo_libdatastorage_abstract
 		for($i = 0;$i < $nb;$i++)
 		{
 			$data = &$list[$i];
-			$this->_prepare(&$data);
+			$data = $this->_prepare($data);
 		}
 
 		return($list);

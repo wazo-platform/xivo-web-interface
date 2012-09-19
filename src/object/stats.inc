@@ -23,10 +23,6 @@ class xivo_stats
 	var $_conf			= array();
 	var $_identity		= array();
 
-	public function __construct()
-	{
-	}
-
 	public function load_ressource($ressource)
 	{
 		$this->_load_ressource_abstract();

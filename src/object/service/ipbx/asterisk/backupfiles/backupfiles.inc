@@ -26,7 +26,7 @@ class xivo_service_asterisk_backupfiles extends xivo_service_asterisk_abstract
 	var $_filter	= false;
 	var $_bakpath	= '';
 
-	function xivo_service_asterisk_backupfiles(&$sre)
+	public function __construct(&$sre)
 	{
 		if(is_object($sre) === false)
 			trigger_error('Invalid service in '.__CLASS__,E_USER_ERROR);

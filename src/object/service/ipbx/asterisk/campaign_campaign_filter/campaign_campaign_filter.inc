@@ -27,7 +27,7 @@ class xivo_service_asterisk_campaign_campaign_filter extends xivo_service_asteri
 	var $_filter	= false;
 	var $_origin	= false;
 
-	function xivo_service_asterisk_campaign_campaign_filter(&$sre,&$dso)
+	public function __construct(&$sre,&$dso)
 	{
 		if(is_object($sre) === false)
 			trigger_error('Invalid service in '.__CLASS__,E_USER_ERROR);

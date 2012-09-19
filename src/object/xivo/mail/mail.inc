@@ -25,9 +25,9 @@ class xivo_object_mail extends xivo_object_abstract
 	var $_dso		= null;
 	var $_name		= 'mail';
 
-	function xivo_object_mail(&$xobj,&$dso)
+	public function __construct(&$xobj,&$dso)
 	{
-		$this->xivo_object_abstract(&$xobj);
+		parent::__construct($xobj);
 
 		if(is_object($dso) === false)
 			trigger_error('Invalid datastorage in '.__CLASS__,E_USER_ERROR);

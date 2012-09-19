@@ -24,9 +24,10 @@ class xivo_application_service_asterisk_cticontexts extends xivo_application_ast
 {
 	var $_cticontexts = false;
 
-	function xivo_application_service_asterisk_cticontexts(&$service,$param=null,$components=true)
+	public function __construct(&$service,$param=null,$components=true)
 	{
-		$this->xivo_application_asterisk_abstract(&$service);
+		parent::__construct($service);
+
 		if(($this->_cticontexts = &$this->_service->get_module('cticontexts')) === false)
 			return(false);
 		else if((bool) $components === true)
@@ -228,7 +229,7 @@ class xivo_application_service_asterisk_cticontexts extends xivo_application_ast
 
 		return($this->_info);
 	}
-	
+
 	function set_edit($arr)
 	{
 		if(empty($this->_info) === true)

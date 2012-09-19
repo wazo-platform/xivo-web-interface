@@ -26,7 +26,7 @@ class xivo_accesswebservice_acl extends xivo_acl_abstract
 	var $_dso	= null;
 	var $_tree	= null;
 
-	function xivo_accesswebservice_acl(&$dso)
+	public function __construct(&$dso)
 	{
 		if(defined('XIVO_WEBSERVICE_ACL_FILE') === true)
 			$path = XIVO_WEBSERVICE_ACL_FILE;

@@ -31,9 +31,9 @@ class xivo_application_service_asterisk_schedule extends xivo_application_asteri
 	var $_sound	      	= array();
 	var $_contextlist	  = array();
 
-	function xivo_application_service_asterisk_schedule(&$service,&$dso,$param=null,$components=true)
+	public function __construct(&$service,&$dso,$param=null,$components=true)
 	{
-		$this->xivo_application_asterisk_abstract(&$service);
+		parent::__construct($service);
 
 		if(is_object($dso) === false)
 			trigger_error('Invalid Datastorage object',E_USER_ERROR);
@@ -187,7 +187,7 @@ class xivo_application_service_asterisk_schedule extends xivo_application_asteri
 				break;
 			case 'list':
 			default:
-				//$rs = $this->_dso->get_all($disable,$order,$limit);
+				#$rs = $this->_dso->get_all($disable,$order,$limit);
 				$rs = $this->_schedule->get_all();
 		}
 
@@ -203,27 +203,7 @@ class xivo_application_service_asterisk_schedule extends xivo_application_asteri
 			$r[$rs[$i]['id']] = $rs[$i];
 
 			$ref = &$r[$rs[$i]['id']];
-
-			$schedule = array();
-			$schedule['name'] = $ref['name'];
-			/*
-			$schedule['context'] = $ref['context'];
-			$schedule['timebeg'] = $ref['timebeg'];
-			$schedule['timeend'] = $ref['timeend'];
-			$schedule['daynamebeg'] = $ref['daynamebeg'];
-			$schedule['daynameend'] = $ref['daynameend'];
-			$schedule['daynumbeg'] = $ref['daynumbeg'];
-			$schedule['daynumend'] = $ref['daynumend'];
-			$schedule['monthbeg'] = $ref['monthbeg'];
-			$schedule['monthend'] = $ref['monthend'];
-			$schedule['publicholiday'] = $ref['publicholiday'];
-			$schedule['commented'] = $ref['commented'];
-			*/
-			$ref = array_merge($ref,$this->_schedule->_prepare($schedule));
-
-		//	$ref['destination'] = $ref['action'];
-			$ref['commented'] = (bool) $ref['commented'];
-			//$ref['linked'] = (bool) $ref['linked'];
+			$ref = $this->_schedule->_prepare($ref);
 
 			$arr = array();
 

@@ -28,7 +28,7 @@ class xivo_service_asterisk_outcalldundipeer extends xivo_service_asterisk_abstr
 	var $_origin		= false;
 	var $_origin_list	= false;
 
-	function xivo_service_asterisk_outcalldundipeer(&$sre,&$dso)
+	public function __construct(&$sre,&$dso)
 	{
 		if(is_object($sre) === false)
 			trigger_error('Invalid service in '.__CLASS__,E_USER_ERROR);
@@ -41,12 +41,12 @@ class xivo_service_asterisk_outcalldundipeer extends xivo_service_asterisk_abstr
 
 		$this->_load_config();
 	}
-	
+
 	function _prepare($data)
 	{
 		$data['outcallid'] = (int) $data['outcallid'];
 		$data['dundipeerid'] = (int) $data['dundipeerid'];
-		
+
 		return($data);
 	}
 

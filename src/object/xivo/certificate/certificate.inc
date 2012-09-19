@@ -29,9 +29,9 @@ class xivo_object_certificate extends xivo_object_abstract
 
 	var $_sysconfd  = false;
 
-	function xivo_object_certificate(&$xobj)
+	public function __construct(&$xobj)
 	{
-		$this->xivo_object_abstract(&$xobj);
+		parent::__construct($xobj);
 
 		$this->_sysconfd = $this->_xobj->get_module('sysconfd');
 		return $this->_sysconfd !== false;

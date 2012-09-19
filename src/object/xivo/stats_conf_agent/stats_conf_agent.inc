@@ -30,7 +30,7 @@ class xivo_object_stats_conf_agent extends xivo_object_abstract
 
 	public function __construct(&$xobj,&$dso)
 	{
-		parent::__construct(&$xobj);
+		parent::__construct($xobj);
 
 		if(is_object($dso) === false)
 			trigger_error('Invalid datastorage in '.__CLASS__,E_USER_ERROR);

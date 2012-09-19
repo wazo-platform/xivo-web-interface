@@ -18,12 +18,12 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-class xivo_acl_abstract
+abstract class xivo_acl_abstract
 {
 	var $_acl_tree	= null;
 	var $_full_tree	= null;
 
-	function xivo_acl_abstract($arr)
+	public function __construct($arr)
 	{
 		if(is_array($arr) === false)
 			trigger_error('Invalid excepted argument in '.__CLASS__,E_USER_ERROR);

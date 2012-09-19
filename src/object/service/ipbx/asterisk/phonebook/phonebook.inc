@@ -28,7 +28,7 @@ class xivo_service_asterisk_phonebook extends xivo_service_asterisk_abstract
 	var $_origin		= false;
 	var $_origin_list	= false;
 
-	function xivo_service_asterisk_phonebook(&$sre,&$dso)
+	public function __construct(&$sre,&$dso)
 	{
 		if(is_object($sre) === false)
 			trigger_error('Invalid service in '.__CLASS__,E_USER_ERROR);
@@ -48,7 +48,7 @@ class xivo_service_asterisk_phonebook extends xivo_service_asterisk_abstract
 
 		if($data['fullname'] === '')
 			$data['fullname'] = $data['displayname'];
-			
+
 		$data['id'] = (int) $data['id'];
 
 		return($data);

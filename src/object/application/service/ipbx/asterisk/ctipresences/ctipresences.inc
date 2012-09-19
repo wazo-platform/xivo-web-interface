@@ -26,9 +26,10 @@ class xivo_application_service_asterisk_ctipresences extends xivo_application_as
 	var $_ctipresences = false;
 	var $_ctistatus = false;
 
-	function xivo_application_service_asterisk_ctipresences(&$service,$param=null,$components=true)
+	public function __construct(&$service,$param=null,$components=true)
 	{
-		$this->xivo_application_asterisk_abstract(&$service);
+		parent::__construct($service);
+
 		if(($this->_ctipresences = &$this->_service->get_module('ctipresences')) === false)
 			return(false);
 		else if((bool) $components === true)

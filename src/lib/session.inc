@@ -22,7 +22,7 @@ class dwho_session
 {
 	var $_dso    = null;
 
-	function dwho_session()
+	public function __construct()
 	{
 		if(defined('DWHO_SESS_HANDLER') === false)
 		{

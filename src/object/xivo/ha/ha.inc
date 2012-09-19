@@ -26,9 +26,9 @@ class xivo_object_ha extends xivo_object_abstract
 	var $_name		= 'ha';
 	var $_filter    = false;
 
-	function xivo_object_ha(&$xobj)
+	public function __construct(&$xobj)
 	{
-		$this->xivo_object_abstract(&$xobj);
+		parent::__construct($xobj);
 
 		$this->_load_config(true);
 	}

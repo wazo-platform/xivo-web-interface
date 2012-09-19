@@ -19,6 +19,11 @@
 #
 
 
+$appgroup = &$ipbx->get_application('group',null,false);
+$appqueue = &$ipbx->get_application('queue',null,false);
+$apprightcall = &$ipbx->get_application('rightcall',null,false);
+$modpark = &$ipbx->get_module('parkinglot');
+
 if(isset($_QR['id']) === false || ($info = $appuser->get($_QR['id'])) === false)
 	$_QRY->go($_TPL->url('service/ipbx/pbx_settings/users'),$param);
 
@@ -30,19 +35,16 @@ $gmember['list'] = $qmember['list'] = $rightcall['list'] = false;
 $gmember['info'] = $qmember['info'] = $rightcall['info'] = false;
 $gmember['slt'] = $qmember['slt'] = $rightcall['slt'] = array();
 
-$appgroup = &$ipbx->get_application('group',null,false);
 $order = array('name' => SORT_ASC);
 if(($groups = $appgroup->get_groups_list(null, $order, null, true)) !== false) {
 	$gmember['list'] = $groups;
 }
 
-$appqueue = &$ipbx->get_application('queue',null,false);
 $order = array('name' => SORT_ASC);
 if(($queues = $appqueue->get_queues_list(null, $order, null, true)) !== false) {
 	$qmember['list'] = $queues;
 }
 
-$apprightcall = &$ipbx->get_application('rightcall',null,false);
 $order = array('name' => SORT_ASC);
 if(($rightcalls = $apprightcall->get_rightcalls_list(null, $order, null, true)) !== false) {
 	$rightcall['list'] = $rightcalls;
@@ -111,6 +113,7 @@ if($rightcall['list'] !== false && dwho_issa('rightcall',$return) === true
 	$rightcall['slt'] = array_keys($rightcall['slt']);
 
 $element = $appuser->get_elements();
+$element['queueskills'] =  $appqueue->skills_gettree();
 
 if(empty($return) === false)
 {
@@ -154,9 +157,6 @@ $softkeys_list = array(
 	'backjoin'      => $_TPL->bbf('softkey_backjoin'),
 );
 
-$element['queueskills'] =  $appqueue->skills_gettree();
-
-$modpark = &$ipbx->get_module('parkinglot');
 
 $_TPL->set_var('id',$_QR['id']);
 $_TPL->set_var('info',$return);

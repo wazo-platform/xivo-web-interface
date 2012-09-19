@@ -33,7 +33,7 @@ class xivo_service_asterisk_realstatic extends xivo_service_asterisk_abstract
 	var $_category		= null;
 	var $_var_name		= null;
 
-	function xivo_service_asterisk_realstatic(&$sre,&$dso,$param=array())
+	public function __construct(&$sre,&$dso,$param=array())
 	{
 		if(is_object($sre) === false)
 			trigger_error('Invalid service in '.__CLASS__,E_USER_ERROR);

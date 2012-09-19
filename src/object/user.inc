@@ -23,7 +23,7 @@ class xivo_user
 	var $_ini	= array();
 	var $_conf	= array();
 
-	function xivo_user()
+	public function __construct()
 	{
 		$this->_conf = &dwho_gat::get('user');
 
@@ -191,7 +191,7 @@ class xivo_user
 		|| is_scalar($section) === false)
 			return(false);
 		$section = trim(preg_replace('@/+@','/',$section),'/');
-		
+
 		$tree = $_SESSION['_ACL']['tree'];
 		$user = $_SESSION['_ACL']['user'];
 		$user_section = &$_SESSION['_ACL']['user_section'];

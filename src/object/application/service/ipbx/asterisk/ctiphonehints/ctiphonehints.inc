@@ -24,9 +24,10 @@ class xivo_application_service_asterisk_ctiphonehints extends xivo_application_a
 {
 	var $_ctiphonehints = false;
 
-	function xivo_application_service_asterisk_ctiphonehints(&$service,$param=null)
+	public function __construct(&$service,$param=null)
 	{
-		$this->xivo_application_asterisk_abstract(&$service);
+		parent::__construct($service);
+
 		if(($this->_ctiphonehints = &$this->_service->get_module('ctiphonehints')) === false)
 			return(false);
 

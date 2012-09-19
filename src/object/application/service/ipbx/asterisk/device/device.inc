@@ -34,9 +34,9 @@ class xivo_application_service_asterisk_device extends xivo_application_asterisk
 	protected $_sccpdevice		= false;
 	protected $_prodv_exist_list = array();
 
-	public function __construct(&$service,&$dso,$param=array())
+	public function __construct(&$service,&$dso,$param=null,$components=true)
 	{
-		$this->xivo_application_asterisk_abstract(&$service);
+		parent::__construct($service);
 
 		if(is_object($dso) === false)
 			trigger_error('Invalid Datastorage object',E_USER_ERROR);

@@ -33,9 +33,10 @@ class xivo_object_sysconfd extends xivo_object_abstract
 	var $_url			= array();
 	var $_status_code	= null;
 
-	function xivo_object_sysconfd(&$xobj)
+	public function __construct(&$xobj)
 	{
-		$this->xivo_object_abstract(&$xobj);
+		parent::__construct($xobj);
+
 		$this->_load_config();
 		$this->_set_configuration();
 		$this->_url = array('scheme'	=> 'http',

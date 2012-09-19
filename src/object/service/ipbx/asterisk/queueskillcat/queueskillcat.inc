@@ -24,14 +24,11 @@ class xivo_service_asterisk_queueskillcat extends xivo_service_asterisk_abstract
 {
 	var $_dso				= null;
 	var $_name			= 'queueskillcat';
-
 	var $_filter		= false;
-	
-	// data - raw version
 	var $_origin		= false;
 	var $_identity	= false;
 
-	function xivo_service_asterisk_queueskillcat(&$sre,&$dso)
+	public function __construct(&$sre,&$dso)
 	{
 		if(is_object($sre) === false)
 			trigger_error('Invalid service in '.__CLASS__,E_USER_ERROR);
@@ -43,7 +40,6 @@ class xivo_service_asterisk_queueskillcat extends xivo_service_asterisk_abstract
 		$this->_dso = &$dso;
 
 		$this->_load_config();
-		//$this->_identity = &$this->_sre->get_identity($this->_name);
 	}
 
 	function _prepare($data)

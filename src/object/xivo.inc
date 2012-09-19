@@ -27,7 +27,7 @@ class xivo_object
 	var $_dso			= null;
 	var $_dsoconf		= array();
 
-	function xivo_object()
+	public function __construct()
 	{
 		$this->_load_config();
 	}
@@ -283,7 +283,7 @@ class xivo_object
 	{
 		if(is_object($this->_dso) === true)
 			$dso = &$this->_dso;
-		else if($this->_load_dso() === true 
+		else if($this->_load_dso() === true
 		&& is_object($this->_dso) === true)
 			$dso = &$this->_dso;
 		else
@@ -324,11 +324,11 @@ class xivo_object
 		if($param === false && $this->_load_dso_config($metatype) === true)
 			$param = &$this->_dsoconf[$metatype];
 
-		if($param === false 
+		if($param === false
 		|| xivo::load_class($class,$dir,$metatype,false) === false)
 			return($param);
 
-		return(new $class($dso,&$param));
+		return(new $class($dso,$param));
 	}
 
 	function _load_dso($name='')

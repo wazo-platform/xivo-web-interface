@@ -27,7 +27,7 @@ class dwho_session_abstract_sql
 	var $_insert     = false;
 	var $_crc        = '';
 
-	function _init(&$dso,$param=array())
+	protected function _init(&$dso,$param=array())
 	{
 		if(is_object($dso) === false)
 			trigger_error('Invalid Datastorage object',E_USER_ERROR);

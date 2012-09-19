@@ -31,7 +31,7 @@ class xivo_accesswebservice extends xivo_libdatastorage_abstract
 	var $_origin		= false;
 	var $_origin_list	= false;
 
-	function xivo_accesswebservice()
+	public function __construct()
 	{
 		$this->_load_config(dirname(__FILE__).DWHO_SEP_DIR.'accesswebservice');
 		$this->_load_dso();

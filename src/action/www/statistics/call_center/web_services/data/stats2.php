@@ -27,7 +27,7 @@ include(dwho_file::joinpath(dirname(__FILE__),'_common.php'));
 
 $_STS->load_ressource('agent');
 
-$stats_agent = new stats_ressource_agent(&$_XS);
+$stats_agent = new stats_ressource_agent($_XS);
 $stats_agent->get_data();
 
 $tpl_statistics->set_name('agent');

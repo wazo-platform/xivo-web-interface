@@ -26,7 +26,7 @@ class xivo_service_asterisk_logfiles extends xivo_service_asterisk_abstract
 	var $_filter	= false;
 	var $_logpath	= '';
 
-	function xivo_service_asterisk_logfiles(&$sre)
+	public function __construct(&$sre)
 	{
 		if(is_object($sre) === false)
 			trigger_error('Invalid service in '.__CLASS__,E_USER_ERROR);
