@@ -18,13 +18,12 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-dwho::load_class('dwho_http');
-$http_response = dwho_http::factory('response');
+$list = $this->get_var('list');
 
-$data = dwho_json::encode($this->get_var('list'));
-
-if($data === false)
+if(($data = dwho_json::encode($list)) === false)
 {
+	dwho::load_class('dwho_http');
+	$http_response = dwho_http::factory('response');
 	$http_response->set_status_line(500);
 	$http_response->send(true);
 }
