@@ -169,6 +169,10 @@ class xivo_service_asterisk_linefeatures extends xivo_service_asterisk_abstract
 				return(false);
 		}
 
+		if ($arr['protocol'] === XIVO_SRE_IPBX_AST_PROTO_SCCP
+		&& isset($arr['number']) === true)
+			$arr['name'] = $arr['number'];
+
 		if (isset($arr['num']) === true)
 			$arr['num'] = (int) $arr['num'];
 
