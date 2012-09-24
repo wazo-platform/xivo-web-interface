@@ -759,7 +759,7 @@ class dwho_tpl_statistics extends dwho_tpl_module
 			if ($rowname === true)
 			{
 				$return .= '<td class="txt-left">';
-				if ($coldata['name'] === 'total')
+				if (isset($coldata['name']) && $coldata['name'] === 'total')
 					$return .= $coldata['identity'];
 				else
 				{
