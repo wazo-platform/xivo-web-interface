@@ -106,7 +106,7 @@ $informations = $this->get_var('informations');
 									  'border="0"'),
 							   '#',
 							   null,
-							   'onclick="dwho.dom.make_table_list(\''.$type.'\',this); return(dwho.dom.free_focus());"',
+							   'onclick="dwho.dom.make_table_list(\''.$type.'\',this); return(dwho.dom.free_focus());" id="add_variable"',
 							   $this->bbf('col_add'));?>
 				</th>
 			</tr>
