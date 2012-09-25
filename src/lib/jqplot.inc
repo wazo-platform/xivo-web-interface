@@ -26,7 +26,6 @@ class xivo_jqplot
 	private     $_plugins       = array();
 	private     $_pluginloaded  = array();
 	private     $_data_table    = array();
-	private     $_data_foot     = array();
 	private     $_data_row      = array();
 	private     $_result        = array();
 
@@ -54,7 +53,6 @@ class xivo_jqplot
 	{
 		$this->_data_row = $ts->get_data_rows();
 		$this->_data_table = $ts->get_data_table();
-		$this->_data_foot = $ts->get_data_foot();
 	}
 
 	private function add_result($key, $content)
@@ -113,10 +111,9 @@ class xivo_jqplot
 	{
 		$this->load_plugin('pieRenderer');
 
-		$listfield = array('connected','connect','abandon','on_close','on_saturation','on_hungup','on_guide','on_number');
+		$listfield = array('connect','abandon','on_close','on_saturation','on_timeout','on_blocking');
 
-		$data = $this->_data_foot;
-		unset($data['presented']);
+		$data = $this->_data_table['total'];
 		$pie = '[';
 		$datakey = array_keys($data);
 		while ($data)
@@ -760,7 +757,7 @@ class xivo_jqplot
 	{
 		$this->load_plugin('pieRenderer');
 
-		$data = $this->_data_foot;
+		$data = $this->_data_table['total'];
 		$pie = '[';
 		$datakey = array_keys($data);
 		while ($data)
@@ -823,7 +820,7 @@ class xivo_jqplot
 	{
 		$this->load_plugin('pieRenderer');
 
-		$data = $this->_data_foot;
+		$data = $this->_data_table['total'];
 		$pie = '[';
 		$datakey = array_keys($data);
 		while ($data)
