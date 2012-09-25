@@ -61,7 +61,7 @@ switch($act)
 		$contextnumbers = $context['contextnumbers'];
 
 		$obj = $_QRY->get('obj');
-		if(is_null($obj) || !array_key_exists($obj, $contextnummember))
+		if(is_null($obj) || !array_key_exists($obj, $contextnumbers))
 		{
 			$http_response->set_status_line(204);
 			$http_response->send(true);
