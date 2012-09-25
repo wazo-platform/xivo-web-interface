@@ -33,7 +33,7 @@ abstract class dwho_http_abstract extends dwho_mime_cim
 		$this->_rule['wsp'].
 		'\x21\x23-\x7E';
 
-		$this->dwho_mime_cim();
+		parent::__construct();
 	}
 
 	function valid_http_date($date)
