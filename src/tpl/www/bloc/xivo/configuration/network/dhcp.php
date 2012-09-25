@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2011  Avencall
+# Copyright (C) 2006-2011	Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -11,15 +11,15 @@
 #
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	See the
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# along with this program.	If not, see <http://www.gnu.org/licenses/>.
 #
 
-$form    = &$this->get_module('form');
-$dhtml   = &$this->get_module('dhtml');
+$form = &$this->get_module('form');
+$dhtml = &$this->get_module('dhtml');
 
 $element = $this->get_var('element');
 $netifaces = $this->get_var('netifaces');
@@ -27,70 +27,68 @@ $netifaces = $this->get_var('netifaces');
 ?>
 
 <div class="b-infos b-form">
-<h3 class="sb-top xspan">
-	<span class="span-left">&nbsp;</span>
-	<span class="span-center"><?=$this->bbf('title_content_name');?></span>
-	<span class="span-right">&nbsp;</span>
-</h3>
+	<h3 class="sb-top xspan">
+		<span class="span-left">&nbsp;</span> <span class="span-center"><?=$this->bbf('title_content_name');?>
+		</span> <span class="span-right">&nbsp;</span>
+	</h3>
 
-<div class="sb-content">
-<form action="#" method="post" accept-charset="utf-8">
+	<div class="sb-content">
+		<form action="#" method="post" accept-charset="utf-8">
 
-<div id="sb-part-first">
-<?php
-	echo	$form->hidden(array('name'	=> DWHO_SESS_NAME,
-				    'value'	=> DWHO_SESS_ID)),
+			<div id="sb-part-first">
+				<?php
+				echo	$form->hidden(array('name'	=> DWHO_SESS_NAME,
+						'value'	=> DWHO_SESS_ID)),
 
-		$form->hidden(array('name'	=> 'fm_send',
-				    'value'	=> 1)),
+						$form->hidden(array('name'	=> 'fm_send',
+					'value'	=> 1)),
 
-		$form->checkbox(array('desc'		=> $this->bbf('fm_active'),
-				      'name'		=> 'active',
-				      'labelid'		=> 'active',
-				      'checked'		=> $this->get_var('info', 'active'))),
+					$form->checkbox(array('desc'		=> $this->bbf('fm_active'),
+						'name'		=> 'active',
+						'labelid'		=> 'active',
+						'checked'		=> $this->get_var('info', 'active'))),
 
-		$form->text(array('desc'	=> $this->bbf('fm_pool_start'),
-				  'name'	=> 'pool_start',
-				  'labelid'	=> 'pool_start',
-				  'size'	=> 15,
-				  'default'	=> $element['dhcp']['pool_start']['default'],
-				  'value'	=> $this->get_var('info','pool_start'),
-				  'error'   => $this->bbf_args('ipaddr',
-                    $this->get_var('error', 'pool_start'))
-               )),
+						$form->text(array('desc'	=> $this->bbf('fm_pool_start'),
+								'name'	=> 'pool_start',
+								'labelid'	=> 'pool_start',
+								'size'	=> 15,
+								'default'	=> $element['dhcp']['pool_start']['default'],
+								'value'	=> $this->get_var('info','pool_start'),
+								'error'	 => $this->bbf_args('ipaddr',
+										$this->get_var('error', 'pool_start'))
+						)),
 
-		$form->text(array('desc'	=> $this->bbf('fm_pool_end'),
-				  'name'	=> 'pool_end',
-				  'labelid'	=> 'pool_end',
-				  'size'	=> 15,
-				  'default'	=> $element['dhcp']['pool_end']['default'],
-				  'value'	=> $this->get_var('info','pool_end'),
-				  'error'   => $this->bbf_args('ipaddr',
-                    $this->get_var('error', 'pool_end'))
-				  )),
+						$form->text(array('desc'	=> $this->bbf('fm_pool_end'),
+								'name'	=> 'pool_end',
+								'labelid'	=> 'pool_end',
+								'size'	=> 15,
+								'default'	=> $element['dhcp']['pool_end']['default'],
+								'value'	=> $this->get_var('info','pool_end'),
+								'error'	 => $this->bbf_args('ipaddr',
+										$this->get_var('error', 'pool_end'))
+						)),
 
-		$form->text(array('desc'	=> $this->bbf('fm_interfaces'),
-				  'name'    => 'extra_ifaces',
-				  'labelid' => 'extra_ifaces',
-				  'size'    => 15,
-				  'default' => $element['dhcp']['interfaces']['default'],
-				  'help'    => $this->bbf('help_interfaces'),
-				  'value'   => $this->get_var('info','extra_ifaces')));
+						$form->text(array('desc'	=> $this->bbf('fm_interfaces'),
+								'name'	=> 'extra_ifaces',
+								'labelid' => 'extra_ifaces',
+								'size'	=> 15,
+								'default' => $element['dhcp']['interfaces']['default'],
+								'help'	=> $this->bbf('help_interfaces'),
+								'value'	 => $this->get_var('info','extra_ifaces')));
 
-?>
-</div>
-<?php
+				?>
+			</div>
+			<?php
 
-echo	$form->submit(array('name'	=> 'submit',
-			    'id'	=> 'it-submit',
-			    'value'	=> $this->bbf('fm_bt-save')));
+			echo	$form->submit(array('name'	=> 'submit',
+					'id'	=> 'it-submit',
+					'value'	=> $this->bbf('fm_bt-save')));
 
-?>
-</form>
+			?>
+		</form>
 	</div>
 	<div class="sb-foot xspan">
-		<span class="span-left">&nbsp;</span>
-		<span class="span-center">&nbsp;</span>
+		<span class="span-left">&nbsp;</span> <span class="span-center">&nbsp;</span>
 		<span class="span-right">&nbsp;</span>
 	</div>
 </div>

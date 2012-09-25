@@ -18,28 +18,31 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-$appdhcp    = &$_XOBJ->get_application('dhcp');
+$appdhcp = &$_XOBJ->get_application('dhcp');
 
-$fm_save    = null;
-$error      = null;
+$fm_save  = null;
+$error = null;
+
 if(isset($_QR['fm_send']) === true)
 {
-	$fm_save 	= true;
+	$fm_save = true;
 
 	if($appdhcp->set($_QR) === false)
 	{
-		$fm_save    = false;
-		$error      = $appdhcp->get_error();
+		$fm_save = false;
+		$error = $appdhcp->get_error();
 	}
 
 	$info = $_QR;
 }
 else
-{ $info 		= $appdhcp->get(); }
+{
+	$info = $appdhcp->get();
+}
 
-$_TPL->set_var('fm_save'	, $fm_save);
-$_TPL->set_var('info'		, $info);
-$_TPL->set_var('error'		, $error);
+$_TPL->set_var('fm_save', $fm_save);
+$_TPL->set_var('info', $info);
+$_TPL->set_var('error', $error);
 
 $menu = &$_TPL->get_module('menu');
 $menu->set_top('top/user/'.$_USR->get_info('meta'));

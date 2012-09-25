@@ -46,23 +46,19 @@ class xivo_application_xivo_object_dhcp extends xivo_application_xivo_object_abs
 	{
 		$this->_reset();
 
-		if($this->_dhcp->chk_values($arr) === false)
+		if(($rs = $this->_dhcp->chk_values($arr)) === false)
 			$this->_set_errors($this->_dhcp->get_filter_error());
 
 		if($this->get_errnb() > 0)
 			return false;
 
-		$keys = array('active', 'pool_start', 'pool_end', 'extra_ifaces');
-		foreach(array_keys($arr) as $key)
+		if ($rs['active'] === 1 && (empty($rs['pool_start']) || empty($rs['pool_end'])))
 		{
-			if(!in_array($key, $keys))
-				unset($arr[$key]);
+			$this->_set_errors(array('pool_start' => 'empty', 'pool_end' => 'empty'));
+			return(false);
 		}
 
-		if(!array_key_exists('active', $arr))
-			$arr['active'] = 0;
-
-		if($this->_dhcp->edit(1, $arr) === false)
+		if($this->_dhcp->edit(1, $rs) === false)
 			return false;
 
 		// notify commonconf needs to be updated
