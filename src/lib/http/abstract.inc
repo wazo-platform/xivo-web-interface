@@ -27,11 +27,11 @@ abstract class dwho_http_abstract extends dwho_mime_cim
 
 	public function __construct()
 	{
-		$this->_rule['tspecials']    = '\t \(\)\<\>@,;:\\\"\/\[\]\?=\{\}';
-		$this->_rule['token']        = '\!#\$%\&\'\*\+\-\.0-9A-Z\^_`a-z\|~';
-		$this->_rule['qtext']        = $this->_rule['crlf'].
-		$this->_rule['wsp'].
-		'\x21\x23-\x7E';
+		$this->_rule['tspecials'] = '\t \(\)\<\>@,;:\\\"\/\[\]\?=\{\}';
+		$this->_rule['token'] = '\!#\$%\&\'\*\+\-\.0-9A-Z\^_`a-z\|~';
+		$this->_rule['qtext'] = $this->_rule['crlf'];
+		$this->_rule['qtext'] .= $this->_rule['wsp'];
+		$this->_rule['qtext'] .= '\x21\x23-\x7E';
 
 		parent::__construct();
 	}

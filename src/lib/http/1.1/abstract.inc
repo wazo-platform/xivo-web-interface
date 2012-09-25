@@ -69,19 +69,20 @@ abstract class dwho_http_1_1_abstract extends dwho_http_abstract
 	{
 		parent::__construct();
 
-		$this->_rule['qtext']        = $this->_rule['crlf'].
-		$this->_rule['wsp'].
-		'\x21\x23-\x5B\x5D-\x7E\x80-\xFF';
-		$this->_rule['quoted-pair']    = '\x01-\x09\x0B\x0C\x0E-\xFF';
+		$this->_rule['qtext'] = $this->_rule['crlf'];
+		$this->_rule['qtext'] .= $this->_rule['wsp'];
+		$this->_rule['qtext'] .= '\x21\x23-\x5B\x5D-\x7E\x80-\xFF';
 
-		$this->_regexp['word']        = '(?:['.$this->_rule['token'].']+|'.
-				'"(?:['.$this->_rule['qtext'].']|'.
-				'\\\['.$this->_rule['quoted-pair'].'])+")';
+		$this->_rule['quoted-pair'] = '\x01-\x09\x0B\x0C\x0E-\xFF';
 
-		$this->_regexp['parameter']    = '(['.$this->_rule['token'].']+)\s*=\s*'.
-				'(?:(['.$this->_rule['token'].']+)|'.
-				'"((?:['.$this->_rule['qtext'].']|'.
-				'\\\['.$this->_rule['quoted-pair'].'])+)")';
+		$this->_regexp['word'] = '(?:['.$this->_rule['token'].']+|';
+		$this->_regexp['word'] .= '"(?:['.$this->_rule['qtext'].']|';
+		$this->_regexp['word'] .= '\\\['.$this->_rule['quoted-pair'].'])+")';
+
+		$this->_regexp['parameter'] = '(['.$this->_rule['token'].']+)\s*=\s*';
+		$this->_regexp['parameter'] .= '(?:(['.$this->_rule['token'].']+)|';
+		$this->_regexp['parameter'] .= '"((?:['.$this->_rule['qtext'].']|';
+		$this->_regexp['parameter'] .= '\\\['.$this->_rule['quoted-pair'].'])+)")';
 	}
 
 	function quote_word($str)
