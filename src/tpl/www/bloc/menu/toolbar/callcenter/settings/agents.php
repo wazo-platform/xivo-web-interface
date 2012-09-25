@@ -25,6 +25,8 @@ $dhtml = &$this->get_module('dhtml');
 $act = $this->get_var('act');
 $group = $this->get_var('group');
 
+$search = (string) $this->get_var('search');
+
 $param = array('act' => 'addagent');
 
 if($act !== 'list' && $act !== 'add'):
@@ -42,6 +44,7 @@ if($act === 'list'):
 	$dhtml->write_js($toolbar_js);
 elseif($act === 'listagent'):
 	$toolbar_js = array();
+	$toolbar_js[] = 'var xivo_toolbar_fm_search = \''.$dhtml->escape($search).'\';';
 	$toolbar_js[] = 'var xivo_toolbar_form_name = \'fm-agents-list\';';
 	$toolbar_js[] = 'var xivo_toolbar_form_list = \'agents[]\';';
 	$toolbar_js[] = 'var xivo_toolbar_adv_menu_delete_confirm = \''.$dhtml->escape($this->bbf('toolbar_adv_menu_delete_confirm')).'\';';
@@ -71,6 +74,21 @@ endif;
 					    'altkey'	=> 'id',
 					    'selected'	=> $group),
 				      $this->get_var('agentgroup_list'));
+
+if($act === 'listagent'):
+		echo	$form->text(array('name'	=> 'search',
+					  'id'		=> 'it-toolbar-search',
+					  'size'	=> 20,
+					  'paragraph'	=> false,
+					  'value'	=> $search,
+					  'default'	=> $this->bbf('toolbar_fm_search'))),
+
+			$form->image(array('name'	=> 'submit',
+					   'id'		=> 'it-toolbar-subsearch',
+					   'src'	=> $url->img('img/menu/top/toolbar/bt-search.gif'),
+					   'paragraph'	=> false,
+					   'alt'	=> $this->bbf('toolbar_fm_search')));
+endif;
 ?>
 	</div>
 </form>
@@ -187,6 +205,17 @@ dwho.dom.set_onload(function()
 
 				if(this.value !== '')
 					this.form['act'].value += 'agent';
+
+				this.form.submit();
+			   });
+
+	dwho.dom.add_event('change',
+			   dwho_eid('it-toolbar-linked'),
+			   function(e)
+			   {
+				if(xivo_toolbar_fm_search === ''
+				&& dwho_has_len(dwho.form.text_helper['it-toolbar-search']) === false)
+					this.form['search'].value = '';
 
 				this.form.submit();
 			   });

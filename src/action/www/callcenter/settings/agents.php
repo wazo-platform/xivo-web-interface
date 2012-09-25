@@ -33,6 +33,9 @@ $param = array();
 $param['act'] = 'list';
 $param['group'] = $group;
 
+if($search !== '')
+	$param['search'] = $search;
+
 $info = $result = array();
 
 switch($act)
@@ -509,7 +512,11 @@ switch($act)
 		$limit[0] = $prevpage * $nbbypage;
 		$limit[1] = $nbbypage;
 
-		$list = $appagent->get_agents_group($group,null,$order,$limit);
+		if($search !== '')
+			$list = $appagent->search_agents_in_group($search,$group,null,$order,$limit);
+		else
+			$list = $appagent->get_agents_group($group,null,$order,$limit);
+
 		$total = $appagent->get_cnt();
 
 		if($list === false && $total > 0 && $prevpage > 0)
@@ -525,6 +532,7 @@ switch($act)
 
 		$_TPL->set_var('pager',dwho_calc_page($page,$nbbypage,$total));
 		$_TPL->set_var('list',$list);
+		$_TPL->set_var('search',$search);
 		$_TPL->set_var('agentgroup_list',$agentgroup_list);
 		break;
 	default:

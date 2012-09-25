@@ -26,13 +26,18 @@ $pager = $this->get_var('pager');
 $act = $this->get_var('act');
 $group = $this->get_var('group');
 
-$page = $url->pager($pager['pages'],
-		    $pager['page'],
-		    $pager['prev'],
-		    $pager['next'],
-		    'callcenter/settings/agents',
-		    array('act'		=> $act,
-			  'group'	=> $group));
+if(($search = (string) $this->get_var('search')) !== '') {
+	$param['search'] = $search;
+}
+
+$page = $url->pager(
+		$pager['pages'],
+		$pager['page'],
+		$pager['prev'],
+		$pager['next'],
+		'callcenter/settings/agents',
+		array('act'		=> $act,
+			'group'	=> $group));
 
 ?>
 <div id="sr-agent" class="b-list">
@@ -44,16 +49,11 @@ $page = $url->pager($pager['pages'],
 <form action="#" name="fm-agents-list" method="post" accept-charset="utf-8">
 <?php
 	echo	$form->hidden(array('name'	=> DWHO_SESS_NAME,
-				    'value'	=> DWHO_SESS_ID)),
-
-		$form->hidden(array('name'	=> 'act',
-				    'value'	=> $act)),
-
-		$form->hidden(array('name'	=> 'page',
-				    'value'	=> $pager['page'])),
-
-		$form->hidden(array('name'	=> 'group',
-				    'value'	=> $group));
+			'value'	=> DWHO_SESS_ID)),
+	$form->hidden(array('name'	=> 'act', 'value'	=> $act)),
+	$form->hidden(array('name'	=> 'page', 'value'	=> $pager['page'])),
+	$form->hidden(array('name'	=> 'group', 'value'	=> $group)),
+	$form->hidden(array('name' => 'search','value' => ''));
 ?>
 <table id="table-main-listing">
 	<tr class="sb-top">
