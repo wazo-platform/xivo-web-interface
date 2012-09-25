@@ -70,7 +70,6 @@ $tpl_statistics->set_col_struct('call_counter');
 $tpl_statistics->add_col('connect',
 					'direct',
 					'custom:agent,[key],connect');
-
 /*
 $tpl_statistics->add_col('transfer',
 					'direct',
@@ -88,20 +87,18 @@ $tpl_statistics->add_col('conversation',
 			 'direct',
 			 'custom:agent,[key],conversationtime',
 			 'time');
-
-
 $tpl_statistics->add_col('login',
 					'direct',
 					'custom:agent,[key],login_time',
+					'direct');
+$tpl_statistics->add_col('pause',
+					'direct',
+					'custom:agent,[key],pause_time',
 					'direct');
 /*
 $tpl_statistics->add_col('available',
 					'expression',
 					'{custom:agent,[key],logintime}-{custom:agent,[key],calltime}',
-					'time');
-$tpl_statistics->add_col('pause',
-					'direct',
-					'custom:agent,[key],pausetime',
 					'time');
 $tpl_statistics->add_col('traitment',
 					'direct',

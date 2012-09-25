@@ -49,9 +49,19 @@ class xivo_service_asterisk_stat_agent_periodic_sql extends xivo_service_asteris
 		return($r[0]);
 	}
 
-	public function agent_login_time_interval($interval, $agent_ids)
+	public function agent_time_interval($type, $interval, $agent_ids)
 	{
-		$field = array((object) ('SUM("login_time")'));
+		switch($type)
+		{
+			case 'login':
+				$field = array((object) ('SUM("login_time")'));
+				break;
+			case 'pause':
+				$field = array((object) ('SUM("pause_time")'));
+				break;
+			default;
+				return(false);
+		}
 
 		$this->_dso->new_select($this->_table, $field);
 

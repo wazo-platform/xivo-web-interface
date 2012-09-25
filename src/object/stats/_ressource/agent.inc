@@ -37,10 +37,12 @@ class stats_ressource_agent extends xivo_stats_ressource_abstract
 		$conversation_time = $this->_stat_call_on_queue->get_agent_conversation_time($interval, $agent_ids);
 		$answered = $this->_stat_call_on_queue->get_count_agent_answered($interval, $agent_ids);
 		$login_time = $this->_stat_agent_periodic->get_login_time($interval, $agent_ids);
+		$pause_time = $this->_stat_agent_periodic->get_pause_time($interval, $agent_ids);
 
 		$this->_result[$key]['conversationtime']['result'] = $conversation_time;
 		$this->_result[$key]['connect']['result'] = $answered;
 		$this->_result[$key]['login_time']['result'] = $login_time;
+		$this->_result[$key]['pause_time']['result'] = $pause_time;
 
 		return($this->_result);
 	}

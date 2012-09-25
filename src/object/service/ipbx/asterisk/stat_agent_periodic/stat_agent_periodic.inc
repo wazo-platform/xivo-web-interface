@@ -43,7 +43,7 @@ class xivo_service_asterisk_stat_agent_periodic extends xivo_service_asterisk_ab
 		$this->_stat_agent = $this->_sre->get_module('stat_agent');
 	}
 
-	function get_min_and_max_time()
+	public function get_min_and_max_time()
 	{
 		if(($min = $this->_dso->get_min_time()) === false
 		|| ($max = $this->_dso->get_max_time()) === false)
@@ -56,18 +56,29 @@ class xivo_service_asterisk_stat_agent_periodic extends xivo_service_asterisk_ab
 		return($rs);
 	}
 
-	function get_login_time($interval, $agent_id)
+	public function get_pause_time($interval, $agent_id)
 	{
-		$login_time = $this->_dso->agent_login_time_interval($interval, $agent_id);
+		$pause_time = $this->_dso->agent_time_interval('pause', $interval, $agent_id);
+		if ($pause_time === null) {
+			$pause_time = '00:00:00';
+		} else {
+			$pause_time = $this->_strip_microseconds($pause_time);
+		}
+		return $pause_time;
+	}
+
+	public function get_login_time($interval, $agent_id)
+	{
+		$login_time = $this->_dso->agent_time_interval('login', $interval, $agent_id);
 		if ($login_time === null) {
 			$login_time = '00:00:00';
 		} else {
-			$login_time = $this->strip_microseconds($login_time);
+			$login_time = $this->_strip_microseconds($login_time);
 		}
 		return $login_time;
 	}
 
-	function strip_microseconds($time_string) {
+	private function _strip_microseconds($time_string) {
 		return substr($time_string, 0, 8);
 	}
 }
