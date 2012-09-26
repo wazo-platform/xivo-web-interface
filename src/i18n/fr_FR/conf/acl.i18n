@@ -145,6 +145,9 @@ Abonnements MWI
 ; acl(service-ipbx-general_settings-phonebook)
 Carnet d'adresses
 
+; acl(service-ipbx-general_settings-sccp)
+Protocole SCCP
+
 ; acl(service-ipbx-general_settings-sip)
 Protocole SIP
 

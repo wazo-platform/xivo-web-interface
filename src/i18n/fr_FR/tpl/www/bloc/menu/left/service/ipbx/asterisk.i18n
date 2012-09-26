@@ -7,6 +7,9 @@ Paramètres globaux
 ; mn_left_generalsettings-sip
 Protocole SIP
 
+; mn_left_generalsettings-sccp
+Protocole SCCP
+
 ; mn_left_generalsettings-iax
 Protocole IAX
 

@@ -145,6 +145,9 @@ MWI registration
 ; acl(service-ipbx-general_settings-phonebook)
 Phonebook
 
+; acl(service-ipbx-general_settings-sccp)
+SCCP Protocol
+
 ; acl(service-ipbx-general_settings-sip)
 SIP Protocol
 
