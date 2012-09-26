@@ -142,13 +142,13 @@ $informations = $this->get_var('informations');
 				</td>
 				<td>
 	<?php
-		echo $form->select(array('paragraph'	=> false,
-				    'name'	=> 'screencol2['.$i.']',
-				    'empty'	=> true,
-				    'key'	=> false,
-#				    'default'		=> $element['userfeatures']['timezone']['default'],
-				    'selected'	=> $v[1]),
-			      array("title", "text","url","urlx", "picture", "phone", "form"));
+		echo $form->select(array('paragraph' => false,
+				'name' => 'screencol2['.$i.']',
+				'empty' => true,
+				'key' => false,
+				'label' => false,
+				'selected' => $v[1]),
+			array("title", "text","url","urlx", "picture", "phone", "form"));
 	 ?>
 				</td>
 				<td>
@@ -222,11 +222,12 @@ $informations = $this->get_var('informations');
 				<td>
 	<?php
 
-		echo  $form->select(array('paragraph'	=> false,
-				    'name'	=> 'screencol2[]',
-				    'empty'	=> true,
-				    'key'	=> false),
-			      array("title", "text","url","urlx", "picture", "phone", "form"));
+		echo  $form->select(array('paragraph' => false,
+				'name' => 'screencol2[]',
+				'label' => false,
+				'empty' => true,
+				'key' => false),
+			array("title", "text","url","urlx", "picture", "phone", "form"));
 
 	 ?>
 				</td>
