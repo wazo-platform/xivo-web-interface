@@ -123,6 +123,7 @@ $array['service/ipbx'] = 'service/ipbx/index.php';
 // general_settings
 $array['service/ipbx/general_settings/sip'] = 'service/ipbx/index.php/general_settings/sip/';
 $array['service/ipbx/general_settings/iax'] = 'service/ipbx/index.php/general_settings/iax/';
+$array['service/ipbx/general_settings/sccp'] = 'service/ipbx/index.php/general_settings/sccp/';
 $array['service/ipbx/general_settings/voicemail'] = 'service/ipbx/index.php/general_settings/voicemail/';
 $array['service/ipbx/general_settings/phonebook'] = 'service/ipbx/index.php/general_settings/phonebook/';
 $array['service/ipbx/general_settings/advanced'] = 'service/ipbx/index.php/general_settings/advanced/';
@@ -132,6 +133,7 @@ $array['service/ipbx/general_settings/dahdi'] = 'service/ipbx/index.php/general_
 
 $array['service/ipbx/json/restricted/general_settings/sip'] = 'service/ipbx/json.php/restricted/general_settings/sip/';
 $array['service/ipbx/json/restricted/general_settings/iax'] = 'service/ipbx/json.php/restricted/general_settings/iax/';
+$array['service/ipbx/json/restricted/general_settings/sccp'] = 'service/ipbx/json.php/restricted/general_settings/sccp/';
 $array['service/ipbx/json/restricted/general_settings/voicemail'] = 'service/ipbx/json.php/restricted/general_settings/voicemail/';
 $array['service/ipbx/json/restricted/general_settings/phonebook'] = 'service/ipbx/json.php/restricted/general_settings/phonebook/';
 $array['service/ipbx/json/restricted/general_settings/advanced'] = 'service/ipbx/json.php/restricted/general_settings/advanced/';
