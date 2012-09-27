@@ -65,15 +65,6 @@ endif;
 ?>
 	<div class="fm-paragraph">
 <?php
-		echo	$form->select(array('name'	=> 'group',
-					    'id'	=> 'it-toolbar-group',
-					    'paragraph'	=> false,
-					    'browse'	=> 'agentgroup',
-					    'empty'	=> $this->bbf('toolbar_fm_group'),
-					    'key'	=> 'name',
-					    'altkey'	=> 'id',
-					    'selected'	=> $group),
-				      $this->get_var('agentgroup_list'));
 
 if($act === 'listagent'):
 		echo	$form->text(array('name'	=> 'search',
