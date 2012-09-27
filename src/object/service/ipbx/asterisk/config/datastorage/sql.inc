@@ -344,6 +344,10 @@ $array['sccpdevice'] = array();
 $array['sccpdevice']['table'] = 'sccpdevice';
 $array['sccpdevice']['primary'] = array('id' => '');
 
+$array['sccpgeneralsettings'] = array();
+$array['sccpgeneralsettings']['table'] = 'sccpgeneralsettings';
+$array['sccpgeneralsettings']['primary'] = array('id' => '');
+
 $array['schedule'] = array();
 $array['schedule']['table'] = 'schedule';
 $array['schedule']['primary'] = array('id' => '');

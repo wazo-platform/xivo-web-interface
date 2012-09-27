@@ -301,6 +301,9 @@ $array['module']['sccpline']['datastorage'] = true;
 $array['module']['sccpdevice'] = array();
 $array['module']['sccpdevice']['datastorage'] = true;
 
+$array['module']['sccpgeneralsettings'] = array();
+$array['module']['sccpgeneralsettings']['datastorage'] = true;
+
 $array['module']['schedule'] = array();
 $array['module']['schedule']['datastorage'] = true;
 
