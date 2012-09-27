@@ -189,18 +189,6 @@ endif;
 dwho.dom.set_onload(function()
 {
 	dwho.dom.add_event('change',
-			   dwho_eid('it-toolbar-group'),
-			   function()
-			   {
-				this.form['act'].value = 'list';
-
-				if(this.value !== '')
-					this.form['act'].value += 'agent';
-
-				this.form.submit();
-			   });
-
-	dwho.dom.add_event('change',
 			   dwho_eid('it-toolbar-linked'),
 			   function(e)
 			   {
