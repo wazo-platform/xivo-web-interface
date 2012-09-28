@@ -27,7 +27,7 @@ $search  = strval($prefs->get('search', ''));
 $context = strval($prefs->get('context', ''));
 $sort    = $prefs->flipflop('sort', 'name');
 
-$group = isset($_QR['group']) === true ? dwho_uint($_QR['group'],1) : 1;
+$group = is_null($_QRY->get('group')) ? 1 : dwho_uint($_QRY->get('group'), 1);
 
 $param = array();
 $param['act'] = 'list';
