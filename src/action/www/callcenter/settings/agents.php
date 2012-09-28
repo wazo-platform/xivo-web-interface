@@ -513,7 +513,7 @@ switch($act)
 		$limit[1] = $nbbypage;
 
 		if($search !== '')
-			$list = $appagent->search_agents_in_group($search,$group,null,$order,$limit);
+			$list = $appagent->get_agents_search($search,null,$order,$limit);
 		else
 			$list = $appagent->get_agents_group($group,null,$order,$limit);
 

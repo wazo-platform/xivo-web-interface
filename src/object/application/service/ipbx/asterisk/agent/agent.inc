@@ -162,11 +162,6 @@ class xivo_application_service_asterisk_agent extends xivo_application_asterisk_
 		return($r);
 	}
 
-	public function search_agents_in_group($search,$group,$disable=null,$order=null,$limit=null,$assoc=false)
-	{
-		return($this->_get_agents('search',$search,$group,$disable,$order,$limit,$assoc));
-	}
-
 	function get_agents_search($search,$disable=null,$order=null,$limit=null,$assoc=false)
 	{
 		return($this->_get_agents('search',$search,null,$disable,$order,$limit,$assoc));
