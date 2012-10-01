@@ -40,10 +40,13 @@ $array['filter'] = array();
 
 $array['filter']['directmedia'] = array('bool' => true);
 
-$array['filter']['dialtimeout'] = array('cast' => 'uint',
+$array['filter']['dialtimeout'] = array(
+	'cast' => 'uint',
+	'chk' => 1,
 	'between' => array(1,10));
 
-$array['filter']['language'] = array('set' => false,
+$array['filter']['language'] = array(
+	'set' => false,
 	'chk' => 2,
 	'key' => dwho_i18n::get_supported_language_list());
 
