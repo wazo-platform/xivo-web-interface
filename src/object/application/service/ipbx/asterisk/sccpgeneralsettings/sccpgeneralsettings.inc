@@ -61,8 +61,8 @@ class xivo_application_service_asterisk_sccpgeneralsettings extends xivo_applica
 		$rs = $this->chk_values($options);
 		if($rs === false)
 		{
-			$this->_set_result('sccpgeneralsettings',$this->_sccpgeneralsettings->get_filter_result());
-			$this->_set_error('sccpgeneralsettings',$this->_sccpgeneralsettings->get_filter_error());
+			$this->_set_result('sccpgeneralsettings', $this->get_filter_result());
+			$this->_set_error('sccpgeneralsettings', $this->get_filter_error());
 			return(false);
 		}
 		$this->_set_result('sccpgeneralsettings',$this->_sccpgeneralsettings->save_sccp_general_settings($rs));
