@@ -1546,10 +1546,8 @@ class dwho_tpl_form extends dwho_tpl_module
 			for ($i=0;$i<$nb;$i++)
 			{
 				$ref = $selected[$i];
-
 				if (isset($arr[$ref]) === true) {
 					$rs[] = $this->_mk_param_value($ref,$arr);
-
 					// Reorder selected values (sorted by name by default)
 					$tmp = $arr[$ref];
 					unset($arr[$ref]);
@@ -1589,8 +1587,8 @@ class dwho_tpl_form extends dwho_tpl_module
 		$r .= '>'."\n";
 
 		if($this->_param['empty'] !== false
-				|| ($this->_param['invalid'] === true
-						&& $this->_selected === false) === true)
+		|| ($this->_param['invalid'] === true
+			&& $this->_selected === false) === true)
 			$r .= $this->_mk_slt_option_empty();
 
 		if($arr !== '' && $arr !== false)

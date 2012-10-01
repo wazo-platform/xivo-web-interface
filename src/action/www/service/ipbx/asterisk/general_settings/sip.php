@@ -86,7 +86,14 @@ if(dwho_issa('allow',$element) === true
 && dwho_issa('value',$element['allow']) === true
 && isset($info['allow']) === true
 && dwho_has_len($info['allow'],'var_val') === true)
+{
 	$info['allow']['var_val'] = explode(',',$info['allow']['var_val']);
+	$allow_value = $element['allow']['value'];
+	$tmp = array();
+	foreach($allow_value as $key => $value)
+		$tmp[$value] = $value;
+	$element['allow']['value'] = $tmp;
+}
 
 if(dwho_issa('localnet',$info) === true
 && array_key_exists('var_val',$info['localnet']) === true
