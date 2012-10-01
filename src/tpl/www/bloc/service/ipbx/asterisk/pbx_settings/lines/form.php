@@ -30,9 +30,7 @@ $ipbxinfos = $this->get_var('info','ipbx');
 
 $allow = array();
 if(isset($info['protocol']) === true) {
-	if(isset($info['protocol']['allow']) === true) {
-		$allow = explode(',', $info['protocol']['allow']);
-	}
+	$allow =  $info['protocol']['allow'];
 	$protocol = (string) dwho_ak('protocol',$info['protocol'],true);
 	$context = (string) dwho_ak('context',$info['protocol'],true);
 	$amaflags = (string) dwho_ak('amaflags',$info['protocol'],true);
