@@ -68,14 +68,6 @@ class xivo_service_asterisk_cel_sql extends xivo_service_asterisk_abstract_sql
 			$this->_dso->andwhere('"eventtime" BETWEEN \''.$dbeg.'\' AND \''.$dend.'\'');
 		}
 
-		if(isset($arr['channel']) === true)
-		{
-			if(is_array($arr['channel']) === true)
-				$this->_dso->andwherenotbegin('channame',$arr['channel']);
-			else
-				$this->_dso->andwherebegin('channame',$arr['channel']);
-		}
-
 		if(isset($arr['context']) === true)
 			$this->_dso->andwhere(array('context' => $arr['context']));
 

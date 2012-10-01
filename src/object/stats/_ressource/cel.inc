@@ -181,13 +181,14 @@ class stats_ressource_cel
 			return(false);
 
 		$rs = array();
-		while($list)
+		$nb = count($list);
+		for($i=0;$i<$nb;$i++)
 		{
-			$ref = array_shift($list);
-			$uid = $ref['linkedid'];
-			if (isset($rs[$uid]) === false)
-				$rs[$uid] = array();
-			array_push($rs[$uid], $ref);
+			$ref = &$list[$i];
+			$lid = $ref['linkedid'];
+			if (isset($rs[$lid]) === false)
+				$rs[$lid] = array();
+			array_push($rs[$lid], $ref);
 		}
 		return($rs);
 	}
@@ -515,19 +516,20 @@ class stats_ressource_cel
 		if(dwho_has_len($search,'dst') === true && isset($search['dstformat']) === true)
 			$search_dst = $this->_build_search($search['dst'], $search['dstformat']);
 
-		$listcall = array_values($listcall);
-		$token = $itl = $tmp = array();
-		for ($i=0; $i < $total; $i++)
+		if(dwho_has_len($search,'channel') === true && isset($search['channel']) === true)
+			$search_channel = $this->_build_search($search['channel'], 'begin');
+
+		foreach ($listcall as $linkedid => $ticketcall)
 		{
-			$ticketcall = &$listcall[$i];
-			$token = $itl = $tmp = array();
-			while ($ticketcall)
+			$token = $tmp = array();
+			$nb = count($ticketcall);
+			for($i=0; $i<$nb; $i++)
 			{
-				$call = array_shift($ticketcall);
+				$call = &$ticketcall[$i];
 
 				$eventtime = dwho_date::all_to_unixtime($call['eventtime']);
+				#$linkedid = $call['linkedid'];
 				$uniqueid = $call['uniqueid'];
-				$linkedid = $call['linkedid'];
 				$eventtype = $call['eventtype'];
 				$channame = $call['channame'];
 				$trunkname = substr($channame,0,-strlen(strrchr($channame,'-')));
@@ -578,6 +580,7 @@ class stats_ressource_cel
 								$ref['accountcode'] = $call['accountcode'];
 								$ref['amaflags'] = $call['amaflags'];
 								$ref['amaflagsmeta'] = $call['amaflagsmeta'];
+								$ref['peer'] = $call['peer'];
 
 								$cc['ringing'] = $eventtime;
 								break;
@@ -598,6 +601,8 @@ class stats_ressource_cel
 							case 1:
 								if (!isset($ref['from']) || !dwho_has_len($ref['from']))
 									$ref['from'] = $call['cid_name'].' ('.$call['cid_num'].')';
+								if (isset($ref['context']) && $ref['context'] == 'default')
+									$ref['context'] = $call['context'];
 								break;
 							case 2:
 								if (!dwho_has_len($ref['to']))
@@ -628,20 +633,30 @@ class stats_ressource_cel
 					default:
 				}
 			}
+
 			if (isset($search_dst))
 			{
-				$tt = current($token);
-				if (!isset($tt['to'])
-				|| !preg_match($search_dst, $tt['to']))
+				$call_from = current($token);
+				if (!isset($call_from['to'])
+				|| !preg_match($search_dst, $call_from['to']))
 					continue;
 			}
 			if (isset($search_src))
 			{
-				$tt = current($token);
-				if (!isset($tt['from'])
-				|| !preg_match($search_src, $tt['from']))
+				$call_from = current($token);
+				if (!isset($call_from['from'])
+				|| !preg_match($search_src, $call_from['from']))
 					continue;
 			}
+			if (isset($search_channel))
+			{
+				$call_from = current($token);
+				$call_to = next($token);
+				if (!preg_match($search_channel, $call_from['channame'])
+						&& !preg_match($search_channel, $call_to['channame']))
+					continue;
+			}
+
 			array_push($rs,$token);
 		}
 

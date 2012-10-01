@@ -84,14 +84,8 @@ class xivo_service_asterisk_cel extends xivo_service_asterisk_abstract
 			else
 				$search['dbeg'] = $date['dbeg']['date'];
 
-			//if($date['dend'] !== null && $date['dend']['dateint'] > strftime($date['dend']['format']))
-			//	return(false);
-			//else
-				$search['dend'] = $date['dend']['date'];
+			$search['dend'] = $date['dend']['date'];
 		}
-
-		if(dwho_has_len($arr,'channel') === true)
-			$search['channel'] = $this->_search_channel($arr['channel']);
 
 		if(dwho_has_len($arr,'amaflags') === true)
 			$search['amaflags'] = $arr['amaflags'];
