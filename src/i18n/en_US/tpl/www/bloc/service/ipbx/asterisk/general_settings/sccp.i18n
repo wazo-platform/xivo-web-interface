@@ -1,0 +1,20 @@
+; title_content_name
+SCCP protocol properties
+
+; fm_sccpgeneralsettings_directmedia
+Enable Direct RTP
+
+; hlp_fm_sccpgeneralsettings_directmedia
+Asterisk config: directmedia
+
+; fm_sccpgeneralsettings_dialtimeout
+Dial timeout
+
+; hlp_fm_sccpgeneralsettings_dialtimeout
+Asterisk config: dialtimeout
+
+; fm_sccpgeneralsettings_language
+Default language
+
+; hlp_fm_sccpgeneralsettings_language
+Asterisk config: language
