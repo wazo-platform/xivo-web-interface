@@ -79,7 +79,7 @@ if(isset($_QR['fm_send']) === true && dwho_issa('voicemail',$_QR) === true)
 $element = array();
 $element['voicemail'] = $appgeneralvoicemail->get_elements();
 $element['zonemessages'] = $appzonemessages->get_elements();
-$element['general']      = $general->get_element();
+$element['general'] = $general->get_element();
 
 if(dwho_issa('format',$element['voicemail']) === true
 && dwho_issa('value',$element['voicemail']['format']) === true
@@ -87,13 +87,17 @@ if(dwho_issa('format',$element['voicemail']) === true
 && dwho_has_len($info['voicemail']['format'],'var_val') === true)
 {
 	$info['voicemail']['format']['var_val'] = explode('|',$info['voicemail']['format']['var_val']);
-	$element['voicemail']['format']['value'] = array_diff($element['voicemail']['format']['value'],
-							      $info['voicemail']['format']['var_val']);
+	$allow_value = $element['voicemail']['format']['value'];
+	$tmp = array();
+	foreach($allow_value as $key => $value)
+		$tmp[$value] = $value;
+	$element['voicemail']['format']['value'] = $tmp;
 }
 
 $dhtml = &$_TPL->get_module('dhtml');
 $dhtml->set_js('js/service/ipbx/'.$ipbx->get_name().'/general.js');
 $dhtml->set_js('js/dwho/submenu.js');
+$dhtml->load_js_multiselect_files();
 
 $_TPL->set_var('fm_save',$fm_save);
 $_TPL->set_var('element',$element);

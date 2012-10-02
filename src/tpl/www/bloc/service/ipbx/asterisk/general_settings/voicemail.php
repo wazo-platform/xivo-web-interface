@@ -234,55 +234,24 @@ endif;
 
 ?>
 
-<div id="formatlist" class="fm-paragraph fm-multilist">
-	<p>
-		<label id="lb-formatlist" for="it-voicemail-formatlist">
-			<?=$this->bbf('fm_voicemail-format');?>
-		</label>
-	</p>
-				<?=$form->input_for_ms('voicemail-formatlist',$this->bbf('ms_seek'))?>
-	<div class="slt-outlist">
-		<?=$form->select(array('name'		=> 'voicemail[formatlist]',
-				       'label'		=> false,
-				       'id'		=> 'it-voicemail-formatlist',
-#				       'help'	=> $this->bbf('hlp_voicemail-formatlist'),
-				       'multiple'	=> true,
-				       'size'		=> 5,
-				       'paragraph'	=> false,
-				       'key'		=> false,
-				       'bbf'		=> 'ast_format_name_info',
-				       'bbfopt'		=> array('argmode' => 'paramvalue')),
-				 $element['voicemail']['format']['value']);?>
-	</div>
-	<div class="inout-list">
-		<a href="#"
-		   onclick="xivo_voicemail_format('in'); return(dwho.dom.free_focus());"
-		   title="<?=$this->bbf('bt_informat');?>">
-			<?=$url->img_html('img/site/button/arrow-left.gif',
-					  $this->bbf('bt_informat'),
-					  'class="bt-inlist" id="bt-informat" border="0"');?></a><br />
-		<a href="#"
-		   onclick="xivo_voicemail_format('out'); return(dwho.dom.free_focus());"
-		   title="<?=$this->bbf('bt_outformat');?>">
-			<?=$url->img_html('img/site/button/arrow-right.gif',
-					  $this->bbf('bt_outformat'),
-					  'class="bt-outlist" id="bt-outformat" border="0"');?></a>
-	</div>
-	<div class="slt-inlist">
-		<?=$form->select(array('name'		=> 'voicemail[format][]',
-				       'label'		=> false,
-				       'id'		=> 'it-voicemail-format',
-				       'help'	=> $this->bbf('hlp_voicemail-format'),
-				       'multiple'	=> true,
-				       'size'		=> 5,
-				       'paragraph'	=> false,
-				       'key'		=> false,
-				       'bbf'		=> 'ast_format_name_info',
-				       'bbfopt'		=> array('argmode' => 'paramvalue')),
-				 $format);?>
+<fieldset id="fld-codeclist">
+	<legend><?=$this->bbf('fm_voicemail-format');?></legend>
+<div id="formatlist">
+	<div class="fm-paragraph fm-description">
+		<?=$form->jq_select(array('paragraph'	=> false,
+							'label'		=> false,
+							'name'		=> 'voicemail[format][]',
+							'id' 		=> 'it-voicemail-formatlist',
+							'key'		=> false,
+							'bbf'		=> 'ast_format_name_info',
+							'bbfopt'	=> array('argmode' => 'paramvalue'),
+							'selected'  => $format),
+					$element['voicemail']['format']['value']);?>
+	<div class="clearboth"></div>
 	</div>
 </div>
-<div class="clearboth"></div>
+</fieldset>
+
 </div>
 
 <div id="sb-part-voicemenu" class="b-nodisplay">
