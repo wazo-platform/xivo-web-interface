@@ -78,11 +78,17 @@ if(dwho_issa('allow',$element) === true
 && dwho_has_len($info['allow'],'var_val') === true)
 {
 	$info['allow']['var_val'] = explode(',',$info['allow']['var_val']);
-	$element['allow']['value'] = array_diff($element['allow']['value'],$info['allow']['var_val']);
+	$allow_value = $element['allow']['value'];
+	$tmp = array();
+	foreach($allow_value as $key => $value)
+		$tmp[$value] = $value;
+	$element['allow']['value'] = $tmp;
 }
 
 $dhtml = &$_TPL->get_module('dhtml');
 $dhtml->set_js('js/dwho/submenu.js');
+$dhtml->set_js('js/utils/codeclist.js');
+$dhtml->load_js_multiselect_files();
 
 $_TPL->set_var('fm_save',$fm_save);
 $_TPL->set_var('info',$info);

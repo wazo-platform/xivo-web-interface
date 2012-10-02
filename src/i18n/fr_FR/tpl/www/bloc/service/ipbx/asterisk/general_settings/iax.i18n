@@ -376,6 +376,9 @@ Seulement par requête
 ; fm_codecpriority-opt(host)
 Hôte
 
+; fm_codec-custom
+Personnaliser les codecs:
+
 ; fm_codec-disallow
 Codecs désactivés:
 
