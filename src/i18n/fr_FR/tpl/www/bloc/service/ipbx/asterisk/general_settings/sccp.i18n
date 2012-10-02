@@ -2,19 +2,19 @@
 Propriétés du protocole SCCP
 
 ; fm_sccpgeneralsettings_directmedia
-Activer le Direct RTP
+Activer le direct media : 
 
 ; hlp_fm_sccpgeneralsettings_directmedia
 Config asterisk: directmedia
 
 ; fm_sccpgeneralsettings_dialtimeout
-Délai d'attente de la numérotation
+Délai d'attente de la numérotation :
 
 ; hlp_fm_sccpgeneralsettings_dialtimeout
 Config asterisk: dialtimeout
 
 ; fm_sccpgeneralsettings_language
-Langue par défaut
+Langue par défaut :
 
 ; hlp_fm_sccpgeneralsettings_language
 Config asterisk: language

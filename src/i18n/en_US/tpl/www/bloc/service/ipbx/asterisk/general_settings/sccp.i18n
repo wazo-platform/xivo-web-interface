@@ -2,19 +2,19 @@
 SCCP protocol properties
 
 ; fm_sccpgeneralsettings_directmedia
-Enable Direct RTP
+Enable direct media:
 
 ; hlp_fm_sccpgeneralsettings_directmedia
 Asterisk config: directmedia
 
 ; fm_sccpgeneralsettings_dialtimeout
-Dial timeout
+Dial timeout:
 
 ; hlp_fm_sccpgeneralsettings_dialtimeout
 Asterisk config: dialtimeout
 
 ; fm_sccpgeneralsettings_language
-Default language
+Default language:
 
 ; hlp_fm_sccpgeneralsettings_language
 Asterisk config: language
