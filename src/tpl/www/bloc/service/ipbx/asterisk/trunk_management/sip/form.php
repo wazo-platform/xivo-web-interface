@@ -501,98 +501,42 @@ endif;
             'help'    => $this->bbf('hlp_fm_protocol-session-refresher'),
             'selected'  => $info['protocol']['session-refresher'],
             'default' => $element['protocol']['session-refresher']['default']),
-         $element['protocol']['session-refresher']['value']),
-
-		$form->checkbox(array('desc'	=> $this->bbf('fm_codec-custom'),
-				      'name'	=> 'codec-active',
-				      'labelid'	=> 'codec-active',
-				      'checked'	=> $codec_active),
-				'onclick="xivo_chg_attrib(\'ast_fm_trunk_codec\',
-							  \'it-protocol-disallow\',
-							  Number((this.checked === false)));"'),
-
-		$form->select(array('desc'	=> $this->bbf('fm_protocol_codec-disallow'),
-				    'name'	=> 'protocol[disallow]',
-				    'labelid'	=> 'protocol-disallow',
-				    'key'	=> false,
-				    'bbf'	=> 'fm_protocol_codec-disallow-opt',
-				    'bbfopt'	=> array('argmode' => 'paramvalue')),
-			      $element['protocol']['disallow']['value']);
+         $element['protocol']['session-refresher']['value']);
 
 ?>
 
-<div id="codeclist" class="fm-paragraph fm-multilist">
-	<p>
-		<label id="lb-codeclist" for="it-codeclist" onclick="dwho_eid('it-codeclist').focus();">
-			<?=$this->bbf('fm_protocol_codec-allow');?>
-		</label>
-	</p>
-	<div class="slt-outlist">
+<fieldset id="fld-codeclist">
+	<legend><?=$this->bbf('fld-codeclist');?></legend>
 <?php
-		echo	$form->select(array('name'	=> 'codeclist',
-					    'label'	=> false,
-					    'id'	=> 'it-codeclist',
-					    'multiple'	=> true,
-					    'size'	=> 5,
-					    'paragraph'	=> false,
-					    'key'	=> false,
-					    'bbf'	=> 'ast_codec_name_type',
-					    'bbfopt'	=> array('argmode' => 'paramvalue')),
-				      $element['protocol']['allow']['value']);
+	echo	$form->checkbox(array('desc'	=> $this->bbf('fm_codec-custom'),
+							'name'		=> 'codec-active',
+							'labelid'	=> 'codec-active',
+							'checked'	=> $codec_active));
 ?>
-	</div>
-
-	<div class="inout-list">
-		<a href="#"
-		   onclick="dwho.form.move_selected('it-codeclist',
-						  'it-codec');
-			    return(dwho.dom.free_focus());"
-		   title="<?=$this->bbf('bt_incodec');?>">
-			<?=$url->img_html('img/site/button/arrow-left.gif',
-					  $this->bbf('bt_incodec'),
-					  'class="bt-inlist" id="bt-incodec" border="0"');?></a><br />
-		<a href="#"
-		   onclick="dwho.form.move_selected('it-codec',
-						  'it-codeclist');
-			    return(dwho.dom.free_focus());"
-		   title="<?=$this->bbf('bt_outcodec');?>">
-			<?=$url->img_html('img/site/button/arrow-right.gif',
-					  $this->bbf('bt_outcodec'),
-					  'class="bt-outlist" id="bt-outcodec" border="0"');?></a>
-	</div>
-
-	<div class="slt-inlist">
+<div id="codeclist">
 <?php
-		echo	$form->select(array('name'	=> 'protocol[allow][]',
-					    'label'	=> false,
-					    'id'	=> 'it-codec',
-					    'multiple'	=> true,
-					    'size'	=> 5,
-					    'paragraph'	=> false,
-					    'key'	=> false,
-					    'bbf'	=> 'ast_codec_name_type',
-					    'bbfopt'	=> array('argmode' => 'paramvalue')),
-				      $allow);
+	echo	$form->select(array('desc'	=> $this->bbf('fm_protocol_codec-disallow'),
+							'name'		=> 'protocol[disallow]',
+							'labelid'	=> 'protocol[disallow]',
+							'key'		=> false,
+							'bbf'		=> 'fm_protocol_codec-disallow-opt',
+							'bbfopt'	=> array('argmode' => 'paramvalue')),
+					$element['protocol']['disallow']['value']);
 ?>
-		<div class="bt-updown">
-			<a href="#"
-			   onclick="dwho.form.order_selected('it-codec',1);
-				    return(dwho.dom.free_focus());"
-			   title="<?=$this->bbf('bt_upcodec');?>">
-				<?=$url->img_html('img/site/button/arrow-up.gif',
-						  $this->bbf('bt_upcodec'),
-						  'class="bt-uplist" id="bt-upcodec" border="0"');?></a><br />
-			<a href="#"
-			   onclick="dwho.form.order_selected('it-codec',-1);
-				    return(dwho.dom.free_focus());"
-			   title="<?=$this->bbf('bt_downcodec');?>">
-				<?=$url->img_html('img/site/button/arrow-down.gif',
-						  $this->bbf('bt_downcodec'),
-						  'class="bt-downlist" id="bt-downcodec" border="0"');?></a>
-		</div>
+	<div class="fm-paragraph fm-description">
+		<?=$form->jq_select(array('paragraph'	=> false,
+							'label'		=> false,
+							'name'		=> 'protocol[allow][]',
+							'id' 		=> 'it-allow',
+							'key'		=> false,
+							'bbf'		=> 'ast_codec_name_type',
+							'bbfopt'	=> array('argmode' => 'paramvalue'),
+							'selected'  => $allow),
+					$element['protocol']['allow']['value']);?>
+	<div class="clearboth"></div>
 	</div>
 </div>
-<div class="clearboth"></div>
+</fieldset>
 
 </div>
 

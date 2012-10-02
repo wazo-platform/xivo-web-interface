@@ -70,7 +70,11 @@ switch($act)
 			if(is_array($allow) === false)
 				$allow = explode(',',$allow);
 
-			$element['protocol']['allow']['value'] = array_diff($element['protocol']['allow']['value'],$allow);
+			$allow_value = $element['protocol']['allow']['value'];
+			$tmp = array();
+			foreach($allow_value as $key => $value)
+				$tmp[$value] = $value;
+			$element['protocol']['allow']['value'] = $tmp;
 		}
 
 		if(empty($result) === false)
@@ -80,6 +84,8 @@ switch($act)
 		$dhtml->set_js('js/service/ipbx/'.$ipbx->get_name().'/trunks/sip.js');
 		$dhtml->set_js('js/service/ipbx/'.$ipbx->get_name().'/trunks.js');
 		$dhtml->set_js('js/dwho/submenu.js');
+		$dhtml->set_js('js/utils/codeclist.js');
+		$dhtml->load_js_multiselect_files();
 
 		$_TPL->set_var('info',$result);
 		$_TPL->set_var('error',$error);
@@ -137,7 +143,11 @@ switch($act)
 			if(is_array($allow) === false)
 				$allow = explode(',',$allow);
 
-			$element['protocol']['allow']['value'] = array_diff($element['protocol']['allow']['value'],$allow);
+			$allow_value = $element['protocol']['allow']['value'];
+			$tmp = array();
+			foreach($allow_value as $key => $value)
+				$tmp[$value] = $value;
+			$element['protocol']['allow']['value'] = $tmp;
 		}
 
 		if(empty($return) === false)
@@ -153,6 +163,8 @@ switch($act)
 		$dhtml->set_js('js/service/ipbx/'.$ipbx->get_name().'/trunks/sip.js');
 		$dhtml->set_js('js/service/ipbx/'.$ipbx->get_name().'/trunks.js');
 		$dhtml->set_js('js/dwho/submenu.js');
+		$dhtml->set_js('js/utils/codeclist.js');
+		$dhtml->load_js_multiselect_files();
 
 		$_TPL->set_var('id',$info['trunkfeatures']['id']);
 		$_TPL->set_var('info',$return);
