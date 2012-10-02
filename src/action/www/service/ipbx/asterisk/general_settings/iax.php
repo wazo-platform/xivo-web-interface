@@ -60,6 +60,9 @@ if(isset($_QR['fm_send']) === true)
 
 		unset($_QR['calllimits']);
 
+		if (isset($_QR['codec-active']) === false)
+			$_QR['allow'] = array();
+
 		if(($rs = $appgeneraliax->set_save_all($_QR)) !== false)
 		{
 			$info = $rs['result'];

@@ -299,7 +299,7 @@ endif;
 <?php
 	echo	$form->select(array('desc'	=> $this->bbf('fm_protocol_codec-disallow'),
 							'name'		=> 'protocol[disallow]',
-							'labelid'	=> 'protocol[disallow]',
+							'labelid'	=> 'protocol-disallow',
 							'key'		=> false,
 							'bbf'		=> 'fm_protocol_codec-disallow-opt',
 							'bbfopt'	=> array('argmode' => 'paramvalue')),
@@ -309,7 +309,7 @@ endif;
 		<?=$form->jq_select(array('paragraph'	=> false,
 							'label'		=> false,
 							'name'		=> 'protocol[allow][]',
-							'id' 		=> 'it-allow',
+							'id' 		=> 'it-protocol-allow',
 							'key'		=> false,
 							'bbf'		=> 'ast_codec_name_type',
 							'bbfopt'	=> array('argmode' => 'paramvalue'),
