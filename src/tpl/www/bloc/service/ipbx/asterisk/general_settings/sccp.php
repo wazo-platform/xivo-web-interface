@@ -26,7 +26,7 @@ $element = $this->get_var('element');
 $error = $this->get_var('error');
 
 $error_js = array();
-$error_nb = count($error['generalmeetme']);
+$error_nb = count($error['sccpgeneralsettings']);
 
 foreach($error['sccpgeneralsettings'] as $field):
 	$error_js[] = "dwho.form.error['it-sccpgeneralsettings-".$field."'] = true;";
