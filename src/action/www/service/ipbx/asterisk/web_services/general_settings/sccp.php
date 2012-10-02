@@ -27,46 +27,24 @@ $appsccpgeneralsettings = &$ipbx->get_application('sccpgeneralsettings');
 
 $act = $_QRY->get('act');
 
-function convert_to_json($raw_data) {
-
-	if(dwho::load_class('dwho_json') === false
-		|| ($data = dwho_json::decode($raw_data,true)) === false
-		|| is_array($data) === false)
-	{
-		$http_response->set_status_line(500);
-		$http_response->send(true);
-		header(dwho_json::get_header());
-		die('error converting json data');
-	}
-
-	return $data;
-}
-
 switch($act)
 {
 	case 'edit':
-
-		$data = convert_to_json($_QRY->get_input());
-		$saved = $appsccpgeneralsettings->save_sccp_general_settings($data);
-
-		if($saved === false)
+		if($appsccpgeneralsettings->edit_from_json() === false)
 		{
-			$http_response->set_status_line(500);
+			if ($appsccpgeneralsettings->get_filter_errnb() > 0)
+				print_r($appsccpgeneralsettings->get_filter_error());
+			$http_response->set_status_line(400);
 			$http_response->send(true);
-			header(dwho_json::get_header());
-			die($appsccpgeneralsettings->get_filter_error());
 		}
 
 		$http_response->set_status_line(200);
 		$http_response->send(true);
-
-	break;
-
+		break;
 	case 'view':
 	default:
 		$info = $appsccpgeneralsettings->get_options();
 		$_TPL->set_var('info', $info);
-
 }
 
 $_TPL->set_var('act',$act);

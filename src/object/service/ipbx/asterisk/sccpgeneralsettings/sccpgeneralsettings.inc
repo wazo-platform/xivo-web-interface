@@ -27,7 +27,7 @@ class xivo_service_asterisk_sccpgeneralsettings extends xivo_service_asterisk_ab
 	var $_filter	= false;
 	var $_origin	= false;
 
-	function xivo_service_asterisk_sccpgeneralsettings(&$sre,&$dso)
+	public function __construct(&$sre,&$dso)
 	{
 		if(is_object($sre) === false)
 			trigger_error('Invalid service in '.__CLASS__,E_USER_ERROR);
@@ -51,7 +51,7 @@ class xivo_service_asterisk_sccpgeneralsettings extends xivo_service_asterisk_ab
 			$result[$key] = $value;
 		}
 
-		return $result;
+		return($result);
 	}
 
 	function get_options()
@@ -72,12 +72,11 @@ class xivo_service_asterisk_sccpgeneralsettings extends xivo_service_asterisk_ab
 				'option_name' => $option_name,
 			);
 			$option = array(
-				'option_name' => $option_name,
 				'option_value' => $option_value
 			);
 			$this->edit_where($where, $option);
 		}
-		return $options;
+		return($options);
 	}
 
 }

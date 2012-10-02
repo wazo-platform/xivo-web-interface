@@ -30,10 +30,6 @@ $error['sccpgeneralsettings'] = array();
 $fm_save = null;
 if(isset($_QR['fm_send']) === true)
 {
-
-	if(dwho_issa('sccpgeneralsettings',$_QR) === false)
-		$_QR['sccpgeneralsettings'] = array();
-
 	$saved = $appsccpgeneralsettings->save_sccp_general_settings($_QR['sccpgeneralsettings']);
 	$info['sccpgeneralsettings'] = $appsccpgeneralsettings->get_result('sccpgeneralsettings');
 	$fm_save = true;
@@ -43,7 +39,6 @@ if(isset($_QR['fm_send']) === true)
 		$error['sccpgeneralsettings'] = $appsccpgeneralsettings->get_error();
 		$fm_save = false;
 	}
-
 }
 
 $_TPL->set_var('sccpgeneralsettings', $info['sccpgeneralsettings']);
@@ -52,9 +47,6 @@ $_TPL->set_var('element', $element);
 $_TPL->set_var('fm_save', $fm_save);
 $_TPL->set_var('error', $error);
 $_TPL->set_var('language_list', dwho_i18n::get_supported_language_list());
-
-$dhtml = &$_TPL->get_module('dhtml');
-$dhtml->set_js('js/dwho/submenu.js');
 
 $menu = &$_TPL->get_module('menu');
 $menu->set_top('top/user/'.$_USR->get_info('meta'));

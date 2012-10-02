@@ -29,7 +29,7 @@ class xivo_application_service_asterisk_sccpgeneralsettings extends xivo_applica
 	var $_name		= 'sccpgeneralsettings';
 	var $_sccpgeneralsettings = false;
 
-	function xivo_application_service_asterisk_sccpgeneralsettings(&$service,$param=null,$components=true)
+	public function __construct(&$service,$param=null,$components=true)
 	{
 		parent::__construct($service);
 
@@ -53,22 +53,29 @@ class xivo_application_service_asterisk_sccpgeneralsettings extends xivo_applica
 
 	function get_options()
 	{
-		return $this->_sccpgeneralsettings->get_options();
+		return($this->_sccpgeneralsettings->get_options());
 	}
 
 	function save_sccp_general_settings($options)
 	{
-		$rs = $this->chk_values($options);
-		if($rs === false)
+		if(($rs = $this->chk_values($options)) === false)
 		{
 			$this->_set_result('sccpgeneralsettings', $this->get_filter_result());
 			$this->_set_error('sccpgeneralsettings', $this->get_filter_error());
 			return(false);
 		}
 		$this->_set_result('sccpgeneralsettings',$this->_sccpgeneralsettings->save_sccp_general_settings($rs));
-		return true;
+		return(true);
 	}
 
+	function edit_from_json()
+	{
+		if(($data = $this->_get_data_from_json()) === false
+		|| $appsccpgeneralsettings->save_sccp_general_settings($data))
+			return(false);
+
+		return(true);
+	}
 }
 
 ?>
