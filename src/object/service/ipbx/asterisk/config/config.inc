@@ -94,11 +94,11 @@ $array['module']['campaign_campaign']['datastorage'] = true;
 $array['module']['campaign_campaign_filter'] = array();
 $array['module']['campaign_campaign_filter']['datastorage'] = true;
 
-$array['module']['configfiles'] = array();
-$array['module']['configfiles']['datastorage'] = false;
-
 $array['module']['cel'] = array();
 $array['module']['cel']['datastorage'] = true;
+
+$array['module']['configfiles'] = array();
+$array['module']['configfiles']['datastorage'] = false;
 
 $array['module']['context'] = array();
 $array['module']['context']['datastorage'] = true;
@@ -118,23 +118,20 @@ $array['module']['contextnummember']['datastorage'] = true;
 $array['module']['contexttype'] = array();
 $array['module']['contexttype']['datastorage'] = true;
 
+$array['module']['cticontexts'] = array();
+$array['module']['cticontexts']['datastorage'] = true;
+
 $array['module']['ctidirectories'] = array();
 $array['module']['ctidirectories']['datastorage'] = true;
 
 $array['module']['ctidirectoryfields'] = array();
 $array['module']['ctidirectoryfields']['datastorage'] = true;
 
-$array['module']['ctimain'] = array();
-$array['module']['ctimain']['datastorage'] = true;
-
 $array['module']['ctidisplays'] = array();
 $array['module']['ctidisplays']['datastorage'] = true;
 
-$array['module']['ctisheets'] = array();
-$array['module']['ctisheets']['datastorage'] = true;
-
-$array['module']['cticontexts'] = array();
-$array['module']['cticontexts']['datastorage'] = true;
+$array['module']['ctimain'] = array();
+$array['module']['ctimain']['datastorage'] = true;
 
 $array['module']['ctiphonehints'] = array();
 $array['module']['ctiphonehints']['datastorage'] = true;
@@ -153,6 +150,9 @@ $array['module']['ctiprofilesgroup']['datastorage'] = true;
 
 $array['module']['ctireversedirectories'] = array();
 $array['module']['ctireversedirectories']['datastorage'] = true;
+
+$array['module']['ctisheets'] = array();
+$array['module']['ctisheets']['datastorage'] = true;
 
 $array['module']['ctisheetactions'] = array();
 $array['module']['ctisheetactions']['datastorage'] = true;
@@ -310,14 +310,14 @@ $array['module']['schedule_path']['datastorage'] = true;
 $array['module']['schedule_time'] = array();
 $array['module']['schedule_time']['datastorage'] = true;
 
+$array['module']['serverfeatures'] = array();
+$array['module']['serverfeatures']['datastorage'] = true;
+
 $array['module']['servicesgroup'] = array();
 $array['module']['servicesgroup']['datastorage'] = true;
 
 $array['module']['servicesgroup_user'] = array();
 $array['module']['servicesgroup_user']['datastorage'] = true;
-
-$array['module']['serverfeatures'] = array();
-$array['module']['serverfeatures']['datastorage'] = true;
 
 $array['module']['sipauthentication'] = array();
 $array['module']['sipauthentication']['datastorage'] = true;
