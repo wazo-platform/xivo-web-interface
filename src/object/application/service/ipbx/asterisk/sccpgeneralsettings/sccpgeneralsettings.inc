@@ -71,7 +71,7 @@ class xivo_application_service_asterisk_sccpgeneralsettings extends xivo_applica
 	function edit_from_json()
 	{
 		if(($data = $this->_get_data_from_json()) === false
-		|| $appsccpgeneralsettings->save_sccp_general_settings($data))
+		|| $this->save_sccp_general_settings($data) === false)
 			return(false);
 
 		return(true);
