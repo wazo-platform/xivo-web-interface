@@ -132,8 +132,8 @@ switch($act)
 		for($i=0; $i<$nb; $i++)
 		{
 			$ref = &$contextnummember_obj[$i];
-			if(isset($numbers[$ref['number']]) === true)
-				unset($numbers[$ref['number']]);
+			if($key = array_search($ref['number'], $numbers))
+				unset($numbers[$key]);
 		}
 
 		switch ($_QRY->get('format'))
