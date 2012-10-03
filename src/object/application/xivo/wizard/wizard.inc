@@ -1407,13 +1407,7 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 		}
 
 		$sccpgeneralmodule = &$this->_ipbx->get_module('sccpgeneralsettings');
-		$option = array(
-			'option_name' => 'language',
-			'option_value' => $lang
-		);
-
-		$saved = $sccpgeneralmodule->save_sccp_general_settings($option);
-		if($saved === false)
+		if($sccpgeneralmodule->save_sccp_general_option('language', $lang) === false)
 		{
 			dwho_report::push('error', 'Can\'t save language in SCCP general settings');
 			return(false);

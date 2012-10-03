@@ -48,23 +48,31 @@ class xivo_application_service_asterisk_sccpgeneralsettings extends xivo_applica
 
 	function get_elements()
 	{
-		return($this->get_element());
+		$r = array();
+
+		$r['sccpgeneralsettings'] = $this->get_element();
+
+		return($r);
 	}
 
 	function get_options()
 	{
-		return($this->_sccpgeneralsettings->get_options());
+		$this->_info['sccpgeneralsettings'] = $this->_sccpgeneralsettings->get_options();
+
+		return($this->_info);
 	}
 
 	function save_sccp_general_settings($options)
 	{
-		if(($rs = $this->chk_values($options)) === false)
+		if(($rs = $this->chk_values($options)) === false
+		|| $this->_sccpgeneralsettings->save_sccp_general_settings($rs) === false)
 		{
 			$this->_set_result('sccpgeneralsettings', $this->get_filter_result());
 			$this->_set_error('sccpgeneralsettings', $this->get_filter_error());
 			return(false);
 		}
-		$this->_set_result('sccpgeneralsettings',$this->_sccpgeneralsettings->save_sccp_general_settings($rs));
+
+		$this->_set_result('sccpgeneralsettings', $rs);
 		return(true);
 	}
 

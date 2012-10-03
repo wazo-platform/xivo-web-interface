@@ -65,18 +65,25 @@ class xivo_service_asterisk_sccpgeneralsettings extends xivo_service_asterisk_ab
 		return($this->_prepare($list));
 	}
 
+	function save_sccp_general_option($option_name, $option_value)
+	{
+		$where = array(
+			'option_name' => $option_name,
+		);
+		$option = array(
+			'option_value' => $option_value
+		);
+
+		return($this->edit_where($where, $option));
+	}
+
 	function save_sccp_general_settings($options)
 	{
-		foreach ($options as $option_name => $option_value) {
-			$where = array(
-				'option_name' => $option_name,
-			);
-			$option = array(
-				'option_value' => $option_value
-			);
-			$this->edit_where($where, $option);
-		}
-		return($options);
+		foreach ($options as $option_name => $option_value)
+			if ($this->save_sccp_general_option($option_name, $option_value) === false)
+				return(false);
+
+		return(true);
 	}
 
 }

@@ -25,16 +25,6 @@ $info = $this->get_var('info');
 $element = $this->get_var('element');
 $error = $this->get_var('error');
 
-$error_js = array();
-$error_nb = count($error['sccpgeneralsettings']);
-
-foreach($error['sccpgeneralsettings'] as $field):
-	$error_js[] = "dwho.form.error['it-sccpgeneralsettings-".$field."'] = true;";
-endforeach;
-
-if(isset($error_js[0]) === true)
-	$dhtml->write_js($error_js);
-
 ?>
 
 <div class="b-infos b-form">
@@ -56,7 +46,9 @@ if(isset($error_js[0]) === true)
 				'name'      => 'sccpgeneralsettings[directmedia]',
 				'labelid'   => 'sccpgeneralsettings-directmedia',
 				'help'      => $this->bbf('hlp_fm_sccpgeneralsettings_directmedia'),
-				'checked'   => $info['sccpgeneralsettings']['directmedia'])),
+				'checked'   => $info['sccpgeneralsettings']['directmedia'],
+				'error'		=> $this->bbf_args('error',
+							$this->get_var('error', 'sccpgeneralsettings', 'directmedia')) )),
 
 			$form->text(array(
 				'desc'      => $this->bbf('fm_sccpgeneralsettings_dialtimeout'),
@@ -65,7 +57,9 @@ if(isset($error_js[0]) === true)
 				'labelid'   => 'sccpgeneralsettings-dialtimeout',
 				'size'      => 4,
 				'default'   => $element['sccpgeneralsettings']['dialtimeout']['default'],
-				'value'     => $info['sccpgeneralsettings']['dialtimeout'])),
+				'value'     => $info['sccpgeneralsettings']['dialtimeout'],
+				'error'		=> $this->bbf_args('error',
+							$this->get_var('error', 'sccpgeneralsettings', 'dialtimeout')))),
 
 			$form->select(array(
 				'desc'      => $this->bbf('fm_sccpgeneralsettings_language'),

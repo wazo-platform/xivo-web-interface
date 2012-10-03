@@ -17,31 +17,27 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-$info = array();
-$element = array();
+$error = array();
 
 $appsccpgeneralsettings = &$ipbx->get_application('sccpgeneralsettings');
-$info['sccpgeneralsettings'] = $appsccpgeneralsettings->get_options();
-$element['sccpgeneralsettings'] = $appsccpgeneralsettings->get_elements();
-
-$error = array();
-$error['sccpgeneralsettings'] = array();
+$info = $appsccpgeneralsettings->get_options();
+$element = $appsccpgeneralsettings->get_elements();
 
 $fm_save = null;
 if(isset($_QR['fm_send']) === true)
 {
 	$saved = $appsccpgeneralsettings->save_sccp_general_settings($_QR['sccpgeneralsettings']);
-	$info['sccpgeneralsettings'] = $appsccpgeneralsettings->get_result('sccpgeneralsettings');
+	$info = $appsccpgeneralsettings->get_result();
+
 	$fm_save = true;
 
 	if($saved === false)
 	{
-		$error['sccpgeneralsettings'] = $appsccpgeneralsettings->get_error();
+		$error = $appsccpgeneralsettings->get_error();
 		$fm_save = false;
 	}
 }
 
-$_TPL->set_var('sccpgeneralsettings', $info['sccpgeneralsettings']);
 $_TPL->set_var('info', $info);
 $_TPL->set_var('element', $element);
 $_TPL->set_var('fm_save', $fm_save);
