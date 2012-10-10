@@ -18,8 +18,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-$form  = &$this->get_module('form');
-$info  = $this->get_var('info');
+$form = &$this->get_module('form');
+$info = $this->get_var('info');
 
 ?>
 <div class="b-infos b-form">
@@ -31,17 +31,10 @@ $info  = $this->get_var('info');
 	<div class="sb-content">
 		<form action="#" method="post" accept-charset="utf-8">
 <?php
-	echo	$form->hidden(array('name'	=> DWHO_SESS_NAME,
-				    'value'	=> DWHO_SESS_ID)),
-
-		$form->hidden(array('name'	=> 'act',
-				    'value'	=> 'edit')),
-
-		$form->hidden(array('name'	=> 'fm_send',
-				    'value'	=> 1)),
-
-		$form->hidden(array('name'	=> 'id',
-				    'value'	=> $info['id']));
+	echo $form->hidden(array('name' => DWHO_SESS_NAME,'value' => DWHO_SESS_ID)),
+		$form->hidden(array('name' => 'act', 'value' => 'edit')),
+		$form->hidden(array('name' => 'fm_send', 'value' => 1)),
+		$form->hidden(array('name' => 'id', 'value' => $info['id']));
 ?>
 		<p class="fm-paragraph txt-left">
 			<span class="fm-desc"><?=$this->bbf('fm_login');?></span>&nbsp;<?=dwho_htmlen($info['login']);?>

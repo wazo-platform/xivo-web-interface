@@ -20,13 +20,15 @@
 
 require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'abstract','libdatastorage.inc'));
 
-class xivo_user_abstract extends xivo_libdatastorage_abstract
+abstract class xivo_user_abstract extends xivo_libdatastorage_abstract
 {
 	var $_conf	= array();
 	var $_dso	= null;
 	var $_ini	= array();
 	var $_info	= array();
 	var $_acl	= null;
+	var $_error		= null;
+	var $_errornb	= 0;
 
 	function get_info($name)
 	{
@@ -44,6 +46,25 @@ class xivo_user_abstract extends xivo_libdatastorage_abstract
 
 		if($name{0} !== '_')
 			$this->_info[$name] = $value;
+	}
+
+	function get_error()
+	{
+		return($this->_error);
+	}
+
+	function set_error($name,$value)
+	{
+		$name = (string) $name;
+
+		if($name{0} !== '_')
+			$this->_error[$name] = $value;
+	}
+
+	function reset_error()
+	{
+		$this->_error = array();
+		$this->_errnb = 0;
 	}
 
 	function _prepare(&$data)

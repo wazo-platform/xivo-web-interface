@@ -53,7 +53,10 @@ class xivo_user_admin extends xivo_user_abstract
 		$filter = new dwho_filter($arr_filter);
 
 		if($filter->chk($arr) === false)
+		{
+			$this->_error = &$filter->get_error();
 			return(false);
+		}
 
 		return($this->_dso->edit($arr['id'],$filter->get_result()));
 	}

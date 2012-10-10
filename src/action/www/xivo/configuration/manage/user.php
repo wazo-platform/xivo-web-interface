@@ -26,27 +26,21 @@ $param['act'] = 'list';
 
 switch($act)
 {
-	// Adding a new user
 	case 'add':
-
-		// after form validation, fm_send == 1
 		if(isset($_QR['fm_send']) === true)
-		{			
-			$_QR['user']['meta'] 	= 'admin';
-			$_QR['user']['valid']   = 1;
-			$_QR['user']['obj']  	= '';
+		{
+			$_QR['user']['meta'] = 'admin';
+			$_QR['user']['valid'] = 1;
+			$_QR['user']['obj'] = '';
 
 			if($_USR->add($_QR['user']))
-			{ $_QRY->go($_TPL->url('xivo/configuration/manage/user'), $param); }
-		} else {
+				$_QRY->go($_TPL->url('xivo/configuration/manage/user'), $param);
+		} else
 			$_QR['user'] = array('login' => null, 'passwd' => null);
-		}
 
-		$_TPL->set_var('error'	, $_USR->get_error());
-		$_TPL->set_var('info'	, $_QR['user']);
+		$_TPL->set_var('error', $_USR->get_error());
+		$_TPL->set_var('info', $_QR['user']);
 		break;
-
-
 	case 'edit':
 		if(isset($_QR['id']) === false
 		|| ($info = $_USR->get($_QR['id'])) === false)
@@ -61,16 +55,14 @@ switch($act)
 
 				$_QRY->go($_TPL->url('xivo/configuration/manage/user'),$param);
 			} else {
-				// error
 				$info['passwd'] = $_QR['passwd'];
-				$info['valid']	= $_QR['valid'];
+				$info['valid'] = $_QR['valid'];
 			}
 		}
 
-		$_TPL->set_var('error'	, $_USR->get_error());
-		$_TPL->set_var('info'	, $info);
+		$_TPL->set_var('error', $_USR->get_error());
+		$_TPL->set_var('info', $info);
 		break;
-
 	case 'delete':
 		$param['page'] = $page;
 
@@ -80,18 +72,16 @@ switch($act)
 			$info = $_USR->get($_QR['id']);
 			// we forbid root accounts deletion
 			if($info !== false && strncmp($info['meta'], 'root', 4) != 0)
-			{ $_USR->delete($id); }
+				$_USR->delete($id);
 		}
 
 		$_QRY->go($_TPL->url('xivo/configuration/manage/user'),$param);
 		break;
-
 	case 'deletes':
 		$param['page'] = $page;
 
 		if(dwho_issa('userselection',$_QR))
 		{
-
 			// root users can't be disabled
 			$roots  = $_USR->get_list_where(array('meta' => 'root'));
 			$values = array_diff($_QR['userselection'], $roots);
@@ -105,7 +95,6 @@ switch($act)
 
 		$_QRY->go($_TPL->url('xivo/configuration/manage/user'),$param);
 		break;
-
 	case 'acl':
 		if(isset($_QR['id']) === false
 		|| ($info = $_USR->get($_QR['id'])) === false
@@ -126,7 +115,6 @@ switch($act)
 		}
 		else $_QRY->go($_TPL->url('xivo/configuration/manage/user'),$param);
 		break;
-
 	case 'enables':
 	case 'disables':
 		$param['page'] = $page;
@@ -148,7 +136,6 @@ switch($act)
 
 		$_QRY->go($_TPL->url('xivo/configuration/manage/user'),$param);
 		break;
-
 	default:
 		$act = 'list';
 		$prevpage = $page - 1;

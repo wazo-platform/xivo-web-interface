@@ -20,7 +20,7 @@
 
 $form = &$this->get_module('form');
 
-$info 	 = $this->get_var('info');
+$info = $this->get_var('info');
 $element = $this->get_var('element');
 
 echo	$form->text(array('desc'	=> $this->bbf('fm_login'),
@@ -29,7 +29,7 @@ echo	$form->text(array('desc'	=> $this->bbf('fm_login'),
 			  'size'	=> 15,
 			  'default'	=> $element['login']['default'],
 			  'value'	=> $info['login'],
-			  'error'	=> $this->bbf_args('error_fm_login', 
+			  'error'	=> $this->bbf_args('error_fm_login',
 				$this->get_var('error', 'login')))),
 
 	$form->text(array('desc'	=> $this->bbf('fm_password'),
@@ -38,6 +38,6 @@ echo	$form->text(array('desc'	=> $this->bbf('fm_login'),
 			  'size'	=> 15,
 			  'default'	=> $element['passwd']['default'],
 			  'value'	=> $info['passwd'],
-			  'error'	=> $this->bbf_args('error_fm_password', 
+			  'error'	=> $this->bbf_args('error_fm_password',
 				$this->get_var('error', 'passwd'))));
 ?>
