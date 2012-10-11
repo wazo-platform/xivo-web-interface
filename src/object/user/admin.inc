@@ -43,6 +43,39 @@ class xivo_user_admin extends xivo_user_abstract
 		$this->_load_acl();
 	}
 
+	function add($arr)
+	{
+		$this->reset_error();
+
+		if(is_array($arr) === false
+		|| ($arr_filter = $this->_load_filter('add', $arr['meta'])) === false)
+		{
+			$this->_error['system'] = 'system error';
+			$this->_errornb++;
+			return(false);
+		}
+
+		$filter = new dwho_filter($arr_filter);
+
+		$err = false;
+		if($filter->chk($arr) === false)
+		{
+			$this->_error = &$filter->get_error();
+			$err = true;
+		}
+
+		if($this->exists(array('login' => $arr['login'])))
+		{
+			$this->_error['login'] = 'alreadyexist';
+			$err = true;
+		}
+
+		if($err)
+			return(false);
+
+		return(parent::add($filter->get_result()));
+	}
+
 	function edit($meta,$arr)
 	{
 		if(is_array($arr) === false
