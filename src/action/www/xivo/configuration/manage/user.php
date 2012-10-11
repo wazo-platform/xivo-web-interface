@@ -43,7 +43,9 @@ switch($act)
 		break;
 	case 'edit':
 		if(isset($_QR['id']) === false
-		|| ($info = $_USR->get($_QR['id'])) === false)
+		|| ($info = $_USR->get($_QR['id'])) === false
+		|| (xivo_user::get_info('meta') === 'admin'
+			&& xivo_user::chk_authorize('admin', $info['meta']) === false))
 			$_QRY->go($_TPL->url('xivo/configuration/manage/user'),$param);
 
 		if(isset($_QR['fm_send']) === true)
@@ -56,7 +58,8 @@ switch($act)
 				$_QRY->go($_TPL->url('xivo/configuration/manage/user'),$param);
 			} else {
 				$info['passwd'] = $_QR['passwd'];
-				$info['valid'] = $_QR['valid'];
+				if(isset($_QR['valid']))
+					$info['valid'] = $_QR['valid'];
 			}
 		}
 

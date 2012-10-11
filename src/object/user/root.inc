@@ -59,6 +59,9 @@ class xivo_user_root extends xivo_user_abstract
 
 		$filter = new dwho_filter($arr_filter);
 
+		if($meta === 'root')
+			$arr['valid'] = 1;
+
 		if($filter->chk($arr) === false)
 		{
 			$this->_error = &$filter->get_error();

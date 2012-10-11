@@ -23,18 +23,19 @@ $array['root'] = array();
 $array['root']['add'] = array();
 $array['root']['add']['login'] = array('cast' => 'alnumpunct','minlen' => 4,'maxlen' => 64);
 $array['root']['add']['passwd'] = array('cast' => 'alnumpunct','minlen' => 4,'maxlen' => 64);
-$array['root']['add']['valid'] = array('key' => array('true' => 1,'false' => 1));
-$array['root']['add']['meta'] = array('key' => array('root' => 1));
+$array['root']['add']['valid'] = array('key' => array(1));
+$array['root']['add']['meta'] = array('key' => array('root'));
 
 $array['root']['edit'] = array();
 $array['root']['edit']['passwd'] = array('cast' => 'alnumpunct','minlen' => 4,'maxlen' => 64);
+$array['root']['edit']['valid'] = array('bool' => true);
 
 $array['admin'] = array();
 $array['admin']['add'] = array();
 $array['admin']['add']['login'] = array('cast' => 'alnumpunct','minlen' => 4,'maxlen' => 64);
 $array['admin']['add']['passwd'] = array('cast' => 'alnumpunct','minlen' => 4,'maxlen' => 64);
-$array['admin']['add']['valid'] = array('key' => array('true' => 1,'false' => 1));
-$array['admin']['add']['meta'] = array('key' => array('root' => 1));
+$array['admin']['add']['valid'] = array('key' => array(0, 1));
+$array['admin']['add']['meta'] = array('key' => array('admin'));
 $array['admin']['add']['obj'] = array('chk' => 0);
 
 $array['admin']['edit'] = array();

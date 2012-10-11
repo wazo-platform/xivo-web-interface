@@ -74,6 +74,10 @@ $page = $url->pager($pager['pages'],
 			$ref  = &$list[$i];
 			$icon = $ref['valid']?'enable':'disable';
 
+			if(xivo_user::get_info('meta') === 'admin'
+			&& xivo_user::chk_authorize('admin', $ref['meta']) === false)
+				continue;
+
 ?>
 	<tr onmouseover="this.tmp = this.className; this.className = 'sb-content l-infos-over';"
 	    onmouseout="this.className = this.tmp;"
