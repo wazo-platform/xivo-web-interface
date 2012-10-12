@@ -130,8 +130,8 @@ Agents (detail)
 ; xlet-queues
 Queues (list)
 
-; xlet-queuedetails
-Queues (detail)
+; xlet-queuemembers
+Queue members
 
 ; xlet-queueentrydetails
 Queues (entries detail)

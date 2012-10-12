@@ -130,8 +130,8 @@ Agents (détail)
 ; xlet-queues
 Files d'attente (liste)
 
-; xlet-queuedetails
-Files d'attente (détail)
+; xlet-queuemembers
+Membres d'une file d'attente
 
 ; xlet-queueentrydetails
 Files d'attente (détail des entrées)
