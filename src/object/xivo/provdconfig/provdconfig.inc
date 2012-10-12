@@ -450,9 +450,12 @@ class xivo_object_provdconfig extends xivo_object_provd_abstract
 		|| ($rs = $this->_extenumbers->get_where(array('typeval' => $name))) === false)
 			return(null);
 
+		$pattern_symbols = array('_', '.', '!', 'X', 'Z', 'N');
 		$exten = $rs['exten'];
-		$exten = str_replace('_', '', $exten);
-		$exten = str_replace('.', '', $exten);
+		foreach ($pattern_symbols as $symbol)
+        {
+			$exten = str_replace($symbol, '', $exten);
+        }
 
 		return($exten);
 	}
