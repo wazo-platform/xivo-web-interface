@@ -695,9 +695,23 @@ class xivo_application_service_asterisk_outcall extends xivo_application_asteris
 			$ref = &$rs[$i];
 			$ref['type'] = 'outcall';
 			$ref['typeid'] = $outcallid;
-			if ($this->_dialpattern->get($ref['id'],$info_context) === false
-			|| $this->_dialpattern->set('edit',$ref,$result_context,$outcallid) === false
-			|| $this->_dialpattern->edit() === false)
+
+			if (isset($ref['id']) === true
+			&& (int) $ref['id'] !== 0)
+			{
+				if ($this->_dialpattern->get($ref['id'],$info_context) === false)
+				{
+					$errnb++;
+					$error[$i] = 'dialpattern not exist';
+					continue;
+				}
+				$act = 'edit';
+			} else {
+				$act = 'add';
+			}
+
+			if($this->_dialpattern->set($act,$ref,$result_context,$outcallid) === false
+			|| $this->_dialpattern->$act() === false)
 			{
 				$errnb++;
 				$error[$i] = $this->_dialpattern->get_filter_error();
