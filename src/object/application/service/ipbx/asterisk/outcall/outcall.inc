@@ -436,7 +436,7 @@ class xivo_application_service_asterisk_outcall extends xivo_application_asteris
 
 		if($this->get_errnb() > 0
 		|| ($outcallid = $this->add_outcall()) === false
-		|| $this->edit_dialpattern($outcallid) === false
+		|| $this->add_dialpattern($outcallid) === false
 		|| $this->add_outcalldundipeer($outcallid) === false
 		|| $this->add_outcalltrunk($outcallid) === false
 		|| $this->add_rightcall($outcallid) === false
@@ -460,6 +460,39 @@ class xivo_application_service_asterisk_outcall extends xivo_application_asteris
 			return(false);
 
 		return(($this->_return['outcall'] = $this->_outcall->add($rs)));
+	}
+
+	function add_dialpattern($outcallid)
+	{
+		if(($rs = $this->get_result('dialpattern')) === null
+		|| ($outcallid = dwho_ulongint($outcallid)) === 0)
+			return($rs);
+
+		$context = (string) $this->get_result_var('outcall','context');
+
+		$errnb = 0;
+		$error = $res = array();
+		for($i = 0;$i < count($rs);$i++)
+		{
+			$ref = &$rs[$i];
+			$ref['type'] = 'outcall';
+			$ref['typeid'] = $outcallid;
+
+			if($this->_dialpattern->set('add',$ref,$context,$outcallid) === false
+			|| $this->_dialpattern->add() === false)
+			{
+				$errnb++;
+				$error[$i] = $this->_dialpattern->get_filter_error();
+			}
+		}
+
+		if ($errnb >> 0)
+		{
+			$this->_set_errors('dialpattern',$error);
+			return(false);
+		}
+
+		return(true);
 	}
 
 	function add_outcalldundipeer($outcallid)
@@ -623,7 +656,9 @@ class xivo_application_service_asterisk_outcall extends xivo_application_asteris
 		if(($rs = $this->get_result('dialpattern')) === null
 		|| ($outcallid = dwho_ulongint($outcallid)) === 0)
 			return($rs);
-		$context = (string) $this->get_result_var('outcall','context');
+
+		$info_context = (string) $this->get_info_var('outcall','context');
+		$result_context = (string) $this->get_result_var('outcall','context');
 
 		$dialpattern = array();
 		$dialpattern['list'] = array();
@@ -646,7 +681,7 @@ class xivo_application_service_asterisk_outcall extends xivo_application_asteris
 			{
 				$ref = &$dialpattern_list[$i];
 				if (isset($ref['id']) === true
-				&& $this->_dialpattern->get($ref['id'],$context) !== false
+				&& $this->_dialpattern->get($ref['id'],$info_context) !== false
 				&& $this->_dialpattern->delete() !== false)
 					continue;
 				else
@@ -654,30 +689,15 @@ class xivo_application_service_asterisk_outcall extends xivo_application_asteris
 			}
 		}
 		$errnb = 0;
-		$error = array();
-		$res = array();
+		$error = $res = array();
 		for($i = 0;$i < count($rs);$i++)
 		{
 			$ref = &$rs[$i];
 			$ref['type'] = 'outcall';
 			$ref['typeid'] = $outcallid;
-
-			if (isset($ref['id']) === true
-			&& (int) $ref['id'] !== 0)
-			{
-				if ($this->_dialpattern->get($ref['id'],$context) === false)
-				{
-					$errnb++;
-					$error[$i] = 'dialpattern not exist';
-					continue;
-				}
-				$act = 'edit';
-			} else {
-				$act = 'add';
-			}
-
-			if($this->_dialpattern->set($act,$ref,$context,$outcallid) === false
-			|| $this->_dialpattern->$act() === false)
+			if ($this->_dialpattern->get($ref['id'],$info_context) === false
+			|| $this->_dialpattern->set('edit',$ref,$result_context,$outcallid) === false
+			|| $this->_dialpattern->edit() === false)
 			{
 				$errnb++;
 				$error[$i] = $this->_dialpattern->get_filter_error();
