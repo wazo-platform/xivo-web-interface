@@ -464,7 +464,7 @@ $array['element']['tlsdontverifyserver']['set'] = true;
 $array['element']['tlscipher'] = array();
 $array['element']['tlscipher']['default'] = '';
 $array['element']['tlscipher']['null'] = true;
-//$array['element']['tlscipher']['value']    = array('default', 'complementofdefault', 'all', 'complementofall', 'high', 'medium', 'low', 'export', 'export40', 'export50', 'null', 'aNULL', 'RSA', 'kEDH', 'kDHd', 'aRSA', 'DSS', 'aDH', 'FZA', 'SSLv2', 'DH', 'ADH', 'AES', 'CAMELLIA', '3DES', 'DES', 'RC4', 'RC2', 'IDEA', 'SEED', 'MD5', 'SHA1', 'SHA', 'aGOST', 'aGOST01', 'aGOST94', 'kGOST', 'GOST94', 'GOST89MAC');
+//$array['element']['tlscipher']['value' ] = array('default', 'complementofdefault', 'all', 'complementofall', 'high', 'medium', 'low', 'export', 'export40', 'export50', 'null', 'aNULL', 'RSA', 'kEDH', 'kDHd', 'aRSA', 'DSS', 'aDH', 'FZA', 'SSLv2', 'DH', 'ADH', 'AES', 'CAMELLIA', '3DES', 'DES', 'RC4', 'RC2', 'IDEA', 'SEED', 'MD5', 'SHA1', 'SHA', 'aGOST', 'aGOST01', 'aGOST94', 'kGOST', 'GOST94', 'GOST89MAC');
 
 $array['element']['tos_text'] = array();
 $array['element']['tos_text']['value'] = array('CS0','CS1','CS2','CS3','CS4','CS5','CS6','CS7',
@@ -474,24 +474,24 @@ $array['element']['tos_text']['default'] = '';
 $array['element']['tos_text']['null'] = true;
 
 $array['element']['cos_sip'] = array();
-$array['element']['cos_sip']['value']    = array(1, 2, 3, 4, 5, 6, 7);
-$array['element']['cos_sip']['default']  = '';
-$array['element']['cos_sip']['null']     = true;
+$array['element']['cos_sip']['value' ] = array(1, 2, 3, 4, 5, 6, 7);
+$array['element']['cos_sip']['default'] = '';
+$array['element']['cos_sip']['null'] = true;
 
 $array['element']['cos_audio'] = array();
-$array['element']['cos_audio']['value']    = array(1, 2, 3, 4, 5, 6, 7);
-$array['element']['cos_audio']['default']  = '';
-$array['element']['cos_audio']['null']     = true;
+$array['element']['cos_audio']['value' ] = array(1, 2, 3, 4, 5, 6, 7);
+$array['element']['cos_audio']['default'] = '';
+$array['element']['cos_audio']['null'] = true;
 
 $array['element']['cos_video'] = array();
-$array['element']['cos_video']['value']    = array(1, 2, 3, 4, 5, 6, 7);
-$array['element']['cos_video']['default']  = '';
-$array['element']['cos_video']['null']     = true;
+$array['element']['cos_video']['value' ] = array(1, 2, 3, 4, 5, 6, 7);
+$array['element']['cos_video']['default'] = '';
+$array['element']['cos_video']['null'] = true;
 
 $array['element']['cos_text'] = array();
-$array['element']['cos_text']['value']    = array(1, 2, 3, 4, 5, 6, 7);
-$array['element']['cos_text']['default']  = '';
-$array['element']['cos_text']['null']     = true;
+$array['element']['cos_text']['value' ] = array(1, 2, 3, 4, 5, 6, 7);
+$array['element']['cos_text']['default'] = '';
+$array['element']['cos_text']['null'] = true;
 
 $array['element']['mwiexpiry'] = array();
 $array['element']['mwiexpiry']['value'] = array(1,10,20,30,40,50,60,70,80,90,
@@ -499,8 +499,8 @@ $array['element']['mwiexpiry']['value'] = array(1,10,20,30,40,50,60,70,80,90,
 						    200,210,220,230,240,300,600,900,
 						    1200,1800,2400,2700,3000,3600,4500,
 						    5400,6300,7200);
-$array['element']['mwiexpiry']['default']  = 3600;
-$array['element']['mwiexpiry']['null']     = true;
+$array['element']['mwiexpiry']['default'] = 3600;
+$array['element']['mwiexpiry']['null'] = true;
 
 $array['element']['qualifyfreq'] = array();
 $array['element']['qualifyfreq']['value'] = array(0,10,20,30,40,50,60,70,80,90,100,110,120,130,140,150,160,170,180,190,200,210,220,230,240,250,260,270,280,290,300,310,320,330,340,350,360,370,380,390,400,410,420,430,440,450,460,470,480,490,500,510,520,530,540,550,560,570,580,590,600);
@@ -513,54 +513,54 @@ $array['element']['qualifygap']['default'] = '100';
 $array['element']['qualifygap']['null'] = true;
 
 $array['element']['qualifypeers'] = array();
-$array['element']['qualifypeers']['value']    = array(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,35,40,45,50,60,70,80,90,100);
-$array['element']['qualifypeers']['default']  = 1;
-//$array['element']['qualifypeers']['null']     = true;
+$array['element']['qualifypeers']['value' ] = array(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,35,40,45,50,60,70,80,90,100);
+$array['element']['qualifypeers']['default'] = 1;
+//$array['element']['qualifypeers']['null'] = true;
 
 $array['element']['parkinglot'] = array();
-$array['element']['parkinglot']['default']  = '';
-$array['element']['parkinglot']['null']     = true;
+$array['element']['parkinglot']['default'] = '';
+$array['element']['parkinglot']['null'] = true;
 
 $array['element']['prematuremedia'] = array();
-$array['element']['prematuremedia']['value']    = array('no', 'yes');
-$array['element']['prematuremedia']['default']  = 'no';
-$array['element']['prematuremedia']['null']     = true;
+$array['element']['prematuremedia']['value' ] = array('no', 'yes');
+$array['element']['prematuremedia']['default'] = 'no';
+$array['element']['prematuremedia']['set'] = true;
 
 $array['element']['sdpsession'] = array();
-$array['element']['sdpsession']['default']  = '';
-$array['element']['sdpsession']['null']     = true;
+$array['element']['sdpsession']['default'] = '';
+$array['element']['sdpsession']['null'] = true;
 
 $array['element']['sdpowner'] = array();
-$array['element']['sdpowner']['default']  = '';
-$array['element']['sdpowner']['null']     = true;
+$array['element']['sdpowner']['default'] = '';
+$array['element']['sdpowner']['null'] = true;
 
 $array['element']['authfailureevents'] = array();
-$array['element']['authfailureevents']['value']    = array('no', 'yes');
-$array['element']['authfailureevents']['default']  = 'no';
-$array['element']['authfailureevents']['set']     = true;
+$array['element']['authfailureevents']['value' ] = array('no', 'yes');
+$array['element']['authfailureevents']['default'] = 'no';
+$array['element']['authfailureevents']['set'] = true;
 
 $array['element']['dynamic_exclude_static'] = array();
-$array['element']['dynamic_exclude_static']['value']    = array('no', 'yes');
-$array['element']['dynamic_exclude_static']['default']  = 'no';
-$array['element']['dynamic_exclude_static']['set']      = true;
+$array['element']['dynamic_exclude_static']['value' ] = array('no', 'yes');
+$array['element']['dynamic_exclude_static']['default'] = 'no';
+$array['element']['dynamic_exclude_static']['set'] = true;
 
 $array['element']['contactdeny'] = array();
-$array['element']['contactdeny']['default']  = '';
-$array['element']['contactdeny']['null']     = true;
+$array['element']['contactdeny']['default'] = '';
+$array['element']['contactdeny']['null'] = true;
 
 $array['element']['contactpermit'] = array();
-$array['element']['contactpermit']['default']  = '';
-$array['element']['contactpermit']['null']     = true;
+$array['element']['contactpermit']['default'] = '';
+$array['element']['contactpermit']['null'] = true;
 
 $array['element']['shrinkcallerid'] = array();
-$array['element']['shrinkcallerid']['value']    = array('no', 'yes');
-$array['element']['shrinkcallerid']['default']  = 'yes';
-$array['element']['shrinkcallerid']['set']      = true;
+$array['element']['shrinkcallerid']['value' ] = array('no', 'yes');
+$array['element']['shrinkcallerid']['default'] = 'yes';
+$array['element']['shrinkcallerid']['set'] = true;
 
 $array['element']['regextenonqualify'] = array();
-$array['element']['regextenonqualify']['value']    = array('no', 'yes');
-$array['element']['regextenonqualify']['default']  = 'no';
-$array['element']['regextenonqualify']['set']      = true;
+$array['element']['regextenonqualify']['value' ] = array('no', 'yes');
+$array['element']['regextenonqualify']['default'] = 'no';
+$array['element']['regextenonqualify']['set'] = true;
 
 $array['element']['timert1'] = array();
 $array['element']['timert1']['value'] = array(0,10,30,30,40,50,60,70,80,90,100,200,300,400,500,600,700,800,900,1000,1100,1200,1300,1400,1500,1600,1700,1800,1900,2000);
@@ -572,9 +572,9 @@ $array['element']['timerb']['default'] = '32000';
 $array['element']['timerb']['null'] = true;
 
 $array['element']['session-timers'] = array();
-$array['element']['session-timers']['value']    = array('originate', 'accept', 'refuse');
-$array['element']['session-timers']['default']  = null;
-$array['element']['session-timers']['null']     = true;
+$array['element']['session-timers']['value' ] = array('originate', 'accept', 'refuse');
+$array['element']['session-timers']['default'] = null;
+$array['element']['session-timers']['null'] = true;
 
 $array['element']['session-expires'] = array();
 $array['element']['session-expires']['value'] = array(0,60,120,180,240,300,360,420,480,540,600,660,720,780,840,900,960,1020,1080,1140,1200,1260,1320,1380,1440,1500,1560,1620,1680,1740,1800,1860,1920,1980,2040,2100,2160,2220,2280,2340,2400,2460,2520,2580,2640,2700,2760,2820,2880,2940,3000,3060,3120,3180,3240,3300,3360,3420,3480,3540,3600);
@@ -587,39 +587,39 @@ $array['element']['session-minse']['default'] = '90';
 $array['element']['session-minse']['null'] = true;
 
 $array['element']['session-refresher'] = array();
-$array['element']['session-refresher']['value']    = array('uas', 'uac');
-$array['element']['session-refresher']['default']  = 'uas';
-$array['element']['session-refresher']['null']     = false;
+$array['element']['session-refresher']['value' ] = array('uas', 'uac');
+$array['element']['session-refresher']['default'] = 'uas';
+$array['element']['session-refresher']['null'] = false;
 
 $array['element']['hash_users'] = array();
-//$array['element']['hash_users']['default']  = '563';
-$array['element']['hash_users']['default']  = null;
-$array['element']['hash_users']['null']     = true;
+//$array['element']['hash_users']['default'] = '563';
+$array['element']['hash_users']['default'] = null;
+$array['element']['hash_users']['null'] = true;
 
 $array['element']['hash_peers'] = array();
-//$array['element']['hash_peers']['default']  = '563';
-$array['element']['hash_peers']['default']  = null;
-$array['element']['hash_peers']['null']     = true;
+//$array['element']['hash_peers']['default'] = '563';
+$array['element']['hash_peers']['default'] = null;
+$array['element']['hash_peers']['null'] = true;
 
 $array['element']['hash_dialogs'] = array();
-//$array['element']['hash_dialogs']['default']  = '563';
-$array['element']['hash_dialogs']['default']  = null;
-$array['element']['hash_dialogs']['null']     = true;
+//$array['element']['hash_dialogs']['default'] = '563';
+$array['element']['hash_dialogs']['default'] = null;
+$array['element']['hash_dialogs']['null'] = true;
 
 
 $array['element']['notifycid'] = array();
-$array['element']['notifycid']['value']    = array('no', 'yes');
-$array['element']['notifycid']['default']  = 'no';
-$array['element']['notifycid']['set']      = true;
+$array['element']['notifycid']['value' ] = array('no', 'yes');
+$array['element']['notifycid']['default'] = 'no';
+$array['element']['notifycid']['set'] = true;
 
 $array['element']['callcounter'] = array();
-$array['element']['callcounter']['value']    = array('no', 'yes');
-$array['element']['callcounter']['default']  = 'no';
-$array['element']['callcounter']['set']      = true;
+$array['element']['callcounter']['value' ] = array('no', 'yes');
+$array['element']['callcounter']['default'] = 'no';
+$array['element']['callcounter']['set'] = true;
 
 $array['element']['stunaddr'] = array();
-$array['element']['stunaddr']['default']  = '';
-$array['element']['stunaddr']['null']     = true;
+$array['element']['stunaddr']['default'] = '';
+$array['element']['stunaddr']['null'] = true;
 
 $array['element']['directmedia'] = array();
 $array['element']['directmedia']['value'] = array(
@@ -632,14 +632,14 @@ $array['element']['directmedia']['default'] = 'no';
 $array['element']['directmedia']['null'] = true;
 
 $array['element']['ignoresdpversion'] = array();
-$array['element']['ignoresdpversion']['value']    = array('no', 'yes');
-$array['element']['ignoresdpversion']['default']  = 'no';
-$array['element']['ignoresdpversion']['set']      = true;
+$array['element']['ignoresdpversion']['value' ] = array('no', 'yes');
+$array['element']['ignoresdpversion']['default'] = 'no';
+$array['element']['ignoresdpversion']['set'] = true;
 
 $array['element']['jbtargetextra'] = array();
-//$array['element']['jbtargetextra']['default']  = '40';
-$array['element']['jbtargetextra']['default']  = null;
-$array['element']['jbtargetextra']['null']     = true;
+//$array['element']['jbtargetextra']['default'] = '40';
+$array['element']['jbtargetextra']['default'] = null;
+$array['element']['jbtargetextra']['null'] = true;
 
 $array['element']['media_address'] = array();
 $array['element']['media_address']['default'] = '';
@@ -680,12 +680,12 @@ $array['element']['disallowed_methods']['null'] = true;
 $array['element']['domainsasrealm'] = array();
 $array['element']['domainsasrealm']['value'] = array('no','yes');
 $array['element']['domainsasrealm']['default'] = 'no';
-$array['element']['domainsasrealm']['set']     = true;
+$array['element']['domainsasrealm']['set'] = true;
 
 $array['element']['textsupport'] = array();
 $array['element']['textsupport']['value'] = array('no','yes');
 $array['element']['textsupport']['default'] = '';
-$array['element']['textsupport']['null']    = true;
+$array['element']['textsupport']['null' ] = true;
 
 $array['element']['videosupport'] = array();
 $array['element']['videosupport']['value'] = array('no','yes','always');
@@ -854,7 +854,6 @@ $array['filter']['rtautoclear'] = array('key' => array('yes','no',1,10,20,30,40,
 						       100,110,120,130,140,150,160,170,180,
 						       190,200,210,220,230,240));
 $array['filter']['subscribecontext'] = array('set' => false,'chk' => 0);
-
 $array['filter']['match_auth_username'] = array('bool' => true);
 $array['filter']['udpbindaddr'] = array('set' => false,'chk' => 2);
 $array['filter']['tcpenable'] = array('bool' => true);
@@ -884,8 +883,7 @@ $array['filter']['domainsasrealm'] = array('set' => false, 'chk' => 2, 'bool' =>
 $array['filter']['textsupport'] = array('set' => false, 'chk' => 2, 'key' => array('no','yes'));
 $array['filter']['videosupport'] = array('set' => false, 'chk' => 2, 'key' => array('no','yes','always'));
 $array['filter']['auth_options_requests'] = array('bool' => true);
-
-
+$array['filter']['prematuremedia'] = array('bool' => true);
 $array['filter']['encryption'] = array('bool' => true);
 $array['filter']['transport'] = array('set' => false, 'key' => array('udp','tcp','tls', 'udp,tcp', 'tcp,tls', 'udp,tcp,tls'));
 
