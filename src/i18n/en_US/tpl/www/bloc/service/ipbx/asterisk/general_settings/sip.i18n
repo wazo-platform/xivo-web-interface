@@ -1165,7 +1165,7 @@ Asterisk config: callcounter
 
 
 ; fm_prematuremedia
-ISDN compatibility:
+ISDN compatibility (early media):
 
 ; hlp_fm_prematuremedia
 Asterisk config: prematuremedia

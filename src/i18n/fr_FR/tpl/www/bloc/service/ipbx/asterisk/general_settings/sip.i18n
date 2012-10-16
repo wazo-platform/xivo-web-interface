@@ -956,7 +956,7 @@ Activer le décompte des appels par téléphone :
 Config asterisk: callcounter
 
 ; fm_prematuremedia
-Activer la compatibité ISDN : 
+Activer la compatibité ISDN (retour de sonnerie) :
 
 ; hlp_fm_prematuremedia
 Config asterisk: prematuremedia
@@ -968,25 +968,25 @@ Nom de la session SDP :
 Config asterisk: sdpsession
 
 ; fm_sdpowner
-champ 'username' de la chaîne SDP owner : 
+champ 'username' de la chaîne SDP owner :
 
 ; hlp_fm_sdpowner
 Config asterisk: sdpowner
 
 ; fm_ignoresdpversion
-Ignorer le numéro de version des paquets SDP : 
+Ignorer le numéro de version des paquets SDP :
 
 ; hlp_fm_ignoresdpversion
 Config asterisk: ignoresdpversion
 
 ; fm_shrinkcallerid
-Nettoyer le caller-id : 
+Nettoyer le caller-id :
 
 ; hlp_fm_shrinkcallerid
 Config asterisk: shrinkcallerid
 
 ; fm_session-timers
-Activer session-timer : 
+Activer session-timer :
 
 ; hlp_fm_session-timers
 Config asterisk: session-timers
@@ -1000,9 +1000,8 @@ Sur demande uniquement
 ; session-timers-opt(refuse)
 Non
 
-
 ; fm_session-expires
-Interval maximal de rafraîchissement de la session : 
+Interval maximal de rafraîchissement de la session :
 
 ; hlp_fm_session-expires
 Config asterisk: session-expires
