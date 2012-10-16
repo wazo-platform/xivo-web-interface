@@ -22,24 +22,22 @@ Transfer on busy
 ; fwdrna
 Transfer on no-answer
 
-
-
-; func-presence 
+; func-presence
 Presence permission
 
-; func-switchboard 
+; func-switchboard
 Switchboard
 
-; func-customerinfo 
+; func-customerinfo
 Customer info permission
 
 ; func-agents
 Agents
 
-; func-search 
+; func-search
 Search
 
-; func-dial 
+; func-dial
 Dialing permission
 
 ; func-chitchat
@@ -80,15 +78,6 @@ Url to send once connected
 ; pref-xlet-identity-pauseagent
 (Un)Pause one's agent ("Identity" xlet)
 
-; pref-xlet-agentsnext-fontname
-Font name ("Agent Groups" xlet)
-
-; pref-xlet-agentsnext-fontsize
-Font size ("Agent groups" xlet)
-
-; pref-xlet-agentsnext-blinktime
-Blinking period ("Agent groups" xlet)
-
 ; pref-xlet-agentdetails-noqueueaction
 No action on queues by agents ("Agent details" xlet)
 
@@ -120,9 +109,6 @@ Ad libitum
 
 ; xlet-agents
 Agents (list)
-
-; xlet-agentsnext
-Agents (list, next) (experimental)
 
 ; xlet-agentdetails
 Agents (detail)

@@ -22,24 +22,22 @@ Transfert sur occupation
 ; fwdrna
 Transfert sur non-réponse
 
-
-
-; func-presence 
+; func-presence
 Autoriser l'information de présence
 
-; func-switchboard 
+; func-switchboard
 Mise en relation extérieure des téléphones
 
-; func-customerinfo 
+; func-customerinfo
 Autoriser les fiches client
 
 ; func-agents
 Agents
 
-; func-search 
+; func-search
 Contacts
 
-; func-dial 
+; func-dial
 Composer
 
 ; func-chitchat
@@ -80,15 +78,6 @@ Url à émettre une fois le login effectué
 ; pref-xlet-identity-pauseagent
 (Dé)Pause des agents (xlet "Identité")
 
-; pref-xlet-agentsnext-fontname
-Police de caractères (xlet "Groupes d'agents")
-
-; pref-xlet-agentsnext-fontsize
-Taille de la police de caractères (xlet "Groupes d'agents")
-
-; pref-xlet-agentsnext-blinktime
-Durée de clignotement (xlet "Groupes d'agents")
-
 ; pref-xlet-agentdetails-noqueueaction
 Pas d'action sur les files par les agents (xlet "Détails des agents")
 
@@ -116,13 +105,8 @@ Transitions automatiques entre les états de présence
 ; pref-adlibitum
 Ad libitum
 
-
-
 ; xlet-agents
 Agents (liste)
-
-; xlet-agentsnext
-Agents (liste, next) (expérimental)
 
 ; xlet-agentdetails
 Agents (détail)
