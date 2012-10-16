@@ -50,8 +50,7 @@ $preferencesavail = array(
 		'xlet.agents.fontsize'            => $_TPL->bbf('pref-xlet-agents-fontsize'),
 		'xlet.agents.iconsize'            => $_TPL->bbf('pref-xlet-agents-iconsize'),
 		'xlet.queues.statsfetchperiod'    => $_TPL->bbf('pref-xlet-queues-statsfetchperiod'),
-		'presence.autochangestate'        => $_TPL->bbf('pref-presence-autochangestate'),
-		'adlibitum'                       => $_TPL->bbf('pref-adlibitum')
+		'presence.autochangestate'        => $_TPL->bbf('pref-presence-autochangestate')
 );
 
 $ctixlets = array_keys(dwho_json::decode(file_get_contents('/etc/pf-xivo/xivo-ctid/allowedxlets.json'), true));
