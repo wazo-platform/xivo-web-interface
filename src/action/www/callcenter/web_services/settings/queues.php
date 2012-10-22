@@ -61,6 +61,24 @@ switch($act)
 		$http_response->set_status_line($status);
 		$http_response->send(true);
 		break;
+	case 'edit':
+		$appqueue = &$ipbx->get_application('queue');
+		if(($info = $appqueue->get($_QRY->get('id'),
+		                           null,
+		                           $nocomponents)) === false)
+		{
+			$http_response->set_status_line(204);
+			$http_response->send(true);
+		}
+
+		if($appqueue->edit_from_json() === true)
+			$status = 200;
+		else
+			$status = 400;
+
+		$http_response->set_status_line($status);
+		$http_response->send(true);
+		break;
 	case 'delete':
 		$appqueue = &$ipbx->get_application('queue');
 
