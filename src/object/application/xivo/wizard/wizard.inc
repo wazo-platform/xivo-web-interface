@@ -1269,9 +1269,8 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 	{
 		// save to database
 		$this->_load_xivo_dso();
-		$uuid = $this->_sysconfd->request_get('/xivo_uuid');
 		$modnetiface = &$this->_xobj->get_module('netiface');
-		if (($voip_iface = $modnetiface->get_voip_iface($uuid['uuid'])) === false)
+		if (($voip_iface = $modnetiface->get_voip_iface()) === false)
 		{
 			$this->_set_error('netiface','get_voip_iface');
 			return(false);
@@ -1319,11 +1318,7 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 
 		$bcast  = implode('.', $bcast);
 
-		// requested iface uuid must match local one
-		$uuid = $this->_sysconfd->request_get('/xivo_uuid');
-
 		$data = array(
-			'uuid'        => $uuid['uuid'],
 			'name'        => $name,
 			'ifname'      => $name,
 			'hwtypeid'    => 1,

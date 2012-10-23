@@ -155,19 +155,14 @@ class xivo_application_xivo_object_netiface extends xivo_application_xivo_object
 		if(($this->_info['netiface'] = $this->_netiface->get($id)) === false)
 			return(false);
 
-		// requested iface uuid must match local one
-		$uuid = $this->_sysconfd->request_get('/xivo_uuid');
-		if($this->_info['netiface']['uuid'] != $uuid['uuid'])
-			return false;
-
-		$voip_iface = $this->_netiface->get_voip_iface($uuid['uuid']);
+		$voip_iface = $this->_netiface->get_voip_iface();
 
 		$this->_origin['netiface'] = $this->_netiface->get_origin();
 
 		$ifname = $this->_info['netiface']['ifname'];
 
 		$this->_info = array_merge($this->_info,
-			$this->init_state_interface($ifname,$uuid['uuid'], $this->_info['netiface']['method']));
+			$this->init_state_interface($ifname, $this->_info['netiface']['method']));
 
 		return($this->_info);
 	}
@@ -371,7 +366,7 @@ class xivo_application_xivo_object_netiface extends xivo_application_xivo_object
 		return($rs);
 	}
 
-	function valid_interface($ifname,$hwtypeid=null,$address=null,$vlanrawdevice=null,$vlanid=null,$uuid=null,$id=null)
+	function valid_interface($ifname,$hwtypeid=null,$address=null,$vlanrawdevice=null,$vlanid=null,$id=null)
 	{
 		if($hwtypeid !== null && $hwtypeid !== 0 && ($hwtypeid = dwho_uint($hwtypeid)) === 0)
 			return(false);
@@ -380,7 +375,7 @@ class xivo_application_xivo_object_netiface extends xivo_application_xivo_object
 
 		if($address !== null)
 		{
-			$where = array('address' => $address, 'uuid' => $uuid);
+			$where = array('address' => $address);
 
 			if($id === null)
 			{
@@ -409,7 +404,7 @@ class xivo_application_xivo_object_netiface extends xivo_application_xivo_object
 			if(is_array($phyiface) === false)
 				return(false);
 
-			$where = array('ifname' => $phyifname, 'uuid' => $uuid);
+			$where = array('ifname' => $phyifname);
 
 			if($hwtypeid !== null)
 				$where['hwtypeid'] = $hwtypeid;
@@ -462,7 +457,7 @@ class xivo_application_xivo_object_netiface extends xivo_application_xivo_object
 			if($this->_sysnet->is_alias_if($ifname) === true)
 				return(false);
 
-			$where = array('ifname' => $vlanrawdevice, 'uuid' => $uuid);
+			$where = array('ifname' => $vlanrawdevice);
 
 			if($hwtypeid !== null)
 				$where['hwtypeid'] = $hwtypeid;
@@ -470,7 +465,7 @@ class xivo_application_xivo_object_netiface extends xivo_application_xivo_object
 			if($this->_netiface->exists($where) !== true)
 				return(false);
 
-			$where = array('vlanid' => $vlanid, 'uuid' => $uuid);
+			$where = array('vlanid' => $vlanid);
 
 			if($hwtypeid !== null)
 				$where['hwtypeid'] = $hwtypeid;
@@ -510,7 +505,7 @@ class xivo_application_xivo_object_netiface extends xivo_application_xivo_object
 			else if(isset($devinfo['hwtypeid']) === true
 			&& dwho_uint($devinfo['hwtypeid']) !== $hwtypeid)
 				return(false);
-			else if(($info = $this->_netiface->get_where(array('uuid' => $uuid, 'ifname' => $ifname))) !== false
+			else if(($info = $this->_netiface->get_where(array('ifname' => $ifname))) !== false
 			&& dwho_uint($info['hwtypeid']) !== $hwtypeid)
 				return(false);
 
@@ -537,14 +532,14 @@ class xivo_application_xivo_object_netiface extends xivo_application_xivo_object
 		return('none');
 	}
 
-	function init_state_interface($ifname, $uuid, $method='static')
+	function init_state_interface($ifname, $method='static')
 	{
 		$unremovables = $this->get_unremovable_interfaces();
-		$voip_iface = $this->_netiface->get_voip_iface($uuid);
+		$voip_iface = $this->_netiface->get_voip_iface();
 
 		$res = array();
 		/* cannot remove/disable a interface if another one is depending on */
-		if($this->_netiface->exists_link($ifname, $uuid) !== false
+		if($this->_netiface->exists_link($ifname) !== false
 		|| isset($unremovables[$ifname]) === true
 		|| $voip_iface['ifname'] == $ifname) {
 			$res['disableable'] = false;
@@ -566,9 +561,7 @@ class xivo_application_xivo_object_netiface extends xivo_application_xivo_object
 
 	function get_netifaces_list($disable=null,$order=null,$limit=null,$assoc=false)
 	{
-		$uuid = $this->_sysconfd->request_get('/xivo_uuid');
-		$where = array('uuid' => $uuid['uuid']);
-		$rs = $this->_netiface->get_all_where($where, $disable, true, $order, $limit, $assoc);
+		$rs = $this->_netiface->get_all($disable, true, $order, $limit, $assoc);
 		$this->_cnt = $this->_netiface->get_cnt();
 
 		$netinfo = $this->_sysconfd->request_get('/discover_netifaces');
@@ -592,7 +585,7 @@ class xivo_application_xivo_object_netiface extends xivo_application_xivo_object
 				$ref = &$r[$key];
 				$ref['netiface']['hwtype'] = $hwtype;
 
-				$ref = array_merge($ref, $this->init_state_interface($key, $uuid['uuid'], $val['method']));
+				$ref = array_merge($ref, $this->init_state_interface($key, $val['method']));
 
 				if(is_array($netinfo) === true
 				&& isset($netinfo[$val['ifname']]) === true
@@ -729,8 +722,6 @@ class xivo_application_xivo_object_netiface extends xivo_application_xivo_object
 		}
 
 		$arr['devname'] = $devname;
-		$uuid = $this->_sysconfd->request_get('/xivo_uuid');
-		$arr['uuid'] = $uuid['uuid'];
 
 		$this->set_netiface($arr);
 		$this->set_sysconfnet($devname);
@@ -868,7 +859,7 @@ class xivo_application_xivo_object_netiface extends xivo_application_xivo_object
 	{
 		if (!is_array($netiface) || empty($netiface)) {
 			return(false);
-		} elseif(($voip_iface = $this->_netiface->get_voip_iface($netiface['uuid'])) !== false
+		} elseif(($voip_iface = $this->_netiface->get_voip_iface()) !== false
 		&& $netiface['networktype'] == 'voip'
 		&& $voip_iface['ifname'] !== $netiface['ifname'])
 		{
@@ -933,8 +924,7 @@ class xivo_application_xivo_object_netiface extends xivo_application_xivo_object
 					  $rs['hwtypeid'],
 					  $rs['address'],
 					  $rs['vlanrawdevice'],
-					  $rs['vlanid'],
-					  $rs['uuid']) === false)
+					  $rs['vlanid']) === false)
 			return(false);
 
 		$this->make_voip_interface($rs);
@@ -1004,11 +994,10 @@ class xivo_application_xivo_object_netiface extends xivo_application_xivo_object
 					  $rs['address'],
 					  $rs['vlanrawdevice'],
 					  $rs['vlanid'],
-					  $rs['uuid'],
 					  $this->_info['netiface']['id']) === false)
 			return(false);
 		else if(strcmp($rs['ifname'],$this->_info['netiface']['ifname']) !== 0
-		&& $this->_netiface->exists_link($this->_info['netiface']['ifname'], $this->_info['netiface']['uuid']) !== false)
+		&& $this->_netiface->exists_link($this->_info['netiface']['ifname']) !== false)
 			return(false);
 
 		if ($this->_info['netiface']["vlanrawdevice"] !== null

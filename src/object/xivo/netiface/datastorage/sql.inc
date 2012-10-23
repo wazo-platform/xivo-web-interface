@@ -22,31 +22,25 @@ xivo_object::required(array('abstract','datastorage','sql.inc'),true);
 
 class xivo_object_netiface_sql extends xivo_object_abstract_sql
 {
-	var $_unique	= array(array('uuid','ifname'));
+	var $_unique	= array(array('ifname'));
 
-	function exists_link($ifname, $uuid)
+	function exists_link($ifname)
 	{
-		if(dwho_has_len($ifname) === false
-		|| dwho_has_len($uuid)   === false)
+		if(dwho_has_len($ifname) === false)
 			return(null);
 
 		$this->_dso->new_select($this->_table,array('ifname'));
 
-		// Test if exists an alias interface
-		$this->_dso->where(array('uuid' => $uuid));
-		$this->_dso->andwherebegin('ifname',$ifname.':');
-
-		// Test if exists a vlan-raw-device
-		$this->_dso->orwhere(array('uuid' => $uuid));
+		$this->_dso->wherebegin('ifname',$ifname.':');
 		$this->_dso->andwhere(array('vlanrawdevice' => $ifname));
 
 		return($this->_dso->select_single());
 	}
 
-	function get_voip_iface($uuid)
+	function get_voip_iface()
 	{
 		$this->_dso->new_select($this->_table);
-		$this->_dso->where(array('uuid' => $uuid));
+
 		$this->_dso->where(array('networktype' => 'voip'));
 
 		return($this->_dso->select_single());
