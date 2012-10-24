@@ -686,7 +686,7 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 		$info = array();
 		$info['usertype'] = 'user';
 		$info['userid'] = 0;
-		$info['order'] = 0;
+		$info['position'] = 0;
 		$info['category'] = $type;
 
 		$key = $type.'member';

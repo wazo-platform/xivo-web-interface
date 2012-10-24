@@ -148,7 +148,7 @@ class xivo_application_service_asterisk_group extends xivo_application_asterisk_
 		$where['category'] = 'group';
 		$where['queue_name'] = $this->_info['groupfeatures']['name'];
 
-		$order = array('order' => SORT_ASC);
+		$order = array('position' => SORT_ASC);
 
 		if($this->_queuemember === false
 		|| ($this->_info['user'] = $this->_queuemember->get_all_where($where,null,true,$order)) === false
@@ -469,7 +469,7 @@ class xivo_application_service_asterisk_group extends xivo_application_asterisk_
 			}
 
 			$info['queue_name'] = $name;
-			$info['order'] = $i+1;
+			$info['position'] = $i+1;
 
 			if(($rs = $this->_queuemember->chk_values($info)) === false
 			|| isset($tmp[$uinfo['id']]) === true)
