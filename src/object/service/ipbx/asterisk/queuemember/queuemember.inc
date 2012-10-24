@@ -46,6 +46,7 @@ class xivo_service_asterisk_queuemember extends xivo_service_asterisk_abstract
 	{
 		$data['userid'] = (int) $data['userid'];
 		$data['commented'] = (bool) $data['commented'];
+		$data['order'] = (int) $data['order'];
 
 		return($data);
 	}
@@ -54,6 +55,9 @@ class xivo_service_asterisk_queuemember extends xivo_service_asterisk_abstract
 	{
 		if(is_array($arr) === false)
 			return(false);
+
+		if ($arr['order'] == 0)
+			$arr['order'] = $this->_get_next_order_for_queuename($arr['queue_name']);
 
 		$arr['skills'] = $arr['usertype'].'-'.$arr['userid'];
 		return(parent::add($arr,$id));
@@ -64,8 +68,16 @@ class xivo_service_asterisk_queuemember extends xivo_service_asterisk_abstract
 		if(is_array($arr) === false)
 			return(false);
 
+		if ($arr['order'] == 0)
+			$arr['order'] = $this->_get_next_order_for_queuename($arr['queue_name']);
+
 		$arr['skills'] = $arr['usertype'].'-'.$arr['userid'];
 		return(parent::edit($id,$arr,$disable));
+	}
+
+	private function _get_next_order_for_queuename($queue_name)
+	{
+		return(((int) $this->_dso->get_last_order_for_queuename($queue_name)) + 1);
 	}
 }
 ?>

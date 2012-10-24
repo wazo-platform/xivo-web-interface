@@ -18,6 +18,16 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+function dwho_array_set_value_to_key($arr, $key_of_expected_value)
+{
+	$r = array();
+	foreach($arr as $old_key => $element)
+	{
+		$r[$element[$key_of_expected_value]] = $element;
+	}
+	return($r);
+}
+
 function dwho_clean_cmd_list_to_process()
 {
 	$_SRE = dwho_gct::get('xivo_service');

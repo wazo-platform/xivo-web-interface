@@ -67,6 +67,10 @@ $array['element']['category']['value'] = array('queue','group');
 $array['element']['skills'] = array();
 $array['element']['skills']['default'] = '';
 
+$array['element']['order'] = array();
+$array['element']['order']['default'] = 0;
+$array['element']['order']['setdef'] = true;
+
 
 $array['filter'] = array();
 $array['filter']['queue_name'] = array('regexp' => '/^[a-z0-9_\.-]+$/i','minlen' => 1,'maxlen' => 128);
@@ -84,6 +88,7 @@ $array['filter']['channel'] = array('key' => array(
 							XIVO_SRE_IPBX_AST_CHAN_AGENT,
 							XIVO_SRE_IPBX_AST_CHAN_UNKNOWN));
 $array['filter']['category'] = array('key' => array('queue','group'));
-$array['filter']['skills']   = array('set' => false, 'chk' => 2, 'maxlen' => 64);
+$array['filter']['skills'] = array('set' => false, 'chk' => 2, 'maxlen' => 64);
+$array['filter']['order'] = array('cast' => 'ulongint');
 
 ?>

@@ -178,14 +178,14 @@ class xivo_application_service_asterisk_queue extends xivo_application_asterisk_
 			return(false);
 
 		$where = array();
-
 		$where['usertype'] = $type;
 		$where['category'] = 'queue';
-
 		$where['queue_name'] = $this->_info['queuefeatures']['name'];
 
+		$order = array('order' => SORT_ASC);
+
 		if(is_object($this->_queuemember) === false
-		|| ($this->_info[$type] = $this->_queuemember->get_all_where($where)) === false
+		|| ($this->_info[$type] = $this->_queuemember->get_all_where($where,null,true,$order)) === false
 		|| isset($this->_info[$type][0]) === false)
 			return(false);
 
@@ -608,11 +608,14 @@ class xivo_application_service_asterisk_queue extends xivo_application_asterisk_
 			}
 
 			$info['queue_name'] = $name;
-			$info['skills']	    = '';
+			$info['skills'] = '';
+
 			// set user queueskill
 			if($type === 'agent' && $this->_agentskill->exists(array('agentid' => $uinfo['id'])) !== false
 			|| $this->_userskill->exists(array('userid' => $uinfo['id'])) !== false)
 				$info['skills'] = $type . '-' . $uinfo['id'];
+
+			$info['order'] = $i+1;
 
 			if(($rs = $this->_queuemember->chk_values($info)) === false
 			|| isset($tmp[$uinfo['id']]) === true)
