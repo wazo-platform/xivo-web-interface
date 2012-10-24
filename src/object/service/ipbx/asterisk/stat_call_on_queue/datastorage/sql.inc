@@ -36,7 +36,7 @@ class xivo_service_asterisk_stat_call_on_queue_sql extends xivo_service_asterisk
 		$r = $this->_dso->select_singlecolumn();
 
 		if(isset($r[0]) === false)
-			$r = false;
+			return(0);
 
 		return((int) $r[0]);
 	}
@@ -58,7 +58,7 @@ class xivo_service_asterisk_stat_call_on_queue_sql extends xivo_service_asterisk
 		$r = $this->_dso->select_singlecolumn();
 
 		if(isset($r[0]) === false)
-			$r = false;
+			return(0);
 
 		return((int) $r[0]);
 	}
@@ -74,14 +74,14 @@ class xivo_service_asterisk_stat_call_on_queue_sql extends xivo_service_asterisk
 		$r = $this->_dso->select_singlecolumn();
 
 		if(isset($r[0]) === false)
-			$r = false;
+			return(0);
 
 		return((int) $r[0]);
 	}
 
 	public function agent_conversation_time($interval, $agent_ids)
 	{
-		$field = array((object) ('SUM(talktime)'));
+		$field = array((object) ("interval '1 second' * SUM(talktime) AS talktime"));
 
 		$this->_dso->new_select($this->_table, $field);
 
@@ -91,9 +91,9 @@ class xivo_service_asterisk_stat_call_on_queue_sql extends xivo_service_asterisk
 		$r = $this->_dso->select_singlecolumn();
 
 		if(isset($r[0]) === false)
-			$r = false;
+			return(0);
 
-		return((int) $r[0]);
+		return($r[0]);
 	}
 
 	public function agent_count_status($status, $interval, $agent_ids)
@@ -109,7 +109,7 @@ class xivo_service_asterisk_stat_call_on_queue_sql extends xivo_service_asterisk
 		$r = $this->_dso->select_singlecolumn();
 
 		if(isset($r[0]) === false)
-			$r = false;
+			return(0);
 
 		return((int) $r[0]);
 	}

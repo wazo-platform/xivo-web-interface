@@ -56,30 +56,27 @@ class xivo_service_asterisk_stat_agent_periodic extends xivo_service_asterisk_ab
 		return($rs);
 	}
 
+	public function get_productivity($interval, $agent_id)
+	{
+		return($this->_dso->agent_productivity($interval, $agent_id));
+	}
+
 	public function get_pause_time($interval, $agent_id)
 	{
 		$pause_time = $this->_dso->agent_time_interval('pause', $interval, $agent_id);
-		if ($pause_time === null) {
-			$pause_time = '00:00:00';
-		} else {
-			$pause_time = $this->_strip_microseconds($pause_time);
-		}
-		return $pause_time;
+		return($this->_interval_value($pause_time));
+	}
+
+	public function get_wrapup_time($interval, $agent_id)
+	{
+		$wrapup_time = $this->_dso->agent_time_interval('wrapup', $interval, $agent_id);
+		return($this->_interval_value($wrapup_time));
 	}
 
 	public function get_login_time($interval, $agent_id)
 	{
 		$login_time = $this->_dso->agent_time_interval('login', $interval, $agent_id);
-		if ($login_time === null) {
-			$login_time = '00:00:00';
-		} else {
-			$login_time = $this->_strip_microseconds($login_time);
-		}
-		return $login_time;
-	}
-
-	private function _strip_microseconds($time_string) {
-		return substr($time_string, 0, 8);
+		return($this->_interval_value($login_time));
 	}
 }
 

@@ -58,14 +58,15 @@ switch ($axetype)
 
 $tpl_statistics->set_data_custom('agent',$stats_agent->_result);
 
-/*
 $tpl_statistics->set_col_struct(null);
+/*
 $tpl_statistics->add_col('productivity',
-					'expression',
-					'{custom:agent,[key],calltime}/{custom:agent,[key],logintime}',
-					'percent');
+					'direct',
+					'custom:agent,[key],productivity');
+					#'expression',
+					#'{custom:agent,[key],calltime}/{custom:agent,[key],logintime}',
+					#'percent');
 */
-
 $tpl_statistics->set_col_struct('call_counter');
 $tpl_statistics->add_col('connect',
 					'direct',
@@ -84,9 +85,9 @@ $tpl_statistics->add_col('outgoing',
 
 $tpl_statistics->set_col_struct('total_time');
 $tpl_statistics->add_col('conversation',
-			 'direct',
-			 'custom:agent,[key],conversationtime',
-			 'time');
+					'direct',
+					'custom:agent,[key],conversationtime',
+					'direct');
 $tpl_statistics->add_col('login',
 					'direct',
 					'custom:agent,[key],login_time',
@@ -95,6 +96,10 @@ $tpl_statistics->add_col('pause',
 					'direct',
 					'custom:agent,[key],pause_time',
 					'direct');
+$tpl_statistics->add_col('wrapup',
+					'direct',
+					'custom:agent,[key],wrapup_time',
+					'direct');
 /*
 $tpl_statistics->add_col('available',
 					'expression',
@@ -102,9 +107,10 @@ $tpl_statistics->add_col('available',
 					'time');
 $tpl_statistics->add_col('traitment',
 					'direct',
-					'custom:agent,[key],traitmenttime',
-					'time');
-
+					'custom:agent,[key],traitment_time',
+					'direct');
+*/
+/*
 $tpl_statistics->set_col_struct('average_time');
 $tpl_statistics->add_col('dmt',
 					'expression',

@@ -156,6 +156,9 @@ Presented out of queue
 ; col_pause
 <acronym title="Pause"> Pause</acronym>
 
+; col_wrapup
+<acronym title="Wrapup Time">Wrapup</acronym
+
 ; col_traitment
 <acronym title="Processed">Proc.</acronym>
 
