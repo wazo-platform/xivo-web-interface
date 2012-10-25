@@ -58,8 +58,8 @@ switch ($axetype)
 
 $tpl_statistics->set_data_custom('agent',$stats_agent->_result);
 
-$tpl_statistics->set_col_struct(null);
 /*
+$tpl_statistics->set_col_struct(null);
 $tpl_statistics->add_col('productivity',
 					'direct',
 					'custom:agent,[key],productivity');
