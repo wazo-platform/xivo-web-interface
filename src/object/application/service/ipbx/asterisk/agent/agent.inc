@@ -392,6 +392,7 @@ class xivo_application_service_asterisk_agent extends xivo_application_asterisk_
 		$info['userid'] = 0;
 		$info['category'] = 'queue';
 		$info['call-limit'] = 0;
+		$info['position'] = 0;
 
 		$tmp = $reslist = array();
 
