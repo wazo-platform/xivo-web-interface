@@ -456,6 +456,8 @@ class xivo_application_service_asterisk_device extends xivo_application_asterisk
 			return(false);
 		}
 
+		$rs['mac'] = strtolower($rs['mac']);
+
 		$this->_set_result('devicefeatures',$rs);
 
 		return(true);
