@@ -30,6 +30,7 @@ $array['option']['defdir']['goodbye'] = 1;
 $array['option']['defdir']['monitor'] = 1;
 $array['option']['defdir']['playback'] = 1;
 $array['option']['defdir']['recordings'] = 1;
+$array['option']['defdir']['recordings-meetme'] = 1;
 
 $array['option']['dir'] = array();
 $array['option']['dir']['name'] = '/^[a-z0-9_-]{1,200}$/i';
