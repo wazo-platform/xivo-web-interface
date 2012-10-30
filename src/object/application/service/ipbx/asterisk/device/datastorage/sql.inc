@@ -40,7 +40,7 @@ class xivo_application_service_asterisk_device_sql extends xivo_application_abst
 		return(dwho_ulongint($this->_dso->select_count(null,'id',$this->_table['devicefeatures'])));
 	}
 
-	function get_all($disable=null,$initialized=null,$order=null,$limit=null,$value=null)
+	function get_all($disable=null,$order=null,$limit=null,$value=null)
 	{
 		$this->_cnt = 0;
 
@@ -58,13 +58,15 @@ class xivo_application_service_asterisk_device_sql extends xivo_application_abst
 				null,
 				'*');
 
-		//$this->_dso->aggregate_where(false,'AND');
-		$this->_dso->aggregate_where();
 		if(dwho_has_len($value) === true)
 		{
 			$this->_dso->aggregate_where();
-			$this->_dso->whereexact('ip',$value,true,$this->_table['devicefeatures']);
-			$this->_dso->orwhereexact('mac',$value,true,$this->_table['devicefeatures']);
+			$this->_dso->wherelike('ip',$value,'contain',$this->_table['devicefeatures']);
+			$this->_dso->orwherelike('mac',$value,'contain',$this->_table['devicefeatures']);
+			$this->_dso->orwherelike('plugin',$value,'contain',$this->_table['devicefeatures']);
+			$this->_dso->orwherelike('vendor',$value,'contain',$this->_table['devicefeatures']);
+			$this->_dso->orwherelike('model',$value,'contain',$this->_table['devicefeatures']);
+			$this->_dso->orwherelike('number',$value,'contain',$this->_table['linefeatures']);
 		}
 
 		$this->_dso->new_order($order,null,$this->_table['devicefeatures']);
@@ -82,14 +84,14 @@ class xivo_application_service_asterisk_device_sql extends xivo_application_abst
 		return($r);
 	}
 
-	function search($value,$disable=null,$initialized=null,$order=null)
+	function search($value,$disable=null,$order=null,$limit=null)
 	{
 		$this->_cnt = 0;
 
 		if(dwho_has_len($value) === false)
 			return(false);
 
-		return($this->get_all($disable,$initialized,$order,$limit,$value));
+		return($this->get_all($disable,$order,$limit,$value));
 	}
 }
 
