@@ -168,13 +168,6 @@ if(isset($error_js[0]) === true)
 					'selected'	=> $info['agentglobalparams']['maxlogintries']),
 					$element['agentglobalparams']['maxlogintries']['value']),
 
-		$form->checkbox(array('desc'	=> $this->bbf('fm_agentoptions_updatecdr'),
-					'name'	=>'agentglobalparams[updatecdr]',
-					'labelid'	=>'agentglobalparams-updatecdr',
-					'help'	=>$this->bbf('hlp_fm_agentoptions_updatecdr'),
-					'default'	=>$element['agentglobalparams']['updatecdr']['default'],
-					'checked'=>$info['agentglobalparams']['updatecdr'])),
-
 		$form->checkbox(array('desc'	=> $this->bbf('fm_agentoptions_recordagentcalls'),
 				      'name'	=> 'agentglobalparams[recordagentcalls]',
 				      'labelid'	=> 'agentglobalparams-recordagentcalls',

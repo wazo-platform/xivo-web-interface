@@ -39,11 +39,6 @@ $array['element']['goodbye'] = array();
 $array['element']['goodbye']['default'] = 'vm-goodbye';
 $array['element']['goodbye']['setdef'] = true;
 
-$array['element']['updatecdr'] = array();
-$array['element']['updatecdr']['value'] = array('no','yes');
-$array['element']['updatecdr']['default'] = 'no';
-$array['element']['updatecdr']['set'] = true;
-
 $array['element']['recordagentcalls'] = array();
 $array['element']['recordagentcalls']['value'] = array('no','yes');
 $array['element']['recordagentcalls']['default'] = 'no';
@@ -75,7 +70,6 @@ $array['filter']['goodbye'] = array('set'	=> false,
 				    'chk'	=> 2,
 				    'maxlen'	=> 255,
 				    'regexp'	=> '/^[\/'.XIVO_SRE_IPBX_AST_REGEXP_AUDIO_FILE_PATTERN.']+$/');
-$array['filter']['updatecdr'] = array('bool' => true);
 $array['filter']['recordagentcalls'] = array('bool' => true);
 $array['filter']['recordformat'] = array('set'	=> false,
 					 'chk'	=> 2,

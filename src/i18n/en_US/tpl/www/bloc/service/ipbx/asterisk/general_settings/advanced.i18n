@@ -42,9 +42,6 @@ Unlimited
 ; fm_agentoptions_maxlogintries-opt
 %s
 
-; fm_agentoptions_updatecdr
-Log the calls:
-
 ; fm_agentoptions_recordagentcalls
 Record the calls:
 
@@ -80,9 +77,6 @@ Asterisk config: endcall
 
 ; hlp_fm_agentoptions_goodbye
 Asterisk config: goodbye
-
-; hlp_fm_agentoptions_updatecdr
-Asterisk config: updatecdr
 
 ; hlp_fm_agentoptions_recordagentcalls
 Asterisk config: recordagentcalls

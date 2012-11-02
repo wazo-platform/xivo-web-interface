@@ -36,9 +36,6 @@ Illimité
 ; fm_agentoptions_maxlogintries-opt
 %s
 
-; fm_agentoptions_updatecdr
-Enregistrement dans les journaux d'appels :
-
 ; fm_agentoptions_recordagentcalls
 Enregistrement des appels :
 
@@ -74,9 +71,6 @@ Config asterisk: endcall
 
 ; hlp_fm_agentoptions_goodbye
 Config asterisk: goodbye
-
-; hlp_fm_agentoptions_updatecdr
-Config asterisk: updatecdr
 
 ; hlp_fm_agentoptions_recordagentcalls
 Config asterisk: recordagentcalls
