@@ -21,12 +21,6 @@ Asterisk config: guest
 
 ;;; agents
 
-; fm_generalagents_persistentagents
-Persistent agents:
-
-; hlp_fm_generalagents_persistentagents
-Asterisk config: persistentagents
-
 ; fm_agentfeatures_silent
 Disable connection announce:
 

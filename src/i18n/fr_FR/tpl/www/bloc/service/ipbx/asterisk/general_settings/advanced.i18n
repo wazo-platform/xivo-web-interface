@@ -21,12 +21,6 @@ Config asterisk: guest
 
 ;;; agents
 
-; fm_generalagents_persistentagents
-Agents persistants :
-
-; hlp_fm_generalagents_persistentagents
-Config asterisk: persistentagents
-
 ; fm_generalagents_multiplelogin
 Permettre à une extension d'avoir plusieurs agents :
 
