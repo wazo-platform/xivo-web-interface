@@ -21,9 +21,6 @@ Config asterisk: guest
 
 ;;; agents
 
-; fm_generalagents_multiplelogin
-Permettre à une extension d'avoir plusieurs agents :
-
 ; fm_agentoptions_endcall
 Activer la possibilité de raccrocher avec un DTMF :
 
@@ -165,9 +162,6 @@ Config asterisk: endalert
 
 ; fm_success-save
 Paramètres globaux avancés sauvegardées avec succès
-
-; hlp_fm_generalagents_multiplelogin
-Config asterisk: multiplelogin
 
 ; hlp_fm_generalqueues_autofill
 Config asterisk: autofill

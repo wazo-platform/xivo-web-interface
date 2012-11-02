@@ -154,12 +154,6 @@ Asterisk config: endalert
 ; fm_success-save
 Global advanced parameters successfully saved
 
-; fm_generalagents_multiplelogin
-Possibly multiple agents for one extension:
-
-; hlp_fm_generalagents_multiplelogin
-Asterisk config: multiplelogin
-
 ; hlp_fm_generalqueues_autofill
 Asterisk Config: autofill
 
