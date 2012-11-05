@@ -30,15 +30,6 @@ Group:
 ; fm_agentoptions_autologoffunavail
 Autodisconnect if channel unavailable:
 
-; fm_agentoptions_maxlogintries
-Number of login retries:
-
-; fm_agentoptions_maxlogintries-opt(0)
-Unlimited
-
-; fm_agentoptions_maxlogintries-opt
-%s
-
 ; fm_agentoptions_recordagentcalls
 Record the calls:
 
@@ -62,9 +53,6 @@ Default
 
 ; fm_agentoptions_savecallsin
 Directory for call records:
-
-; hlp_fm_agentoptions_maxlogintries
-Asterisk config: maxlogintries
 
 ; hlp_fm_agentoptions_autologoffunavail
 Asterisk config: autologoffunavail

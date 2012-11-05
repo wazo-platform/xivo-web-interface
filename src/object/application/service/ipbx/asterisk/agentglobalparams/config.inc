@@ -25,11 +25,6 @@ $array['element']['autologoffunavail']['value'] = array('no','yes');
 $array['element']['autologoffunavail']['default'] = 'no';
 $array['element']['autologoffunavail']['set'] = true;
 
-$array['element']['maxlogintries'] = array();
-$array['element']['maxlogintries']['value'] = range(0,10);
-$array['element']['maxlogintries']['default'] = 3;
-$array['element']['maxlogintries']['setdef'] = true;
-
 $array['element']['goodbye'] = array();
 $array['element']['goodbye']['default'] = 'vm-goodbye';
 $array['element']['goodbye']['setdef'] = true;
@@ -59,7 +54,6 @@ $array['element']['custom_beep']['setdef'] = true;
 
 $array['filter'] = array();
 $array['filter']['autologoffunavail'] = array('bool' => true);
-$array['filter']['maxlogintries'] = array('cast' => 'uint','between' => array(0,10));
 $array['filter']['goodbye'] = array('set'	=> false,
 				    'chk'	=> 2,
 				    'maxlen'	=> 255,

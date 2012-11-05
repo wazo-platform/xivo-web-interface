@@ -150,17 +150,6 @@ if(isset($error_js[0]) === true)
 					'default'	=> $element['agentglobalparams']['autologoffunavail']['default'],
 					'checked' => $info['agentglobalparams']['autologoffunavail'])),
 
-		$form->select(array('desc'	=> $this->bbf('fm_agentoptions_maxlogintries'),
-					'name'	=> 'agentglobalparams[maxlogintries]',
-					'labelid'	=> 'agentglobalparams-maxlogintries',
-					'key'	=> false,
-					'help'	=> $this->bbf('hlp_fm_agentoptions_maxlogintries'),
-					'bbf'	=> 'fm_agentoptions_maxlogintries-opt',
-					'bbfopt'	=> array('argmode' => 'paramvalue'),
-					'default'	=> $element['agentglobalparams']['maxlogintries']['default'],
-					'selected'	=> $info['agentglobalparams']['maxlogintries']),
-					$element['agentglobalparams']['maxlogintries']['value']),
-
 		$form->checkbox(array('desc'	=> $this->bbf('fm_agentoptions_recordagentcalls'),
 				      'name'	=> 'agentglobalparams[recordagentcalls]',
 				      'labelid'	=> 'agentglobalparams-recordagentcalls',

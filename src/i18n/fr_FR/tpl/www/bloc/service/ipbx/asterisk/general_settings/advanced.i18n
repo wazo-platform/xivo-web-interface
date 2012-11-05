@@ -24,15 +24,6 @@ Config asterisk: guest
 ; fm_agentoptions_autologoffunavail
 Déconnexion automatique si le canal est indisponible :
 
-; fm_agentoptions_maxlogintries
-Nombre de tentatives de connexion :
-
-; fm_agentoptions_maxlogintries-opt(0)
-Illimité
-
-; fm_agentoptions_maxlogintries-opt
-%s
-
 ; fm_agentoptions_recordagentcalls
 Enregistrement des appels :
 
@@ -56,9 +47,6 @@ Défaut
 
 ; fm_agentoptions_savecallsin
 Répertoire contenant les enregistrements des conversations : 
-
-; hlp_fm_agentoptions_maxlogintries
-Config asterisk: maxlogintries
 
 ; hlp_fm_agentoptions_autologoffunavail
 Config asterisk: autologoffunavail
