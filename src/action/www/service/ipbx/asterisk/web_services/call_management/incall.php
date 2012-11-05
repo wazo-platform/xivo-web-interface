@@ -51,7 +51,7 @@ switch($act)
 		break;
 	case 'edit':
 		$appincall = &$ipbx->get_application('incall');
-		
+
 		if(($incall = $appincall->get($_QRY->get('id'))) === false)
 			$status = 404;
 		else if($appincall->edit_from_json($incall) === true)

@@ -56,6 +56,22 @@ switch($act)
 		}
 
 		break;
+	case 'edit':
+		$apptrunk = &$ipbx->get_application('trunk',
+						    array('protocol' => XIVO_SRE_IPBX_AST_PROTO_SIP));
+
+		if(($trunk = $apptrunk->get($_QRY->get('id'))) === false)
+			$status = 404;
+		else if($apptrunk->edit_from_json($trunk) === true)
+			$status = 200;
+		else
+			$status = 400;
+
+		error_log(dwho_json::encode($apptrunk->get_error()));
+
+		$http_response->set_status_line($status);
+		$http_response->send(true);
+		break;
 	case 'delete':
 		$apptrunk = &$ipbx->get_application('trunk',
 						    array('protocol' => XIVO_SRE_IPBX_AST_PROTO_SIP));

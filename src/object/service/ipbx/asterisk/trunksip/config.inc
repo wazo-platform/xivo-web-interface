@@ -468,7 +468,7 @@ $array['filter']['fullcontact'] = array('set' => false,'chk' => 0);
 $array['filter']['vmexten'] = array('set' => false,'chk' => 0);
 $array['filter']['callingpres'] = array('set' => false,'chk' => 0);
 $array['filter']['ipaddr'] = array('set' => false,'chk' => 0);
-$array['filter']['regseconds'] = array('set' => false,'chk' => 0);
+$array['filter']['regseconds'] = array('set' => false,'chk' => 2);
 $array['filter']['regserver'] = array('set' => false,'chk' => 0);
 $array['filter']['lastms'] = array('set' => false,'chk' => 0);
 $array['filter']['protocol'] = array('set' => false);
