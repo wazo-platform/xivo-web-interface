@@ -256,36 +256,7 @@ $qmember = $this->get_var('qmember');
 				      $moh_list);
 		endif;
 
-		echo $form->select(array('desc'	=> $this->bbf('fm_agentfeatures_ackcall'),
-				    'name'	=> 'agentfeatures[ackcall]',
-				    'labelid'	=> 'agentfeatures-ackcall',
-				    'key'	=> false,
-				    'help'	=> $this->bbf('hlp_fm_agentfeatures_ackcall'),
-				    'bbf'	=> 'fm_agentfeatures_ackcall-opt',
-				    'bbfopt'	=> array('argmode' => 'paramvalue'),
-				    'default'	=> $element['agentfeatures']['ackcall']['default'],
-				    'selected'	=> $info['agentfeatures']['ackcall']),
-			      $element['agentfeatures']['ackcall']['value']),
-
-		$form->select(array('desc'	=> $this->bbf('fm_agentfeatures_acceptdtmf'),
-				    'name'	=> 'agentfeatures[acceptdtmf]',
-				    'labelid'	=> 'agentfeatures-acceptdtmf',
-				    'key'	=> false,
-				    'help'	=> $this->bbf('hlp_fm_agentfeatures_acceptdtmf'),
-				    'default'	=> $element['agentfeatures']['acceptdtmf']['default'],
-				    'selected'	=> $info['agentfeatures']['acceptdtmf']),
-			      $element['agentfeatures']['acceptdtmf']['value']),
-
-		$form->select(array('desc'	=> $this->bbf('fm_agentfeatures_enddtmf'),
-				    'name'	=> 'agentfeatures[enddtmf]',
-				    'labelid'	=> 'agentfeatures-enddtmf',
-				    'key'	=> false,
-				    'help'	=> $this->bbf('hlp_fm_agentfeatures_enddtmf'),
-				    'default'	=> $element['agentfeatures']['enddtmf']['default'],
-				    'selected'	=> $info['agentfeatures']['enddtmf']),
-			      $element['agentfeatures']['enddtmf']['value']),
-
-		$form->select(array('desc'	=> $this->bbf('fm_agentfeatures_autologoff'),
+		echo $form->select(array('desc'	=> $this->bbf('fm_agentfeatures_autologoff'),
 				    'name'	=> 'agentfeatures[autologoff]',
 				    'labelid'	=> 'agentfeatures-autologoff',
 				    'key'	=> false,
