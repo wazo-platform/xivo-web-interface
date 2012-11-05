@@ -56,9 +56,6 @@ $array['element']['wrapuptime']['value'] = array(0,5000,10000,15000,20000,
 $array['element']['wrapuptime']['default'] = 0;
 $array['element']['wrapuptime']['setdef'] = true;
 
-$array['element']['musiconhold'] = array();
-$array['element']['musiconhold']['default'] = XIVO_SRE_IPBX_AST_MOH_DEFAULT;
-
 $array['element']['description'] = array();
 $array['element']['description']['default'] = '';
 
@@ -74,7 +71,6 @@ $array['filter']['autologoff'] = array('cast' => 'uint','between' => array(0,60,
 $array['filter']['wrapuptime'] = array('key' => array(0,5000,10000,15000,20000,
 						      25000,30000,35000,40000,
 						      45000,50000,55000,60000));
-$array['filter']['musiconhold'] = array('set' => false,'chk' => 2,'maxlen' => 20);
 $array['filter']['description'] = array('set' => false,'chk' => 2,'maxlen' => 1000,'cast' => 'sgraph_crlf_tab','eol' => true);
 
 ?>

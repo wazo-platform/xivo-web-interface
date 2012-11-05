@@ -25,7 +25,6 @@ class xivo_application_service_asterisk_agentgroup extends xivo_application_aste
 	var $_agentgroup	= false;
 	var $_agentmember	= null;
 	var $_contextlist	= array();
-	var $_musiconhold	= array();
 
 	public function __construct(&$service,$param=null,$components=true)
 	{

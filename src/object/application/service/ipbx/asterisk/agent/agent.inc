@@ -29,7 +29,6 @@ class xivo_application_service_asterisk_agent extends xivo_application_asterisk_
 	var $_queuemember	= null;
 	var $_queueskills   = null;
 	var $_contextlist	= array();
-	var $_musiconhold	= array();
 
 	public function __construct(&$service,$param=null,$components=true)
 	{

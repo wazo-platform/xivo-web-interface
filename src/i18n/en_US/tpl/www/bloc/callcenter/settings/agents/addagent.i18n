@@ -97,9 +97,6 @@ weight is not an integer
 ; error_fm_queueskill_weight(unbound)
 weight must be an integer between 0 and 100
 
-; fm_agentfeatures_musiconhold
-Music on hold:
-
 ; fm_agentfeatures_autologoff
 Ring time before logoff :
 
@@ -123,7 +120,3 @@ Asterisk config: autologoff
 
 ; hlp_fm_agentfeatures_wrapuptime
 Asterisk config: wrapuptime
-
-; hlp_fm_agentfeatures_musiconhold
-Asterisk config: musiconhold
-

@@ -97,9 +97,6 @@ Le poids saisi n'est pas un nombre entier
 ; error_fm_queueskill_weight(unbound)
 Le poids doit être un nombre entier compris entre 0 et 100
 
-; fm_agentfeatures_musiconhold
-Musique d'attente:
-
 ; fm_agentfeatures_autologoff
 Temps de sonnerie avant déconnexion :
 
@@ -123,7 +120,3 @@ Config asterisk: autologoff
 
 ; hlp_fm_agentfeatures_wrapuptime
 Config asterisk: wrapuptime
-
-; hlp_fm_agentfeatures_musiconhold
-Config asterisk: musiconhold
-

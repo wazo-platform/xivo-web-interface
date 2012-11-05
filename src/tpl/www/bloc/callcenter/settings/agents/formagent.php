@@ -246,16 +246,6 @@ $qmember = $this->get_var('qmember');
 
 <div id="sb-part-last" class="b-nodisplay">
 <?php
-		if(($moh_list = $this->get_var('moh_list')) !== false):
-			echo	$form->select(array('desc'	=> $this->bbf('fm_agentfeatures_musiconhold'),
-					    'name'	=> 'agentfeatures[musiconhold]',
-					    'labelid'	=> 'agentfeatures-musiconhold',
-					    'key'	=> 'category',
-					    'default'	=> $element['agentfeatures']['musiconhold']['default'],
-					    'selected'	=> $info['agentfeatures']['musiconhold']),
-				      $moh_list);
-		endif;
-
 		echo $form->select(array('desc'	=> $this->bbf('fm_agentfeatures_autologoff'),
 				    'name'	=> 'agentfeatures[autologoff]',
 				    'labelid'	=> 'agentfeatures-autologoff',
