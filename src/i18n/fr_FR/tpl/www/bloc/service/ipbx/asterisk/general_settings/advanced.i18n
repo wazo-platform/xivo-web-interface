@@ -21,9 +21,6 @@ Config asterisk: guest
 
 ;;; agents
 
-; fm_agentoptions_endcall
-Activer la possibilité de raccrocher avec un DTMF :
-
 ; fm_agentoptions_autologoffunavail
 Déconnexion automatique si le canal est indisponible :
 
@@ -65,9 +62,6 @@ Config asterisk: maxlogintries
 
 ; hlp_fm_agentoptions_autologoffunavail
 Config asterisk: autologoffunavail
-
-; hlp_fm_agentoptions_endcall
-Config asterisk: endcall
 
 ; hlp_fm_agentoptions_goodbye
 Config asterisk: goodbye

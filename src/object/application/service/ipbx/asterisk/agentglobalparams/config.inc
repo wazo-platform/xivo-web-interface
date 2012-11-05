@@ -20,11 +20,6 @@
 
 $array = array();
 
-$array['element']['endcall'] = array();
-$array['element']['endcall']['value'] = array('no','yes');
-$array['element']['endcall']['default'] = 'yes';
-$array['element']['endcall']['set'] = true;
-
 $array['element']['autologoffunavail'] = array();
 $array['element']['autologoffunavail']['value'] = array('no','yes');
 $array['element']['autologoffunavail']['default'] = 'no';
@@ -63,7 +58,6 @@ $array['element']['custom_beep']['default'] = 'beep';
 $array['element']['custom_beep']['setdef'] = true;
 
 $array['filter'] = array();
-$array['filter']['endcall'] = array('bool' => true);
 $array['filter']['autologoffunavail'] = array('bool' => true);
 $array['filter']['maxlogintries'] = array('cast' => 'uint','between' => array(0,10));
 $array['filter']['goodbye'] = array('set'	=> false,

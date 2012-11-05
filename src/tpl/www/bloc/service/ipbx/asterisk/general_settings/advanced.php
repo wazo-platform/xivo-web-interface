@@ -143,14 +143,7 @@ if(isset($error_js[0]) === true)
 
 <div id="sb-part-agents" class="b-nodisplay">
 <?php
-		echo $form->checkbox(array('desc'	=> $this->bbf('fm_agentoptions_endcall'),
-					'name'	=> 'agentglobalparams[endcall]',
-					'labelid'	=> 'agentglobalparams-endcall',
-					'help'	=> $this->bbf('hlp_fm_agentoptions_endcall'),
-					'default'	=> $element['agentglobalparams']['endcall']['default'],
-					'checked' => $info['agentglobalparams']['endcall'])),
-
-		$form->checkbox(array('desc'	=> $this->bbf('fm_agentoptions_autologoffunavail'),
+		echo $form->checkbox(array('desc'	=> $this->bbf('fm_agentoptions_autologoffunavail'),
 					'name'	=> 'agentglobalparams[autologoffunavail]',
 					'labelid'	=> 'agentglobalparams-autologoffunavail',
 					'help'	=> $this->bbf('hlp_fm_agentoptions_autologoffunavail'),

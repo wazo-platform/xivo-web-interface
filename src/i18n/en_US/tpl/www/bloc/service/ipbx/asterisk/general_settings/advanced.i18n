@@ -27,9 +27,6 @@ Disable connection announce:
 ; fm_agentfeatures_numgroup
 Group:
 
-; fm_agentoptions_endcall
-Press DTMF to hangup:
-
 ; fm_agentoptions_autologoffunavail
 Autodisconnect if channel unavailable:
 
@@ -71,9 +68,6 @@ Asterisk config: maxlogintries
 
 ; hlp_fm_agentoptions_autologoffunavail
 Asterisk config: autologoffunavail
-
-; hlp_fm_agentoptions_endcall
-Asterisk config: endcall
 
 ; hlp_fm_agentoptions_goodbye
 Asterisk config: goodbye
