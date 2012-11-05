@@ -25,39 +25,7 @@ $array['element']['autologoffunavail']['value'] = array('no','yes');
 $array['element']['autologoffunavail']['default'] = 'no';
 $array['element']['autologoffunavail']['set'] = true;
 
-$array['element']['recordagentcalls'] = array();
-$array['element']['recordagentcalls']['value'] = array('no','yes');
-$array['element']['recordagentcalls']['default'] = 'no';
-$array['element']['recordagentcalls']['set'] = true;
-
-$array['element']['recordformat'] = array();
-$array['element']['recordformat']['value'] = array(XIVO_SRE_IPBX_AST_FORMAT_AUDIO_WAV,
-						   XIVO_SRE_IPBX_AST_FORMAT_AUDIO_WAV49,
-						   XIVO_SRE_IPBX_AST_FORMAT_AUDIO_GSM);
-$array['element']['recordformat']['default'] = XIVO_SRE_IPBX_AST_FORMAT_AUDIO_WAV;
-$array['element']['recordformat']['setdef'] = true;
-
-$array['element']['urlprefix'] = array();
-$array['element']['urlprefix']['default'] = '';
-
-$array['element']['savecallsin'] = array();
-$array['element']['savecallsin']['default'] = '';
-
 $array['filter'] = array();
 $array['filter']['autologoffunavail'] = array('bool' => true);
-$array['filter']['recordagentcalls'] = array('bool' => true);
-$array['filter']['recordformat'] = array('set'	=> false,
-					 'chk'	=> 2,
-					 'key'	=> array(XIVO_SRE_IPBX_AST_FORMAT_AUDIO_WAV,
-							 XIVO_SRE_IPBX_AST_FORMAT_AUDIO_WAV49,
-							 XIVO_SRE_IPBX_AST_FORMAT_AUDIO_GSM));
-$array['filter']['urlprefix'] = array('set'	=> false,
-				      'chk'	=> 2,
-				      'minlen'	=> 3,
-				      'maxlen'	=> 255,
-							'cast'	=> 'sgraph');
-$array['filter']['savecallsin'] = array('set' => false,
-					'chk'   => 2,
-					'maxlen' => 255);
 
 ?>

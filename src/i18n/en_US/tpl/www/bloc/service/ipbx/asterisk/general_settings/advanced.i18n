@@ -30,32 +30,8 @@ Group:
 ; fm_agentoptions_autologoffunavail
 Autodisconnect if channel unavailable:
 
-; fm_agentoptions_recordagentcalls
-Record the calls:
-
-; fm_agentoptions_recordformat
-Recording format:
-
-; fm_agentoptions_urlprefix
-URL prefix used to access the recordings:
-
-; fm_agentoptions_savecallsin
-Directory for call records:
-
 ; hlp_fm_agentoptions_autologoffunavail
 Asterisk config: autologoffunavail
-
-; hlp_fm_agentoptions_recordagentcalls
-Asterisk config: recordagentcalls
-
-; hlp_fm_agentoptions_recordformat
-Asterisk config: recordformat
-
-; hlp_fm_agentoptions_urlprefix
-Asterisk config: urlprefix
-
-; hlp_fm_agentoptions_savecallsin
-Asterisk config: savecallsin
 
 ;;; queues
 

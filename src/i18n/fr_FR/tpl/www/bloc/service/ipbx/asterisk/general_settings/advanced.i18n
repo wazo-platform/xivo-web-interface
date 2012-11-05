@@ -24,32 +24,8 @@ Config asterisk: guest
 ; fm_agentoptions_autologoffunavail
 Déconnexion automatique si le canal est indisponible :
 
-; fm_agentoptions_recordagentcalls
-Enregistrement des appels :
-
-; fm_agentoptions_recordformat
-Format d'enregistrement :
-
-; fm_agentoptions_urlprefix
-URL d'accès aux enregistrements :
-
-; fm_agentoptions_savecallsin
-Répertoire contenant les enregistrements des conversations : 
-
 ; hlp_fm_agentoptions_autologoffunavail
 Config asterisk: autologoffunavail
-
-; hlp_fm_agentoptions_recordagentcalls
-Config asterisk: recordagentcalls
-
-; hlp_fm_agentoptions_recordformat
-Config asterisk: recordformat
-
-; hlp_fm_agentoptions_urlprefix
-Config asterisk: urlprefix
-
-; hlp_fm_agentoptions_savecallsin
-Config asterisk: savecallsin
 
 
 ;;; queues

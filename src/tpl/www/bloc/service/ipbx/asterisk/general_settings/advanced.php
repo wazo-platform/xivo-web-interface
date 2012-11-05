@@ -148,41 +148,7 @@ if(isset($error_js[0]) === true)
 					'labelid'	=> 'agentglobalparams-autologoffunavail',
 					'help'	=> $this->bbf('hlp_fm_agentoptions_autologoffunavail'),
 					'default'	=> $element['agentglobalparams']['autologoffunavail']['default'],
-					'checked' => $info['agentglobalparams']['autologoffunavail'])),
-
-		$form->checkbox(array('desc'	=> $this->bbf('fm_agentoptions_recordagentcalls'),
-				      'name'	=> 'agentglobalparams[recordagentcalls]',
-				      'labelid'	=> 'agentglobalparams-recordagentcalls',
-					    'help'	=> $this->bbf('hlp_fm_agentoptions_recordagentcalls'),
-				      'default'	=> $element['agentglobalparams']['recordagentcalls']['default'],
-				      'checked' => $info['agentglobalparams']['recordagentcalls'])),
-
-		$form->select(array('desc'	=> $this->bbf('fm_agentoptions_recordformat'),
-				    'name'	=> 'agentglobalparams[recordformat]',
-				    'labelid'	=> 'agentglobalparams-recordformat',
-				    'key'	=> false,
-				    'help'	=> $this->bbf('hlp_fm_agentoptions_recordformat'),
-				    'bbf'	=> 'ast_format_name_info',
-				    'bbfopt'	=> array('argmode' => 'paramvalue'),
-				    'default'	=> $element['agentglobalparams']['recordformat']['default'],
-				    'selected'	=> $info['agentglobalparams']['recordformat']),
-			      $element['agentglobalparams']['recordformat']['value']),
-
-		$form->text(array('desc'	=> $this->bbf('fm_agentoptions_urlprefix'),
-				  'name'	=> 'agentglobalparams[urlprefix]',
-				  'labelid'	=> 'agentglobalparams-urlprefix',
-				  'size'	=> 15,
-			    'help'	=> $this->bbf('hlp_fm_agentoptions_urlprefix'),
-				  'default'	=> $element['agentglobalparams']['urlprefix']['default'],
-				  'value'	=> $info['agentglobalparams']['urlprefix'])),
-
-		$form->text(array('desc'	=> $this->bbf('fm_agentoptions_savecallsin'),
-				  'name'	=> 'agentglobalparams[savecallsin]',
-				  'labelid'	=> 'agentglobalparams-savecallsin',
-				  'size'	=> 15,
-			    'help'	=> $this->bbf('hlp_fm_agentoptions_savecallsin'),
-				  'default'	=> $element['agentglobalparams']['savecallsin']['default'],
-				  'value'	=> $info['agentglobalparams']['savecallsin']));
+					'checked' => $info['agentglobalparams']['autologoffunavail']));
 ?>
 </div>
 
