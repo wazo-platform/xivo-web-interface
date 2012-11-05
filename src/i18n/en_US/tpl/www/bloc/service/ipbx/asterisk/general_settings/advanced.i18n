@@ -21,9 +21,6 @@ Asterisk config: guest
 
 ;;; agents
 
-; fm_agentfeatures_silent
-Disable connection announce:
-
 ; fm_agentfeatures_numgroup
 Group:
 

@@ -37,9 +37,6 @@ Language:
 ; fm_agentfeatures_numgroup
 Group:
 
-; fm_agentfeatures_silent
-Disable connection announce:
-
 ; bt_inuser
 Add user(s) ->
 

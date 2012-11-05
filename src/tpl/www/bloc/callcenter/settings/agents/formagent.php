@@ -246,12 +246,6 @@ $qmember = $this->get_var('qmember');
 
 <div id="sb-part-last" class="b-nodisplay">
 <?php
-	echo	$form->checkbox(array('desc'	=> $this->bbf('fm_agentfeatures_silent'),
-				      'name'	=> 'agentfeatures[silent]',
-				      'labelid'	=> 'agentfeatures-silent',
-				      'default'	=> $element['agentfeatures']['silent']['default'],
-							'checked'	=> $info['agentfeatures']['silent']));
-
 		if(($moh_list = $this->get_var('moh_list')) !== false):
 			echo	$form->select(array('desc'	=> $this->bbf('fm_agentfeatures_musiconhold'),
 					    'name'	=> 'agentfeatures[musiconhold]',

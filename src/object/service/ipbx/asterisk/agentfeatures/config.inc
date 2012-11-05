@@ -44,11 +44,6 @@ $array['element']['language'] = array();
 $array['element']['language']['value'] = dwho_i18n::get_supported_language_list();
 $array['element']['language']['default'] = '';
 
-$array['element']['silent'] = array();
-$array['element']['silent']['value'] = array(0,1);
-$array['element']['silent']['default'] = 0;
-$array['element']['silent']['set'] = true;
-
 $array['element']['autologoff'] = array();
 $array['element']['autologoff']['value'] = array(0,5,10,15,20,25,30,35,40,45,50,55,60);
 $array['element']['autologoff']['default'] = 0;
@@ -89,7 +84,6 @@ $array['filter']['firstname'] = array('set' => false,'chk' => 2,'maxlen' => 128,
 $array['filter']['lastname'] = array('set' => false,'chk' => 2,'maxlen' => 128,'cast' => 'sgraph');
 $array['filter']['context'] = array('callback' => 'xivo_service_asterisk::chk_context');
 $array['filter']['language'] = array('set' => false,'chk' => 2,'maxlen' => 5,'key' => dwho_i18n::get_supported_language_list());
-$array['filter']['silent'] = array('bool' => true);
 $array['filter']['autologoff'] = array('cast' => 'uint','between' => array(0,60,5));
 $array['filter']['ackcall'] = array('key' => array('no','yes','always'));
 $array['filter']['acceptdtmf'] = array('set' => false,
