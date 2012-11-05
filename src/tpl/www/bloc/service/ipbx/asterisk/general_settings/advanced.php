@@ -182,25 +182,7 @@ if(isset($error_js[0]) === true)
 				  'size'	=> 15,
 			    'help'	=> $this->bbf('hlp_fm_agentoptions_savecallsin'),
 				  'default'	=> $element['agentglobalparams']['savecallsin']['default'],
-				  'value'	=> $info['agentglobalparams']['savecallsin'])),
-
-		$form->select(array('desc'	=> $this->bbf('fm_agentoptions_custom_beep'),
-				    'name'	=> 'agentglobalparams[custom_beep]',
-				    'labelid'	=> 'agentglobalparams-custom-beep',
-				    'help'	=> $this->bbf('hlp_fm_agentoptions_custom_beep'),
-				    'empty'	=> $this->bbf('fm_agentoptions_custom-beep-opt','default'),
-				    'default'	=> $element['agentglobalparams']['custom_beep']['default'],
-				    'selected'	=> $info['agentglobalparams']['custom_beep']),
-			      $this->get_var('beep_list')),
-
-		$form->select(array('desc'	=> $this->bbf('fm_agentoptions_goodbye'),
-				    'name'	=> 'agentglobalparams[goodbye]',
-				    'labelid'	=> 'agentglobalparams-goodbye',
-				    'help'	=> $this->bbf('hlp_fm_agentoptions_goodbye'),
-				    'empty'	=> $this->bbf('fm_agentoptions_goodbye-opt','default'),
-				    'default'	=> $element['agentglobalparams']['goodbye']['default'],
-				    'selected'	=> $info['agentglobalparams']['goodbye']),
-			      $this->get_var('goodbye_list'));
+				  'value'	=> $info['agentglobalparams']['savecallsin']));
 ?>
 </div>
 

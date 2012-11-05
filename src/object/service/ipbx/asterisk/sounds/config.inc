@@ -24,9 +24,7 @@ $array['option'] = array();
 
 $array['option']['defdir'] = array();
 $array['option']['defdir']['acd'] = 1;
-$array['option']['defdir']['beep'] = 1;
 $array['option']['defdir']['features'] = 1;
-$array['option']['defdir']['goodbye'] = 1;
 $array['option']['defdir']['monitor'] = 1;
 $array['option']['defdir']['playback'] = 1;
 $array['option']['defdir']['recordings'] = 1;

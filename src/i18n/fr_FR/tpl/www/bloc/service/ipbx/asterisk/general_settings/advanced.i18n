@@ -33,26 +33,11 @@ Format d'enregistrement :
 ; fm_agentoptions_urlprefix
 URL d'accès aux enregistrements :
 
-; fm_agentoptions_custom_beep
-Fichier son des beeps :
-
-; fm_agentoptions_custom-beep-opt(default)
-Défaut
-
-; fm_agentoptions_goodbye
-Fichier son de fin d'un appel :
-
-; fm_agentoptions_goodbye-opt(default)
-Défaut
-
 ; fm_agentoptions_savecallsin
 Répertoire contenant les enregistrements des conversations : 
 
 ; hlp_fm_agentoptions_autologoffunavail
 Config asterisk: autologoffunavail
-
-; hlp_fm_agentoptions_goodbye
-Config asterisk: goodbye
 
 ; hlp_fm_agentoptions_recordagentcalls
 Config asterisk: recordagentcalls
@@ -65,9 +50,6 @@ Config asterisk: urlprefix
 
 ; hlp_fm_agentoptions_savecallsin
 Config asterisk: savecallsin
-
-; hlp_fm_agentoptions_custom_beep
-Config asterisk: custom_beep
 
 
 ;;; queues

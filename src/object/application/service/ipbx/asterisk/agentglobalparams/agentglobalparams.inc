@@ -67,29 +67,6 @@ class xivo_application_service_asterisk_agentglobalparams extends xivo_applicati
 		$this->_set_result('agentglobalparams',$this->_agentglobalparams->save_agent_global_params($rs,"agents"));
 		return true;
 	}
-
-	function get_beep()
-	{
-		if(empty($this->_beep) === false)
-			return($this->_beep);
-		else if(($sounds = &$this->_service->get_module('sounds')) === false)
-			return(false);
-		else if(($this->_beep = $sounds->get_list('beep','pathnoext')) !== false)
-			asort($this->_beep);
-		return($this->_beep);
-	}
-
-	function get_goodbye()
-	{
-		if(empty($this->_goodbye) === false)
-			return($this->_goodbye);
-		else if(($sounds = &$this->_service->get_module('sounds')) === false)
-			return(false);
-		else if(($this->_goodbye = $sounds->get_list('goodbye','pathnoext')) !== false)
-			asort($this->_goodbye);
-		return($this->_goodbye);
-	}
-
 }
 
 ?>

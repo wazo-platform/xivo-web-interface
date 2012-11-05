@@ -25,10 +25,6 @@ $array['element']['autologoffunavail']['value'] = array('no','yes');
 $array['element']['autologoffunavail']['default'] = 'no';
 $array['element']['autologoffunavail']['set'] = true;
 
-$array['element']['goodbye'] = array();
-$array['element']['goodbye']['default'] = 'vm-goodbye';
-$array['element']['goodbye']['setdef'] = true;
-
 $array['element']['recordagentcalls'] = array();
 $array['element']['recordagentcalls']['value'] = array('no','yes');
 $array['element']['recordagentcalls']['default'] = 'no';
@@ -47,17 +43,8 @@ $array['element']['urlprefix']['default'] = '';
 $array['element']['savecallsin'] = array();
 $array['element']['savecallsin']['default'] = '';
 
-$array['element']['custom_beep'] = array();
-$array['element']['custom_beep']['value'] = array('beep');
-$array['element']['custom_beep']['default'] = 'beep';
-$array['element']['custom_beep']['setdef'] = true;
-
 $array['filter'] = array();
 $array['filter']['autologoffunavail'] = array('bool' => true);
-$array['filter']['goodbye'] = array('set'	=> false,
-				    'chk'	=> 2,
-				    'maxlen'	=> 255,
-				    'regexp'	=> '/^[\/'.XIVO_SRE_IPBX_AST_REGEXP_AUDIO_FILE_PATTERN.']+$/');
 $array['filter']['recordagentcalls'] = array('bool' => true);
 $array['filter']['recordformat'] = array('set'	=> false,
 					 'chk'	=> 2,
@@ -72,9 +59,5 @@ $array['filter']['urlprefix'] = array('set'	=> false,
 $array['filter']['savecallsin'] = array('set' => false,
 					'chk'   => 2,
 					'maxlen' => 255);
-$array['filter']['custom_beep'] = array('set'		=> false,
-					'chk'		=> 2,
-					'maxlen'	=> 255,
-					'regexp'	=> '/^[\/'.XIVO_SRE_IPBX_AST_REGEXP_AUDIO_FILE_PATTERN.']+$/');
 
 ?>

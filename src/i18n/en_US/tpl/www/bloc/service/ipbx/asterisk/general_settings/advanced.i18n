@@ -39,26 +39,11 @@ Recording format:
 ; fm_agentoptions_urlprefix
 URL prefix used to access the recordings:
 
-; fm_agentoptions_custom_beep
-Beeps audio file:
-
-; fm_agentoptions_custom-beep-opt(default)
-Default
-
-; fm_agentoptions_goodbye
-Audio file used when a call ends:
-
-; fm_agentoptions_goodbye-opt(default)
-Default
-
 ; fm_agentoptions_savecallsin
 Directory for call records:
 
 ; hlp_fm_agentoptions_autologoffunavail
 Asterisk config: autologoffunavail
-
-; hlp_fm_agentoptions_goodbye
-Asterisk config: goodbye
 
 ; hlp_fm_agentoptions_recordagentcalls
 Asterisk config: recordagentcalls
@@ -71,15 +56,6 @@ Asterisk config: urlprefix
 
 ; hlp_fm_agentoptions_savecallsin
 Asterisk config: savecallsin
-
-; hlp_fm_agentoptions_custom_beep
-Asterisk config: custom_beep
-
-; fm_agentoptions_custom-beep-opt(default)
-Default
-
-; fm_agentoptions_goodbye-opt(default)
-Default
 
 ;;; queues
 

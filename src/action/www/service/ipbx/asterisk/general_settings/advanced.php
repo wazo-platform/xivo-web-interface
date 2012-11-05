@@ -134,8 +134,6 @@ if(isset($_QR['fm_send']) === true)
 		$info['general'] = $_QR['general'];
 }
 
-$_TPL->set_var('beep_list',$appagentglobalparams->get_beep());
-$_TPL->set_var('goodbye_list',$appagentglobalparams->get_goodbye());
 $_TPL->set_var('fm_save', $fm_save);
 $_TPL->set_var('error', $error);
 $_TPL->set_var('agentglobalparams', $info['agentglobalparams']);
