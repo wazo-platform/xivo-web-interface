@@ -82,9 +82,6 @@ Sonnerie d'un transfert :
 ; fm_userfeatures_rightcallcode
 Code droits d'appel :
 
-; fm_userfeatures_alarmclock
-Heure de réveil :
-
 ; create_context
 Créer un contexte
 
