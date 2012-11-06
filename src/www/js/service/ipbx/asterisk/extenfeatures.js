@@ -67,8 +67,6 @@ var xivo_list_elt_extenfeatures = {
                              'it-extenfeatures-list-agentstaticlogin'],
     'it-extenfeatures-enable-agentstaticlogoff':    ['it-extenfeatures-agentstaticlogoff',
                              'it-extenfeatures-list-agentstaticlogoff'],
-    'it-extenfeatures-enable-agentdynamiclogin':    ['it-extenfeatures-agentdynamiclogin',
-                             'it-extenfeatures-list-agentdynamiclogin'],
     'it-extenfeatures-enable-paging':    ['it-extenfeatures-paging',
                              'it-extenfeatures-list-paging'],
     'it-extenfeatures-enable-phoneprogfunckey':    ['it-extenfeatures-phoneprogfunckey',

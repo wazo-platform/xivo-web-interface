@@ -391,9 +391,6 @@ Connecte un agent statique
 ; fm_phonefunckey_type-opt(extenfeatures-agentstaticlogoff)
 Déconnecte un agent statique
 
-; fm_phonefunckey_type-opt(extenfeatures-agentdynamiclogin)
-Connecte un agent dynamique
-
 ; fm_phonefunckey_type-optgroup(extension-parking)
 Parking
 

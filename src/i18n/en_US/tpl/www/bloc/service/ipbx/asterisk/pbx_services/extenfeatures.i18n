@@ -160,9 +160,6 @@ Connect a static agent:
 ; fm_extenfeatures_enable-agentstaticlogoff
 Disconnect a static agent:
 
-; fm_extenfeatures_enable-agentdynamiclogin
-Connect a dynamic agent:
-
 ; fm_extenfeatures_enable-phoneprogfunckey
 function keys programmation :
 

@@ -21,11 +21,6 @@
 $array = array();
 
 $array['exten'] = array();
-$array['exten']['agentdynamiclogin'] = array();
-$array['exten']['agentdynamiclogin']['app'] = 'GoSub';
-$array['exten']['agentdynamiclogin']['appdata'] = array();
-$array['exten']['agentdynamiclogin']['appdata'][0] = 'agentdynamiclogin';
-$array['exten']['agentdynamiclogin']['appdata'][1] = '${EXTEN:$<EXTNUMLEN>}';
 
 $array['exten']['agentstaticlogin'] = array();
 $array['exten']['agentstaticlogin']['app'] = 'GoSub';
@@ -209,9 +204,6 @@ $array['exten']['paging']['appdata'][1] = '${EXTEN:$<EXTNUMLEN>}';
 
 $array['element'] = array();
 
-$array['element']['agentdynamiclogin'] = array();
-$array['element']['agentdynamiclogin']['default'] = '*33.';
-
 $array['element']['agentstaticlogin'] = array();
 $array['element']['agentstaticlogin']['default'] = '*31.';
 
@@ -315,7 +307,6 @@ $array['element']['paging'] = array();
 $array['element']['paging']['default'] = '*11.';
 
 $array['filter'] = array();
-$array['filter']['agentdynamiclogin'] = array('minlen' => 1,'maxlen' => 40);
 $array['filter']['agentstaticlogin'] = array('minlen' => 1,'maxlen' => 40);
 $array['filter']['agentstaticlogoff'] = array('minlen' => 1,'maxlen' => 40);
 $array['filter']['agentstaticlogtoggle'] = array('minlen' => 1,'maxlen' => 40);

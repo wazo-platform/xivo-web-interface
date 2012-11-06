@@ -866,31 +866,6 @@ if(isset($error_js[0]) === true)
 			      array('*',range(3,11)));
 ?>
 		</div>
-<?php
-	echo	$form->checkbox(array('desc'	=> $this->bbf('fm_extenfeatures_enable-agentdynamiclogin'),
-				      'name'	=> 'extenfeatures[agentdynamiclogin][enable]',
-				      'labelid'	=> 'extenfeatures-enable-agentdynamiclogin',
-				      'checked'	=> ((bool) $this->get_var('extenfeatures','agentdynamiclogin','commented') === false)));
-?>
-		<div class="fm-paragraph">
-<?php
-	echo	$form->text(array('desc'	=> $this->bbf('fm_extenfeatures-extension'),
-				  'name'	=> 'extenfeatures[agentdynamiclogin][exten]',
-				  'paragraph'	=> false,
-				  'labelid'	=> 'extenfeatures-agentdynamiclogin',
-				  'size'	=> 15,
-				  'value'	=> $this->get_var('extenfeatures','agentdynamiclogin','exten'),
-				  'default'	=> $element['extenfeatures']['agentdynamiclogin']['default'],
-				  'invalid'	=> isset($invalid['extenfeatures']['agentdynamiclogin']))),
-
-		$form->select(array('paragraph'	=> false,
-				    'name'	=> 'extenfeatures[list-agentdynamiclogin]',
-				    'labelid'	=> 'extenfeatures-list-agentdynamiclogin',
-				    'empty'	=> true,
-				    'key'	=> false),
-			      array('*',range(3,11)));
-?>
-		</div>
 	</div>
 
 	<div id="sb-part-parking" class="b-nodisplay">
