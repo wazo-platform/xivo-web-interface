@@ -32,7 +32,7 @@ echo	$form->text(array('desc'	=> $this->bbf('fm_login'),
 			  'error'	=> $this->bbf_args('error_fm_login',
 				$this->get_var('error', 'login')))),
 
-	$form->text(array('desc'	=> $this->bbf('fm_password'),
+	$form->password(array('desc'	=> $this->bbf('fm_password'),
 			  'name'	=> 'user[passwd]',
 			  'labelid'	=> 'passwd',
 			  'size'	=> 15,

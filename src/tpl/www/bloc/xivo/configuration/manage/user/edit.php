@@ -43,7 +43,7 @@ $info = $this->get_var('info');
 			<span class="fm-desc"><?=$this->bbf('fm_type');?></span>&nbsp;<?=$info['meta']?>
 		</p>
 <?php
-	echo	$form->text(array('desc'	=> $this->bbf('fm_password'),
+	echo	$form->password(array('desc'	=> $this->bbf('fm_password'),
 				  'name'	=> 'passwd',
 				  'labelid'	=> 'passwd',
 				  'size'	=> 15,
