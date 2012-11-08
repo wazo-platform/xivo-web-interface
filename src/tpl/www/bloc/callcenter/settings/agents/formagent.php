@@ -247,30 +247,15 @@ $qmember = $this->get_var('qmember');
 <div id="sb-part-last" class="b-nodisplay">
 <?php
 		echo $form->select(array('desc'	=> $this->bbf('fm_agentfeatures_autologoff'),
-				    'name'	=> 'agentfeatures[autologoff]',
-				    'labelid'	=> 'agentfeatures-autologoff',
-				    'key'	=> false,
-				    'help'	=> $this->bbf('hlp_fm_agentfeatures_autologoff'),
-				    'bbf'	=> 'fm_agentfeatures_autologoff-opt',
-				    'bbfopt'	=> array('argmode' => 'paramvalue'),
-				    'default'	=> $element['agentfeatures']['autologoff']['default'],
-				    'selected'	=> $info['agentfeatures']['autologoff']),
-			      $element['agentfeatures']['autologoff']['value']),
-
-		$form->select(array('desc'	=> $this->bbf('fm_agentfeatures_wrapuptime'),
-				    'name'	=> 'agentfeatures[wrapuptime]',
-				    'labelid'	=> 'agentfeatures-wrapuptime',
-				    'key'	=> false,
-				    'help'	=> $this->bbf('hlp_fm_agentfeatures_wrapuptime'),
-				    'bbf'	=> 'time-opt',
-				    'bbfopt'	=> array('argmode'	=> 'paramvalue',
-							 'time'		=> array(
-									'from'		=> 'millisecond',
-									'format'	=> '%s')),
-				    'selected'	=> $info['agentfeatures']['wrapuptime'],
-				    'default'	=> $element['agentfeatures']['wrapuptime']['default']),
-			      $element['agentfeatures']['wrapuptime']['value']);
-
+					 'name'	=> 'agentfeatures[autologoff]',
+					 'labelid'	=> 'agentfeatures-autologoff',
+					 'key'	=> false,
+					 'help'	=> $this->bbf('hlp_fm_agentfeatures_autologoff'),
+					 'bbf'	=> 'fm_agentfeatures_autologoff-opt',
+					 'bbfopt'	=> array('argmode' => 'paramvalue'),
+					 'default'	=> $element['agentfeatures']['autologoff']['default'],
+					 'selected'	=> $info['agentfeatures']['autologoff']),
+				   $element['agentfeatures']['autologoff']['value']);
 ?>
 	<div class="fm-paragraph fm-description">
 		<p>

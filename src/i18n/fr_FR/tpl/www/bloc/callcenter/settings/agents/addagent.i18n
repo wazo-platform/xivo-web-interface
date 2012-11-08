@@ -106,17 +106,5 @@ Illimité
 ; fm_agentfeatures_autologoff-opt
 %s secondes
 
-; fm_agentfeatures_wrapuptime
-Délai de réattribution d'appel :
-
-; fm_agentfeatures_wrapuptime-opt(0)
-Désactivé
-
-; fm_agentfeatures_wrapuptime-opt-seconds
-%s secondes
-
 ; hlp_fm_agentfeatures_autologoff
 Config asterisk: autologoff
-
-; hlp_fm_agentfeatures_wrapuptime
-Config asterisk: wrapuptime

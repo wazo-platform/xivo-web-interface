@@ -106,17 +106,5 @@ Unlimited
 ; fm_agentfeatures_autologoff-opt
 %s seconds
 
-; fm_agentfeatures_wrapuptime
-Wrap up time :
-
-; fm_agentfeatures_wrapuptime-opt(0)
-Disabled
-
-; fm_agentfeatures_wrapuptime-opt-seconds
-%s seconds
-
 ; hlp_fm_agentfeatures_autologoff
 Asterisk config: autologoff
-
-; hlp_fm_agentfeatures_wrapuptime
-Asterisk config: wrapuptime
