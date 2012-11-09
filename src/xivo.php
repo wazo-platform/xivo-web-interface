@@ -65,6 +65,13 @@ switch($tpl_area)
 		$_TPL = &new dwho_tpl($_CF['template']['www']['path'],
 				array('menu','url','dhtml'),
 				$_URL);
+
+		if (isset($_QR['submit']) && isset($_QR['fm_send']))
+		{
+			if(!isset($_QR['secure_form'])
+			|| $_QR['secure_form'] !== DWHO_SECURE_STR)
+				$_QRY->go($_TPL->url('xivo/logoff'));
+		}
 		break;
 	case 'ui':
 	case 'json':

@@ -36,43 +36,44 @@ class dwho_tpl_form extends dwho_tpl_module
 	{
 		$v = (array) $v;
 
-		$this->_param['name']        = 'undefined';
-		$this->_param['type']        = 'text';
-		$this->_param['help']        = '';        # Help text for this field
-		$this->_param['comment']    = '';        # Comment to be added under the field
-		$this->_param['desc']        = false;
-		$this->_param['default']    = false;
-		$this->_param['value']        = false;
-		$this->_param['valuef']        = false;    # Sprintf format for field value
-		$this->_param['selected']    = false;
-		$this->_param['checked']    = false;
-		$this->_param['size']        = 10;
-		$this->_param['rows']        = 5;
-		$this->_param['cols']        = 50;
-		$this->_param['multiple']    = false;
-		$this->_param['disabled']    = false;
-		$this->_param['readonly']    = false;
-		$this->_param['required']    = false;
-		$this->_param['regexp']        = '';        # Regexp to check entry
-		$this->_param['modifier']    = '';        # Function to modifiy entry
-		$this->_param['id']        = false;
-		$this->_param['class']        = false;
-		$this->_param['label']        = true;
-		$this->_param['paragraph']    = true;
-		$this->_param['paragraphid']    = true;
-		$this->_param['key']        = null;
-		$this->_param['altkey']        = false;
-		$this->_param['optionf']    = false;    # Sprintf format for select options
-		$this->_param['empty']        = false;
-		$this->_param['optgroup']    = false;
-		$this->_param['bbf']        = false;
-		$this->_param['bbfopt']        = array('argmode' => 'paramvalue');
-		$this->_param['browse']        = false;
-		$this->_param['jump']        = 0;
-		$this->_param['jump_strict']    = true;
-		$this->_param['invalid']    = false;
-		$this->_param['error']        = '';
-		$this->_param['legend']        = '';
+		$this->_param['secure_str'] = DWHO_SECURE_STR;
+		$this->_param['name'] = 'undefined';
+		$this->_param['type'] = 'text';
+		$this->_param['help'] = '';        # Help text for this field
+		$this->_param['comment'] = '';        # Comment to be added under the field
+		$this->_param['desc'] = false;
+		$this->_param['default'] = false;
+		$this->_param['value'] = false;
+		$this->_param['valuef'] = false;    # Sprintf format for field value
+		$this->_param['selected'] = false;
+		$this->_param['checked'] = false;
+		$this->_param['size'] = 10;
+		$this->_param['rows'] = 5;
+		$this->_param['cols'] = 50;
+		$this->_param['multiple'] = false;
+		$this->_param['disabled'] = false;
+		$this->_param['readonly'] = false;
+		$this->_param['required'] = false;
+		$this->_param['regexp'] = '';        # Regexp to check entry
+		$this->_param['modifier'] = '';        # Function to modifiy entry
+		$this->_param['id'] = false;
+		$this->_param['class'] = false;
+		$this->_param['label'] = true;
+		$this->_param['paragraph'] = true;
+		$this->_param['paragraphid'] = true;
+		$this->_param['key'] = null;
+		$this->_param['altkey'] = false;
+		$this->_param['optionf'] = false;    # Sprintf format for select options
+		$this->_param['empty'] = false;
+		$this->_param['optgroup'] = false;
+		$this->_param['bbf'] = false;
+		$this->_param['bbfopt'] = array('argmode' => 'paramvalue');
+		$this->_param['browse'] = false;
+		$this->_param['jump'] = 0;
+		$this->_param['jump_strict'] = true;
+		$this->_param['invalid'] = false;
+		$this->_param['error'] = '';
+		$this->_param['legend']  = '';
 
 		if(isset($v['name']) === true)
 			$this->_param['name'] = dwho_htmlsc($v['name']);
@@ -731,6 +732,13 @@ class dwho_tpl_form extends dwho_tpl_module
 			$this->_render = '<p class="fm-paragraph-submit">'."\n".$this->_render."\n".'</p>';
 
 		$this->_mk_desc();
+
+		$_render = $this->_render;
+
+		$secure_render = $this->hidden(array('name'	=> 'secure_form',
+					    'value'	=> DWHO_SECURE_STR));
+
+		$this->_render = $secure_render . $_render;
 
 		return($this->_render);
 	}
