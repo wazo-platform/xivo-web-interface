@@ -486,7 +486,7 @@ class xivo_application_service_asterisk_queue extends xivo_application_asterisk_
 				else if($i === 10)
 					break;
 
-				$pannounce .= '|'.$value;
+				$pannounce .= ','.$value;
 				$i++;
 			}
 
