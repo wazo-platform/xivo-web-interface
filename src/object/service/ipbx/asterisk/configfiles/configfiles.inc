@@ -83,18 +83,9 @@ class xivo_service_asterisk_configfiles extends xivo_service_asterisk_abstract
 	function edit($name,$contents)
 	{
 		if(($file = $this->_chk_file($name)) !== false)
-			return(dwho_file::put_contents($file,$this->_chk_contents_file($contents)));
+			return(dwho_file::put_contents($file, dwho_eol($contents)));
 
 		return(false);
-	}
-
-	private function _chk_contents_file($contents)
-	{
-		$contents = dwho_eol($contents);
-		$contents = dwho_notag($contents);
-		$contents = dwho_notagscript($contents);
-
-		return($contents);
 	}
 
 	function _checkfile($shortname)
@@ -137,7 +128,7 @@ class xivo_service_asterisk_configfiles extends xivo_service_asterisk_abstract
 			return(false);
 		}
 
-		if(dwho_file::put_contents($filename, $this->_chk_contents_file($contents)) === false)
+		if(dwho_file::put_contents($filename, dwho_eol($contents)) === false)
 			return(false);
 
 		@chmod($filename, 0664);
