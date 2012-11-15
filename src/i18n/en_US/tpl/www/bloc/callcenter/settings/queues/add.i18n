@@ -113,10 +113,10 @@ Unlimited
 Data quality:
 
 ; fm_queuefeatures_hitting-callee
-Allow caller to pass calls with *:
+Allow callee to hang up the call:
 
 ; fm_queuefeatures_hitting-caller
-Allow callee to pass call with *:
+Allow caller to hang up the call:
 
 ; fm_queuefeatures_retries
 No retry when time has elapsed:
@@ -125,10 +125,10 @@ No retry when time has elapsed:
 Ring instead of On-Hold Music:
 
 ; fm_queuefeatures_transfer-user
-Allow callee to transfer the caller:
+Allow callee to transfer the call:
 
 ; fm_queuefeatures_transfer-call
-Allow callee to transfer the call:
+Allow caller to transfer the call:
 
 ; fm_queuefeatures_write-caller
 Allow callee to record the call:

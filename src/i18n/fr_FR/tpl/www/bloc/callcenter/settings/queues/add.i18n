@@ -134,10 +134,10 @@ Illimité
 Qualité des données:
 
 ; fm_queuefeatures_hitting-callee
-Autorise l'appelant à sortir avec "*":
+Autorise l'appelé à raccrocher l'appel:
 
 ; fm_queuefeatures_hitting-caller
-Autorise l'appelé à sortir avec "*":
+Autorise l'appelant à raccrocher l'appel:
 
 ; fm_queuefeatures_retries
 Aucun rappel pour le temps dépassé:
@@ -146,7 +146,7 @@ Aucun rappel pour le temps dépassé:
 Sonnerie au lieu de musique d'attente:
 
 ; fm_queuefeatures_transfer-user
-Autorise l'appelé à transférer l'appelant:
+Autorise l'appelé à transférer l'appel:
 
 ; fm_queuefeatures_transfer-call
 Autorise l'appelant à transférer l'appel:
