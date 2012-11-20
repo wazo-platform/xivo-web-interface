@@ -152,13 +152,13 @@ Supprime les messages vocaux de l'utilisateur précisé :
 Supprime les messages de la boîte vocale précisée :
 
 ; fm_extenfeatures_enable-agentstaticlogtoggle
-Connecte/déconnecte un agent statique :
+Connecte/déconnecte un agent :
 
 ; fm_extenfeatures_enable-agentstaticlogin
-Connecte un agent statique :
+Connecte un agent :
 
 ; fm_extenfeatures_enable-agentstaticlogoff
-Déconnecte un agent statique :
+Déconnecte un agent :
 
 ; fm_extenfeatures_enable-phoneprogfunckey
 Programmation des touches de fonction :

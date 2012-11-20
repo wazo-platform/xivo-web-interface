@@ -152,13 +152,13 @@ Delete messages from specified user's voicemail :
 Delete message from specified voicemail :
 
 ; fm_extenfeatures_enable-agentstaticlogtoggle
-Connect/Disconnect static agent :
+Connect/Disconnect agent :
 
 ; fm_extenfeatures_enable-agentstaticlogin
-Connect a static agent:
+Connect an agent:
 
 ; fm_extenfeatures_enable-agentstaticlogoff
-Disconnect a static agent:
+Disconnect an agent:
 
 ; fm_extenfeatures_enable-phoneprogfunckey
 function keys programmation :

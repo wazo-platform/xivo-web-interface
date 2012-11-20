@@ -380,13 +380,13 @@ Supprime les messages vocaux de l'utilisateur
 Agent
 
 ; fm_phonefunckey_type-opt(extenfeatures-agentstaticlogtoggle)
-Connecte/déconnecte un agent statique
+Connecte/déconnecte un agent
 
 ; fm_phonefunckey_type-opt(extenfeatures-agentstaticlogin)
-Connecte un agent statique
+Connecte un agent
 
 ; fm_phonefunckey_type-opt(extenfeatures-agentstaticlogoff)
-Déconnecte un agent statique
+Déconnecte un agent
 
 ; fm_phonefunckey_type-optgroup(extension-parking)
 Parking

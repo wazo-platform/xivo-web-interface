@@ -419,13 +419,13 @@ Delete messages from voicemail
 Agent
 
 ; fm_phonefunckey_type-opt(extenfeatures-agentstaticlogtoggle)
-Connect/Disconnect a static agent
+Connect/Disconnect an agent
 
 ; fm_phonefunckey_type-opt(extenfeatures-agentstaticlogin)
-Connect a static agent
+Connect an agent
 
 ; fm_phonefunckey_type-opt(extenfeatures-agentstaticlogoff)
-Disconnect a static agent
+Disconnect an agent
 
 ; fm_phonefunckey_type-optgroup(extension-parking)
 Parking
