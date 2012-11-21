@@ -22,9 +22,6 @@ Enregistrement du flux audio:
 ; fm_paging_quiet
 Silence, ne pas jouer le bip:
 
-; fm_paging_callnotbusy
-Appeler seulement les utilisateurs qui n'ont pas le statut occupé: 
-
 ; fm_paging_announcement_caller
 Ne pas jouer le son d'annonce à l'appelant:
 

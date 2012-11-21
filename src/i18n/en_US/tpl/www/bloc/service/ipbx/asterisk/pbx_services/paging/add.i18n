@@ -25,9 +25,6 @@ Record the page into a file:
 ; fm_paging_quiet
 Quiet, do not play beep to caller:
 
-; fm_paging_callnotbusy
-Only dial a channel if its device state says that it is 'NOT_INUSE': 
-
 ; fm_paging_announcement_caller
 Do not play simultaneous announcement to caller:
 
@@ -51,4 +48,4 @@ Description:
 Users called: 
 
 ; fm_pagingcaller
-Users caller: 
+Users caller:

@@ -78,7 +78,6 @@ $array['filter']['number'] = array('minlen' => 1,'maxlen' => 40,'regexp' => '/^(
 $array['filter']['duplex'] = array('bool' => true);
 $array['filter']['ignore'] = array('bool' => true);
 $array['filter']['quiet'] = array('bool' => true);
-$array['filter']['callnotbusy'] = array('bool' => true);
 $array['filter']['timeout'] = array('set'	=> false,
 								   'chk'	=> 2,
 								   'key' 	=> $array['element']['timeout']['value']);
