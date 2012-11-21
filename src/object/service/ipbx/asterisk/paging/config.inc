@@ -44,11 +44,6 @@ $array['element']['quiet']['value'] = array(0,1);
 $array['element']['quiet']['default'] = 0;
 $array['element']['quiet']['set'] = true;
 
-$array['element']['callnotbusy'] = array();
-$array['element']['callnotbusy']['value'] = array(0,1);
-$array['element']['callnotbusy']['default'] = 1;
-$array['element']['callnotbusy']['set'] = true;
-
 $array['element']['timeout'] = array();
 $array['element']['timeout']['value'] = array(0,15,30,45,60,75,90,
 						     105,120,135,150,165,180,195,
