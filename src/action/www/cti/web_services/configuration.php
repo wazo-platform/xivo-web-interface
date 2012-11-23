@@ -43,7 +43,7 @@ switch($act)
 		$ctisheetactions = &$ipbx->get_module('ctisheetactions');
 		$ctisheetevents = &$ipbx->get_module('ctisheetevents');
 		$ctimain = &$ipbx->get_module('ctimain');
-		$ctiprofiles = &$ipbx->get_module('ctiprofiles');
+		$cti_profile = &$ipbx->get_module('cti_profile');
 		$ctistatus = &$ipbx->get_module('ctistatus');
 		$ctipresences = &$ipbx->get_module('ctipresences');
 		$ctiphonehints = &$ipbx->get_module('ctiphonehints');
@@ -77,7 +77,7 @@ switch($act)
 		$load_displays = $ctidisplays->get_all();
 		$load_sheetactions = $ctisheetactions->get_all();
 		$load_sheetevents = $ctisheetevents->get_all();
-		$load_profiles = $ctiprofiles->get_all();
+		$load_profiles = $cti_profile->get_all();
 		$load_presences = $ctipresences->get_all();
 		$load_phonehintsgroups = $ctiphonehintsgroup->get_all();
 		$load_rdid = $ctirdid->get(1);
@@ -378,7 +378,7 @@ switch($act)
 			{
 				$pfid = $pf['name'];
 				$out['profiles'][$pfid] = array(
-					'name' => $pf['appliname'],
+					'name' => $pf['name'],
 
 					'xlets' => dwho_json::decode($pf['xlets'], true),
 					'services' => "itm_services_".$pfid,

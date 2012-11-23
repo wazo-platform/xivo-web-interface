@@ -671,6 +671,26 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		return(false);
 	}
 
+	protected function _prepare_list_data_from_form($arr)
+	{
+		$reslist = array();
+
+		foreach($arr as $key => $list)
+		{
+			for($i = 0;$i < count($list);$i++)
+			{
+				if (isset($arr[$key][$i]) === false
+				|| $arr[$key][$i] === '')
+					$reslist[$i][$key] = '';
+				else
+					$reslist[$i][$key] = $arr[$key][$i];
+			}
+		}
+
+		array_pop($reslist);
+
+		return($reslist);
+	}
 }
 
 ?>

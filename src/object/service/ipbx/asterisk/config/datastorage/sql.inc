@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2011  Avencall
+# Copyright (C) 2006-2012  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -104,6 +104,38 @@ $array['contexttype'] = array();
 $array['contexttype']['table'] = 'contexttype';
 $array['contexttype']['primary'] = array('id' => '');
 
+$array['cti_preference'] = array();
+$array['cti_preference']['table'] = 'cti_preference';
+$array['cti_preference']['primary'] = array('id' => '');
+
+$array['cti_profile'] = array();
+$array['cti_profile']['table'] = 'cti_profile';
+$array['cti_profile']['primary'] = array('id' => '');
+
+$array['cti_profile_preference'] = array();
+$array['cti_profile_preference']['table'] = 'cti_profile_preference';
+$array['cti_profile_preference']['primary'] = array('profile_id' => '','preference_id' => '');
+
+$array['cti_profile_service'] = array();
+$array['cti_profile_service']['table'] = 'cti_profile_service';
+$array['cti_profile_service']['primary'] = array('profile_id' => '','service_id' => '');
+
+$array['cti_profile_xlet'] = array();
+$array['cti_profile_xlet']['table'] = 'cti_profile_xlet';
+$array['cti_profile_xlet']['primary'] = array('profile_id' => '','xlet_id' => '');
+
+$array['cti_service'] = array();
+$array['cti_service']['table'] = 'cti_service';
+$array['cti_service']['primary'] = array('id' => '');
+
+$array['cti_xlet'] = array();
+$array['cti_xlet']['table'] = 'cti_xlet';
+$array['cti_xlet']['primary'] = array('id' => '');
+
+$array['cti_xlet_layout'] = array();
+$array['cti_xlet_layout']['table'] = 'cti_xlet_layout';
+$array['cti_xlet_layout']['primary'] = array('id' => '');
+
 $array['cticontexts'] = array();
 $array['cticontexts']['table'] = 'cticontexts';
 $array['cticontexts']['primary'] = array('id' => '');
@@ -136,13 +168,9 @@ $array['ctipresences'] = array();
 $array['ctipresences']['table'] = 'ctipresences';
 $array['ctipresences']['primary'] = array('id' => '');
 
-$array['ctiprofiles'] = array();
-$array['ctiprofiles']['table'] = 'ctiprofiles';
-$array['ctiprofiles']['primary'] = array('id' => '');
-
-$array['ctiprofilesgroup'] = array();
-$array['ctiprofilesgroup']['table'] = 'ctiprofilesgroup';
-$array['ctiprofilesgroup']['primary'] = array('id' => '');
+$array['ctistatus'] = array();
+$array['ctistatus']['table'] = 'ctistatus';
+$array['ctistatus']['primary'] = array('id' => '');
 
 $array['ctireversedirectories'] = array();
 $array['ctireversedirectories']['table'] = 'ctireversedirectories';
@@ -155,10 +183,6 @@ $array['ctisheetevents']['primary'] = array('id' => '');
 $array['ctisheetactions'] = array();
 $array['ctisheetactions']['table'] = 'ctisheetactions';
 $array['ctisheetactions']['primary'] = array('id' => '');
-
-$array['ctistatus'] = array();
-$array['ctistatus']['table'] = 'ctistatus';
-$array['ctistatus']['primary'] = array('id' => '');
 
 $array['devicefeatures'] = array();
 $array['devicefeatures']['table'] = 'devicefeatures';
