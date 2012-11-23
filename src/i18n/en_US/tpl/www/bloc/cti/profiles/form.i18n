@@ -16,6 +16,12 @@ Add »
 ; fm_profiles_name
 Name:
 
+; fm_profiles_appliname
+Display name:
+
+; fm_profiles_maxgui
+Max. GUI:
+
 ; cti-profiles-status
 Status
 
@@ -66,6 +72,12 @@ Add
 
 ; no_xlets
 No Xlet
+
+; cmt_profiles_appliname
+A more understandable name
+
+; cmt_profiles_maxgui
+Put -1 for no limit
 
 ; opt_preferences-delete
 Delete this preference

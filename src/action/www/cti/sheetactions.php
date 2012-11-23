@@ -21,8 +21,8 @@ $act = isset($_QR['act']) === true ? $_QR['act'] : '';
 $idsheetactions = isset($_QR['idsheetactions']) === true ? dwho_uint($_QR['idsheetactions'],1) : 1;
 $page = isset($_QR['page']) === true ? dwho_uint($_QR['page'],1) : 1;
 
-$mod_cti_profile = &$ipbx->get_module('cti_profile');
-$pl = $mod_cti_profile->get_all();
+$appuser = &$ipbx->get_application('ctiprofiles');
+$pl = $appuser->get_profiles_list();
 
 $appcontext = &$ipbx->get_application('cticontexts');
 $contextlist = $appcontext->get_contexts_list();
@@ -32,7 +32,7 @@ $profileclientlist = array();
 
 foreach($pl as $v)
 {
-	$profileclientlist[] = $v['cti_profile']['name'];
+	$profileclientlist[] = $v['ctiprofiles']['name'];
 }
 
 foreach($contextlist as $v)

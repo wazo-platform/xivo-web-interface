@@ -246,11 +246,6 @@ class dwho_filter
 		return((int) dwho_bool($value));
 	}
 
-	function chk_pg_bool($value)
-	{
-		return(dwho_var_to_pg_bool($value));
-	}
-
 	function chk_cast($type,$value)
 	{
 		if(dwho_has_len($value) === false)
@@ -557,14 +552,6 @@ class dwho_filter
 			return($this->chk_bool($value));
 		}
 
-		if(isset($arr['pg_bool']) === true)
-		{
-			if($set === false && $chk === 2 && dwho_has_len($value) === false)
-				return('');
-
-			return($this->chk_pg_bool($value));
-		}
-
 		if(isset($arr['value']) === true)
 		{
 			if($chk === 2 && empty($value) === true)
@@ -842,8 +829,7 @@ class dwho_filter
 
 		if($set === true)
 		{
-			if(isset($v[$key]) === false
-			&& (isset($arr['bool']) === true || isset($arr['pg_bool']) === true))
+			if(isset($v[$key]) === false && isset($arr['bool']) === true)
 				$v[$key] = null;
 			else if($this->chk_set($key,$v) === false)
 				return(false);

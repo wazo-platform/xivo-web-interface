@@ -35,7 +35,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 	var $_agentfeatures	= null;
 	var $_linefeatures	= false;
 	var $_line			= false;
-	var $_cti_profile	= false;
+	var $_ctiprofiles	= false;
 	var $_appentity		= false;
 	var $_entity		= false;
 	var $_phonefunckey	= null;
@@ -96,7 +96,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		if(($this->_rightcall = $this->get_abstract('rightcall',array('type' => 'user'))) === false
 		|| ($this->_dialaction = $this->get_abstract('dialaction',array('category' => 'user'))) === false
 		|| ($this->_line = $this->_service->get_application('line')) === false
-		|| ($this->_cti_profile = $this->_service->get_module('cti_profile')) === false
+		|| ($this->_ctiprofiles = $this->_service->get_application('ctiprofiles')) === false
 		|| ($_XOBJ = &dwho_gct::get('xivo_object')) === false
 		|| ($this->_appentity = &$_XOBJ->get_application('entity')) === false
 		|| ($this->_entity = &$_XOBJ->get_module('entity')) === false
@@ -424,8 +424,8 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 	{
 		if(empty($this->_profileclientlist) === false)
 			return($this->_profileclientlist);
-		elseif($this->_cti_profile === false
-		|| ($list = $this->_cti_profile->get_all()) === false
+		elseif($this->_ctiprofiles === false
+		|| ($list = $this->_ctiprofiles->get_profiles_list()) === false
 		|| ($nb = count($list)) === 0)
 			return(false);
 
@@ -433,8 +433,8 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 
 		for($i=0;$i<$nb;$i++)
 		{
-			$ref = &$list[$i];
-			$this->_profileclientlist[$ref['name']] = $ref['name'];
+			$ref = &$list[$i]['ctiprofiles'];
+			$this->_profileclientlist[$ref['name']] = $ref['appliname'];
 		}
 
 		return($this->_profileclientlist);

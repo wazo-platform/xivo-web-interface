@@ -18,15 +18,12 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-function dwho_array_set_value_to_key($arr, $key_of_expected_value, $only_value=false)
+function dwho_array_set_value_to_key($arr, $key_of_expected_value)
 {
 	$r = array();
 	foreach($arr as $old_key => $element)
 	{
-		$key = $element[$key_of_expected_value];
-		if ($only_value)
-			$element = $key;
-		$r[$key] = $element;
+		$r[$element[$key_of_expected_value]] = $element;
 	}
 	return($r);
 }
@@ -222,14 +219,12 @@ function dwho_bool($bool)
 
 	switch($bool)
 	{
-		case '1':
 		case 'y':
 		case 't':
 		case 'on':
 		case 'yes':
 		case 'true':
 			return(true);
-		case '0':
 		case 'n':
 		case 'f':
 		case 'off':
@@ -239,20 +234,6 @@ function dwho_bool($bool)
 	}
 
 	return((bool) $bool);
-}
-
-function dwho_var_to_pg_bool($bool)
-{
-	$bool = dwho_bool($bool);
-
-	switch($bool)
-	{
-		case true:
-			return('true');
-		default:
-		case false:
-			return('false');
-	}
 }
 
 function dwho_empty($val,$var=true)

@@ -22,21 +22,23 @@ $form = &$this->get_module('form');
 
 ?>
 <div id="sr-agentgroup" class="b-infos b-form">
-	<h3 class="sb-top xspan">
-	<span class="span-left">&nbsp;</span
-	><span class="span-center"><?=$this->bbf('title_content_name');?></span>
-	<span class="span-right">&nbsp;</span>
-	</h3>
-	<?php $this->file_include('bloc/cti/profiles/submenu'); ?>
+	<h3 class="sb-top xspan"><span class="span-left">&nbsp;</span><span class="span-center"><?=$this->bbf('title_content_name');?></span><span class="span-right">&nbsp;</span></h3>
+<?php $this->file_include('bloc/cti/profiles/submenu'); ?>
 	<div class="sb-content">
-		<form action="#" method="post" accept-charset="utf-8">
-			<?=$form->hidden(array('name' => DWHO_SESS_NAME,'value' => DWHO_SESS_ID));?>
-			<?=$form->hidden(array('name' => 'act','value' => 'edit'));?>
-			<?=$form->hidden(array('name' => 'fm_send','value' => 1));?>
-			<?=$form->hidden(array('name' => 'id','value' => $this->get_var('id')));?>
-			<?php $this->file_include('bloc/cti/profiles/form'); ?>
-			<?=$form->submit(array('name' => 'submit','id' => 'it-submit','value' => $this->bbf('fm_bt-save')));?>
-		</form>
+<form action="#" method="post" accept-charset="utf-8" onsubmit="dwho.form.select('it-services');">
+
+<?=$form->hidden(array('name' => DWHO_SESS_NAME,'value' => DWHO_SESS_ID));?>
+<?=$form->hidden(array('name' => 'act','value' => 'edit'));?>
+<?=$form->hidden(array('name' => 'fm_send','value' => 1));?>
+<?=$form->hidden(array('name' => 'idprofiles','value' => $this->get_var('idprofiles')));?>
+
+<?php
+	$this->file_include('bloc/cti/profiles/form');
+?>
+
+<?=$form->submit(array('name' => 'submit','id' => 'it-submit','value' => $this->bbf('fm_bt-save')));?>
+
+</form>
 	</div>
 	<div class="sb-foot xspan"><span class="span-left">&nbsp;</span><span class="span-center">&nbsp;</span><span class="span-right">&nbsp;</span></div>
 </div>
