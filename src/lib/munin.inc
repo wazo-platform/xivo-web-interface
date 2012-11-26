@@ -56,7 +56,6 @@ function _get_category($graph_id)
 			'open_.*'         => 'system',
 			'swap'            => 'system',
 			'ntp_.*'          => 'time',
-			'mysql_.*'        => 'mysql',
 			'pg_.*'           => 'postgresql');
 
 	$category = 'other';
