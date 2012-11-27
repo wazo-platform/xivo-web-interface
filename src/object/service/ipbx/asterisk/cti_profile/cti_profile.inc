@@ -44,7 +44,6 @@ class xivo_service_asterisk_cti_profile extends xivo_service_asterisk_abstract
 	function _prepare($data)
 	{
 		$data['id'] = (int) $data['id'];
-		$data['deletable'] = dwho_bool($data['deletable']);
 
 		return($data);
 	}

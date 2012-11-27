@@ -374,7 +374,6 @@ class xivo_application_service_asterisk_cti_profile extends xivo_application_ast
 		|| $rs === false)
 			return(false);
 
-		$rs['deletable'] = 'true';
 		$this->_return['cti_profile'] = $this->_cti_profile->add($rs);
 		return($this->_return['cti_profile']);
 	}

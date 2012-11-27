@@ -31,15 +31,10 @@ $array['element']['phonehints_id'] = array();
 $array['element']['phonehints_id']['default'] = 0;
 $array['element']['phonehints_id']['setdef'] = true;
 
-$array['element']['deletable'] = array();
-$array['element']['deletable']['default'] = 1;
-$array['element']['deletable']['setdef'] = true;
-
 
 $array['filter'] = array();
 $array['filter']['name'] = array('set' => false, 'chk' => 2, 'regexp' => '/^[a-z0-9_\-\,]+$/');
 $array['filter']['presence_id'] = array('cast' => 'uint');
 $array['filter']['phonehints_id'] = array('cast' => 'uint');
-$array['filter']['deletable'] = array('pg_bool' => true);
 
 ?>
