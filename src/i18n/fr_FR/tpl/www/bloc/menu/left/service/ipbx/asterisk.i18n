@@ -25,9 +25,6 @@ Avancés
 ; mn_left_generalsettings-outboundmwi
 Abonnements MWI
 
-; mn_left_generalsettings-dundi
-Protocole DUNDi
-
 ; mn_left_ti_pbxsettings
 Paramètres IPBX
 
@@ -87,18 +84,6 @@ Protocole IAX
 
 ; mn_left_trunkmanagement-custom
 Personnalisée
-
-; mn_left_ti_dundi
-Routage dynamique
-
-; mn_left_dundi-general
-Général
-
-; mn_left_dundi-peers
-Pairs
-
-; mn_left_dundi-mappings
-Mappings
 
 ; mn_left_ti_cost_center
 Centre de coût

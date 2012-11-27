@@ -128,8 +128,6 @@ $array['service/ipbx/general_settings/voicemail'] = 'service/ipbx/index.php/gene
 $array['service/ipbx/general_settings/phonebook'] = 'service/ipbx/index.php/general_settings/phonebook/';
 $array['service/ipbx/general_settings/advanced'] = 'service/ipbx/index.php/general_settings/advanced/';
 $array['service/ipbx/general_settings/outboundmwi'] = 'service/ipbx/index.php/general_settings/outboundmwi/';
-$array['service/ipbx/general_settings/dundi'] = 'service/ipbx/index.php/general_settings/dundi';
-$array['service/ipbx/general_settings/dahdi'] = 'service/ipbx/index.php/general_settings/dahdi';
 
 $array['service/ipbx/json/restricted/general_settings/sip'] = 'service/ipbx/json.php/restricted/general_settings/sip/';
 $array['service/ipbx/json/restricted/general_settings/iax'] = 'service/ipbx/json.php/restricted/general_settings/iax/';
@@ -272,20 +270,6 @@ $array['service/ipbx/control_system/restart'] = 'service/ipbx/index.php/control_
 // cost_center
 $array['service/ipbx/cost_center/operator'] = 'service/ipbx/index.php/cost_center/operator/';
 $array['service/ipbx/cost_center/servicesgroup'] = 'service/ipbx/index.php/cost_center/servicesgroup/';
-
-
-// dundi
-$array['service/ipbx/dundi/peers'] = 'service/ipbx/index.php/dundi/peers';
-$array['service/ipbx/dundi/mappings'] = 'service/ipbx/index.php/dundi/mappings';
-
-$array['service/ipbx/ui/pbx_settings/dundi/peers'] = 'service/ipbx/ui.php/dundi/peers/';
-$array['service/ipbx/ui/pbx_settings/dundi/mappings'] = 'service/ipbx/ui.php/dundi/mappings/';
-
-$array['service/ipbx/json/restricted/dundi/peers'] = 'service/ipbx/json.php/restricted/dundi/peers/';
-$array['service/ipbx/json/restricted/dundi/mappings'] = 'service/ipbx/json.php/restricted/dundi/mappings/';
-
-$array['service/ipbx/json/private/dundi/peers'] = 'service/ipbx/json.php/private/dundi/peers/';
-$array['service/ipbx/json/private/dundi/mappings'] = 'service/ipbx/json.php/private/dundi/mappings/';
 
 
 /*

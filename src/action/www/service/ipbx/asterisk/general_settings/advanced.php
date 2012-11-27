@@ -120,8 +120,6 @@ if(isset($_QR['fm_send']) === true)
 
 	if(dwho_issa('general',$_QR) === false)
 		$_QR['general'] = array();
-	if(!array_key_exists('dundi',$_QR['general']))
-		$_QR['general']['dundi'] = 0;
 
 	if(!$general->edit(1, $_QR['general']))
 	{

@@ -24,7 +24,6 @@ $url = &$this->get_module('url');
 $element = $this->get_var('element');
 $context_list = $this->get_var('context_list');
 
-$dundipeer = $this->get_var('dundipeer');
 $outcalltrunk = $this->get_var('outcalltrunk');
 $rightcall    = $this->get_var('rightcall');
 $schedules    = $this->get_var('schedules');
@@ -93,36 +92,7 @@ endif;
 				    'default'	=> $element['outcall']['hangupringtime']['default'],
 				    'selected'	=> $this->get_var('info','outcall','hangupringtime')),
 			      $element['outcall']['hangupringtime']['value']);
-?>
-<?php
-/* hide dundi peers until it's readded
-if($dundipeer['list'] !== false):
-?>
-<div id="dundipeerlist" class="fm-paragraph fm-description">
-	<p>
-		<label id="lb-dundipeer" for="it-dundipeer"><?=$this->bbf('fm_dundipeer');?></label>
-	</p>
-		<?=$form->jq_select(array('paragraph'	=> false,
-					 	'label'		=> false,
-            			'name'    	=> 'outcalldundipeer[]',
-						'id' 		=> 'outcalldundipeer',
-						'key'		=> 'identity',
-				       	'altkey'	=> 'id',
-            			'selected'  => $dundipeer['slt']),
-					$dundipeer['list']);?>
-</div>
-<div class="clearboth"></div>
-<?php
-else:
-	echo	'<div class="txt-center">',
-		$url->href_htmln($this->bbf('create_dundipeer'),
-				'service/ipbx/dundi/peers',
-				'act=add'),
-		'</div>';
-endif;
-*/
-?>
-<?php
+
 if($outcalltrunk['list'] !== false):
 ?>
 <div id="outcalltrunklist" class="fm-paragraph fm-description">

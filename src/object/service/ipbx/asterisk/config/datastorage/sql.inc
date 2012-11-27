@@ -196,18 +196,6 @@ $array['dialpattern'] = array();
 $array['dialpattern']['table'] = 'dialpattern';
 $array['dialpattern']['primary'] = array('id' => '');
 
-$array['dundi'] = array();
-$array['dundi']['table'] = 'dundi';
-$array['dundi']['primary'] = array('id' => '');
-
-$array['dundipeer'] = array();
-$array['dundipeer']['table'] = 'dundi_peer';
-$array['dundipeer']['primary'] = array('id' => '');
-
-$array['dundimapping'] = array();
-$array['dundimapping']['table'] = 'dundi_mapping';
-$array['dundimapping']['primary'] = array('id' => '');
-
 $array['extensions'] = array();
 $array['extensions']['table'] = 'extensions';
 $array['extensions']['primary'] = array('id' => '');
@@ -275,10 +263,6 @@ $array['outcall']['primary'] = array('id' => '');
 $array['outcalltrunk'] = array();
 $array['outcalltrunk']['table'] = 'outcalltrunk';
 $array['outcalltrunk']['primary'] = array('outcallid' => '','trunkfeaturesid' => '');
-
-$array['outcalldundipeer'] = array();
-$array['outcalldundipeer']['table'] = 'outcalldundipeer';
-$array['outcalldundipeer']['primary'] = array('outcallid' => '','dundipeerid' => '');
 
 $array['paging'] = array();
 $array['paging']['table'] = 'paging';

@@ -25,7 +25,6 @@ class xivo_application_service_asterisk_outcall extends xivo_application_asteris
 	var $_dso			= null;
 	var $_outcall		= false;
 	var $_outcalltrunk	= false;
-	var $_outcalldundipeer	= false;
 	var $_rightcall		= false;
 	var $_contextmember	= false;
 	var $_dialpattern	= false;
@@ -56,7 +55,6 @@ class xivo_application_service_asterisk_outcall extends xivo_application_asteris
 		$this->_components = true;
 
 		if(($this->_outcalltrunk = &$this->_service->get_module('outcalltrunk')) === false
-		|| ($this->_outcalldundipeer = &$this->_service->get_module('outcalldundipeer')) === false
 		|| ($this->_rightcall = $this->get_abstract('rightcall',array('type' => 'outcall'))) === false
 		|| ($this->_contextmember = $this->get_abstract('contextmember',array('type' => 'outcall'))) === false)
 			return(false);
@@ -81,9 +79,6 @@ class xivo_application_service_asterisk_outcall extends xivo_application_asteris
 		if(dwho_ak('outcalltrunk',$nocomponents,true) === false)
 			$this->_get_outcalltrunk();
 
-		if(dwho_ak('outcalldundipeer',$nocomponents,true) === false)
-			$this->_get_outcalldundipeer();
-
 		if(dwho_ak('rightcall',$nocomponents,true) === false)
 			$this->_get_rightcall($this->_info['outcall']['id']);
 
@@ -103,20 +98,6 @@ class xivo_application_service_asterisk_outcall extends xivo_application_asteris
 			return(false);
 
 		$this->_origin_list['dialpattern'] = $this->_dialpattern->get_origin();
-	}
-
-	function _get_outcalldundipeer()
-	{
-		$this->_info['outcalldundipeer'] = false;
-		$this->_origin['outcalldundipeer'] = false;
-
-		$where = array();
-		$where['outcallid'] = $this->_info['outcall']['id'];
-
-		if(($this->_info['outcalldundipeer'] = $this->_outcalldundipeer->get_all_where($where)) !== false)
-			$this->_origin['outcalldundipeer'] = $this->_outcalldundipeer->get_origin_list();
-
-		return($this->_info['outcalldundipeer']);
 	}
 
 	function _get_outcalltrunk()
@@ -229,9 +210,6 @@ class xivo_application_service_asterisk_outcall extends xivo_application_asteris
 			dwho_report::push('error', array('you_must_select_a_trunk'));
 		}
 
-		if(dwho_issa('outcalldundipeer',$arr) === true)
-			$this->set_outcalldundipeer($arr['outcalldundipeer']);
-
 		if(dwho_issa('rightcall',$arr) === true)
 			$this->set_rightcall($arr['rightcall']);
 
@@ -334,44 +312,6 @@ class xivo_application_service_asterisk_outcall extends xivo_application_asteris
 		return(true);
 	}
 
-	function set_outcalldundipeer($arr)
-	{
-		if(is_array($arr) === false || ($nb = count($arr)) === 0)
-		{
-			$this->_set_result('outcalldundipeer',null);
-			$this->_set_error('outcalldundipeer','invalid data');
-			return(false);
-		}
-
-		$arr = array_values($arr);
-
-		$info = array();
-		$info['outcallid'] = 0;
-
-		$reslist = $tmp = array();
-
-		for($i = 0,$j = 0;$i < $nb;$i++)
-		{
-			$info['priority'] = $j;
-			$info['dundipeerid'] = (int) $arr[$i];
-
-			if(($rs = $this->_outcalldundipeer->chk_values($info)) === false)
-				continue;
-
-			$tmp[$rs['dundipeerid']] = 1;
-			$reslist[$j++] = $rs;
-		}
-
-		if(isset($reslist[0]) === false)
-		{
-			$this->_set_result('outcalldundipeer',false);
-			return(false);
-		}
-
-		$this->_set_result('outcalldundipeer',$reslist);
-		return(true);
-	}
-
 	function set_outcalltrunk($arr)
 	{
 		if(is_array($arr) === false || ($nb = count($arr)) === 0)
@@ -437,7 +377,6 @@ class xivo_application_service_asterisk_outcall extends xivo_application_asteris
 		if($this->get_errnb() > 0
 		|| ($outcallid = $this->add_outcall()) === false
 		|| $this->add_dialpattern($outcallid) === false
-		|| $this->add_outcalldundipeer($outcallid) === false
 		|| $this->add_outcalltrunk($outcallid) === false
 		|| $this->add_rightcall($outcallid) === false
 		|| $this->add_contextmember($outcallid) === false
@@ -489,42 +428,6 @@ class xivo_application_service_asterisk_outcall extends xivo_application_asteris
 		if ($errnb >> 0)
 		{
 			$this->_set_errors('dialpattern',$error);
-			return(false);
-		}
-
-		return(true);
-	}
-
-	function add_outcalldundipeer($outcallid)
-	{
-		if(($rs = $this->get_result('outcalldundipeer')) === null)
-			return($rs);
-
-		if(($outcallid = dwho_ulongint($outcallid)) === 0
-		|| $rs === false)
-			return(false);
-
-		$id = array();
-
-		$nb = count($rs);
-
-		$this->_return['outcalldundipeer'] = array();
-
-		for($i = 0;$i < $nb;$i++)
-		{
-			$rs[$i]['outcallid'] = $outcallid;
-
-			$id['outcallid'] = $outcallid;
-
-			if($this->_outcalldundipeer->add($rs[$i]) === false)
-				return(false);
-
-			$this->_return['outcalldundipeer'][] = $id;
-		}
-
-		if(isset($this->_return['outcalldundipeer'][0]) === false)
-		{
-			$this->_return['outcalldundipeer'] = false;
 			return(false);
 		}
 
@@ -599,9 +502,6 @@ class xivo_application_service_asterisk_outcall extends xivo_application_asteris
 				case 'outcalltrunk':
 					$this->_outcalltrunk->delete_where(array('outcallid' => $outcallid));
 					break;
-				case 'outcalldundipeer':
-					$this->_outcalldundipeer->delete_where(array('outcallid' => $outcallid));
-					break;
 				case 'rightcall':
 					$this->_rightcall->reverse_add();
 					break;
@@ -624,7 +524,6 @@ class xivo_application_service_asterisk_outcall extends xivo_application_asteris
 		if($this->get_errnb() > 0
 		|| $this->edit_outcall() === false
 		|| $this->edit_dialpattern($this->_info['outcall']['id']) === false
-		|| $this->edit_outcalldundipeer() === false
 		|| $this->edit_outcalltrunk() === false
 		|| $this->edit_rightcall() === false
 		|| $this->edit_contextmember() === false
@@ -727,16 +626,6 @@ class xivo_application_service_asterisk_outcall extends xivo_application_asteris
 		return(true);
 	}
 
-	function edit_outcalldundipeer()
-	{
-		if(dwho_issa('outcall',$this->_info) === false)
-			return(false);
-
-		$this->_return['outcalldundipeer'] = $this->delete_outcalldundipeer();
-
-		return($this->add_outcalldundipeer($this->_info['outcall']['id']));
-	}
-
 	function edit_outcalltrunk()
 	{
 		if(dwho_issa('outcall',$this->_info) === false)
@@ -805,13 +694,6 @@ class xivo_application_service_asterisk_outcall extends xivo_application_asteris
 					&& $this->_origin['outcalltrunk'] !== false)
 						$this->_outcalltrunk->add_origin_list($this->_origin['outcalltrunk']);
 					break;
-				case 'outcalldundipeer':
-					$this->delete_outcalldundipeer();
-
-					if(isset($this->_origin['outcalldundipeer']) === true
-					&& $this->_origin['outcalldundipeer'] !== false)
-						$this->_outcalldundipeer->add_origin_list($this->_origin['outcalldundipeer']);
-					break;
 				case 'rightcall':
 					$this->_rightcall->reverse_edit($this->_status);
 					break;
@@ -834,7 +716,6 @@ class xivo_application_service_asterisk_outcall extends xivo_application_asteris
 		if($this->_delete_dialpattern($this->_info['dialpattern'], $this->_info['outcall']['context']) === false
 		|| $this->delete_outcall() === false
 		|| $this->delete_outcalltrunk() === false
-		|| $this->delete_outcalldundipeer() === false
 		|| $this->delete_rightcall() === false
 		|| $this->delete_contextmember() === false
 		|| $this->delete_schedule_path() === false)
@@ -877,21 +758,6 @@ class xivo_application_service_asterisk_outcall extends xivo_application_asteris
 				return(false);
 		}
 
-	}
-
-	function delete_outcalldundipeer()
-	{
-		if(dwho_issa('outcalldundipeer',$this->_info) === false)
-			return(null);
-		else if(dwho_issa('outcall',$this->_info) === false)
-			return(false);
-
-		$r = $this->_outcalldundipeer->delete_where(array('outcallid' => $this->_info['outcall']['id']));
-
-		if($this->_status === 'delete')
-			$this->_return['outcalldundipeer'] = $r;
-
-		return($r);
 	}
 
 	function delete_outcalltrunk()
@@ -937,11 +803,6 @@ class xivo_application_service_asterisk_outcall extends xivo_application_asteris
 					if(isset($this->_origin['outcalltrunk']) === true
 					&& $this->_origin['outcalltrunk'] !== false)
 						$this->_outcalltrunk->add_origin_list($this->_origin['outcalltrunk']);
-					break;
-				case 'outcalldundipeer':
-					if(isset($this->_origin['outcalldundipeer']) === true
-					&& $this->_origin['outcalldundipeer'] !== false)
-						$this->_outcalldundipeer->add_origin_list($this->_origin['outcalldundipeer']);
 					break;
 				case 'rightcall':
 					$this->_rightcall->add_origin_list();
