@@ -112,7 +112,7 @@ switch($act)
 			}
 			else
 			{
-				$app_cti_profile->update_users_with_profile($name);
+				$app_cti_profile->update_users_with_profile($info["cti_profile"]["name"]);
 				$_QRY->go($_TPL->url('cti/profiles'),$param);
 			}
 		}

@@ -251,6 +251,13 @@ class dwho_filter
 		return(dwho_var_to_pg_bool($value));
 	}
 
+	function chk_pg_integer_null($value)
+	{
+		if (!$value)
+			return(null);
+		return((int) $value);
+	}
+
 	function chk_cast($type,$value)
 	{
 		if(dwho_has_len($value) === false)
@@ -563,6 +570,14 @@ class dwho_filter
 				return('');
 
 			return($this->chk_pg_bool($value));
+		}
+
+		if(isset($arr['pg_integer_null']) === true)
+		{
+			if($set === false && $chk === 2 && dwho_has_len($value) === false)
+				return(null);
+
+			return($this->chk_pg_integer_null($value));
 		}
 
 		if(isset($arr['value']) === true)

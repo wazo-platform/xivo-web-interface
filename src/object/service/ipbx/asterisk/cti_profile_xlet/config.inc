@@ -45,8 +45,8 @@ $array['element']['scrollable'] = array();
 $array['element']['scrollable']['default'] = true;
 
 $array['element']['order'] = array();
-$array['element']['order']['default'] = 0;
-$array['element']['order']['setdef'] = true;
+$array['element']['order']['default'] = '';
+$array['element']['order']['null'] = true;
 
 
 $array['filter'] = array();
@@ -57,6 +57,6 @@ $array['filter']['closable'] = array('pg_bool' => true);
 $array['filter']['movable'] = array('pg_bool' => true);
 $array['filter']['floating'] = array('pg_bool' => true);
 $array['filter']['scrollable'] = array('pg_bool' => true);
-$array['filter']['order'] = array('cast' => 'uint');
+$array['filter']['order'] = array('pg_integer_null' => true);
 
 ?>

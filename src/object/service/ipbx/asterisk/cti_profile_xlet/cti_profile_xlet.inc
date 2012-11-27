@@ -50,7 +50,7 @@ class xivo_service_asterisk_cti_profile_xlet extends xivo_service_asterisk_abstr
 		$data['movable'] = dwho_bool($data['movable']);
 		$data['floating'] = dwho_bool($data['floating']);
 		$data['scrollable'] = dwho_bool($data['scrollable']);
-		$data['order'] = (int) $data['order'];
+		$data['order'] = ($data['order'] === null) ? null : (int) $data['order'];
 
 		return($data);
 	}
