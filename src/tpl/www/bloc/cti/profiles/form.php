@@ -31,6 +31,8 @@ $xlet_layout = $this->get_var('xlet_layout');
 $xlet = $this->get_var('xlet');
 $preference = $this->get_var('preference');
 
+$yesno = array($this->bbf('no'), $this->bbf('yes'));
+
 ?>
 
 <div id="sb-part-first" class="b-nodisplay">
@@ -125,62 +127,74 @@ $preference = $this->get_var('preference');
 			<tr class="fm-paragraph<?=$errdisplay?>">
 				<td class="td-left txt-center">
 					<?=$form->select(array('paragraph'	=> false,
-									'name'		=> 'xlet[id][]',
+									'name'		=> 'xlet[id]['.$i.']',
 									'id'		=> false,
 									'label'		=> false,
-									  'key'	=> 'plugin_name',
-									  'altkey'	 => 'id',
+									'key'		=> 'plugin_name',
+									'altkey'	=> 'id',
 									'selected'	=> $info['xlet'][$i]['xlet_id']),
-							$xlet);?>
+								$xlet);?>
 				</td>
 				<td>
 					<?=$form->select(array('paragraph'	=> false,
-								 'name'		=> 'xlet[layout][]',
-								 'id'		=> false,
-								 'label'		=> false,
-								 'size'		=> 15,
-									  'key'	=> 'name',
-									  'altkey'	 => 'id',
+									'name'		=> 'xlet[layout]['.$i.']',
+									'id'		=> false,
+									'label'		=> false,
+									'size'		=> 15,
+									'key'		=> 'name',
+									'altkey'	=> 'id',
 									'selected'	=> $info['xlet'][$i]['layout_id']),
-							$xlet_layout);?>
+								$xlet_layout);?>
 				</td>
 				<td>
-					<?=$form->checkbox(array('paragraph'	=> false,
-						'name'		=> 'xlet[floating][]',
-						'checked'	=> $info['xlet'][$i]['floating'],
-						'id'		=> false));?>
+					<?=$form->select(array('paragraph'	=> false,
+									'name'		=> 'xlet[floating][]',
+									'id'		=> false,
+									'label'		=> false,
+									'selected'	=> $info['xlet'][$i]['floating']
+							 ),
+							 $yesno);?>
 				</td>
 				<td>
-					<?=$form->checkbox(array('paragraph'	=> false,
-						'name'		=> 'xlet[closable][]',
-						'checked'	=> $info['xlet'][$i]['closable'],
-						'id'		=> false));?>
+					<?=$form->select(array('paragraph'	=> false,
+									'name'		=> 'xlet[closable][]',
+									'id'		=> false,
+									'label'		=> false,
+									'selected'	=> $info['xlet'][$i]['closable']
+							 ),
+							 $yesno);?>
 				</td>
 				<td>
-					<?=$form->checkbox(array('paragraph'	=> false,
-						'name'		=> 'xlet[movable][]',
-						'checked'	=> $info['xlet'][$i]['movable'],
-						'id'		=> false));?>
+					<?=$form->select(array('paragraph'	=> false,
+									'name'		=> 'xlet[movable][]',
+									'id'		=> false,
+									'label'		=> false,
+									'selected'	=> $info['xlet'][$i]['movable']
+							 ),
+							 $yesno);?>
 				</td>
 				<td>
-					<?=$form->checkbox(array('paragraph'	=> false,
-						'name'		=> 'xlet[scrollable][]',
-						'checked'	=> $info['xlet'][$i]['scrollable'],
-						'id'		=> false));?>
+					<?=$form->select(array('paragraph'	=> false,
+									'name'		=> 'xlet[scrollable][]',
+									'id'		=> false,
+									'label'		=> false,
+									'selected'	=> $info['xlet'][$i]['scrollable']
+							 ),
+							 $yesno);?>
 				</td>
 				<td>
 					<?=$form->text(array('paragraph'	=> false,
-								 'name'		=> 'xlet[order][]',
-								 'id'		=> false,
-								 'label'	=> false,
-								 'size'		=> 4,
-								 'disabled'	=> false,
-								 'value'	=> $info['xlet'][$i]['order']));?>
+								'name'		=> 'xlet[order]['.$i.']',
+								'id'		=> false,
+								'label'		=> false,
+								'size'		=> 4,
+								'disabled'	=> false,
+								'value'		=> $info['xlet'][$i]['order']));?>
 				</td>
 				<td class="td-right">
 					<?=$url->href_html($url->img_html('img/site/button/mini/blue/delete.gif',
-									  $this->bbf('opt_'.$type.'-delete'),
-									  'border="0"'),
+									$this->bbf('opt_'.$type.'-delete'),
+									'border="0"'),
 								'#',
 								null,
 								'onclick="dwho.dom.make_table_list(\''.$type.'\',this,1); return(dwho.dom.free_focus());"',
@@ -194,7 +208,7 @@ $preference = $this->get_var('preference');
 ?>
 			</tbody>
 			<tfoot>
-			<tr id="no-<?=$type?>"<?=($info['preference']) ? ' class="b-nodisplay"' : ''?>>
+			<tr id="no-<?=$type?>"<?=($info['xlet']) ? ' class="b-nodisplay"' : ''?>>
 				<td colspan="8" class="td-single"><?=$this->bbf('no_'.$type);?></td>
 			</tr>
 			</tfoot>
@@ -205,48 +219,56 @@ $preference = $this->get_var('preference');
 				<td class="td-left txt-center">
 					<?=$form->select(array('paragraph'	=> false,
 									'name'		=> 'xlet[id][]',
-									'id'			=> false,
+									'id'		=> false,
 									'label'		=> false,
 									'key'		=> 'plugin_name',
-									'altkey'		=> 'id'),
+									'altkey'	=> 'id'),
 							$xlet);?>
 				</td>
 				<td>
 					<?=$form->select(array('paragraph'	=> false,
 									'name'		=> 'xlet[layout][]',
 									'id'		=> false,
-									'label'	=> false,
+									'label'		=> false,
 									'key'		=> 'name',
 									'altkey'	=> 'id'),
 							$xlet_layout);?>
 				</td>
 				<td>
-					<?=$form->checkbox(array('paragraph'	=> false,
-											'name'		=> 'xlet[floating][]',
-											'id'		=> true,
-											'label'		=> false,
-											'default'	=> 1));?>
+					<?=$form->select(array('paragraph'	=> false,
+									'name'		=> 'xlet[floating][]',
+									'id'		=> false,
+									'label'		=> false,
+									'default'	=> $element['xlet']['floating']['default']
+							 ),
+							 $yesno);?>
 				</td>
 				<td>
-					<?=$form->checkbox(array('paragraph'	=> false,
-											'name'		=> 'xlet[closable][]',
-											'id'		=> true,
-											'label'		=> false,
-											'default'	=> 1));?>
+					<?=$form->select(array('paragraph'	=> false,
+									'name'		=> 'xlet[closable][]',
+									'id'		=> false,
+									'label'		=> false,
+									'default'	=> $element['xlet']['closable']['default']
+							 ),
+							 $yesno);?>
 				</td>
 				<td>
-					<?=$form->checkbox(array('paragraph'	=> false,
-											'name'		=> 'xlet[movable][]',
-											'id'		=> true,
-											'label'		=> false,
-											'default'	=> 1));?>
+					<?=$form->select(array('paragraph'	=> false,
+									'name'		=> 'xlet[movable][]',
+									'id'		=> false,
+									'label'		=> false,
+									'default'	=> $element['xlet']['movable']['default']
+							 ),
+							 $yesno);?>
 				</td>
 				<td>
-					<?=$form->checkbox(array('paragraph'	=> false,
-											'name'		=> 'xlet[scrollable][]',
-											'id'		=> true,
-											'label'		=> false,
-											'default'	=> 1));?>
+					<?=$form->select(array('paragraph'	=> false,
+									'name'		=> 'xlet[scrollable][]',
+									'id'		=> false,
+									'label'		=> false,
+									'default'	=> $element['xlet']['scrollable']['default']
+							 ),
+							 $yesno);?>
 				</td>
 				<td>
 					<?=$form->text(array('paragraph'	=> false,
