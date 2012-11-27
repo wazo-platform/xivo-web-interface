@@ -1,171 +1,127 @@
-; enablevm
+
+; service-(enablevm)
 Enable voicemail
 
-; callrecord
+; service-(callrecord)
 Call record
 
-; incallrec
+; service-(incallrec)
 Incall record
 
-; incallfilter
+; service-(incallfilter)
 Call filter
 
-; enablednd
+; service-(enablednd)
 Enable DND
 
-; fwdunc
+; service-(fwdunc)
 Unconditional transfer to a number
 
-; fwdbusy
+; service-(fwdbusy)
 Transfer on busy
 
-; fwdrna
+; service-(fwdrna)
 Transfer on no-answer
 
-; func-presence
-Presence permission
-
-; func-switchboard
-Switchboard
-
-; func-customerinfo
-Customer info permission
-
-; func-agents
-Agents
-
-; func-search
-Search
-
-; func-dial
-Dialing permission
-
-; func-chitchat
-Instant messaging
-
-; func-conference
-Conference room permission
-
-; func-directory
-Directory
-
-; func-fax
-Fax permission
-
-; func-features
-Features permission
-
-; func-history
-History permission
-
-; func-database
-Database write permission
-
-; func-supervisor
-Grant a supervisor right for records campaigns
-
-; func-administrator
-Grant an administrator right for records campaigns
 
 
-
-; pref-loginwindow-url
+; pref-(loginwindow.url)
 Url to send once connected
 
-; pref-xlet-identity-logagent
+; pref-(xlet.identity.logagent)
 (Dis)Connect one's agent ("Identity" xlet)
 
-; pref-xlet-identity-pauseagent
+; pref-(xlet.identity.pauseagent)
 (Un)Pause one's agent ("Identity" xlet)
 
-; pref-xlet-agentdetails-noqueueaction
+; pref-(xlet.agentdetails.noqueueaction)
 No action on queues by agents ("Agent details" xlet)
 
-; pref-xlet-agentdetails-hideastid
+; pref-(xlet.agentdetails.hideastid)
 Hide the XiVO name ("Agent details" xlet)
 
-; pref-xlet-agentdetails-hidecontext
+; pref-(xlet.agentdetails.hidecontext)
 Hide the context name ("Agent details" xlet)
 
-; pref-xlet-agents-fontname
+; pref-(xlet.agents.fontname)
 Font name ("Agents list" xlet)
 
-; pref-xlet-agents-fontsize
+; pref-(xlet.agents.fontsize)
 Font size ("Agents list" xlet)
 
-; pref-xlet-agents-iconsize
+; pref-(xlet.agents.iconsize)
 Icons size ("Agents list" xlet)
 
-; pref-xlet-queues-statsfetchperiod
+; pref-(xlet.queues.statsfetchperiod)
 Statistics fetch period ("Queues list" xlet)
 
-; pref-presence-autochangestate
+; pref-(presence.autochangestate)
 Automatic transitions between presence states
 
-; pref-adlibitum
+; pref-(adlibitum)
 Ad libitum
 
 
 
-; xlet-agents
+; xlet-(agents)
 Agents (list)
 
-; xlet-agentdetails
+; xlet-(agentdetails)
 Agents (detail)
 
-; xlet-queues
+; xlet-(queues)
 Queues (list)
 
-; xlet-queuemembers
+; xlet-(queuemembers)
 Queue members
 
-; xlet-queueentrydetails
+; xlet-(queueentrydetails)
 Queues (entries detail)
 
-; xlet-calls
+; xlet-(calls)
 Calls (experimental)
 
-; xlet-customerinfo
+; xlet-(customerinfo)
 Customer info
 
-; xlet-datetime
+; xlet-(datetime)
 Datetime
 
-; xlet-dial
+; xlet-(dial)
 Dialer
 
-; xlet-directory
+; xlet-(directory)
 Directory
 
-; xlet-fax
+; xlet-(fax)
 Fax
 
-; xlet-features
+; xlet-(features)
 Features
 
-; xlet-history
+; xlet-(history)
 History
 
-; xlet-identity
+; xlet-(identity)
 Identity
 
-; xlet-search
+; xlet-(search)
 Search
 
-; xlet-conference
+; xlet-(conference)
 Conference rooms
 
-; xlet-operator
+; xlet-(operator)
 Operator (experimental)
 
-; xlet-mylocaldir
+; xlet-(mylocaldir)
 MyDirectory
 
-; xlet-callcampaign
+; xlet-(callcampaign)
 Call campaigns (experimental)
 
-; xlet-tabber
+; xlet-(tabber)
 Tabber
 
-; xlet-xletweb
+; xlet-(xletweb)
 Web

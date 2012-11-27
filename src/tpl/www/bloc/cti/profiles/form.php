@@ -50,19 +50,19 @@ $yesno = array($this->bbf('no'), $this->bbf('yes'));
 <?php
 	echo $form->select(array('desc'		=> $this->bbf('fm_profiles_presence'),
 					'name'		=> 'cti_profile[presence_id]',
-					'id'			=> false,
+					'id'		=> false,
 					'label'		=> false,
 					'key'		=> 'name',
-					'altkey'		=> 'id',
+					'altkey'	=> 'id',
 					'selected'	=> $info['cti_profile']['presence_id']
 			 ),$presences);
 
 	echo $form->select(array('desc'		=> $this->bbf('fm_profiles_phonehints'),
 					'name'		=> 'cti_profile[phonehints_id]',
-					'id'			=> false,
+					'id'		=> false,
 					'label'		=> false,
 					'key'		=> 'name',
-					'altkey'		=> 'id',
+					'altkey'	=> 'id',
 					'selected'	=> $info['cti_profile']['phonehints_id']
 			 ),$phonehints);
 ?>
@@ -79,6 +79,7 @@ $yesno = array($this->bbf('no'), $this->bbf('yes'));
 							 	'label'		=> false,
 								'name'		=> 'services[]',
 								'id' 		=> 'it-services',
+								'bbf'		=> 'service-',
 								'key'		=> 'key',
 								'altkey'	=> 'id',
 								'selected'  => $service['slt']),
@@ -130,6 +131,7 @@ $yesno = array($this->bbf('no'), $this->bbf('yes'));
 									'name'		=> 'xlet[id]['.$i.']',
 									'id'		=> false,
 									'label'		=> false,
+									'bbf'		=> 'xlet-',
 									'key'		=> 'plugin_name',
 									'altkey'	=> 'id',
 									'selected'	=> $info['xlet'][$i]['xlet_id']),
@@ -221,6 +223,7 @@ $yesno = array($this->bbf('no'), $this->bbf('yes'));
 									'name'		=> 'xlet[id][]',
 									'id'		=> false,
 									'label'		=> false,
+									'bbf'		=> 'xlet-',
 									'key'		=> 'plugin_name',
 									'altkey'	=> 'id'),
 							$xlet);?>
@@ -324,6 +327,7 @@ $yesno = array($this->bbf('no'), $this->bbf('yes'));
 								'name'		=> 'preference[id][]',
 								'id'		=> false,
 								'label'		=> false,
+								'bbf'		=> 'pref-',
 								'key'		=> 'option',
 								'altkey'	=> 'id',
 								'selected'	=> $info['preference'][$i]['preference_id']),
@@ -366,6 +370,7 @@ $yesno = array($this->bbf('no'), $this->bbf('yes'));
 								'name'		=> 'preference[id][]',
 								'id'		=> false,
 								'label'		=> false,
+								'bbf'		=> 'pref-',
 								'key'		=> 'option',
 								'altkey'	=> 'id'),
 							$preference);?>
