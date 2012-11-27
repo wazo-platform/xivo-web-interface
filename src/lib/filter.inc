@@ -253,9 +253,7 @@ class dwho_filter
 
 	function chk_pg_integer_null($value)
 	{
-		if (!$value)
-			return(null);
-		return((int) $value);
+		return(($value === null || $value === '') ? null : (int) $value);
 	}
 
 	function chk_cast($type,$value)
