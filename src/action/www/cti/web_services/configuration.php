@@ -20,7 +20,7 @@
 $access_category = 'configuration';
 $access_subcategory = '';
 
-#include(dwho_file::joinpath(dirname(__FILE__),'_common.php'));
+include(dwho_file::joinpath(dirname(__FILE__),'_common.php'));
 
 $starttime = microtime(true);
 
@@ -41,9 +41,6 @@ $ldapfilter = &$ipbx->get_module('ldapfilter');
 
 xivo::load_class('xivo_ldapserver',XIVO_PATH_OBJECT,null,false);
 $ldapserver = new xivo_ldapserver();
-
-$config = dwho::load_init(XIVO_PATH_CONF.DWHO_SEP_DIR.'ipbx.ini');
-$db_ast = $db_cti =$config['general']['datastorage'];
 
 $info_general = $general->get(1);
 $load_ctimain = $ctimain->get(1);
@@ -89,7 +86,6 @@ $out['keyfile']  = $load_ctimain['tlsprivkeyfile'];
 
 $out['main']['incoming_tcp'] = $tcpdefs;
 $out['main']['incoming_udp'] = $udpdefs;
-$out['main']['db_uri'] = $db_cti;
 $out['main']['sockettimeout'] = (float) $load_ctimain['socket_timeout'];
 $out['main']['logintimeout'] = (float) $load_ctimain['login_timeout'];
 $out['main']['context_separation'] = (bool) $load_ctimain['context_separation'];
@@ -344,7 +340,6 @@ $urllists = array(
 	'urllist_queues' => array($callcenteruri.'settings/queues')
 );
 $outlocalserver['urllists'] = $urllists;
-$outlocalserver['db_uri'] = $db_ast;
 $outlocalserver['timezone'] = $info_general['timezone'];
 
 $out['bench'] = (float) (microtime(true) - $starttime);
