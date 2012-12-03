@@ -74,7 +74,7 @@ $yesno = array($this->bbf('no'), $this->bbf('yes'));
 	if(isset($service['list']) === true
 	&& $service['list'] !== false):
 ?>
-		<div id="queuelist" class="fm-paragraph fm-description">
+		<div id="servicelist" class="fm-paragraph fm-description">
 				<?=$form->jq_select(array('paragraph'	=> false,
 							 	'label'		=> false,
 								'name'		=> 'services[]',
