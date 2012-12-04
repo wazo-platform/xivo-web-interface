@@ -23,7 +23,6 @@ xivo_service_asterisk::required(array('abstract','datastorage','abstract','sql.i
 class xivo_service_asterisk_meetmefeatures_sql extends xivo_service_asterisk_abstract_sql
 {
 	var $_unique	= 'name';
-	var $_disable	= null;
 
 	function get_all_except($id,$number=false,$order=null,$limit=null)
 	{

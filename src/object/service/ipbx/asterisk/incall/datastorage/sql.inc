@@ -23,7 +23,6 @@ xivo_service_asterisk::required(array('abstract','datastorage','abstract','sql.i
 class xivo_service_asterisk_incall_sql extends xivo_service_asterisk_abstract_sql
 {
 	var $_unique	= array(array('exten','context'));
-	var $_disable	= null;
 
 	function get_all_wherein($id,$where)
 	{
