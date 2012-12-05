@@ -72,21 +72,6 @@ if(isset($error_js[0]) === true)
 			      	'selected' => $info['ctisheetevents']['unlink']),
                                 $sheetactionslist),
 
-		$form->select(array('desc'	=> $this->bbf('fm_sheetevents_agentlinked'),
-				    'name'	=> 'ctisheetevents[agentlinked]',
-				    'labelid'	=> 'agentlinked',
-				    'key'	=> false,
-				    'default'	=> $element['ctisheetevents']['agentlinked']['default'],
-			      	'selected' => $info['ctisheetevents']['agentlinked']),
-				$sheetactionslist),
-		$form->select(array('desc'	=> $this->bbf('fm_sheetevents_agentunlinked'),
-				    'name'	=> 'ctisheetevents[agentunlinked]',
-				    'labelid'	=> 'agentunlinked',
-				    'key'	=> false,
-				    'default'	=> $element['ctisheetevents']['agentunlinked']['default'],
-			      	'selected' => $info['ctisheetevents']['agentunlinked']),
-				$sheetactionslist),
-
 		$form->select(array('desc'	=> $this->bbf('fm_sheetevents_incomingdid'),
 				    'name'	=> 'ctisheetevents[incomingdid]',
 				    'labelid'	=> 'incomingdid',
@@ -95,30 +80,6 @@ if(isset($error_js[0]) === true)
 			      	'selected' => $info['ctisheetevents']['incomingdid']),
 				$sheetactionslist),
 
-        /*
-		$form->select(array('desc'	=> $this->bbf('fm_sheetevents_incomingqueue'),
-				    'name'	=> 'ctisheetevents[incomingqueue]',
-				    'labelid'	=> 'incomingqueue',
-				    'key'	=> false,
-				    'default'	=> $element['ctisheetevents']['incomingqueue']['default'],
-			      	'selected' => $info['ctisheetevents']['incomingqueue']),
-				$sheetactionslist),
-
-		$form->select(array('desc'	=> $this->bbf('fm_sheetevents_incominggroup'),
-				    'name'	=> 'ctisheetevents[incominggroup]',
-				    'labelid'	=> 'incominggroup',
-				    'key'	=> false,
-				    'default'	=> $element['ctisheetevents']['incominggroup']['default'],
-			      	'selected' => $info['ctisheetevents']['incominggroup']),
-				$sheetactionslist),
-        $form->select(array('desc'  => $this->bbf('fm_sheetevents_outcall'),
-                    'name'  => 'ctisheetevents[outcall]',
-                    'labelid'   => 'outcall',
-                    'key'   => false,
-                    'default'   => $element['ctisheetevents']['outcall']['default'],
-                    'selected' => $info['ctisheetevents']['outcall']),
-                $sheetactionslist),
-         */
         $form->select(array('desc'  => $this->bbf('fm_sheetevents_hangup'),
                     'name'  => 'ctisheetevents[hangup]',
                     'labelid'   => 'hangup',
@@ -127,15 +88,6 @@ if(isset($error_js[0]) === true)
                     'selected' => $info['ctisheetevents']['hangup']),
                 $sheetactionslist);
 
-        /*
-		$form->select(array('desc'	=> $this->bbf('fm_sheetevents_faxreceived'),
-				    'name'	=> 'ctisheetevents[faxreceived]',
-				    'labelid'	=> 'faxreceived',
-				    'key'	=> false,
-				    'default'	=> $element['ctisheetevents']['faxreceived']['default'],
-			      	'selected' => $info['ctisheetevents']['faxreceived']),
-                                $sheetactionslist);
-         */
 		$type = 'custom';
 		$count = count($customs);
 		$errdisplay = '';

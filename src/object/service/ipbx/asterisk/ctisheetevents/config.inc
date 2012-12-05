@@ -21,29 +21,6 @@
 $array = array();
 $array['element'] = array();
 
-$array['element']['agentlinked'] = array();
-$array['element']['agentlinked']['default'] = '';
-
-$array['element']['agentunlinked'] = array();
-$array['element']['agentunlinked']['default'] = '';
-
-$array['element']['faxreceived'] = array();
-$array['element']['faxreceived']['default'] = '';
-
-$array['element']['incomingqueue'] = array();
-$array['element']['incomingqueue']['default'] = '';
-
-$array['element']['incominggroup'] = array();
-$array['element']['incominggroup']['default'] = '';
-
-$array['element']['incomingdid'] = array();
-$array['element']['incomingdid']['default'] = '';
-
-$array['element']['outcall'] = array();
-$array['element']['outcall']['default'] = '';
-
-$array['element']['hangup'] = array();
-$array['element']['hangup']['default'] = '';
 
 $array['element']['dial'] = array();
 $array['element']['dial']['default'] = '';
@@ -54,6 +31,12 @@ $array['element']['link']['default'] = '';
 $array['element']['unlink'] = array();
 $array['element']['unlink']['default'] = '';
 
+$array['element']['incomingdid'] = array();
+$array['element']['incomingdid']['default'] = '';
+
+$array['element']['hangup'] = array();
+$array['element']['hangup']['default'] = '';
+
 $array['element']['custom'] = array();
 $array['element']['custom']['default'] = '';
 
@@ -61,16 +44,10 @@ $array['element']['custom']['default'] = '';
 dwho::load_class('dwho_network');
 
 $array['filter'] = array();
-$array['filter']['agentlinked'] 	= array('set' => false, 'chk' => 2, 'regexp' => '/^[a-z0-9_\-\,]+$/i');
-$array['filter']['agentunlinked'] 	= array('set' => false, 'chk' => 2, 'regexp' => '/^[a-z0-9_\-\,]+$/i');
-$array['filter']['faxreceived'] 	= array('set' => false, 'chk' => 2, 'regexp' => '/^[a-z0-9_\-\,]+$/i');
-$array['filter']['incomingqueue'] 	= array('set' => false, 'chk' => 2, 'regexp' => '/^[a-z0-9_\-\,]+$/i');
-$array['filter']['incominggroup'] 	= array('set' => false, 'chk' => 2, 'regexp' => '/^[a-z0-9_\-\,]+$/i');
-$array['filter']['incomingdid'] 	= array('set' => false, 'chk' => 2, 'regexp' => '/^[a-z0-9_\-\,]+$/i');
-$array['filter']['outcall']	= array('set' => false, 'chk' => 2, 'regexp' => '/^[a-z0-9_\-\,]+$/i');
-$array['filter']['hangup']	= array('set' => false, 'chk' => 2, 'regexp' => '/^[a-z0-9_\-\,]+$/i');
 $array['filter']['dial'] 	= array('set' => false, 'chk' => 2, 'regexp' => '/^[a-z0-9_\-\,]+$/i');
 $array['filter']['link'] 	= array('set' => false, 'chk' => 2, 'regexp' => '/^[a-z0-9_\-\,]+$/i');
 $array['filter']['unlink'] 	= array('set' => false, 'chk' => 2, 'regexp' => '/^[a-z0-9_\-\,]+$/i');
+$array['filter']['incomingdid'] 	= array('set' => false, 'chk' => 2, 'regexp' => '/^[a-z0-9_\-\,]+$/i');
+$array['filter']['hangup']	= array('set' => false, 'chk' => 2, 'regexp' => '/^[a-z0-9_\-\,]+$/i');
 $array['filter']['custom'] 	= array('set' => false, 'chk' => 2, 'regexp' => '/^.*$/i');
 ?>
