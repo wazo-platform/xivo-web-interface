@@ -145,12 +145,15 @@ if(isset($load_directories) === true && is_array($load_directories) === true)
 				rawurlencode($filter['filter']));
 		}
 
+		$dird_match_direct = dwho_json::decode($dir['match_direct'], true);
+		$dird_match_reverse = dwho_json::decode($dir['match_reverse'], true);
+
 		$dirid = $dir['name'];
 		$dirout[$dirid]['uri'] = $uri;
 		$dirout[$dirid]['delimiter'] = $dir['delimiter'];
 		$dirout[$dirid]['name'] = $dir['description'];
-		$dirout[$dirid]['match_direct'] = dwho_json::decode($dir['match_direct'], true) == false ? array() : dwho_json::decode($dir['match_direct'], true);
-		$dirout[$dirid]['match_reverse'] = dwho_json::decode($dir['match_reverse'], true) == false ? array() : dwho_json::decode($dir['match_reverse'], true);
+		$dirout[$dirid]['match_direct'] = $dird_match_direct == false ? array() : $dird_match_direct;
+		$dirout[$dirid]['match_reverse'] = $dird_match_reverse == false ? array() : $dird_match_reverse;
 
 		$fields = $ctidirectoryfld->get_all_where(array('dir_id' => $dir['id']));
 		foreach($fields as $field)
@@ -187,7 +190,10 @@ if(isset($load_sheetevents,$load_sheetevents[0]))
 		$evtout[$k][] = $eventdef;
 	}
 	if (isset($evtout['custom']) === true)
-		$evtout['custom'] = dwho_json::decode($evtout['custom'], true) == false ? array() : dwho_json::decode($evtout['custom'], true);
+	{
+		$evtout_custom = dwho_json::decode($evtout['custom'], true);
+		$evtout['custom'] = $evtout_custom == false ? array() : $evtout_custom;
+	}
 	$out['sheets']['events'] = $evtout;
 }
 if(isset($load_sheetactions) === true
@@ -204,9 +210,12 @@ if(isset($load_sheetactions) === true
 		$optout[$actid]['focus'] = $action['focus'] == 1 ? "yes" : "no";
 		$optout[$actid]['zip'] = 1;
 
+		$action_context = dwho_json::decode($action['context'], true);
+		$action_capaids = dwho_json::decode($action['capaids'], true);
+
 		$condout[$actid]['whom'] = $action['whom'];
-		$condout[$actid]['contexts'] = dwho_json::decode($action['context'], true) == false ? array() : dwho_json::decode($action['context'], true);
-		$condout[$actid]['profileids'] = dwho_json::decode($action['capaids'], true) == false ? array() : dwho_json::decode($action['capaids'], true);
+		$condout[$actid]['contexts'] = $action_context == false ? array() : $action_context;
+		$condout[$actid]['profileids'] = $action_capaids == false ? array() : $action_capaids;
 
 		$arr = array();
 		$arr = dwho_json::decode($action['sheet_info'], true);
@@ -221,9 +230,14 @@ if(isset($load_sheetactions) === true
 					$qtui = $a1[3];
 			}
 		}
-		$dispout[$actid]['systray_info'] = dwho_json::decode($action['systray_info'], true) == false ? array() : dwho_json::decode($action['systray_info'], true);
-		$dispout[$actid]['sheet_info'] = dwho_json::decode($action['sheet_info'], true) == false ? array() : dwho_json::decode($action['sheet_info'], true);
-		$dispout[$actid]['action_info'] = dwho_json::decode($action['action_info'], true) == false ? array() : dwho_json::decode($action['action_info'], true);
+
+		$action_systray_info = dwho_json::decode($action['systray_info'], true);
+		$action_sheet_info = dwho_json::decode($action['sheet_info'], true);
+		$action_action_info = dwho_json::decode($action['action_info'], true);
+
+		$dispout[$actid]['systray_info'] = $action_systray_info == false ? array() : $action_systray_info;
+		$dispout[$actid]['sheet_info'] = $action_sheet_info == false ? array() : $action_sheet_info;
+		$dispout[$actid]['action_info'] = $action_action_info == false ? array() : $action_action_info;
 		$dispout[$actid]['sheet_qtui'][$qtui] = $action['sheet_qtui'];
 	}
 	$out['sheets']['options'] = $optout;
