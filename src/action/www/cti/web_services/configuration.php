@@ -24,7 +24,6 @@ include(dwho_file::joinpath(dirname(__FILE__),'_common.php'));
 
 $starttime = microtime(true);
 
-$general = &$ipbx->get_module('general');
 $cticontexts = &$ipbx->get_module('cticontexts');
 $ctidirectories = &$ipbx->get_module('ctidirectories');
 $ctidirectoryfld = &$ipbx->get_module('ctidirectoryfields');
@@ -42,7 +41,6 @@ $ldapfilter = &$ipbx->get_module('ldapfilter');
 xivo::load_class('xivo_ldapserver',XIVO_PATH_OBJECT,null,false);
 $ldapserver = new xivo_ldapserver();
 
-$info_general = $general->get(1);
 $load_ctimain = $ctimain->get(1);
 $load_contexts = $cticontexts->get_all();
 $load_directories = $ctidirectories->get_all();
@@ -315,7 +313,6 @@ $out['ipbx_connection'] = array(
 	'username'  => $load_ctimain['ami_login'],
 	'password'  => $load_ctimain['ami_password']
 );
-$out['timezone'] = $info_general['timezone'];
 
 $out['bench'] = (float) (microtime(true) - $starttime);
 
