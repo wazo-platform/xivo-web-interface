@@ -22,6 +22,20 @@ xivo_service_asterisk::required(array('abstract','datastorage','abstract','sql.i
 class xivo_service_asterisk_cti_profile_sql extends xivo_service_asterisk_abstract_sql
 {
 	var $_unique = array('name');
+
+	public function cti_profile_id_with_name($profile_name)
+	{
+		$this->_dso->new_select($this->_table,'id');
+
+		$this->_dso->where(array('name' => $profile_name));
+
+		$r = $this->_dso->select_singlecolumn();
+
+		if(isset($r[0]) === false)
+			return(false);
+
+		return((int) $r[0]);
+	}
 }
 
 ?>

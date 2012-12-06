@@ -33,7 +33,7 @@ $array['element']['phonehints_id']['setdef'] = true;
 
 
 $array['filter'] = array();
-$array['filter']['name'] = array('set' => false, 'chk' => 2, 'regexp' => '/^[a-z0-9_\-\,]+$/');
+$array['filter']['name'] = array('cast' => 'sgraph','minlen' => 3,'maxlen' => 128);
 $array['filter']['presence_id'] = array('cast' => 'uint');
 $array['filter']['phonehints_id'] = array('cast' => 'uint');
 

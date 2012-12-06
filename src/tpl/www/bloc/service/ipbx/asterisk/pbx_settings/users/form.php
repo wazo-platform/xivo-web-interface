@@ -244,12 +244,13 @@ endif;
 
 	if(is_array($profileclient_list) === true && empty($profileclient_list) === false):
 		echo	$form->select(array('desc'	=> $this->bbf('fm_userfeatures_profileclient'),
-					    'name'	=> 'userfeatures[profileclient]',
-					    'labelid'	=> 'userfeatures-profileclient',
+						'name'	=> 'userfeatures[cti_profile_id]',
+						'labelid'	=> 'userfeatures-cti_profile_id',
 						'altkey'	=> 'name',
-					    'default'	=> $element['userfeatures']['profileclient']['default'],
-					    'selected'	=> $info['userfeatures']['profileclient']),
-				      $profileclient_list);
+						'key'		=> 'id',
+						'default'	=> $element['userfeatures']['cti_profile_id']['default'],
+						'selected'	=> $info['userfeatures']['cti_profile_id']),
+					$profileclient_list);
 	endif;
 ?>
 </fieldset>

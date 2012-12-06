@@ -69,9 +69,9 @@ $array['element']['loginclient']['default'] = '';
 $array['element']['passwdclient'] = array();
 $array['element']['passwdclient']['default'] = '';
 
-$array['element']['profileclient'] = array();
-$array['element']['profileclient']['default'] = 'client';
-$array['element']['profileclient']['setdef'] = true;
+$array['element']['cti_profile_id'] = array();
+$array['element']['cti_profile_id']['default'] = 0;
+$array['element']['cti_profile_id']['setdef'] = true;
 
 $array['element']['enablehint'] = array();
 $array['element']['enablehint']['value'] = array(0,1);
@@ -219,7 +219,7 @@ $array['filter']['passwdclient'] = array('set'		=> false,
 					 'minlen'	=> 4,
 					 'maxlen'	=> 64,
 					 'regexp'	=> '/^[a-zA-Z0-9-\._~\!\$&\'\(\)\*\+,;=:%]+$/');
-$array['filter']['profileclient'] = array('set' => false,'chk' => 2);
+$array['filter']['cti_profile_id'] = array('set' => false,'chk' => 2,'cast' => 'ulongint');
 $array['filter']['enablehint'] = array('bool' => true);
 $array['filter']['enablevoicemail'] = array('bool' => true);
 $array['filter']['enablexfer'] = array('bool' => true);

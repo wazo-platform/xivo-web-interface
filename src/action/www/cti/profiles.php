@@ -111,10 +111,7 @@ switch($act)
 				$info = array_merge($info,$result);
 			}
 			else
-			{
-				$app_cti_profile->update_users_with_profile($info["cti_profile"]["name"]);
 				$_QRY->go($_TPL->url('cti/profiles'),$param);
-			}
 		}
 
 		if($service['list'] !== false && dwho_issa('service',$info) === true
@@ -153,8 +150,6 @@ switch($act)
 				|| ($info = $app->get($_QR['id'])) === false)
 			$_QRY->go($_TPL->url('cti/profiles'),$param);
 
-		$name = $info['cti_profile']['name'];
-		$app->disable_users_with_profile($name);
 		$app->delete();
 
 		$_QRY->go($_TPL->url('cti/profiles'),$param);

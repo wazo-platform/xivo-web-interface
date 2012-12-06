@@ -120,9 +120,6 @@ dwho.dom.set_onload(function()
 					if(dwho_is_undef(dwho.fm[xivo_toolbar_form_name]['search']) === false)
 						dwho.fm[xivo_toolbar_form_name]['search'].value = xivo_toolbar_fm_search;
 
-					if(dwho_is_undef(dwho.fm[xivo_toolbar_form_name]['context']) === false)
-						dwho.fm[xivo_toolbar_form_name]['context'].value = '<?=$context_js?>';
-
 					dwho.fm[xivo_toolbar_form_name]['act'].value = 'deletes';
 					dwho.fm[xivo_toolbar_form_name].submit();
 				}
