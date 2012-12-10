@@ -1,0 +1,17 @@
+; col_name
+Nom de la campagne
+
+; server_error
+Serveur erreur, vérifiez le xivo-recording-webservice
+
+; no_recording_campaign
+Aucun campagne d'enregistrement trouvé
+
+; opt_modify
+Modifier
+
+; opt_delete
+Supprimer
+
+; opt_delete_confirm
+Etes-vous certain de vouloir supprimer cette campagne ?
