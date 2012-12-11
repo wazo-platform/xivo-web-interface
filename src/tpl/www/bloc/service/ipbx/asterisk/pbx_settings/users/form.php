@@ -249,6 +249,7 @@ endif;
 						'altkey'	=> 'name',
 						'key'		=> 'id',
 						'default'	=> $element['userfeatures']['cti_profile_id']['default'],
+						'empty'	=> true,
 						'selected'	=> $info['userfeatures']['cti_profile_id']),
 					$profileclient_list);
 	endif;

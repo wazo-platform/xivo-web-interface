@@ -70,8 +70,8 @@ $array['element']['passwdclient'] = array();
 $array['element']['passwdclient']['default'] = '';
 
 $array['element']['cti_profile_id'] = array();
-$array['element']['cti_profile_id']['default'] = 0;
-$array['element']['cti_profile_id']['setdef'] = true;
+$array['element']['cti_profile_id']['default'] = '';
+$array['element']['cti_profile_id']['null'] = true;
 
 $array['element']['enablehint'] = array();
 $array['element']['enablehint']['value'] = array(0,1);
