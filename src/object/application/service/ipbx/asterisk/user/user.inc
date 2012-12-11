@@ -1927,7 +1927,8 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		}
 
 		if (isset($arr['userfeatures']['enableclient']) === true
-		&& isset($arr['userfeatures']['profileclient']) === true)
+		&& isset($arr['userfeatures']['profileclient']) === true
+		&& (dwho_has_len($arr['userfeatures']['profileclient']) === true))
 		{
 			$profile_name = $arr['userfeatures']['profileclient'];
 			if (($profile_id = $this->_cti_profile->get_cti_profile_id_with_name($profile_name)) === false)
