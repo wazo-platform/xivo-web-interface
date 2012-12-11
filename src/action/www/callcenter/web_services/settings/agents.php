@@ -59,6 +59,18 @@ switch($act)
 		$http_response->set_status_line($status);
 		$http_response->send(true);
 		break;
+	case 'edit':
+		$appagent = &$ipbx->get_application('agent');
+		if(($info = $appagent->get($_QRY->get('id'))) === false)
+			$status = 204;
+		elseif($appagent->edit_from_json($info) === true)
+			$status = 200;
+		else
+			$status = 400;
+
+		$http_response->set_status_line($status);
+		$http_response->send(true);
+		break;
 	case 'delete':
 		$appagent = &$ipbx->get_application('agent');
 

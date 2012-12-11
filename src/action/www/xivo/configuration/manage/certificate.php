@@ -19,14 +19,11 @@
 #
 $modcert = &$_XOBJ->get_module('certificate');
 
-$act 		= isset($_QR['act']) === true ? $_QR['act'] : '';
-$page 		= isset($_QR['page']) === true ? dwho_uint($_QR['page'],1) : 1;
-$search 	= isset($_QR['search']) === true ? strval($_QR['search']) : '';
-$context 	= isset($_QR['context']) === true ? strval($_QR['context']) : '';
+$act = isset($_QR['act']) === true ? $_QR['act'] : '';
+$page = isset($_QR['page']) === true ? dwho_uint($_QR['page'],1) : 1;
+$search = isset($_QR['search']) === true ? strval($_QR['search']) : '';
+$context = isset($_QR['context']) === true ? strval($_QR['context']) : '';
 
-#$_TPL->load_i18n_file('tpl/www/bloc/service/ipbx/asterisk/dundi/peers/add.i18n', 'global');
-
-// default view mode == list
 $param = array('act' => 'list');
 
 if($search !== '')
@@ -34,8 +31,7 @@ if($search !== '')
 else if($context !== '')
 	$param['context'] = $context;
 
-$contexts = false;
-$error    = false;
+$contexts = $error = false;
 
 $language = $_TPL->_i18n->get_language();
 

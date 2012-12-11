@@ -1,18 +1,18 @@
 
 ; success_during_synchronize
-Synchronisation des terminaisons reussies
+Synchronisation des terminaisons reussie
 
 ; error_during_synchronize
 Echec de la synchronisation des terminaisons
 
 ; send_mass_synchronize
-Synchronisation de masse envoyé au terminaisons
+Synchronisation de masse envoyée aux terminaisons
 
 ; params_successfully_updated
-Mise à jour réussi
+Mise à jour réussie
 
 ; error_during_get_params
-Erreur durant la récuperation
+Erreur durant la récupération
 
 ; error_during_edit_params
 Erreur durant la mise à jour 

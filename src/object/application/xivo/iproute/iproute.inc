@@ -210,14 +210,9 @@ class xivo_application_xivo_object_iproute extends xivo_application_xivo_object_
 
 	function is_valid_iproute($iface,$destination,$netmask,$id=null)
 	{
-		# get local UUID
-		$uuid = $this->_sysconfd->request_get('/xivo_uuid');
-		$uuid = $uuid['uuid'];
-
 		$where = array();
 		$where['ifname'] = $iface;
 		$where['hwtypeid'] = 1;
-		$where['uuid'] = $uuid;
 
 		if($this->_netiface->exists($where) === false) {
 			dwho_report::push('error', dwho_i18n::babelfish('interface_not_exist',array($iface)));

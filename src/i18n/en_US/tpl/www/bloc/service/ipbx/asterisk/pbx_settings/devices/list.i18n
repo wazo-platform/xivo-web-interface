@@ -1,8 +1,14 @@
 ; col_mac
 MAC
 
+; col_sort_mac
+Sort by MAC
+
 ; col_ip
 IP
+
+; col_sort_ip
+Sort by IP
 
 ; col_phonenumber
 Phone number
@@ -10,8 +16,14 @@ Phone number
 ; col_vendor
 Vendor
 
+; col_sort_vendor
+Sort by vendor
+
 ; col_model
-Modele
+Model
+
+; col_sort_model
+Sort by model
 
 ; col_plugin
 Plugin

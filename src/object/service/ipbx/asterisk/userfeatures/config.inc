@@ -193,9 +193,6 @@ $array['element']['ringforward']['default'] = '';
 $array['element']['rightcallcode'] = array();
 $array['element']['rightcallcode']['default'] = '';
 
-$array['element']['alarmclock'] = array();
-$array['element']['alarmclock']['default'] = '';
-
 
 $array['filter'] = array();
 $array['filter']['firstname'] = array('cast' => 'sgraph','maxlen' => 128);
@@ -264,8 +261,5 @@ $array['filter']['ringextern'] = array('set' => false,'chk' => 2,'maxlen' => 64)
 $array['filter']['ringgroup'] = array('set' => false,'chk' => 2,'maxlen' => 64);
 $array['filter']['ringforward'] = array('set' => false,'chk' => 2,'maxlen' => 64);
 $array['filter']['rightcallcode'] = array('set'	=> false,'chk' => 2,'regexp' => '/^[0-9]+$/','maxlen' => 15);
-$array['filter']['alarmclock'] = array('set' => false,'chk' => 2,'regexp' => '/^[0-9]{2}:[0-9]{2}$/');
-#$array['filter']['pitch'] = array('set' => false,'chk' => 2,'key' => array('highest', 'higher', 'high', 'low', 'lower','lowest'));
-#$array['filter']['pitchdirection'] = array('set' => false,'chk' => 2,'key' => array('rx', 'tx', 'both'));
 
 ?>

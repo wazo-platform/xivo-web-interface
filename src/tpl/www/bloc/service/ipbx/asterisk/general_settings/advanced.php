@@ -143,96 +143,12 @@ if(isset($error_js[0]) === true)
 
 <div id="sb-part-agents" class="b-nodisplay">
 <?php
-		echo $form->checkbox(array('desc'	=> $this->bbf('fm_generalagents_multiplelogin'),
-					'name'	=> 'agentgeneralparams[multiplelogin]',
-					'labelid'	=> 'agentgeneralparams-multiplelogin',
-					'default'	=> $element['agentgeneralparams']['multiplelogin']['default'],
-					'help'	=> $this->bbf('hlp_fm_generalagents_multiplelogin'),
-					'checked'	=> $info['agentgeneralparams']['multiplelogin'])),
-
-		$form->checkbox(array('desc'	=> $this->bbf('fm_agentoptions_endcall'),
-					'name'	=> 'agentglobalparams[endcall]',
-					'labelid'	=> 'agentglobalparams-endcall',
-					'help'	=> $this->bbf('hlp_fm_agentoptions_endcall'),
-					'default'	=> $element['agentglobalparams']['endcall']['default'],
-					'checked' => $info['agentglobalparams']['endcall'])),
-
-		$form->checkbox(array('desc'	=> $this->bbf('fm_agentoptions_autologoffunavail'),
+		echo $form->checkbox(array('desc'	=> $this->bbf('fm_agentoptions_autologoffunavail'),
 					'name'	=> 'agentglobalparams[autologoffunavail]',
 					'labelid'	=> 'agentglobalparams-autologoffunavail',
 					'help'	=> $this->bbf('hlp_fm_agentoptions_autologoffunavail'),
 					'default'	=> $element['agentglobalparams']['autologoffunavail']['default'],
-					'checked' => $info['agentglobalparams']['autologoffunavail'])),
-
-		$form->select(array('desc'	=> $this->bbf('fm_agentoptions_maxlogintries'),
-					'name'	=> 'agentglobalparams[maxlogintries]',
-					'labelid'	=> 'agentglobalparams-maxlogintries',
-					'key'	=> false,
-					'help'	=> $this->bbf('hlp_fm_agentoptions_maxlogintries'),
-					'bbf'	=> 'fm_agentoptions_maxlogintries-opt',
-					'bbfopt'	=> array('argmode' => 'paramvalue'),
-					'default'	=> $element['agentglobalparams']['maxlogintries']['default'],
-					'selected'	=> $info['agentglobalparams']['maxlogintries']),
-					$element['agentglobalparams']['maxlogintries']['value']),
-
-		$form->checkbox(array('desc'	=> $this->bbf('fm_agentoptions_updatecdr'),
-					'name'	=>'agentglobalparams[updatecdr]',
-					'labelid'	=>'agentglobalparams-updatecdr',
-					'help'	=>$this->bbf('hlp_fm_agentoptions_updatecdr'),
-					'default'	=>$element['agentglobalparams']['updatecdr']['default'],
-					'checked'=>$info['agentglobalparams']['updatecdr'])),
-
-		$form->checkbox(array('desc'	=> $this->bbf('fm_agentoptions_recordagentcalls'),
-				      'name'	=> 'agentglobalparams[recordagentcalls]',
-				      'labelid'	=> 'agentglobalparams-recordagentcalls',
-					    'help'	=> $this->bbf('hlp_fm_agentoptions_recordagentcalls'),
-				      'default'	=> $element['agentglobalparams']['recordagentcalls']['default'],
-				      'checked' => $info['agentglobalparams']['recordagentcalls'])),
-
-		$form->select(array('desc'	=> $this->bbf('fm_agentoptions_recordformat'),
-				    'name'	=> 'agentglobalparams[recordformat]',
-				    'labelid'	=> 'agentglobalparams-recordformat',
-				    'key'	=> false,
-				    'help'	=> $this->bbf('hlp_fm_agentoptions_recordformat'),
-				    'bbf'	=> 'ast_format_name_info',
-				    'bbfopt'	=> array('argmode' => 'paramvalue'),
-				    'default'	=> $element['agentglobalparams']['recordformat']['default'],
-				    'selected'	=> $info['agentglobalparams']['recordformat']),
-			      $element['agentglobalparams']['recordformat']['value']),
-
-		$form->text(array('desc'	=> $this->bbf('fm_agentoptions_urlprefix'),
-				  'name'	=> 'agentglobalparams[urlprefix]',
-				  'labelid'	=> 'agentglobalparams-urlprefix',
-				  'size'	=> 15,
-			    'help'	=> $this->bbf('hlp_fm_agentoptions_urlprefix'),
-				  'default'	=> $element['agentglobalparams']['urlprefix']['default'],
-				  'value'	=> $info['agentglobalparams']['urlprefix'])),
-
-		$form->text(array('desc'	=> $this->bbf('fm_agentoptions_savecallsin'),
-				  'name'	=> 'agentglobalparams[savecallsin]',
-				  'labelid'	=> 'agentglobalparams-savecallsin',
-				  'size'	=> 15,
-			    'help'	=> $this->bbf('hlp_fm_agentoptions_savecallsin'),
-				  'default'	=> $element['agentglobalparams']['savecallsin']['default'],
-				  'value'	=> $info['agentglobalparams']['savecallsin'])),
-
-		$form->select(array('desc'	=> $this->bbf('fm_agentoptions_custom_beep'),
-				    'name'	=> 'agentglobalparams[custom_beep]',
-				    'labelid'	=> 'agentglobalparams-custom-beep',
-				    'help'	=> $this->bbf('hlp_fm_agentoptions_custom_beep'),
-				    'empty'	=> $this->bbf('fm_agentoptions_custom-beep-opt','default'),
-				    'default'	=> $element['agentglobalparams']['custom_beep']['default'],
-				    'selected'	=> $info['agentglobalparams']['custom_beep']),
-			      $this->get_var('beep_list')),
-
-		$form->select(array('desc'	=> $this->bbf('fm_agentoptions_goodbye'),
-				    'name'	=> 'agentglobalparams[goodbye]',
-				    'labelid'	=> 'agentglobalparams-goodbye',
-				    'help'	=> $this->bbf('hlp_fm_agentoptions_goodbye'),
-				    'empty'	=> $this->bbf('fm_agentoptions_goodbye-opt','default'),
-				    'default'	=> $element['agentglobalparams']['goodbye']['default'],
-				    'selected'	=> $info['agentglobalparams']['goodbye']),
-			      $this->get_var('goodbye_list'));
+					'checked' => $info['agentglobalparams']['autologoffunavail']));
 ?>
 </div>
 

@@ -43,6 +43,12 @@ Fieldname
 ; col_2
 Value
 
+; col_add
+Add field
+
+; opt_disp-delete
+Delete field
+
 ; no_disp
 No fields
 

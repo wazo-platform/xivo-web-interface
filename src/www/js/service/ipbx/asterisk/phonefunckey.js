@@ -157,8 +157,7 @@ var xivo_phonefunckey_suggest_type = {
 	'meetme' : xivo_phonefunckey_suggest_event_meetme,
 	'extenfeatures-agentstaticlogtoggle' : xivo_phonefunckey_suggest_event_agent,
 	'extenfeatures-agentstaticlogin' : xivo_phonefunckey_suggest_event_agent,
-	'extenfeatures-agentstaticlogoff' : xivo_phonefunckey_suggest_event_agent,
-	'extenfeatures-agentdynamiclogin' : xivo_phonefunckey_suggest_event_agent
+	'extenfeatures-agentstaticlogoff' : xivo_phonefunckey_suggest_event_agent
 };
 
 function xivo_build_phonefunckey_array(id) {

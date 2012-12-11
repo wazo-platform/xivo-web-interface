@@ -682,6 +682,19 @@ abstract class xivo_libdatastorage_abstract extends xivo_libconfig_abstract
 			return($rs[array_pop($primary_key)]);
 		}
 	}
+
+	protected function _interval_value($value)
+	{
+		if (!$value)
+			return('00:00:00');
+		else
+			return($this->_strip_interval_microseconds($value));
+	}
+
+	protected function _strip_interval_microseconds($interval_string)
+	{
+		return(substr($interval_string, 0, 8));
+	}
 }
 
 ?>

@@ -188,14 +188,6 @@ $array['type']['extenfeatures-agentstaticlogoff']['supervisable'] = true;
 $array['type']['extenfeatures-agentstaticlogoff']['destination'] = true;
 $array['type']['extenfeatures-agentstaticlogoff']['progfunckey'] = true;
 
-$array['type']['extenfeatures-agentdynamiclogin'] = array();
-$array['type']['extenfeatures-agentdynamiclogin']['category'] = 'extension-agent';
-$array['type']['extenfeatures-agentdynamiclogin']['name'] = 'extenfeatures-agentdynamiclogin';
-$array['type']['extenfeatures-agentdynamiclogin']['extension'] = false;
-$array['type']['extenfeatures-agentdynamiclogin']['supervisable'] = true;
-$array['type']['extenfeatures-agentdynamiclogin']['destination'] = true;
-$array['type']['extenfeatures-agentdynamiclogin']['progfunckey'] = true;
-
 $array['type']['generalfeatures-parkext'] = array();
 $array['type']['generalfeatures-parkext']['category'] = 'extension-parking';
 $array['type']['generalfeatures-parkext']['name'] = 'generalfeatures-parkext';

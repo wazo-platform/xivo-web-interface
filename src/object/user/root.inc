@@ -22,10 +22,8 @@ require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'user','abstract.inc'));
 
 class xivo_user_root extends xivo_user_abstract
 {
-	var $_param	= array('factory' => true);
+	var $_param		= array('factory' => true);
 	var $_authent	= null;
-	var $_error	= null;
-	var $_errornb	= 0;
 
 	public function __construct($factory=true)
 	{
@@ -61,6 +59,9 @@ class xivo_user_root extends xivo_user_abstract
 
 		$filter = new dwho_filter($arr_filter);
 
+		if($meta === 'root')
+			$arr['valid'] = 1;
+
 		if($filter->chk($arr) === false)
 		{
 			$this->_error = &$filter->get_error();
@@ -91,22 +92,16 @@ class xivo_user_root extends xivo_user_abstract
 			$err = true;
 		}
 
-		// login must be unique
 		if($this->exists(array('login' => $arr['login'])))
-		{ $this->_error['login'] = 'alreadyexist'; $err = true; }
+		{
+			$this->_error['login'] = 'alreadyexist';
+			$err = true;
+		}
 
 		if($err)
-		{ return(false); }
+			return(false);
 
 		return(parent::add($filter->get_result()));
-	}
-	function get_error()
-	{ return($this->_error); }
-
-	function reset_error()
-	{
-		$this->_error = array();
-		$this->_errnb = 0;
 	}
 
 }

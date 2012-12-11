@@ -55,6 +55,19 @@ switch($act)
 		$http_response->set_status_line($status);
 		$http_response->send(true);
 		break;
+	case 'edit':
+		$appgroup = &$ipbx->get_application('group');
+
+		if(($group = $appgroup->get($_QRY->get('id'))) === false)
+			$status = 404;
+		else if($appgroup->edit_from_json($group) === true)
+			$status = 200;
+		else
+			$status = 400;
+
+		$http_response->set_status_line($status);
+		$http_response->send(true);
+		break;
 	case 'delete':
 		$appgroup = &$ipbx->get_application('group');
 

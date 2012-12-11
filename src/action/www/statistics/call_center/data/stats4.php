@@ -111,16 +111,16 @@ $xivo_jqplot->init_data_full($tpl_statistics);
 
 switch ($axetype)
 {
-	case 'type':
-		$xivo_jqplot->gener_graph('period_pie_connect','chart1','total_call_connect_by_period');
-		$xivo_jqplot->gener_graph('period_pie_abandon','chart2','total_call_abandon_by_period');
-		break;
 	case 'day':
 	case 'week':
 	case 'month':
 	case 'year':
+		$xivo_jqplot->gener_graph('period_pie_connect','chart1','total_call_connect_by_period');
+		$xivo_jqplot->gener_graph('period_pie_abandon','chart2','total_call_abandon_by_period');
 		break;
+	case 'type':
 	default:
+		break;
 }
 
 $_TPL->set_var('xivo_jqplot',$xivo_jqplot);

@@ -59,6 +59,10 @@ class dwho_session
 			session_save_path(DWHO_SESS_SAVE_PATH);
 
 		$this->_mk_cookie();
+
+		if (!isset($_SESSION['DWHO_SECURE_NAME']))
+			$_SESSION['DWHO_SECURE_NAME'] = uniqid('xivo_', true);
+		define('DWHO_SECURE_STR',$_SESSION['DWHO_SECURE_NAME']);
 	}
 
 	function _mk_cookie()

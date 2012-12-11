@@ -763,7 +763,6 @@ function update_callerid() {
 }
 
 $(function() {
-	$('#it-userfeatures-alarmclock').timepicker({});
 	$('#it-userfeatures-firstname').change(update_callerid);
 	$('#it-userfeatures-lastname').change(update_callerid);
 });

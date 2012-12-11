@@ -23,7 +23,7 @@ require_once('xivo.php');
 if($_USR->mk_active() === false)
 	$_QRY->go($_TPL->url('xivo/logoff'));
 
-$file = '/var/backups/pf-xivo/'.$_QR['path'];
+$file = '/var/backups/xivo/'.$_QR['path'];
 
 if(dwho_file::is_f_r($file) === false)
 	die('File not exist.');

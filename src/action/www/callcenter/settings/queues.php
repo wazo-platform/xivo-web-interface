@@ -85,7 +85,7 @@ switch($act)
 			{
 				$fm_save = false;
 				$result = $appqueue->get_result();
-				$error = array_merge($appqueue->get_error(), $errval);
+				$error = $appqueue->get_error();
 				$result['dialaction'] = $appqueue->get_dialaction_result();
 			}
 			else
@@ -98,7 +98,7 @@ switch($act)
 		&& empty($result['queue']['periodic-announce']) === false)
 		{
 			if(is_array($result['queue']['periodic-announce']) === false)
-				$pannounce['slt'] = explode('|',$result['queue']['periodic-announce']);
+				$pannounce['slt'] = explode(',',$result['queue']['periodic-announce']);
 			else
 				$pannounce['slt'] = $result['queue']['periodic-announce'];
 
@@ -218,7 +218,7 @@ switch($act)
 			{
 				$fm_save = false;
 				$result = $appqueue->get_result();
-				$error = array_merge($appqueue->get_error(), $errval);
+				$error = $appqueue->get_error();
 				$result['dialaction'] = $appqueue->get_dialaction_result();
 			}
 			else
@@ -231,7 +231,7 @@ switch($act)
 		&& empty($return['queue']['periodic-announce']) === false)
 		{
 			if(is_array($return['queue']['periodic-announce']) === false)
-				$pannounce['slt'] = explode('|',$return['queue']['periodic-announce']);
+				$pannounce['slt'] = explode(',',$return['queue']['periodic-announce']);
 			else
 				$pannounce['slt'] = $return['queue']['periodic-announce'];
 

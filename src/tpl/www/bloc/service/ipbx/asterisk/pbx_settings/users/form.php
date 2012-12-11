@@ -451,18 +451,6 @@ endif;
 	<fieldset id="fld-services">
 		<legend><?=$this->bbf('fld-services');?></legend>
 <?php
-/* hide alarm clock
-	echo	$form->text(array('desc'	=> $this->bbf('fm_userfeatures_alarmclock'),
-				  'name'	=> 'userfeatures[alarmclock]',
-				  'labelid'	=> 'userfeatures-alarmclock',
-				  'size'	=> 5,
-				  'readonly'	=> false,
-				  'value'	=> $info['userfeatures']['alarmclock'],
-				  'error'	=> $this->bbf_args('error',
-				$this->get_var('error', 'userfeatures', 'alarmclock'))));
-*/
-?>
-<?php
 	echo	$form->checkbox(array('desc'	=> $this->bbf('fm_userfeatures_enablehint'),
 				      'name'	=> 'userfeatures[enablehint]',
 				      'labelid'	=> 'userfeatures-enablehint',

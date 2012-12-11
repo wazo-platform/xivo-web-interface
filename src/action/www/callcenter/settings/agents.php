@@ -311,7 +311,6 @@ switch($act)
 		$_TPL->set_var('umember',$umember);
 		$_TPL->set_var('queues',$queues);
 		$_TPL->set_var('qmember',$qmember);
-		$_TPL->set_var('moh_list',$appagent->get_musiconhold());
 		$_TPL->set_var('context_list',$appagent->get_context_list(null,null,null,false,'internal'));
 		$_TPL->set_var('agentgroup_list',$agentgroup_list);
 
@@ -433,7 +432,6 @@ switch($act)
 		$_TPL->set_var('umember',$umember);
 		$_TPL->set_var('queues',$queues);
 		$_TPL->set_var('qmember',$qmember);
-		$_TPL->set_var('moh_list',$appagent->get_musiconhold());
 		$_TPL->set_var('context_list',$appagent->get_context_list(null,null,null,false,'internal'));
 		$_TPL->set_var('agentgroup_list',$agentgroup_list);
 

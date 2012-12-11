@@ -87,13 +87,9 @@ class dwho_query
 		$data = $this->_orig[$type];
 
 		if(($mode & DWHO_QUERY_MODE_RAW) !== 0)
-			$r = &$this->_filter($data,
-					$mode,
-					($this->_mquotes === true ? true : null));        // remove spaces and is unquoted
+			$r = &$this->_filter($data, $mode, ($this->_mquotes === true ? true : null));        // remove spaces and is unquoted
 		else
-			$r = &$this->_filter($data,
-					$mode,
-					($this->_mquotes === false ? false : null));    // remove spaces and is quoted
+			$r = &$this->_filter($data, $mode, ($this->_mquotes === false ? false : null));    // remove spaces and is quoted
 
 		return(($ref = &$r));
 	}
@@ -118,10 +114,10 @@ class dwho_query
 		/*
 		if($query !== false)
 		{
-		if(dwho_has_len($q) === true)
-			$q .= DWHO_SEP_ARG_OUT;
+			if(dwho_has_len($q) === true)
+				$q .= DWHO_SEP_ARG_OUT;
 
-		$q .= DWHO_SESS_STR;
+			$q .= DWHO_SESS_STR;
 		}
 		*/
 		if(dwho_has_len($q) === true)

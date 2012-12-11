@@ -686,6 +686,7 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 		$info = array();
 		$info['usertype'] = 'user';
 		$info['userid'] = 0;
+		$info['position'] = 0;
 		$info['category'] = $type;
 
 		$key = $type.'member';
@@ -1234,31 +1235,11 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 
 	function edit_groupmember()
 	{
-		if(dwho_issa('linefeatures',$this->_info) === false)
-			return(false);
-		else if(dwho_issa('groupmember',$this->_info) === false)
-			return($this->add_groupmember($this->get_result_var('linefeatures','iduserfeatures')));
-
-		$this->_return['groupmember'] = $this->delete_groupmember();
-
-		if($this->get_result('groupmember') === null)
-			return($this->_return['groupmember']);
-
 		return($this->_edit_member_type('group'));
 	}
 
 	function edit_queuemember()
 	{
-		if(dwho_issa('linefeatures',$this->_info) === false)
-			return(false);
-		else if(dwho_issa('queuemember',$this->_info) === false)
-			return($this->add_queuemember($this->get_result_var('linefeatures','iduserfeatures')));
-
-		$this->_return['queuemember'] = $this->delete_queuemember();
-
-		if($this->get_result('queuemember') === null)
-			return($this->_return['queuemember']);
-
 		return($this->_edit_member_type('queue'));
 	}
 
@@ -1269,30 +1250,59 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 			return(false);
 
 		$key = $type.'member';
+		$keyid = $type.'featuresid';
 
-		if(($rs = $this->get_result($key)) === null || $rs === false)
-			return($rs);
+		$old_qm =  array();
+		$new_qm = dwho_array_set_value_to_key($this->get_result($key), $keyid);
 
-		$ret = $this->_return[$key] = array();
-
-		$nb = count($rs);
-
-		for($i = 0;$i < $nb;$i++)
+		if(dwho_issa($key,$this->_info) === true)
 		{
-			$rs[$i]['userid'] = $this->_info['linefeatures']['iduserfeatures'];
-			if($type == 'queue') {
-				$rs[$i]['skills'] = $rs[$i]['userid'];
+
+			$old_qm = dwho_array_set_value_to_key($this->_info[$key], $keyid);
+
+			$to_delete = array_diff_key($old_qm, $new_qm);
+			$to_edit = array_intersect_key($old_qm, $new_qm);
+
+			foreach ($to_delete as $element)
+			{
+				$where = array('usertype' => $element['usertype'],
+							'userid' => $element['userid'],
+							'queue_name' => $element['queue_name']);
+				if($this->_queuemember->delete_where($where) === false)
+					return(false);
+
+				$this->_return[$key][] = $element;
 			}
 
-			unset($rs[$i]['groupfeaturesid'],$rs[$i]['queuefeaturesid']);
+			foreach ($to_edit as $element)
+			{
+				if($type == 'queue')
+					$element['skills'] = $element['userid'];
 
-			if($this->_queuemember->add($rs[$i]) === false)
+				unset($element['groupfeaturesid'],$element['queuefeaturesid']);
+				$where = array('queue_name' => $element['queue_name'], 'interface' => $element['interface']);
+				if($this->_queuemember->edit($where, $element) === false)
+					return(false);
+
+				$this->_return[$key][] = $element;
+			}
+
+		}
+
+		$to_add = array_diff_key($new_qm, $old_qm);
+
+		foreach ($to_add as $element)
+		{
+			$element['userid'] = $this->_info['linefeatures']['iduserfeatures'];
+			if($type == 'queue')
+				$element['skills'] = $element['userid'];
+
+			unset($element['groupfeaturesid'],$element['queuefeaturesid']);
+
+			if($this->_queuemember->add($element) === false)
 				return(false);
 
-			$ret['queue_name'] = $rs[$i]['queue_name'];
-			$ret['interface'] = $rs[$i]['interface'];
-
-			$this->_return[$key][] = $ret;
+			$this->_return[$key][] = $element;
 		}
 
 		if(isset($this->_return[$key][0]) === false)

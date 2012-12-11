@@ -20,7 +20,7 @@
 
 $url = &$this->get_module('url');
 
-$name    = $this->get_var('name');
+$name = $this->get_var('name');
 $content = $this->get_var('content');
 
 header('Pragma: no-cache');

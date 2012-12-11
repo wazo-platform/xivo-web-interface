@@ -43,9 +43,6 @@ $preferencesavail = array(
 		'loginwindow.url'                 => $_TPL->bbf('pref-loginwindow-url'),
 		'xlet.identity.logagent'          => $_TPL->bbf('pref-xlet-identity-logagent'),
 		'xlet.identity.pauseagent'        => $_TPL->bbf('pref-xlet-identity-pauseagent'),
-		'xlet.agentsnext.fontname'        => $_TPL->bbf('pref-xlet-agentsnext-fontname'),
-		'xlet.agentsnext.fontsize'        => $_TPL->bbf('pref-xlet-agentsnext-fontsize'),
-		'xlet.agentsnext.blinktime'       => $_TPL->bbf('pref-xlet-agentsnext-blinktime'),
 		'xlet.agentdetails.noqueueaction' => $_TPL->bbf('pref-xlet-agentdetails-noqueueaction'),
 		'xlet.agentdetails.hideastid'     => $_TPL->bbf('pref-xlet-agentdetails-hideastid'),
 		'xlet.agentdetails.hidecontext'   => $_TPL->bbf('pref-xlet-agentdetails-hidecontext'),
@@ -53,8 +50,7 @@ $preferencesavail = array(
 		'xlet.agents.fontsize'            => $_TPL->bbf('pref-xlet-agents-fontsize'),
 		'xlet.agents.iconsize'            => $_TPL->bbf('pref-xlet-agents-iconsize'),
 		'xlet.queues.statsfetchperiod'    => $_TPL->bbf('pref-xlet-queues-statsfetchperiod'),
-		'presence.autochangestate'        => $_TPL->bbf('pref-presence-autochangestate'),
-		'adlibitum'                       => $_TPL->bbf('pref-adlibitum')
+		'presence.autochangestate'        => $_TPL->bbf('pref-presence-autochangestate')
 );
 
 $ctixlets = array_keys(dwho_json::decode(file_get_contents('/etc/pf-xivo/xivo-ctid/allowedxlets.json'), true));

@@ -49,7 +49,7 @@ endif;
 							'#',
 							null,
 							'onclick="xivo_phonefunckey_add(this);
-								  return(dwho.dom.free_focus());" 
+								  return(dwho.dom.free_focus());"
                                                         id="add_funckey_button"',
 							$this->bbf('col_phonefunckey-add'));?></th>
 	</tr>
@@ -136,8 +136,6 @@ if($nb > 0):
 				    array('agenttype'	=> 'extenfeatures-agentstaticlogin'));
 		$this->file_include('bloc/service/ipbx/asterisk/pbx_settings/users/phonefunckey/extension-agent',
 				    array('agenttype'	=> 'extenfeatures-agentstaticlogoff'));
-		$this->file_include('bloc/service/ipbx/asterisk/pbx_settings/users/phonefunckey/extension-agent',
-				    array('agenttype'	=> 'extenfeatures-agentdynamiclogin'));
 		$this->file_include('bloc/service/ipbx/asterisk/pbx_settings/users/phonefunckey/bosssecretary');
 		$this->file_include('bloc/service/ipbx/asterisk/pbx_settings/users/phonefunckey/custom');
 
@@ -198,8 +196,6 @@ endif;
 			    array('agenttype'	=> 'extenfeatures-agentstaticlogin'));
 	$this->file_include('bloc/service/ipbx/asterisk/pbx_settings/users/phonefunckey/extension-agent',
 			    array('agenttype'	=> 'extenfeatures-agentstaticlogoff'));
-	$this->file_include('bloc/service/ipbx/asterisk/pbx_settings/users/phonefunckey/extension-agent',
-			    array('agenttype'	=> 'extenfeatures-agentdynamiclogin'));
 	$this->file_include('bloc/service/ipbx/asterisk/pbx_settings/users/phonefunckey/bosssecretary');
 	$this->file_include('bloc/service/ipbx/asterisk/pbx_settings/users/phonefunckey/custom');
 

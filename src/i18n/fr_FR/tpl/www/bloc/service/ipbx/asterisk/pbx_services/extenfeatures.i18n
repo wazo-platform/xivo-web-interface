@@ -160,9 +160,6 @@ Connecte un agent statique :
 ; fm_extenfeatures_enable-agentstaticlogoff
 Déconnecte un agent statique :
 
-; fm_extenfeatures_enable-agentdynamiclogin
-Connecte un agent dynamique :
-
 ; fm_extenfeatures_enable-phoneprogfunckey
 Programmation des touches de fonction :
 

@@ -46,6 +46,19 @@ switch($act)
 		$http_response->set_status_line($status);
 		$http_response->send(true);
 		break;
+	case 'edit':
+		$appentity = &$_XOBJ->get_application('entity');
+
+		if(($entity = $appentity->get($_QRY->get('id'))) === false)
+			$status = 404;
+		else if($appentity->edit_from_json($entity) === true)
+			$status = 200;
+		else
+			$status = 400;
+
+		$http_response->set_status_line($status);
+		$http_response->send(true);
+		break;
 	case 'delete':
 		$appentity = &$_XOBJ->get_application('entity');
 

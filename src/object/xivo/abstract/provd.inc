@@ -345,6 +345,9 @@ abstract class xivo_object_provd_abstract extends xivo_object_abstract
 
 	public function edit_params($uri,$value)
 	{
+		if ($value === '')
+			$value = null;
+
 		$data = array();
 		$data['param'] = array();
 		$data['param']['value'] = $value;

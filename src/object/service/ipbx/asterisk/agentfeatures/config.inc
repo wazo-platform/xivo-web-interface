@@ -44,39 +44,10 @@ $array['element']['language'] = array();
 $array['element']['language']['value'] = dwho_i18n::get_supported_language_list();
 $array['element']['language']['default'] = '';
 
-$array['element']['silent'] = array();
-$array['element']['silent']['value'] = array(0,1);
-$array['element']['silent']['default'] = 0;
-$array['element']['silent']['set'] = true;
-
 $array['element']['autologoff'] = array();
 $array['element']['autologoff']['value'] = array(0,5,10,15,20,25,30,35,40,45,50,55,60);
 $array['element']['autologoff']['default'] = 0;
 $array['element']['autologoff']['setdef'] = true;
-
-$array['element']['ackcall'] = array();
-$array['element']['ackcall']['value'] = array('no','yes','always');
-$array['element']['ackcall']['default'] = 'no';
-
-$array['element']['acceptdtmf'] = array();
-$array['element']['acceptdtmf']['value'] = array('0','1','2','3','4','5','6','7','8','9','*','#');
-$array['element']['acceptdtmf']['default'] = '#';
-$array['element']['acceptdtmf']['null'] = true;
-
-$array['element']['enddtmf'] = array();
-$array['element']['enddtmf']['value'] = array('0','1','2','3','4','5','6','7','8','9','*','#');
-$array['element']['enddtmf']['default'] = '*';
-$array['element']['enddtmf']['null'] = true;
-
-$array['element']['wrapuptime'] = array();
-$array['element']['wrapuptime']['value'] = array(0,5000,10000,15000,20000,
-						 25000,30000,35000,40000,
-						 45000,50000,55000,60000);
-$array['element']['wrapuptime']['default'] = 0;
-$array['element']['wrapuptime']['setdef'] = true;
-
-$array['element']['musiconhold'] = array();
-$array['element']['musiconhold']['default'] = XIVO_SRE_IPBX_AST_MOH_DEFAULT;
 
 $array['element']['description'] = array();
 $array['element']['description']['default'] = '';
@@ -89,19 +60,7 @@ $array['filter']['firstname'] = array('set' => false,'chk' => 2,'maxlen' => 128,
 $array['filter']['lastname'] = array('set' => false,'chk' => 2,'maxlen' => 128,'cast' => 'sgraph');
 $array['filter']['context'] = array('callback' => 'xivo_service_asterisk::chk_context');
 $array['filter']['language'] = array('set' => false,'chk' => 2,'maxlen' => 5,'key' => dwho_i18n::get_supported_language_list());
-$array['filter']['silent'] = array('bool' => true);
 $array['filter']['autologoff'] = array('cast' => 'uint','between' => array(0,60,5));
-$array['filter']['ackcall'] = array('key' => array('no','yes','always'));
-$array['filter']['acceptdtmf'] = array('set' => false,
-					'chk'    => 2,
-					'key'    => array('0','1','2','3','4','5','6','7','8','9','*','#'));
-$array['filter']['enddtmf'] = array('set' => false,
-					'chk'    => 2,
-					'key'    => array('0','1','2','3','4','5','6','7','8','9','*','#'));
-$array['filter']['wrapuptime'] = array('key' => array(0,5000,10000,15000,20000,
-						      25000,30000,35000,40000,
-						      45000,50000,55000,60000));
-$array['filter']['musiconhold'] = array('set' => false,'chk' => 2,'maxlen' => 20);
 $array['filter']['description'] = array('set' => false,'chk' => 2,'maxlen' => 1000,'cast' => 'sgraph_crlf_tab','eol' => true);
 
 ?>

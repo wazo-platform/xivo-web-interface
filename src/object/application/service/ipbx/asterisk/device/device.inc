@@ -342,28 +342,28 @@ class xivo_application_service_asterisk_device extends xivo_application_asterisk
 		return($r);
 	}
 
-	public function get_devices_search($search,$disable=null,$order=null,$limit=null,$assoc=false,$initialized=null)
+	public function get_devices_search($search,$disable=null,$order=null,$limit=null,$assoc=false)
 	{
-		return($this->_get_devices('search',$disable,$search,$order,$limit,$assoc,$initialized));
+		return($this->_get_devices('search',$disable,$search,$order,$limit,$assoc));
 	}
 
-	public function get_devices_list($disable=null,$order=null,$limit=null,$assoc=false,$initialized=null)
+	public function get_devices_list($disable=null,$order=null,$limit=null,$assoc=false)
 	{
-		return($this->_get_devices('list',$disable,null,$order,$limit,$assoc,$initialized));
+		return($this->_get_devices('list',$disable,null,$order,$limit,$assoc));
 	}
 
-	private function _get_devices($action,$disable=null,$search='',$order=null,$limit=null,$assoc=false,$initialized=null)
+	private function _get_devices($action,$disable=null,$search='',$order=null,$limit=null,$assoc=false)
 	{
 		$search = strval($search);
 
 		switch($action)
 		{
 			case 'search':
-				$rs = $this->_dso->search($search,$disable,$initialized,$order,$limit);
+				$rs = $this->_dso->search($search,$disable,$order,$limit);
 				break;
 			case 'list':
 			default:
-				$rs = $this->_dso->get_all($disable,$initialized,$order,$limit);
+				$rs = $this->_dso->get_all($disable,$order,$limit);
 		}
 
 		$this->_cnt = $this->_dso->get_cnt();
@@ -455,6 +455,8 @@ class xivo_application_service_asterisk_device extends xivo_application_asterisk
 			$this->_set_error('devicefeatures',$this->_devicefeatures->get_filter_error());
 			return(false);
 		}
+
+		$rs['mac'] = strtolower($rs['mac']);
 
 		$this->_set_result('devicefeatures',$rs);
 

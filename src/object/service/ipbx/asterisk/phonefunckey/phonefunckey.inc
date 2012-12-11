@@ -71,7 +71,6 @@ class xivo_service_asterisk_phonefunckey extends xivo_service_asterisk_abstract
 						$data['type'] = $data['typeextenumbers'].'-'.$data['typevalextenumbers'];
 						$data['typeval'] = $data['typevalextenumbersright'];
 						return($data);
-					case 'agentdynamiclogin':
 					case 'agentstaticlogin':
 					case 'agentstaticlogoff':
 					case 'agentstaticlogtoggle':
@@ -177,7 +176,6 @@ class xivo_service_asterisk_phonefunckey extends xivo_service_asterisk_abstract
 
 		switch($arr['type'])
 		{
-			case 'extenfeatures-agentdynamiclogin':
 			case 'extenfeatures-agentstaticlogin':
 			case 'extenfeatures-agentstaticlogoff':
 			case 'extenfeatures-agentstaticlogtoggle':
@@ -247,7 +245,6 @@ class xivo_service_asterisk_phonefunckey extends xivo_service_asterisk_abstract
 					case 'paging':
 					case 'bsfilter':
 						return(true);
-					case 'agentdynamiclogin':
 					case 'agentstaticlogin':
 					case 'agentstaticlogoff':
 					case 'agentstaticlogtoggle':
@@ -271,8 +268,7 @@ class xivo_service_asterisk_phonefunckey extends xivo_service_asterisk_abstract
 		{
 			case 'agent':
 				if($type !== 'extenfeatures'
-				|| ($typeval !== 'agentdynamiclogin'
-				   && $typeval !== 'agentstaticlogin'
+				|| ($typeval !== 'agentstaticlogin'
 				   && $typeval !== 'agentstaticlogoff'
 				   && $typeval !== 'agentstaticlogtoggle') === true)
 					return(false);
@@ -304,7 +300,6 @@ class xivo_service_asterisk_phonefunckey extends xivo_service_asterisk_abstract
 						$rs['type'] = $type;
 						$rs['val'] = $typeval;
 						return($rs);
-					case 'agentdynamiclogin':
 					case 'agentstaticlogin':
 					case 'agentstaticlogoff':
 					case 'agentstaticlogtoggle':
@@ -332,8 +327,7 @@ class xivo_service_asterisk_phonefunckey extends xivo_service_asterisk_abstract
 		{
 			case 'agent':
 				if($type !== 'extenfeatures'
-				|| ($typeval !== 'agentdynamiclogin'
-				   && $typeval !== 'agentstaticlogin'
+				|| ($typeval !== 'agentstaticlogin'
 				   && $typeval !== 'agentstaticlogoff'
 				   && $typeval !== 'agentstaticlogtoggle') === true)
 					return(false);

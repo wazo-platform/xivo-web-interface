@@ -62,3 +62,5 @@ $menu->set_toolbar('toolbar/xivo/configuration/manage/general');
 $_TPL->set_bloc('main','xivo/configuration/manage/general');
 $_TPL->set_struct('xivo/configuration');
 $_TPL->display('index');
+
+?>

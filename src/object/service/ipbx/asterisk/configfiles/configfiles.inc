@@ -83,7 +83,7 @@ class xivo_service_asterisk_configfiles extends xivo_service_asterisk_abstract
 	function edit($name,$contents)
 	{
 		if(($file = $this->_chk_file($name)) !== false)
-			return(dwho_file::put_contents($file,dwho_eol($contents)));
+			return(dwho_file::put_contents($file, dwho_eol($contents)));
 
 		return(false);
 	}
@@ -92,17 +92,26 @@ class xivo_service_asterisk_configfiles extends xivo_service_asterisk_abstract
 	{
 		$shortname = trim($shortname);
 		if(strlen($shortname) == 0)
-		{ $this->_error['filename'] = 'empty'; return false; }
+		{
+			$this->_error['filename'] = 'empty';
+			return(false);
+		}
 
 		if(strpos($shortname, '.conf') !== strlen($shortname) - 5)
 			$shortname .= '.conf';
 
 		if(preg_match('/^[a-zA-Z0-9_-]+\.conf$/',$shortname) !== 1)
-		{ $this->_error['filename'] = 'regexp'; return false; }
+		{
+			$this->_error['filename'] = 'regexp';
+			return(false);
+		 }
 
 		$filename = $this->_cfgpath.DWHO_SEP_DIR.$shortname;
 		if(dwho_file::is_f($filename) || dwho_file::is_d($filename))
-		{ $this->_error['filename'] = 'alreadyexists'; return false; }
+		{
+			$this->_error['filename'] = 'alreadyexists';
+			return(false);
+		 }
 
 		return $filename;
 	}
@@ -111,13 +120,16 @@ class xivo_service_asterisk_configfiles extends xivo_service_asterisk_abstract
 	{
 		$this->_error = array();
 		if(($filename = $this->_checkfile($shortname)) === false)
-			return false;
+			return(false);
 
 		if(!touch($filename))
-		{ $this->_error['filename'] = 'creationerror'; return false; }
+		{
+			$this->_error['filename'] = 'creationerror';
+			return(false);
+		}
 
-		if(dwho_file::put_contents($filename,dwho_eol($contents)) === false)
-		{ return false; }
+		if(dwho_file::put_contents($filename, dwho_eol($contents)) === false)
+			return(false);
 
 		@chmod($filename, 0664);
 		@chown($filename, 'asterisk');
@@ -144,9 +156,11 @@ class xivo_service_asterisk_configfiles extends xivo_service_asterisk_abstract
 		$this->_error = array();
 
 		if(($http_response = dwho_http::factory('response')) === false
-		|| ($fileinfo = $http_response->upload_file('import',
-							    $this->_conf['import']['file'])) === false)
-		{ $this->_error['import'] = 'empty'; return(false); }
+		|| ($fileinfo = $http_response->upload_file('import', $this->_conf['import']['file'])) === false)
+		{
+			$this->_error['import'] = 'empty';
+			return(false);
+		}
 
 		$shortname = $fileinfo['name'];
 		if(($pos = strpos($shortname, '.')) !== null)
@@ -154,11 +168,15 @@ class xivo_service_asterisk_configfiles extends xivo_service_asterisk_abstract
 		$shortname .= ".conf";
 
 		if(($filename = $this->_checkfile($shortname)) === false)
-			return false;
-		if(!move_uploaded_file($fileinfo['tmp_name'], $filename))
-		{ $this->_error['import'] = 'creationerror'; return false; }
+			return(false);
 
-		return true;
+		if(!move_uploaded_file($fileinfo['tmp_name'], $filename))
+		{
+			$this->_error['import'] = 'creationerror';
+			return(false);
+		}
+
+		return(true);
 	}
 
 	function delete($filename)
@@ -167,11 +185,17 @@ class xivo_service_asterisk_configfiles extends xivo_service_asterisk_abstract
 		$filename = trim($filename);
 
 		if(preg_match('/^[a-zA-Z0-9_-]+\.conf$/',$filename) !== 1)
-		{ $this->_error['filename'] = 'regexp'; return false; }
+		{
+			$this->_error['filename'] = 'regexp';
+			return(false);
+		}
 
 		$filename = $this->_cfgpath.DWHO_SEP_DIR.$filename;
 		if(!dwho_file::is_f($filename))
-		{ $this->_error['filename'] = 'notexists'; return false; }
+		{
+			$this->_error['filename'] = 'notexists';
+			return(false);
+		}
 
 		return(dwho_file::rm($filename));
 	}
@@ -187,7 +211,9 @@ class xivo_service_asterisk_configfiles extends xivo_service_asterisk_abstract
 	}
 
 	function get_error()
-	{ return($this->_error); }
+	{
+		return($this->_error);
+	}
 }
 
 ?>

@@ -1,8 +1,14 @@
 ; col_mac
 MAC
 
+; col_sort_mac
+Trier par MAC
+
 ; col_ip
 IP
+
+; col_sort_ip
+Trier par IP
 
 ; col_phonenumber
 N de tel.
@@ -10,8 +16,14 @@ N de tel.
 ; col_vendor
 Marque
 
+; col_sort_vendor
+Trier par marque
+
 ; col_model
 Modèle
+
+; col_sort_model
+Trier par modèle
 
 ; col_plugin
 Greffon

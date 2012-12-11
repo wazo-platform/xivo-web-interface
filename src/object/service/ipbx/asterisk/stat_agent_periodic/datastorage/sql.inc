@@ -31,7 +31,7 @@ class xivo_service_asterisk_stat_agent_periodic_sql extends xivo_service_asteris
 		$r = $this->_dso->select_singlecolumn();
 
 		if(isset($r[0]) === false)
-			$r = false;
+			return(false);
 
 		return($r[0]);
 	}
@@ -44,9 +44,28 @@ class xivo_service_asterisk_stat_agent_periodic_sql extends xivo_service_asteris
 		$r = $this->_dso->select_singlecolumn();
 
 		if(isset($r[0]) === false)
-			$r = false;
+			return(false);
 
 		return($r[0]);
+	}
+
+	public function agent_productivity($interval, $agent_ids)
+	{
+		$field = array((object) ("(SUM(stat_call_on_queue.talktime)::float / extract('epoch' from SUM(stat_queue_periodic.login_time))) * 100 AS productivity"));
+
+		$this->_stat_common_where($interval);
+
+		$this->_dso->new_select($this->_table, $field);
+
+		$this->_dso->innerjoin('stat_call_on_queue',
+				       'stat_call_on_queue.agent_id = '.$this->_table.'.agent_id',
+				       null,
+				       '');
+
+		$this->_dso->wherein('agent_id',$agent_ids);
+		$this->_stat_common_where($interval);
+
+		$r = $this->_dso->select_singlecolumn();
 	}
 
 	public function agent_time_interval($type, $interval, $agent_ids)
@@ -58,6 +77,9 @@ class xivo_service_asterisk_stat_agent_periodic_sql extends xivo_service_asteris
 				break;
 			case 'pause':
 				$field = array((object) ('SUM("pause_time")'));
+				break;
+			case 'wrapup':
+				$field = array((object) ('SUM("wrapup_time")'));
 				break;
 			default;
 				return(false);
@@ -71,7 +93,7 @@ class xivo_service_asterisk_stat_agent_periodic_sql extends xivo_service_asteris
 		$r = $this->_dso->select_singlecolumn();
 
 		if(isset($r[0]) === false)
-			$r = false;
+			return(false);
 
 		return($r[0]);
 	}

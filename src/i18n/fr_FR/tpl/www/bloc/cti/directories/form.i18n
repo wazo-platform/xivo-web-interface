@@ -43,6 +43,12 @@ Nom du champ
 ; col_2
 Valeur 
 
+; col_add
+Ajouter un champ
+
+; opt_disp-delete
+Supprimer le champ
+
 ; no_disp
 Aucun champ associé
 

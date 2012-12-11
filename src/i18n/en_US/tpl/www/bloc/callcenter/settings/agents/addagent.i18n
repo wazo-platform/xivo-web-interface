@@ -37,9 +37,6 @@ Language:
 ; fm_agentfeatures_numgroup
 Group:
 
-; fm_agentfeatures_silent
-Disable connection announce:
-
 ; bt_inuser
 Add user(s) ->
 
@@ -100,27 +97,6 @@ weight is not an integer
 ; error_fm_queueskill_weight(unbound)
 weight must be an integer between 0 and 100
 
-; fm_agentfeatures_musiconhold
-Music on hold:
-
-; fm_agentfeatures_ackcall
-Require a DTMF to pick a call :
-
-; fm_agentfeatures_ackcall-opt(no)
-No
-
-; fm_agentfeatures_ackcall-opt(yes)
-Yes
-
-; fm_agentfeatures_ackcall-opt(always)
-Always
-
-; fm_agentfeatures_acceptdtmf
-Accept call DTMF :
-
-; fm_agentfeatures_enddtmf
-End call DTMF :
-
 ; fm_agentfeatures_autologoff
 Ring time before logoff :
 
@@ -130,30 +106,5 @@ Unlimited
 ; fm_agentfeatures_autologoff-opt
 %s seconds
 
-; fm_agentfeatures_wrapuptime
-Wrap up time :
-
-; fm_agentfeatures_wrapuptime-opt(0)
-Disabled
-
-; fm_agentfeatures_wrapuptime-opt-seconds
-%s seconds
-
-; hlp_fm_agentfeatures_ackcall
-Asterisk config: ackcall
-
-; hlp_fm_agentfeatures_acceptdtmf
-Asterisk config: acceptdtmf
-
-; hlp_fm_agentfeatures_enddtmf
-Asterisk config: enddtmf
-
 ; hlp_fm_agentfeatures_autologoff
 Asterisk config: autologoff
-
-; hlp_fm_agentfeatures_wrapuptime
-Asterisk config: wrapuptime
-
-; hlp_fm_agentfeatures_musiconhold
-Asterisk config: musiconhold
-

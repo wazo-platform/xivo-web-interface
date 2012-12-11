@@ -617,7 +617,6 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 					$res = dwho_array_startswith_key($ref,'meetmefeatures.',true);
 					$res['identity'] = $this->_service->identity('meetmefeatures',$res,false);
 					break;
-				case 'extenfeatures-agentdynamiclogin':
 				case 'extenfeatures-agentstaticlogin':
 				case 'extenfeatures-agentstaticlogoff':
 				case 'extenfeatures-agentstaticlogtoggle':

@@ -82,9 +82,6 @@ Sonnerie d'un transfert :
 ; fm_userfeatures_rightcallcode
 Code droits d'appel :
 
-; fm_userfeatures_alarmclock
-Heure de réveil :
-
 ; create_context
 Créer un contexte
 
@@ -390,9 +387,6 @@ Connecte un agent statique
 
 ; fm_phonefunckey_type-opt(extenfeatures-agentstaticlogoff)
 Déconnecte un agent statique
-
-; fm_phonefunckey_type-opt(extenfeatures-agentdynamiclogin)
-Connecte un agent dynamique
 
 ; fm_phonefunckey_type-optgroup(extension-parking)
 Parking

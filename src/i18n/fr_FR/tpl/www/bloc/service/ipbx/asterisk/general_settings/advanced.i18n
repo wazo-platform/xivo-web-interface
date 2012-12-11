@@ -21,86 +21,11 @@ Config asterisk: guest
 
 ;;; agents
 
-; fm_generalagents_persistentagents
-Agents persistants :
-
-; hlp_fm_generalagents_persistentagents
-Config asterisk: persistentagents
-
-; fm_generalagents_multiplelogin
-Permettre à une extension d'avoir plusieurs agents :
-
-; fm_agentoptions_endcall
-Activer la possibilité de raccrocher avec un DTMF :
-
 ; fm_agentoptions_autologoffunavail
 Déconnexion automatique si le canal est indisponible :
 
-; fm_agentoptions_maxlogintries
-Nombre de tentatives de connexion :
-
-; fm_agentoptions_maxlogintries-opt(0)
-Illimité
-
-; fm_agentoptions_maxlogintries-opt
-%s
-
-; fm_agentoptions_updatecdr
-Enregistrement dans les journaux d'appels :
-
-; fm_agentoptions_recordagentcalls
-Enregistrement des appels :
-
-; fm_agentoptions_recordformat
-Format d'enregistrement :
-
-; fm_agentoptions_urlprefix
-URL d'accès aux enregistrements :
-
-; fm_agentoptions_custom_beep
-Fichier son des beeps :
-
-; fm_agentoptions_custom-beep-opt(default)
-Défaut
-
-; fm_agentoptions_goodbye
-Fichier son de fin d'un appel :
-
-; fm_agentoptions_goodbye-opt(default)
-Défaut
-
-; fm_agentoptions_savecallsin
-Répertoire contenant les enregistrements des conversations : 
-
-; hlp_fm_agentoptions_maxlogintries
-Config asterisk: maxlogintries
-
 ; hlp_fm_agentoptions_autologoffunavail
 Config asterisk: autologoffunavail
-
-; hlp_fm_agentoptions_endcall
-Config asterisk: endcall
-
-; hlp_fm_agentoptions_goodbye
-Config asterisk: goodbye
-
-; hlp_fm_agentoptions_updatecdr
-Config asterisk: updatecdr
-
-; hlp_fm_agentoptions_recordagentcalls
-Config asterisk: recordagentcalls
-
-; hlp_fm_agentoptions_recordformat
-Config asterisk: recordformat
-
-; hlp_fm_agentoptions_urlprefix
-Config asterisk: urlprefix
-
-; hlp_fm_agentoptions_savecallsin
-Config asterisk: savecallsin
-
-; hlp_fm_agentoptions_custom_beep
-Config asterisk: custom_beep
 
 
 ;;; queues
@@ -171,9 +96,6 @@ Config asterisk: endalert
 
 ; fm_success-save
 Paramètres globaux avancés sauvegardées avec succès
-
-; hlp_fm_generalagents_multiplelogin
-Config asterisk: multiplelogin
 
 ; hlp_fm_generalqueues_autofill
 Config asterisk: autofill

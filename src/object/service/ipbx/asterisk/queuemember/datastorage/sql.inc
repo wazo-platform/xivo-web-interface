@@ -25,6 +25,20 @@ class xivo_service_asterisk_queuemember_sql extends xivo_service_asterisk_abstra
 	var $_autoincrement	= false;
 	var $_unique		= array(array('queue_name','channel','usertype','userid','category'));
 	var $_disable		= null;
+
+	public function get_last_position_for_queuename($queue_name)
+	{
+		$this->_dso->new_select($this->_table,(object) 'MAX("position") AS last_order');
+
+		$this->_dso->where(array('queue_name' => $queue_name));
+
+		$r = $this->_dso->select_singlecolumn();
+
+		if(isset($r[0]) === false)
+			return(0);
+
+		return($r[0]);
+	}
 }
 
 ?>

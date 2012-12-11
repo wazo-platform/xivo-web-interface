@@ -326,6 +326,8 @@ class xivo_application_service_asterisk_incall extends xivo_application_asterisk
 		if(array_key_exists('schedule_id', $arr))
 			$this->_set_result('schedule_id', intval($arr['schedule_id']));
 
+		error_log(dwho_json::encode($this->get_error()));
+
 		return(($this->get_errnb() < 1));
 	}
 

@@ -50,7 +50,6 @@ class xivo_service_asterisk_agentfeatures extends xivo_service_asterisk_abstract
 
 		$data['id'] = (int) $data['id'];
 		$data['commented'] = (bool) $data['commented'];
-		$data['silent'] = (bool) $data['silent'];
 
 		return($data);
 	}
