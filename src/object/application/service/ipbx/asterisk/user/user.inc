@@ -1915,17 +1915,6 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 
 	function _prepare_import($arr, $partial=false)
 	{
-		if(dwho_issa('voicemail',$arr) === true
-		&& empty($arr['voicemail']) === false
-		&& dwho_has_len($arr['voicemail'],'mailbox') === true) {
-			if($issa_userfeatures === true) {
-				$arr['userfeatures']['enablevoicemail'] = true;
-				$arr['userfeatures']['voicemailtype'] = 'asterisk';
-			}
-		} else {
-			unset($arr['voicemail']);
-		}
-
 		if (isset($arr['userfeatures']['enableclient']) === true
 		&& isset($arr['userfeatures']['profileclient']) === true
 		&& (dwho_has_len($arr['userfeatures']['profileclient']) === true))
@@ -1934,6 +1923,15 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			if (($profile_id = $this->_cti_profile->get_cti_profile_id_with_name($profile_name)) === false)
 				return('Wrong CTI profile name');
 			$arr['userfeatures']['cti_profile_id'] = $profile_id;
+		}
+
+		if(dwho_issa('voicemail',$arr) === true
+		&& empty($arr['voicemail']) === false
+		&& dwho_has_len($arr['voicemail'],'mailbox') === true) {
+			$arr['userfeatures']['enablevoicemail'] = true;
+			$arr['userfeatures']['voicemailtype'] = 'asterisk';
+		} else {
+			unset($arr['voicemail']);
 		}
 
 		if (isset($arr['userfeatures']['entityid']) === false)
@@ -2000,16 +1998,17 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		{
 			$ref = &$data[$i];
 			$line_number = $i+1;
+
+			if (dwho_issa('userfeatures', $ref) === false)
+			{
+				$this->_report_error_from_import_csv($r, $this->get_error(), 'Missing userfeatures', $line_number, $ref);
+				continue;
+			}
+
 			if (($arr = $this->_prepare_import($ref)) === false
 			|| is_array($arr) === false)
 			{
 				$this->_report_error_from_import_csv($r, $arr, $arr, $line_number, $ref);
-				continue;
-			}
-
-			if (dwho_issa('userfeatures', $arr) === false)
-			{
-				$this->_report_error_from_import_csv($r, $this->get_error(), 'Missing userfeatures', $line_number, $ref);
 				continue;
 			}
 
