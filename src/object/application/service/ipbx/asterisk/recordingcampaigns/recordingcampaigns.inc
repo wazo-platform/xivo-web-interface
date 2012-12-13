@@ -25,11 +25,12 @@ include('httpful.phar');
 class xivo_application_service_asterisk_recordingcampaigns extends xivo_application_asterisk_abstract
 {
 
+	private $service_url = 'http://127.0.0.1:50050/rest/record/';
 	private function get_recordings()
 	{
 		$recordings_reply = false;
 		$recordings_list = false;
-		$recordings_reply = \Httpful\Request::get('http://192.168.51.11:5050/rest/record/')->send();
+		$recordings_reply = \Httpful\Request::get($this->service_url)->send();
 		if(!$recordings_reply->hasErrors()):
 			# TODO : Check content-type
 			$recordings_list = dwho_json::decode($recordings_reply->body);
@@ -59,7 +60,7 @@ class xivo_application_service_asterisk_recordingcampaigns extends xivo_applicat
 		$recordings_list = false;
 		
 		$content= dwho_json::encode(array("campaign_name"=>$campaign_name, "queue_id"=>$queue_id, "activated"=>$activated, "base_filename"=>$base_filename) );
-		$recordings_reply = \Httpful\Request::post('http://192.168.51.11:5050/rest/record/')
+		$recordings_reply = \Httpful\Request::post($this->service_url)
 								->body($content)
 								->sendsJson()
 								->send();

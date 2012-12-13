@@ -30,6 +30,7 @@ function table_header($this_local)
 {
 ?>
 <div class="b-list">
+<form>
 <table id="table-main-listing">
 	<tr class="sb-top">
 		<th class="th-left xspan"><span class="span-left">&nbsp;</span></th>
@@ -41,14 +42,13 @@ function table_header($this_local)
 }
 
 function print_recordings($recordings_list, $form, $url, $dhtml, $this_local) {
-	if($recordings_list === false):
+	if($recordings_list === false) {
 		print_recordings_error($this_local);
-	else: if (($nb = count($recordings_list)) === 0):
-		print_recordings_empty_list();
-	else:
+	}	elseif (($nb = count($recordings_list)) === 0) {
+		print_recordings_empty_list($this_local);
+	} else {
 		print_recordings_list($recordings_list, $nb, $form, $url, $dhtml, $this_local);
-	endif;
-	endif;
+	}
 }
 	
 	
@@ -65,11 +65,11 @@ function print_recordings_error($this_local, $flask_error="Unknown error")
 <?php 
 }
 
-function print_recordings_empty_list()
+function print_recordings_empty_list($this_local)
 {
 ?>	
 		<tr class="sb-content">
-			<td colspan="10" class="td-single"><?=$this->bbf('no_recording_campaign');?></td>
+			<td colspan="10" class="td-single"><?php echo $this_local->bbf('no_recording_campaign'); ?></td>
 		</tr>
 <?php 
 }
@@ -104,7 +104,7 @@ function print_recordings_list($recordings_list, $nb, $form, $url, $dhtml, $this
 				echo	$url->img_html('img/site/flag/'.$icon.'.gif',null,'class="icons-list"'),
 					dwho_trunc($recording['name'],15,'...',false);
 ?>
-		
+		</label>
 <?php 
 		echo $recording['campaign_name']
 ?>
@@ -145,16 +145,17 @@ function table_footer()
 	</tr>
 </table>
 </form>
+</div>
 <?php 
 }
 
 
 table_header($this);
 $flask_error = $this->get_var('error');
-if ($flask_error != null) :
+if ($flask_error != null) {
 	print_recordings_error($this, $flask_error);
-else:
+} else {
 	$recordings_list = $this->get_var('recordingcampaigns');
 	print_recordings($recordings_list, $form, $url, $dhtml, $this);
-endif;
+}
 table_footer();
