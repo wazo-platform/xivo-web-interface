@@ -1,0 +1,26 @@
+; caller
+Appelant
+
+; callee
+Appelé
+
+; file
+Fichier
+
+; start_time
+Heure de début
+
+; action
+Action
+
+; no_recording
+Aucun enregistrement pour cette campagne.
+
+; opt_modify
+Modifier
+
+; opt_delete
+Supprimer
+
+; opt_delete_confirm
+Etes-vous certain de vouloir supprimer cette campagne ?
