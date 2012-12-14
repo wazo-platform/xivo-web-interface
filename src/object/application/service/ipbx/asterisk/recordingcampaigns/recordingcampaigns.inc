@@ -26,28 +26,41 @@ class xivo_application_service_asterisk_recordingcampaigns extends xivo_applicat
 {
 
 	private $service_url = 'http://127.0.0.1:50050/rest/record/';
-	private function get_recordings()
+	public function get_campaigns()
 	{
+		$campaigns_reply = false;
+		$campaigns_list = false;
+		$campaigns_reply = \Httpful\Request::get($this->service_url)->send();
+		if(!$campaigns_reply->hasErrors()):
+			# TODO : Check content-type
+			$campaigns_list = dwho_json::decode($campaigns_reply->body);
+		else:
+			throw new Exception("Http reply code: " + $campaigns_reply->code);
+		endif;
+		return $campaigns_list;
+	}
+	
+// 	function get($id=null)
+// 	{
+// 		if ($id == null):
+// 			return $this->get_recordings();
+// 		else:
+		
+// 		endif;
+// 		return null;
+// 	}
+
+	public function get_recordings($campaign_id) {
 		$recordings_reply = false;
 		$recordings_list = false;
-		$recordings_reply = \Httpful\Request::get($this->service_url)->send();
+		$recordings_reply = \Httpful\Request::get($this->service_url + $campaign_id)->send();
 		if(!$recordings_reply->hasErrors()):
-			# TODO : Check content-type
-			$recordings_list = dwho_json::decode($recordings_reply->body);
+		# TODO : Check content-type
+		$recordings_list = dwho_json::decode($recordings_reply->body);
 		else:
 			throw new Exception("Http reply code: " + $recordings_reply->code);
 		endif;
-		return $recordings_list;
-	}
-	
-	function get($id=null)
-	{
-		if ($id == null):
-			return $this->get_recordings();
-		else:
-		
-		endif;
-		return null;
+			return $recordings_list;
 	}
 
 
