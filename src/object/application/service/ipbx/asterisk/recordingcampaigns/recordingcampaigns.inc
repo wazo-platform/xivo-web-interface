@@ -25,7 +25,7 @@ include('httpful.phar');
 class xivo_application_service_asterisk_recordingcampaigns extends xivo_application_asterisk_abstract
 {
 
-	private $service_url = 'http://127.0.0.1:50050/rest/record/';
+	private $service_url = 'http://127.0.0.1:50050/rest/IPBX/recording_campaigns/';
 	public function get_campaigns()
 	{
 		$campaigns_reply = false;
@@ -50,13 +50,13 @@ class xivo_application_service_asterisk_recordingcampaigns extends xivo_applicat
 // 		return null;
 // 	}
 
-	public function get_recordings($campaign_id) {
+	public function get_recordings($campaign_name) {
 		$recordings_reply = false;
 		$recordings_list = false;
-		$recordings_reply = \Httpful\Request::get($this->service_url + $campaign_id)->send();
+		$recordings_reply = \Httpful\Request::get($this->service_url . $campaign_name . "/")-> send(); 
 		if(!$recordings_reply->hasErrors()):
-		# TODO : Check content-type
-		$recordings_list = dwho_json::decode($recordings_reply->body);
+			# TODO : Check content-type
+			$recordings_list = dwho_json::decode($recordings_reply->body);
 		else:
 			throw new Exception("Http reply code: " + $recordings_reply->code);
 		endif;

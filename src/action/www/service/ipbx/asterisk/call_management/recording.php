@@ -47,13 +47,12 @@ switch($act)
 		break;
 	case 'listrecordings':
 		try {
-			//TODO décommenter quand le webservice fonctionnera
-			//$recordings = $appreccampaigns->get_recordings();
-			$recordings = array();
-			$recordings[0]["caller"] = "moi";
-			$recordings[0]["callee"] = "lui";
-			$recordings[0]["file_name"] = "fichier";
-			$recordings[0]["start_time"] = "01/01/01 00:00";
+			$recordings = $appreccampaigns->get_recordings($_QR['campaign']);
+// 			$recordings = array();
+// 			$recordings[0]["caller"] = "moi";
+// 			$recordings[0]["callee"] = "lui";
+// 			$recordings[0]["file_name"] = "fichier";
+// 			$recordings[0]["start_time"] = "01/01/01 00:00";
 			$_TPL->set_var('recordings', $recordings);
 		} catch(Exception $e) {
 			$_TPL->set_var('error',$e->getMessage());

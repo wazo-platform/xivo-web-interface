@@ -36,7 +36,6 @@ function table_header($this_local)
 		<th class="th-left xspan"><span class="span-left">&nbsp;</span></th>
 		<th class="th-center"><?=$this_local->bbf('caller');?></th>
 		<th class="th-center"><?=$this_local->bbf('callee');?></th>
-		<th class="th-center"><?=$this_local->bbf('file');?></th>
 		<th class="th-center"><?=$this_local->bbf('start_time');?></th>
 		<th class="th-center col-action"><?=$this_local->bbf('col_action');?></th>
 		<th class="th-right xspan"><span class="span-right">&nbsp;</span></th>
@@ -79,10 +78,10 @@ function print_recordings_empty_list($this_local)
 
 function print_recordings_list($recordings_list, $nb, $form, $url, $dhtml, $this_local)
 {
-	for($i = 0;$i < $nb;$i++):
+	for($i = 0;$i < $nb;$i++){
 	//TODO qd le web service marchera: supprimer ligne suivante et décommenter celle d'après
-	$recording = $recordings_list[$i];	
-	//$recording = get_object_vars(&$recordings_list[$i]);
+	//$recording = $recordings_list[$i];	
+	$recording = get_object_vars(&$recordings_list[$i]);
 			
 ?>
 	<tr onmouseover="this.tmp = this.className; this.className = 'sb-content l-infos-over';"
@@ -90,7 +89,7 @@ function print_recordings_list($recordings_list, $nb, $form, $url, $dhtml, $this
 	    class="sb-content l-infos-<?=(($i % 2) + 1)?>on2">
 		<td class="td-left">
 			<?=$form->checkbox(array('name'		=> 'recordings[]',
-						 'value'	=> $recording['file_name'],
+						 //'value'	=> $recording['file_name'],
 						 'label'	=> false,
 						 'id'		=> 'it-recordings-'.$i,
 						 'checked'	=> false,
@@ -108,9 +107,9 @@ function print_recordings_list($recordings_list, $nb, $form, $url, $dhtml, $this
 		<td>
 			<?= $recording['callee'] ?>
 		</td>
-		<td>
-			<?= $recording['file_name'] ?>
-		</td>
+<!-- 		<td> -->
+	
+<!-- 		</td> -->
 		<td>
 			<?= $recording['start_time'] ?>
 		</td>
@@ -128,7 +127,7 @@ function print_recordings_list($recordings_list, $nb, $form, $url, $dhtml, $this
 		</td>
 	</tr>
 <?php
-		endfor;
+		}
 }
 
 function table_footer() 

@@ -48,7 +48,7 @@ function print_recordings($recordings_list, $form, $url, $dhtml, $this_local) {
 		print_recordings_empty_list($this_local);
 	} else {
 		print_recordings_list($recordings_list, $nb, $form, $url, $dhtml, $this_local);
-	}
+	}	
 }
 	
 	
