@@ -79,54 +79,52 @@ function print_recordings_empty_list($this_local)
 function print_recordings_list($recordings_list, $nb, $form, $url, $dhtml, $this_local)
 {
 	for($i = 0;$i < $nb;$i++){
-	//TODO qd le web service marchera: supprimer ligne suivante et décommenter celle d'après
-	//$recording = $recordings_list[$i];	
-	$recording = get_object_vars(&$recordings_list[$i]);
-			
-?>
-	<tr onmouseover="this.tmp = this.className; this.className = 'sb-content l-infos-over';"
-	    onmouseout="this.className = this.tmp;"
-	    class="sb-content l-infos-<?=(($i % 2) + 1)?>on2">
-		<td class="td-left">
-			<?=$form->checkbox(array('name'		=> 'recordings[]',
-						 //'value'	=> $recording['file_name'],
-						 'label'	=> false,
-						 'id'		=> 'it-recordings-'.$i,
-						 'checked'	=> false,
-						 'paragraph'	=> false));?>
-		</td>
-	    <td class="txt-left" title="<?=dwho_alttitle($recording['caller']);?>">
-			<label for="it-recordings-<?=$i?>" id="lb-recordings-<?=$i?>">		
-<?php
-				echo	$url->img_html('img/site/flag/enable.gif',null,'class="icons-list"');
-?>
-			</label>
-		<?= $recording['caller']  ?>
-			
-		</td>
-		<td>
-			<?= $recording['callee'] ?>
-		</td>
-<!-- 		<td> -->
+		//TODO qd le web service marchera: supprimer ligne suivante et décommenter celle d'après
+		//$recording = $recordings_list[$i];	
+		$recording = get_object_vars(&$recordings_list[$i]);
+				
+	?>
+		<tr onmouseover="this.tmp = this.className; this.className = 'sb-content l-infos-over';"
+		    onmouseout="this.className = this.tmp;"
+		    class="sb-content l-infos-<?=(($i % 2) + 1)?>on2">
+			<td class="td-left">
+				<?=$form->checkbox(array('name'		=> 'recordings[]',
+							 //'value'	=> $recording['file_name'],
+							 'label'	=> false,
+							 'id'		=> 'it-recordings-'.$i,
+							 'checked'	=> false,
+							 'paragraph'	=> false));?>
+			</td>
+		    <td class="txt-left" title="<?=dwho_alttitle($recording['caller']);?>">
+				<label for="it-recordings-<?=$i?>" id="lb-recordings-<?=$i?>">		
+	<?php
+					echo	$url->img_html('img/site/flag/enable.gif',null,'class="icons-list"');
+	?>
+				</label>
+			<?= $recording['caller']  ?>
+				
+			</td>
+			<td>
+				<?= $recording['callee'] ?>
+			</td>
 	
-<!-- 		</td> -->
-		<td>
-			<?= $recording['start_time'] ?>
-		</td>
-		<td class="td-right" colspan="2">
-<?php
-			echo	$url->href_html($url->img_html('img/site/button/delete.gif',
-							       $this_local->bbf('opt_delete'),
-							       'border="0"'),
-						'service/ipbx/call_management/recording',
-						array('act'	=> 'delete',
-						      'id'	=> $recording['campaign_name']),
-						'onclick="return(confirm(\''.$dhtml->escape($this_local->bbf('opt_delete_confirm')).'\'));"',
-						$this_local->bbf('opt_delete'));
-?>
-		</td>
-	</tr>
-<?php
+			<td>
+				<?= $recording['start_time'] ?>
+			</td>
+			<td class="td-right" colspan="2">
+	<?php
+				echo	$url->href_html($url->img_html('img/site/button/delete.gif',
+								       $this_local->bbf('opt_delete'),
+								       'border="0"'),
+							'service/ipbx/call_management/recording',
+							array('act'	=> 'delete',
+							      'id'	=> $recording['campaign_name']),
+							'onclick="return(confirm(\''.$dhtml->escape($this_local->bbf('opt_delete_confirm')).'\'));"',
+							$this_local->bbf('opt_delete'));
+	?>
+			</td>
+		</tr>
+	<?php
 		}
 }
 
@@ -135,7 +133,7 @@ function table_footer()
 ?>
 	<tr class="sb-foot">
 		<td class="td-left xspan b-nosize"><span class="span-left b-nosize">&nbsp;</span></td>
-		<td class="td-center" colspan="5"><span class="b-nosize">&nbsp;</span></td>
+		<td class="td-center" colspan="4"><span class="b-nosize">&nbsp;</span></td>
 		<td class="td-right xspan b-nosize"><span class="span-right b-nosize">&nbsp;</span></td>
 	</tr>
 </table>

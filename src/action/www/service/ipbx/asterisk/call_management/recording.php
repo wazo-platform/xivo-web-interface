@@ -30,14 +30,27 @@ switch($act)
 	case 'add':
 		$result = $fm_save = $error = null;
 		
-		if(isset($_QR['fm_send']) === true) //&& dwho_issa('recordcampaign',$_QR) === true)
-		{
-			$appreccampaigns->add($_QR['recordingcampaign_name'], $_QR['recordingcampaign_queuename']);
+		if(isset($_QR['fm_send']) === true) {
+			$appreccampaigns->add($_QR['recordingcampaign_name'], $_QR['recordingcampaign_queueid']);
 			$_QRY->go($_TPL->url('service/ipbx/call_management/recording'),$param);
+		} else { 
+			$queues_list = refactor_queue_list($appreccampaigns->get_queues_list());
+			$_TPL->set_var('queues_list', $queues_list);
 		}
 		break;
 
 	case 'edit':
+		$result = $fm_save = $error = null;
+		
+		if(isset($_QR['fm_send']) === true) {
+			$appreccampaigns->edit($_QR['original_name'], $_QR['recordingcampaign_name'], $_QR['recordingcampaign_queueid']);
+			$_QRY->go($_TPL->url('service/ipbx/call_management/recording'),$param);
+		} else {
+			$queues_list = refactor_queue_list($appreccampaigns->get_queues_list());
+			$campaign = $appreccampaigns->get_campaign_details($_QR['name']);
+			$_TPL->set_var('queues_list', $queues_list);
+			$_TPL->set_var('info', get_object_vars($campaign[0]));
+		}
 		break;
 		
 	case 'delete':
@@ -48,11 +61,6 @@ switch($act)
 	case 'listrecordings':
 		try {
 			$recordings = $appreccampaigns->get_recordings($_QR['campaign']);
-// 			$recordings = array();
-// 			$recordings[0]["caller"] = "moi";
-// 			$recordings[0]["callee"] = "lui";
-// 			$recordings[0]["file_name"] = "fichier";
-// 			$recordings[0]["start_time"] = "01/01/01 00:00";
 			$_TPL->set_var('recordings', $recordings);
 		} catch(Exception $e) {
 			$_TPL->set_var('error',$e->getMessage());
@@ -84,4 +92,15 @@ $_TPL->set_struct('service/ipbx/'.$ipbx->get_name());
 
 $_TPL->display('index');
 
+function refactor_queue_list($queues_list) {
+	$queues_list_refactored = array();
+	for($i = 0; $i < count($queues_list); $i++) {
+		$new_item = array();
+		$item = get_object_vars(&$queues_list[$i]);
+		$new_item['id'] = $item['id'];
+		$new_item['ext_name'] = $item['number'] . ': ' . $item['displayname'];
+		$queues_list_refactored[$i] = $new_item;
+	}
+	return $queues_list_refactored;
+}
 ?>

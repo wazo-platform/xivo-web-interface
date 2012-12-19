@@ -1,5 +1,8 @@
-; col_name
+; campaign_name
 Nom de la campagne
+
+; queue_name
+Nom de la file
 
 ; server_error
 Serveur erreur, vérifiez le xivo-recording-webservice
