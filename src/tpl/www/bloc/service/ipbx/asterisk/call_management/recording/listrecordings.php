@@ -109,9 +109,9 @@ function print_recordings_list($recordings_list, $nb, $form, $url, $dhtml, $this
 			</td>
 			<td>
 				<?php 
-					$display = $recording['callee'] == 'None'? '_' : $recording['callee'];
+					$display = $recording['callee'] == ''? '-' : $recording['callee'];
 					$display .= "/";
-					$display .= $recording['agent'] == 'None'? '_' : $recording['agent'];
+					$display .= $recording['agent'] == ''? '-' : $recording['agent'];
 					echo $display; ?>
 			</td>
 			<td class="td-right" colspan="2">
