@@ -34,9 +34,9 @@ function table_header($this_local)
 <table id="table-main-listing">
 	<tr class="sb-top">
 		<th class="th-left xspan"><span class="span-left">&nbsp;</span></th>
-		<th class="th-center"><?=$this_local->bbf('caller');?></th>
-		<th class="th-center"><?=$this_local->bbf('callee');?></th>
 		<th class="th-center"><?=$this_local->bbf('start_time');?></th>
+		<th class="th-center"><?=$this_local->bbf('caller');?></th>
+		<th class="th-center"><?=$this_local->bbf('callee_agent');?></th>
 		<th class="th-center col-action"><?=$this_local->bbf('col_action');?></th>
 		<th class="th-right xspan"><span class="span-right">&nbsp;</span></th>
 	</tr>
@@ -95,24 +95,36 @@ function print_recordings_list($recordings_list, $nb, $form, $url, $dhtml, $this
 							 'checked'	=> false,
 							 'paragraph'	=> false));?>
 			</td>
-		    <td class="txt-left" title="<?=dwho_alttitle($recording['caller']);?>">
+			<td class="txt-left" title="<?=dwho_alttitle($recording['caller']);?>">
 				<label for="it-recordings-<?=$i?>" id="lb-recordings-<?=$i?>">		
 	<?php
 					echo	$url->img_html('img/site/flag/enable.gif',null,'class="icons-list"');
 	?>
 				</label>
+				<?= $recording['start_time'] ?>
+			</td>
+		    <td>
 			<?= $recording['caller']  ?>
 				
 			</td>
 			<td>
-				<?= $recording['callee'] ?>
-			</td>
-	
-			<td>
-				<?= $recording['start_time'] ?>
+				<?php 
+					$display = $recording['callee'] == 'None'? '_' : $recording['callee'];
+					$display .= "/";
+					$display .= $recording['agent'] == 'None'? '_' : $recording['agent'];
+					echo $display; ?>
 			</td>
 			<td class="td-right" colspan="2">
 	<?php
+				//display "download" button
+				echo	$url->href_html($url->img_html('img/site/button/file.gif',
+						$this_local->bbf('opt_download'),
+						'border="0"'),
+						'/recordings/' . $recording['filename'],
+						'',
+						$this_local->bbf('opt_delete'));
+				echo '&nbsp';
+				//display "delete" button
 				echo	$url->href_html($url->img_html('img/site/button/delete.gif',
 								       $this_local->bbf('opt_delete'),
 								       'border="0"'),
@@ -152,3 +164,4 @@ if ($flask_error != null) {
 	print_recordings($recordings_list, $form, $url, $dhtml, $this);
 }
 table_footer();
+?>

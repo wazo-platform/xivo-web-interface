@@ -1,8 +1,8 @@
 ; caller
 Appelant
 
-; callee
-Appelé
+; callee_agent
+Appelé / Agent
 
 ; file
 Fichier
@@ -24,3 +24,6 @@ Supprimer
 
 ; opt_delete_confirm
 Etes-vous certain de vouloir supprimer cette campagne ?
+
+;server_error
+Erreur du serveur

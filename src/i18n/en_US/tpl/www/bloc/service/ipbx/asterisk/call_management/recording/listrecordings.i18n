@@ -1,8 +1,8 @@
 ; caller
 Caller
 
-; callee
-Callee
+; callee_agent
+Callee / Agent
 
 ; file
 File
@@ -24,3 +24,6 @@ Delete
 
 ; opt_delete_confirm
 Are you sure you want to remove this campaign?
+
+;server_error
+Server error
