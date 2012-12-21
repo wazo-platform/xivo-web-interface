@@ -20,17 +20,23 @@
 
 $form = &$this->get_module('form');
 $url = &$this->get_module('url');
-
+$queues_list = $this->get_var('queues_list');
+$act = $this->get_var('act');
+$info = $this->get_var('info');
 ?>
 
 
 <?php
-	echo	$form->text(array('desc'	=> $this->bbf('fm_campaign_name'),
-				  'name'	=> 'recordingcampaign_name',
-				  'size'	=> 15));
+echo $form->text(array('desc'	=> $this->bbf('fm_campaign_name'),
+						'name'	=> 'recordingcampaign_name',
+						'default' => $act == 'edit'? $info['campaign_name'] : null,
+						'size'	=> 15));
 
-	echo	$form->text(array('desc'	=> $this->bbf('fm_queue_name'),
-				    'name'	=> 'recordingcampaign_queuename',
-					'size'	=> 15));
+echo $form->select(array('desc'	=> $this->bbf('fm_queue_name'),
+						'name'		=> 'recordingcampaign_queueid',
+						'altkey' => 'id', //altkey = "value" attribute
+						'key' => 'ext_name', //key = displayed name
+						'selected' => $act == 'edit'? $info['queue_id'] : null),
+						$queues_list);
 
 ?>

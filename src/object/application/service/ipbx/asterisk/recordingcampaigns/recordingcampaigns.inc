@@ -77,7 +77,6 @@ class xivo_application_service_asterisk_recordingcampaigns extends xivo_applicat
 		} else {
 			throw new Exception("Http reply code: " + $campaign_reply->code);
 		}
-
 	}
 
 	public function add($campaign_name, $queue_id, $activated="true", $base_filename=null)
@@ -101,7 +100,6 @@ class xivo_application_service_asterisk_recordingcampaigns extends xivo_applicat
 		
 		$content= dwho_json::encode(array("campaign_name"=>$new_campaign_name, 
 										  "queue_id"=>$new_queue_id) );
-		
 		$editing_reply = \Httpful\Request::put($this->recording_service_url . $original_campaign_name)
 											->body($content)
 											->sendsJson()

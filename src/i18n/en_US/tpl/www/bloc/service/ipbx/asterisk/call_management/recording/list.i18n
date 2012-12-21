@@ -1,5 +1,8 @@
-; col_name
+; campaign_name
 Campaign name
+
+; queue_name
+Queue name
 
 ; server_error
 Server error, check xivo-recording-webservice

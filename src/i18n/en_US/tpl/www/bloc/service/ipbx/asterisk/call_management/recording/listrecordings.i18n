@@ -1,0 +1,29 @@
+; caller
+Caller
+
+; callee_agent
+Callee / Agent
+
+; file
+File
+
+; start_time
+Start time
+
+; action
+Action
+
+; no_recording
+No recording for this campaign
+
+; opt_modify
+Edit
+
+; opt_delete
+Delete
+
+; opt_delete_confirm
+Are you sure you want to remove this campaign?
+
+;server_error
+Server error

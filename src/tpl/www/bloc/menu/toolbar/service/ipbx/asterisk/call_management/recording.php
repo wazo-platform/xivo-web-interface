@@ -20,6 +20,7 @@
 
 $url = &$this->get_module('url');
 $dhtml = &$this->get_module('dhtml');
+$act = $this->get_var('act');
 
 $toolbar_js = array();
 $toolbar_js[] = 'var xivo_toolbar_form_name = \'fm-recording-list\';';
@@ -32,12 +33,14 @@ $dhtml->write_js($toolbar_js);
 ?>
 <script type="text/javascript" src="<?=$this->file_time($this->url('js/xivo_toolbar.js'));?>"></script>
 <?php
-
-echo	$url->href_html($url->img_html('img/menu/top/toolbar/bt-add.gif',
-				       $this->bbf('toolbar_opt_add'),
-				       'id="toolbar-bt-add"
-						border="0"'),
-			'service/ipbx/call_management/recording',
-			'act=add',
-			null,
-			$this->bbf('toolbar_opt_add'));
+if($act == 'list') {
+	echo	$url->href_html($url->img_html('img/menu/top/toolbar/bt-add.gif',
+					       $this->bbf('toolbar_opt_add'),
+					       'id="toolbar-bt-add"
+							border="0"'),
+				'service/ipbx/call_management/recording',
+				'act=add',
+				null,
+				$this->bbf('toolbar_opt_add'));
+}
+?>
