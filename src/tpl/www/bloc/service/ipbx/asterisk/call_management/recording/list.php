@@ -34,7 +34,8 @@ function table_header($this_local)
 <table id="table-main-listing">
 	<tr class="sb-top">
 		<th class="th-left xspan"><span class="span-left">&nbsp;</span></th>
-		<th class="th-center"><?=$this_local->bbf('col_name');?></th>
+		<th class="th-center"><?=$this_local->bbf('campaign_name');?></th>
+		<th class="th-center"><?=$this_local->bbf('queue_name');?></th>
 		<th class="th-center col-action"><?=$this_local->bbf('col_action');?></th>
 		<th class="th-right xspan"><span class="span-right">&nbsp;</span></th>
 	</tr>
@@ -48,7 +49,7 @@ function print_recordings($recordings_list, $form, $url, $dhtml, $this_local) {
 		print_recordings_empty_list($this_local);
 	} else {
 		print_recordings_list($recordings_list, $nb, $form, $url, $dhtml, $this_local);
-	}
+	}	
 }
 	
 	
@@ -98,17 +99,21 @@ function print_recordings_list($recordings_list, $nb, $form, $url, $dhtml, $this
 						 'checked'	=> false,
 						 'paragraph'	=> false));?>
 		</td>
-	    <td class="txt-left" title="<?=dwho_alttitle($recording['campaign_name']);?>">
-			<label for="it-recordings-<?=$i?>" id="lb-recordings-<?=$i?>">		
+	    <td class="txt-left curpointer"
+	    	title="<?=dwho_alttitle($recording['campaign_name']);?>"
+	    	onclick="location.href = dwho.dom.node.lastchild(this);">
 <?php
 				echo	$url->img_html('img/site/flag/'.$icon.'.gif',null,'class="icons-list"'),
-					dwho_trunc($recording['name'],15,'...',false);
-?>
-		</label>
-<?php 
-		echo $recording['campaign_name']
+					//dwho_trunc($recording['campaign_name'],15,'...',false);
+				$url->href_html(dwho_trunc($recording['campaign_name'],40,'...',false),
+						'service/ipbx/call_management/recording',
+						array('act'	=> 'listrecordings',
+								'campaign'	=> $recording['campaign_name']));
 ?>
 			
+		</td>
+		<td>
+			<?= $recording['queue_name'] ?>
 		</td>
 		<td class="td-right" colspan="2">
 <?php
@@ -117,7 +122,7 @@ function print_recordings_list($recordings_list, $nb, $form, $url, $dhtml, $this
 							       'border="0"'),
 						'service/ipbx/call_management/recording',
 						array('act'	=> 'edit',
-						      'id'	=> $recording['campaign_name']),
+						      'name'=> $recording['campaign_name']),
 						null,
 						$this_local->bbf('opt_modify')),"\n",
 				$url->href_html($url->img_html('img/site/button/delete.gif',
@@ -140,7 +145,7 @@ function table_footer()
 ?>
 	<tr class="sb-foot">
 		<td class="td-left xspan b-nosize"><span class="span-left b-nosize">&nbsp;</span></td>
-		<td class="td-center" colspan="2"><span class="b-nosize">&nbsp;</span></td>
+		<td class="td-center" colspan="3"><span class="b-nosize">&nbsp;</span></td>
 		<td class="td-right xspan b-nosize"><span class="span-right b-nosize">&nbsp;</span></td>
 	</tr>
 </table>
