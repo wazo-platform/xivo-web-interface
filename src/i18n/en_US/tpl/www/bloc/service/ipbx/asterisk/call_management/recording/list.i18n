@@ -18,3 +18,9 @@ Delete
 
 ; opt_delete_confirm
 Are you sure you want to remove this campaign?
+
+;start_date
+Start date
+
+;end_date
+End date

@@ -23,9 +23,36 @@ $url = &$this->get_module('url');
 $queues_list = $this->get_var('queues_list');
 $act = $this->get_var('act');
 $info = $this->get_var('info');
+
+function reformat_date($bad_formatted_date = null) {
+	if($bad_formatted_date != null and $bad_formatted_date != '') {
+		return date("Y-m-d", strtotime($bad_formatted_date));
+	}
+	return '';
+}
 ?>
-
-
+<div id="sr-cel">
+	<div class="fm-paragraph fm-desc-inline">
+		<div class="fm-multifield">
+			<?php
+				echo	$form->text(array('desc'	=> $this->bbf('start_date'),
+							  'paragraph'	=> false,
+							  'name'	=> 'recordingcampaign_start_date',
+							  'labelid'	=> 'start_date',
+							  'default'	=>  reformat_date($act == 'edit'? $info['start_date']:null)));
+			?>
+		</div>
+		<div class="fm-multifield">
+			<?php
+				echo	$form->text(array('desc'	=> $this->bbf('end_date'),
+							  'paragraph'	=> false,
+							  'name'	=> 'recordingcampaign_end_date',
+							  'labelid'	=> 'end_date',
+							  'default'	=>  reformat_date($act == 'edit'? $info['end_date']:null)));
+			?>
+		</div>
+	</div>
+</div>
 <?php
 echo $form->text(array('desc'	=> $this->bbf('fm_campaign_name'),
 						'name'	=> 'recordingcampaign_name',

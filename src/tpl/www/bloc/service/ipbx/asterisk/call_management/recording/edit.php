@@ -36,7 +36,7 @@ $info = $this->get_var('info');
 <?=$form->hidden(array('name' => DWHO_SESS_NAME,'value' => DWHO_SESS_ID));?>
 <?=$form->hidden(array('name' => 'fm_send','value' => 1));?>
 <?=$form->hidden(array('name' => 'act','value' => 'edit'));?>
-<?=$form->hidden(array('name' => 'original_name','value' => $info['campaign_name']));?>
+<?=$form->hidden(array('name' => 'campaign_id','value' => $info['id']));?>
 <?php	$this->file_include('bloc/service/ipbx/asterisk/call_management/recording/form');?>
 <?=$form->submit(array('name' => 'submit','id' => 'it-submit','value' => $this->bbf('fm_bt-save')));?>
 </form>

@@ -18,3 +18,9 @@ Supprimer
 
 ; opt_delete_confirm
 Etes-vous certain de vouloir supprimer cette campagne ?
+
+;start_date
+Date de début
+
+;end_date
+Date de fin

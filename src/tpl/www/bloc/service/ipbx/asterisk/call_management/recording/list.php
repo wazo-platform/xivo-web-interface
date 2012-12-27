@@ -25,6 +25,12 @@ $dhtml = &$this->get_module('dhtml');
 
 $exception_message = "";
 
+function reformat_date($bad_formatted_date) {
+	if($bad_formatted_date != null and $bad_formatted_date != '') {
+		return date("Y-m-d", strtotime($bad_formatted_date));
+	}
+	return '';
+}
 
 function table_header($this_local) 
 {
@@ -36,6 +42,8 @@ function table_header($this_local)
 		<th class="th-left xspan"><span class="span-left">&nbsp;</span></th>
 		<th class="th-center"><?=$this_local->bbf('campaign_name');?></th>
 		<th class="th-center"><?=$this_local->bbf('queue_name');?></th>
+		<th class="th-center"><?=$this_local->bbf('start_date');?></th>
+		<th class="th-center"><?=$this_local->bbf('end_date');?></th>
 		<th class="th-center col-action"><?=$this_local->bbf('col_action');?></th>
 		<th class="th-right xspan"><span class="span-right">&nbsp;</span></th>
 	</tr>
@@ -93,14 +101,14 @@ function print_recordings_list($recordings_list, $nb, $form, $url, $dhtml, $this
 	    class="sb-content l-infos-<?=(($i % 2) + 1)?>on2">
 		<td class="td-left">
 			<?=$form->checkbox(array('name'		=> 'recordings[]',
-						 'value'	=> $recording['campaign_name'],
+						 'value'	=> $recording['campaign_id'],
 						 'label'	=> false,
 						 'id'		=> 'it-recordings-'.$i,
 						 'checked'	=> false,
 						 'paragraph'	=> false));?>
 		</td>
 	    <td class="txt-left curpointer"
-	    	title="<?=dwho_alttitle($recording['campaign_name']);?>"
+	    	title="<?=dwho_alttitle($recording['campaign_id']);?>"
 	    	onclick="location.href = dwho.dom.node.lastchild(this);">
 <?php
 				echo	$url->img_html('img/site/flag/'.$icon.'.gif',null,'class="icons-list"'),
@@ -108,13 +116,19 @@ function print_recordings_list($recordings_list, $nb, $form, $url, $dhtml, $this
 				$url->href_html(dwho_trunc($recording['campaign_name'],40,'...',false),
 						'service/ipbx/call_management/recording',
 						array('act'	=> 'listrecordings',
-								'campaign'	=> $recording['campaign_name']));
+								'campaign'	=> $recording['id']));
 ?>
 			
 		</td>
 		<td>
 			<?= $recording['queue_name'] ?>
 		</td>
+		<td>
+		<?= reformat_date($recording['start_date'])	?>
+		</td>
+		<td><?= reformat_date($recording['end_date'])	?>
+		</td>
+		
 		<td class="td-right" colspan="2">
 <?php
 			echo	$url->href_html($url->img_html('img/site/button/edit.gif',
@@ -122,7 +136,7 @@ function print_recordings_list($recordings_list, $nb, $form, $url, $dhtml, $this
 							       'border="0"'),
 						'service/ipbx/call_management/recording',
 						array('act'	=> 'edit',
-						      'name'=> $recording['campaign_name']),
+						      'id'=> $recording['id']),
 						null,
 						$this_local->bbf('opt_modify')),"\n",
 				$url->href_html($url->img_html('img/site/button/delete.gif',
@@ -130,7 +144,7 @@ function print_recordings_list($recordings_list, $nb, $form, $url, $dhtml, $this
 							       'border="0"'),
 						'service/ipbx/call_management/recording',
 						array('act'	=> 'delete',
-						      'id'	=> $recording['campaign_name']),
+						      'id'	=> $recording['id']),
 						'onclick="return(confirm(\''.$dhtml->escape($this_local->bbf('opt_delete_confirm')).'\'));"',
 						$this_local->bbf('opt_delete'));
 ?>
@@ -145,7 +159,7 @@ function table_footer()
 ?>
 	<tr class="sb-foot">
 		<td class="td-left xspan b-nosize"><span class="span-left b-nosize">&nbsp;</span></td>
-		<td class="td-center" colspan="3"><span class="b-nosize">&nbsp;</span></td>
+		<td class="td-center" colspan="5"><span class="b-nosize">&nbsp;</span></td>
 		<td class="td-right xspan b-nosize"><span class="span-right b-nosize">&nbsp;</span></td>
 	</tr>
 </table>

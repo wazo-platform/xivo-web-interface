@@ -31,7 +31,8 @@ switch($act)
 		$result = $fm_save = $error = null;
 		
 		if(isset($_QR['fm_send']) === true) {
-			$appreccampaigns->add($_QR['recordingcampaign_name'], $_QR['recordingcampaign_queueid']);
+			$appreccampaigns->add($_QR['recordingcampaign_name'], $_QR['recordingcampaign_queueid'], 
+							$_QR["recordingcampaign_start_date"], $_QR["recordingcampaign_end_date"]);
 			$_QRY->go($_TPL->url('service/ipbx/call_management/recording'),$param);
 		} else { 
 			$queues_list = refactor_queue_list($appreccampaigns->get_queues_list());
@@ -43,11 +44,12 @@ switch($act)
 		$result = $fm_save = $error = null;
 		
 		if(isset($_QR['fm_send']) === true) {
-			$appreccampaigns->edit($_QR['original_name'], $_QR['recordingcampaign_name'], $_QR['recordingcampaign_queueid']);
+			$appreccampaigns->edit($_QR['campaign_id'], $_QR['recordingcampaign_name'], $_QR['recordingcampaign_queueid'], 
+							$_QR["recordingcampaign_start_date"], $_QR["recordingcampaign_end_date"]);
 			$_QRY->go($_TPL->url('service/ipbx/call_management/recording'),$param);
 		} else {
 			$queues_list = refactor_queue_list($appreccampaigns->get_queues_list());
-			$campaign = $appreccampaigns->get_campaign_details($_QR['name']);
+			$campaign = $appreccampaigns->get_campaign_details($_QR['id']);
 			$_TPL->set_var('queues_list', $queues_list);
 			$_TPL->set_var('info', get_object_vars($campaign[0]));
 		}
@@ -89,6 +91,12 @@ $menu->set_toolbar('toolbar/service/ipbx/'.$ipbx->get_name().'/call_management/r
 $_TPL->set_var('act',$act);
 $_TPL->set_bloc('main','service/ipbx/'.$ipbx->get_name().'/call_management/recording/'.$act);
 $_TPL->set_struct('service/ipbx/'.$ipbx->get_name());
+
+$dhtml = &$_TPL->get_module('dhtml');
+$dhtml->set_js('js/dwho/submenu.js');
+$dhtml->set_css('/css/statistics/statistics.css');
+$dhtml->add_js('/struct/js/date.js.php');
+$dhtml->set_js('js/service/ipbx/'.$ipbx->get_name().'/recording.js');
 
 $_TPL->display('index');
 

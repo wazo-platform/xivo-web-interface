@@ -44,10 +44,10 @@ class xivo_application_service_asterisk_recordingcampaigns extends xivo_applicat
 	}
 
 
-	public function get_recordings($campaign_name) {
+	public function get_recordings($campaign_id) {
 		$recordings_reply = false;
 		$recordings_list = false;
-		$recordings_reply = \Httpful\Request::get($this->recording_service_url . $campaign_name . "/")-> send();
+		$recordings_reply = \Httpful\Request::get($this->recording_service_url . $campaign_id . "/")-> send();
 		if(!$recordings_reply->hasErrors()):
 		# TODO : Check content-type
 		$recordings_list = dwho_json::decode($recordings_reply->body);
@@ -68,10 +68,10 @@ class xivo_application_service_asterisk_recordingcampaigns extends xivo_applicat
 		}
 	}
 
-	public function get_campaign_details($campaign_name) {
+	public function get_campaign_details($campaign_id) {
 		$campaign_reply = false;
 		$campaign_reply = \Httpful\Request::get($this->recording_service_url
-				. $campaign_name)-> send();
+				. $campaign_id)-> send();
 		if(!$campaign_reply->hasErrors()) {
 			return dwho_json::decode($campaign_reply->body);
 		} else {
@@ -79,7 +79,7 @@ class xivo_application_service_asterisk_recordingcampaigns extends xivo_applicat
 		}
 	}
 
-	public function add($campaign_name, $queue_id, $activated="true", $base_filename=null)
+	public function add($campaign_name, $queue_id, $start_date, $end_date, $activated="true", $base_filename=null)
 	{
 		if ($base_filename == null){
 			$base_filename=$campaign_name . "-file-";
@@ -87,7 +87,12 @@ class xivo_application_service_asterisk_recordingcampaigns extends xivo_applicat
 		$recordings_reply = false;
 		$recordings_list = false;
 
-		$content= dwho_json::encode(array("campaign_name"=>$campaign_name, "queue_id"=>$queue_id, "activated"=>$activated, "base_filename"=>$base_filename) );
+		$content= dwho_json::encode(array("campaign_name"=>$campaign_name, 
+										  "queue_id"=>$queue_id, 
+										  "start_date"=>$start_date,
+										  "end_date"=>$end_date,
+										  "activated"=>$activated, 
+										  "base_filename"=>$base_filename) );
 		$recordings_reply = \Httpful\Request::post($this->recording_service_url)
 												->body($content)
 												->sendsJson()
@@ -95,12 +100,14 @@ class xivo_application_service_asterisk_recordingcampaigns extends xivo_applicat
 		return $recording_reply;
 	}
 	
-	public function edit($original_campaign_name, $new_campaign_name, $new_queue_id) {
+	public function edit($campaign_id, $new_campaign_name, $new_queue_id, $new_start_date, $new_end_date) {
 		$editing_reply = false;
 		
 		$content= dwho_json::encode(array("campaign_name"=>$new_campaign_name, 
-										  "queue_id"=>$new_queue_id) );
-		$editing_reply = \Httpful\Request::put($this->recording_service_url . $original_campaign_name)
+										  "queue_id"=>$new_queue_id,
+										  "start_date"=>$new_start_date,
+										  "end_date"=> $new_end_date) );
+		$editing_reply = \Httpful\Request::put($this->recording_service_url . $campaign_id)
 											->body($content)
 											->sendsJson()
 											->send();

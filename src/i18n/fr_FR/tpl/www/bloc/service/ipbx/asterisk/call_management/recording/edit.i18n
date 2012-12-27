@@ -9,3 +9,9 @@ Nom de la file
 
 ; fm_bt-save
 Enregistrer
+
+; start_date
+Date de début
+
+; end_date
+Date de fin
