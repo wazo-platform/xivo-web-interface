@@ -117,12 +117,15 @@ function print_recordings_list($recordings_list, $nb, $form, $url, $dhtml, $this
 			<td class="td-right" colspan="2">
 	<?php
 				//display "download" button
+
+	
+	
 				echo	$url->href_html($url->img_html('img/site/button/file.gif',
 						$this_local->bbf('opt_download'),
 						'border="0"'),
-						'/recordings/' . $recording['filename'],
-						'',
-						$this_local->bbf('opt_delete'));
+						'service/ipbx/call_management/recording',
+						array('act' => 'download',
+								'file' => $recording['filename']));
 				echo '&nbsp';
 				//display "delete" button
 				echo	$url->href_html($url->img_html('img/site/button/delete.gif',

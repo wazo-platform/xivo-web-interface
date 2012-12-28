@@ -68,7 +68,17 @@ switch($act)
 			$_TPL->set_var('error',$e->getMessage());
 		}
 		break;
-		
+	
+	case 'download':
+		$file = basename($_QR['file']);
+		$filepath = "/var/lib/pf-xivo/sounds/campagnes/" . $file;
+		if ($file != "" && file_exists($filepath)) {
+			$_TPL->set_var('file', $file);
+			$_TPL->set_var('filepath', $filepath);
+			$_TPL->display('/bloc/service/ipbx/'.$ipbx->get_name().'/call_management/recording/download');
+			die();
+		}
+		break;
 	default:
 		$act = 'list';
 		try
