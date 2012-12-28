@@ -28,31 +28,50 @@ $param['act'] = 'list';
 switch($act)
 {
 	case 'add':
-		$result = $fm_save = $error = null;
+		$errors_list = array();
 		
 		if(isset($_QR['fm_send']) === true) {
-			$appreccampaigns->add($_QR['recordingcampaign_name'], $_QR['recordingcampaign_queueid'], 
-							$_QR["recordingcampaign_start_date"], $_QR["recordingcampaign_end_date"]);
-			$_QRY->go($_TPL->url('service/ipbx/call_management/recording'),$param);
+			try {	
+				$appreccampaigns->add($_QR['recordingcampaign_name'], $_QR['recordingcampaign_queueid'], 
+								$_QR["recordingcampaign_start_date"], $_QR["recordingcampaign_end_date"]);
+			} catch(Exception $e) {
+				array_push($errors_list, $e->getMessage());
+			}
+			if(empty($errors_list))
+				$_QRY->go($_TPL->url('service/ipbx/call_management/recording'),$param);
 		} else { 
 			$queues_list = refactor_queue_list($appreccampaigns->get_queues_list());
 			$_TPL->set_var('queues_list', $queues_list);
 		}
+		$_TPL->set_var('errors_list', $errors_list);
 		break;
 
 	case 'edit':
-		$result = $fm_save = $error = null;
-		
+		$errors_list = array();
 		if(isset($_QR['fm_send']) === true) {
-			$appreccampaigns->edit($_QR['campaign_id'], $_QR['recordingcampaign_name'], $_QR['recordingcampaign_queueid'], 
-							$_QR["recordingcampaign_start_date"], $_QR["recordingcampaign_end_date"]);
-			$_QRY->go($_TPL->url('service/ipbx/call_management/recording'),$param);
+			try {
+				$appreccampaigns->edit($_QR['campaign_id'], $_QR['recordingcampaign_name'], $_QR['recordingcampaign_queueid'],
+						$_QR["recordingcampaign_start_date"], $_QR["recordingcampaign_end_date"]);
+			} catch(Exception $e) {
+				array_push($errors_list, $e->getMessage());
+			}
+			if(empty($errors_list))
+				$_QRY->go($_TPL->url('service/ipbx/call_management/recording'),$param);
 		} else {
-			$queues_list = refactor_queue_list($appreccampaigns->get_queues_list());
-			$campaign = $appreccampaigns->get_campaign_details($_QR['id']);
-			$_TPL->set_var('queues_list', $queues_list);
-			$_TPL->set_var('info', get_object_vars($campaign[0]));
+			try {
+				$queues_list = refactor_queue_list($appreccampaigns->get_queues_list());
+				$_TPL->set_var('queues_list', $queues_list);
+			} catch(Exception $e) {
+				array_push($errors_list, $e->getMessage());
+			}
+			try {
+				$campaign = $appreccampaigns->get_campaign_details($_QR['id']);
+				$_TPL->set_var('info', get_object_vars($campaign[0]));
+			} catch(Exception $e) {
+				array_push($errors_list, $e->getMessage());
+			}
 		}
+		$_TPL->set_var('errors_list', $errors_list);
 		break;
 		
 	case 'delete':
@@ -77,18 +96,20 @@ switch($act)
 			$_TPL->set_var('filepath', $filepath);
 			$_TPL->display('/bloc/service/ipbx/'.$ipbx->get_name().'/call_management/recording/download');
 			die();
+		} else {
+			die();
 		}
 		break;
 	default:
 		$act = 'list';
-		try
-		{
+		$errors_list = $_TPL->get_var('errors_list');
+		if($errors_list == null) $errors_list = array();
+		try	{
 			$recordingcampaigns = $appreccampaigns->get_campaigns();
 			$_TPL->set_var('recordingcampaigns',$recordingcampaigns);
-		}
-		catch (Exception $e)
-		{
-			$_TPL->set_var('error',$e->getMessage());
+		} catch (Exception $e) {
+			array_push($errors_list, $e->getMessage());
+			$_TPL->set_var('errors_list',$errors_list);
 		}
 }
 		

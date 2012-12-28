@@ -54,17 +54,20 @@ function print_recordings($recordings_list, $form, $url, $dhtml, $this_local) {
 }
 	
 	
-function print_recordings_error($this_local, $flask_error="Unknown error") 
-{
-?>
-	<tr class="sb-content">
-		<td colspan="10" class="td-single">
-<?php
-		echo $this_local->bbf('server_error'), " (Exception: ", $flask_error, ")";
-?>
-		</td>
-	</tr>
-<?php 
+function print_recordings_error($errors_list) {
+	if($errors_list != null && !empty($errors_list)) {
+		?>
+		<div id="report-xivo-error" class="xivo-error xivo-messages">
+			<ul>
+			<?php 
+			foreach($errors_list as $error) {
+				echo "<li>$error</li>";
+			}?>
+			
+			</ul>
+		</div>
+		<?php 
+	}
 }
 
 function print_recordings_empty_list($this_local)
@@ -159,12 +162,10 @@ function table_footer()
 
 
 table_header($this);
-$flask_error = $this->get_var('error');
-if ($flask_error != null) {
-	print_recordings_error($this, $flask_error);
-} else {
-	$recordings_list = $this->get_var('recordings');
-	print_recordings($recordings_list, $form, $url, $dhtml, $this);
-}
+$errors_list = $this->get_var('errors_list');
+print_recordings_error($errors_list);
+$recordings_list = $this->get_var('recordings');
+print_recordings($recordings_list, $form, $url, $dhtml, $this);
+
 table_footer();
 ?>

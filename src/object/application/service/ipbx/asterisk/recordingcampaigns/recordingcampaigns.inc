@@ -29,32 +29,37 @@ class xivo_application_service_asterisk_recordingcampaigns extends xivo_applicat
 	private $queues_service_url = 'http://127.0.0.1:50050/rest/CallCenter/queues/';
 	protected $_filter = false;
 	
+	private function manage_errors($http_reply) {
+		if(!$http_reply->hasErrors())
+			return false;
+		elseif($http_reply->code >= 500)
+			throw new Exception("Server error: " . $http_reply->body);
+		else
+			throw new Exception("Client error: " . $http_reply->body);
+	}
+	
 	public function get_campaigns()
 	{
 		$campaigns_reply = false;
-		$campaigns_list = false;
 		$campaigns_reply = \Httpful\Request::get($this->recording_service_url)->send();
-		if(!$campaigns_reply->hasErrors()):
-		# TODO : Check content-type
-		$campaigns_list = dwho_json::decode($campaigns_reply->body);
-		else:
-		throw new Exception("Http reply code: " + $campaigns_reply->code);
-		endif;
-		return $campaigns_list;
+		if(!$campaigns_reply->hasErrors()) {
+			# TODO : Check content-type
+			return dwho_json::decode($campaigns_reply->body);
+		} else {
+			$this->manage_errors($campaigns_reply);
+		}
 	}
 
 
 	public function get_recordings($campaign_id) {
 		$recordings_reply = false;
-		$recordings_list = false;
 		$recordings_reply = \Httpful\Request::get($this->recording_service_url . $campaign_id . "/")-> send();
-		if(!$recordings_reply->hasErrors()):
-		# TODO : Check content-type
-		$recordings_list = dwho_json::decode($recordings_reply->body);
-		else:
-		throw new Exception("Http reply code: " + $recordings_reply->code);
-		endif;
-		return $recordings_list;
+		if(!$recordings_reply->hasErrors()) {
+			# TODO : Check content-type
+			return dwho_json::decode($recordings_reply->body);
+		} else {
+			$this->manage_errors($recordings_reply);
+		}
 	}
 
 	public function get_queues_list() {
@@ -64,7 +69,7 @@ class xivo_application_service_asterisk_recordingcampaigns extends xivo_applicat
 			# TODO : Check content-type
 			return dwho_json::decode($queues_reply->body);
 		} else {
-			throw new Exception("Http reply code: " + $queues_reply->code);
+			$this->manage_errors($queues_reply);
 		}
 	}
 
@@ -75,7 +80,7 @@ class xivo_application_service_asterisk_recordingcampaigns extends xivo_applicat
 		if(!$campaign_reply->hasErrors()) {
 			return dwho_json::decode($campaign_reply->body);
 		} else {
-			throw new Exception("Http reply code: " + $campaign_reply->code);
+			$this->manage_errors($campaign_reply);
 		}
 	}
 
@@ -85,7 +90,6 @@ class xivo_application_service_asterisk_recordingcampaigns extends xivo_applicat
 			$base_filename=$campaign_name . "-file-";
 		}
 		$recordings_reply = false;
-		$recordings_list = false;
 
 		$content= dwho_json::encode(array("campaign_name"=>$campaign_name, 
 										  "queue_id"=>$queue_id, 
@@ -97,7 +101,7 @@ class xivo_application_service_asterisk_recordingcampaigns extends xivo_applicat
 												->body($content)
 												->sendsJson()
 												->send();
-		return $recording_reply;
+		$this->manage_errors($recordings_reply);
 	}
 	
 	public function edit($campaign_id, $new_campaign_name, $new_queue_id, $new_start_date, $new_end_date) {
@@ -111,7 +115,7 @@ class xivo_application_service_asterisk_recordingcampaigns extends xivo_applicat
 											->body($content)
 											->sendsJson()
 											->send();
-		return $editing_reply;
+		$this->manage_errors($editing_reply);
 	}
 
 	function add_from_json()

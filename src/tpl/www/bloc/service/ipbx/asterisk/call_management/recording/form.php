@@ -23,12 +23,27 @@ $url = &$this->get_module('url');
 $queues_list = $this->get_var('queues_list');
 $act = $this->get_var('act');
 $info = $this->get_var('info');
+$errors_list = $this->get_var('errors_list');
 
 function reformat_date($bad_formatted_date = null) {
 	if($bad_formatted_date != null and $bad_formatted_date != '') {
 		return date("Y-m-d", strtotime($bad_formatted_date));
 	}
 	return '';
+}
+
+if($errors_list != null && !empty($errors_list)) {
+	?>
+	<div id="report-xivo-error" class="xivo-error xivo-messages">
+		<ul>
+		<?php 
+		foreach($errors_list as $error) {
+			echo "<li>$error</li>";
+		}?>
+		
+		</ul>
+	</div>
+	<?php 
 }
 ?>
 <div id="sr-cel">
