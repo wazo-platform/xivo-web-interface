@@ -39,10 +39,11 @@ switch($act)
 			}
 			if(empty($errors_list))
 				$_QRY->go($_TPL->url('service/ipbx/call_management/recording'),$param);
-		} else { 
-			$queues_list = refactor_queue_list($appreccampaigns->get_queues_list());
-			$_TPL->set_var('queues_list', $queues_list);
 		}
+		//on définit queues_list dans tous les cas, on en a besoin en cas d'erreur
+		$queues_list = refactor_queue_list($appreccampaigns->get_queues_list());
+		$_TPL->set_var('queues_list', $queues_list);
+		
 		$_TPL->set_var('errors_list', $errors_list);
 		break;
 
@@ -50,27 +51,27 @@ switch($act)
 		$errors_list = array();
 		if(isset($_QR['fm_send']) === true) {
 			try {
-				$appreccampaigns->edit($_QR['campaign_id'], $_QR['recordingcampaign_name'], $_QR['recordingcampaign_queueid'],
+				$appreccampaigns->edit($_QR['id'], $_QR['recordingcampaign_name'], $_QR['recordingcampaign_queueid'],
 						$_QR["recordingcampaign_start_date"], $_QR["recordingcampaign_end_date"]);
 			} catch(Exception $e) {
 				array_push($errors_list, $e->getMessage());
 			}
 			if(empty($errors_list))
 				$_QRY->go($_TPL->url('service/ipbx/call_management/recording'),$param);
-		} else {
-			try {
-				$queues_list = refactor_queue_list($appreccampaigns->get_queues_list());
-				$_TPL->set_var('queues_list', $queues_list);
-			} catch(Exception $e) {
-				array_push($errors_list, $e->getMessage());
-			}
-			try {
-				$campaign = $appreccampaigns->get_campaign_details($_QR['id']);
-				$_TPL->set_var('info', get_object_vars($campaign[0]));
-			} catch(Exception $e) {
-				array_push($errors_list, $e->getMessage());
-			}
+		} 
+		try {
+			$queues_list = refactor_queue_list($appreccampaigns->get_queues_list());
+			$_TPL->set_var('queues_list', $queues_list);
+		} catch(Exception $e) {
+			array_push($errors_list, $e->getMessage());
 		}
+		try {
+			$campaign = $appreccampaigns->get_campaign_details($_QR['id']);
+			$_TPL->set_var('info', get_object_vars($campaign[0]));
+		} catch(Exception $e) {
+			array_push($errors_list, $e->getMessage());
+		}
+		
 		$_TPL->set_var('errors_list', $errors_list);
 		break;
 		

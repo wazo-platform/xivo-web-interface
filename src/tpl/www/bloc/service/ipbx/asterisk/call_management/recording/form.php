@@ -47,6 +47,11 @@ if($errors_list != null && !empty($errors_list)) {
 }
 ?>
 <div id="sr-cel">
+	<?php
+	if($act == 'edit') {
+		echo $form->hidden(array('name' => 'id',
+								'value' => $info['id']));
+	} ?>
 	<div class="fm-paragraph fm-desc-inline">
 		<div class="fm-multifield">
 			<?php

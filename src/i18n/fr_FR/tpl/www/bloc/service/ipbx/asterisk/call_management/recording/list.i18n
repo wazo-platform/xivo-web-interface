@@ -5,10 +5,10 @@ Nom de la campagne
 Nom de la file
 
 ; server_error
-Serveur erreur, vérifiez le xivo-recording-webservice
+Erreur du serveur, vérifiez le xivo-recording-webservice
 
 ; no_recording_campaign
-Aucun campagne d'enregistrement trouvé
+Aucune campagne d'enregistrement trouvée
 
 ; opt_modify
 Modifier
