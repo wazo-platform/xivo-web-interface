@@ -123,7 +123,7 @@ function print_recordings_list($recordings_list, $nb, $form, $url, $dhtml, $this
 			
 		</td>
 		<td>
-			<?= $recording['queue_name'] ?>
+			<?= $recording["queue_number"] . ": " .  $recording['queue_display_name']?>
 		</td>
 		<td>
 		<?= reformat_date($recording['start_date'])	?>

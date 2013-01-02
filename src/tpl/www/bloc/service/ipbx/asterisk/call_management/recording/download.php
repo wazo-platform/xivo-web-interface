@@ -10,7 +10,6 @@ header('Last-Modified: '.
 		dwho_i18n::strftime_l('%Z',null));
 header("Content-Disposition: attachment; filename=\"" . $file . "\"");
 header("Content-Type: audio/wav");
-//header('Content-Type: application/octetstream');
 header("Content-Transfer-Encoding: binary");
 header("Content-Length: " . $size);
 readfile($filepath);
