@@ -36,7 +36,7 @@ function table_header($this_local)
 		<th class="th-left xspan"><span class="span-left">&nbsp;</span></th>
 		<th class="th-center"><?=$this_local->bbf('start_time');?></th>
 		<th class="th-center"><?=$this_local->bbf('caller');?></th>
-		<th class="th-center"><?=$this_local->bbf('callee_agent');?></th>
+		<th class="th-center"><?=$this_local->bbf('agent');?></th>
 		<th class="th-center col-action"><?=$this_local->bbf('col_action');?></th>
 		<th class="th-right xspan"><span class="span-right">&nbsp;</span></th>
 	</tr>
@@ -111,11 +111,8 @@ function print_recordings_list($recordings_list, $nb, $form, $url, $dhtml, $this
 				
 			</td>
 			<td>
-				<?php 
-					$display = $recording['callee'] == ''? '-' : $recording['callee'];
-					$display .= "/";
-					$display .= $recording['agent'] == ''? '-' : $recording['agent'];
-					echo $display; ?>
+				<?=
+					$recording['agent']?>
 			</td>
 			<td class="td-right" colspan="2">
 	<?php

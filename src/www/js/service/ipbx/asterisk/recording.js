@@ -39,7 +39,7 @@ $(document).ready(function() {
         firstDay: 1,
         selectOtherMonths: true,
         dayNamesMin: xivo_date_day_min,
-        ayNamesShort: xivo_date_day_short,
+        dayNamesShort: xivo_date_day_short,
         dayNames: xivo_date_day,
         monthNames: xivo_date_month,
         monthNamesShort: xivo_date_month_short,
@@ -48,17 +48,25 @@ $(document).ready(function() {
         showAnim: 'fold',
         showMonthAfterYear: true,
         showWeek: true,
-        weekHeader: 'W'
+        weekHeader: 'W',
+        showTime: true,
+        constrainInput: false
     });
     
-    $("#it-start_date").datepicker({
+    $("#it-start_date").datetimepicker({
         dateFormat: 'yy-mm-dd',
-        altFormat: 'yy-mm-dd'
+        timeFormat: 'hh:mm:ss',
+        stepMinutes: 1,
+        stepHours: 1,
+        time24h: false
     });
     
-    $("#it-end_date").datepicker({
+    $("#it-end_date").datetimepicker({
         dateFormat: 'yy-mm-dd',
-        altFormat: 'yy-mm-dd'
+        timeFormat: 'hh:mm:ss',
+        stepMinutes: 1,
+        stepHours: 1,
+        time24h: false
     });
     
 });

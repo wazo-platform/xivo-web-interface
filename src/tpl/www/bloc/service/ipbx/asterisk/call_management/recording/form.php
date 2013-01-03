@@ -27,7 +27,7 @@ $errors_list = $this->get_var('errors_list');
 
 function reformat_date($bad_formatted_date = null) {
 	if($bad_formatted_date != null and $bad_formatted_date != '') {
-		return date("Y-m-d", strtotime($bad_formatted_date));
+		return date("Y-m-d H:i:s", strtotime($bad_formatted_date));
 	}
 	return '';
 }

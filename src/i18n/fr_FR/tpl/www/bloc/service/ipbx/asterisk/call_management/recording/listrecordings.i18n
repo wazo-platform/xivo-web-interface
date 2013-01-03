@@ -1,8 +1,8 @@
 ; caller
 Appelant
 
-; callee_agent
-Appelé / Agent
+; agent
+Agent
 
 ; file
 Fichier
