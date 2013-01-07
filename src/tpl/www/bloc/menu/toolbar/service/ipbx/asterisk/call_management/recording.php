@@ -32,7 +32,10 @@ $dhtml->write_js($toolbar_js);
 
 ?>
 <script type="text/javascript" src="<?=$this->file_time($this->url('js/xivo_toolbar.js'));?>"></script>
+
 <?php
+if($act == 'listrecordings')
+	display_search_zone($this);
 if($act == 'list') {
 	echo	$url->href_html($url->img_html('img/menu/top/toolbar/bt-add.gif',
 					       $this->bbf('toolbar_opt_add'),
@@ -42,5 +45,37 @@ if($act == 'list') {
 				'act=add',
 				null,
 				$this->bbf('toolbar_opt_add'));
+}
+
+function display_search_zone($this_local) {
+	$form = &$this_local->get_module('form');
+	$url = &$this_local->get_module('url');
+	?>
+	<form action="#" method="post" accept-charset="utf-8">
+	<?php
+	echo	$form->hidden(array('name'	=> DWHO_SESS_NAME,
+			'value'	=> DWHO_SESS_ID)),
+			$form->hidden(array('name'	=> 'act',
+					'value'	=> 'listrecordings')),
+			$form->hidden(array('name'	=> 'campaign',
+					'value'	=> $this_local->get_var('campaign')));
+			?>
+		<div class="fm-paragraph">
+	<?php
+			echo	$form->text(array('name'	=> 'search',
+						  'id'		=> 'it-toolbar-search',
+						  'size'	=> 20,
+						  'paragraph'	=> false,
+						  'default'	=> $this_local->bbf('toolbar_fm_search'))),
+	
+				$form->image(array('name'	=> 'submit',
+						   'id'		=> 'it-toolbar-subsearch',
+						   'src'	=> $url->img('img/menu/top/toolbar/bt-search.gif'),
+						   'paragraph'	=> false,
+						   'alt'	=> $this_local->bbf('toolbar_fm_search')));
+	?>
+		</div>
+	</form>
+<?php 
 }
 ?>

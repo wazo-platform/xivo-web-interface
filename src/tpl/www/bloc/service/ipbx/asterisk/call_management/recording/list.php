@@ -21,7 +21,6 @@
 $url = &$this->get_module('url');
 $form = &$this->get_module('form');
 $dhtml = &$this->get_module('dhtml');
-$error = $this->get_var('error');
 //$act = $this->get_var('act');
 
 

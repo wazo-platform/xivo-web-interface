@@ -81,12 +81,24 @@ switch($act)
 	case 'menu':
 		break;
 	case 'listrecordings':
-		try {
-			$recordings = $appreccampaigns->get_recordings($_QR['campaign']);
-			$_TPL->set_var('recordings', $recordings);
-		} catch(Exception $e) {
-			$_TPL->set_var('error',$e->getMessage());
+		$errors_list = array();
+		if(isset($_QR['search'])) {
+			try {
+				$recordings = $appreccampaigns->search_recordings($_QR['campaign'], $_QR['search']);
+				$_TPL->set_var('recordings', $recordings);
+			} catch(Exception $e) {
+				array_push($errors_list, $e->getMessage());
+			}
+		} else {
+			try {
+				$recordings = $appreccampaigns->get_recordings($_QR['campaign']);
+				$_TPL->set_var('recordings', $recordings);
+			} catch(Exception $e) {
+				array_push($errors_list, $e->getMessage());
+			}
 		}
+		$_TPL->set_var('campaign', $_QR['campaign']);
+		$_TPL->set_var('errors_list', $errors_list);
 		break;
 	
 	case 'download':
@@ -126,7 +138,7 @@ $_TPL->set_struct('service/ipbx/'.$ipbx->get_name());
 
 $dhtml = &$_TPL->get_module('dhtml');
 $dhtml->set_js('js/dwho/submenu.js');
-$dhtml->set_css('/css/statistics/statistics.css');
+//$dhtml->set_css('/css/statistics/statistics.css');
 $dhtml->add_js('/struct/js/date.js.php');
 $dhtml->set_js('js/service/ipbx/'.$ipbx->get_name().'/recording.js');
 

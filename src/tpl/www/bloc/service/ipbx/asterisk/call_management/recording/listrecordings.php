@@ -82,8 +82,6 @@ function print_recordings_empty_list($this_local)
 function print_recordings_list($recordings_list, $nb, $form, $url, $dhtml, $this_local)
 {
 	for($i = 0;$i < $nb;$i++){
-		//TODO qd le web service marchera: supprimer ligne suivante et décommenter celle d'après
-		//$recording = $recordings_list[$i];	
 		$recording = get_object_vars(&$recordings_list[$i]);
 				
 	?>

@@ -117,6 +117,18 @@ class xivo_application_service_asterisk_recordingcampaigns extends xivo_applicat
 											->send();
 		$this->manage_errors($editing_reply);
 	}
+	
+	public function search_recordings($campaign_id, $search_pattern) {
+		$recordings_reply = false;
+		$params = "?key=$search_pattern";
+		$recordings_reply = \Httpful\Request::get($this->recording_service_url . $campaign_id . "/search" . $params)-> send();
+		if(!$recordings_reply->hasErrors()) {
+			# TODO : Check content-type
+			return dwho_json::decode($recordings_reply->body);
+		} else {
+			$this->manage_errors($recordings_reply);
+		}
+	}
 
 	function add_from_json()
 	{
