@@ -129,6 +129,17 @@ class xivo_application_service_asterisk_recordingcampaigns extends xivo_applicat
 			$this->manage_errors($recordings_reply);
 		}
 	}
+	
+	public function delete($campaign_id, $recording_id) {
+		$delete_reply = false;
+		$delete_reply = \Httpful\Request::delete($this->recording_service_url . $campaign_id . "/" . $recording_id)-> send();
+		if(!$delete_reply->hasErrors()) {
+			# TODO : Check content-type
+			return dwho_json::decode($delete_reply->body);
+		} else {
+			$this->manage_errors($delete_reply);
+		}
+	}
 
 	function add_from_json()
 	{

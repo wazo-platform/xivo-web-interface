@@ -110,7 +110,7 @@ function print_recordings_list($recordings_list, $nb, $form, $url, $dhtml, $this
 			</td>
 			<td>
 				<?=
-					$recording['agent']?>
+					$recording['agent_no']?>
 			</td>
 			<td class="td-right" colspan="2">
 	<?php
@@ -131,7 +131,8 @@ function print_recordings_list($recordings_list, $nb, $form, $url, $dhtml, $this
 								       'border="0"'),
 							'service/ipbx/call_management/recording',
 							array('act'	=> 'delete',
-							      'id'	=> $recording['campaign_name']),
+							      'id'	=> $recording['cid'],
+								  'campaign' => $recording['campaign_id']),
 							'onclick="return(confirm(\''.$dhtml->escape($this_local->bbf('opt_delete_confirm')).'\'));"',
 							$this_local->bbf('opt_delete'));
 	?>

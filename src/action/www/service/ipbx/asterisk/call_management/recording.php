@@ -76,6 +76,15 @@ switch($act)
 		break;
 		
 	case 'delete':
+		$errors_list = array();
+		try {
+			$appreccampaigns->delete($_QR['campaign'], $_QR['id']);
+		} catch(Exception $e) {
+			array_push($errors_list, $e->getMessage());
+		}
+		$param['act'] = 'listrecordings';
+		$param['campaign'] = $_QR['campaign'];
+		$_QRY->go($_TPL->url('service/ipbx/call_management/recording'),$param);
 		break;
 		
 	case 'menu':
