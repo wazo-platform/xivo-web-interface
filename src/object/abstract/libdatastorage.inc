@@ -481,8 +481,7 @@ abstract class xivo_libdatastorage_abstract extends xivo_libconfig_abstract
 		return($r);
 	}
 
-	private function _parse_ctibus_cmd(&$cmds, $state, $id)
-	{
+	private function _parse_bus_cmd(&$cmds, $state, $id) {
 		foreach ($cmds as &$cmd)
 			$cmd = sprintf($cmd, $state, $id);
 	}
@@ -500,6 +499,8 @@ abstract class xivo_libdatastorage_abstract extends xivo_libconfig_abstract
 			$cmds['ctibus'] = array();
 		if (!isset($cmds['dird']))
 			$cmds['dird'] = array();
+		if (!isset($cmds['agentbus']))
+			$cmds['agentbus'] = array();
 
 		$name = $this->_name;
 
@@ -517,8 +518,11 @@ abstract class xivo_libdatastorage_abstract extends xivo_libconfig_abstract
 			{
 				foreach ($types as $type => $cmd)
 				{
-					if ($type === 'ctibus')
-						$this->_parse_ctibus_cmd($cmd, $state, $id);
+
+					if ($type === 'ctibus' || $type === 'agentbus') {
+						$this->_parse_bus_cmd($cmd, $state, $id);
+					}
+
 					$cmds[$type] = array_merge($cmds[$type], $cmd);
 					$cmds[$type] = array_unique($cmds[$type]);
 					$cmds[$type] = array_values($cmds[$type]);
