@@ -1,5 +1,11 @@
 <?php
+//logging
 $file = $this->get_var('file');
+$logphrase = "File " . $file . " is being downloaded.";
+$command = 'logger -t xivo-recording "' . $logphrase . '"';
+exec($command);
+
+
 $filepath = $this->get_var('filepath');
 $size = filesize($filepath);
 
