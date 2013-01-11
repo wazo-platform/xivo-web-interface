@@ -93,14 +93,14 @@ switch($act)
 		$errors_list = array();
 		if(isset($_QR['search'])) {
 			try {
-				$recordings = $appreccampaigns->search_recordings($_QR['campaign'], $_QR['search']);
+				$recordings = $appreccampaigns->search_recordings($_QR['campaign'], $_QR['search'])->data;
 				$_TPL->set_var('recordings', $recordings);
 			} catch(Exception $e) {
 				array_push($errors_list, $e->getMessage());
 			}
 		} else {
 			try {
-				$recordings = $appreccampaigns->get_recordings($_QR['campaign']);
+				$recordings = $appreccampaigns->get_recordings($_QR['campaign'])->data;
 				$_TPL->set_var('recordings', $recordings);
 			} catch(Exception $e) {
 				array_push($errors_list, $e->getMessage());
@@ -127,7 +127,7 @@ switch($act)
 		$errors_list = $_TPL->get_var('errors_list');
 		if($errors_list == null) $errors_list = array();
 		try	{
-			$recordingcampaigns = $appreccampaigns->get_campaigns();
+			$recordingcampaigns = $appreccampaigns->get_campaigns()->data;
 			$_TPL->set_var('recordingcampaigns',$recordingcampaigns);
 		} catch (Exception $e) {
 			array_push($errors_list, $e->getMessage());
