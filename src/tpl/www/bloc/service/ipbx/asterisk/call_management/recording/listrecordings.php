@@ -21,15 +21,18 @@
 $url = &$this->get_module('url');
 $form = &$this->get_module('form');
 $dhtml = &$this->get_module('dhtml');
-//$act = $this->get_var('act');
+$params = $this->get_var('params');
+$pager = $this->get_var('pager');
 
 $exception_message = "";
 
 
-function table_header($this_local) 
+function table_header($this_local, $page) 
 {
+echo '<div class="b-list">';
+if($page !== '')
+	echo '<div class="b-page">',$page,'</div>';
 ?>
-<div class="b-list">
 <form>
 <table id="table-main-listing">
 	<tr class="sb-top">
@@ -142,7 +145,7 @@ function print_recordings_list($recordings_list, $nb, $form, $url, $dhtml, $this
 		}
 }
 
-function table_footer() 
+function table_footer($page) 
 {
 ?>
 	<tr class="sb-foot">
@@ -151,17 +154,25 @@ function table_footer()
 		<td class="td-right xspan b-nosize"><span class="span-right b-nosize">&nbsp;</span></td>
 	</tr>
 </table>
-</form>
-</div>
+</form> 
 <?php 
+	if($page !== '') 
+		echo '<div class="b-page">',$page,'</div>';
+	echo '</div>';
 }
 
 
-table_header($this);
+$page = $url->pager($pager['pages'],
+		$pager['page'],
+		$pager['prev'],
+		$pager['next'],
+		'service/ipbx/call_management/recording',
+		array('act' => 'listrecordings', $params));
+table_header($this, $page);
 $errors_list = $this->get_var('errors_list');
 print_recordings_error($errors_list);
 $recordings_list = $this->get_var('recordings');
 print_recordings($recordings_list, $form, $url, $dhtml, $this);
-
-table_footer();
+table_footer($page);
+paginate($page);
 ?>

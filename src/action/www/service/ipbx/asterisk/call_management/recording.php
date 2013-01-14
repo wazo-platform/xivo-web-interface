@@ -19,6 +19,8 @@
 #
 
 $act = isset($_QR['act']) === true ? $_QR['act'] : '';
+$page = isset($_QR['page']) === true ? intval($_QR['page']) : 1;
+$pagesize = 50;
 
 $appreccampaigns = &$ipbx->get_application('recordingcampaigns');
 
@@ -66,7 +68,7 @@ switch($act)
 			array_push($errors_list, $e->getMessage());
 		}
 		try {
-			$campaign = $appreccampaigns->get_campaign_details($_QR['id']);
+			$campaign = $appreccampaigns->get_campaign_details($_QR['id'])->data;
 			$_TPL->set_var('info', get_object_vars($campaign[0]));
 		} catch(Exception $e) {
 			array_push($errors_list, $e->getMessage());
@@ -91,22 +93,37 @@ switch($act)
 		break;
 	case 'listrecordings':
 		$errors_list = array();
+		$total = 0;
 		if(isset($_QR['search'])) {
 			try {
-				$recordings = $appreccampaigns->search_recordings($_QR['campaign'], $_QR['search'])->data;
+				$result = $appreccampaigns->search_recordings($_QR['campaign'], $_QR['search'], $page, $pagesize);
+				$recordings = $result->data;
+				$total = $result->total;
 				$_TPL->set_var('recordings', $recordings);
 			} catch(Exception $e) {
 				array_push($errors_list, $e->getMessage());
 			}
 		} else {
 			try {
-				$recordings = $appreccampaigns->get_recordings($_QR['campaign'])->data;
+				$result = $appreccampaigns->get_recordings($_QR['campaign'], $page, $pagesize);
+				$recordings = $result->data;
+				$total = $result->total;
 				$_TPL->set_var('recordings', $recordings);
 			} catch(Exception $e) {
 				array_push($errors_list, $e->getMessage());
 			}
 		}
-		$_TPL->set_var('campaign', $_QR['campaign']);
+		
+		$params = array('campaign' => $_QR['campaign']);
+		if(isset($_QR['search']))
+				$params['search'] = $_QR['search'];
+		$pages = get_nb_pages($total, $pagesize);
+		$pager = array('pages' => $pages,
+					   'page' => $page,
+					   'prev' => $page - 1,
+					   'next' => $page == $pages ? 0 : $page + 1);
+		$_TPL->set_var('pager', $pager);
+		$_TPL->set_var('params', $params);
 		$_TPL->set_var('errors_list', $errors_list);
 		break;
 	
@@ -150,7 +167,6 @@ $dhtml->set_js('js/dwho/submenu.js');
 //$dhtml->set_css('/css/statistics/statistics.css');
 $dhtml->add_js('/struct/js/date.js.php');
 $dhtml->set_js('js/service/ipbx/'.$ipbx->get_name().'/recording.js');
-
 $_TPL->display('index');
 
 function refactor_queue_list($queues_list) {
@@ -163,5 +179,9 @@ function refactor_queue_list($queues_list) {
 		$queues_list_refactored[$i] = $new_item;
 	}
 	return $queues_list_refactored;
+}
+
+function get_nb_pages($total, $pagesize) {
+	return ceil($total/$pagesize);
 }
 ?>

@@ -140,14 +140,10 @@ function print_recordings_list($recordings_list, $nb, $form, $url, $dhtml, $this
 						      'id'=> $recording['id']),
 						null,
 						$this_local->bbf('opt_modify')),"\n",
-				$url->href_html($url->img_html('img/site/button/delete.gif',
+						$url->img_html('img/site/button/delete.gif',
 							       $this_local->bbf('opt_delete'),
-							       'border="0"'),
-						'service/ipbx/call_management/recording',
-						array('act'	=> 'delete',
-						      'id'	=> $recording['id']),
-						'onclick="return(confirm(\''.$dhtml->escape($this_local->bbf('opt_delete_confirm')).'\'));"',
-						$this_local->bbf('opt_delete'));
+							       'border="0" onclick="alert(\''.$dhtml->escape($this_local->bbf('not_implemented')).'\');"');
+						
 ?>
 		</td>
 	</tr>

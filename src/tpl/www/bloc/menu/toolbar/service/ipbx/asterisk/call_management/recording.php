@@ -50,6 +50,7 @@ if($act == 'list') {
 function display_search_zone($this_local) {
 	$form = &$this_local->get_module('form');
 	$url = &$this_local->get_module('url');
+	$params = $this_local->get_var('params');
 	?>
 	<form action="#" method="post" accept-charset="utf-8">
 	<?php
@@ -58,7 +59,7 @@ function display_search_zone($this_local) {
 			$form->hidden(array('name'	=> 'act',
 					'value'	=> 'listrecordings')),
 			$form->hidden(array('name'	=> 'campaign',
-					'value'	=> $this_local->get_var('campaign')));
+					'value'	=> $params['campaign']));
 			?>
 		<div class="fm-paragraph">
 	<?php

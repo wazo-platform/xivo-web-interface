@@ -51,9 +51,10 @@ class xivo_application_service_asterisk_recordingcampaigns extends xivo_applicat
 	}
 
 
-	public function get_recordings($campaign_id) {
+	public function get_recordings($campaign_id, $page, $pagesize) {
 		$recordings_reply = false;
-		$recordings_reply = \Httpful\Request::get($this->recording_service_url . $campaign_id . "/")-> send();
+		$params = "?_page=$page&_pagesize=$pagesize";
+		$recordings_reply = \Httpful\Request::get($this->recording_service_url . $campaign_id . "/" . $params)-> send();
 		if(!$recordings_reply->hasErrors()) {
 			# TODO : Check content-type
 			return dwho_json::decode($recordings_reply->body);
@@ -118,9 +119,9 @@ class xivo_application_service_asterisk_recordingcampaigns extends xivo_applicat
 		$this->manage_errors($editing_reply);
 	}
 	
-	public function search_recordings($campaign_id, $search_pattern) {
+	public function search_recordings($campaign_id, $search_pattern, $page, $pagesize) {
 		$recordings_reply = false;
-		$params = "?key=$search_pattern";
+		$params = "?key=$search_pattern&_page=$page&_pagesize=$pagesize";
 		$recordings_reply = \Httpful\Request::get($this->recording_service_url . $campaign_id . "/search" . $params)-> send();
 		if(!$recordings_reply->hasErrors()) {
 			# TODO : Check content-type
