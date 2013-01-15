@@ -44,7 +44,7 @@ $array['type']['meetme']['supervisable'] = true;
 $array['type']['custom'] = array();
 $array['type']['custom']['name'] = 'custom';
 $array['type']['custom']['destination'] = true;
-$array['type']['custom']['supervisable'] = false;
+$array['type']['custom']['supervisable'] = true;
 
 $array['type']['featuremap-automon'] = array();
 $array['type']['featuremap-automon']['category'] = 'extension-general';
