@@ -38,6 +38,7 @@ if($page !== '')
 	<tr class="sb-top">
 		<th class="th-left xspan"><span class="span-left">&nbsp;</span></th>
 		<th class="th-center"><?=$this_local->bbf('start_time');?></th>
+		<th class="th-center"><?=$this_local->bbf('client_id');?></th>
 		<th class="th-center"><?=$this_local->bbf('caller');?></th>
 		<th class="th-center"><?=$this_local->bbf('agent');?></th>
 		<th class="th-center col-action"><?=$this_local->bbf('col_action');?></th>
@@ -106,6 +107,9 @@ function print_recordings_list($recordings_list, $nb, $form, $url, $dhtml, $this
 	?>
 				</label>
 				<?= $recording['start_time'] ?>
+			</td>
+			<td>
+			<?= $recording['client_id']  ?>	
 			</td>
 		    <td>
 			<?= $recording['caller']  ?>

@@ -10,6 +10,9 @@ Fichier
 ; start_time
 Heure de début
 
+; client_id
+Numéro de client
+
 ; action
 Action
 
