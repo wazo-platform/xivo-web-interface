@@ -1,5 +1,4 @@
 <?php
-
 #
 # XiVO Web-Interface
 # Copyright (C) 2006-2011  Avencall
@@ -36,11 +35,18 @@ switch($act)
 			try {	
 				$appreccampaigns->add($_QR['recordingcampaign_name'], $_QR['recordingcampaign_queueid'], 
 								$_QR["recordingcampaign_start_date"], $_QR["recordingcampaign_end_date"]);
-			} catch(Exception $e) {
-				array_push($errors_list, $e->getMessage());
+			} catch(WebServiceException $e) {
+				$errors_list = array_concatenate($errors_list, $e->getErrorsList());
 			}
-			if(empty($errors_list))
+			if(empty($errors_list)) {
 				$_QRY->go($_TPL->url('service/ipbx/call_management/recording'),$param);
+			} else {
+				$info = array('start_date' => $_QR["recordingcampaign_start_date"],
+							  'end_date' => $_QR["recordingcampaign_end_date"],
+							  'campaign_name' => $_QR["recordingcampaign_name"],
+							  'queue_id' => $_QR['recordingcampaign_queueid']);
+				$_TPL->set_var('info', $info);
+			}
 		}
 		//on définit queues_list dans tous les cas, on en a besoin en cas d'erreur
 		$queues_list = refactor_queue_list($appreccampaigns->get_queues_list());
@@ -51,27 +57,40 @@ switch($act)
 
 	case 'edit':
 		$errors_list = array();
-		if(isset($_QR['fm_send']) === true) {
+		//fm_send is set ==> the edition form has been submited
+		if(isset($_QR['fm_send'])) {
 			try {
 				$appreccampaigns->edit($_QR['id'], $_QR['recordingcampaign_name'], $_QR['recordingcampaign_queueid'],
 						$_QR["recordingcampaign_start_date"], $_QR["recordingcampaign_end_date"]);
-			} catch(Exception $e) {
-				array_push($errors_list, $e->getMessage());
+			} catch(WebServiceException $e) {
+				$errors_list = array_concatenate($errors_list, $e->getErrorsList());
 			}
-			if(empty($errors_list))
+			//if there is no error, we go back to the list of campaigns
+			//else, we keep in memory the data which was sent and continue
+			if(empty($errors_list)){
 				$_QRY->go($_TPL->url('service/ipbx/call_management/recording'),$param);
-		} 
+			} else {
+				$info = array('start_date' => $_QR["recordingcampaign_start_date"],
+						'end_date' => $_QR["recordingcampaign_end_date"],
+						'campaign_name' => $_QR["recordingcampaign_name"],
+						'queue_id' => $_QR['recordingcampaign_queueid'],
+						'id' => $_QR['id']);
+				$_TPL->set_var('info', $info);
+			}
+		} else {
+			try {
+				//we display the current state of the campaign
+				$campaign = $appreccampaigns->get_campaign_details($_QR['id'])->data;
+				$_TPL->set_var('info', get_object_vars($campaign[0]));
+			} catch(Exception $e) {
+				$errors_list = array_concatenate($errors_list, $e->getMessage());
+			}
+		}
 		try {
 			$queues_list = refactor_queue_list($appreccampaigns->get_queues_list());
 			$_TPL->set_var('queues_list', $queues_list);
 		} catch(Exception $e) {
-			array_push($errors_list, $e->getMessage());
-		}
-		try {
-			$campaign = $appreccampaigns->get_campaign_details($_QR['id'])->data;
-			$_TPL->set_var('info', get_object_vars($campaign[0]));
-		} catch(Exception $e) {
-			array_push($errors_list, $e->getMessage());
+			$errors_list = array_concatenate($errors_list, $e->getMessage());
 		}
 		
 		$_TPL->set_var('errors_list', $errors_list);
@@ -183,5 +202,12 @@ function refactor_queue_list($queues_list) {
 
 function get_nb_pages($total, $pagesize) {
 	return ceil($total/$pagesize);
+}
+
+function array_concatenate($modified_array, $new_values) {
+	foreach($new_values as $value) {
+		array_push($modified_array, $value);
+	}
+	return $modified_array;
 }
 ?>

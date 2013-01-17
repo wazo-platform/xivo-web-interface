@@ -30,3 +30,6 @@ Server error
 
 ;opt_download
 Download
+
+;help_search_recordings
+Search can be performed on the fields Agent and Caller

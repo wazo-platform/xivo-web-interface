@@ -15,3 +15,12 @@ Date de début
 
 ; end_date
 Date de fin
+
+; duplicated_name
+Ce nom de campagne existe déjà
+
+;empty_name
+Le nom de campagne ne peut être vide
+
+;start_greater_than_end
+La date de départ ne peut être supérieure à la date de fin.

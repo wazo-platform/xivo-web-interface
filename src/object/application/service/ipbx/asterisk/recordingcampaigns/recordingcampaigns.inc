@@ -19,9 +19,8 @@
 #
 
 dwho_file::required(array(XIVO_PATH_OBJECT,'application','service','ipbx','asterisk.inc'),true);
-//xivo_service_asterisk::required(array('abstract','abstract.inc'),true);
-
 include('httpful.phar');
+include('exceptions.php');
 
 class xivo_application_service_asterisk_recordingcampaigns extends xivo_application_asterisk_abstract//xivo_service_asterisk_abstract
 {
@@ -32,10 +31,11 @@ class xivo_application_service_asterisk_recordingcampaigns extends xivo_applicat
 	private function manage_errors($http_reply) {
 		if(!$http_reply->hasErrors())
 			return false;
-		elseif($http_reply->code >= 500)
-			throw new Exception("Server error: " . $http_reply->body);
-		else
-			throw new Exception("Client error: " . $http_reply->body);
+		else {
+			$exc = new WebServiceException();
+			$exc->addErrors(dwho_json::decode($http_reply->body));
+			throw $exc;
+		}
 	}
 	
 	public function get_campaigns()

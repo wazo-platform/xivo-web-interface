@@ -30,3 +30,6 @@ Erreur du serveur
 
 ;opt_download
 Télécharger
+
+;help_search_recordings
+La recherche peut porter sur les champs Agent et Appelant

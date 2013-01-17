@@ -15,3 +15,12 @@ Start date
 
 ; end_date
 End date
+
+; duplicated_name
+This campaign name already exists
+
+;empty_name
+The campaign name cannot be empty
+
+;start_greater_than_end
+Start date cannot be greater than end date

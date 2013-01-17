@@ -24,6 +24,7 @@ $queues_list = $this->get_var('queues_list');
 $act = $this->get_var('act');
 $info = $this->get_var('info');
 $errors_list = $this->get_var('errors_list');
+$supported_errors = array('duplicated_name', 'empty_name', 'start_greater_than_end');
 
 function reformat_date($bad_formatted_date = null) {
 	if($bad_formatted_date != null and $bad_formatted_date != '') {
@@ -38,7 +39,12 @@ if($errors_list != null && !empty($errors_list)) {
 		<ul>
 		<?php 
 		foreach($errors_list as $error) {
-			echo "<li>$error</li>";
+			if(in_array($error, $supported_errors)) {
+				echo "<li>".$this->bbf($error)."</li>";
+			} else {
+				echo "<li>Error: $error</li>";
+			}
+			
 		}?>
 		
 		</ul>
@@ -59,7 +65,7 @@ if($errors_list != null && !empty($errors_list)) {
 							  'paragraph'	=> false,
 							  'name'	=> 'recordingcampaign_start_date',
 							  'labelid'	=> 'start_date',
-							  'default'	=>  reformat_date($act == 'edit'? $info['start_date']:null)));
+							  'default'	=>  reformat_date(isset($info)? $info['start_date']:null)));
 			?>
 		</div>
 		<div class="fm-multifield">
@@ -68,7 +74,7 @@ if($errors_list != null && !empty($errors_list)) {
 							  'paragraph'	=> false,
 							  'name'	=> 'recordingcampaign_end_date',
 							  'labelid'	=> 'end_date',
-							  'default'	=>  reformat_date($act == 'edit'? $info['end_date']:null)));
+							  'default'	=>  reformat_date(isset($info)? $info['end_date']:null)));
 			?>
 		</div>
 	</div>
@@ -76,14 +82,14 @@ if($errors_list != null && !empty($errors_list)) {
 <?php
 echo $form->text(array('desc'	=> $this->bbf('fm_campaign_name'),
 						'name'	=> 'recordingcampaign_name',
-						'default' => $act == 'edit'? $info['campaign_name'] : null,
+						'default' => isset($info)? $info['campaign_name'] : null,
 						'size'	=> 15));
 
 echo $form->select(array('desc'	=> $this->bbf('fm_queue_name'),
 						'name'		=> 'recordingcampaign_queueid',
 						'altkey' => 'id', //altkey = "value" attribute
 						'key' => 'ext_name', //key = displayed name
-						'selected' => $act == 'edit'? $info['queue_id'] : null),
+						'selected' => isset($info)? $info['queue_id'] : null),
 						$queues_list);
 
 ?>

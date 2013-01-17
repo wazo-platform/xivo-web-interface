@@ -73,7 +73,8 @@ function display_search_zone($this_local) {
 						   'id'		=> 'it-toolbar-subsearch',
 						   'src'	=> $url->img('img/menu/top/toolbar/bt-search.gif'),
 						   'paragraph'	=> false,
-						   'alt'	=> $this_local->bbf('toolbar_fm_search')));
+						   'alt'	=> $this_local->bbf('toolbar_fm_search'),
+						   'help'	=> $this_local->bbf('help_search_recordings')));
 	?>
 		</div>
 	</form>
