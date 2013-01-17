@@ -27,3 +27,6 @@ Une campagne existe déjà sur cet intervalle de temps
 
 ;start_greater_than_end
 La date de départ ne peut être supérieure à la date de fin.
+
+; invalid_date_format
+La date doit être au format : YYYY-MM-DD ou : YYYY-MM-DD hh:mm:ss

@@ -27,3 +27,6 @@ A campaign already exists on this time interval
 
 ;start_greater_than_end
 Start date cannot be greater than end date
+
+; invalid_date_format
+The date format must be: YYYY-MM-DD or: YYYY-MM-DD hh:mm:ss
