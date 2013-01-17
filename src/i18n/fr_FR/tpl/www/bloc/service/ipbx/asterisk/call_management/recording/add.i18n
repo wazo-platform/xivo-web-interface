@@ -22,5 +22,8 @@ Ce nom de campagne existe déjà
 ;empty_name
 Le nom de campagne ne peut être vide
 
+;concurrent_campaigns
+Une campagne existe déjà sur cet intervalle de temps
+
 ;start_greater_than_end
 La date de départ ne peut être supérieure à la date de fin.

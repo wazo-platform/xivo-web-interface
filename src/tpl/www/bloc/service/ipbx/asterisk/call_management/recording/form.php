@@ -24,7 +24,8 @@ $queues_list = $this->get_var('queues_list');
 $act = $this->get_var('act');
 $info = $this->get_var('info');
 $errors_list = $this->get_var('errors_list');
-$supported_errors = array('duplicated_name', 'empty_name', 'start_greater_than_end');
+$supported_errors = array('duplicated_name', 'empty_name',
+		'start_greater_than_end', 'concurrent_campaigns');
 
 function reformat_date($bad_formatted_date = null) {
 	if($bad_formatted_date != null and $bad_formatted_date != '') {

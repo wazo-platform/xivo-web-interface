@@ -22,5 +22,8 @@ This campaign name already exists
 ;empty_name
 The campaign name cannot be empty
 
+;concurrent_campaigns
+A campaign already exists on this time interval
+
 ;start_greater_than_end
 Start date cannot be greater than end date
