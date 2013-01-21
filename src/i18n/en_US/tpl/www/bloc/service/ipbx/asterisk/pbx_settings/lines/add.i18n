@@ -637,12 +637,6 @@ Skill
 ; smenu_t38
 T38
 
-; fm_linefeatures_profileclient
-Profile:
-
-; fm_linefeatures_agentid
-Agent:
-
 ; col_2
 Weight
 

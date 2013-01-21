@@ -384,3 +384,6 @@ Apply network configuration
 
 ; acl(xivo-monit)
 Monit
+
+; acl(cti-profiles)
+CTI profiles

@@ -75,16 +75,15 @@ $array['callcenter/web_services/private/registrationcampaign/campaigns'] = array
 # CTI
 ###################################################################
 
-$array['cti/web_services/restricted/configuration'] = array(
-	'path'		=> 'cti/web_services/configuration',
+$array['cti/web_services/restricted/profiles'] = array(
+	'path'		=> 'cti/web_services/profiles',
 	'define'	=> array('XIVO_LOC_WEBSERVICES_MODE'	=> 'restricted'));
 
-$array['cti/web_services/private/configuration'] = array(
-	'path'		=> 'cti/web_services/configuration',
+$array['cti/web_services/private/profiles'] = array(
+	'path'		=> 'cti/web_services/profiles',
 	'define'	=> array('XIVO_LOC_WEBSERVICES_MODE'	=> 'private'));
 
-# special
-$array['service/ipbx/asterisk/web_services/private/ctiserver/configuration'] = array(
+$array['cti/web_services/private/configuration'] = array(
 	'path'		=> 'cti/web_services/configuration',
 	'define'	=> array('XIVO_LOC_WEBSERVICES_MODE'	=> 'private'));
 

@@ -24,8 +24,6 @@ $url = &$this->get_module('url');
 $element = $this->get_var('element');
 $info = $this->get_var('info');
 
-$profileclientlist = $this->get_var('profileclientlist');
-$contextavail = $this->get_var('contextavail');
 $screens = $this->get_var('screens');
 $systrays = $this->get_var('systrays');
 $informations = $this->get_var('informations');
@@ -40,13 +38,6 @@ $informations = $this->get_var('informations');
 				  'size'	=> 15,
 				  'default'	=> $element['sheetactions']['name']['default'],
 				  'value'	=> $info['sheetactions']['name']));
-
-#	echo	$form->text(array('desc'	=> $this->bbf('fm_sheetactions_whom'),
-#				  'name'	=> 'sheetactions[whom]',
-#				  'labelid'	=> 'sheetactions-whom',
-#				  'size'	=> 15,
-#				  'default'	=> $element['sheetactions']['whom']['default'],
-#				  'value'	=> $info['sheetactions']['whom']));
 
 	echo    $form->checkbox(array('desc' => $this->bbf('fm_sheetactions_focus'),
 						'name' => 'sheetactions[focus]',
@@ -71,8 +62,6 @@ $informations = $this->get_var('informations');
 	</div>
 </div>
 <div id="sb-part-screens" class="b-nodisplay">
-<!-- ///////////////////////////////// SCREENS ///////////////////////////// -->
-
 <?=$form->checkbox(array('desc'	=> $this->bbf('fm_sheetactions_disable'),
 	'name'		=> 'sheetactions[disable]',
 	'checked'		=> $info['sheetactions']['disable'],
@@ -268,8 +257,6 @@ $informations = $this->get_var('informations');
 	</div>
 </div>
 <div id="sb-part-systrays" class="b-nodisplay">
-
-<!-- ///////////////////////////////// SYSTRAYS ///////////////////////////// -->
 <?php
 	$type = 'systrays';
 	$count = count($systrays);
@@ -432,8 +419,6 @@ $informations = $this->get_var('informations');
 	</div>
 </div>
 <div id="sb-part-last" class="b-nodisplay">
-
-<!-- ///////////////////////////////// INFORMATIONS ///////////////////////////// -->
 <?php
 	$type = 'informations';
 	$count = count($informations);

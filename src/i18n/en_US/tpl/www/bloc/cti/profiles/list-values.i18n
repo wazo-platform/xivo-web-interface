@@ -128,3 +128,6 @@ Web
 
 ; xlet-(switchboard)
 Switchboard
+
+; xlet-(remotedirectory)
+Remote directory

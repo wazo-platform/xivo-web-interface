@@ -49,6 +49,7 @@ class xivo_service_asterisk_userfeatures extends xivo_service_asterisk_abstract
 
 		$data['id'] = (int) $data['id'];
 		$data['entityid'] = (int) $data['entityid'];
+		$data['cti_profile_id'] = (int) $data['cti_profile_id'];
 		$data['enableclient'] = (bool) $data['enableclient'];
 		$data['enablehint'] = (bool) $data['enablehint'];
 		$data['enablevoicemail'] = (bool) $data['enablevoicemail'];
@@ -103,13 +104,10 @@ class xivo_service_asterisk_userfeatures extends xivo_service_asterisk_abstract
 		return($r);
 	}
 
-	public function users_has_profile($profile_name)
+	public function users_has_profile_id($cti_profile_id)
 	{
-		if(dwho_has_len($profile_name) === false)
-			return(null);
-
 		$arr = array();
-		$arr['profileclient'] = strtolower($profile_name);
+		$arr['cti_profile_id'] = (int) $cti_profile_id;
 
 		if($this->get_nb($arr) > 0)
 			return(true);

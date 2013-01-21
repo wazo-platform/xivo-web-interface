@@ -434,7 +434,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		for($i=0;$i<$nb;$i++)
 		{
 			$ref = &$list[$i];
-			$this->_profileclientlist[$ref['name']] = $ref['name'];
+			$this->_profileclientlist[$ref['id']] = $ref['name'];
 		}
 
 		return($this->_profileclientlist);
@@ -814,15 +814,15 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			$arr['musiconhold'] = '';
 
 		if($action === 'edit'
-		&& isset($arr['profileclient']) === false
+		&& isset($arr['cti_profile_id']) === false
 		&& isset($arr['enableclient']) === false)
-			$arr['profileclient'] = $this->_origin['userfeatures']['profileclient'];
+			$arr['cti_profile_id'] = $this->_origin['userfeatures']['cti_profile_id'];
 
 		$this->get_profileclient_list();
 
-		if(isset($arr['profileclient']) === true
-		&& isset($this->_profileclientlist[$arr['profileclient']]) === false)
-			$arr['profileclient'] = '';
+		if(isset($arr['cti_profile_id']) === true
+		&& isset($this->_profileclientlist[$arr['cti_profile_id']]) === false)
+			$arr['cti_profile_id'] = '';
 
 		if(isset($arr['destunc']) === true
 		&& dwho_has_len($arr['destunc']) === false)
@@ -1915,33 +1915,35 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 
 	function _prepare_import($arr, $partial=false)
 	{
-		$issa_userfeatures = dwho_issa('userfeatures',$arr);
+		if (isset($arr['userfeatures']['enableclient']) === true
+		&& isset($arr['userfeatures']['profileclient']) === true
+		&& (dwho_has_len($arr['userfeatures']['profileclient']) === true))
+		{
+			$profile_name = $arr['userfeatures']['profileclient'];
+			if (($profile_id = $this->_cti_profile->get_cti_profile_id_with_name($profile_name)) === false)
+				return('Wrong CTI profile name');
+			$arr['userfeatures']['cti_profile_id'] = $profile_id;
+		}
 
 		if(dwho_issa('voicemail',$arr) === true
 		&& empty($arr['voicemail']) === false
 		&& dwho_has_len($arr['voicemail'],'mailbox') === true) {
-			if($issa_userfeatures === true) {
-				$arr['userfeatures']['enablevoicemail'] = true;
-				$arr['userfeatures']['voicemailtype'] = 'asterisk';
-			}
+			$arr['userfeatures']['enablevoicemail'] = true;
+			$arr['userfeatures']['voicemailtype'] = 'asterisk';
 		} else {
 			unset($arr['voicemail']);
 		}
 
-		if($issa_userfeatures === true)
-		{
-			if (isset($arr['userfeatures']['entityid']) === false)
-				$arr['userfeatures']['entityid'] = 1;
+		if (isset($arr['userfeatures']['entityid']) === false)
+			$arr['userfeatures']['entityid'] = 1;
 
-			if(dwho_has_len($arr['userfeatures'],'firstname') === true)
-				$arr['userfeatures']['callerid'] = $arr['userfeatures']['firstname'].' ';
+		if(dwho_has_len($arr['userfeatures'],'firstname') === true)
+			$arr['userfeatures']['callerid'] = $arr['userfeatures']['firstname'].' ';
 
-			if(dwho_has_len($arr['userfeatures'],'lastname') === true)
-				$arr['userfeatures']['callerid'] .= $arr['userfeatures']['lastname'];
-		}
+		if(dwho_has_len($arr['userfeatures'],'lastname') === true)
+			$arr['userfeatures']['callerid'] .= $arr['userfeatures']['lastname'];
 
-		if($issa_userfeatures === true
-		&& dwho_has_len($arr['userfeatures'],'agentnumber') === true
+		if(dwho_has_len($arr['userfeatures'],'agentnumber') === true
 		&& is_object($this->_agentfeatures) === true
 		&& ($agentid = $this->_agentfeatures->get_primary(
 					array('number' => $arr['userfeatures']['agentnumber']))) !== false) {
@@ -1959,6 +1961,16 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		}
 
 		return($arr);
+	}
+
+	private function _report_error_from_import_csv(&$r, $generic_error, $import_step, $line_number, $line_data)
+	{
+		$generic_error = is_array($generic_error) ? implode("\n", $generic_error) : $generic_error;
+		$error_msg = $generic_error. " - error during $import_step - line #$line_number\n";
+
+		error_log(print_r($generic_error, true)."\n".print_r($line_data, true) . ' userimport - line #'.$line_number);
+		array_push($r['total']['error_return'], $error_msg);
+		dwho_report::push('error', $generic_error);
 	}
 
 	function import_from_array($data,$save=true)
@@ -1982,23 +1994,29 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		$r['total']['error_return'] = array();
 		$r['total']['count'] = $nb;
 
-		$tpl = $GLOBALS['_TPL'];
-		$tpl->load_i18n_file('tpl/www/bloc/service/ipbx/asterisk/pbx_settings/users/import.i18n', 'global');
-
-		for($i = 0,$row = 1;$i < $nb;$i++,$row++)
+		for($i = 0;$i < $nb;$i++)
 		{
 			$ref = &$data[$i];
-			$line = $i+1;
-			$arr = $this->_prepare_import($ref);
+			$line_number = $i+1;
+
+			if (dwho_issa('userfeatures', $ref) === false)
+			{
+				$this->_report_error_from_import_csv($r, $this->get_error(), 'Missing userfeatures', $line_number, $ref);
+				continue;
+			}
+
+			if (($arr = $this->_prepare_import($ref)) === false
+			|| is_array($arr) === false)
+			{
+				$this->_report_error_from_import_csv($r, $arr, $arr, $line_number, $ref);
+				continue;
+			}
 
 			if($this->set_add($arr) === false)
 			{
-				$r['lines'][$row] = 'error_import';
+				$r['lines'][$line_number] = 'error_import';
 				$r['total']['error']++;
-
-				dwho_logw(print_r($this->get_error(),true)."\n".print_r($ref, true), 'userimport', "line #$line");
-				array_push($r['total']['error_return'],"error during create user - line #$line\n");
-				dwho_report::push('error', $this->get_error(), $tpl->bbf('import_fail'));
+				$this->_report_error_from_import_csv($r, $this->get_error(), 'create user', $line_number, $ref);
 				continue;
 			}
 			else if(dwho_issa('incall',$arr) === false
@@ -2006,19 +2024,15 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			{
 				if($save === true && $this->add() === false)
 				{
-					$r['lines'][$row] = 'error_user';
+					$r['lines'][$line_number] = 'error_user';
 					$r['total']['error']++;
 
 					$this->_reverse_add();
-
-					dwho_logw(print_r($this->get_error(),true)."\n".print_r($ref, true), 'userimport', "line #$line");
-					array_push($r['total']['error_return'],
-						implode("\n", $this->get_error()). " - error during create user - line #$line\n");
-					dwho_report::push('error', $this->get_error());
+					$this->_report_error_from_import_csv($r, $this->get_error(), 'create user', $line_number, $ref);
 				}
 				else
 				{
-					$r['lines'][$row] = 'success';
+					$r['lines'][$line_number] = 'success';
 					$r['total']['success']++;
 				}
 				continue;
@@ -2039,32 +2053,24 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			unset($incall['incall']['ringseconds']);
 			if($appincall->set_add($incall) === false)
 			{
-				$r['lines'][$row] = 'error_incall';
+				$r['lines'][$line_number] = 'error_incall';
 				$r['total']['error']++;
-
-				dwho_logw(print_r($appincall->get_error(),true)."\n".print_r($ref, true), 'userimport', "line #$line");
-				array_push($r['total']['error_return'],
-					implode("\n", $appincall->get_error()). " - error during validate incall - line #$line\n");
-				dwho_report::push('error', $appincall->get_error());
+				$this->_report_error_from_import_csv($r, $appincall->get_error(), 'validate incall', $line_number, $ref);
 				continue;
 			}
 			else if($save === false)
 			{
-				$r['lines'][$row] = 'success';
+				$r['lines'][$line_number] = 'success';
 				$r['total']['success']++;
 				continue;
 			}
 			else if($this->add() === false)
 			{
-				$r['lines'][$row] = 'error';
+				$r['lines'][$line_number] = 'error';
 				$r['total']['error']++;
 
 				$this->_reverse_add();
-
-				dwho_logw(print_r($this->get_error(),true)."\n".print_r($ref, true), 'userimport', "line #$line");
-				array_push($r['total']['error_return'],
-					implode("\n", $this->get_error()). " - error during create user - line #$line\n");
-				dwho_report::push('error', $this->get_error());
+				$this->_report_error_from_import_csv($r, $this->get_error(), 'create user', $line_number, $ref);
 				continue;
 			}
 
@@ -2073,19 +2079,15 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			if($appincall->set_add($incall) === false
 			|| $appincall->add() === false)
 			{
-				$r['lines'][$row] = 'error';
+				$r['lines'][$line_number] = 'error';
 				$r['total']['error']++;
 
 				$appincall->_reverse_add();
-
-				dwho_logw(print_r($this->get_error(),true)."\n".print_r($ref, true), 'userimport', "line #$line");
-				array_push($r['total']['error_return'],
-					implode("\n", $appincall->get_error()). " - error during create incall - line #$line\n");
-				dwho_report::push('error', $this->get_error());
+				$this->_report_error_from_import_csv($r, $appincall->get_error(), 'create incall', $line_number, $ref);
 			}
 			else
 			{
-				$r['lines'][$row] = 'success';
+				$r['lines'][$line_number] = 'success';
 				$r['total']['success']++;
 			}
 		}
@@ -2103,20 +2105,8 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 							    $this->_conf['import']['file'])) === false)
 			return(false);
 
-		$filecsv = new dwho_file_csv();
-
-		if(($data = $filecsv->parse($fileinfo['tmp_name'],
-					    0,
-					    '|',
-					    null,
-					    true,
-					    $this->_conf['import']['field'])) === false
-		|| empty($data) === true)
-		{
-			dwho_logw('cannot parse csv file (maybe fields are not separated by | ?)', 'users import', '');
-			dwho_file::rm($fileinfo['tmp_name']);
+		if (($data = $this->_get_data_from_csv_file($fileinfo['tmp_name'], $this->_conf['import']['field'])) === false)
 			return(false);
-		}
 
 		$r = $this->import_from_array($data,$save);
 
@@ -2129,46 +2119,53 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 	function import_from_csv()
 	{
 		$_QRY = &dwho_gct::get('dwho_query');
-		$tmp_file = tempnam("/tmp", "import_csv_");
 
 		if(dwho::load_class('dwho::file::csv') === false
-		|| ($data_input = $_QRY->get_input()) === false
-		|| file_put_contents($tmp_file,$data_input) === false)
+		|| ($data_input = $_QRY->get_input()) === false)
 		{
 			print("can not get data (maybe missing join data in your POST ?)\n");
-			dwho_file::rm($tmp_file);
 			return(false);
 		}
 
-		print file_get_contents($tmp_file);
+		$tmpfname = tempnam('/tmp' , 'import_');
+		file_put_contents($tmpfname, $data_input);
 
-		$filecsv = new dwho_file_csv();
-		if(($data = $filecsv->parse($tmp_file,
-					    0,
-					    '|',
-					    null,
-					    true,
-					    $this->_conf['import']['field'])) === false
-		|| empty($data) === true)
-		{
-			print("can not parse csv file (maybe fields are not separated by | ?)\n");
-			dwho_file::rm($tmp_file);
+		if (($data = $this->_get_data_from_csv_file($tmpfname, $this->_conf['import']['field'])) === false)
 			return(false);
-		}
 
 		$r = $this->import_from_array($data);
+
 		if ( $r['total']['error'] > 0)
 		{
 			$error_return = $r['total']['error_return'];
 			foreach($error_return as $err)
 				print $err."\n";
-			dwho_file::rm($tmp_file);
+			dwho_file::rm($tmpfname);
 			return(false);
 		}
 
-		dwho_file::rm($tmp_file);
+		dwho_file::rm($tmpfname);
 
 		return(true);
+	}
+
+	private function _get_data_from_csv_file($csv_file_path, $field_map)
+	{
+		$filecsv = new dwho_file_csv();
+
+		if(($data = $filecsv->parse($csv_file_path,
+					    0,
+					    '|',
+					    null,
+					    true,
+					    $field_map)) === false
+		|| empty($data) === true)
+		{
+			print("can not parse csv file (maybe fields are not separated by | ?)\n");
+			dwho_file::rm($tmpfname);
+			return(false);
+		}
+		return($data);
 	}
 
 	function add_from_json()

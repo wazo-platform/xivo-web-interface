@@ -157,7 +157,7 @@ class xivo_application_service_asterisk_cti_profile extends xivo_application_ast
 			$ref = &$rs[$i];
 			$r[$ref['id']] = $this->_cti_profile->_prepare($ref);
 
-			if($this->users_has_profile($ref['name']))
+			if($this->users_has_profile_id($ref['id']))
 				$r[$ref['id']]['deletable'] = false;
 			else
 				$r[$ref['id']]['deletable'] = true;
@@ -169,6 +169,11 @@ class xivo_application_service_asterisk_cti_profile extends xivo_application_ast
 			return(array_values($r));
 
 		return($r);
+	}
+
+	public function users_has_profile_id($profile_id)
+	{
+		return($this->_userfeatures->users_has_profile_id($profile_id));
 	}
 
 	function set_edit($arr)
@@ -606,76 +611,6 @@ class xivo_application_service_asterisk_cti_profile extends xivo_application_ast
 		return(true);
 	}
 
-	public function users_has_profile($profile_name)
-	{
-		return($this->_userfeatures->users_has_profile($profile_name));
-	}
-
-	function update_users_with_profile($name)
-	{
-		$r = true;
-
-		$this->_status = 'update-cti_profile';
-		$this->_return = array();
-
-		if($this->get_errnb() > 0
-		|| $this->update_users_profile($name) === false)
-		{
-			$r = false;
-			$this->_reverse_update($name);
-		}
-
-		$this->_status = '';
-		return($r);
-	}
-
-	function update_users_profile($name)
-	{
-		if(dwho_issa('cti_profile',$this->_info) === false
-		|| ($rs = $this->get_result('cti_profile')) === null
-		|| $rs === false)
-			return(false);
-
-		$from = array();
-		$from['profileclient'] = $name;
-
-		$to = array();
-		$to['profileclient'] = $rs['name'];
-
-		$this->_return['cti_profile'] = $this->_userfeatures->edit_where($from, $to);
-
-		return($this->_return['cti_profile']);
-	}
-
-	function _reverse_update($name)
-	{
-		$from = array();
-		$from['profileclient'] = $rs['name'];
-
-		$to = array();
-		$to['profileclient'] = $name;
-
-		return($this->_userfeatures->edit_where($from, $to));
-	}
-
-	function disable_users_with_profile($name)
-	{
-		if(dwho_issa('cti_profile',$this->_info) === false)
-			return false;
-
-		$from = array();
-		$from['profileclient'] = $this->_info['cti_profile']['name'];
-
-		$to = array();
-		$to['profileclient'] = '';
-		$to['enableclient'] = 0;
-
-		$this->_return['cti_profile'] = $this->_userfeatures->edit_where($from, $to);
-
-		return($this->_return['cti_profile']);
-
-	}
-
 	function delete()
 	{
 		$r = true;
@@ -700,7 +635,7 @@ class xivo_application_service_asterisk_cti_profile extends xivo_application_ast
 		if(dwho_issa('cti_profile',$this->_info) === false)
 			return(false);
 
-		if($this->users_has_profile($this->_info['cti_profile']['name']))
+		if($this->users_has_profile_id($this->_info['cti_profile']['id']))
 		{
 			dwho_report::push('error','Can\'t delete this ctiprofile because it\'s used by a user');
 			return(false);

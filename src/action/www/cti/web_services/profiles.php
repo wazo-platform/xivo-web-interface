@@ -1,7 +1,8 @@
 <?php
+
 #
 # XiVO Web-Interface
-# Copyright (C) 2012  Avencall
+# Copyright (C) 2006-2011  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,25 +18,31 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-xivo_service_asterisk::required(array('abstract','datastorage','abstract','sql.inc'),true);
+$access_category = 'profiles';
 
-class xivo_service_asterisk_cti_profile_sql extends xivo_service_asterisk_abstract_sql
+include(dwho_file::joinpath(dirname(__FILE__),'_common.php'));
+
+$act = $_QRY->get('act');
+
+switch($act)
 {
-	var $_unique = array('name');
+	case 'list':
+	default:
+		$act = 'list';
 
-	public function cti_profile_id_with_name($profile_name)
-	{
-		$this->_dso->new_select($this->_table,'id');
+		$appprofile = &$ipbx->get_application('cti_profile',null,false);
 
-		$this->_dso->where(array('name' => $profile_name));
+		if(($list = $appprofile->get_cti_profile_list()) === false)
+		{
+			$http_response->set_status_line(204);
+			$http_response->send(true);
+		}
 
-		$r = $this->_dso->select_singlecolumn();
-
-		if(isset($r[0]) === false)
-			return(false);
-
-		return((int) $r[0]);
-	}
+		$_TPL->set_var('list',$list);
 }
+
+$_TPL->set_var('act',$act);
+$_TPL->set_var('sum',$_QRY->get('sum'));
+$_TPL->display('/genericjson');
 
 ?>

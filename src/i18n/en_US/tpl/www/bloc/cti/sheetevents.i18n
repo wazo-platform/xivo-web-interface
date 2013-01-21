@@ -10,26 +10,8 @@ Link:
 ; fm_sheetevents_unlink
 Unlink:
 
-; fm_sheetevents_agentlinked
-Agent linked:
-
-; fm_sheetevents_agentunlinked
-Agent unlinked:
-
 ; fm_sheetevents_incomingdid
 Incoming DID:
-
-; fm_sheetevents_incomingqueue
-Incoming Queue:
-
-; fm_sheetevents_incominggroup
-Incoming Group:
-
-; fm_sheetevents_faxreceived
-Fax reception:
-
-; fm_sheetevents_outcall
-Outgoing Call:
 
 ; fm_sheetevents_hangup
 Hangup:

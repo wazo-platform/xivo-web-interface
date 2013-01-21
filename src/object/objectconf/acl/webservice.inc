@@ -103,4 +103,7 @@ $array['tree']['service']['callcenter']['settings']['queueskillrules'] = true;
 #$array['tree']['service']['callcenter']['registrationcampaign'] = array();
 #$array['tree']['service']['callcenter']['registrationcampaign']['campaigns'] = true;
 
+$array['tree']['cti'] = array();
+$array['tree']['cti']['profiles'] = true;
+
 ?>
