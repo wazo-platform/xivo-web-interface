@@ -118,6 +118,23 @@ switch($act)
 		&& ($secretary['slt'] = dwho_array_intersect_key($callfiltermember['secretary'],$secretary['list'],'typeval')) !== false)
 			$secretary['slt'] = array_keys($secretary['slt']);
 
+		$extenumbers = &$ipbx->get_module('extenumbers');
+		$where = array();
+		$where['type'] = 'extenfeatures';
+		$where['typeval'] = 'bsfilter';
+		$bsfilter_extenmbers = $extenumbers->get_where($where);
+
+		$list = $callfiltermember['secretary'];
+		foreach ($list as $secretary_data)
+		{
+			if (array_key_exists($secretary_data['typeval'], $secretary['list']))
+			{
+				$bs_exten = str_replace('.', $secretary_data['id'], $bsfilter_extenmbers['exten']);
+				$identity = $secretary['list'][$secretary_data['typeval']]['identity'];
+				$secretary['list'][$secretary_data['typeval']]['identity'] = $identity . ' ( '.$bs_exten.' )';
+			}
+		}
+
 		if(empty($return) === false)
 		{
 			if(dwho_issa('dialaction',$return) === false || empty($return['dialaction']) === true)

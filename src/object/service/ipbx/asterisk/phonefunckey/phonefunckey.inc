@@ -422,6 +422,7 @@ class xivo_service_asterisk_phonefunckey extends xivo_service_asterisk_abstract
 		|| ($modmeetmefeatures = &$ipbx->get_module('meetmefeatures')) === false
 		|| ($modgroupfeatures = &$ipbx->get_module('groupfeatures')) === false
 		|| ($modlinefeatures = &$ipbx->get_module('linefeatures')) === false
+		|| ($moduserfeatures = &$ipbx->get_module('userfeatures')) === false
 		|| ($modextenumbers = &$ipbx->get_module('extenumbers')) === false)
 			return(false);
 
@@ -508,43 +509,35 @@ class xivo_service_asterisk_phonefunckey extends xivo_service_asterisk_abstract
 					$where = array();
 					$where['type'] = $type['type'];
 					$where['typeval'] = $type['val'];
+
 					if (($rsextenmbers = $modextenumbers->get_where($where)) !== false)
 						$rsexten = $rsextenmbers['exten'];
+
 					switch($type['val'])
 					{
 						case 'bsfilter':
-							$whereright = array();
-							$whereright['type'] = $ref['typeextenumbersright'];
-							$whereright['typeval'] = $ref['typevalextenumbersright'];
+							$userfeatures = $moduserfeatures->get($iduserfeatures);
+							$bstype = $userfeatures["bsfilter"];
 
-							switch($ref['typeextenumbersright'])
+							switch ($bstype)
 							{
-								case 'user':
-									if (($masterline = $modlinefeatures->get_user_masterline($ref['typevalextenumbersright'])) === false
-									|| ($callfiltermember = $modcallfiltermember->get_where($whereright)) === false)
-									{
-										dwho_report::push('error', 'error during get master line of user or user not exist in callfitermember');
-										break;
-									}
-									$w = array();
-									$w['callfilterid'] = $callfiltermember['callfilterid'];
-									$w['bstype'] = ($callfiltermember['bstype'] === 'boss') ? 'secretary' : 'boss';
-									$w['typeval'] = (string) $iduserfeatures;
-									$callfilter = $modcallfiltermember->get_where($w);
-
-									if($w['bstype'] === 'boss')
-										$bossmasterline = $modlinefeatures->get_user_masterline($callfilter['typeval']);
-									else
-									{
-										$bossmasterline = $masterline;
-										$masterline = $modlinefeatures->get_user_masterline($callfilter['typeval']);
-									}
+								case 'boss':
+									$boss_id = (string) $iduserfeatures;
+									$secretary_id = (string) $ref['typevalextenumbersright'];
+									break;
+								case 'secretary':
+									$secretary_id = (string) $iduserfeatures;
+									$boss_id = (string) $ref['typevalextenumbersright'];
+									break;
 							}
 
-							$exten .= $bossmasterline['number'];
-							$exten .= '*';
-							$exten .= $masterline['number'];
-							$exten = str_replace('.', $exten, $rsexten);
+							if (($callfiltermember = $modcallfiltermember->get_by_boss_secretary($boss_id, $secretary_id)) === false)
+							{
+								dwho_report::push('error', 'error during get callfiltermember of user');
+								break;
+							}
+
+							$exten = str_replace('.', $callfiltermember['id'], $rsexten);
 							break;
 						default:
 							if($ref['progfunckey'] === true)
@@ -562,6 +555,9 @@ class xivo_service_asterisk_phonefunckey extends xivo_service_asterisk_abstract
 								$exten = str_replace('.', $ref['typevalextenumbersright'], $rsexten);
 					}
 			}
+
+			if ($exten == '')
+				dwho_report::push('error', 'error during get funckey of user');
 
 			$conf[$ref['fknum']]['value'] = $exten;
 

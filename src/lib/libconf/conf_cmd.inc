@@ -63,6 +63,14 @@ $array['ctidirectories']['dird'] = array('update-config');
 $array['ctireversedirectories'] = array();
 $array['ctireversedirectories']['dird'] = array('update-config');
 
+$array['callfilter'] = array();
+$array['callfilter']['ctibus'] = array();
+$array['callfilter']['ipbx'] = array('dialplan reload');
+
+$array['callfiltermember'] = array();
+$array['callfiltermember']['ctibus'] = array();
+$array['callfiltermember']['ipbx'] = array('dialplan reload');
+
 $array['incall'] = array();
 $array['incall']['ctibus'] = array();
 $array['incall']['ipbx'] = array('dialplan reload');

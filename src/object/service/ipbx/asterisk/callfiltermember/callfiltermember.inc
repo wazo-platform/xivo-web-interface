@@ -88,6 +88,11 @@ class xivo_service_asterisk_callfiltermember extends xivo_service_asterisk_abstr
 
 		return($info);
 	}
+
+	public function get_by_boss_secretary($boss_id, $secreatary_id)
+	{
+		return($this->_dso->get_by_boss_secretary($boss_id, $secreatary_id));
+	}
 }
 
 ?>
