@@ -16,12 +16,6 @@ Remove
 ; fm_profiles_name
 Nom :
 
-; fm_profiles_appliname
-Nom affiché :
-
-; fm_profiles_maxgui
-Max. GUI :
-
 ; cti-profiles-status
 Statuts
 
@@ -72,12 +66,6 @@ Numero
 
 ; no_xlets
 Aucune Xlet configurée
-
-; cmt_profiles_appliname
-Un nom plus compréhensible
-
-; cmt_profiles_maxgui
-Mettre -1 pour aucune limite
 
 ; opt_preferences-delete
 Supprimer la préférence

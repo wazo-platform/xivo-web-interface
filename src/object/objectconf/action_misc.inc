@@ -75,16 +75,15 @@ $array['callcenter/web_services/private/registrationcampaign/campaigns'] = array
 # CTI
 ###################################################################
 
-$array['cti/web_services/restricted/configuration'] = array(
-	'path'		=> 'cti/web_services/configuration',
+$array['cti/web_services/restricted/profiles'] = array(
+	'path'		=> 'cti/web_services/profiles',
 	'define'	=> array('XIVO_LOC_WEBSERVICES_MODE'	=> 'restricted'));
 
-$array['cti/web_services/private/configuration'] = array(
-	'path'		=> 'cti/web_services/configuration',
+$array['cti/web_services/private/profiles'] = array(
+	'path'		=> 'cti/web_services/profiles',
 	'define'	=> array('XIVO_LOC_WEBSERVICES_MODE'	=> 'private'));
 
-# special
-$array['service/ipbx/asterisk/web_services/private/ctiserver/configuration'] = array(
+$array['cti/web_services/private/configuration'] = array(
 	'path'		=> 'cti/web_services/configuration',
 	'define'	=> array('XIVO_LOC_WEBSERVICES_MODE'	=> 'private'));
 
@@ -172,26 +171,6 @@ $array['service/ipbx/asterisk/web_services/restricted/ctiserver/configuration'] 
 	'path'		=> 'cti/web_services/configuration',
 	'define'	=> array('XIVO_LOC_WEBSERVICES_MODE'	=> 'restricted'));
 
-
-# dundi
-$array['service/ipbx/asterisk/web_services/restricted/dundi/peers'] = array(
-	'path'		=> 'service/ipbx/asterisk/web_services/dundi/peers',
-	'define'	=> array('XIVO_LOC_WEBSERVICES_MODE'	=> 'restricted'));
-$array['service/ipbx/asterisk/web_services/restricted/dundi/mappings'] = array(
-	'path'		=> 'service/ipbx/asterisk/web_services/dundi/mappings',
-	'define'	=> array('XIVO_LOC_WEBSERVICES_MODE'	=> 'restricted'));
-
-$array['service/ipbx/asterisk/web_services/private/dundi/peers'] = array(
-	'path'		=> 'service/ipbx/asterisk/web_services/dundi/peers',
-	'define'	=> array('XIVO_LOC_WEBSERVICES_MODE'	=> 'private'));
-$array['service/ipbx/asterisk/web_services/private/dundi/mappings'] = array(
-	'path'		=> 'service/ipbx/asterisk/web_services/dundi/mappings',
-	'define'	=> array('XIVO_LOC_WEBSERVICES_MODE'	=> 'private'));
-
-$array['service/ipbx/asterisk/ui/dundi/peers/'] = array(
-	'path'		=> 'service/ipbx/asterisk/ui/dundi/peers');
-$array['service/ipbx/asterisk/ui/dundi/mappings/'] = array(
-	'path'		=> 'service/ipbx/asterisk/ui/dundi/mappings');
 
 # general_settings
 $array['service/ipbx/asterisk/web_services/restricted/general_settings/sip'] = array(

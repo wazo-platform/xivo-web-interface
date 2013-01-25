@@ -119,17 +119,11 @@ class xivo_application_service_asterisk_callfilter extends xivo_application_aste
 			$ref = &$rs[$i];
 
 			$user = array();
-			#$user['context'] = $ref['member_context'];
 			$user['firstname'] = $ref['member_firstname'];
 			$user['lastname'] = $ref['member_lastname'];
-			#$user['number'] = $ref['member_number'];
-			#$user['name'] = $ref['member_name'];
 
-			unset($ref['member_context'],
-			      $ref['member_firstname'],
-			      $ref['member_lastname'],
-			      $ref['member_number'],
-			      $ref['member_name']);
+			unset($ref['member_firstname'],
+			      $ref['member_lastname']);
 
 			$user['identity'] = $this->_userfeatures->mk_identity($user);
 
@@ -234,17 +228,13 @@ class xivo_application_service_asterisk_callfilter extends xivo_application_aste
 			return(false);
 
 		$r = array();
+		for($i = 0;$i < $nb;$i++)
+		{
+			$r[$rs[$i]['id']] = $this->_userfeatures->_prepare($rs[$i]);
+		}
 
-		if((bool) $assoc === true)
-		{
-			for($i = 0;$i < $nb;$i++)
-				$r[$rs[$i]['id']] = $this->_userfeatures->_prepare($rs[$i]);
-		}
-		else
-		{
-			for($i = 0;$i < $nb;$i++)
-				$rs[$i] = $this->_userfeatures->_prepare($rs[$i]);
-		}
+		if((bool) $assoc === false)
+			$r = array_values($r);
 
 		if(empty($r) === true)
 			$r = false;

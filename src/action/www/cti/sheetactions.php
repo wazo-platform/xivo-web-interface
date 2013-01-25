@@ -21,25 +21,6 @@ $act = isset($_QR['act']) === true ? $_QR['act'] : '';
 $idsheetactions = isset($_QR['idsheetactions']) === true ? dwho_uint($_QR['idsheetactions'],1) : 1;
 $page = isset($_QR['page']) === true ? dwho_uint($_QR['page'],1) : 1;
 
-$appuser = &$ipbx->get_application('ctiprofiles');
-$pl = $appuser->get_profiles_list();
-
-$appcontext = &$ipbx->get_application('cticontexts');
-$contextlist = $appcontext->get_contexts_list();
-
-$contextavail = array();
-$profileclientlist = array();
-
-foreach($pl as $v)
-{
-	$profileclientlist[] = $v['ctiprofiles']['name'];
-}
-
-foreach($contextlist as $v)
-{
-	$contextavail[] = $v['cticontexts']['name'];
-}
-
 $param = array();
 $param['idsheetactions'] = $idsheetactions;
 $info = $result = array();
@@ -112,32 +93,7 @@ switch($act)
 			$str .= '}';
 
 			$_QR['sheetactions']['action_info'] = $str;
-
 			$_QR['sheetactions']['deletable'] = 1;
-
-			$str = "[";
-			if(isset($_QR['capaids']))
-			{
-				foreach($_QR['capaids'] as $v)
-				{
-					$str .= '"' . trim($v) . '",';
-				}
-				$str = trim($str, ',');
-			}
-			$str .= "]";
-			$_QR['sheetactions']['capaids'] = $str;
-
-			$str = "[";
-			if(isset($_QR['context']))
-			{
-				foreach($_QR['context'] as $v)
-				{
-					$str .= '"' . $contextavail[$v] . '",';
-				}
-				$str = trim($str, ',');
-			}
-			$str .= "]";
-			$_QR['sheetactions']['context'] = $str;
 
 			if($app->set_add($_QR) === false
 					|| $app->add() === false)
@@ -151,17 +107,11 @@ switch($act)
 
 		dwho::load_class('dwho_sort');
 
-		$result['capaids']['list'] = $profileclientlist;
-		$result['capaids']['slt'] = null;
-		$result['context']['list'] = $contextavail;
-		$result['context']['slt'] = null;
 		$result['sheetactions'] = null;
 
 		$screens = null;
 		$systrays = null;
 		$informations = null;
-		$_TPL->set_var('contextavail',$contextavail);
-		$_TPL->set_var('profileclientlist',$profileclientlist);
 		$_TPL->set_var('screens',$screens);
 		$_TPL->set_var('systrays',$systrays);
 		$_TPL->set_var('informations',$informations);
@@ -245,32 +195,7 @@ switch($act)
 			$str .= '}';
 
 			$_QR['sheetactions']['action_info'] = $str;
-
 			$_QR['sheetactions']['deletable'] = 1;
-
-			$str = "[";
-			if(isset($_QR['capaids']))
-			{
-				foreach($_QR['capaids'] as $v)
-				{
-					$str .= '"' . trim($v) . '",';
-				}
-				$str = trim($str, ',');
-			}
-			$str .= "]";
-			$_QR['sheetactions']['capaids'] = $str;
-
-			$str = "[";
-			if(isset($_QR['context']))
-			{
-				foreach($_QR['context'] as $v)
-				{
-					$str .= '"' . $contextavail[$v] . '",';
-				}
-				$str = trim($str, ',');
-			}
-			$str .= "]";
-			$_QR['sheetactions']['context'] = $str;
 
 			if($app->set_edit($_QR) === false
 					|| $app->edit() === false)
@@ -293,31 +218,6 @@ switch($act)
 			$data[] = $d;
 		}
 
-		$return['context']['list'] = $contextavail;
-		$return['context']['slt'] = array();
-		if(isset($return['sheetactions']['context']) && dwho_has_len($return['sheetactions']['context']))
-		{
-			$sel = dwho_json::decode($return['sheetactions']['context'], true);
-			$return['context']['slt'] = array_intersect($sel, $return['context']['list']);
-			$return['context']['list'] = array_diff($return['context']['list'], $return['context']['slt']);
-		}
-
-		$sel = dwho_json::decode($return['sheetactions']['capaids'], true);
-		$arrpf = array();
-		foreach($sel as $v)
-		{
-			$arrpf[$v] = $v;
-		}
-
-		$return['capaids']['list'] = $profileclientlist;
-		$return['capaids']['slt'] = array();
-
-		if(isset($return['sheetactions']['capaids']) && dwho_has_len($return['sheetactions']['capaids']))
-		{
-			$return['capaids']['slt']  = array_intersect($arrpf, $return['capaids']['list']);
-			$return['capaids']['list'] = array_diff($return['capaids']['list'], $return['capaids']['slt']);
-		}
-
 		$screens = null;
 		if(isset($info['sheetactions']['sheet_info']) && dwho_has_len($info['sheetactions']['sheet_info']))
 		{
@@ -337,8 +237,6 @@ switch($act)
 		}
 
 		$_TPL->set_var('idsheetactions',$return['sheetactions']['id']);
-		$_TPL->set_var('contextavail',$contextavail);
-		$_TPL->set_var('profileclientlist',$profileclientlist);
 		$_TPL->set_var('screens',$screens);
 		$_TPL->set_var('systrays',$systrays);
 		$_TPL->set_var('informations',$informations);

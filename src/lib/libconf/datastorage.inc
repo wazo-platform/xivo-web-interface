@@ -20,17 +20,6 @@
 
 $array = array();
 
-$array['mysql'] = array();
-$array['mysql']['label'] = 'MySQL';
-$array['mysql']['meta'] = 'sql';
-$array['mysql']['extension'] = 'mysql';
-$array['mysql']['ssl'] = true;
-
-$array['sqlite'] = array();
-$array['sqlite']['label'] = 'SQLite';
-$array['sqlite']['meta'] = 'sql';
-$array['sqlite']['extension'] = 'sqlite';
-
 $array['postgresql'] = array();
 $array['postgresql']['label'] = 'PostgreSQL';
 $array['postgresql']['meta'] = 'sql';

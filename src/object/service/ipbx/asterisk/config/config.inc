@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2011  Avencall
+# Copyright (C) 2006-2012  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -118,6 +118,30 @@ $array['module']['contextnummember']['datastorage'] = true;
 $array['module']['contexttype'] = array();
 $array['module']['contexttype']['datastorage'] = true;
 
+$array['module']['cti_preference'] = array();
+$array['module']['cti_preference']['datastorage'] = true;
+
+$array['module']['cti_profile'] = array();
+$array['module']['cti_profile']['datastorage'] = true;
+
+$array['module']['cti_profile_preference'] = array();
+$array['module']['cti_profile_preference']['datastorage'] = true;
+
+$array['module']['cti_profile_service'] = array();
+$array['module']['cti_profile_service']['datastorage'] = true;
+
+$array['module']['cti_profile_xlet'] = array();
+$array['module']['cti_profile_xlet']['datastorage'] = true;
+
+$array['module']['cti_service'] = array();
+$array['module']['cti_service']['datastorage'] = true;
+
+$array['module']['cti_xlet'] = array();
+$array['module']['cti_xlet']['datastorage'] = true;
+
+$array['module']['cti_xlet_layout'] = array();
+$array['module']['cti_xlet_layout']['datastorage'] = true;
+
 $array['module']['cticontexts'] = array();
 $array['module']['cticontexts']['datastorage'] = true;
 
@@ -142,11 +166,8 @@ $array['module']['ctiphonehintsgroup']['datastorage'] = true;
 $array['module']['ctipresences'] = array();
 $array['module']['ctipresences']['datastorage'] = true;
 
-$array['module']['ctiprofiles'] = array();
-$array['module']['ctiprofiles']['datastorage'] = true;
-
-$array['module']['ctiprofilesgroup'] = array();
-$array['module']['ctiprofilesgroup']['datastorage'] = true;
+$array['module']['ctistatus'] = array();
+$array['module']['ctistatus']['datastorage'] = true;
 
 $array['module']['ctireversedirectories'] = array();
 $array['module']['ctireversedirectories']['datastorage'] = true;
@@ -160,9 +181,6 @@ $array['module']['ctisheetactions']['datastorage'] = true;
 $array['module']['ctisheetevents'] = array();
 $array['module']['ctisheetevents']['datastorage'] = true;
 
-$array['module']['ctistatus'] = array();
-$array['module']['ctistatus']['datastorage'] = true;
-
 $array['module']['devicefeatures'] = array();
 $array['module']['devicefeatures']['datastorage'] = true;
 
@@ -171,15 +189,6 @@ $array['module']['dialaction']['datastorage'] = true;
 
 $array['module']['dialpattern'] = array();
 $array['module']['dialpattern']['datastorage'] = true;
-
-$array['module']['dundi'] = array();
-$array['module']['dundi']['datastorage'] = true;
-
-$array['module']['dundipeer'] = array();
-$array['module']['dundipeer']['datastorage'] = true;
-
-$array['module']['dundimapping'] = array();
-$array['module']['dundimapping']['datastorage'] = true;
 
 $array['module']['extensions'] = array();
 $array['module']['extensions']['datastorage'] = true;
@@ -231,9 +240,6 @@ $array['module']['outcall']['datastorage'] = true;
 
 $array['module']['outcalltrunk'] = array();
 $array['module']['outcalltrunk']['datastorage'] = true;
-
-$array['module']['outcalldundipeer'] = array();
-$array['module']['outcalldundipeer']['datastorage'] = true;
 
 $array['module']['paging'] = array();
 $array['module']['paging']['datastorage'] = true;

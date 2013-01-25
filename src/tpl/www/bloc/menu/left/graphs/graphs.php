@@ -36,88 +36,80 @@ $tree = &$this->get_var('tree');
 				<?=$url->href_html($this->bbf('mn_left_munin-nginx'),
 						   'graphs/munin/nginx');?>
 			</dd>
-			<?php 
-				} 
-				
+			<?php
+				}
+
 				if(array_key_exists('asterisk', $tree)) {
 			?>
 			<dd id="mn-asterisk">
 				<?=$url->href_html($this->bbf('mn_left_munin-asterisk'),
 						   'graphs/munin/asterisk');?>
 			</dd>
-			<?php 
-				} 
-				if(array_key_exists('mysql', $tree)) {
-			?>
-			<dd id="mn-mysql">
-				<?=$url->href_html($this->bbf('mn_left_munin-mysql'),
-						   'graphs/munin/mysql');?>
-			</dd>
-			<?php 
-				} 
+			<?php
+				}
 				if(array_key_exists('postgresql', $tree)) {
 			?>
 			<dd id="mn-postgresql">
 				<?=$url->href_html($this->bbf('mn_left_munin-postgresql'),
 						   'graphs/munin/postgresql');?>
 			</dd>
-			<?php 
-				} 
-				
+			<?php
+				}
+
 				if(array_key_exists('disk', $tree)) {
 			?>
 			<dd id="mn-disk">
 				<?=$url->href_html($this->bbf('mn_left_munin-disk'),
 						   'graphs/munin/disk');?>
 			</dd>
-			<?php 
-				} 
-				
+			<?php
+				}
+
 				if(array_key_exists('time', $tree)) {
 			?>
 			<dd id="mn-time">
 				<?=$url->href_html($this->bbf('mn_left_munin-time'),
 						   'graphs/munin/time');?>
 			</dd>
-			<?php 
-				} 
-				
+			<?php
+				}
+
 				if(array_key_exists('postfix', $tree)) {
 			?>
 			<dd id="mn-postfix">
 				<?=$url->href_html($this->bbf('mn_left_munin-postfix'),
 						   'graphs/munin/postfix');?>
 			</dd>
-			<?php 
-				} 
-				
+			<?php
+				}
+
 				if(array_key_exists('processes', $tree)) {
 			?>
 			<dd id="mn-processes">
 				<?=$url->href_html($this->bbf('mn_left_munin-processes'),
 						   'graphs/munin/processes');?>
 			</dd>
-			<?php 
-				} 
-				
+			<?php
+				}
+
 				if(array_key_exists('network', $tree)) {
 			?>
 			<dd id="mn-network">
 				<?=$url->href_html($this->bbf('mn_left_munin-network'),
 						   'graphs/munin/network');?>
 			</dd>
-			<?php 
-				} 
-				
+			<?php
+				}
+
 				if(array_key_exists('system', $tree)) {
 			?>
 			<dd id="mn-system">
 				<?=$url->href_html($this->bbf('mn_left_munin-system'),
 						   'graphs/munin/system');?>
 			</dd>
-			<?php 
-				} 
-				
+			<?php
+				}
+
 				if(array_key_exists('other', $tree)) {
 			?>
 			<dd id="mn-other">

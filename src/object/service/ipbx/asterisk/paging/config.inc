@@ -44,11 +44,6 @@ $array['element']['quiet']['value'] = array(0,1);
 $array['element']['quiet']['default'] = 0;
 $array['element']['quiet']['set'] = true;
 
-$array['element']['callnotbusy'] = array();
-$array['element']['callnotbusy']['value'] = array(0,1);
-$array['element']['callnotbusy']['default'] = 1;
-$array['element']['callnotbusy']['set'] = true;
-
 $array['element']['timeout'] = array();
 $array['element']['timeout']['value'] = array(0,15,30,45,60,75,90,
 						     105,120,135,150,165,180,195,
@@ -83,7 +78,6 @@ $array['filter']['number'] = array('minlen' => 1,'maxlen' => 40,'regexp' => '/^(
 $array['filter']['duplex'] = array('bool' => true);
 $array['filter']['ignore'] = array('bool' => true);
 $array['filter']['quiet'] = array('bool' => true);
-$array['filter']['callnotbusy'] = array('bool' => true);
 $array['filter']['timeout'] = array('set'	=> false,
 								   'chk'	=> 2,
 								   'key' 	=> $array['element']['timeout']['value']);

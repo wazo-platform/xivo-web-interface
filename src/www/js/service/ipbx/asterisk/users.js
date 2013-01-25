@@ -51,9 +51,6 @@ var xivo_ast_users_elt_default = {
 	'userfeatures-passwdclient' : {
 		it : true
 	},
-	'userfeatures-profileclient' : {
-		it : true
-	},
 	'userfeatures-enablehint' : {
 		it : true
 	},
@@ -172,20 +169,6 @@ var xivo_ast_users_elt_default = {
 		it : true
 	}
 };
-
-var xivo_ast_fm_user_enableclient = {
-	'it-userfeatures-profileclient' : {
-		property : [ {
-			disabled : true,
-			className : 'it-readonly'
-		}, {
-			disabled : false,
-			className : 'it-enabled'
-		} ]
-	}
-};
-
-xivo_attrib_register('ast_fm_user_enableclient', xivo_ast_fm_user_enableclient);
 
 var xivo_ast_fm_user_enablerna = {
 	'it-userfeatures-destrna' : {
@@ -455,12 +438,6 @@ function xivo_ast_user_chg_name() {
 	return (true);
 }
 
-function xivo_ast_user_chg_enableclient() {
-	if ((enableclient = dwho_eid('it-userfeatures-enableclient')) !== false)
-		xivo_chg_attrib('ast_fm_user_enableclient',
-				Number(enableclient.checked));
-}
-
 function xivo_ast_user_chg_enablerna() {
 	if ((enablerna = dwho_eid('it-userfeatures-enablerna')) !== false)
 		xivo_chg_attrib('ast_fm_user_enablerna', 'it-userfeatures-destrna',
@@ -721,9 +698,6 @@ function xivo_ast_user_onload() {
 
 		dwho.dom.add_event('change', outcallerid_type, outcallerid_type_fn);
 	}
-
-	dwho.dom.add_event('change', dwho_eid('it-userfeatures-enableclient'),
-			xivo_ast_user_chg_enableclient);
 
 	dwho.dom.add_event('change', dwho_eid('it-userfeatures-enablerna'),
 			xivo_ast_user_chg_enablerna);

@@ -387,3 +387,6 @@ Appliquer les modifications réseau
 
 ; acl(xivo-monit)
 Monit
+
+; acl(cti-profiles)
+Profils CTI

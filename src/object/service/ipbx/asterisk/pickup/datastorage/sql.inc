@@ -24,7 +24,6 @@ class xivo_service_asterisk_pickup_sql extends xivo_service_asterisk_abstract_sq
 {
 	var $_autoincrement	= false;
 	var $_unique	= 'name';
-	#var $_disable	= null;
 	
 	function get_empty()
 	{

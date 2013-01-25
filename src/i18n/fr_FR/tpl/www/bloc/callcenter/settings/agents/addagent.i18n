@@ -37,6 +37,9 @@ Langue:
 ; fm_agentfeatures_numgroup
 Groupe:
 
+;fm_agentfeatures_preprocess-subroutine
+Sous-routine de prétraitement:
+
 ; bt_inuser
 Ajouter un ou plusieurs utilisateurs ->
 

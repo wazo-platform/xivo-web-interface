@@ -63,12 +63,6 @@ $pagingcaller = $this->get_var('pagingcaller');
 				      'default'		=> $element['paging']['quiet']['default'],
 					  'checked'		=> $this->get_var('info','paging','quiet'))),
 
-		$form->checkbox(array('desc'	=> $this->bbf('fm_paging_callnotbusy'),
-				      'name'		=> 'paging[callnotbusy]',
-				      'labelid'		=> 'paging-callnotbusy',
-				      'default'		=> $element['paging']['callnotbusy']['default'],
-					  'checked'		=> $this->get_var('info','paging','callnotbusy'))),
-
 		$form->select(array('desc'	=> $this->bbf('fm_paging_timeout'),
 					    'name'		=> 'paging[timeout]',
 					    'labelid'	=> 'paging-timeout',

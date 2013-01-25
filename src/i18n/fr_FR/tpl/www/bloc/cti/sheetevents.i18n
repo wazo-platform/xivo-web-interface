@@ -10,26 +10,8 @@ Mise en relation (Link):
 ; fm_sheetevents_unlink
 Fin de mise en relation (Unlink):
 
-; fm_sheetevents_agentlinked
-Mise en relation pour Agent:
-
-; fm_sheetevents_agentunlinked
-Fin de mise en relation pour Agent:
-
 ; fm_sheetevents_incomingdid
 Appel entrant (SDA):
-
-; fm_sheetevents_incomingqueue
-File d'attente entrante:
-
-; fm_sheetevents_incominggroup
-Groupe entrant:
-
-; fm_sheetevents_faxreceived
-Réception fax:
-
-; fm_sheetevents_outcall
-Appel sortant:
 
 ; fm_sheetevents_hangup
 Raccroché:

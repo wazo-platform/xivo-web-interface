@@ -24,7 +24,6 @@ class xivo_service_asterisk_queuepenalty_sql extends xivo_service_asterisk_abstr
 {
 	var $_autoincrement	= true;
 	var $_unique	= 'name';
-	#var $_disable	= null;
 }
 
 ?>

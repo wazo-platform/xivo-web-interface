@@ -104,22 +104,6 @@ if(isset($error_js[0]) === true)
 			</div>
 			<span class="span-right">&nbsp;</span>
 		</li>
-<?php
-/* hide dundi
-		<li id="dwsm-tab-6"
-		    class="dwsm-blur-last"
-		    onclick="dwho_submenu.select(this,'sb-part-dundi',1);"
-		    onmouseout="dwho_submenu.blur(this,1);"
-		    onmouseover="dwho_submenu.focus(this,1);">
-			<div class="tab">
-				<span class="span-center">
-					<a href="#dundi"><?=$this->bbf('smenu_dundi');?></a>
-				</span>
-			</div>
-			<span class="span-right">&nbsp;</span>
-		</li>
-*/
-?>
 	</ul>
 </div>
 
@@ -267,23 +251,6 @@ if(isset($error_js[0]) === true)
 			      $element['general']);
 ?>
 </div>
-
-<?php
-/* Hide dundi
-<div id="sb-part-dundi" class="b-nodisplay">
-<?php
-		echo $form->checkbox(array('desc'	=> $this->bbf('fm_general_dundi'),
-				  	'name'		  => 'general[dundi]',
-						'labelid'	  => 'general-dundi',
-					  'help'	  	=> $this->bbf('hlp_fm_general-dundi'),
-					  'required'	=> false,
-			      'checked'		=> $this->get_var('info','general','dundi'),
-			      'default'		=> $this->get_var('elements','generaldundi','dundi','default')));
-?>
-</div>
-*/
-?>
-
 <?php
 	echo	$form->submit(array('name'	=> 'submit',
 				    'id'	=> 'it-submit',

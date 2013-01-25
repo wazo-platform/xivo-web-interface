@@ -47,29 +47,13 @@ $dhtml = &$this->get_module('dhtml');
 				'</dd>';
 		endif;
 
-
 		if(xivo_user::chk_acl('general_settings', 'sccp') === true):
 			echo    '<dd id="mn-general-settings--sccp">',
 				$url->href_html($this->bbf('mn_left_generalsettings-sccp'),
 						'service/ipbx/general_settings/sccp'),
 				'</dd>';
 		endif;
-/*
-		if(xivo_user::chk_acl('general_settings','dundi') === true):
-			echo	'<dd id="mn-general-settings--dundi">',
-				$url->href_html($this->bbf('mn_left_generalsettings-dundi'),
-						'service/ipbx/general_settings/dundi'),
-				'</dd>';
-		endif;
-*/
-/*
-		if(xivo_user::chk_acl('general_settings','dahdi') === true):
-			echo	'<dd id="mn-general-settings--dahdi">',
-				$url->href_html($this->bbf('mn_left_generalsettings-dahdi'),
-						'service/ipbx/general_settings/dahdi'),
-				'</dd>';
-		endif;
-*/
+
 		if(xivo_user::chk_acl('general_settings','voicemail') === true):
 			echo	'<dd id="mn-general-settings--voicemail">',
 				$url->href_html($this->bbf('mn_left_generalsettings-voicemail'),
@@ -258,27 +242,6 @@ $dhtml = &$this->get_module('dhtml');
 
 		echo	'</dl>';
 	endif;
-/*
-	if(xivo_user::chk_acl('dundi') === true):
-		echo	'<dl><dt>',$this->bbf('mn_left_ti_dundi'),'</dt>';
-
-		if(xivo_user::chk_acl('dundi','mappings') === true):
-			echo	'<dd id="mn-dundi--mappings">',
-				$url->href_html($this->bbf('mn_left_dundi-mappings'),
-						'service/ipbx/dundi/mappings'),
-				'</dd>';
-		endif;
-
-		if(xivo_user::chk_acl('dundi','peers') === true):
-			echo	'<dd id="mn-dundi--peers">',
-				$url->href_html($this->bbf('mn_left_dundi-peers'),
-						'service/ipbx/dundi/peers'),
-				'</dd>';
-		endif;
-
-		echo	'</dl>';
-	endif;
-*/
 	/*
 	if(xivo_user::chk_acl('cost_center') === true):
 		echo	'<dl><dt>',$this->bbf('mn_left_ti_cost_center'),'</dt>';

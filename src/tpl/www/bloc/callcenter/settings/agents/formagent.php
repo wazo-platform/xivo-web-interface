@@ -103,7 +103,16 @@ $qmember = $this->get_var('qmember');
 				    'altkey'	=> 'id',
 				    'default'	=> $this->get_var('group'),
 				    'selected'	=> $info['agentfeatures']['numgroup']),
-			      $this->get_var('agentgroup_list'));
+			      $this->get_var('agentgroup_list')),
+
+		$form->text(array('desc'	=> $this->bbf('fm_agentfeatures_preprocess-subroutine'),
+				  'name'	=> 'agentfeatures[preprocess_subroutine]',
+				  'labelid' 	=> 'agentfeatures-preprocess-subroutine',
+				  'size'	=> 15,
+				  'default'	=> $element['agentfeatures']['preprocess_subroutine']['default'],
+				  'value'	=> $info['agentfeatures']['preprocess_subroutine'],
+				  'error'	=> $this->bbf_args('error',
+					   $this->get_var('error','agentfeatures','preprocess_subroutine'))));
 
 ?>
 </div>

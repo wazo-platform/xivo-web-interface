@@ -24,6 +24,21 @@ class xivo_service_asterisk_callfiltermember_sql extends xivo_service_asterisk_a
 {
 	var $_unique	= array(array('callfilterid','type','typeval'));
 	var $_disable	= null;
+
+	public function get_by_boss_secretary($boss_id, $secreatary_id)
+	{
+		$this->_dso->new_select($this->_table);
+
+		$this->_dso->where(array('type' => 'user'));
+		$subquery = '(SELECT "callfilterid" FROM "callfiltermember" WHERE "type" = \'user\' AND "bstype" = \'boss\'  AND "typeval" = \''.$boss_id.'\')';
+		$this->_dso->andwhere(array('callfilterid' => (object) $subquery));
+		$this->_dso->andwhere(array('typeval' => $secreatary_id));
+		$this->_dso->andwhere(array('bstype' => 'secretary'));
+
+		$r = $this->_dso->select_single();
+
+		return($r);
+	}
 }
 
 ?>

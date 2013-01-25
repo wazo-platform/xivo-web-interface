@@ -31,8 +31,5 @@ NTP
 ; mn_left_munin-nginx
 Nginx
 
-; mn_left_munin-mysql
-MySQL
-
 ; mn_left_munin-postgresql
 PostgreSQL
