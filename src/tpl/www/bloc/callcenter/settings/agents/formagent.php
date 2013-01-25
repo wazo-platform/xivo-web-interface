@@ -28,6 +28,7 @@ $context_list = $this->get_var('context_list');
 $umember = $this->get_var('umember');
 $queues = $this->get_var('queues');
 $qmember = $this->get_var('qmember');
+$act = $this->get_var('act');
 
 ?>
 
@@ -49,18 +50,31 @@ $qmember = $this->get_var('qmember');
 				  'default'	=> $element['agentfeatures']['lastname']['default'],
 				  'value'	=> $info['agentfeatures']['lastname'],
 				  'error'	=> $this->bbf_args('error',
-					   $this->get_var('error','agentfeatures','lastname')))),
+					   $this->get_var('error','agentfeatures','lastname'))));
 
-		$form->text(array('desc'	=> $this->bbf('fm_agentfeatures_number'),
-				  'name'	=> 'agentfeatures[number]',
-				  'labelid'	=> 'agentfeatures-number',
-				  'size'	=> 15,
-				  'default'	=> $element['agentfeatures']['number']['default'],
-				  'value'	=> $info['agentfeatures']['number'],
-				  'error'	=> $this->bbf_args('error',
-					   $this->get_var('error','agentfeatures','number')))),
+if ($act === 'addagent') {
+	echo $form->text(array('desc'	=> $this->bbf('fm_agentfeatures_number'),
+				'name'	=> 'agentfeatures[number]',
+				'labelid'	=> 'agentfeatures-number',
+				'size'	=> 15,
+				'default'	=> $element['agentfeatures']['number']['default'],
+				'value'	=> $info['agentfeatures']['number'],
+				'error'	=> $this->bbf_args('error',
+					$this->get_var('error','agentfeatures','number'))));
+} else {
+	echo $form->text(array('desc'	=> $this->bbf('fm_agentfeatures_number'),
+				'name'	=> 'agentfeatures[number]',
+				'labelid'	=> 'agentfeatures-number',
+				'size'	=> 15,
+				'readonly'	=> true,
+				'class'		=> 'it-disabled',
+				'default'	=> $element['agentfeatures']['number']['default'],
+				'value'	=> $info['agentfeatures']['number'],
+				'error'	=> $this->bbf_args('error',
+					$this->get_var('error','agentfeatures','number'))));
+}
 
-		$form->text(array('desc'	=> $this->bbf('fm_agentfeatures_passwd'),
+	echo $form->text(array('desc'	=> $this->bbf('fm_agentfeatures_passwd'),
 				  'name'	=> 'agentfeatures[passwd]',
 				  'labelid'	=> 'agentfeatures-passwd',
 				  'size'	=> 15,
