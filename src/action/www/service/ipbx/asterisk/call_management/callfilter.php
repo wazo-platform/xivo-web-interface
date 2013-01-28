@@ -72,7 +72,7 @@ switch($act)
 		$_TPL->set_var('dialaction',$result['dialaction']);
 		$_TPL->set_var('element',$appcallfilter->get_elements());
 		$_TPL->set_var('destination_list',$appcallfilter->get_dialaction_destination_list());
-		$_TPL->set_var('context_list',$appcallfilter->get_context_list());
+		$_TPL->set_var('context_list',$appcallfilter->get_context_list(null,null,null,false,'internal'));
 		$_TPL->set_var('bosslist',$appcallfilter->get_free_boss_users());
 		$_TPL->set_var('secretary',$secretary);
 
@@ -151,7 +151,7 @@ switch($act)
 		$_TPL->set_var('dialaction',$return['dialaction']);
 		$_TPL->set_var('element',$appcallfilter->get_elements());
 		$_TPL->set_var('destination_list',$appcallfilter->get_dialaction_destination_list());
-		$_TPL->set_var('context_list',$appcallfilter->get_context_list());
+		$_TPL->set_var('context_list',$appcallfilter->get_context_list(null,null,null,false,'internal'));
 		$_TPL->set_var('bosslist',$appcallfilter->get_boss_users());
 		$_TPL->set_var('secretary',$secretary);
 
