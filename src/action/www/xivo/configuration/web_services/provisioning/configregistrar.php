@@ -37,7 +37,6 @@ switch($act)
 	case 'rebuild_required_config':
 		$provdconfig = &$_XOBJ->get_module('provdconfig');
 		$linefeatures = &$ipbx->get_module('linefeatures');
-		$devicefeatures = &$ipbx->get_module('devicefeatures');
 
 		$status = 204;
 		if (($list = $linefeatures->get_list_device_associated()) !== false
@@ -52,6 +51,25 @@ switch($act)
 			}
 		}
 		$provdconfig->rebuild_required_config();
+
+		$http_response->set_status_line($status);
+		$http_response->send(true);
+		break;
+	case 'sync_devices':
+		$provddevice = &$_XOBJ->get_module('provddevice');
+		$devicefeatures = &$ipbx->get_module('devicefeatures');
+
+		$status = 204;
+		if (($list = $devicefeatures->get_all()) !== false
+		&& ($nb = count($list)) > 0)
+		{
+			$status = 200;
+			for($i=0; $i<$nb; $i++)
+			{
+				$ref = &$list[$i];
+				$provddevice->synchronize($ref['deviceid']);
+			}
+		}
 
 		$http_response->set_status_line($status);
 		$http_response->send(true);
