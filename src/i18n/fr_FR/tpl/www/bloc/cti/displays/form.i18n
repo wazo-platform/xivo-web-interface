@@ -22,5 +22,8 @@ Description
 ; list-avail-formats
 <i>Formats d'affichage disponibles :&nbsp;</i>
 
+; opt_disp-delete
+Effacer ce champ
+
 ; no_disp
 Aucun affichage
