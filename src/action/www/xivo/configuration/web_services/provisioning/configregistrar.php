@@ -39,33 +39,21 @@ switch($act)
 		$linefeatures = &$ipbx->get_module('linefeatures');
 		$devicefeatures = &$ipbx->get_module('devicefeatures');
 
-		$http_response->set_status_line(204);
-		if (($list = $linefeatures->get_all_where(array('configregistrar' => 'default'))) !== false
+		$status = 204;
+		if (($list = $linefeatures->get_list_device_associated()) !== false
 		&& ($nb = count($list)) > 0)
 		{
-			$res = array();
-			for($i=0;$i<$nb;$i++)
+			$status = 200;
+			for($i=0; $i<$nb; $i++)
 			{
 				$ref = &$list[$i];
-				$deviceid = $ref['device'];
-				if (($device = $devicefeatures->get($deviceid)) === false
-				|| ($config = $device['config']) === null)
-					continue;
-				array_push($res,$device['id']);
+				$deviceid = (int) $ref['device'];
+				$provdconfig->rebuild_device_config($deviceid);
 			}
-
-			$listid = array_unique($res);
-			$listid = array_values($listid);
-
-			$nb = count($listid);
-			for($i=0;$i<$nb;$i++) {
-				$provdconfig->rebuild_device_config($listid[$i]);
-			}
-			$http_response->set_status_line(200);
 		}
-
 		$provdconfig->rebuild_required_config();
 
+		$http_response->set_status_line($status);
 		$http_response->send(true);
 		break;
 	default:
