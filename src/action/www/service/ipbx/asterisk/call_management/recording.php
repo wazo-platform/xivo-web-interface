@@ -96,10 +96,10 @@ switch($act)
 		$_TPL->set_var('errors_list', $errors_list);
 		break;
 		
-	case 'delete':
+	case 'delete_recording':
 		$errors_list = array();
 		try {
-			$appreccampaigns->delete($_QR['campaign'], $_QR['id']);
+			$appreccampaigns->delete_recording($_QR['campaign'], $_QR['id']);
 		} catch(Exception $e) {
 			array_push($errors_list, $e->getMessage());
 		}
@@ -107,7 +107,7 @@ switch($act)
 		$param['campaign'] = $_QR['campaign'];
 		$_QRY->go($_TPL->url('service/ipbx/call_management/recording'),$param);
 		break;
-		
+	
 	case 'menu':
 		break;
 	case 'listrecordings':
@@ -158,9 +158,22 @@ switch($act)
 			die();
 		}
 		break;
+		
+	case 'delete_campaign':
+		$errors_list = array();
+		try {
+			$appreccampaigns->delete_campaign($_QR['campaign']);
+		} catch(WebServiceException $e) {
+			$errors_list = array_concatenate($errors_list, $e->getErrorsList());
+			foreach($errors_list as $error) {
+				dwho_report::push('error', dwho_i18n::babelfish($error));
+			}
+		}
+		$_QRY->go($_TPL->url('service/ipbx/call_management/recording'),$param);
+		break;
+		
 	default:
 		$act = 'list';
-		$errors_list = $_TPL->get_var('errors_list');
 		if($errors_list == null) $errors_list = array();
 		try	{
 			$recordingcampaigns = $appreccampaigns->get_campaigns()->data;

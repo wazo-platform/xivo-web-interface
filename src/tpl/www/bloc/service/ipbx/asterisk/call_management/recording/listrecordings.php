@@ -137,7 +137,7 @@ function print_recordings_list($recordings_list, $nb, $form, $url, $dhtml, $this
 								       $this_local->bbf('opt_delete'),
 								       'border="0"'),
 							'service/ipbx/call_management/recording',
-							array('act'	=> 'delete',
+							array('act'	=> 'delete_recording',
 							      'id'	=> $recording['cid'],
 								  'campaign' => $recording['campaign_id']),
 							'onclick="return(confirm(\''.$dhtml->escape($this_local->bbf('opt_delete_confirm')).'\'));"',
