@@ -55,6 +55,25 @@ switch($act)
 		$http_response->set_status_line($status);
 		$http_response->send(true);
 		break;
+	case 'sync_bsfilter_devices':
+		$appdevice = &$ipbx->get_application('device');
+		$provddevice = &$_XOBJ->get_module('provddevice');
+
+		$status = 204;
+		if (($list = $appdevice->get_devices_has_bsfilter()) !== false
+		&& ($nb = count($list)) > 0)
+		{
+			$status = 200;
+			for($i=0; $i<$nb; $i++)
+			{
+				$ref = &$list[$i];
+				$provddevice->synchronize($ref['deviceid']);
+			}
+		}
+
+		$http_response->set_status_line($status);
+		$http_response->send(true);
+		break;
 	case 'sync_devices':
 		$provddevice = &$_XOBJ->get_module('provddevice');
 		$devicefeatures = &$ipbx->get_module('devicefeatures');
