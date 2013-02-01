@@ -30,11 +30,10 @@ $array['voicemailfeatures']['ipbx'] = array('voicemail reload');
 $array['agentfeatures'] = array();
 $array['agentfeatures']['ctibus'] = array('xivo[agent,%s,%s]', 'xivo[user,%s,%s]', 'xivo[queuemember,update]');
 $array['agentfeatures']['agentbus'] = array('agent.%s.%s');
-$array['agentfeatures']['ipbx'] = array('module reload app_queue.so', 'module reload chan_agent.so');
+$array['agentfeatures']['ipbx'] = array('module reload app_queue.so');
 
 $array['agentglobalparams'] = array();
 $array['agentglobalparams']['ctibus'] = array('xivo[cticonfig,update]');
-$array['agentglobalparams']['ipbx'] = array('module reload chan_agent.so');
 
 $array['general'] = array();
 $array['general']['ctibus'] = array();
