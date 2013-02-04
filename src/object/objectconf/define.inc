@@ -47,26 +47,6 @@ define('XIVO_AV_FR_CORP_COUNTRY'	,'France');
 define('XIVO_AV_FR_CORP_PHONE'		,'+33 (0) 4 37 49 78 10');
 define('XIVO_AV_FR_CORP_FAX'		,'+33 (0) 4 27 46 63 30');
 
-define('XIVO_PF_FR_CORP_NAME'		,'Proformatique sarl');
-define('XIVO_PF_FR_CORP_EMAIL'		,'contact@avencall.com');
-define('XIVO_PF_FR_CORP_URL'		,'avencall.com');
-define('XIVO_PF_FR_CORP_ADDRESS'	,'11 Rue Salomon de Rothschild');
-define('XIVO_PF_FR_CORP_ZIPCODE'	,'92150');
-define('XIVO_PF_FR_CORP_CITY'		,'Suresnes');
-define('XIVO_PF_FR_CORP_COUNTRY'	,'France');
-define('XIVO_PF_FR_CORP_PHONE'		,'+33 (0) 1 41 38 99 60');
-define('XIVO_PF_FR_CORP_FAX'		,'+33 (0) 1 41 38 99 70');
-
-define('XIVO_PF_CA_CORP_NAME'		,'Avencall inc');
-define('XIVO_PF_CA_CORP_EMAIL'		,'contact@avencall.ca');
-define('XIVO_PF_CA_CORP_URL'		,'avencall.ca');
-define('XIVO_PF_CA_CORP_ADDRESS'	,'2590, boul. Laurier, local 1040');
-define('XIVO_PF_CA_CORP_ZIPCODE'	,'G1V 4M6');
-define('XIVO_PF_CA_CORP_CITY'		,'Quebec');
-define('XIVO_PF_CA_CORP_COUNTRY'	,'Canada');
-define('XIVO_PF_CA_CORP_PHONE'		,'+1 (418) 476 5458');
-define('XIVO_PF_CA_CORP_FAX'		,'+1 (418) 476 5458');
-
 define('XIVO_WS_HEADER_NAME_VERSION','X-XIVO-WS-VERSION');
 define('XIVO_WS_VERSION','1.0');
 

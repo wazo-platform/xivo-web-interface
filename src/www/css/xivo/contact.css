@@ -17,7 +17,8 @@
  */
 
 #r-xivo-contact .sb-content {padding: 10px 0px;display: block;}
-#r-xivo-contact .sb-content .logo {float: left;width: 49%;text-align: center;padding-top: 5px;padding-bottom: 5px;}
+#r-xivo-contact .sb-content .logo {text-align: center;magin:auto;}
+#r-xivo-contact .sb-content .logo img {width: 80%;height: 80%;magin:auto;}
 #r-xivo-contact .sb-content .body {float: left;width: 33%;}
 #r-xivo-contact .sb-content .clear {clear: both;}
 #r-xivo-contact dl {padding-bottom: 10px;}
