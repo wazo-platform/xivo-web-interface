@@ -23,7 +23,7 @@ $url = $this->get_module('url');
 <div class="b-infos">
 	<h3 class="sb-top xspan"><span class="span-left">&nbsp;</span><span class="span-center"><?=$this->bbf('title_content_name');?></span><span class="span-right">&nbsp;</span></h3>
 	<div class="sb-content">
-		<div class="logo"><?=$url->img_html('img/site/logo_avencall_rgb_quadri_en.jpg',XIVO_AV_FR_CORP_NAME);?></div>
+		<div class="logo"><?=$url->img_html('img/site/logo_avencall_rgb_quadri_en.png',XIVO_AV_FR_CORP_NAME);?></div>
 		<div class="clear"></div>
 	</div>
 	<div class="sb-content">
