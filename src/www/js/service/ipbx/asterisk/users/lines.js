@@ -31,6 +31,39 @@ function map_autocomplete_line_free_to(obj,list,exept)
     });
 }
 
+function reset_line_number(obj, deviceId)
+{
+	$(obj).find('option').remove();
+	for (var i=1; i<=12; i++) {
+		$(obj).append("<option value="+i+">"+i+"</option>");
+	}
+	xivo_http_search_line_from_provd($(obj), deviceId);
+}
+
+function add_autocomplete_device(searchField, valueField, lineNumField)
+{
+	searchField.autocomplete({
+		source: function(request, response) {
+			var search = request.term;
+			var url = '/service/ipbx/ui.php/pbx_settings/device/search/?format=jquery&search=' + search;
+			$.getJSON(url, function(data) {
+				response(data);
+			});
+		},
+		focus: function(event, ui) {
+			$(searchField).val(ui.item.label);
+			$(valueField).val(ui.item.value);
+			return false;
+		},
+		select: function(event, ui) {
+			$(searchField).val(ui.item.label);
+			$(valueField).val(ui.item.value);
+			reset_line_number(lineNumField, ui.item.value);
+			return false;
+		}
+	});
+}
+
 //get available line for a device
 function xivo_http_search_line_from_provd(obj,config,exept)
 {
@@ -265,23 +298,22 @@ function update_row_infos()
                     helper.show('slow');
                     map_autocomplete_extension_to($(this),context.val());
                 });
+
+                var devicesearch = context.parents('tr').find('#device-search');
+                var devicevalue = context.parents('tr').find('#linefeatures-device');
+                var linenum = $(this).find('#linefeatures-num');
+
+                add_autocomplete_device(devicesearch, devicevalue, linenum);
+
                 number.blur(function(){
                     $(this).parent().find('#numberpool_helper').hide('slow');
                 });
+
                 device = $(this).find('#linefeatures-device').val();
                 devicenumline = $(this).find("#linefeatures-num");
+
                 if (device == '')
                     devicenumline.hide();
-                
-                $(this).find('#linefeatures-device').change(function() {
-                    devicenumline = $(this).parents('tr').find("#linefeatures-num");
-                    $(devicenumline).each(function(){
-                        $(this).find('option').remove();
-                        for (var i=1; i<=12; i++)
-                            $(this).append("<option value="+i+">"+i+"</option>");
-                    });
-                    xivo_http_search_line_from_provd(devicenumline,$(this).val());
-                });
             }
         }
         idx++;

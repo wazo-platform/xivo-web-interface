@@ -191,6 +191,7 @@ $array['service/ipbx/ui/pbx_settings/groups'] = 'service/ipbx/ui.php/pbx_setting
 $array['service/ipbx/ui/pbx_settings/meetme'] = 'service/ipbx/ui.php/pbx_settings/meetme/';
 $array['service/ipbx/ui/pbx_settings/voicemail'] = 'service/ipbx/ui.php/pbx_settings/voicemail/';
 $array['service/ipbx/ui/pbx_settings/extension/search'] = 'service/ipbx/ui.php/pbx_settings/extension/search/';
+$array['service/ipbx/ui/pbx_settings/device/search'] = 'service/ipbx/ui.php/pbx_settings/device/search/';
 
 
 // call_management
