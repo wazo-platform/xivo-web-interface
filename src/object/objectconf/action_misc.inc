@@ -296,9 +296,6 @@ $array['service/ipbx/asterisk/ui/pbx_settings/meetme/users/search'] = array(
 $array['service/ipbx/asterisk/ui/pbx_settings/extension/search'] = array(
 	'path'		=> 'service/ipbx/asterisk/ui/pbx_settings/extension',
 	'define'	=> array('XIVO_LOC_UI_ACTION'	=> 'search'));
-$array['service/ipbx/asterisk/ui/pbx_settings/device/search'] = array(
-	 'path'		=> 'service/ipbx/asterisk/ui/pbx_settings/device',
-	 'define'	=> array('XIVO_LOC_UI_ACTION'	=> 'search'));
 
 # call_management
 $array['service/ipbx/asterisk/web_services/restricted/call_management/incall'] = array(

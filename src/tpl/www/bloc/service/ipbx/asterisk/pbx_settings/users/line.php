@@ -25,27 +25,23 @@ $info = $this->get_var('info');
 $element = $this->get_var('element');
 $list = $this->get_var('list');
 $list_configregistrar = $this->get_var('list_configregistrar');
-
 $list_device_line = $this->get_var('list_device_line');
-$nb_devices = count($list_device_line);
-
-$device_mapping = array();
-foreach($list_device_line as $line_device)
-{
-	$device_id = $line_device['devicefeatures']['id'];
-    $trimmed_mac = trim($line_device['devicefeatures']['mac']);
-    $trimmed_ip = trim($line_device['devicefeatures']['ip']);
-
-    if(empty($trimmed_mac) === false) {
-		$device_label = $trimmed_mac;
-    } else if(empty($trimmed_ip) === false) {
-		$device_label = $trimmed_ip;
-    }
-
-	$device_mapping[$device_id] = $device_label;
-}
-
 $err = $this->get_var('error','linefeatures');
+
+$list_device = array();
+$nb_device = count($list_device_line);
+for($i=0; $i<$nb_device; $i++):
+	$cur_device = $list_device_line[$i]['devicefeatures'];
+	$trimmed_mac = trim($cur_device['mac']);
+	$trimmed_ip = trim($cur_device['ip']);
+	if(empty($trimmed_mac) === false) {
+		$cur_device['display'] = 'MAC: '.$cur_device['mac'];
+		$list_device[$i] = $cur_device;
+	} else if(empty($trimmed_ip) === false) {
+		$cur_device['display'] = 'IP: '.$cur_device['ip'];
+		$list_device[$i] = $cur_device;
+	}
+endfor;
 
 ?>
 <!--
@@ -255,21 +251,23 @@ if($list !== false):
 		</td>
 		*/ ?>
 		<td>
-		<?=$form->hidden(array('name' => 'linefeatures[device][]',
-			'value' 	=> $ref['device'],
-			'id'		=> 'linefeatures-device'));?>
 		<?php if ($list_device === false): ?>
 			 -
+			<?=$form->hidden(array('name' => 'linefeatures[device][]',
+					'value' 	=> null,
+				    'id'		=> 'linefeatures-device'));?>
 		<?php else: ?>
-			<?=$form->text(array('paragraph'	=> false,
-					     'id'		=> 'device-search',
-					     'label'	=> false,
-					     'size'		=> 18,
-						 'value'    => $device_mapping[$ref['device']],
-					     'default'	=> $element['linefeatures']['device']['default'])
-			            );?>
+			<?=$form->select(array('paragraph'	=> false,
+				    'name'		=> 'linefeatures[device][]',
+				    'id'		=> 'linefeatures-device',
+				    'label'		=> false,
+				    'key'		=> 'display',
+				    'altkey'	=> 'id',
+				    'empty'		=> true,
+				    'default'	=> $element['linefeatures']['device']['default'],
+					'selected'	=> $ref['device']),
+			      $list_device);?>
 		<?php endif; ?>
-
 		</td>
 		<td>
 			&nbsp;
@@ -398,18 +396,21 @@ endif;
 		</td>
 		*/ ?>
 		<td id="td_ex-linefeatures-device">
-		<?=$form->hidden(array('name' => 'linefeatures[device][]',
-			'value' 	=> null,
-			'id'		=> 'linefeatures-device'));?>
 		<?php if ($list_device === false): ?>
 			 -
+			<?=$form->hidden(array('name' => 'linefeatures[device][]',
+					'value' 	=> null,
+				    'id'		=> 'linefeatures-device'));?>
 		<?php else: ?>
-			<?=$form->text(array('paragraph'	=> false,
-					     'id'		=> 'device-search',
-					     'label'	=> false,
-					     'size'		=> 18,
-					     'default'	=> $element['linefeatures']['device']['default'])
-			            );?>
+			<?=$form->select(array('paragraph'	=> false,
+				    'name'		=> 'linefeatures[device][]',
+				    'id'		=> 'linefeatures-device',
+				    'label'		=> false,
+				    'key'		=> 'display',
+				    'altkey'	=> 'id',
+				    'default'	=> $element['linefeatures']['device']['default'],
+				    'empty'		=> true),
+			      $list_device);?>
 		<?php endif; ?>
 		</td>
 		<td>
