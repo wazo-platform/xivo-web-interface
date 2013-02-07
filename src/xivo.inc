@@ -43,6 +43,7 @@ class xivo extends dwho
 
 		$this->_init_cfg();
 
+		$this->_init_datastorage();
 		$this->_set_report();
 		$this->_set_error();
 		$this->_set_query();
@@ -62,7 +63,9 @@ class xivo extends dwho
 	protected function _init_cfg()
 	{
 		if(($xivo_ini = parent::load_init(XIVO_PATH_CONF.DWHO_SEP_DIR.'xivo.ini')) === false)
-			define('XIVO_WEBI_CONFIGURED',false);
+			die('ERR: Missing datastorage file in XIVO');
+
+		define('XIVO_WEBI_CONFIGURED', (bool) file_exists(XIVO_LIB.'/configured'));
 
 		if(dwho_issa('locale',$xivo_ini) === true)
 			$this->_cfg_ini_locale($xivo_ini['locale']);
@@ -97,15 +100,6 @@ class xivo extends dwho
 		if(dwho_constant('XIVO_WEBI_CONFIGURED',true) === false)
 			return(null);
 
-		if(dwho_issa('general',$xivo_ini) === true && isset($xivo_ini['general']['datastorage']) === true)
-			$this->_cfg_ini_datastorage($xivo_ini['general']['datastorage']);
-		else if(dwho_issa('datastorage',$xivo_ini) === true)
-			$this->_cfg_ini_datastorage($xivo_ini['datastorage']);
-		else if(defined('XIVO_WEBI_CONFIGURED') === false)
-			define('XIVO_WEBI_CONFIGURED',false);
-		else
-			die('ERR: Missing datastorage configuration in XIVO init file');
-
 		if(dwho_issa('service',$xivo_ini) === true)
 		{
 			if(isset($this->_conf['xivo']['ini']['service']) === true)
@@ -130,6 +124,21 @@ class xivo extends dwho
 			define('XIVO_WEBI_CONFIGURED',true);
 
 		return(true);
+	}
+
+	protected function _init_datastorage()
+	{
+		if(($dso_conf = parent::load_init(XIVO_CONF.DWHO_SEP_DIR.'datastorage.conf')) === false)
+			die('ERR: Missing datastorage file in XIVO');
+
+		$this->_conf['datastorage'] = $dso_conf;
+
+		if(dwho_issa('general',$dso_conf) === true) {
+			if (isset($dso_conf['general']['xivo']) === true)
+				$this->_cfg_ini_datastorage($dso_conf['general']['xivo']);
+			else
+				die('ERR: Missing xivo param in general section in XIVO in datastorage file');
+		}
 	}
 
 	protected function _set_language()

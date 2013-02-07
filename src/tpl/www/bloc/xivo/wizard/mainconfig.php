@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2011  Avencall
+# Copyright (C) 2006-2013  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,9 +19,7 @@
 #
 
 $form = &$this->get_module('form');
-
 $element = $this->get_var('element');
-
 ?>
 <fieldset id="fld-mainconfig-hostname">
 	<legend><?=$this->bbf('fld-mainconfig-hostname');?></legend>

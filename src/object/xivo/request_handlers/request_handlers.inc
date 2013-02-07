@@ -32,15 +32,18 @@ class xivo_object_request_handlers extends xivo_object_abstract
 
 	}
 
-	function exec_cmd($cmds, $ask_answer=false)
+	public function exec_cmd($cmds, $ask_answer=false)
 	{
+		if(dwho_constant('XIVO_WEBI_CONFIGURED',true) === false)
+			return(null);
+
 		$answer = $this->_sysconfd->request_post('/exec_request_handlers', $cmds);
 		if ($ask_answer)
 			return($this->_parse_answer($answer));
 		return(true);
 	}
 
-	function _parse_answer($answer)
+	private function _parse_answer($answer)
 	{
 		if (dwho_issa('ipbx', $answer)) {
 			return $answer['ipbx'];

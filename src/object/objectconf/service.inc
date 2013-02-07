@@ -23,21 +23,13 @@ define('XIVO_SRE_CLASS_PRE','_sre_');
 $array = array();
 
 $array['ipbx'] = array();
-
-if(($asterisk_ini = xivo_service::get_engine_initcfg('ipbx','asterisk')) !== false)
-{
-	$array['ipbx']['asterisk'] = array();
-	$array['ipbx']['asterisk']['label']	= 'Asterisk';
-	$array['ipbx']['asterisk']['ini']	= $asterisk_ini;
-}
+$array['ipbx']['asterisk'] = array();
+$array['ipbx']['asterisk']['label']	= 'Asterisk';
+$array['ipbx']['asterisk']['ini']	= 'asterisk';
 
 $array['monitoring'] = array();
-
-if(($monit_ini = xivo_service::get_engine_initcfg('monitoring','monit')) !== false)
-{
-	$array['monitoring']['monit'] = array();
-	$array['monitoring']['monit']['label']	= 'Monit';
-	$array['monitoring']['monit']['ini']	= $monit_ini;
-}
+$array['monitoring']['monit'] = array();
+$array['monitoring']['monit']['label']	= 'Monit';
+$array['monitoring']['monit']['ini']	= 'monit';
 
 ?>

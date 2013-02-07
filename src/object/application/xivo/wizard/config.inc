@@ -23,102 +23,17 @@ $array = array();
 $array['step'] = array();
 $array['step']['welcome'] = true;
 $array['step']['license'] = true;
-#$array['step']['ipbxengine'] = true;
-#$array['step']['dbconfig'] = true;
-$array['step']['checkcomponents'] = true;
 $array['step']['mainconfig'] = true;
 $array['step']['entitycontext'] = true;
-//$array['step']['ipbximportuser'] = true;
 $array['step']['validate'] = true;
 
-$array['ipbximportuser'] = array();
-$array['ipbximportuser']['file'] = array();
-$array['ipbximportuser']['file']['name'] = '/^[a-z0-9_-]{1,50}(?:\.[a-z]{1,10})?$/i';
-$array['ipbximportuser']['file']['mime'] = array('text/plain','text/csv');
-
-$array['ipbximportuser']['field'] = array();
-$array['ipbximportuser']['field']['firstname'] = array('userfeatures','firstname');
-$array['ipbximportuser']['field']['lastname'] = array('userfeatures','lastname');
-$array['ipbximportuser']['field']['username'] = array('protocol','name');
-$array['ipbximportuser']['field']['password'] = array('protocol','secret');
-$array['ipbximportuser']['field']['phonenumber'] = array('userfeatures','number');
-$array['ipbximportuser']['field']['incallexten'] = array('incall','exten');
 
 $array['element'] = array();
 
-$array['element']['dbconfig'] = array();
-
-$array['element']['dbconfig']['create_auto'] = array();
-$array['element']['dbconfig']['create_auto']['value'] = array(1,0);
-$array['element']['dbconfig']['create_auto']['default'] = 1;
-$array['element']['dbconfig']['create_auto']['checked'] = true;
-$array['element']['dbconfig']['create_auto']['null'] = true;
-
-$array['element']['dbconfig']['backend'] = array();
-$array['element']['dbconfig']['backend']['value'] = array('postgresql');
-$array['element']['dbconfig']['backend']['default'] = 'postgresql';
-
-$array['element']['dbconfig']['postgresql'] = array();
-$array['element']['dbconfig']['postgresql']['host'] = array();
-$array['element']['dbconfig']['postgresql']['host']['default'] = 'localhost';
-
-$array['element']['dbconfig']['postgresql']['port'] = array();
-$array['element']['dbconfig']['postgresql']['port']['default'] = '';
-
-$array['element']['dbconfig']['postgresql']['xivouser'] = array();
-$array['element']['dbconfig']['postgresql']['xivouser']['default'] = 'xivo';
-
-$array['element']['dbconfig']['postgresql']['xivopass'] = array();
-$array['element']['dbconfig']['postgresql']['xivopass']['default'] = 'proformatique';
-
-$array['element']['dbconfig']['postgresql']['xivodbname'] = array();
-$array['element']['dbconfig']['postgresql']['xivodbname']['default'] = 'xivo';
-
-$array['element']['dbconfig']['postgresql']['ipbxuser'] = array();
-$array['element']['dbconfig']['postgresql']['ipbxuser']['default'] = 'asterisk';
-
-$array['element']['dbconfig']['postgresql']['ipbxpass'] = array();
-$array['element']['dbconfig']['postgresql']['ipbxpass']['default'] = 'proformatique';
-
-$array['element']['dbconfig']['postgresql']['ipbxdbname'] = array();
-$array['element']['dbconfig']['postgresql']['ipbxdbname']['default'] = 'asterisk';
-
-$array['element']['mainconfig'] = array();
-$array['element']['mainconfig']['hostname'] = array();
-$array['element']['mainconfig']['hostname']['default'] = '';
-
-$array['element']['mainconfig']['domain'] = array();
-$array['element']['mainconfig']['domain']['default'] = '';
-
-$array['element']['mainconfig']['adminpasswd'] = array();
-$array['element']['mainconfig']['adminpasswd']['default'] = '';
-
-$array['element']['mainconfig']['confirmadminpasswd'] = array();
-$array['element']['mainconfig']['confirmadminpasswd']['default'] = '';
-
-$array['element']['netiface'] = array();
-$array['element']['netiface']['address'] = array();
-$array['element']['netiface']['address']['default'] = '';
-
-$array['element']['netiface']['netmask'] = array();
-$array['element']['netiface']['netmask']['default'] = '';
-
-$array['element']['netiface']['gateway'] = array();
-$array['element']['netiface']['gateway']['default'] = '';
-
-$array['element']['resolvconf'] = array();
-$array['element']['resolvconf']['nameserver1'] = array();
-$array['element']['resolvconf']['nameserver1']['default'] = '';
-
-$array['element']['resolvconf']['nameserver2'] = array();
-$array['element']['resolvconf']['nameserver2']['default'] = '';
-
 $array['element']['entity'] = array();
-$array['element']['entity']['name'] = array();
-$array['element']['entity']['name']['default'] = '';
 
+$array['element']['entity']['name'] = array();
 $array['element']['entity']['displayname'] = array();
-$array['element']['entity']['displayname']['default'] = '';
 
 $array['element']['context'] = array();
 
@@ -163,41 +78,6 @@ $array['element']['context']['outcall']['displayname']['default'] = '';
 dwho::load_class('dwho_network');
 
 $array['filter'] = array();
-
-$array['filter']['dbconfig'] = array();
-$array['filter']['dbconfig']['backend'] = array('key' => array('postgresql'));
-$array['filter']['dbconfig']['create_auto'] = array('set' => false,'chk' => 2,'bool' => true);
-
-$array['filter']['dbconfig']['postgresql'] = array();
-$array['filter']['dbconfig']['postgresql']['host'] = array('callback'	=> 'dwho_network::valid_host',
-						      'callbackarg'	=> array((DWHO_NETWORK_HOST_IPV4_DOTDEC |
-										  DWHO_NETWORK_HOST_HOSTNAME)));
-$array['filter']['dbconfig']['postgresql']['port'] = array('set'		=> false,
-						      'chk'		=> 2,
-						      'callback'	=> 'dwho_network::valid_port_number');
-$array['filter']['dbconfig']['postgresql']['xivouser'] = array('set'		=> false,
-							  'chk'		=> 2,
-							  'maxlen'	=> 64,
-							  'regexp'	=> '/^[a-zA-Z0-9-\._~\!\$&\'\(\)\*\+,;=%]+$/');
-$array['filter']['dbconfig']['postgresql']['xivopass'] = array('set'		=> false,
-							  'chk'		=> 2,
-							  'maxlen'	=> 64,
-							  'regexp'	=> '/^[a-zA-Z0-9-\._~\!\$&\'\(\)\*\+,;=:%]+$/');
-$array['filter']['dbconfig']['postgresql']['xivodbname'] = array('minlen'	=> 1,
-							    'maxlen'	=> 64,
-							    'regexp'	=> '/^[a-zA-Z0-9_]+$/');
-$array['filter']['dbconfig']['postgresql']['ipbxuser'] = array('set'		=> false,
-							  'chk'		=> 2,
-							  'maxlen'	=> 64,
-							  'regexp'	=> '/^[a-zA-Z0-9-\._~\!\$&\'\(\)\*\+,;=%]+$/');
-$array['filter']['dbconfig']['postgresql']['ipbxpass'] = array('set'		=> false,
-							  'chk'		=> 2,
-							  'maxlen'	=> 64,
-							  'regexp'	=> '/^[a-zA-Z0-9-\._~\!\$&\'\(\)\*\+,;=:%]+$/');
-$array['filter']['dbconfig']['postgresql']['ipbxdbname'] = array('minlen'	=> 1,
-							    'maxlen'	=> 64,
-									'regexp'	=> '/^[a-zA-Z0-9_]+$/');
-
 $array['filter']['mainconfig'] = array();
 $array['filter']['mainconfig']['hostname'] = array('callback'		=> 'dwho_network::valid_host',
 						   'callbackarg'	=> array(DWHO_NETWORK_HOST_HOSTNAME));
