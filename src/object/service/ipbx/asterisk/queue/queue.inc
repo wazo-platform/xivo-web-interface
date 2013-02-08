@@ -62,8 +62,8 @@ class xivo_service_asterisk_queue extends xivo_service_asterisk_abstract
 	{
 		if(is_array($arr) === false)
 			return(false);
-
-		unset($arr['name']);
+		else if(isset($arr['name']) === true)
+			$arr['name'] = strtolower($arr['name']);
 
 		return(parent::edit($id,$arr,$disable));
 	}
