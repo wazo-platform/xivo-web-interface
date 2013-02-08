@@ -42,9 +42,8 @@ class xivo extends dwho
 			$this->_conf['xivo'] = dwho_array_merge_replace_recursive($this->_conf['xivo'],$xivo);
 
 		$this->_init_cfg();
-
-		$this->_init_datastorage();
 		$this->_set_report();
+		$this->_init_datastorage();
 		$this->_set_error();
 		$this->_set_query();
 		$this->_set_language();
