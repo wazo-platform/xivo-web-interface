@@ -90,10 +90,10 @@ function print_recordings_list($recordings_list, $nb, $form, $url, $dhtml, $this
 
 		$recording = get_object_vars(&$recordings_list[$i]);
 
-		if($recording['activated'] === true):
-			$icon = 'disable';
-		else:
+		if($recording['activated']):
 			$icon = 'enable';
+		else:
+			$icon = 'disable';
 		endif;
 			
 ?>
