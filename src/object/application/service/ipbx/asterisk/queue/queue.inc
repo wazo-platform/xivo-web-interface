@@ -321,6 +321,10 @@ class xivo_application_service_asterisk_queue extends xivo_application_asterisk_
 		|| dwho_issa('queue',$arr) === false)
 			return(false);
 
+		if($action === 'edit') {
+			$arr['queuefeatures']['name'] = $this->_info['queuefeatures']['name'];
+		}
+
 		if (empty($arr['queuefeatures']['displayname']) === true)
 			$arr['queuefeatures']['displayname'] = $arr['queuefeatures']['name'];
 

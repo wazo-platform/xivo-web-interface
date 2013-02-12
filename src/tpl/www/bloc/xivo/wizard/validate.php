@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2011  Avencall
+# Copyright (C) 2006-2013  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,34 +24,8 @@ $dhtml = &$this->get_module('dhtml');
 $info = $this->get_var('info');
 $netiface = $this->get_var('info','netiface');
 $resolvconf = $this->get_var('info','resolvconf');
+?>
 
-$error_ipbximportuser = $this->get_var('error','ipbximportuser');
-
-if(dwho_issa('lines',$error_ipbximportuser) === true
-&& dwho_issa('total',$error_ipbximportuser) === true
-&& isset($error_ipbximportuser['total']['error']) === true
-&& $error_ipbximportuser['total']['error'] > 0):
-	$dhtml->write_js('dwho.dom.set_onload(xivo_wizard_ipbximportuser_error,
-					      \''.$dhtml->escape($this->bbf('ipbximportuser_view_error',
-									    $error_ipbximportuser['total']['error'])).'\');');
-?>
-<div class="b-nodisplay">
-	<dl id="ipbximportuser-lines-status">
-		<dt><?=$this->bbf('ipbximportuser_lines_status');?></dt>
-<?php
-	foreach($error_ipbximportuser['lines'] as $line => $status):
-		echo	'<dd class="ipbximportuser-line-',$status,'">',
-			$this->bbf('ipbximportuser_lines_status',
-				   array('line' => $line,
-					 $status)),
-			'</dd>';
-	endforeach;
-?>
-	</dl>
-</div>
-<?php
-endif;
-?>
 <div id="validate-instruction">
 	<?=nl2br($this->bbf('validate_instruction'));?>
 </div>

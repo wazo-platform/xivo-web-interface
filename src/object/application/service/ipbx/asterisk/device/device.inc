@@ -342,6 +342,11 @@ class xivo_application_service_asterisk_device extends xivo_application_asterisk
 		return($r);
 	}
 
+	public function get_devices_has_bsfilter()
+	{
+		return($this->_dso->get_has_bsfilter());
+	}
+
 	public function get_devices_search($search,$disable=null,$order=null,$limit=null,$assoc=false)
 	{
 		return($this->_get_devices('search',$disable,$search,$order,$limit,$assoc));

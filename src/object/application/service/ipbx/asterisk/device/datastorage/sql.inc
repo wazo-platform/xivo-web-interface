@@ -23,7 +23,8 @@ require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'application','abstract','data
 class xivo_application_service_asterisk_device_sql extends xivo_application_abstract_datastorage_sql
 {
 	var $_table	= array('devicefeatures' => '',
-						'linefeatures' => '');
+						'linefeatures' => '',
+						'userfeatures' => '');
 
 	function get_nb($arr=null,$disable=null,$initialized=null)
 	{
@@ -92,6 +93,30 @@ class xivo_application_service_asterisk_device_sql extends xivo_application_abst
 			return(false);
 
 		return($this->get_all($disable,$order,$limit,$value));
+	}
+
+	public function get_has_bsfilter()
+	{
+		$this->_dso->new_select($this->_table['userfeatures'], null);
+
+		$this->_dso->innerjoin($this->_table['linefeatures'],
+							$this->_table['userfeatures'].'.id = '.$this->_table['linefeatures'].'.iduserfeatures',
+							null);
+
+		$this->_dso->innerjoin($this->_table['devicefeatures'],
+							$this->_dso->cast($this->_table['devicefeatures'].'.id', 'varchar').' = '.$this->_table['linefeatures'].'.device',
+							null,
+							'*');
+
+		$this->_dso->where(array('bsfilter' => 'boss'), $this->_table['userfeatures']);
+		$this->_dso->orwhere(array('bsfilter' => 'secretary'), $this->_table['userfeatures']);
+
+		$r = $this->_dso->select_all();
+
+		if(isset($r[0]) === false)
+			$r = false;
+
+		return($r);
 	}
 }
 

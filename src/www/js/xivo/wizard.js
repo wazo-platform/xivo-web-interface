@@ -1,6 +1,6 @@
 /*
  * XiVO Web-Interface
- * Copyright (C) 2006-2011  Avencall
+ * Copyright (C) 2006-2013  Avencall
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,16 +16,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
-function xivo_wizard_ipbximportuser_error(sum) {
-	var spansum = dwho.dom.create_element('span', {
-		'id' : 'ipbximportuser-tooltips-error',
-		'className' : 'fm-txt-error'
-	}, sum);
-
-	dwho.dom.create_focus_caption(dwho_eid('tooltips'),
-			dwho_eid('ipbximportuser-lines-status'), spansum, 'center');
-}
 
 function xivo_wizard_chg_entity_name() {
 	if (dwho_eid('it-entity-name') === false
@@ -44,7 +34,7 @@ function xivo_wizard_chg_entity_name() {
 	dwho_eid('it-entity-name').value = name;
 }
 
-function xivo_wizard_dbconfig_backend_onload() {
+function xivo_wizard_onload() {
 	dwho.dom.add_event('change', dwho_eid('it-language'), function() {
 		this.form['refresh'].value = 1;
 		this.form.submit();
@@ -60,7 +50,7 @@ function xivo_wizard_dbconfig_backend_onload() {
 	});
 }
 
-dwho.dom.set_onload(xivo_wizard_dbconfig_backend_onload);
+dwho.dom.set_onload(xivo_wizard_onload);
 
 
 var apply_wizard = {

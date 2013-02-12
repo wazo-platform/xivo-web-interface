@@ -272,7 +272,9 @@ function update_row_infos()
                 devicenumline = $(this).find("#linefeatures-num");
                 if (device == '')
                     devicenumline.hide();
-                
+
+                $(this).find('#linefeatures-device').select2();
+
                 $(this).find('#linefeatures-device').change(function() {
                     devicenumline = $(this).parents('tr').find("#linefeatures-num");
                     $(devicenumline).each(function(){

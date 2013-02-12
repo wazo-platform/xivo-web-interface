@@ -15,12 +15,3 @@ Incoming DID:
 
 ; fm_sheetevents_hangup
 Hangup:
-
-; col_1
-Custom Event
-
-; col_2
-Action
-
-; no_custom
-No custom event

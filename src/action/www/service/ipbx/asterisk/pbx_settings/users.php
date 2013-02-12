@@ -107,6 +107,11 @@ switch($act)
 		// autocomplete
 		$dhtml->set_css('extra-libs/jquery-ui/themes/ui-lightness/jquery.ui.autocomplete.css',true);
 		$dhtml->set_js('extra-libs/jquery-ui/ui/jquery.ui.autocomplete.js',true);
+
+		// select2
+		$dhtml->set_css('extra-libs/select2/select2-xivo.css', true);
+		$dhtml->set_js('extra-libs/select2/select2.min.js', true);
+
 		break;
 	case 'delete':
 		$param['page'] = $page;

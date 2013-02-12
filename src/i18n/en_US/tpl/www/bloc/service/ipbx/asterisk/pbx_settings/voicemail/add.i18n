@@ -180,7 +180,7 @@ Maximum duration of a message:
 Asterisk config: maxsecs
 
 ; fm_voicemail-nextaftercmd
-Lecture automatique du message suivant :
+Automatically read the next message:
 
 ; hlp_fm_voicemail-nextaftercmd
 Asterisk config: nextaftercmd

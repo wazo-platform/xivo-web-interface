@@ -1,6 +1,9 @@
 ; redirect_message_waiting
 Veuillez patienter durant le traitement des opérations...
 
+; start_xivo_services
+Démarrage des services en cours...
+
 ; commit_db_data
 Enregistrement dans la base de données...
 

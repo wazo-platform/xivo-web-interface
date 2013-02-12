@@ -27,6 +27,11 @@ $code = 400;
 
 switch($step)
 {
+	case 'start_xivo_services':
+		if($appwizard->start_xivo_services() !== false)
+			$code = 200;
+		echo 'next::commit_db_data::', $_TPL->bbf('commit_db_data');
+		break;
 	case 'commit_db_data':
 		if($appwizard->commit_db_data() !== false)
 			$code = 200;
@@ -61,7 +66,7 @@ switch($step)
 		break;
 	default:
 		$code = 200;
-		echo 'next::commit_db_data::', $_TPL->bbf('commit_db_data');
+		echo 'next::start_xivo_services::', $_TPL->bbf('start_xivo_services');
 		break;
 }
 
