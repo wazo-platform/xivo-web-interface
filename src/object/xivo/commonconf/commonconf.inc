@@ -22,7 +22,7 @@ xivo_object::required(array('abstract','abstract.inc'),true);
 
 class xivo_object_commonconf extends xivo_object_abstract
 {
-	var $_name	 = 'commonconf';
+	var $_name       = 'commonconf';
 	var $_sysconfd	 = false;
 	var $_dhcp       = false;
 	var $_monitoring = false;
@@ -35,11 +35,12 @@ class xivo_object_commonconf extends xivo_object_abstract
 	{
 		parent::__construct($xobj);
 
-		if(($this->_sysconfd    = &$this->_xobj->get_module('sysconfd'))     === false
-		|| ($this->_dhcp        = &$this->_xobj->get_module('dhcp'))         === false
-		|| ($this->_monitoring  = &$this->_xobj->get_module('monitoring'))   === false
-		|| ($this->_mail        = &$this->_xobj->get_module('mail'))         === false
-		|| ($this->_provisioning = &$this->_xobj->get_module('provisioning')) === false)
+		if(($this->_sysconfd = &$this->_xobj->get_module('sysconfd')) === false
+		|| ($this->_dhcp = &$this->_xobj->get_module('dhcp')) === false
+		|| ($this->_monitoring = &$this->_xobj->get_module('monitoring')) === false
+		|| ($this->_mail = &$this->_xobj->get_module('mail')) === false
+		|| ($this->_provisioning = &$this->_xobj->get_module('provisioning')) === false
+		|| ($this->_netiface = &$this->_xobj->get_module('netiface') === false))
 			return(false);
 
 		return(true);
@@ -51,32 +52,15 @@ class xivo_object_commonconf extends xivo_object_abstract
 		$dotted_nm = split('\.', $netmask);
 
 		$subnet = sprintf("%d.%d.%d.%d",
-		(((int)$dotted_ip[0]) & ((int)$dotted_nm[0])),
-		(((int)$dotted_ip[1]) & ((int)$dotted_nm[1])),
-		(((int)$dotted_ip[2]) & ((int)$dotted_nm[2])),
-		(((int)$dotted_ip[3]) & ((int)$dotted_nm[3]))
+				(((int)$dotted_ip[0]) & ((int)$dotted_nm[0])),
+				(((int)$dotted_ip[1]) & ((int)$dotted_nm[1])),
+				(((int)$dotted_ip[2]) & ((int)$dotted_nm[2])),
+				(((int)$dotted_ip[3]) & ((int)$dotted_nm[3]))
 		);
 
 		return($subnet);
 	}
 
-	function _ip2bcast($ip, $netmask)
-	{
-		$dotted_ip = split('\.', $ip);
-		$dotted_nm = split('\.', $netmask);
-
-		/*NOTE:
-		 * not bitwise operator (~) return a negative value (~255 = -256).
-		* as we want a value between 0 and 255, we add 256 and take module of the
-		* result
-		*/
-		$bcast = '';
-		foreach(range(0,3) as $i)
-			$bcast .= sprintf('%d.', ((int)$dotted_ip[$i]) | ((~ ((int)$dotted_nm[$i])+256)%256));
-		$bcast = substr($bcast, 0, -1);
-
-		return($bcast);
-	}
 
 	function generate($content, $onlystatic=true)
 	{
@@ -86,34 +70,34 @@ class xivo_object_commonconf extends xivo_object_abstract
 		$rawdata = $this->_dhcp->get(1);
 		$pool_start = strlen($rawdata['pool_start'])==0?'':$rawdata['pool_start'];
 		$conf = array_merge($conf, array(
-			'xivo.dhcp.pool' 			=> $pool_start.' '.$rawdata['pool_end'],
-			'xivo.dhcp.extra_ifaces'	=> $rawdata['extra_ifaces'],
-			'xivo.dhcp.active'			=> $rawdata['active']==0?false:true,
+				'xivo.dhcp.pool' 			=> $pool_start.' '.$rawdata['pool_end'],
+				'xivo.dhcp.extra_ifaces'	=> $rawdata['extra_ifaces'],
+				'xivo.dhcp.active'			=> $rawdata['active']==0?false:true,
 		));
 
 		// mail (postfix)
 		$rawdata = $this->_mail->get(1);
 		$mydomain = strlen($rawdata['mydomain'])==0?null:$rawdata['mydomain'];
 		$conf = array_merge($conf, array(
-			'xivo.smtp.mydomain' 			=> $mydomain,
-			'xivo.smtp.origin'				=> $rawdata['origin'],
-			'xivo.smtp.relayhost'			=> $rawdata['relayhost'],
-			'xivo.smtp.fallback_relayhost'	=> $rawdata['fallback_relayhost'],
-			'xivo.smtp.canonical'			=> $rawdata['canonical'],
+				'xivo.smtp.mydomain' 			=> $mydomain,
+				'xivo.smtp.origin'				=> $rawdata['origin'],
+				'xivo.smtp.relayhost'			=> $rawdata['relayhost'],
+				'xivo.smtp.fallback_relayhost'	=> $rawdata['fallback_relayhost'],
+				'xivo.smtp.canonical'			=> $rawdata['canonical'],
 		));
 
 		// provisioning
 		$rawdata = $this->_provisioning->get(1);
 		$conf = array_merge($conf, array(
-			'xivo.provd.net4_ip'		=> $rawdata['net4_ip'],
-			'xivo.provd.http_port'		=> $rawdata['http_port'],
-			'xivo.provd.username'		=> $rawdata['username'],
-			'xivo.provd.password'		=> $rawdata['password'],
-			'xivo.provd.rest_port'		=> $rawdata['rest_port'],
-			'xivo.provd.rest_net4_ip'	=> $rawdata['net4_ip_rest'],
-			'xivo.provd.rest_authentication'	=> (bool) $rawdata['private'],
-			'xivo.provd.rest_ssl'		=> (bool) $rawdata['secure'],
-			'xivo.provd.dhcp_integration' => (bool) $rawdata['dhcp_integration']
+				'xivo.provd.net4_ip'		=> $rawdata['net4_ip'],
+				'xivo.provd.http_port'		=> $rawdata['http_port'],
+				'xivo.provd.username'		=> $rawdata['username'],
+				'xivo.provd.password'		=> $rawdata['password'],
+				'xivo.provd.rest_port'		=> $rawdata['rest_port'],
+				'xivo.provd.rest_net4_ip'	=> $rawdata['net4_ip_rest'],
+				'xivo.provd.rest_authentication'	=> (bool) $rawdata['private'],
+				'xivo.provd.rest_ssl'		=> (bool) $rawdata['secure'],
+				'xivo.provd.dhcp_integration' => (bool) $rawdata['dhcp_integration']
 		));
 
 		// monitoring
@@ -123,15 +107,16 @@ class xivo_object_commonconf extends xivo_object_abstract
 		$dahdi_monitor_ports = strlen($rawdata['dahdi_monitor_ports'])==0?null:$rawdata['dahdi_monitor_ports'];
 		$max_call_duration = strlen($rawdata['max_call_duration'])==0?null:$rawdata['max_call_duration'];
 		$conf = array_merge($conf, array(
-			'xivo.maintenance'		=> $maintenance,
-			'alert_emails'			=> $alert_emails,
-			'dahdi_monitor_ports'	=> $dahdi_monitor_ports,
-			'max_call_duration'		=> $max_call_duration,
+				'xivo.maintenance'		=> $maintenance,
+				'alert_emails'			=> $alert_emails,
+				'dahdi_monitor_ports'	=> $dahdi_monitor_ports,
+				'max_call_duration'		=> $max_call_duration,
 		));
 
 		//resolvconf
 		// we can't load application at start, or we'll have an infinite loop
-		if(($this->_resolvconf  = &$this->_xobj->get_application('resolvconf')) == false) {
+		if(($this->_resolvconf  = &$this->_xobj->get_application('resolvconf')) == false)
+		{
 			$content = 'cannot load *resolvconf* application';
 			return false;
 		}
@@ -149,90 +134,27 @@ class xivo_object_commonconf extends xivo_object_abstract
 		$hostname = is_null($rawdata['resolvconf']['hostname'])?'':$rawdata['resolvconf']['hostname'];
 		$resolvconf = is_null($rawdata['resolvconf']['domain'])?'':$rawdata['resolvconf']['domain'];
 		$conf = array_merge($conf, array(
-			'xivo.hostname'			=> $hostname,
-			'xivo.domain'			=> $resolvconf,
-			'xivo.extra.dns.search'	=> '',
-			'xivo.nameservers'		=> $ns,
+				'xivo.hostname'			=> $hostname,
+				'xivo.domain'			=> $resolvconf,
+				'xivo.extra.dns.search'	=> '',
+				'xivo.nameservers'		=> $ns,
 		));
 
 		// netiface
-		// we can't load application at start, or we'll have an infinite loop
-		if(($this->_netiface    = &$this->_xobj->get_application('netiface')) == false) {
-			$content = 'cannot load *netiface* application';
-			return false;
-		}
-
-		$list = $this->_netiface->get_netifaces_list();
-
-		// we filter network devices list, keeping only 'voip' interfaces:
-		//  1. 1st vlan
-		//  2. 1st voip iface
-		//  3. voip ifaces list
-		$vlanid     = 0;        //0 means no vlan
-		$ifaces     = "";
-		$cidr_id    = -1;
-
-		$_netifaces  = array();
-		for($i = 0; $i < count($list); $i++)
+		if (($voip_iface = $this->_netiface->get_voip_iface()) == false)
 		{
-			$item = &$list[$i];
-			if(array_key_exists('netiface', $item)) {
-				$_netifaces[$item['netiface']['ifname']] = $item;
-			}
-
-			if(!$item['actionable']
-			|| $item['netiface']['disable']
-			|| strcmp($item['netiface']['networktype'], 'voip') != 0) {
-				continue;
-			}
-
-			$ifaces .= $item['netiface']['ifname'] . ' ';
-
-			if($vlanid == 0 && $item['netinfo']['vlanif']) {
-				$vlanid = intval($item['netiface']['vlanid']);
-			}
-
-			if($cidr_id < 0 && (!$onlystatic || strcmp($item['netiface']['method'], 'static') == 0)) {
-				$cidr_id = $i;
-			}
-		}
-
-		// no VOIP netiface defined
-		if($cidr_id < 0) {
 			$content = 'no VOIP interface configured';
 			return false;
 		}
 
-		$net = array(
-			'ipaddr'    => $list[$cidr_id]['netiface']['address'],
-			'netmask'   => $list[$cidr_id]['netiface']['netmask'],
-			'broadcast' => $list[$cidr_id]['netiface']['broadcast']);
+		$conf['xivo.voip.ifaces'] = $voip_iface['ifname'];
+		$conf['xivo.net4.ip'] = $voip_iface['address'];
+		$conf['xivo.net4.netmask'] = $voip_iface['netmask'];
+		$conf['xivo.net4.subnet'] = $this->_ip2subnet($voip_iface['address'], $voip_iface['netmask']);
 
-		$ifaces = trim($ifaces);
-		$subnet = $this->_ip2subnet($list[$cidr_id]['netiface']['address'], $list[$cidr_id]['netiface']['netmask']);
-
-		$conf = array_merge($conf, array(
-			'xivo.voip.ifaces'      => $ifaces,
-			'xivo.voip.vlan.id'     => $vlanid,
-			'xivo.net4.ip'          => $net['ipaddr'],
-			'xivo.net4.netmask'     => $net['netmask'],
-			'xivo.net4.broadcast'   => $net['broadcast'],
-			'xivo.net4.subnet'      => $subnet
-		));
-
-		// load database uri
-		// 1. xivo
-		$config  = dwho::load_init(XIVO_PATH_CONF.DWHO_SEP_DIR.'xivo.ini');
-		$db_xivo = $config['general']['datastorage'];
-
-		// 2. asterisk
-		$config  = dwho::load_init(XIVO_PATH_CONF.DWHO_SEP_DIR.'ipbx.ini');
-		$db_ast  = $config['general']['datastorage'];
-
-		$conf = array_merge($conf, array(
-			'xivo.astdb'	=> $db_ast,
-			'xivo.xivodb'	=> $db_xivo
-		));
+		$_cf = dwho_gat::get('_CF');
+		$conf['xivo.astdb'] = $_cf['datastorage']['general']['asterisk'];
+		$conf['xivo.xivodb'] = $_cf['datastorage']['general']['xivo'];
 
 		return $this->_sysconfd->request_post('/commonconf_generate', $conf);
 	}
