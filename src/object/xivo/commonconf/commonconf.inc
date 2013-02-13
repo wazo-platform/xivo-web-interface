@@ -87,9 +87,9 @@ class xivo_object_commonconf extends xivo_object_abstract
 		$conf['provd_password'] = $rawdata['password'];
 		$conf['provd_rest_port'] = $rawdata['rest_port'];
 		$conf['provd_rest_net4_ip'] = $rawdata['net4_ip_rest'];
-		$conf['provd_rest_authentication'] = (int) $rawdata['private'] == 0 ? 'no' : 'yes';
-		$conf['provd_rest_ssl'] = (int) $rawdata['secure'] == 0 ? 'no' : 'yes';
-		$conf['provd_dhcp_integration'] = (int) $rawdata['dhcp_integration'] == 0 ? 'no' : 'yes';
+		$conf['provd_rest_authentication'] = (int) $rawdata['private'];
+		$conf['provd_rest_ssl'] = (int) $rawdata['secure'];
+		$conf['provd_dhcp_integration'] = (int) $rawdata['dhcp_integration'];
 
 		$rawdata = $this->_monitoring->get(1);
 		$maintenance = $rawdata['maintenance']==0?false:true;
