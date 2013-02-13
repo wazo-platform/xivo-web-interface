@@ -65,55 +65,42 @@ class xivo_object_commonconf extends xivo_object_abstract
 	function generate($content, $onlystatic=true)
 	{
 		$conf = array();
-
-		// dhcp
 		$rawdata = $this->_dhcp->get(1);
 		$pool_start = strlen($rawdata['pool_start'])==0?'':$rawdata['pool_start'];
-		$conf = array_merge($conf, array(
-				'xivo.dhcp.pool' 			=> $pool_start.' '.$rawdata['pool_end'],
-				'xivo.dhcp.extra_ifaces'	=> $rawdata['extra_ifaces'],
-				'xivo.dhcp.active'			=> $rawdata['active']==0?false:true,
-		));
 
-		// mail (postfix)
+		$conf['dhcp_pool'] = $pool_start.' '.$rawdata['pool_end'];
+		$conf['dhcp_extra_ifaces'] = $rawdata['extra_ifaces'];
+		$conf['dhcp_active'] = $rawdata['active'] == 0 ? 'no' : 'yes';
+
 		$rawdata = $this->_mail->get(1);
-		$mydomain = strlen($rawdata['mydomain'])==0?null:$rawdata['mydomain'];
-		$conf = array_merge($conf, array(
-				'xivo.smtp.mydomain' 			=> $mydomain,
-				'xivo.smtp.origin'				=> $rawdata['origin'],
-				'xivo.smtp.relayhost'			=> $rawdata['relayhost'],
-				'xivo.smtp.fallback_relayhost'	=> $rawdata['fallback_relayhost'],
-				'xivo.smtp.canonical'			=> $rawdata['canonical'],
-		));
+		$mydomain = strlen($rawdata['mydomain'])== 0 ? null : $rawdata['mydomain'];
+		$conf['smtp_mydomain'] = $mydomain;
+		$conf['smtp_origin'] = $rawdata['origin'];
+		$conf['smtp_relayhost'] = $rawdata['relayhost'];
+		$conf['smtp_fallback_relayhost'] = $rawdata['fallback_relayhost'];
+		$conf['smtp_canonical'] = $rawdata['canonical'];
 
-		// provisioning
 		$rawdata = $this->_provisioning->get(1);
-		$conf = array_merge($conf, array(
-				'xivo.provd.net4_ip'		=> $rawdata['net4_ip'],
-				'xivo.provd.http_port'		=> $rawdata['http_port'],
-				'xivo.provd.username'		=> $rawdata['username'],
-				'xivo.provd.password'		=> $rawdata['password'],
-				'xivo.provd.rest_port'		=> $rawdata['rest_port'],
-				'xivo.provd.rest_net4_ip'	=> $rawdata['net4_ip_rest'],
-				'xivo.provd.rest_authentication'	=> (bool) $rawdata['private'],
-				'xivo.provd.rest_ssl'		=> (bool) $rawdata['secure'],
-				'xivo.provd.dhcp_integration' => (bool) $rawdata['dhcp_integration']
-		));
+		$conf['provd_net4_ip'] = $rawdata['net4_ip'];
+		$conf['provd_http_port'] = $rawdata['http_port'];
+		$conf['provd_username'] = $rawdata['username'];
+		$conf['provd_password'] = $rawdata['password'];
+		$conf['provd_rest_port'] = $rawdata['rest_port'];
+		$conf['provd_rest_net4_ip'] = $rawdata['net4_ip_rest'];
+		$conf['provd_rest_authentication'] = (int) $rawdata['private'] == 0 ? 'no' : 'yes';
+		$conf['provd_rest_ssl'] = (int) $rawdata['secure'] == 0 ? 'no' : 'yes';
+		$conf['provd_dhcp_integration'] = (int) $rawdata['dhcp_integration'] == 0 ? 'no' : 'yes';
 
-		// monitoring
 		$rawdata = $this->_monitoring->get(1);
 		$maintenance = $rawdata['maintenance']==0?false:true;
 		$alert_emails = strlen($rawdata['alert_emails']) == 0?null:str_replace("\r\n", " ", $rawdata['alert_emails']);
 		$dahdi_monitor_ports = strlen($rawdata['dahdi_monitor_ports'])==0?null:$rawdata['dahdi_monitor_ports'];
 		$max_call_duration = strlen($rawdata['max_call_duration'])==0?null:$rawdata['max_call_duration'];
-		$conf = array_merge($conf, array(
-				'xivo.maintenance'		=> $maintenance,
-				'alert_emails'			=> $alert_emails,
-				'dahdi_monitor_ports'	=> $dahdi_monitor_ports,
-				'max_call_duration'		=> $max_call_duration,
-		));
+		$conf['maintenance'] = $maintenance;
+		$conf['alert_emails'] = $alert_emails;
+		$conf['dahdi_monitor_ports'] = $dahdi_monitor_ports;
+		$conf['max_call_duration'] = $max_call_duration;
 
-		//resolvconf
 		// we can't load application at start, or we'll have an infinite loop
 		if(($this->_resolvconf  = &$this->_xobj->get_application('resolvconf')) == false)
 		{
@@ -133,28 +120,26 @@ class xivo_object_commonconf extends xivo_object_abstract
 
 		$hostname = is_null($rawdata['resolvconf']['hostname'])?'':$rawdata['resolvconf']['hostname'];
 		$resolvconf = is_null($rawdata['resolvconf']['domain'])?'':$rawdata['resolvconf']['domain'];
-		$conf = array_merge($conf, array(
-				'xivo.hostname'			=> $hostname,
-				'xivo.domain'			=> $resolvconf,
-				'xivo.extra.dns.search'	=> '',
-				'xivo.nameservers'		=> $ns,
-		));
+		$conf['hostname'] = $hostname;
+		$conf['domain'] = $resolvconf;
+		$conf['extra_dns_search'] = '';
+		$conf['nameservers'] = $ns;
 
-		// netiface
 		if (($voip_iface = $this->_netiface->get_voip_iface()) == false)
 		{
 			$content = 'no VOIP interface configured';
 			return false;
 		}
 
-		$conf['xivo.voip.ifaces'] = $voip_iface['ifname'];
-		$conf['xivo.net4.ip'] = $voip_iface['address'];
-		$conf['xivo.net4.netmask'] = $voip_iface['netmask'];
-		$conf['xivo.net4.subnet'] = $this->_ip2subnet($voip_iface['address'], $voip_iface['netmask']);
+		$conf['voip_ifaces'] = $voip_iface['ifname'];
+		$conf['net4_ip'] = $voip_iface['address'];
+		$conf['net4_netmask'] = $voip_iface['netmask'];
+		$conf['net4_subnet'] = $this->_ip2subnet($voip_iface['address'], $voip_iface['netmask']);
 
 		$_cf = dwho_gat::get('_CF');
-		$conf['xivo.astdb'] = $_cf['datastorage']['general']['asterisk'];
-		$conf['xivo.xivodb'] = $_cf['datastorage']['general']['xivo'];
+		$conf['astdb'] = $_cf['datastorage']['general']['asterisk'];
+		$conf['xivodb'] = $_cf['datastorage']['general']['xivo'];
+
 
 		return $this->_sysconfd->request_post('/commonconf_generate', $conf);
 	}
