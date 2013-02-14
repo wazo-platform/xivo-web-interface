@@ -70,7 +70,7 @@ class xivo_object_commonconf extends xivo_object_abstract
 
 		$conf['dhcp_pool'] = $pool_start.' '.$rawdata['pool_end'];
 		$conf['dhcp_extra_ifaces'] = $rawdata['extra_ifaces'];
-		$conf['dhcp_active'] = $rawdata['active'] == 0 ? 'no' : 'yes';
+		$conf['dhcp_active'] = (int) $rawdata['active'];
 
 		$rawdata = $this->_mail->get(1);
 		$mydomain = strlen($rawdata['mydomain'])== 0 ? null : $rawdata['mydomain'];
