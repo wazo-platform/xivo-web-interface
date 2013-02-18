@@ -40,11 +40,6 @@ switch($step)
 	case 'commit_syslanguage':
 		if($appwizard->commit_syslanguage() !== false)
 			$code = 200;
-		echo 'next::commit_sysdbconfig::', $_TPL->bbf('commit_sysdbconfig');
-		break;
-	case 'commit_sysdbconfig':
-		if($appwizard->commit_sysdbconfig() !== false)
-			$code = 200;
 		echo 'next::set_default_provisioning_values::', $_TPL->bbf('set_default_provisioning_values');
 		break;
 	case 'set_default_provisioning_values':

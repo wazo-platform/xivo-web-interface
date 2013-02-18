@@ -964,16 +964,6 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 		return(true);
 	}
 
-	public function commit_sysdbconfig()
-	{
-		return($this->_sysconfd->request_get('/set_ast_conf'));
-	}
-
-	public function commit_netinfos()
-	{
-		return($this->_commit_netiface());
-	}
-
 	public function set_default_provisioning_values()
 	{
 		$wizsess = $this->_get_save_data_tmp();
@@ -999,6 +989,11 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 			return(false);
 
 		return(true);
+	}
+
+	public function commit_netinfos()
+	{
+		return($this->_commit_netiface());
 	}
 
 	public function commit_commonconf()
