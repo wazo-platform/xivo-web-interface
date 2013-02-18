@@ -22,5 +22,7 @@ define('DWHO_PATH_I18N','/usr/share/pf-xivo-web-interface/i18n');
 define('DWHO_PATH_ROOT','/usr/share/pf-xivo-web-interface/lib');
 
 define('XIVO_PATH_CONF','/etc/pf-xivo/web-interface');
+define('XIVO_CONF','/etc/pf-xivo');
+define('XIVO_LIB','/var/lib/pf-xivo');
 
 ?>

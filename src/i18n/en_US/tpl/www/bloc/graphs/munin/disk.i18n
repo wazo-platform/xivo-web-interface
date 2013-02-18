@@ -11,7 +11,7 @@ Used inodes (percents)
 IO statistics
 
 ; hddtemp_smartctl
-Disks temporature
+Disks temperature
 
 ; smart
 SMART statistics (Disk %s)

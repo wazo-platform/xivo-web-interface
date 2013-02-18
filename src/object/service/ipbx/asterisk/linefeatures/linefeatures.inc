@@ -58,6 +58,14 @@ class xivo_service_asterisk_linefeatures extends xivo_service_asterisk_abstract
 		return($data);
 	}
 
+	function get_list_device_associated()
+	{
+		if(($rs = $this->_dso->list_device_associated()) === false)
+			return(false);
+
+		return($this->_mk_list_assoc_prepare($rs,null,true));
+	}
+
 	function get_user_masterline($userid=null,$deviceid=null)
 	{
 		if ($userid === null

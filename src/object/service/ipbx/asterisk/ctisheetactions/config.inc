@@ -27,15 +27,9 @@ $array['element']['default'] = '';
 $array['element']['name'] = array();
 $array['element']['name']['default'] = '';
 
-$array['element']['context'] = array();
-$array['element']['context']['default'] = '';
-
 $array['element']['whom'] = array();
 $array['element']['whom']['default'] = 'dest';
 $array['element']['whom']['forcedef'] = true;
-
-$array['element']['capaids'] = array();
-$array['element']['capaids']['default'] = '';
 
 $array['element']['sheet_info'] = array();
 $array['element']['sheet_info']['default'] = '';
@@ -67,9 +61,7 @@ $array['element']['disable']['set'] = true;
 
 $array['filter'] = array();
 $array['filter']['name'] 	= array('set' => false, 'chk' => 2, 'regexp' => '/^[[:alnum:]]+$/i');
-$array['filter']['context'] 	= array('set' => false, 'chk' => 2, 'regexp' => '/^.*$/');
 $array['filter']['whom'] 	= array('set' => false, 'chk' => 2, 'regexp' => '/^.*$/');
-$array['filter']['capaids'] 	= array('set' => false, 'chk' => 2, 'regexp' => '/^.*$/');
 $array['filter']['sheet_info'] 	= array('set' => false, 'chk' => 2, 'regexp' => '/^.*$/');
 $array['filter']['systray_info'] 	= array('set' => false, 'chk' => 2, 'regexp' => '/^.*$/');
 $array['filter']['sheet_qtui'] 	= array('set' => false, 'chk' => 2, 'regexp' => '/^.*$/');

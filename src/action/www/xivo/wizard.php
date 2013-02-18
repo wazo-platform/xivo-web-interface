@@ -62,18 +62,6 @@ switch($step)
 
 		$_TPL->set_var('license',$license);
 		break;
-	case 'checkcomponents':
-		if(($info = $appwizard->step_checkcomponents($verify)) === false)
-		{
-			$appwizard->reset_wizard();
-			$_QRY->go($_TPL->url('index'));
-		}
-
-		$_SYSINFO = new dwho_sysinfo();
-		$_TPL->set_var('memstats',$_SYSINFO->memstats(true));
-		$_TPL->set_var('network',$info['hardware']['network']);
-		$_TPL->set_var('packages',$info['packages']);
-		break;
 	case 'mainconfig':
 		if($previous === true
 		|| $trysave === false
@@ -107,18 +95,12 @@ switch($step)
 		$_TPL->set_var('info',$info);
 		$_TPL->set_var('element',$appwizard->get_step_element());
 		break;
-	case 'ipbximportuser':
-		$_TPL->set_var('max_file_size',dwho_get_memory('upload_max_filesize'));
-		break;
 	case 'validate':
 		if($ressave === true
 		&& $_QRY->get('step') === $step)
-		{
 			die();
-		}
 
 		$_TPL->set_var('info',$appwizard->step_validate());
-		$_TPL->set_var('dbbackend',dwho_gat::get('datastorage'));
 		$_TPL->load_i18n_file('tpl/www/struct/page/redirect.i18n', 'global');
 
 		break;

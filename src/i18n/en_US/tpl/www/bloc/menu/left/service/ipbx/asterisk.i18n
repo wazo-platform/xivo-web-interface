@@ -73,6 +73,9 @@ Call pickups
 ; mn_left_callmanagement-schedule
 Schedules
 
+; mn_left_callmanagement-recording
+Recordings
+
 ; mn_left_callmanagement-voicemenu
 Voice menus
 

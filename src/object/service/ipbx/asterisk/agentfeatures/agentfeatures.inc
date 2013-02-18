@@ -104,6 +104,16 @@ class xivo_service_asterisk_agentfeatures extends xivo_service_asterisk_abstract
 
 		return($list);
 	}
+
+	function edit($id,$arr)
+	{
+		if(is_array($arr) === false)
+			return(false);
+
+		unset($arr['number']);
+
+		return(parent::edit($id,$arr));
+	}
 }
 
 ?>

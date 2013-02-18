@@ -1,0 +1,29 @@
+; campaign_name
+Nom de la campagne
+
+; queue_name
+Nom de la file
+
+; server_error
+Erreur du serveur, vérifiez le xivo-recording-webservice
+
+; no_recording_campaign
+Aucune campagne d'enregistrement trouvée
+
+; opt_modify
+Modifier
+
+; opt_delete
+Supprimer
+
+; opt_delete_confirm
+Etes-vous certain de vouloir supprimer cette campagne ?
+
+;start_date
+Date de début
+
+;end_date
+Date de fin
+
+;not_implemented
+Pas encore disponible

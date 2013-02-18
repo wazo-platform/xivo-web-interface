@@ -1,0 +1,38 @@
+; caller
+Caller
+
+; agent
+Agent
+
+; file
+File
+
+; start_time
+Start time
+
+; client_id
+Client number
+
+; action
+Action
+
+; no_recording
+No recording for this campaign
+
+; opt_modify
+Edit
+
+; opt_delete
+Delete
+
+; opt_delete_confirm
+Are you sure you want to remove this recording?
+
+;server_error
+Server error
+
+;opt_download
+Download
+
+;help_search_recordings
+Search can be performed on the fields Agent and Caller

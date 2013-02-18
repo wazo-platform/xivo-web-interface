@@ -13,11 +13,17 @@ Valeur par défaut
 ; col_4
 Format d'affichage
 
+; col_add
+Ajouter un champ
+
 ; fm_description
 Description
 
 ; list-avail-formats
 <i>Formats d'affichage disponibles :&nbsp;</i>
+
+; opt_disp-delete
+Effacer ce champ
 
 ; no_disp
 Aucun affichage

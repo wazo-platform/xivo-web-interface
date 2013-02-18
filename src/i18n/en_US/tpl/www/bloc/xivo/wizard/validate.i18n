@@ -1,20 +1,5 @@
 ; load [global] util/language
 
-; ipbximportuser_view_error(1)
-See users import error.
-
-; ipbximportuser_view_error
-See users import errors.
-
-; ipbximportuser_lines_status
-Line status
-
-; ipbximportuser_lines_status($line|error)
-- Line %{line}$s : Error
-
-; ipbximportuser_lines_status($line|success)
-- Line %{line}$s : Success
-
 ; validate_instruction
 Check following informations then click on "validate" to end installation.
 
@@ -23,9 +8,6 @@ General informations
 
 ; info_language
 Language :
-
-; info_ipbxengine
-IPBX engine :
 
 ; fld-server-information
 Server informations

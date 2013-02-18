@@ -37,7 +37,6 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 	var $_http_response    = false;
 	var $_wizsess          = null;
 	var $_ipbx             = null;
-	var $_xivo_dso_loaded  = false;
 	var $_savetmpfile      = '/tmp/wizard';
 
 	public function __construct(&$xobj,$param=null,$components=true)
@@ -58,70 +57,39 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 
 		$this->_wizsess = &$_SESSION['_wizard'];
 
-		if (empty($this->_wizsess))
-			$this->_prepare_data();
+		$this->_load_datastorage();
 	}
 
-	private function _prepare_data()
+	private function _load_datastorage()
 	{
-		// step ipbx
-		$this->_wizsess['ipbxengine'] = array();
-		$this->_wizsess['ipbxengine']['engine'] = 'asterisk';
-
-		// step dbconfig
-		$this->_wizsess['dbconfig'] = array(
-			'xivo'        => 'postgresql://xivo:proformatique@localhost/xivo?encoding=utf8',
-			'ipbx'        => 'postgresql://asterisk:proformatique@localhost/asterisk?charset=utf8',
-			'backend'     => 'postgresql'
-		);
+		$var = dwho_gat::get('_CF');
+		$this->_load_ipbx_service($var['datastorage']['general']['asterisk']);
+		$this->_load_xivo_dso($var['datastorage']['general']['xivo']);
 	}
 
-	function _load_xivo_dso()
+	private function _load_xivo_dso($uri)
 	{
-		if($this->_xivo_dso_loaded === true)
-			return(true);
-		else if(dwho_issa('dbconfig',$this->_wizsess) === false
-		|| isset($this->_wizsess['dbconfig']['xivo']) === false)
-			return(false);
-
 		$_XIVO = dwho_gct::get('xivo');
-		$_XIVO->load_datastorage($this->_wizsess['dbconfig']['xivo']);
-		$this->_xivo_dso_loaded = true;
-
-		return(true);
+		$_XIVO->load_datastorage($uri);
 	}
 
-	function _load_ipbx_service()
+	private function _load_ipbx_service($uri)
 	{
-		if(is_object($this->_ipbx) === true)
-			return(true);
-		elseif(dwho_issa('ipbxengine',$this->_wizsess) === false
-		&& ($_SRE = dwho_gct::get('xivo_service')) !== false
-		&& ($this->_ipbx = &$_SRE->get('ipbx')) !== false)
-			return(true);
-		else if(dwho_issa('ipbxengine',$this->_wizsess) === false
-		|| isset($this->_wizsess['ipbxengine']['engine']) === false
-		|| dwho_issa('dbconfig',$this->_wizsess) === false
-		|| isset($this->_wizsess['dbconfig']['ipbx']) === false)
-			return(false);
-
 		$_SRE = dwho_gct::get('xivo_service');
 		$engines = $_SRE->get_engines('ipbx');
 
 		if(defined('XIVO_SRE_IPBX_LABEL') === false)
-			define('XIVO_SRE_IPBX_LABEL', $engines[$this->_wizsess['ipbxengine']['engine']]['label']);
+			define('XIVO_SRE_IPBX_LABEL', $engines['asterisk']['label']);
 
 		$config['general'] = array();
-		$config['general']['datastorage'] = $this->_wizsess['dbconfig']['ipbx'];
+		$config['general']['datastorage'] = $uri;
 
-		$_SRE->set_engine_config('ipbx',$this->_wizsess['ipbxengine']['engine'],$config);
+		$_SRE->set_engine_config('ipbx','asterisk',$config);
 
-		$this->_ipbx = &$_SRE->get('ipbx',$this->_wizsess['ipbxengine']['engine'],true);
-
-		return(true);
+		$this->_ipbx = &$_SRE->get('ipbx','asterisk',true);
 	}
 
-	function _get_save_data_tmp()
+	private function _get_save_data_tmp()
 	{
 		if (!($data = file_get_contents($this->_savetmpfile))
 		|| !($wizsess = dwho_json::decode($data,true))) {
@@ -257,16 +225,18 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 		switch($step)
 		{
 			case 'mainconfig':
-				// read system dns
-				$resolvconf = $this->_conf['element']['resolvconf'];
-				if(($dns = $this->_sysconfd->request_get('/dns')) != false)
-				{
-					$resolvconf['nameserver1'] = $dns['nameservers'][0];
-					$resolvconf['nameserver2'] = $dns['nameservers'][1];
-				}
+				exec('hostname -s', $hostname);
+				exec('hostname -d', $dnsdomainname);
+				exec('sed -e \'/^$/d\' /etc/resolv.conf | awk \'{if (tolower($1)=="nameserver") print $2}\'', $nameserver);
 
-				return(array('mainconfig'	=> $this->_conf['element']['mainconfig'],
-							'netiface'		=> $this->_conf['element']['netiface'],
+				$mainconfig = array();
+				$mainconfig['hostname'] = $hostname[0];
+				$mainconfig['domain'] = $dnsdomainname[0];
+				$resolvconf = array();
+				$resolvconf['nameserver1'] = $nameserver[0];
+				$resolvconf['nameserver2'] = isset($nameserver[1])?$nameserver[1]:'';
+
+				return(array('mainconfig'	=> $mainconfig,
 							'resolvconf'	=> $resolvconf));
 			case 'entitycontext':
 				return(array('entity'	=> $this->_conf['element']['entity'],
@@ -310,210 +280,20 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 		return($scheme.'://'.$uri);
 	}
 
-	function _build_lshw($o)
-	{
-		if(is_array($o) === true)
-		{
-			$a = array();
-			foreach($o as $k => $v)
-			{
-				if(is_object($v) === false)
-				{
-					$a[$k] = $v;
-					continue;
-				}
-				else if(isset($v->id) === true)
-					$attrname = $v->id;
-				else if(isset($v->type) === true)
-					$attrname = $v->type;
-				else
-				{
-					$a[$k] = $v;
-					continue;
-				}
-
-				if(isset($a[$attrname]) === true)
-				{
-					$hold = $a[$attrname];
-					$a[$attrname] = array();
-					$a[$attrname][] = $hold;
-					$a[$attrname][] = $this->_build_lshw($v);
-				}
-				else if(isset($v->value) === true
-				&& is_scalar($v->value) === true)
-					$a[$attrname] = $v->value;
-				else if(isset($v->__cdata__) === true
-				&& is_scalar($v->__cdata__) === true)
-					$a[$attrname] = $v->__cdata__;
-				else if(count((array) $v) === 1)
-					$a[$attrname] = '';
-				else if(($value = $this->_build_lshw($v)) !== null)
-					$a[$attrname] = $value;
-			}
-
-			return($a);
-		}
-		else if(is_object($o) === true)
-		{
-			$a = array();
-
-			foreach($o as $k => $v)
-			{
-				if($k === 'disabled' && dwho_bool($v) === true)
-					return(null);
-
-				$a[$k] = $this->_build_lshw($v);
-			}
-
-			return($a);
-		}
-
-		return($o);
-	}
-
-	function lshw_infos()
-	{
-		$r = array();
-		$r['network'] = array();
-		$r['network']['vendor'] = '';
-		$r['network']['driver'] = '';
-		$r['network']['driverversion'] = '';
-		$r['network']['macaddress'] = '';
-		$r['network']['iface'] = '';
-		$r['network']['ipaddress'] = '';
-		$r['network']['speed'] = '';
-		$r['network']['duplex'] = '';
-		$r['network']['autonegotiation'] = '';
-
-		if(($lshw = $this->_build_lshw($this->_sysconfd->request_get('/lshw',
-		array(array('class[]','network')),
-		false))) === false
-		|| dwho_issa('lshw',$lshw) === false
-		|| dwho_issa('node',$lshw['lshw']) === false)
-			return($r);
-
-		$ref = &$lshw['lshw']['node'];
-
-		if(isset($ref['network:0']) === true)
-			$refnet = &$ref['network:0'];
-		else if(isset($ref['network']) === true)
-			$refnet = &$ref['network'];
-		else
-			$refnet = &$ref;
-
-		if(is_array($refnet) === false)
-		return($r);
-
-		if(isset($refnet['vendor']) === true)
-			$r['network']['vendor'] = $refnet['vendor'];
-
-		if(isset($refnet['product']) === true)
-			$r['network']['product'] = $refnet['product'];
-
-		if(isset($refnet['logicalname']) === true)
-			$r['network']['iface'] = $refnet['logicalname'];
-
-		if(isset($refnet['serial']) === true)
-			$r['network']['macaddress'] = $refnet['serial'];
-
-		if(dwho_issa('configuration',$refnet) === false
-		|| dwho_issa('setting',$refnet['configuration']) === false)
-			return($r);
-
-		$refsetting = &$refnet['configuration']['setting'];
-
-		if(isset($refsetting['driver']) === true)
-			$r['network']['driver'] = $refsetting['driver'];
-
-		if(isset($refsetting['driverversion']) === true)
-			$r['network']['driverversion'] = $refsetting['driverversion'];
-
-		if(isset($refsetting['ip']) === true)
-			$r['network']['ipaddress'] = $refsetting['ip'];
-
-		if(isset($refsetting['speed']) === true)
-			$r['network']['speed'] = $refsetting['speed'];
-
-		if(isset($refsetting['duplex']) === true)
-			$r['network']['duplex'] = $refsetting['duplex'];
-
-		if(isset($refsetting['autonegotiation']) === true)
-			$r['network']['autonegotiation'] = $refsetting['autonegotiation'];
-
-		return($r);
-	}
-
-	function packages_infos($levels=null,$force_aptcache_update=false)
-	{
-		if(dwho_issa('ipbxengine',$this->_wizsess) === false
-		|| isset($this->_wizsess['ipbxengine']['engine']) === false
-		|| dwho_issa('dbconfig',$this->_wizsess) === false
-		|| isset($this->_wizsess['dbconfig']['backend']) === false)
-			return(false);
-
-		$ipbxengine = $this->_wizsess['ipbxengine']['engine'];
-		$dbbackend = $this->_wizsess['dbconfig']['backend'];
-
-		if(isset($this->_wizsess['aptcache_update']) === false
-		|| (bool) $force_aptcache_update === true)
-			$this->_wizsess['aptcache_update'] = $this->_sysconfd->request_get('/aptcache_update');
-
-		$query = array();
-
-		if(is_array($levels) === true)
-		{
-			foreach($levels as $value)
-			$query[] = array('level[]',$value);
-		}
-
-		$r = array();
-		$r['ipbx'] = $this->_sysconfd->request_get('/dependencies_'.$ipbxengine,$query);
-		$r['db'] = $this->_sysconfd->request_get('/dependencies_'.$dbbackend,$query);
-		$r['xivo'] = $this->_sysconfd->request_get('/dependencies_xivo',$query);
-
-		return($r);
-	}
-
-	function step_checkcomponents($force_aptcache_update=false)
-	{
-		$r = array();
-		$r['hardware'] = $this->lshw_infos();
-		$r['packages'] = $this->packages_infos(null,$force_aptcache_update);
-
-		return($r);
-	}
-
 	function get_eth_iface()
 	{
-		if(($res = $this->_sysconfd->request_get('/discover_netifaces')) === false
-		|| is_array($res) === false)
-			return(false);
+		$interface = 'eth0';
+		exec('ifconfig "'.$interface.'" | sed -rn \'2s/ .*:(.*)/\1/p\'', $netmask);
+		exec('ifconfig "'.$interface.'" | sed -rn \'2s/.*addr:(.*) Bcast.*/\1/p\'', $addr);
+		exec('ip route | awk \'/default/ { print $3 }\'', $gateway);
 
 		$r = array();
+		$r['name'] = $interface;
+		$r['address'] = $addr[0];
+		$r['netmask'] = $netmask[0];
+		$r['gateway'] = $gateway[0];
 
-		foreach($res as $ifname => $iface)
-		{
-			if(dwho_ak('family',$iface,true) !== 'inet'
-			|| dwho_ak('type',$iface,true) !== 'eth'
-			|| dwho_has_len($iface,'address') === false
-			|| dwho_has_len($iface,'netmask') === false)
-				continue;
-			else if(isset($_SERVER['SERVER_ADDR']) === true
-			&& $_SERVER['SERVER_ADDR'] !== '127.0.0.1'
-			&& $_SERVER['SERVER_ADDR'] !== '::1'
-			&& dwho_network::ipv4_in_subnet($_SERVER['SERVER_ADDR'],
-			$iface['address'].'/'.$iface['netmask']) === false)
-				continue;
-			if($_SERVER['SERVER_ADDR'] !== $iface['address'])
-			array_push($r,$iface);
-			else
-			{
-				array_unshift($r,$iface);
-				break;
-			}
-		}
-
-		return(array_shift($r));
+		return($r);
 	}
 
 	function step_mainconfig()
@@ -630,44 +410,6 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 		return(true);
 	}
 
-	function save_step_checkcomponents()
-	{
-		$this->_wizsess['prevstep'] = $this->get_current_step();
-
-		if(($packages = $this->packages_infos(array('depends'),true)) === false)
-			return(false);
-
-		$error = array();
-
-		foreach($packages as $category => $levels)
-		{
-			if(dwho_issa('depends',$levels) === false)
-				continue;
-
-			foreach($levels['depends'] as $package => $value)
-			{
-				if(isset($value['status']) === true
-				&& $value['status'] !== 'installed')
-				{
-					if(isset($error[$category]) === false)
-						$error[$category] = array();
-					$error[$category][$package] = $value['status'];
-				}
-			}
-		}
-
-		if(empty($error) === false)
-		{
-			$this->_set_error('packages',$error);
-			return(false);
-		}
-
-		$this->_wizsess['checkcomponents'] = true;
-		$this->_wizsess['step'] = $this->get_next_step('checkcomponents');
-
-		return(false);
-	}
-
 	function save_mainconfig($data)
 	{
 		if(dwho_issa('mainconfig',$data) === false)
@@ -759,7 +501,6 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 		$this->_wizsess['mainconfig'] = $this->get_result('mainconfig');
 		$this->_wizsess['netiface'] = $this->get_result('netiface');
 		$this->_wizsess['resolvconf'] = $this->get_result('resolvconf');
-
 		$this->_wizsess['step'] = $this->get_next_step('mainconfig');
 
 		return(true);
@@ -892,9 +633,6 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 
 	function save_step_entitycontext($data)
 	{
-		$this->_load_xivo_dso();
-		$this->_load_ipbx_service();
-
 		$this->_wizsess['prevstep'] = $this->get_current_step();
 
 		$this->save_entity($data);
@@ -914,161 +652,7 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 		return(true);
 	}
 
-	function save_step_ipbximportuser($data)
-	{
-		if(dwho_issa('import',$_FILES) === false
-		|| isset($_FILES['import']['error']) === false
-		|| $_FILES['import']['error'] === UPLOAD_ERR_NO_FILE)
-		{
-			$this->_wizsess['ipbximportuser'] = null;
-			$this->_wizsess['step'] = $this->get_next_step('ipbximportuser');
-			return(null);
-		}
-		else if(($fileinfo = $this->_http_response->upload_file('import',
-			$this->_conf['ipbximportuser']['file'])) === false)
-		{
-			$this->_set_error('ipbximportuser','file','invalid_name');
-			return(false);
-		}
-		else if(dwho_issa('context_internal',$this->_wizsess) === false
-		|| dwho_issa('context_incall',$this->_wizsess) === false
-		|| isset($this->_wizsess['context_internal']['context']['name'],
-		$this->_wizsess['context_incall']['context']['name']) === false)
-		{
-			$this->_set_error('ipbximportuser','missing_contexts');
-			return(false);
-		}
-
-		$internalcontext = $this->_wizsess['context_internal']['context']['name'];
-		$internalnumberbeg = null;
-		$internalnumberend = null;
-
-		if(dwho_issa('contextnumbers',$this->_wizsess['context_internal']) === true
-		&& dwho_issa('user',$this->_wizsess['context_internal']['contextnumbers']) === true
-		&& dwho_issa(0,$this->_wizsess['context_internal']['contextnumbers']['user']) === true)
-		{
-			if(isset($this->_wizsess['context_internal']['contextnumbers']['user'][0]['numberbeg']) === true)
-				$internalnumberbeg = $this->_wizsess['context_internal']['contextnumbers']['user'][0]['numberbeg'];
-
-			if(isset($this->_wizsess['context_internal']['contextnumbers']['user'][0]['numberend']) === true)
-				$internalnumberend = $this->_wizsess['context_internal']['contextnumbers']['user'][0]['numberend'];
-		}
-
-		$incallcontext = $this->_wizsess['context_incall']['context']['name'];
-		$incallnumberbeg = null;
-		$incallnumberend = null;
-		$incalldidlength = 0;
-
-		if(dwho_issa('contextnumbers',$this->_wizsess['context_incall']) === true
-		&& dwho_issa('incall',$this->_wizsess['context_incall']['contextnumbers']) === true
-		&& dwho_issa(0,$this->_wizsess['context_incall']['contextnumbers']['incall']) === true)
-		{
-			if(isset($this->_wizsess['context_incall']['contextnumbers']['incall'][0]['numberbeg']) === true)
-				$incallnumberbeg = $this->_wizsess['context_incall']['contextnumbers']['incall'][0]['numberbeg'];
-
-			if(isset($this->_wizsess['context_incall']['contextnumbers']['incall'][0]['numberend']) === true)
-				$incallnumberend = $this->_wizsess['context_incall']['contextnumbers']['incall'][0]['numberend'];
-
-			if(isset($this->_wizsess['context_incall']['contextnumbers']['incall'][0]['didlength']) === true)
-				$incalldidlength = $this->_wizsess['context_incall']['contextnumbers']['incall'][0]['didlength'];
-		}
-
-		$didlength = -($incalldidlength);
-		$numberbeg = substr($incallnumberbeg,$didlength);
-		$numberend = substr($incallnumberend,$didlength);
-
-		$this->_load_ipbx_service();
-
-		$filecsv = new dwho_file_csv();
-
-		if(($lines = $filecsv->parse($fileinfo['tmp_name'],
-		0,
-		'|',
-		null,
-		true,
-		$this->_conf['ipbximportuser']['field'])) === false
-		|| ($nb = count($lines)) === 0)
-		{
-			dwho_file::rm($fileinfo['tmp_name']);
-			$this->_set_error('ipbximportuser','file','invalid_content');
-			return(false);
-		}
-
-		$reallines = $lines;
-
-		$r = array();
-		$r['lines'] = array();
-		$r['total'] = array();
-		$r['total']['success'] = 0;
-		$r['total']['error'] = 0;
-		$r['total']['count'] = $nb;
-
-		for($i = 0,$row = 1;$i < $nb;$i++,$row++)
-		{
-			$ref = &$lines[$i];
-			$refreal = &$reallines[$i];
-			$ref['protocol']['context'] = $internalcontext;
-			$ref['protocol']['protocol'] = XIVO_SRE_IPBX_AST_PROTO_SIP;
-			$refreal['protocol']['context'] = $internalcontext;
-			$refreal['protocol']['protocol'] = XIVO_SRE_IPBX_AST_PROTO_SIP;
-
-			if(dwho_has_len($ref['userfeatures'],'number') === true
-			&& dwho_has_len($internalnumberbeg) === true
-			&& xivo_service_asterisk::valid_exten_number_in_interval(
-			$internalnumberbeg,
-			$ref['userfeatures']['number'],
-			$internalnumberend) === false)
-			{
-				$r['lines'][$row] = 'error';
-				$r['total']['error']++;
-				continue;
-			}
-
-			unset($ref['userfeatures']['number']);
-
-			if(dwho_issa('incall',$ref) === false
-			|| dwho_has_len($ref['incall'],'exten') === false)
-				continue;
-			else if(dwho_has_len($numberbeg) === false
-			|| xivo_service_asterisk::valid_exten_in_interval(
-			$numberbeg,
-			$ref['incall']['exten'],
-			$numberend) === false)
-			{
-				$r['lines'][$row] = 'error';
-				$r['total']['error']++;
-				continue;
-			}
-
-			$refreal['incall']['context'] = $incallcontext;
-			unset($ref['incall']);
-
-			$r['lines'][$row] = 'success';
-			$r['total']['success']++;
-		}
-
-		if($r['total']['error'] > 0)
-		{
-			$this->_set_error('ipbximportuser',$r);
-			return(false);
-		}
-
-		$appuser = &$this->_ipbx->get_application('user');
-		$r = $appuser->import_from_array($lines,false,false);
-
-		if($r['total']['error'] > 0)
-		{
-			$this->_set_error('ipbximportuser',$r);
-			return(false);
-		}
-
-		$this->_wizsess['ipbximportuser'] = $reallines;
-		$this->_wizsess['step'] = $this->get_next_step('ipbximportuser');
-
-		return(true);
-	}
-
-	function _commit_adminpasswd()
+	private function _commit_adminpasswd()
 	{
 		if(dwho_issa('mainconfig',$this->_wizsess) === false
 		|| isset($this->_wizsess['mainconfig']['adminpasswd']) === false)
@@ -1091,7 +675,7 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 		return(true);
 	}
 
-	function _commit_hosts()
+	private function _commit_hosts()
 	{
 		if(dwho_issa('mainconfig',$this->_wizsess) === false
 		|| isset($this->_wizsess['mainconfig']['hostname'],
@@ -1111,7 +695,7 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 		return(true);
 	}
 
-	function _commit_resolvconf()
+	private function _commit_resolvconf()
 	{
 		if(dwho_issa('resolvconf',$this->_wizsess) === false)
 			return(null);
@@ -1151,7 +735,7 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 		return(true);
 	}
 
-	function _commit_entity()
+	private function _commit_entity()
 	{
 		if(dwho_issa('entity',$this->_wizsess) === false)
 			return(false);
@@ -1173,7 +757,7 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 		return(true);
 	}
 
-	function _commit_context()
+	private function _commit_context()
 	{
 		if(dwho_issa('context',$this->_wizsess) === false
 		|| dwho_issa('internal',$this->_wizsess['context']) === false
@@ -1231,44 +815,8 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 		return(true);
 	}
 
-	function _commit_ipbximportuser()
+	private function _commit_netiface()
 	{
-		if(dwho_issa('ipbximportuser',$this->_wizsess) === false
-		|| empty($this->_wizsess['ipbximportuser']) === true)
-			return(null);
-
-		$appuser = &$this->_ipbx->get_application('user');
-		$r = $appuser->import_from_array($this->_wizsess['ipbximportuser']);
-
-		if($r['total']['error'] > 0)
-		{
-			$this->_set_error('ipbximportuser',$r);
-			return(false);
-		}
-
-		return(true);
-	}
-
-	function _commit_dbconfig()
-	{
-		$dbconfig = array();
-		$dbconfig['xivo'] = $this->_wizsess['dbconfig']['xivo'];
-		$dbconfig['ipbx'] = $this->_wizsess['dbconfig']['ipbx'];
-		$dbconfig['ipbxengine'] = $this->_wizsess['ipbxengine']['engine'];
-
-		if($this->_sysconfd->request_post('/set_db_backends',$dbconfig) === false)
-		{
-			$this->_set_error('dbconfig','backends','save');
-			return(false);
-		}
-
-		return(true);
-	}
-
-	function _commit_netiface()
-	{
-		// save to database
-		$this->_load_xivo_dso();
 		$modnetiface = &$this->_xobj->get_module('netiface');
 		if (($voip_iface = $modnetiface->get_voip_iface()) === false)
 		{
@@ -1292,7 +840,7 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 		return true;
 	}
 
-	function _prepare_netiface()
+	private function _prepare_netiface()
 	{
 		if(dwho_issa('netiface',$this->_wizsess) === false
 		|| isset($this->_wizsess['netiface']['name']) === false)
@@ -1347,46 +895,18 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 		return(true);
 	}
 
-	function set_default_provisioning_values()
-	{
-		$wizsess = $this->_get_save_data_tmp();
-		$this->_load_xivo_dso();
-		$this->_load_ipbx_service();
-
-		$netiface = $wizsess['netiface'];
-
-		$rs = array();
-		$rs['commented'] = 0;
-		$rs['var_name'] = 'autocreate_prefix';
-		$rs['var_val'] = 'ap'.dwho_generate_code();
-
-		$appsip = &$this->_ipbx->get_apprealstatic('sip');
-		$appgeneralsip = &$appsip->get_module('general');
-
-		if($appgeneralsip->set($rs) === false
-		|| $appgeneralsip->save() === false)
-		{
-			dwho_report::push('error', 'Can\'t create autocreate_prefix in staticsip table');
-			return false;
-		}
-
-		$provdconfig = &$this->_xobj->get_module('provdconfig');
-		if ($provdconfig->eval_required_config($netiface['address'],true) === false)
-			return false;
-
-		return(true);
-	}
-
-	function _commit_language($lang)
+	private function _commit_language($lang)
 	{
 		$this->_get_save_data_tmp();
-		$this->_load_xivo_dso();
-		$this->_load_ipbx_service();
 
 		if($lang == 'fr')
 			$lang = 'fr_FR';
 		else
 			$lang = 'en_US';
+
+		exec('cat /etc/timezone', $timezone);
+		$module = &$this->_ipbx->get_module('general');
+		$module->edit(1, array('timezone' => $timezone[0]));
 
 		foreach(array('sip', 'iax') as $name)
 		{
@@ -1411,80 +931,88 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 		return(true);
 	}
 
-	function _commit_timezone()
-	{
-		if(($tz = $this->_sysconfd->request_get('/timezone')) === false)
-		{
-			dwho_report::push('error', 'Can\'t get system timezone');
-			return false;
-		}
-		elseif(is_null($tz))
-		{
-			return true;
-		}
-
-		$module = &$this->_ipbx->get_module('general');
-		$module->edit(1, array('timezone' => $tz));
-		return true;
-	}
-
 	function save_step_validate($data, $tpl)
 	{
 		return(true);
 	}
 
-	function commit_db_data()
+	public function start_xivo_services()
+	{
+		$data = array();
+		$data['xivo-service'] = 'enable';
+		if ($this->_sysconfd->request_post('/xivoctl', $data))
+			$data['xivo-service'] = 'start';
+			return($this->_sysconfd->request_post('/xivoctl', $data));
+		return(false);
+	}
+
+	public function commit_db_data()
 	{
 		$this->_get_save_data_tmp();
-		$this->_load_xivo_dso();
-		$this->_load_ipbx_service();
-
-		$ref_components = array();
-		$ref_components['adminpasswd'] = $this->_commit_adminpasswd();
-		$ref_components['hosts'] = $this->_commit_hosts();
-		$ref_components['resolvconf'] = $this->_commit_resolvconf();
-		$ref_components['entity'] = $this->_commit_entity();
-		$ref_components['context'] = $this->_commit_context();
-		$ref_components['ipbximportuser'] = $this->_commit_ipbximportuser();
-		$ref_components['netiface'] = $this->_prepare_netiface();
-
+		$this->_commit_adminpasswd();
+		$this->_commit_hosts();
+		$this->_commit_resolvconf();
+		$this->_commit_entity();
+		$this->_commit_context();
+		$this->_prepare_netiface();
 		return(true);
 	}
 
-	function commit_syslanguage()
+	public function commit_syslanguage()
 	{
 		$this->_commit_language($this->_wizsess['welcome']['language']);
-		$this->_commit_timezone();
 		return(true);
 	}
 
-	function commit_sysdbconfig()
+	public function set_default_provisioning_values()
 	{
-		return($this->_commit_dbconfig());
+		$wizsess = $this->_get_save_data_tmp();
+		$netiface = $wizsess['netiface'];
+
+		$rs = array();
+		$rs['commented'] = 0;
+		$rs['var_name'] = 'autocreate_prefix';
+		$rs['var_val'] = 'ap'.dwho_generate_code();
+
+		$appsip = &$this->_ipbx->get_apprealstatic('sip');
+		$appgeneralsip = &$appsip->get_module('general');
+
+		if($appgeneralsip->set($rs) === false
+		|| $appgeneralsip->save() === false)
+		{
+			dwho_report::push('error', 'Can\'t create autocreate_prefix in staticsip table');
+			return(false);
+		}
+
+		$provdconfig = &$this->_xobj->get_module('provdconfig');
+		if ($provdconfig->eval_required_config($netiface['address'],true) === false)
+			return(false);
+
+		return(true);
 	}
 
-	function commit_netinfos()
+	public function commit_netinfos()
 	{
 		return($this->_commit_netiface());
 	}
 
-	function commit_commonconf()
+	public function commit_commonconf()
 	{
 		if(($commonconf = &$this->_xobj->get_module('commonconf')) === false)
 			trigger_error('Unable to load commonconf module',E_USER_ERROR);
 
-		// Generate commonconf file
 		$content = '';
 		if($commonconf->generate(&$content) !== false)
 		{
 			$content = str_replace("\n", "<br/>\n", $content);
 			$content = $commonconf->apply();
 
-			$this->_sysconfd->request_post('/services', array('asterisk' => 'restart'));
 			$this->_sysconfd->request_get('/dhcpd_update');
 
 			unlink($this->_savetmpfile);
 			session_destroy();
+			touch(XIVO_LIB.'/configured');
+			file_put_contents(XIVO_LIB.'/configured', date('Y-m-d H:i:s')."\n");
 			return(true);
 		}
 

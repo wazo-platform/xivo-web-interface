@@ -115,6 +115,9 @@ Droits d'appels
 ; acl(service-ipbx-call_management-schedule)
 Horaires
 
+; acl(service-ipbx-call_management-recording)
+Enregistrement
+
 ; acl(service-ipbx-call_management-voicemenu)
 Menus vocaux
 

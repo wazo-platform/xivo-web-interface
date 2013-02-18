@@ -19,26 +19,6 @@ body {margin-top: 40px;}
 #b-content .sb-list .l-colhead td {background-color: #f9f9f9;width: 33%;}
 
 #r-wizard .fm-desc-inline label {padding: 0px 2px;}
-#xivo-wizard-step-checkcomponents #memstats table {width: 100%; padding-bottom: 10px;}
-#xivo-wizard-step-checkcomponents #network table {width: 100%; padding-bottom: 10px;}
-#xivo-wizard-step-checkcomponents #network td {width: 50%;}
-#xivo-wizard-step-checkcomponents #packages table {width: 100%; padding-bottom: 10px;}
-#xivo-wizard-step-checkcomponents #packages .col-package-status {font-weight: bold;}
-#xivo-wizard-step-checkcomponents #packages .status-installed .col-package-status {color: #5dbc00;}
-#xivo-wizard-step-checkcomponents #packages .status-notinstalled .col-package-status {color: #bc0000;}
-#xivo-wizard-step-checkcomponents #packages .status-notexists .col-package-status {color: #055a82;}
-#xivo-wizard-step-checkcomponents #packages .status-unknown .col-package-status {color: #055a82;}
-#xivo-wizard-step-checkcomponents #packages .recommends .status-notinstalled .col-package-status {color: #f96101;}
-#xivo-wizard-step-checkcomponents .fm-paragraph-button {text-align: center;}
-
-#xivo-wizard-step-ipbximportuser #ipbximportuser-instruction {margin-bottom: 10px;}
-#xivo-wizard-step-ipbximportuser #it-import {margin-top: 10px;}
-#ipbximportuser-tooltips-error {text-decoration: underline;}
-#ipbximportuser-tooltips-error:hover {text-decoration: none;}
-#ipbximportuser-lines-status {text-align: left;width: 350px;border: 1px solid #bc0000;padding: 5px;background-color: #ffcbcb;position:absolute;}
-#ipbximportuser-lines-status dt {text-align: center;color: #000;font-weight: bold;padding-bottom: 2px;}
-#ipbximportuser-lines-status .ipbximportuser-line-success {color: #408100;font-weight: bold;}
-#ipbximportuser-lines-status .ipbximportuser-line-error {color: #bc0000;font-weight: bold;}
 
 #xivo-wizard-step-validate #validate-instruction {text-align: center;font-weight: bold;}
 #xivo-wizard-step-validate fieldset {margin-top: 10px;margin-bottom: 0px;}

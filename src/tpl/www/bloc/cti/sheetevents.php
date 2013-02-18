@@ -26,7 +26,6 @@ $info = $this->get_var('info');
 $element = $this->get_var('element');
 
 $error = $this->get_var('error');
-$customs = $this->get_var('customs');
 $sheetactionslist = $this->get_var('sheetactionslist');
 
 if(isset($error_js[0]) === true)
@@ -88,127 +87,6 @@ if(isset($error_js[0]) === true)
                     'selected' => $info['ctisheetevents']['hangup']),
                 $sheetactionslist);
 
-		$type = 'custom';
-		$count = count($customs);
-		$errdisplay = '';
-
-?>
-	<p>&nbsp;</p>
-<!--
-	<div class="sb-list">
-		<table>
-			<thead>
-			<tr class="sb-top">
-
-				<th class="th-left"><?=$this->bbf('col_1');?></th>
-				<th class="th-center"><?=$this->bbf('col_2');?></th>
-				<th class="th-right">
-				<?=$url->href_html($url->img_html('img/site/button/mini/orange/bo-add.gif',
-									  $this->bbf('col_add'),
-									  'border="0"'),
-							   '#',
-							   null,
-							   'onclick="dwho.dom.make_table_list(\''.$type.'\',this); return(dwho.dom.free_focus());"',
-							   $this->bbf('col_add'));?>
-				</th>
-			</tr>
-			</thead>
-			<tbody id="<?=$type?>">
-		<?php
-		if($count > 0):
-			foreach($customs as $k => $v)
-			{
-
-		?>
-			<tr class="fm-paragraph<?=$errdisplay?>">
-				<td class="td-left txt-center">
-	<?php
-					echo $form->text(array('paragraph'	=> false,
-								   'name'		=> 'customcol1[]',
-								   'id'		=> false,
-								   'label'		=> false,
-								   'size'		=> 15,
-								   'key'		=> false,
-								   'value'		=> $k,
-								   'default'	=> ''));
-	 ?>
-				</td>
-				<td>
-	<?php
-					echo $form->select(array('paragraph' => false,
-									'name' 		=> 'customcol2[]',
-									'label'		=> false,
-									'id'		=> false,
-									'key'		=> false,
-									'selected'	=> $v,
-									'invalid'	=> true,
-								),
-								$sheetactionslist);
-
-	 ?>
-				</td>
-				<td class="td-right">
-					<?=$url->href_html($url->img_html('img/site/button/mini/blue/delete.gif',
-									  $this->bbf('opt_'.$type.'-delete'),
-									  'border="0"'),
-							   '#',
-							   null,
-							   'onclick="dwho.dom.make_table_list(\''.$type.'\',this,1); return(dwho.dom.free_focus());"',
-							   $this->bbf('opt_'.$type.'-delete'));?>
-				</td>
-			</tr>
-
-		<?php
-			}
-		endif;
-		?>
-			<tfoot>
-			<tr id="no-<?=$type?>"<?=($count > 0 ? ' class="b-nodisplay"' : '')?>>
-				<td colspan="7" class="td-single"><?=$this->bbf('no_'.$type);?></td>
-			</tr>
-			</tfoot>
-		</table>
-		<table class="b-nodisplay">
-			<tbody id="ex-<?=$type?>">
-			<tr class="fm-paragraph">
-				<td class="td-left txt-center">
-	<?php
-					echo $form->text(array('paragraph'	=> false,
-								   'name'		=> 'customcol1[]',
-								   'id'		=> false,
-								   'label'		=> false,
-								   'size'		=> 15,
-								   'key'		=> false,
-								   'default'	=> ''));
-	 ?>
-				</td>
-				<td>
-	<?php
-					echo $form->select(array('paragraph' => false,
-									'name' 		=> 'customcol2[]',
-									'label'		=> false,
-									'id'		=> false,
-									'key'		=> false,
-								),
-								$sheetactionslist);
-	 ?>
-				</td>
-				<td class="td-right">
-					<?=$url->href_html($url->img_html('img/site/button/mini/blue/delete.gif',
-									  $this->bbf('opt_'.$type.'-delete'),
-									  'border="0"'),
-							   '#',
-							   null,
-							   'onclick="dwho.dom.make_table_list(\''.$type.'\',this,1); return(dwho.dom.free_focus());"',
-							   $this->bbf('opt_'.$type.'-delete'));?>
-				</td>
-			</tr>
-			</tbody>
-		</table>
-	</div>
--->
-
-<?php
 	echo	$form->submit(array('name'	=> 'submit',
 				    'id'	=> 'it-submit',
 				    'value'	=> $this->bbf('fm_bt-save')));

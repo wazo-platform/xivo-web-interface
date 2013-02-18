@@ -31,21 +31,35 @@ $announce_list   = $this->get_var('announce_list');
 $context_list    = $this->get_var('context_list');
 $schedules       = $this->get_var('schedules');
 $defaultrules    = $this->get_var('defaultrules');
+$act             = $this->get_var('act');
 
 ?>
 
 <div id="sb-part-first" class="b-nodisplay">
 <?php
-	echo	$form->text(array('desc'	=> $this->bbf('fm_queuefeatures_name'),
-				  'name'	=> 'queuefeatures[name]',
-				  'labelid' => 'queuefeatures-name',
-				  'size'	=> 15,
-				  'default'	=> $element['queuefeatures']['name']['default'],
-				  'value'	=> $this->get_var('info','queuefeatures','name'),
-				  'error'	=> $this->bbf_args('error',
-					   $this->get_var('error','queuefeatures','name')))),
+if ($act === 'add') {
+	echo $form->text(array('desc'	=> $this->bbf('fm_queuefeatures_name'),
+				'name'	=> 'queuefeatures[name]',
+				'labelid' => 'queuefeatures-name',
+				'size'	=> 15,
+				'default'	=> $element['queuefeatures']['name']['default'],
+				'value'	=> $this->get_var('info','queuefeatures','name'),
+				'error'	=> $this->bbf_args('error',
+					$this->get_var('error','queuefeatures','name'))));
+} else {
+	echo $form->text(array('desc'	=> $this->bbf('fm_queuefeatures_name'),
+				'name'	=> 'queuefeatures[name]',
+				'labelid' => 'queuefeatures-name',
+				'size'	=> 15,
+				'readonly'	=> true,
+				'class'		=> 'it-disabled',
+				'default'	=> $element['queuefeatures']['name']['default'],
+				'value'	=> $this->get_var('info','queuefeatures','name'),
+				'error'	=> $this->bbf_args('error',
+					$this->get_var('error','queuefeatures','name'))));
+}
 
-		$form->text(array('desc'	=> $this->bbf('fm_queuefeatures_displayname'),
+	echo $form->text(array('desc'	=> $this->bbf('fm_queuefeatures_displayname'),
 				  'name'	=> 'queuefeatures[displayname]',
 				  'labelid' => 'queuefeatures-displayname',
 				  'size'	=> 15,

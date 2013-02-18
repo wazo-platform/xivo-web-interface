@@ -37,11 +37,6 @@ $array['element']['incomingdid']['default'] = '';
 $array['element']['hangup'] = array();
 $array['element']['hangup']['default'] = '';
 
-$array['element']['custom'] = array();
-$array['element']['custom']['default'] = '';
-
-
-dwho::load_class('dwho_network');
 
 $array['filter'] = array();
 $array['filter']['dial'] 	= array('set' => false, 'chk' => 2, 'regexp' => '/^[a-z0-9_\-\,]+$/i');
@@ -49,5 +44,4 @@ $array['filter']['link'] 	= array('set' => false, 'chk' => 2, 'regexp' => '/^[a-
 $array['filter']['unlink'] 	= array('set' => false, 'chk' => 2, 'regexp' => '/^[a-z0-9_\-\,]+$/i');
 $array['filter']['incomingdid'] 	= array('set' => false, 'chk' => 2, 'regexp' => '/^[a-z0-9_\-\,]+$/i');
 $array['filter']['hangup']	= array('set' => false, 'chk' => 2, 'regexp' => '/^[a-z0-9_\-\,]+$/i');
-$array['filter']['custom'] 	= array('set' => false, 'chk' => 2, 'regexp' => '/^.*$/i');
 ?>

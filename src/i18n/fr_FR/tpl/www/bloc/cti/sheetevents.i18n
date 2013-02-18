@@ -15,13 +15,3 @@ Appel entrant (SDA):
 
 ; fm_sheetevents_hangup
 Raccroché:
-
-; col_1
-Événement personnalisé
-
-; col_2
-Action
-
-; no_custom
-Aucun évènement personnalisé
-

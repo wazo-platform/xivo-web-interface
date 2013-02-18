@@ -30,7 +30,6 @@ $info['ctisheetevents'] = $load_inf[0];
 $element = array();
 $element['ctisheetevents'] = $sheetevents->get_element();
 
-$customs = null;
 $error = array();
 $error['sheetevents'] = array();
 $fm_save = null;
@@ -47,18 +46,6 @@ if(isset($_QR['fm_send']) === true)
 	$fm_save = false;
 	$parting = array();
 
-	$str = "{";
-	# Custom events commented out and removed from template untill correctly implemented.
-	#foreach($_QR['customcol1'] as $k=>$v)
-	#{
-	#	$tv = trim($v);
-	#	if($tv != '')
-	#	{
-	#		$str .= '"'.$tv.'": "'.trim($_QR['customcol2'][$k]).'",';
-	#	}
-	#}
-	$str = trim($str, ',').'}';
-	$_QR['ctisheetevents']['custom'] = $str;
 	if(($rs = $sheetevents->chk_values($_QR['ctisheetevents'])) === false)
 	{
 		$ret = 0;
@@ -75,19 +62,9 @@ if(isset($_QR['fm_send']) === true)
 $load_inf = $sheetevents->get_all();
 
 $info['ctisheetevents'] = $load_inf[0];
-$arr = array();
-$arr = dwho_json::decode($load_inf[0]['custom'], true);
-if($arr !== false)
-{
-	foreach($arr as $k => $v)
-	{
-		$customs[$k] = $v;
-	}
-}
 
 $_TPL->set_var('sheetactionslist',$sheetactionslist);
 $_TPL->set_var('fm_save',$fm_save);
-$_TPL->set_var('customs',$customs);
 $_TPL->set_var('error',$error);
 $_TPL->set_var('element',$element);
 $_TPL->set_var('info', $info);

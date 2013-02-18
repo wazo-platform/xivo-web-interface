@@ -32,8 +32,7 @@ $yesno = array($this->bbf('no'), $this->bbf('yes'));
 <?php
 	echo	$form->select(array('desc'	=> $this->bbf('fm_contexts_name'),
 				  'name'	=> 'contexts-name',
-				  'id'		=> false,
-				  'label'	=> false,
+				  'labelid'	=> 'contexts-name',
 				  'key'		=> false,
 				  'selected'	=> $info['cticontexts']['name']
 				  ),
@@ -41,8 +40,7 @@ $yesno = array($this->bbf('no'), $this->bbf('yes'));
 
 	echo	$form->select(array('desc'	=> $this->bbf('fm_contexts_display'),
 				  'name'	=> 'contexts-display',
-				  'id'		=> false,
-				  'label'	=> false,
+				  'labelid'	=> 'contexts-display',
 				  'key'		=> false,
 				  'selected'	=> $info['cticontexts']['display']
 				  ),

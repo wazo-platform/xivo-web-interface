@@ -271,6 +271,30 @@ class xivo_service_asterisk_linefeatures_sql extends xivo_service_asterisk_abstr
 		return($r);
 	}
 
+	function list_device_associated()
+	{
+		$this->_cnt = 0;
+
+		$this->_dso->new_select($this->_table);
+
+		$arr = array();
+
+		if(($internal = $this->_set_param_internal()) !== null)
+			$arr['internal'] = $internal;
+
+		$this->_dso->andwherenot(array('device' => ''), $this->_table);
+		$this->_dso->andwherenotnull('device', $this->_table);
+		$this->_dso->andwhere($arr, $this->_table);
+
+		$r = $this->_dso->select_all();
+
+		if(($this->_cnt = $this->_dso->select_count()) === false
+		|| isset($r[0]) === false)
+			$r = false;
+
+		return($r);
+	}
+
 	function get_all_where($arr,$disable=null,$order=null,$limit=null,$assoc=false)
 	{
 		$this->_cnt = 0;
@@ -308,7 +332,6 @@ class xivo_service_asterisk_linefeatures_sql extends xivo_service_asterisk_abstr
 			$r = false;
 
 		return($r);
-		return(parent::get_list_where($arr,$disable,$order,$limit,true));
 	}
 }
 

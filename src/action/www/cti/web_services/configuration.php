@@ -189,11 +189,13 @@ if(isset($load_sheetevents,$load_sheetevents[0]))
 		$eventdef["condition"] = $load_sheetevents[0][$k];
 		$evtout[$k][] = $eventdef;
 	}
+
 	if (isset($evtout['custom']) === true)
 	{
 		$evtout_custom = dwho_json::decode($evtout['custom'], true);
 		$evtout['custom'] = $evtout_custom == false ? array() : $evtout_custom;
 	}
+
 	$out['sheets']['events'] = $evtout;
 }
 if(isset($load_sheetactions) === true
@@ -217,7 +219,6 @@ if(isset($load_sheetactions) === true
 		$condout[$actid]['contexts'] = $action_context == false ? array() : $action_context;
 		$condout[$actid]['profileids'] = $action_capaids == false ? array() : $action_capaids;
 
-		$arr = array();
 		$arr = dwho_json::decode($action['sheet_info'], true);
 		$qtui = "null";
 

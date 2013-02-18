@@ -1,6 +1,9 @@
 ; redirect_message_waiting
 Please wait while operations are processed ...
 
+; start_xivo_services
+Service starting in progress...
+
 ; commit_db_data
 Writing configuration in the database ...
 
