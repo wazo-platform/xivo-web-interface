@@ -37,25 +37,7 @@ switch($act)
 		if(isset($_QR['fm_send']) === true
 		&& dwho_issa('displays',$_QR) === true)
 		{
-			$cpt = 10;
-			$str = "{";
-			foreach($_QR['dispcol1'] as $k => $v)
-			{
-				if(trim($v) != '')
-				{
-					$str .= '"'.$cpt.'": ';
-					$str .= '[ "'.trim($v).'",';
-					$str .= '"'.trim($_QR['dispcol2'][$k]).'",';
-					$str .= '"'.trim($_QR['dispcol3'][$k]).'",';
-					$str .= '"'.trim($_QR['dispcol4'][$k]).'" ]';
-					$cpt += 10;
-				}
-				$str .= ',';
-			}
-			$str = trim($str, ',');
-			$str .= '}';
-
-			$_QR['displays']['data'] = $str;
+			$_QR['displays']['data'] = $app->format_display_data($_QR);
 			$_QR['displays']['deletable'] = 1;
 			if($app->set_add($_QR) === false
 			|| $app->add() === false)
@@ -92,25 +74,7 @@ switch($act)
 		&& dwho_issa('displays',$_QR) === true)
 		{
 			$return = &$result;
-			$cpt = 10;
-			$str = '{ ';
-			foreach($_QR['dispcol1'] as $k => $v)
-			{
-				if(trim($v) != '')
-				{
-					$str .= '"'.$cpt.'": ';
-					$str .= '[ "'.trim($v).'",';
-					$str .= '"'.trim($_QR['dispcol2'][$k]).'",';
-					$str .= '"'.trim($_QR['dispcol3'][$k]).'",';
-					$str .= '"'.trim($_QR['dispcol4'][$k]).'" ]';
-					$cpt += 10;
-				}
-				$str .= ',';
-			}
-			$str = trim($str, ',');
-			$str .= ' }';
-
-			$_QR['displays']['data'] = $str;
+			$_QR['displays']['data'] = $app->format_display_data($_QR);
 			$_QR['displays']['deletable'] = 1;
 
 			if($app->set_edit($_QR) === false

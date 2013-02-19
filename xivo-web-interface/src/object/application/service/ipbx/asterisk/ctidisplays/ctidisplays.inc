@@ -392,6 +392,28 @@ class xivo_application_service_asterisk_ctidisplays extends xivo_application_ast
 
 		return(true);
 	}
+
+	function format_display_data($result) {
+		$cpt = 10;
+		$str = '{ ';
+		foreach($result['dispcol1'] as $k => $v)
+		{
+			$title = trim($result['dispcol1'][$k]);
+			$type = trim($result['dispcol2'][$k]);
+			$default = trim($result['dispcol3'][$k]);
+			$value = trim($result['dispcol4'][$k]);
+			if (empty($title) && empty($type) && empty($default) && empty($value)) {
+				continue;
+			}
+			$str .= sprintf('"%s": [ "%s", "%s", "%s", "%s"],', $cpt, $title, $type, $default, $value);
+			$cpt += 10;
+		}
+		$str = trim($str, ',');
+		$str .= ' }';
+
+		return $str;
+	}
+
 }
 
 ?>
