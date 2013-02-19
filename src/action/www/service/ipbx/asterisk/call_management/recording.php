@@ -197,6 +197,7 @@ $dhtml = &$_TPL->get_module('dhtml');
 $dhtml->set_js('js/dwho/submenu.js');
 $dhtml->add_js('/struct/js/date.js.php');
 $dhtml->set_js('js/service/ipbx/'.$ipbx->get_name().'/recording.js');
+$dhtml->set_js('extra-libs/timepicker/jquery-ui-timepicker-addon.js', true);
 $_TPL->display('index');
 
 function refactor_queue_list($queues_list) {
