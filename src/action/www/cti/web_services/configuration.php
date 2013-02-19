@@ -189,6 +189,13 @@ if(isset($load_sheetevents,$load_sheetevents[0]))
 		$eventdef["condition"] = $load_sheetevents[0][$k];
 		$evtout[$k][] = $eventdef;
 	}
+
+	if (isset($evtout['custom']) === true)
+	{
+		$evtout_custom = dwho_json::decode($evtout['custom'], true);
+		$evtout['custom'] = $evtout_custom == false ? array() : $evtout_custom;
+	}
+
 	$out['sheets']['events'] = $evtout;
 }
 if(isset($load_sheetactions) === true
@@ -205,7 +212,12 @@ if(isset($load_sheetactions) === true
 		$optout[$actid]['focus'] = $action['focus'] == 1 ? "yes" : "no";
 		$optout[$actid]['zip'] = 1;
 
+		$action_context = dwho_json::decode($action['context'], true);
+		$action_capaids = dwho_json::decode($action['capaids'], true);
+
 		$condout[$actid]['whom'] = $action['whom'];
+		$condout[$actid]['contexts'] = $action_context == false ? array() : $action_context;
+		$condout[$actid]['profileids'] = $action_capaids == false ? array() : $action_capaids;
 
 		$arr = dwho_json::decode($action['sheet_info'], true);
 		$qtui = "null";
@@ -219,9 +231,14 @@ if(isset($load_sheetactions) === true
 					$qtui = $a1[3];
 			}
 		}
-		$dispout[$actid]['systray_info'] = dwho_json::decode($action['systray_info'], true) == false ? array() : dwho_json::decode($action['systray_info'], true);
-		$dispout[$actid]['sheet_info'] = dwho_json::decode($action['sheet_info'], true) == false ? array() : dwho_json::decode($action['sheet_info'], true);
-		$dispout[$actid]['action_info'] = dwho_json::decode($action['action_info'], true) == false ? array() : dwho_json::decode($action['action_info'], true);
+
+		$action_systray_info = dwho_json::decode($action['systray_info'], true);
+		$action_sheet_info = dwho_json::decode($action['sheet_info'], true);
+		$action_action_info = dwho_json::decode($action['action_info'], true);
+
+		$dispout[$actid]['systray_info'] = $action_systray_info == false ? array() : $action_systray_info;
+		$dispout[$actid]['sheet_info'] = $action_sheet_info == false ? array() : $action_sheet_info;
+		$dispout[$actid]['action_info'] = $action_action_info == false ? array() : $action_action_info;
 		$dispout[$actid]['sheet_qtui'][$qtui] = $action['sheet_qtui'];
 	}
 	$out['sheets']['options'] = $optout;
