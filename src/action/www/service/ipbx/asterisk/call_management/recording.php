@@ -16,7 +16,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 $act = isset($_QR['act']) === true ? $_QR['act'] : '';
 $page = isset($_QR['page']) === true ? intval($_QR['page']) : 1;
 $pagesize = 50;
@@ -80,7 +79,7 @@ switch($act)
 		} else {
 			try {
 				//we display the current state of the campaign
-				$campaign = $appreccampaigns->get_campaign_details($_QR['id'])->data;
+				$campaign = $appreccampaigns->get_campaign_details($_QR['id'])->items;
 				$_TPL->set_var('info', get_object_vars($campaign[0]));
 			} catch(Exception $e) {
 				$errors_list = array_concatenate($errors_list, $e->getMessage());
@@ -116,7 +115,7 @@ switch($act)
 		if(isset($_QR['search'])) {
 			try {
 				$result = $appreccampaigns->search_recordings($_QR['campaign'], $_QR['search'], $page, $pagesize);
-				$recordings = $result->data;
+				$recordings = $result->items;
 				$total = $result->total;
 				$_TPL->set_var('recordings', $recordings);
 			} catch(Exception $e) {
@@ -125,7 +124,7 @@ switch($act)
 		} else {
 			try {
 				$result = $appreccampaigns->get_recordings($_QR['campaign'], $page, $pagesize);
-				$recordings = $result->data;
+				$recordings = $result->items;
 				$total = $result->total;
 				$_TPL->set_var('recordings', $recordings);
 			} catch(Exception $e) {
@@ -176,7 +175,7 @@ switch($act)
 		$act = 'list';
 		if($errors_list == null) $errors_list = array();
 		try	{
-			$recordingcampaigns = $appreccampaigns->get_campaigns()->data;
+			$recordingcampaigns = $appreccampaigns->get_campaigns()->items;
 			$_TPL->set_var('recordingcampaigns',$recordingcampaigns);
 		} catch (Exception $e) {
 			array_push($errors_list, $e->getMessage());
@@ -196,7 +195,6 @@ $_TPL->set_struct('service/ipbx/'.$ipbx->get_name());
 
 $dhtml = &$_TPL->get_module('dhtml');
 $dhtml->set_js('js/dwho/submenu.js');
-//$dhtml->set_css('/css/statistics/statistics.css');
 $dhtml->add_js('/struct/js/date.js.php');
 $dhtml->set_js('js/service/ipbx/'.$ipbx->get_name().'/recording.js');
 $_TPL->display('index');
