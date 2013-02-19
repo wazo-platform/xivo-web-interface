@@ -29,11 +29,11 @@
 	1/ Add fields in asterisk database (table ctidirectories)
 	2/ Add support for these fields below in add and edit sections
 	3/ Add corresponding entries and filters in the config file :
-		/usr/share/pf-xivo-web-interface/object/service/ipbx/asterisk/ctidirectories/config.inc
+		/usr/share/xivo-web-interface/object/service/ipbx/asterisk/ctidirectories/config.inc
 	4/ Add corresponding widgets in template file :
-		/usr/share/pf-xivo-web-interface/tpl/www/bloc/cti/directories/form.php
+		/usr/share/xivo-web-interface/tpl/www/bloc/cti/directories/form.php
 	5/ Add JSON generation for these fields in
-		/usr/share/pf-xivo-web-interface/application/www/service/ipbx/asterisk/web_services/ctiserver/configuration.php
+		/usr/share/xivo-web-interface/application/www/service/ipbx/asterisk/web_services/ctiserver/configuration.php
 */
 /***************************************************************************************************************************/
 

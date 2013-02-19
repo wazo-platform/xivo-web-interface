@@ -28,7 +28,7 @@ $array['ini']['error']['report_type'] = 1;
 $array['ini']['error']['report_mode'] = 1;
 $array['ini']['error']['report_func'] = 1;
 $array['ini']['error']['email'] = 'xivo-webinterface-error@proformatique.com';
-$array['ini']['error']['file'] = '/var/log/pf-xivo-web-interface/error.log';
+$array['ini']['error']['file'] = '/var/log/xivo-web-interface/error.log';
 
 $array['ini']['locale'] = array();
 $array['ini']['locale']['language'] = 'en';

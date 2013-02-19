@@ -18,8 +18,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-define('DWHO_PATH_I18N','/usr/share/pf-xivo-web-interface/i18n');
-define('DWHO_PATH_ROOT','/usr/share/pf-xivo-web-interface/lib');
+define('DWHO_PATH_I18N','/usr/share/xivo-web-interface/i18n');
+define('DWHO_PATH_ROOT','/usr/share/xivo-web-interface/lib');
 
 define('XIVO_PATH_CONF','/etc/pf-xivo/web-interface');
 define('XIVO_CONF','/etc/pf-xivo');
