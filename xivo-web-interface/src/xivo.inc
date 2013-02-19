@@ -62,7 +62,7 @@ class xivo extends dwho
 	protected function _init_cfg()
 	{
 		if(($xivo_ini = parent::load_init(XIVO_PATH_CONF.DWHO_SEP_DIR.'xivo.ini')) === false)
-			die('ERR: Missing datastorage file in XIVO');
+			die('ERR: Missing file: '.XIVO_PATH_CONF.DWHO_SEP_DIR.'xivo.ini');
 
 		define('XIVO_WEBI_CONFIGURED', (bool) file_exists(XIVO_LIB.'/configured'));
 
