@@ -20,7 +20,7 @@
 $access_category = 'configuration';
 $access_subcategory = '';
 
-#include(dwho_file::joinpath(dirname(__FILE__),'_common.php'));
+include(dwho_file::joinpath(dirname(__FILE__),'_common.php'));
 
 $starttime = microtime(true);
 
