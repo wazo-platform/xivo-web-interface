@@ -27,7 +27,6 @@ $starttime = microtime(true);
 $cticontexts = &$ipbx->get_module('cticontexts');
 $ctidirectories = &$ipbx->get_module('ctidirectories');
 $ctidirectoryfld = &$ipbx->get_module('ctidirectoryfields');
-$ctidisplays = &$ipbx->get_module('ctidisplays');
 $ctisheetactions = &$ipbx->get_module('ctisheetactions');
 $ctisheetevents = &$ipbx->get_module('ctisheetevents');
 $ctistatus = &$ipbx->get_module('ctistatus');
@@ -42,7 +41,6 @@ $ldapserver = new xivo_ldapserver();
 
 $load_contexts = $cticontexts->get_all();
 $load_directories = $ctidirectories->get_all();
-$load_displays = $ctidisplays->get_all();
 $load_sheetactions = $ctisheetactions->get_all();
 $load_sheetevents = $ctisheetevents->get_all();
 $load_presences = $ctipresences->get_all();
@@ -52,7 +50,6 @@ $load_rdid = $ctirdid->get(1);
 $out = array(
 	'contexts'		 => array(),
 	'directories'	  => array(),
-	'displays'		 => array(),
 	'sheets'		   => array(),
 	# object display options referred to by the profiles
 	'userstatus'	   => array(),
@@ -72,20 +69,6 @@ if(isset($load_contexts) === true && is_array($load_contexts) === true)
 		$ctxout[$ctxid]['display'] = $context['display'];
 	}
 	$out['contexts'] = $ctxout;
-}
-
-# DISPLAYS
-if(isset($load_displays) === true && is_array($load_displays) === true)
-{
-	$dspout = array();
-
-	foreach($load_displays as $display)
-	{
-		$dspid = $display['name'];
-		$dspout[$dspid] = dwho_json::decode($display['data'], true);
-
-	}
-	$out['displays'] = $dspout;
 }
 
 # DIRECTORIES
