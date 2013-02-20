@@ -20,7 +20,7 @@
 $access_category = 'configuration';
 $access_subcategory = '';
 
-include(dwho_file::joinpath(dirname(__FILE__),'_common.php'));
+#include(dwho_file::joinpath(dirname(__FILE__),'_common.php'));
 
 $starttime = microtime(true);
 
@@ -30,7 +30,6 @@ $ctidirectoryfld = &$ipbx->get_module('ctidirectoryfields');
 $ctidisplays = &$ipbx->get_module('ctidisplays');
 $ctisheetactions = &$ipbx->get_module('ctisheetactions');
 $ctisheetevents = &$ipbx->get_module('ctisheetevents');
-$ctimain = &$ipbx->get_module('ctimain');
 $ctistatus = &$ipbx->get_module('ctistatus');
 $ctipresences = &$ipbx->get_module('ctipresences');
 $ctiphonehints = &$ipbx->get_module('ctiphonehints');
@@ -41,7 +40,6 @@ $ldapfilter = &$ipbx->get_module('ldapfilter');
 xivo::load_class('xivo_ldapserver',XIVO_PATH_OBJECT,null,false);
 $ldapserver = new xivo_ldapserver();
 
-$load_ctimain = $ctimain->get(1);
 $load_contexts = $cticontexts->get_all();
 $load_directories = $ctidirectories->get_all();
 $load_displays = $ctidisplays->get_all();
@@ -52,7 +50,6 @@ $load_phonehintsgroups = $ctiphonehintsgroup->get_all();
 $load_rdid = $ctirdid->get(1);
 
 $out = array(
-	'main'			 => array(),
 	'contexts'		 => array(),
 	'directories'	  => array(),
 	'displays'		 => array(),
@@ -61,33 +58,6 @@ $out = array(
 	'userstatus'	   => array(),
 	'phonestatus'	  => array(),
 );
-
-# MAIN
-$tcpdefs = array();
-foreach(array('cti','ctis','webi','info') as $k)
-	$tcpdefs[strtoupper($k)] = array(
-		$load_ctimain[$k.'_ip'],
-		(int) $load_ctimain[$k.'_port'],
-		$load_ctimain[$k.'_active'] != 0
-	);
-
-$udpdefs = array(
-	'ANNOUNCE' => array(
-		$load_ctimain['announce_ip'],
-		(int) $load_ctimain['announce_port'],
-		$load_ctimain['announce_active'] != 0
-	)
-);
-
-$out['certfile'] = $load_ctimain['tlscertfile'];
-$out['keyfile']  = $load_ctimain['tlsprivkeyfile'];
-
-$out['main']['incoming_tcp'] = $tcpdefs;
-$out['main']['incoming_udp'] = $udpdefs;
-$out['main']['sockettimeout'] = (float) $load_ctimain['socket_timeout'];
-$out['main']['logintimeout'] = (float) $load_ctimain['login_timeout'];
-$out['main']['context_separation'] = (bool) $load_ctimain['context_separation'];
-$out['main']['live_reload_conf'] = (bool) $load_ctimain['live_reload_conf'];
 
 # CONTEXTS
 if(isset($load_contexts) === true && is_array($load_contexts) === true)
@@ -302,15 +272,6 @@ if(isset($load_phonehintsgroups) === true
 	}
 	$out['phonestatus'] = $hintsout;
 }
-
-
-# ASTERISK AMI
-$out['ipbx_connection'] = array(
-	'ipaddress' => $load_ctimain['ami_ip'],
-	'ipport'	=> (int) $load_ctimain['ami_port'],
-	'username'  => $load_ctimain['ami_login'],
-	'password'  => $load_ctimain['ami_password']
-);
 
 $out['bench'] = (float) (microtime(true) - $starttime);
 
