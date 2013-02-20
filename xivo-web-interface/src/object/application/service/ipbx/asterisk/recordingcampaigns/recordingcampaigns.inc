@@ -24,8 +24,8 @@ include('exceptions.php');
 
 class xivo_application_service_asterisk_recordingcampaigns extends xivo_application_asterisk_abstract//xivo_service_asterisk_abstract
 {
-	private $recording_service_url = 'http://127.0.0.1:50050/rest/IPBX/recording_campaigns/';
-	private $queues_service_url = 'http://127.0.0.1:50050/rest/CallCenter/queues/';
+	private $recording_service_url = 'http://127.0.0.1:50050/1.0/recording_campaigns/';
+	private $queues_service_url = 'http://127.0.0.1:50050/1.0/CallCenter/queues/';
 	protected $_filter = false;
 	private $headers_array = array("Accept" => "application/json",
 				       "Content-Type" => "application/json");
