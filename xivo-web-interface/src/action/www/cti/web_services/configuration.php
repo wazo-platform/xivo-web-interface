@@ -24,7 +24,6 @@ include(dwho_file::joinpath(dirname(__FILE__),'_common.php'));
 
 $starttime = microtime(true);
 
-$cticontexts = &$ipbx->get_module('cticontexts');
 $ctidirectories = &$ipbx->get_module('ctidirectories');
 $ctidirectoryfld = &$ipbx->get_module('ctidirectoryfields');
 $ctisheetactions = &$ipbx->get_module('ctisheetactions');
@@ -33,43 +32,24 @@ $ctistatus = &$ipbx->get_module('ctistatus');
 $ctipresences = &$ipbx->get_module('ctipresences');
 $ctiphonehints = &$ipbx->get_module('ctiphonehints');
 $ctiphonehintsgroup = &$ipbx->get_module('ctiphonehintsgroup');
-$ctirdid = &$ipbx->get_module('ctireversedirectories');
 $ldapfilter = &$ipbx->get_module('ldapfilter');
 
 xivo::load_class('xivo_ldapserver',XIVO_PATH_OBJECT,null,false);
 $ldapserver = new xivo_ldapserver();
 
-$load_contexts = $cticontexts->get_all();
 $load_directories = $ctidirectories->get_all();
 $load_sheetactions = $ctisheetactions->get_all();
 $load_sheetevents = $ctisheetevents->get_all();
 $load_presences = $ctipresences->get_all();
 $load_phonehintsgroups = $ctiphonehintsgroup->get_all();
-$load_rdid = $ctirdid->get(1);
 
 $out = array(
-	'contexts'		 => array(),
 	'directories'	  => array(),
 	'sheets'		   => array(),
 	# object display options referred to by the profiles
 	'userstatus'	   => array(),
 	'phonestatus'	  => array(),
 );
-
-# CONTEXTS
-if(isset($load_contexts) === true && is_array($load_contexts) === true)
-{
-	$ctxout = array();
-	foreach($load_contexts as $context)
-	{
-		$ctxid = $context['name'];
-		$ctxout[$ctxid] = array();
-		$ctxdirs = explode(',', $context['directories']);
-		$ctxout[$ctxid]['directories'] = $ctxdirs;
-		$ctxout[$ctxid]['display'] = $context['display'];
-	}
-	$out['contexts'] = $ctxout;
-}
 
 # DIRECTORIES
 if(isset($load_directories) === true && is_array($load_directories) === true)
@@ -113,16 +93,6 @@ if(isset($load_directories) === true && is_array($load_directories) === true)
 			$dirout[$dirid]['field_' . $field['fieldname']] = array($field['value']);
 	}
 	$out['directories'] = $dirout;
-}
-
-# REVERSEDID
-if(isset($load_rdid) === true && is_array($load_rdid) === true)
-{
-	if(!array_key_exists('*', $out['contexts']))
-		$out['contexts']['*'] = array();
-
-	$dirblok = dwho_json::decode($load_rdid['directories'], true);
-	$out['contexts']['*']['didextens'] = array('*' => $dirblok);
 }
 
 # SHEETS
