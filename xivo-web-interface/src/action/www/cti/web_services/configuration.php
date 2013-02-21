@@ -30,8 +30,6 @@ $ctisheetactions = &$ipbx->get_module('ctisheetactions');
 $ctisheetevents = &$ipbx->get_module('ctisheetevents');
 $ctistatus = &$ipbx->get_module('ctistatus');
 $ctipresences = &$ipbx->get_module('ctipresences');
-$ctiphonehints = &$ipbx->get_module('ctiphonehints');
-$ctiphonehintsgroup = &$ipbx->get_module('ctiphonehintsgroup');
 $ldapfilter = &$ipbx->get_module('ldapfilter');
 
 xivo::load_class('xivo_ldapserver',XIVO_PATH_OBJECT,null,false);
@@ -41,14 +39,12 @@ $load_directories = $ctidirectories->get_all();
 $load_sheetactions = $ctisheetactions->get_all();
 $load_sheetevents = $ctisheetevents->get_all();
 $load_presences = $ctipresences->get_all();
-$load_phonehintsgroups = $ctiphonehintsgroup->get_all();
 
 $out = array(
 	'directories'	  => array(),
 	'sheets'		   => array(),
 	# object display options referred to by the profiles
-	'userstatus'	   => array(),
-	'phonestatus'	  => array(),
+	'userstatus'	   => array()
 );
 
 # DIRECTORIES
@@ -199,31 +195,6 @@ if(isset($load_presences) === true
 		}
 	}
 	$out['userstatus'] = $presout;
-}
-
-# PHONEHINTS (LINE STATUSES)
-if(isset($load_phonehintsgroups) === true
-&& is_array($load_phonehintsgroups) === true)
-{
-	$hintsout = array();
-	foreach($load_phonehintsgroups as $phonehintsgroup)
-	{
-		$where = array('idgroup' => $phonehintsgroup['id']);
-		if(($load_phonehints = $ctiphonehints->get_all_where($where)) === false)
-			continue;
-
-		$phonehintsgroup_id = $phonehintsgroup['name'];
-		$hintsout[$phonehintsgroup_id] = array();
-
-		foreach($load_phonehints as $phonehint)
-		{
-			$phonehint_id = $phonehint['number'];
-			$hintsout[$phonehintsgroup_id][$phonehint_id] = array();
-			$hintsout[$phonehintsgroup_id][$phonehint_id]['longname'] = $phonehint['name'];
-			$hintsout[$phonehintsgroup_id][$phonehint_id]['color'] = $phonehint['color'];
-		}
-	}
-	$out['phonestatus'] = $hintsout;
 }
 
 $out['bench'] = (float) (microtime(true) - $starttime);
