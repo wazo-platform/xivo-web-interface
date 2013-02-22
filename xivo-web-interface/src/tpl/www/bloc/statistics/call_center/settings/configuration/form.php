@@ -267,10 +267,6 @@ if (is_null($listqos) === false
 ?>
 	</fieldset>
 </div>
-
-<?php
-if (xivo_user::get_info('meta') === 'root'):
-?>
 <div id="sb-part-last" class="b-nodisplay">
 	<fieldset id="xivo-user">
 		<legend><?=$this->bbf('xivo_user');?></legend>
@@ -287,8 +283,3 @@ if (xivo_user::get_info('meta') === 'root'):
 		<div class="clearboth"></div>
 	</fieldset>
 </div>
-<?php
-else:
-	echo $form->hidden(array('name' => 'xivouser[]', 'value' => xivo_user::get_info('id')));
-endif;
-?>

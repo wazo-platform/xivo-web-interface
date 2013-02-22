@@ -61,9 +61,6 @@
 				</div>
 				<span class="span-right">&nbsp;</span>
 			</li>
-<?php
-	if (xivo_user::get_info('meta') === 'root'):
-?>
 			<li id="dwsm-tab-6"
 				class="dwsm-blur"
 				onclick="dwho_submenu.select(this,'sb-part-agent');"
@@ -84,21 +81,5 @@
 				</div>
 				<span class="span-right">&nbsp;</span>
 			</li>
-<?php
-	else:
-?>
-			<li id="dwsm-tab-6"
-				class="dwsm-blur-last"
-				onclick="dwho_submenu.select(this,'sb-part-agent',1);"
-				onmouseout="dwho_submenu.blur(this,1);"
-				onmouseover="dwho_submenu.focus(this,1);">
-				<div class="tab">
-					<span class="span-center"><a href="#agents"><?=$this->bbf('smenu_agents');?></a></span>
-				</div>
-				<span class="span-right">&nbsp;</span>
-			</li>
-<?php
-	endif;
-?>
 		</ul>
 	</div>
