@@ -187,7 +187,6 @@ $array['element']['noplaymsgfirstenter']['set'] = true;
 $array['element']['maxusers'] = array();
 $array['element']['maxusers']['default'] = 0;
 $array['element']['maxusers']['set'] = true;
-$array['element']['maxusers']['forcedef'] = true;
 
 $array['element']['emailfrom'] = array();
 $array['element']['emailfrom']['default'] = 'no-reply+meetme@xivo.fr';
