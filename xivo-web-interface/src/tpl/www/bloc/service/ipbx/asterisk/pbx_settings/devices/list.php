@@ -181,13 +181,15 @@ $page = $url->pager($pager['pages'],
 		<td><?=(dwho_has_len($devicefeatures['plugin']) === true ? $devicefeatures['plugin'] : '-')?></td>
 		<td class="td-right" colspan="2">
 <?php
+		$protocol = $linefeatures['protocol'];
 		echo	$url->href_html($url->img_html('img/site/utils/updating.png',
 						       $this->bbf('opt_synchronize'),
 						       'border="0"'),
 					'service/ipbx/pbx_settings/devices',
 					array('act'	=> 'synchronize',
 					      'id'	=> $devicefeatures['id']),
-					'onclick="if(confirm(\''.$dhtml->escape($this->bbf('opt_synchronize_confirm')).'\')){init_synchronize(\''.$devicefeatures['id'].'\');}return(false);"',
+					'onclick="if(confirm(\''.$dhtml->escape($this->bbf('opt_synchronize_confirm')).'\'))
+						{init_synchronize(\''.$devicefeatures['id'].'\',\''.$protocol.'\');}return(false);"',
 					$this->bbf('opt_synchronize')),"\n";
 		echo	$url->href_html($url->img_html('img/site/utils/reset.png',
 						       $this->bbf('opt_reset-autoprov'),

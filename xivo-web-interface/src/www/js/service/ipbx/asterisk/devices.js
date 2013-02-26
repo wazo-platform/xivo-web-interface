@@ -17,15 +17,24 @@
  */
 
 
-function init_synchronize(id) {
+function init_synchronize(id,protocol) {
 	var url = '/xivo/configuration/ui.php/provisioning/devices?act=synchronize&id=' + id;
-	$('#box_installer').show();
 	$.get(url, function(data) {
-				if (data === null)
-					return false;
-				ajax_request_oip(data);
-				this.int = setInterval(ajax_request_oip, 1000, data);
-			});
+		if (data === null)
+			return false;
+		if (protocol == 'sccp') {
+			var str = data.split('::');
+			var box = $('#box_installer').find('div');
+			if (str[0] == 'redirecturi') {
+				box.hide();
+				top.location.href = str[1];
+			}
+		} else {
+			$('#box_installer').show();
+			ajax_request_oip(data);
+			this.int = setInterval(ajax_request_oip, 1000, data);
+		}
+	});
 }
 
 function ajax_request_oip(path) {
