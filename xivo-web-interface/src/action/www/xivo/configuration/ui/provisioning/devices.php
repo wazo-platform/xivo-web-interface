@@ -43,7 +43,7 @@ switch($act)
 				$raw_mac = $info['devicefeatures']['mac'];
 				$mac = strtoupper(str_replace(':','',$raw_mac));
 				$sep = 'SEP' . $mac;
-				$status = $ipbx->discuss_ipbx('sccp resync ' . $sep,true)
+				$status = $ipbx->discuss_ipbx('sccp resync ' . $sep,true);
 				if($status) {
 					dwho_report::push('info',dwho_i18n::babelfish('successfully_synchronize',array($_QR['id'])));
 				} else {
