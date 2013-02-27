@@ -252,9 +252,9 @@ class xivo_application_service_asterisk_device extends xivo_application_asterisk
 	public function get_protocol()
 	{
 		if (isset($this->_info['config']['protocol']) === true)
-		{
 			$this->_info['protocol'] = $this->_info['config']['protocol'];
-		} else return false;
+		else
+			return(false);
 	}
 
 	public function get_sep()
