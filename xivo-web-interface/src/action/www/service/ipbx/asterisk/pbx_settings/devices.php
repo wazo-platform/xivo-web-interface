@@ -64,14 +64,10 @@ switch($act)
 		{
 			if(($info = $appdevice->get($values[$i])) !== false)
 			{
-
-				$protocol = $info['config']['protocol'];
-				if(strcmp($protocol,'SCCP') === 0) {
-					$raw_mac = $info['devicefeatures']['mac'];
-					$mac = strtoupper(str_replace(':','',$raw_mac));
-					$sep = 'SEP' . $mac;
-					$status = $ipbx->discuss_ipbx('sccp resync ' . $sep,true);
-				} else {
+				switch($info['protocol']) {
+				case 'SCCP':
+					$status = $ipbx->discuss_ipbx('sccp resync ' . $info['sep'],true);
+				default:
 					$modprovddevice->synchronize($info['devicefeatures']['deviceid']);
 				}
 			}

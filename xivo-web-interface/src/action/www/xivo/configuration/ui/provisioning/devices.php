@@ -38,12 +38,9 @@ switch($act)
 			if( ($info = $appdevice->get($_QR['id'])) === false) {
 				throw new Exception('No associated device');
 			}
-			$protocol = $info['config']['protocol'];
-			if(strcmp($protocol,'SCCP') === 0) {
-				$raw_mac = $info['devicefeatures']['mac'];
-				$mac = strtoupper(str_replace(':','',$raw_mac));
-				$sep = 'SEP' . $mac;
-				$status = $ipbx->discuss_ipbx('sccp resync ' . $sep,true);
+			switch($info['protocol']) {
+			case 'SCCP':
+				$status = $ipbx->discuss_ipbx('sccp resync ' . $info['sep'],true);
 				if($status) {
 					dwho_report::push('info',dwho_i18n::babelfish('successfully_synchronize',array($_QR['id'])));
 				} else {
@@ -54,8 +51,7 @@ switch($act)
 				$uri = $_TPL->url('service/ipbx/pbx_settings/devices').'?'.$q;
 				$msg = 'redirecturi::'.($uri);
 				die($msg);
-			} else
-			{
+			default:
 				$location = $provddevice->synchronize($info['devicefeatures']['deviceid']);
 				if(!$location)
 				{

@@ -172,6 +172,8 @@ class xivo_application_service_asterisk_device extends xivo_application_asterisk
 		$this->get_deviceprovd($this->_info['devicefeatures']['deviceid']);
 		$this->get_capabilities();
 		$this->get_config();
+		$this->get_protocol();
+		$this->get_sep();
 
 		return($this->_info);
 	}
@@ -245,6 +247,25 @@ class xivo_application_service_asterisk_device extends xivo_application_asterisk
 
 		$this->_info['config'] = $deviceconfig['raw_config'];
 		$this->_info['deviceconfig'] = $deviceconfig;
+	}
+
+	public function get_protocol()
+	{
+		if (isset($this->_info['config']['protocol']) === true)
+		{
+			$this->_info['protocol'] = $this->_info['config']['protocol'];
+		} else return false;
+	}
+
+	public function get_sep()
+	{
+		$this->_info['sep'] = '';
+		if (isset($this->_info['config']['protocol'], $this->_info['devicefeatures']['mac']) === false
+		|| strcasecmp($this->_info['config']['protocol'],'SCCP') != 0)
+			return(false);
+		$raw_mac = $this->_info['devicefeatures']['mac'];
+		$mac = strtoupper(str_replace(':','',$raw_mac));
+		$this->_info['sep'] = 'SEP' . $mac;
 	}
 
 	public function mode_autoprov($synchronize=false)
