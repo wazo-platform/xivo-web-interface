@@ -28,7 +28,7 @@ $array['voicemailfeatures']['ctibus'] = array('xivo[voicemail,%s,%s]');
 $array['voicemailfeatures']['ipbx'] = array('voicemail reload');
 
 $array['agentfeatures'] = array();
-$array['agentfeatures']['ctibus'] = array('xivo[agent,%s,%s]', 'xivo[user,%s,%s]', 'xivo[queuemember,update]');
+$array['agentfeatures']['ctibus'] = array('xivo[agent,%s,%s]', 'xivo[queuemember,update]');
 $array['agentfeatures']['agentbus'] = array('agent.%s.%s');
 $array['agentfeatures']['ipbx'] = array('module reload app_queue.so');
 
