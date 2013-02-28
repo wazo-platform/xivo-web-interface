@@ -518,6 +518,11 @@ abstract class xivo_libdatastorage_abstract extends xivo_libconfig_abstract
 			{
 				foreach ($types as $type => $cmd)
 				{
+					if ($type === 'ctibus' && $state === 'delete') {
+						if(in_array('xivo[queuemember,update]', $cmd) === true) {
+							$cmd = array_reverse($cmd);
+						}
+					}
 
 					if ($type === 'ctibus' || $type === 'agentbus') {
 						$this->_parse_bus_cmd($cmd, $state, $id);
