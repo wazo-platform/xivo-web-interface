@@ -67,7 +67,6 @@ class xivo_application_service_asterisk_callfilter_sql extends xivo_application_
 
 		$this->_dso->new_group('id',$this->_table['callfilter']);
 		$this->_dso->add_group('name',$this->_table['callfilter']);
-		$this->_dso->add_group('context',$this->_table['callfilter']);
 		$this->_dso->add_group('type',$this->_table['callfilter']);
 		$this->_dso->add_group('bosssecretary',$this->_table['callfilter']);
 		$this->_dso->add_group('callfrom',$this->_table['callfilter']);

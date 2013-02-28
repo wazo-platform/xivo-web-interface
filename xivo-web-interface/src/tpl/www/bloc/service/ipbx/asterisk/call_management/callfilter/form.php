@@ -25,7 +25,6 @@ $info = $this->get_var('info');
 $element = $this->get_var('element');
 $bosslist = $this->get_var('bosslist');
 $secretary = $this->get_var('secretary');
-$context_list = $this->get_var('context_list');
 
 if($this->get_var('act') === 'add'):
 	$invalid_boss = false;
@@ -48,23 +47,6 @@ endif;
 				  'value'	=> $info['callfilter']['name'],
 				  'error'	=> $this->bbf_args('error',
 						   $this->get_var('error', 'callfilter', 'name')) ));
-
-if($context_list !== false):
-	echo	$form->select(array('desc'	=> $this->bbf('fm_callfilter_context'),
-				    'name'	=> 'callfilter[context]',
-				    'labelid'	=> 'callfilter-context',
-				    'key'	=> 'identity',
-				    'altkey'	=> 'name',
-				    'default'	=> $element['callfilter']['context']['default'],
-				    'selected'	=> $info['callfilter']['context']),
-			      $context_list);
-else:
-	echo	'<div id="fd-callfilter-context" class="txt-center">',
-		$url->href_htmln($this->bbf('create_context'),
-				'service/ipbx/system_management/context',
-				'act=add'),
-		'</div>';
-endif;
 
 	echo	$form->select(array('desc'	=> $this->bbf('fm_callfilter_callfrom'),
 				    'name'	=> 'callfilter[callfrom]',

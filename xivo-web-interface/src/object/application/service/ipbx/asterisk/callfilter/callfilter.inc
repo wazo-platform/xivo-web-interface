@@ -27,10 +27,8 @@ class xivo_application_service_asterisk_callfilter extends xivo_application_aste
 	var $_userfeatures	    = false;
 	var $_callfiltermember	= false;
 	var $_dialaction	    = false;
-	var $_contextmember	    = false;
 	var $_callerid		    = false;
 	var $_param		        = array('type'	=> '');
-	var $_contextlist	    = array();
 
 	public function __construct(&$service,&$dso,$param=null,$components=true)
 	{
@@ -72,7 +70,6 @@ class xivo_application_service_asterisk_callfilter extends xivo_application_aste
 
 		if(($this->_callfiltermember = &$this->_service->get_module('callfiltermember')) === false
 		|| ($this->_dialaction = $this->get_abstract('dialaction',array('category' => 'callfilter'))) === false
-		|| ($this->_contextmember = $this->get_abstract('contextmember',array('type' => 'callfilter'))) === false
 		|| ($this->_callerid = $this->get_abstract('callerid',array('type' => 'callfilter'))) === false)
 			return(false);
 
@@ -93,7 +90,6 @@ class xivo_application_service_asterisk_callfilter extends xivo_application_aste
 
 		$this->_get_callfiltermember();
 		$this->_get_dialaction($this->_info['callfilter']['id']);
-		$this->_get_contextmember($this->_info['callfilter']['id']);
 		$this->_get_callerid($this->_info['callfilter']['id']);
 
 		return($this->_info);
@@ -280,11 +276,8 @@ class xivo_application_service_asterisk_callfilter extends xivo_application_aste
 				$ref['linked'] = (bool) $ref['linked'];
 
 				$member = array();
-				#$member['context'] = $ref['member_context'];
 				$member['firstname'] = $ref['member_firstname'];
 				$member['lastname'] = $ref['member_lastname'];
-				#$member['number'] = $ref['member_number'];
-				#$member['name'] = $ref['member_name'];
 				$member['identity'] = $this->_userfeatures->mk_identity($member);
 				$ref['member_identity'] = $member['identity'];
 			}
@@ -348,8 +341,6 @@ class xivo_application_service_asterisk_callfilter extends xivo_application_aste
 
 		if(dwho_issa('dialaction',$arr) === true)
 			$this->set_dialaction($arr['dialaction']);
-
-		$this->set_contextmember();
 
 		if(dwho_issa('callerid',$arr) === true)
 			$this->set_callerid($arr['callerid']);
@@ -427,7 +418,6 @@ class xivo_application_service_asterisk_callfilter extends xivo_application_aste
 
 		$where = array();
 		$where['bsfilter'] = 'boss';
-		#$where['context'] = (string) $this->get_result_var('callfilter','context');
 
 		if(($boss = $this->_userfeatures->get_where($where,true,null,$list['boss']['id'])) === false)
 		{
@@ -457,7 +447,6 @@ class xivo_application_service_asterisk_callfilter extends xivo_application_aste
 
 		$where = array();
 		$where['bsfilter'] = 'secretary';
-		#$where['context'] = $boss['context'];
 
 		for($i = 0;$i < $nb;$i++)
 		{
@@ -494,16 +483,6 @@ class xivo_application_service_asterisk_callfilter extends xivo_application_aste
 		return(true);
 	}
 
-	function set_contextmember()
-	{
-		$rs = array();
-		$rs['callfilter-context']['context'] = (string) $this->get_result_var('callfilter','context');
-		$rs['callfilter-context']['typeval'] = 0;
-		$rs['callfilter-context']['varname'] = 'context';
-
-		return(parent::set_contextmember($rs));
-	}
-
 	function add()
 	{
 		$r = true;
@@ -516,7 +495,6 @@ class xivo_application_service_asterisk_callfilter extends xivo_application_aste
 		|| ($callfilterid = $this->add_callfilter()) === false
 		|| $this->add_callfiltermember($callfilterid) === false
 		|| $this->add_dialaction($callfilterid) === false
-		|| $this->add_contextmember($callfilterid) === false
 		|| $this->add_callerid($callfilterid) === false)
 		{
 			$r = false;
@@ -617,9 +595,6 @@ class xivo_application_service_asterisk_callfilter extends xivo_application_aste
 				case 'dialaction':
 					$this->_dialaction->reverse_add();
 					break;
-				case 'contextmember':
-					$this->_contextmember->reverse_add();
-					break;
 				case 'callerid':
 					$this->_callerid->reverse_add();
 					break;
@@ -640,7 +615,6 @@ class xivo_application_service_asterisk_callfilter extends xivo_application_aste
 		|| $this->edit_callfilter() === false
 		|| $this->edit_callfiltermember() === false
 		|| $this->edit_dialaction() === false
-		|| $this->edit_contextmember() === false
 		|| $this->edit_callerid() === false)
 		{
 			$r = false;
@@ -763,14 +737,6 @@ class xivo_application_service_asterisk_callfilter extends xivo_application_aste
 		return(parent::edit_dialaction($this->_info['callfilter']['id']));
 	}
 
-	function edit_contextmember()
-	{
-		if(dwho_issa('callfilter',$this->_info) === false)
-			return(false);
-
-		return(parent::edit_contextmember($this->_info['callfilter']['id']));
-	}
-
 	function edit_callerid()
 	{
 		if(dwho_issa('callfilter',$this->_info) === false)
@@ -810,9 +776,6 @@ class xivo_application_service_asterisk_callfilter extends xivo_application_aste
 				case 'dialaction':
 					$this->_dialaction->reverse_edit($this->_status);
 					break;
-				case 'contextmember':
-					$this->_contextmember->reverse_edit($this->_status);
-					break;
 				case 'callerid':
 					$this->_callerid->reverse_edit($this->_status);
 					break;
@@ -832,7 +795,6 @@ class xivo_application_service_asterisk_callfilter extends xivo_application_aste
 		if($this->delete_callfilter() === false
 		|| $this->delete_callfiltermember() === false
 		|| $this->delete_dialaction() === false
-		|| $this->delete_contextmember() === false
 		|| $this->delete_callerid() === false)
 		{
 			$r = false;
@@ -916,9 +878,6 @@ class xivo_application_service_asterisk_callfilter extends xivo_application_aste
 					break;
 				case 'dialaction':
 					$this->_dialaction->add_origin_list();
-					break;
-				case 'contextmember':
-					$this->_contextmember->add_origin_list();
 					break;
 				case 'callerid':
 					$this->_callerid->add_origin();

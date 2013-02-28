@@ -24,9 +24,6 @@ $array['element'] = array();
 $array['element']['name'] = array();
 $array['element']['name']['default'] = '';
 
-$array['element']['context'] = array();
-$array['element']['context']['default'] = '';
-
 $array['element']['type'] = array();
 $array['element']['type']['value'] = array('bosssecretary');
 $array['element']['type']['default'] = 'bosssecretary';
@@ -60,7 +57,6 @@ $array['element']['description']['default'] = '';
 
 $array['filter'] = array();
 $array['filter']['name'] = array('maxlen' => 128,'regexp' => '/^[a-z0-9_-]+$/i');
-$array['filter']['context'] = array('callback' => 'xivo_service_asterisk::chk_context');
 $array['filter']['type'] = array('set' => false);
 $array['filter']['bosssecretary'] = array('set' => false,'key' => array('bossfirst-serial',
 									'bossfirst-simult',
