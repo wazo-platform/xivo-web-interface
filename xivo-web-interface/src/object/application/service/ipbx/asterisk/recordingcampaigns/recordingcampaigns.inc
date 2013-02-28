@@ -27,6 +27,8 @@ class xivo_application_service_asterisk_recordingcampaigns extends xivo_applicat
 	private $recording_service_url = 'http://127.0.0.1:50050/rest/IPBX/recording_campaigns/';
 	private $queues_service_url = 'http://127.0.0.1:50050/rest/CallCenter/queues/';
 	protected $_filter = false;
+	private $headers_array = array("Accept" => "application/json",
+				       "Content-Type" => "application/json");
 	
 	private function manage_errors($http_reply) {
 		if(!$http_reply->hasErrors())
@@ -41,7 +43,7 @@ class xivo_application_service_asterisk_recordingcampaigns extends xivo_applicat
 	public function get_campaigns()
 	{
 		$campaigns_reply = false;
-		$campaigns_reply = \Httpful\Request::get($this->recording_service_url)->send();
+		$campaigns_reply = \Httpful\Request::get($this->recording_service_url)->addHeaders($this->headers_array)->send();
 		if(!$campaigns_reply->hasErrors()) {
 			# TODO : Check content-type
 			return dwho_json::decode($campaigns_reply->body);
@@ -54,7 +56,8 @@ class xivo_application_service_asterisk_recordingcampaigns extends xivo_applicat
 	public function get_recordings($campaign_id, $page, $pagesize) {
 		$recordings_reply = false;
 		$params = "?_page=$page&_pagesize=$pagesize";
-		$recordings_reply = \Httpful\Request::get($this->recording_service_url . $campaign_id . "/" . $params)-> send();
+		$recordings_reply = \Httpful\Request::get($this->recording_service_url . $campaign_id . "/" . $params)
+						->addHeaders($this->headers_array)-> send();
 		if(!$recordings_reply->hasErrors()) {
 			# TODO : Check content-type
 			return dwho_json::decode($recordings_reply->body);
@@ -65,7 +68,7 @@ class xivo_application_service_asterisk_recordingcampaigns extends xivo_applicat
 
 	public function get_queues_list() {
 		$queues_reply = false;
-		$queues_reply = \Httpful\Request::get($this->queues_service_url)-> send();
+		$queues_reply = \Httpful\Request::get($this->queues_service_url)->addHeaders($this->headers_array)-> send();
 		if(!$queues_reply->hasErrors()) {
 			# TODO : Check content-type
 			return dwho_json::decode($queues_reply->body);
@@ -77,7 +80,7 @@ class xivo_application_service_asterisk_recordingcampaigns extends xivo_applicat
 	public function get_campaign_details($campaign_id) {
 		$campaign_reply = false;
 		$campaign_reply = \Httpful\Request::get($this->recording_service_url
-				. $campaign_id)-> send();
+				. $campaign_id)->addHeaders($this->headers_array)-> send();
 		if(!$campaign_reply->hasErrors()) {
 			return dwho_json::decode($campaign_reply->body);
 		} else {
@@ -100,6 +103,7 @@ class xivo_application_service_asterisk_recordingcampaigns extends xivo_applicat
 										  "base_filename"=>$base_filename) );
 		$recordings_reply = \Httpful\Request::post($this->recording_service_url)
 												->body($content)
+												->addHeaders($this->headers_array)
 												->sendsJson()
 												->send();
 		$this->manage_errors($recordings_reply);
@@ -114,6 +118,7 @@ class xivo_application_service_asterisk_recordingcampaigns extends xivo_applicat
 										  "end_date"=> $new_end_date) );
 		$editing_reply = \Httpful\Request::put($this->recording_service_url . $campaign_id)
 											->body($content)
+											->addHeaders($this->headers_array)
 											->sendsJson()
 											->send();
 		$this->manage_errors($editing_reply);
@@ -122,7 +127,7 @@ class xivo_application_service_asterisk_recordingcampaigns extends xivo_applicat
 	public function search_recordings($campaign_id, $search_pattern, $page, $pagesize) {
 		$recordings_reply = false;
 		$params = "?key=$search_pattern&_page=$page&_pagesize=$pagesize";
-		$recordings_reply = \Httpful\Request::get($this->recording_service_url . $campaign_id . "/search" . $params)-> send();
+		$recordings_reply = \Httpful\Request::get($this->recording_service_url . $campaign_id . "/search" . $params)->addHeaders($this->headers_array)-> send();
 		if(!$recordings_reply->hasErrors()) {
 			# TODO : Check content-type
 			return dwho_json::decode($recordings_reply->body);
@@ -133,7 +138,7 @@ class xivo_application_service_asterisk_recordingcampaigns extends xivo_applicat
 	
 	public function delete_recording($campaign_id, $recording_id) {
 		$delete_reply = false;
-		$delete_reply = \Httpful\Request::delete($this->recording_service_url . $campaign_id . "/" . $recording_id)-> send();
+		$delete_reply = \Httpful\Request::delete($this->recording_service_url . $campaign_id . "/" . $recording_id)->addHeaders($this->headers_array)-> send();
 		if(!$delete_reply->hasErrors()) {
 			# TODO : Check content-type
 			return dwho_json::decode($delete_reply->body);
@@ -144,7 +149,7 @@ class xivo_application_service_asterisk_recordingcampaigns extends xivo_applicat
 	
 	public function delete_campaign($campaign_id) {
 		$delete_reply = false;
-		$delete_reply = \Httpful\Request::delete($this->recording_service_url . $campaign_id)-> send();
+		$delete_reply = \Httpful\Request::delete($this->recording_service_url . $campaign_id)->addHeaders($this->headers_array)-> send();
 		if(!$delete_reply->hasErrors()) {
 			# TODO : Check content-type
 			return dwho_json::decode($delete_reply->body);
