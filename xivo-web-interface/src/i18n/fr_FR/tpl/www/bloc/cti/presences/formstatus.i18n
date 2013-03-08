@@ -25,6 +25,12 @@ Action
 ; col_actions-args
 Paramètre
 
+; bt_inaccess_status
+Ajouter
+
+; bt_outaccess_status
+Enlever
+
 ; no_actions
 Aucune action
 
