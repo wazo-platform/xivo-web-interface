@@ -35,13 +35,6 @@ $appgeneralmeetme = &$appmeetme->get_module('general');
 $info['generalmeetme'] = $appgeneralmeetme->get_all_by_category();
 $element['generalmeetme'] = $appgeneralmeetme->get_elements();
 
-$appsip = &$ipbx->get_apprealstatic('sip');
-$appgeneralsip = &$appsip->get_module('general');
-$autocreatepeer = $appgeneralsip->get('autocreatepeer');
-$autocreatepeerval = $autocreatepeer['general']['var_val'];
-$info['userinternal'] = array();
-$info['userinternal']['guest'] = ($autocreatepeerval === 'yes') ? true : false;
-
 $general = &$ipbx->get_module('general');
 $info['general'] = $general->get(1);
 $element['general'] = array_keys(dwho_i18n::get_timezone_list());
@@ -94,30 +87,6 @@ if(isset($_QR['fm_send']) === true)
 			$fm_save = true;
 	}
 
-	if(dwho_issa('userinternal',$_QR) === false)
-		$_QR['userinternal'] = array();
-
-	$rs_sip = array();
-	$rs_sip['commented'] = 0;
-	$rs_sip['var_name'] = 'autocreatepeer';
-
-	if(isset($_QR['userinternal']['guest']) === true)
-	{
-		$rs_sip['var_val'] = 'yes';
-		$info['userinternal']['guest'] = true;
-	}
-	else
-	{
-		$rs_sip['var_val'] = 'no';
-		$info['userinternal']['guest'] = false;
-	}
-
-	if($appgeneralsip->set($rs_sip) === false
-			|| $appgeneralsip->save() === false)
-	{
-		dwho_report::push('error', 'Can\'t edit autocreatepeer in staticsip table');
-	}
-
 	if(dwho_issa('general',$_QR) === false)
 		$_QR['general'] = array();
 
@@ -137,14 +106,10 @@ $_TPL->set_var('error', $error);
 $_TPL->set_var('agentglobalparams', $info['agentglobalparams']);
 $_TPL->set_var('generalqueues', $info['generalqueues']);
 $_TPL->set_var('generalmeetme', $info['generalmeetme']);
-$_TPL->set_var('userinternal', $info['userinternal']);
 $_TPL->set_var('general', $info['general']);
 $_TPL->set_var('info', $info);
 $_TPL->set_var('element', $element);
 
-
-$appagent = &$ipbx->get_application('agent',null,false);
-$_TPL->set_var('moh_list', $appagent->get_musiconhold());
 
 $dhtml = &$_TPL->get_module('dhtml');
 $dhtml->set_js('js/dwho/submenu.js');

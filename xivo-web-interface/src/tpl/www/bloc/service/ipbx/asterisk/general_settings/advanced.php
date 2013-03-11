@@ -51,24 +51,12 @@ if(isset($error_js[0]) === true)
 		    onmouseover="dwho_submenu.focus(this);">
 			<div class="tab">
 				<span class="span-center">
-					<a href="#first"><?=$this->bbf('smenu_userinternal');?></a>
+					<a href="#first"><?=$this->bbf('smenu_agents');?></a>
 				</span>
 			</div>
 			<span class="span-right">&nbsp;</span>
 		</li>
 		<li id="dwsm-tab-2"
-		    class="dwsm-blur"
-		    onclick="dwho_submenu.select(this,'sb-part-agents');"
-		    onmouseout="dwho_submenu.blur(this);"
-		    onmouseover="dwho_submenu.focus(this);">
-			<div class="tab">
-				<span class="span-center">
-					<a href="#agents"><?=$this->bbf('smenu_agents');?></a>
-				</span>
-			</div>
-			<span class="span-right">&nbsp;</span>
-		</li>
-		<li id="dwsm-tab-3"
 		    class="dwsm-blur"
 		    onclick="dwho_submenu.select(this,'sb-part-queues');"
 		    onmouseout="dwho_submenu.blur(this);"
@@ -80,7 +68,7 @@ if(isset($error_js[0]) === true)
 			</div>
 			<span class="span-right">&nbsp;</span>
 		</li>
-		<li id="dwsm-tab-4"
+		<li id="dwsm-tab-3"
 		    class="dwsm-blur"
 		    onclick="dwho_submenu.select(this,'sb-part-meetme',1);"
 		    onmouseout="dwho_submenu.blur(this);"
@@ -92,7 +80,7 @@ if(isset($error_js[0]) === true)
 			</div>
 			<span class="span-right">&nbsp;</span>
 		</li>
-		<li id="dwsm-tab-5"
+		<li id="dwsm-tab-4"
 		    class="dwsm-blur-last"
 		    onclick="dwho_submenu.select(this,'sb-part-timezone',1);"
 		    onmouseout="dwho_submenu.blur(this,1);"
@@ -118,14 +106,6 @@ if(isset($error_js[0]) === true)
 ?>
 
 <div id="sb-part-first" class="b-nodisplay">
-	<?=$form->checkbox(array('desc'		=> $this->bbf('fm_userinternal_guest'),
-				 'name'		=> 'userinternal[guest]',
-				 'labelid'	=> 'userinternal-guest',
-				 'help'		=> $this->bbf('hlp_fm_userinternal_guest'),
-				 'checked'	=> $this->get_var('info','userinternal','guest')));?>
-</div>
-
-<div id="sb-part-agents" class="b-nodisplay">
 <?php
 		echo $form->checkbox(array('desc'	=> $this->bbf('fm_agentoptions_autologoffunavail'),
 					'name'	=> 'agentglobalparams[autologoffunavail]',

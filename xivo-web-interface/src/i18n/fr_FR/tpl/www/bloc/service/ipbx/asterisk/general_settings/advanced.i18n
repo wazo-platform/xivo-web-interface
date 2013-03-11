@@ -1,9 +1,6 @@
 ; title_content_name
 Paramètres globaux avancés
 
-; smenu_userinternal
-Utilisateurs internes
-
 ; smenu_agents
 Agents
 
@@ -12,12 +9,6 @@ Files d'attente
 
 ; smenu_meetme
 Chambres de conférence
-
-; fm_userinternal_guest
-Invité :
-
-; hlp_fm_userinternal_guest
-Config asterisk: guest
 
 ;;; agents
 
