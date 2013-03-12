@@ -19,9 +19,9 @@ $array['meetmefeatures'] = array();
 $array['meetmefeatures']['ctibus'] = array('xivo[meetme,%s,%s]');
 $array['meetmefeatures']['ipbx'] = array('dialplan reload', 'module reload app_queue.so');
 
-$array['voicemailfeatures'] = array();
-$array['voicemailfeatures']['ctibus'] = array('xivo[voicemail,%s,%s]');
-$array['voicemailfeatures']['ipbx'] = array('voicemail reload');
+$array['voicemail'] = array();
+$array['voicemail']['ctibus'] = array('xivo[voicemail,%s,%s]');
+$array['voicemail']['ipbx'] = array('voicemail reload');
 
 $array['agentfeatures'] = array();
 $array['agentfeatures']['ctibus'] = array('xivo[agent,%s,%s]', 'xivo[queuemember,update]');

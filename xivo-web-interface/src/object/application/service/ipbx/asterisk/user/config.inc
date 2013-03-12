@@ -56,7 +56,7 @@ $array['import']['field']['voicemailpassword'] = array('voicemail','password');
 $array['import']['field']['voicemailemail'] = array('voicemail','email');
 $array['import']['field']['voicemailattach'] = array('voicemail','attach');
 $array['import']['field']['voicemaildelete'] = array('voicemail','deletevoicemail');
-$array['import']['field']['voicemailskippass'] = array('voicemailfeatures','skipcheckpass');
+$array['import']['field']['voicemailskippass'] = array('voicemail','skipcheckpass');
 
 $array['import']['field']['incallexten'] = array('incall','exten');
 $array['import']['field']['incallcontext'] = array('incall','context');

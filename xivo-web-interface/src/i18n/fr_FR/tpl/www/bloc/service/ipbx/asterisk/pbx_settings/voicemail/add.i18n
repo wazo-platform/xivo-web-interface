@@ -31,7 +31,7 @@ Fuseau horaire :
 ; fm_voicemail_language
 Langue :
 
-; fm_voicemailfeatures_skipcheckpass
+; fm_voicemail_skipcheckpass
 Désactiver la vérification du mot de passe :
 
 ; fm_voicemail_maxmsg

@@ -127,7 +127,7 @@ E-mail :
 ; fm_voicemail_tz
 Fuseau horaire :
 
-; fm_voicemailfeatures_skipcheckpass
+; fm_voicemail_skipcheckpass
 Désactiver la vérification du mot de passe :
 
 ; fm_voicemail_attach

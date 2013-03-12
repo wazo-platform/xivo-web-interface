@@ -237,6 +237,11 @@ $array['element']['passwordlocation']['value'] = array('spooldir','voicemail');
 $array['element']['passwordlocation']['default'] = '';
 $array['element']['passwordlocation']['null'] = true;
 
+$array['element']['skipcheckpass'] = array();
+$array['element']['skipcheckpass']['value'] = array(0,1);
+$array['element']['skipcheckpass']['default'] = 0;
+$array['element']['skipcheckpass']['set'] = true;
+
 dwho::load_class('dwho_network');
 
 $array['filter'] = array();
@@ -298,5 +303,5 @@ $array['filter']['nextaftercmd'] = array('set' => false, 'chk' => 2, 'bool' => t
 $array['filter']['backupdeleted'] = array('set' => false, 'chk' => 2, 'cast' => 'uint','between' => array(0,100,1));
 $array['filter']['volgain'] = array('set' => false, 'chk' => 2, 'cast' => 'float', 'key' => array(-5,-4.5,-4,-3.5,-3,-2.5,-2,-1.5,-1,-0.5,0,0.5,1,1.5,2,2.5,3,3.5,4,4.5,5));
 $array['filter']['passwordlocation'] = array('set' => false, 'chk' => 2, 'key' => array('spooldir','voicemail'));
-
+$array['filter']['skipcheckpass'] = array('bool' => true);
 ?>

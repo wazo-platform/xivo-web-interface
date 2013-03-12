@@ -371,6 +371,10 @@ $array['element']['backupdeleted'] = array();
 $array['element']['backupdeleted']['default'] = 100;
 $array['element']['backupdeleted']['null']    = true;
 
+$array['element']['skipcheckpass'] = array();
+$array['element']['skipcheckpass']['value'] = array(0, 1);
+$array['element']['skipcheckpass']['default'] = 0;
+$array['element']['skipcheckpass']['set'] = true;
 
 // FILTERS
 
@@ -476,5 +480,5 @@ $array['filter']['listen-control-pause-key'] = array('set' => false,'chk' => 2,'
 $array['filter']['listen-control-restart-key'] = array('set' => false,'chk' => 2,'maxlen' => 1024);
 $array['filter']['listen-control-stop-key'] = array('set' => false,'chk' => 2,'maxlen' => 1024);
 $array['filter']['backupdeleted'] = array('cast' => 'uint','between' => array(1,256));
-
+$array['filter']['skipcheckpass'] = array('bool' => true);
 ?>
