@@ -379,9 +379,6 @@ $array['module']['usersip']['datastorage'] = true;
 $array['module']['voicemail'] = array();
 $array['module']['voicemail']['datastorage'] = true;
 
-$array['module']['voicemailfeatures'] = array();
-$array['module']['voicemailfeatures']['datastorage'] = true;
-
 $array['module']['voicemenu'] = array();
 $array['module']['voicemenu']['datastorage'] = true;
 

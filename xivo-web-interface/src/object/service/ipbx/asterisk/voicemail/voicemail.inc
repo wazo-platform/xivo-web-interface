@@ -50,6 +50,7 @@ class xivo_service_asterisk_voicemail extends xivo_service_asterisk_abstract
 
 		$data['uniqueid'] = (int) $data['uniqueid'];
 		$data['commented'] = (bool) $data['commented'];
+		$data['skipcheckpass'] = (bool) $data['skipcheckpass'];
 
 		return($data);
 	}

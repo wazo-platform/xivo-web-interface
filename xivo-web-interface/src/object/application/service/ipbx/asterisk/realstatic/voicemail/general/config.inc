@@ -371,7 +371,6 @@ $array['element']['backupdeleted'] = array();
 $array['element']['backupdeleted']['default'] = 100;
 $array['element']['backupdeleted']['null']    = true;
 
-
 // FILTERS
 
 $array['filter'] = array();
@@ -476,5 +475,4 @@ $array['filter']['listen-control-pause-key'] = array('set' => false,'chk' => 2,'
 $array['filter']['listen-control-restart-key'] = array('set' => false,'chk' => 2,'maxlen' => 1024);
 $array['filter']['listen-control-stop-key'] = array('set' => false,'chk' => 2,'maxlen' => 1024);
 $array['filter']['backupdeleted'] = array('cast' => 'uint','between' => array(1,256));
-
 ?>

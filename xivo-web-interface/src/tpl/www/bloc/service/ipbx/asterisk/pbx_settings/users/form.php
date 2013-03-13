@@ -389,11 +389,11 @@ endif;
 				      $tz_list);
 	endif;
 
-	echo	$form->checkbox(array('desc'	=> $this->bbf('fm_voicemailfeatures_skipcheckpass'),
-				      'name'	=> 'voicemailfeatures[skipcheckpass]',
-				      'labelid'	=> 'voicemailfeatures-skipcheckpass',
-				      'default'	=> $element['voicemailfeatures']['skipcheckpass']['default'],
-				      'checked'	=> $this->get_var('info','voicemailfeatures','skipcheckpass'))),
+	echo	$form->checkbox(array('desc'	=> $this->bbf('fm_voicemail_skipcheckpass'),
+				      'name'	=> 'voicemail[skipcheckpass]',
+				      'labelid'	=> 'voicemail-skipcheckpass',
+				      'default'	=> $element['voicemail']['skipcheckpass']['default'],
+				      'checked'	=> $this->get_var('info','voicemail','skipcheckpass'))),
 
 		$form->select(array('desc'	=> $this->bbf('fm_voicemail_attach'),
 				    'name'	=> 'voicemail[attach]',

@@ -145,7 +145,7 @@ var xivo_ast_users_elt_default = {
 	'voicemail-tz' : {
 		it : false
 	},
-	'voicemailfeatures-skipcheckpass' : {
+	'voicemail-skipcheckpass' : {
 		it : false
 	},
 	'voicemail-attach' : {
@@ -327,9 +327,9 @@ var xivo_ast_fm_user_voicemail = {
 			disabled : true,
 			className : 'it-disabled'
 		} ],
-		link : 'it-voicemailfeatures-skipcheckpass'
+		link : 'it-voicemail-skipcheckpass'
 	},
-	'it-voicemailfeatures-skipcheckpass' : {
+	'it-voicemail-skipcheckpass' : {
 		property : [ {
 			disabled : false,
 			className : 'it-enabled'
@@ -644,7 +644,7 @@ function xivo_ast_user_voicemail_set_info(request) {
 	dwho_eid('it-voicemail-password').value = obj['voicemail']['password'];
 	dwho_eid('it-voicemail-email').value = obj['voicemail']['email'];
 	dwho_eid('it-voicemail-tz').value = obj['voicemail']['tz'];
-	dwho_eid('it-voicemailfeatures-skipcheckpass').checked = dwho_bool(obj['voicemailfeatures']['skipcheckpass']);
+	dwho_eid('it-voicemail-skipcheckpass').checked = dwho_bool(obj['voicemail']['skipcheckpass']);
 	dwho_eid('it-voicemail-attach').value = obj['voicemail']['attach'];
 	dwho_eid('it-voicemail-deletevoicemail').checked = dwho_bool(obj['voicemail']['deletevoicemail']);
 

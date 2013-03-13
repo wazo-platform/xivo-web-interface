@@ -77,7 +77,6 @@ switch($act)
 		if(isset($_QR['fm_send']) === true && dwho_issa('voicemail',$_QR) === true)
 		{
 			$return = &$result;
-
 			if($appvoicemail->set_edit($_QR) === false
 			|| $appvoicemail->edit() === false)
 			{
@@ -88,7 +87,6 @@ switch($act)
 			else
 				$_QRY->go($_TPL->url('service/ipbx/pbx_settings/voicemail'),$param);
 		}
-
 		$dhtml = &$_TPL->get_module('dhtml');
 		$dhtml->set_js('js/dwho/submenu.js');
 

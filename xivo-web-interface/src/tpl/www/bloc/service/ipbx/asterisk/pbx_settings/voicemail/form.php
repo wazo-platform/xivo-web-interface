@@ -17,7 +17,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 $form = &$this->get_module('form');
 $url = &$this->get_module('url');
 
@@ -102,11 +101,11 @@ endif;
 				    'selected'	=> $info['voicemail']['language']),
 			      $element['voicemail']['language']['value']),
 
-		$form->checkbox(array('desc'	=> $this->bbf('fm_voicemailfeatures_skipcheckpass'),
-				      'name'	=> 'voicemailfeatures[skipcheckpass]',
-				      'labelid'	=> 'voicemailfeatures-skipcheckpass',
-				      'default'	=> $element['voicemailfeatures']['skipcheckpass']['default'],
-				      'checked'	=> $info['voicemailfeatures']['skipcheckpass'])),
+		$form->checkbox(array('desc'	=> $this->bbf('fm_voicemail_skipcheckpass'),
+				      'name'	=> 'voicemail[skipcheckpass]',
+				      'labelid'	=> 'voicemail-skipcheckpass',
+				      'default'	=> $element['voicemail']['skipcheckpass']['default'],
+				      'checked'	=> $info['voicemail']['skipcheckpass'])),
 
 		$form->select(array('desc'	=> $this->bbf('fm_voicemail_maxmsg'),
 				    'name'	=> 'voicemail[maxmsg]',
