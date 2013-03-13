@@ -28,8 +28,6 @@ $ctidirectories = &$ipbx->get_module('ctidirectories');
 $ctidirectoryfld = &$ipbx->get_module('ctidirectoryfields');
 $ctisheetactions = &$ipbx->get_module('ctisheetactions');
 $ctisheetevents = &$ipbx->get_module('ctisheetevents');
-$ctistatus = &$ipbx->get_module('ctistatus');
-$ctipresences = &$ipbx->get_module('ctipresences');
 $ldapfilter = &$ipbx->get_module('ldapfilter');
 
 xivo::load_class('xivo_ldapserver',XIVO_PATH_OBJECT,null,false);
@@ -38,13 +36,10 @@ $ldapserver = new xivo_ldapserver();
 $load_directories = $ctidirectories->get_all();
 $load_sheetactions = $ctisheetactions->get_all();
 $load_sheetevents = $ctisheetevents->get_all();
-$load_presences = $ctipresences->get_all();
 
 $out = array(
 	'directories'	  => array(),
 	'sheets'		   => array(),
-	# object display options referred to by the profiles
-	'userstatus'	   => array()
 );
 
 # DIRECTORIES
@@ -146,55 +141,6 @@ if(isset($load_sheetactions) === true
 	$out['sheets']['options'] = $optout;
 	$out['sheets']['displays'] = $dispout;
 	$out['sheets']['conditions'] = $condout;
-}
-
-# PRESENCES (USER STATUSES)
-if(isset($load_presences) === true
-&& is_array($load_presences) === true)
-{
-	$presout = array();
-	foreach($load_presences as $pres)
-	{
-		$presid = $pres['name'];
-		$id = $pres['id'];
-		$where = array();
-		$where['presence_id'] = $id;
-		if(($load_status = $ctistatus->get_all_where($where)) === false)
-			continue;
-
-		$statref = array();
-		foreach($load_status as $stat)
-			$statref[$stat['id']] = $stat['name'];
-
-		foreach($load_status as $stat)
-		{
-			$name = $stat['name'];
-			$presout[$presid][$name]['longname'] = $stat['display_name'];
-			$presout[$presid][$name]['color'] = $stat['color'];
-			$accessids = $stat['access_status'];
-
-			$accessstatus = array();
-			foreach(explode(',', $accessids) as $i)
-				if (isset($statref[$i]))
-					$accessstatus[] = $statref[$i];
-			if(!empty($accessstatus)) {
-				$presout[$presid][$name]['allowed'] = $accessstatus;
-			}
-
-			$actions = explode(',', $stat['actions']);
-			$pattern = '/^(.*)\((.*)\)/';
-			$actionsout = array();
-			foreach($actions as $a)
-			{
-				if (preg_match($pattern, $a, $match) > 0)
-					$actionsout[$match[1]] = $match[2];
-			}
-			if(!empty($actionsout)) {
-				$presout[$presid][$name]['actions'] = $actionsout;
-			}
-		}
-	}
-	$out['userstatus'] = $presout;
 }
 
 $out['bench'] = (float) (microtime(true) - $starttime);
