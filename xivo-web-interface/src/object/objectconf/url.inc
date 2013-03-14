@@ -292,14 +292,6 @@ $array['cti/sheetevents'] = 'cti/index.php/sheetevents/';
 $array['cti/restart'] = 'cti/index.php/restart/';
 
 
-$array['service/ipbx/json/restricted/ctiserver/configuration'] = 'service/ipbx/json.php/restricted/ctiserver/configuration/';
-$array['service/ipbx/json/private/ctiserver/configuration'] = 'service/ipbx/json.php/private/ctiserver/configuration/';
-
-$array['cti/json/restricted/configuration'] = 'cti/json.php/restricted/configuration';
-
-$array['cti/json/private/configuration'] = 'cti/json.php/private/configuration';
-
-
 /*
  * CALLCENTER SECTION
  *
