@@ -26,21 +26,14 @@ $starttime = microtime(true);
 
 $ctidirectories = &$ipbx->get_module('ctidirectories');
 $ctidirectoryfld = &$ipbx->get_module('ctidirectoryfields');
-$ctisheetactions = &$ipbx->get_module('ctisheetactions');
-$ctisheetevents = &$ipbx->get_module('ctisheetevents');
 $ldapfilter = &$ipbx->get_module('ldapfilter');
 
 xivo::load_class('xivo_ldapserver',XIVO_PATH_OBJECT,null,false);
 $ldapserver = new xivo_ldapserver();
 
 $load_directories = $ctidirectories->get_all();
-$load_sheetactions = $ctisheetactions->get_all();
-$load_sheetevents = $ctisheetevents->get_all();
 
-$out = array(
-	'directories'	  => array(),
-	'sheets'		   => array(),
-);
+$out = array('directories' => array());
 
 # DIRECTORIES
 if(isset($load_directories) === true && is_array($load_directories) === true)
@@ -84,63 +77,6 @@ if(isset($load_directories) === true && is_array($load_directories) === true)
 			$dirout[$dirid]['field_' . $field['fieldname']] = array($field['value']);
 	}
 	$out['directories'] = $dirout;
-}
-
-# SHEETS
-$sheetsout = array();
-if(isset($load_sheetevents,$load_sheetevents[0]))
-{
-	$evtout = array();
-	foreach(array_keys($load_sheetevents[0]) as $k)
-	{
-		if($k == 'id')
-			continue;
-		if($load_sheetevents[0][$k] == "")
-			continue;
-		$eventdef = array();
-		$eventdef["display"] = $load_sheetevents[0][$k];
-		$eventdef["option"] = $load_sheetevents[0][$k];
-		$eventdef["condition"] = $load_sheetevents[0][$k];
-		$evtout[$k][] = $eventdef;
-	}
-	$out['sheets']['events'] = $evtout;
-}
-if(isset($load_sheetactions) === true
-&& is_array($load_sheetactions) === true)
-{
-	$optout = array();
-	$dispout = array();
-	$condout = array();
-
-	foreach($load_sheetactions as $action)
-	{
-		$actid = $action['name'];
-
-		$optout[$actid]['focus'] = $action['focus'] == 1 ? "yes" : "no";
-		$optout[$actid]['zip'] = 1;
-
-		$condout[$actid]['whom'] = $action['whom'];
-
-		$arr = dwho_json::decode($action['sheet_info'], true);
-		$qtui = "null";
-
-		if(is_array($arr) === true)
-		{
-			foreach($arr as $k=>$v)
-			{
-				$a1 = $arr[$k];
-				if($a1[1] == 'form')
-					$qtui = $a1[3];
-			}
-		}
-		$dispout[$actid]['systray_info'] = dwho_json::decode($action['systray_info'], true) == false ? array() : dwho_json::decode($action['systray_info'], true);
-		$dispout[$actid]['sheet_info'] = dwho_json::decode($action['sheet_info'], true) == false ? array() : dwho_json::decode($action['sheet_info'], true);
-		$dispout[$actid]['action_info'] = dwho_json::decode($action['action_info'], true) == false ? array() : dwho_json::decode($action['action_info'], true);
-		$dispout[$actid]['sheet_qtui'][$qtui] = $action['sheet_qtui'];
-	}
-	$out['sheets']['options'] = $optout;
-	$out['sheets']['displays'] = $dispout;
-	$out['sheets']['conditions'] = $condout;
 }
 
 $out['bench'] = (float) (microtime(true) - $starttime);
