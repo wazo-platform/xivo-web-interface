@@ -131,3 +131,6 @@ POPC
 
 ; xlet-(remotedirectory)
 Répertoire externe
+
+; xlet-(agentstatusdashboard)
+Grille des agents
