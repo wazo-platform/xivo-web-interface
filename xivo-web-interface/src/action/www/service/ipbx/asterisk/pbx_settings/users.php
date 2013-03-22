@@ -122,8 +122,6 @@ switch($act)
 			$_QRY->go($_TPL->url('service/ipbx/pbx_settings/users'),$param);
 
 		$appuser->delete();
-		$appqueue = &$ipbx->get_application('queue');
-		$appqueue->userskills_delete($_QR['id']);
 
 		$_QRY->go($_TPL->url('service/ipbx/pbx_settings/users'),$param);
 		break;
@@ -134,7 +132,6 @@ switch($act)
 			$_QRY->go($_TPL->url('service/ipbx/pbx_settings/users'),$param);
 
 		$appuser = &$ipbx->get_application('user');
-		$appqueue = &$ipbx->get_application('queue');
 
 		$nb = count($values);
 
@@ -142,8 +139,6 @@ switch($act)
 		{
 			if($appuser->get($values[$i]) !== false)
 				$appuser->delete();
-
-			$appqueue->userskills_delete($values[$i]);
 		}
 
 		$_QRY->go($_TPL->url('service/ipbx/pbx_settings/users'),$param);

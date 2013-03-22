@@ -1625,13 +1625,12 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		|| $this->delete_callfiltermember() === false
 		|| $this->delete_queueskill() === false
         || $this->delete_groupmember() === false
+		|| $this->delete_queuemember() === false
 		|| $this->delete_schedule_path() === false)
 		{
 			$r = false;
 			$this->_reverse_delete();
 		}
-		else
-			$this->unlinks();
 
 		$this->_status = '';
 
