@@ -1631,6 +1631,8 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			$r = false;
 			$this->_reverse_delete();
 		}
+		else
+			$this->unlinks();
 
 		$this->_status = '';
 
