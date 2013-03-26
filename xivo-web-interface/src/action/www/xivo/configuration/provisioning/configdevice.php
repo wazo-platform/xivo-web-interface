@@ -22,12 +22,10 @@ dwho::load_class('dwho_prefs');
 $prefs = new dwho_prefs('provd_config');
 
 $act = isset($_QR['act']) === true ? $_QR['act']  : '';
-$page = dwho_uint($prefs->get('page', 1));
 $search = strval($prefs->get('search', ''));
 
 $param = array();
 $param['act'] = 'list';
-$param['page'] = $page;
 
 if($search !== '')
 	$param['search'] = $search;
@@ -93,8 +91,6 @@ switch($act)
 		$dhtml->set_js('js/service/ipbx/asterisk/devices.js');
 		break;
 	case 'delete':
-		$param['page'] = $page;
-
 		if(isset($_QR['id']) === false || $appprovdconfig->get($_QR['id']) === false)
 			$_QRY->go($_TPL->url('xivo/configuration/provisioning/configdevice'),$param);
 
@@ -103,8 +99,6 @@ switch($act)
 		$_QRY->go($_TPL->url('xivo/configuration/provisioning/configdevice'),$param);
 		break;
 	case 'deletes':
-		$param['page'] = $page;
-
 		if(($values = dwho_issa_val('configdevice',$_QR)) === false)
 			$_QRY->go($_TPL->url('xivo/configuration/provisioning/configdevice'),$param);
 
@@ -121,28 +115,13 @@ switch($act)
 	case 'list':
 	default:
 		$act = 'list';
-		$prevpage = $page - 1;
-		$nbbypage = 20;
 
 		$order = array();
 		$order['id'] = SORT_ASC;
 
-		$limit = array();
-		$limit[0] = $prevpage * $nbbypage;
-		$limit[1] = $nbbypage;
-
-		if (($list = $appprovdconfig->get_config_list($search,$order,$limit,false,false,'device')) === false)
+		if (($list = $appprovdconfig->get_config_list($search,$order,null,false,false,'device')) === false)
 			$list = array();
 
-		$total = $appprovdconfig->get_cnt();
-
-		if($list === false && $total > 0 && $prevpage > 0)
-		{
-			$param['page'] = $prevpage;
-			$_QRY->go($_TPL->url('xivo/configuration/provisioning/config'),$param);
-		}
-
-		$_TPL->set_var('pager',dwho_calc_page($page,$nbbypage,$total));
 		$_TPL->set_var('list',$list);
 		$_TPL->set_var('search',$search);
 }
