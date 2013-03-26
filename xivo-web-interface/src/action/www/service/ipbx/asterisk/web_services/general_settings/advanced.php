@@ -30,12 +30,17 @@ $appgeneralqueues = &$appqueues->get_module('general');
 $appmeetme = &$ipbx->get_apprealstatic('meetme');
 $appgeneralmeetme = &$appmeetme->get_module('general');
 
+$appuserguest = &$ipbx->get_application('user',array('internal' => 1),false);
+
 $general   = &$ipbx->get_module('general');
 
 
 $info['generalqueues'] = $appgeneralqueues->get_all_by_category();
 $info['generalmeetme'] = $appgeneralmeetme->get_all_by_category();
 $info['general']       = $general->get(1);
+
+$guest = $appuserguest->get_where(array('name' => 'guest'),null,true);
+$info['guest_active'] = !$guest['commented'];
 
 $act = $_QRY->get('act');
 
