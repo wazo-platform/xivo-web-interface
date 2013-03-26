@@ -46,15 +46,6 @@ Création automatique d'un utilisateur :
 ; hlp_fm_autocreatepeer
 Config asterisk: autocreatepeer
 
-; fm_autocreatepeer-opt(no)
-Non
-
-; fm_autocreatepeer-opt(yes)
-Oui
-
-; fm_autocreatepeer-opt(persist)
-Persist
-
 ; fm_allowguest
 Accepter un appel non authentifié :
 

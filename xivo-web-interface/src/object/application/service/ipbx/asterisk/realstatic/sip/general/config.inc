@@ -26,8 +26,9 @@ $array['element']['bindport']['default'] = 5060;
 $array['element']['bindport']['setdef'] = true;
 
 $array['element']['autocreatepeer'] = array();
-$array['element']['autocreatepeer']['value'] = array('no','yes','persist');
-$array['element']['autocreatepeer']['default'] = 'persist';
+$array['element']['autocreatepeer']['value'] = array('no','yes');
+$array['element']['autocreatepeer']['default'] = 'no';
+$array['element']['autocreatepeer']['set'] = true;
 
 $array['element']['allowguest'] = array();
 $array['element']['allowguest']['value'] = array('no','yes');
@@ -714,7 +715,7 @@ $array['filter']['bindport'] = array('set' => false,'chk' => 2,'cast' => 'uint',
 $array['filter']['udpbindaddr'] = array('set' => false,'chk' => 2,'callback' => 'dwho_network::valid_host',
 				     'callbackarg'	=> array((DWHO_NETWORK_HOST_IPV4_DOTDEC | DWHO_NETWORK_HOST_HOSTNAME)),
 				     'maxlen'		=> 64);
-$array['filter']['autocreatepeer'] = array('set' => false, 'key' => array('no','yes','persist'));
+$array['filter']['autocreatepeer'] = array('bool' => true);
 $array['filter']['allowguest'] = array('bool' => true);
 $array['filter']['allowsubscribe'] = array('bool' => true);
 $array['filter']['allowoverlap'] = array('bool' => true);
