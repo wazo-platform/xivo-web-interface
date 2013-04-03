@@ -39,7 +39,6 @@ class xivo_application_service_asterisk_queue extends xivo_application_asterisk_
 	var $_skill		= false;
 	var $_skillcat		= false;
 	var $_skillrule 	= false;
-	var $_userskill 	= false;
 	var $_agentskill 	= false;
 	var $_errors		= array();
 
@@ -69,7 +68,6 @@ class xivo_application_service_asterisk_queue extends xivo_application_asterisk_
 		|| ($this->_skill = &$this->_service->get_module('queueskill')) === false
 		|| ($this->_skillcat = &$this->_service->get_module('queueskillcat')) === false
 		|| ($this->_skillrule = &$this->_service->get_module('queueskillrule')) === false
-		|| ($this->_userskill = &$this->_service->get_module('userqueueskill')) === false
 		|| ($this->_agentskill = &$this->_service->get_module('agentqueueskill')) === false
 		|| ($this->_extenumbers = $this->get_abstract('extenumbers',array('type' => 'queue'))) === false
 		|| ($this->_dialaction = $this->get_abstract('dialaction',array('category' => 'queue'))) === false
@@ -1263,13 +1261,12 @@ class xivo_application_service_asterisk_queue extends xivo_application_asterisk_
 
 	function skills_delete($id, $vals_only=false)
 	{
-		// deleting related user/agent skills
+		// deleting related agent skills
 		$skills = $this->_skill->get_list_where(array('catid' => $id));
 		if(is_array($skills))
 		{
 			foreach($skills as $skid)
 			{
-				$this->_userskill->delete_where(array('skillid' => $skid));
 				$this->_agentskill->delete_where(array('skillid' => $skid));
 			}
 		}
@@ -1390,12 +1387,10 @@ class xivo_application_service_asterisk_queue extends xivo_application_asterisk_
 
 		$delete_values = array_diff($stored_values, $update_values);
 
-		// WARNING: skills may be used by users/agents & by skill rules
-		//	- we also delete user skills
+		// WARNING: skills may be used by agents & by skill rules
 		//	  (rule skills just be ignored)
 		foreach($delete_values as $id)
 		{
-			$this->_userskill->delete_where(array('skillid' => $id));
 			$this->_agentskill->delete_where(array('skillid' => $id));
 			$res = $this->_skill->delete($id);
 		}
@@ -1571,77 +1566,6 @@ class xivo_application_service_asterisk_queue extends xivo_application_asterisk_
 #
 #		return($this->_dso->skillrules_getall($filter));
 	}
-
-
-
-
-	/** user skills */
-	/**
-		check values
-	*/
-	function userskills_setadd($userskills)
-	{
-		$this->_errors = array();
-		$skillids = array();
-		$err = true;
-
-		for($i = count($userskills) - 1; $i >= 0; $i--)
-		{
-			$this->_errors[$i] = array();
-
-			if(strlen($userskills[$i]['weight']) == 0)
-			{ $err = false; $this->_errors[$i]['weight'] = 'empty'; }
-			else if(!(is_int($userskills[$i]['weight']) || ctype_digit($userskills[$i]['weight'])))
-			{ $err = false; $this->_errors[$i]['weight'] = 'notnumeric'; }
-			else if(((int)$userskills[$i]['weight']) < 0
-			|| ((int)$userskills[$i]['weight']) > 100)
-			{ $err = false; $this->_errors[$i]['weight'] = 'unbound'; }
-
-			if(strlen($userskills[$i]['skillid']) == 0)
-			{ $err = false; $this->_errors[$i]['skillid'] = 'empty'; }
-			if(array_key_exists($userskills[$i]['skillid'], $skillids))
-			{
-				$err = false;
-				$this->_errors[$i]['skillid'] = 'doubloon';
-				$this->_errors[$skillids[$userskills[$i]['skillid']]]['skillid'] = 'doubloon';
-			}
-			else
-			{ $skillids[$userskills[$i]['skillid']] = $i; }
-
-		}
-
-		return($err);
-	}
-
-	function userskills_get_error()
-	{ return $this->_errors; }
-
-	function userskills_add($userskills)
-	{
-		$count = count($userskills);
-		for($i =  0; $i < $count; $i++)
-			$this->_userskill->add($userskills[$i]);
-
-		return true;
-	}
-
-	function userskills_setedit($userskills)
-	{ return $this->userskills_setadd($userskills); }
-
-	function userskills_edit($userid, $userskills)
-	{
-		$this->userskills_delete($userid);
-		return $this->userskills_add($userskills);
-	}
-
-	function userskills_delete($userid)
-	{ return $this->_userskill->delete_where(array('userid' => $userid)); }
-
-	function userskills_get($userid)
-	{
-		return $this->_dso->userskills_get(intval($userid));
-	}
-
 
 	/** agent skills */
 	function agentskills_setadd($agentskills)

@@ -16,9 +16,6 @@ Services
 ; smenu_signalling
 Signalling
 
-; smenu_queueskills
-Queueskills
-
 ; smenu_groups
 Groups
 
@@ -633,21 +630,6 @@ T38
 
 ; col_2
 Weight
-
-; no_disp
-No skills
-
-; error_fm_queueskill_skillid(doubloon)
-Same skill can't be affected twice
-
-; error_fm_queueskill_weight(empty)
-You must set a weight (between 0 and 100)
-
-; error_fm_queueskill_weight(notnumeric)
-weight is not an integer
-
-; error_fm_queueskill_weight(unbound)
-weight must be an integer between 0 and 100
 
 ; column_addon
 Expansion modules

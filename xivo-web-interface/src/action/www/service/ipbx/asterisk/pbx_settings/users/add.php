@@ -52,26 +52,9 @@ $rightcall['list'] = $apprightcall->get_rightcalls_list(null,
 							null,
 							true);
 
-$queueskills = array();
-
 if(isset($_QR['fm_send']) === true
-&& dwho_issa('userfeatures',$_QR) === true
-&& dwho_issa('queueskill-skill',$_QR) === true
-&& dwho_issa('queueskill-weight',$_QR) === true)
+&& dwho_issa('userfeatures',$_QR) === true)
 {
-	$queueskills = array();
-
-	// skipping the last one (empty entry)
-	$count = count($_QR['queueskill-skill']) - 1;
-	for($i = 0; $i < $count; $i++)
-	{
-		$queueskills[] = array(
-			'id'    	=> $_QR['queueskill-skill'][$i],
-			'weight'	=> $_QR['queueskill-weight'][$i],
-		);
-	}
-	$_QR['queueskills'] = $queueskills;
-
 	if($appuser->set_add($_QR) === false
 	|| $appuser->add() === false)
 	{
@@ -133,7 +116,6 @@ if($rightcall['list'] !== false && dwho_issa('rightcall',$result) === true
 
 $element = $appuser->get_elements();
 $element['userfeatures']['timezone']['default'] = $general['timezone'];
-$element['queueskills'] =  $appqueue->skills_gettree();
 
 if(empty($result) === false)
 {
@@ -179,7 +161,6 @@ $softkeys_list = array(
 );
 
 
-$_TPL->set_var('queueskills', $queueskills);
 $_TPL->set_var('info',$result);
 $_TPL->set_var('error',$error);
 $_TPL->set_var('fm_save',$fm_save);

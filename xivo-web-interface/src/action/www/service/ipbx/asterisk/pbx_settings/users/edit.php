@@ -113,7 +113,6 @@ if($rightcall['list'] !== false && dwho_issa('rightcall',$return) === true
 	$rightcall['slt'] = array_keys($rightcall['slt']);
 
 $element = $appuser->get_elements();
-$element['queueskills'] =  $appqueue->skills_gettree();
 
 if(empty($return) === false)
 {

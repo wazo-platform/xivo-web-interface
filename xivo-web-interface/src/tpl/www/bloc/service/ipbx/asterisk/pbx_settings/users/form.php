@@ -609,12 +609,6 @@ endif;
 	</fieldset>
 </div>
 
-<div id="sb-part-queueskills" class="b-nodisplay">
-<?php
-	$this->file_include('bloc/service/ipbx/asterisk/pbx_settings/users/queueskills');
-?>
-</div>
-
 <div id="sb-part-groups" class="b-nodisplay">
 <?php
 	$this->file_include('bloc/service/ipbx/asterisk/pbx_settings/users/groups');

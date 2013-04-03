@@ -55,19 +55,6 @@
 			</div>
 			<span class="span-right">&nbsp;</span>
 		</li>
-<?php /*
-		<li id="dwsm-tab-4"
-		    class="dwsm-blur"
-		    onclick="dwho_submenu.select(this,'sb-part-queueskills');"
-		    onmouseout="dwho_submenu.blur(this);"
-		    onmouseover="dwho_submenu.focus(this);">
-			<div class="tab">
-				<span class="span-center">
-					<a href="#queueskills"><?=$this->bbf('smenu_queueskills');?></a></span>
-			</div>
-			<span class="span-right">&nbsp;</span>
-		</li>
-*/ ?>
 		<li id="dwsm-tab-4"
 		    class="dwsm-blur"
 		    onclick="dwho_submenu.select(this,'sb-part-service');"
