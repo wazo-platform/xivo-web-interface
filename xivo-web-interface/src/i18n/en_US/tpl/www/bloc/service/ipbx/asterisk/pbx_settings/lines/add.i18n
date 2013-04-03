@@ -364,9 +364,6 @@ Name
 ; col_group-channel
 Channel
 
-; col_group-calllimit
-Call limit
-
 ; no_group
 No interception groups
 
@@ -381,9 +378,6 @@ Channel
 
 ; col_queue-penalty
 Penalty
-
-; col_queue-calllimit
-Call limit
 
 ; no_queue
 No queues

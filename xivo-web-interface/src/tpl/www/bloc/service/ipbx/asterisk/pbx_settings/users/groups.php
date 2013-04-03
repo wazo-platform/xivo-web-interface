@@ -90,8 +90,7 @@ $qmember = $this->get_var('qmember');
 	<table>
 		<tr class="sb-top">
 			<th class="th-left"><?=$this->bbf('col_group-name');?></th>
-			<th class="th-center"><?=$this->bbf('col_group-channel');?></th>
-			<th class="th-right"><?=$this->bbf('col_group-calllimit');?></th>
+			<th class="th-right"><?=$this->bbf('col_group-channel');?></th>
 		</tr>
 <?php
 		foreach($groups as $value):
@@ -100,16 +99,14 @@ $qmember = $this->get_var('qmember');
 			if(dwho_issa($value['id'],$gmember['info']) === true):
 				$class = '';
 				$value['member'] = $gmember['info'][$value['id']];
-				$calllimit = intval($value['member']['call-limit']);
 			else:
 				$class = ' b-nodisplay';
 				$value['member'] = null;
-				$calllimit = '';
 			endif;
 
 		echo	'<tr id="group-',$name,'" class="fm-paragraph',$class,'">',"\n",
 			'<td class="td-left">',$name,'</td>',"\n",
-			'<td>',
+			'<td class="td-right">',
 			$form->select(array('paragraph'	=> false,
 					    'name'	=> 'group['.$name.'][chantype]',
 					    'id'	=> false,
@@ -119,20 +116,11 @@ $qmember = $this->get_var('qmember');
 					    'selected'	=> $value['member']['channel']),
 				      $element['qmember']['chantype']['value']),
 			'</td>',"\n",
-			'<td class="td-right">',
-			$form->select(array('paragraph'	=> false,
-					    'name'	=> 'group['.$name.'][call-limit]',
-					    'id'	=> false,
-					    'label'	=> false,
-					    'default'	=> $element['qmember']['call-limit']['default'],
-					    'selected'	=> $calllimit),
-				      $element['qmember']['call-limit']['value']),
-			'</td>',"\n",
 			'</tr>',"\n";
 		endforeach;
 ?>
 		<tr id="no-group"<?=(empty($gmember['slt']) === false ? ' class="b-nodisplay"' : '')?>>
-			<td colspan="3" class="td-single"><?=$this->bbf('no_group');?></td>
+			<td colspan="2" class="td-single"><?=$this->bbf('no_group');?></td>
 		</tr>
 	</table>
 </div>
@@ -207,8 +195,7 @@ $qmember = $this->get_var('qmember');
 		<tr class="sb-top">
 			<th class="th-left"><?=$this->bbf('col_queue-name');?></th>
 			<th class="th-center"><?=$this->bbf('col_queue-channel');?></th>
-			<th class="th-center"><?=$this->bbf('col_queue-penalty');?></th>
-			<th class="th-right"><?=$this->bbf('col_queue-calllimit');?></th>
+			<th class="th-right"><?=$this->bbf('col_queue-penalty');?></th>
 		</tr>
 <?php
 		foreach($queues as $value):
@@ -217,12 +204,11 @@ $qmember = $this->get_var('qmember');
 			if(dwho_issa($value['id'],$qmember['info']) === true):
 				$class = '';
 				$value['member'] = $qmember['info'][$value['id']];
-				$calllimit = intval($value['member']['call-limit']);
 				$penalty = intval($value['member']['penalty']);
 			else:
 				$class = ' b-nodisplay';
 				$value['member'] = null;
-				$penalty = $calllimit = '';
+				$penalty = '';
 			endif;
 
 		echo	'<tr id="queue-',$name,'" class="fm-paragraph',$class,'">',"\n",
@@ -237,7 +223,7 @@ $qmember = $this->get_var('qmember');
 					    'selected'	=> $value['member']['channel']),
 				      $element['qmember']['chantype']['value']),
 			'</td>',"\n",
-			'<td>',
+			'<td class="td-right">',
 			$form->select(array('paragraph'	=> false,
 					    'name'	=> 'queue['.$name.'][penalty]',
 					    'id'	=> false,
@@ -246,20 +232,11 @@ $qmember = $this->get_var('qmember');
 					    'selected'	=> $penalty),
 				      $element['qmember']['penalty']['value']),
 			'</td>',"\n",
-			'<td class="td-right">',
-			$form->select(array('paragraph'	=> false,
-					    'name'	=> 'queue['.$name.'][call-limit]',
-					    'id'	=> false,
-					    'label'	=> false,
-					    'default'	=> $element['qmember']['call-limit']['default'],
-					    'selected'	=> $calllimit),
-				      $element['qmember']['call-limit']['value']),
-			'</td>',"\n",
 			'</tr>',"\n";
 		endforeach;
 ?>
 		<tr id="no-queue"<?=(empty($qmember['slt']) === false ? ' class="b-nodisplay"' : '')?>>
-			<td colspan="4" class="td-single"><?=$this->bbf('no_queue');?></td>
+			<td colspan="3" class="td-single"><?=$this->bbf('no_queue');?></td>
 		</tr>
 	</table>
 </div>

@@ -586,8 +586,7 @@ class xivo_application_service_asterisk_queue extends xivo_application_asterisk_
 			$where['userid'] = $uinfo['id'];
 
 			$info = $where;
-			$info['penalty'] = $info['call-limit'] = 0;
-			$info['paused'] = null;
+			$info['penalty'] = 0;
 
 			if($action === 'edit'
 			&& $this->_queuemember->get_where($where) !== false

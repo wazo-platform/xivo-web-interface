@@ -238,9 +238,6 @@ Nom
 ; col_group-channel
 Canal
 
-; col_group-calllimit
-Nb Appels
-
 ; no_group
 Aucun groupe d'interception
 
@@ -255,9 +252,6 @@ Canal
 
 ; col_queue-penalty
 Pénalité
-
-; col_queue-calllimit
-Nb Appels
 
 ; no_queue
 Aucune file d'attente
