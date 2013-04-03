@@ -612,13 +612,6 @@ class xivo_application_service_asterisk_queue extends xivo_application_asterisk_
 			}
 
 			$info['queue_name'] = $name;
-			$info['skills'] = '';
-
-			// set user queueskill
-			if($type === 'agent' && $this->_agentskill->exists(array('agentid' => $uinfo['id'])) !== false
-			|| $this->_userskill->exists(array('userid' => $uinfo['id'])) !== false)
-				$info['skills'] = $type . '-' . $uinfo['id'];
-
 			$info['position'] = $i+1;
 
 			if(($rs = $this->_queuemember->chk_values($info)) === false

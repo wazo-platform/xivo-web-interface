@@ -695,8 +695,6 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 
 		if($type === 'group')
 			$info['penalty'] = 0;
-		else if($type == 'queue')
-			$info['skills'] = '';
 
 		for($i = 0;$i < $nb;$i++)
 		{
@@ -937,8 +935,6 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 		for($i = 0;$i < $nb;$i++)
 		{
 			$rs[$i]['userid'] = $iduserfeatures;
-			if($type == 'queue')
-				$rs[$i]['skills'] = $iduserfeatures;
 
 			unset($rs[$i]['groupfeaturesid'],$rs[$i]['queuefeaturesid']);
 
@@ -1276,9 +1272,6 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 
 			foreach ($to_edit as $element)
 			{
-				if($type == 'queue')
-					$element['skills'] = $element['userid'];
-
 				unset($element['groupfeaturesid'],$element['queuefeaturesid']);
 				$where = array('queue_name' => $element['queue_name'], 'interface' => $element['interface']);
 				if($this->_queuemember->edit($where, $element) === false)
@@ -1294,8 +1287,6 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 		foreach ($to_add as $element)
 		{
 			$element['userid'] = $this->_info['linefeatures']['iduserfeatures'];
-			if($type == 'queue')
-				$element['skills'] = $element['userid'];
 
 			unset($element['groupfeaturesid'],$element['queuefeaturesid']);
 
