@@ -51,7 +51,6 @@ else
 		$arr['passwd'] = $ref['agentfeatures']['passwd'];
 		$arr['context'] = $ref['agentfeatures']['context'];
 		$arr['language'] = $ref['agentfeatures']['language'];
-		$arr['commented'] = $ref['agentfeatures']['commented'];
 
 		$data[] = $arr;
 	}
