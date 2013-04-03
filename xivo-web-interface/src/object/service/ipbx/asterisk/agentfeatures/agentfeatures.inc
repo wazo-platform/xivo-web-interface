@@ -28,6 +28,7 @@ class xivo_service_asterisk_agentfeatures extends xivo_service_asterisk_abstract
 	var $_origin		= false;
 	var $_origin_list	= false;
 	var $_identity		= false;
+	var $_disable       = false;
 
 	public function __construct(&$sre,&$dso)
 	{
