@@ -75,11 +75,6 @@ $page = $url->pager(
 		for($i = 0;$i < $nb;$i++):
 
 			$ref = &$list[$i];
-			if($ref['agentfeatures']['commented'] === true):
-				$icon = 'disable';
-			else:
-				$icon = 'enable';
-			endif;
 ?>
 	<tr onmouseover="this.tmp = this.className; this.className = 'sb-content l-infos-over';"
 	    onmouseout="this.className = this.tmp;"
@@ -95,8 +90,7 @@ $page = $url->pager(
 		<td class="txt-left" title="<?=dwho_alttitle($ref['agentfeatures']['fullname']);?>">
 			<label for="it-agents-<?=$i?>" id="lb-agents-<?=$i?>">
 <?php
-				echo	$url->img_html('img/site/flag/'.$icon.'.gif',null,'class="icons-list"'),
-					dwho_htmlen(dwho_trunc($ref['agentfeatures']['fullname'],25,'...',false));
+				echo dwho_htmlen(dwho_trunc($ref['agentfeatures']['fullname'],25,'...',false));
 ?>
 			</label>
 		</td>

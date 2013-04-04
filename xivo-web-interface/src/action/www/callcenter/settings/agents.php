@@ -472,30 +472,6 @@ switch($act)
 
 		$_QRY->go($_TPL->url('callcenter/settings/agents'),$param);
 		break;
-	case 'enableagents':
-	case 'disableagents':
-		$param['act'] = 'listagent';
-		$param['page'] = $page;
-
-		if(($values = dwho_issa_val('agents',$_QR)) === false)
-			$_QRY->go($_TPL->url('callcenter/settings/agents'),$param);
-
-		$appagent = &$ipbx->get_application('agent',null,false);
-
-		$nb = count($values);
-
-		for($i = 0;$i < $nb;$i++)
-		{
-			if($appagent->get($values[$i]) === false)
-				continue;
-			else if($act === 'disableagents')
-				$appagent->disable();
-			else
-				$appagent->enable();
-		}
-
-		$_QRY->go($_TPL->url('callcenter/settings/agents'),$param);
-		break;
 	case 'listagent':
 		$prevpage = $page - 1;
 		$nbbypage = XIVO_SRE_IPBX_AST_NBBYPAGE;
