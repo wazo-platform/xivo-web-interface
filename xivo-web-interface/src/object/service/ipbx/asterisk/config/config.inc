@@ -370,9 +370,6 @@ $array['module']['userfeatures']['datastorage'] = true;
 $array['module']['useriax'] = array();
 $array['module']['useriax']['datastorage'] = true;
 
-$array['module']['userqueueskill'] = array();
-$array['module']['userqueueskill']['datastorage'] = true;
-
 $array['module']['usersip'] = array();
 $array['module']['usersip']['datastorage'] = true;
 

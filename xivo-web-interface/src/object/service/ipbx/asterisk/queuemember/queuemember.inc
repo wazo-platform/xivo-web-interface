@@ -59,7 +59,6 @@ class xivo_service_asterisk_queuemember extends xivo_service_asterisk_abstract
 		if ($arr['position'] == 0)
 			$arr['position'] = $this->_get_next_position_for_queuename($arr['queue_name']);
 
-		$arr['skills'] = $arr['usertype'].'-'.$arr['userid'];
 		return(parent::add($arr,$id));
 	}
 
@@ -71,7 +70,6 @@ class xivo_service_asterisk_queuemember extends xivo_service_asterisk_abstract
 		if ($arr['position'] == 0)
 			$arr['position'] = $this->_get_next_position_for_queuename($arr['queue_name']);
 
-		$arr['skills'] = $arr['usertype'].'-'.$arr['userid'];
 		return(parent::edit($id,$arr,$disable));
 	}
 

@@ -284,29 +284,6 @@ class xivo_application_service_asterisk_queue_sql extends xivo_application_abstr
 		return $res;
 	}
 
-
-	function userskills_get($id)
-	{
-		if(!is_int($id))
-		{ return false; }
-
-		$this->_dso->new_select('userqueueskill');
-		$this->_dso->where(array('userid' => $id));
-
-		$this->_dso->leftjoin('queueskill',
-			'queueskill.id = userqueueskill.skillid',
-			null,
-			null);
-
-		$this->_dso->new_order('name', null, 'queueskill');
-
-		$res = $this->_dso->select_all(null, true);
-
-		$this->_dso->reset_order();
-		$this->_dso->reset_limit();
-		return($res);
-	}
-
 	function agentskills_get($id)
 	{
 		if(!is_int($id))

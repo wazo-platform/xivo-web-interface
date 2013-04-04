@@ -45,7 +45,6 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 	var $_conf			= array();
 	var $_param			= array();
 	var $_destination	= null;
-	var $_queueskills   = null;
 	var $_schedule_path = false;
 	var $_attachment 	= false;
 
@@ -59,7 +58,6 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		$this->_dso = &$dso;
 
 		if(($this->_userfeatures = &$this->_service->get_module('userfeatures')) === false
-		|| ($this->_queueskills = &$this->_service->get_module('userqueueskill')) === false
 		|| ($this->_schedule_path = &$this->_service->get_module('schedule_path')) === false
 		|| $this->load_init($param) === false)
 			return(false);
@@ -156,10 +154,6 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 
 		if(dwho_ak('phonefunckey',$nocomponents,true) === false)
 			$this->_get_phonefunckey();
-
-		// queueskills
-		//$skills = $this->_queueskills->get_skills($this->_info['userfeatures']['id']);
-		//$this->_info['queueskills'] = $skills === false?array():$skills;
 
 		// schedule
 		$this->_info['schedule_id'] = 0;
@@ -510,14 +504,6 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 
 			$userfeatures = dwho_array_startswith_key($ref,'userfeatures.',true);
 			$r[$userfeatures['id']] = $this->_userfeatures->_prepare($userfeatures);
-/*
-			// get userskills
-			$skills = $this->_queueskills->get_skills($userfeatures['id']);
-			if($skills === false)
-				$skills = array();
-
-			$r[$userfeatures['id']]['queueskills'] = $skills;
-*/
 			if($this->_components === false)
 				continue;
 
@@ -763,11 +749,6 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 
 		if(dwho_issa('phonefunckey',$arr) === true)
 			$this->set_phonefunckey($arr['phonefunckey'],$iduserfeatures);
-/*
-		// QUEUESKILLS
-		if(dwho_issa('queueskills',$arr) === true)
-			$this->set_queueskills($action, $arr['queueskills']);
-*/
 		if($this->get_errnb() > 0)
 			$r = false;
 		else
@@ -1095,34 +1076,6 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		return(true);
 	}
 
-	function set_queueskills($action, $arr)
-	{
-		if($action !== 'add'
-		|| is_array($arr) === false)
-			return(false);
-
-		$skills = array();
-		foreach($arr as $skill)
-		{
-			$skills[] = array(
-				'userid'    => null,
-				'skillid'   => $skill['id'],
-				'weight'    => intval($skill['weight'])
-			);
-		}
-
-		$this->_set_result('queueskills', $skills);
-
-		$appqueue = &$this->_service->get_application('queue');
-		if($appqueue->userskills_setadd($skills) === false)
-		{
-			$this->_set_error('queueskills', $appqueue->userskills_get_error());
-			return false;
-		}
-
-		return true;
-	}
-
 	function update_pictureid($pictureid,$iduserfeatures)
 	{
 		if(($pictureid = dwho_ulongint($pictureid)) === 0
@@ -1152,7 +1105,6 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		|| $this->add_dialaction($userfeaturesid) === false
 		|| $this->edit_linefeatures($userfeaturesid) === false
 		|| $this->add_voicemail($userfeaturesid) === false
-		|| $this->add_queueskills($userfeaturesid) === false
 		|| $this->add_schedule_path($userfeaturesid) === false)
 		{
 			$r = false;
@@ -1246,24 +1198,6 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			$this->_return['phonefunckey'] = false;
 
 		return(true);
-	}
-
-	function add_queueskills($userfeaturesid)
-	{
-		$rs = false;
-
-		if(($userfeaturesid = dwho_ulongint($userfeaturesid)) === 0
-		|| ($rs = $this->get_result('queueskills')) === null
-		|| $rs === false)
-			return($rs);
-
-		foreach($rs as &$skill)
-		{ $skill['userid'] = $userfeaturesid; }
-
-		$appqueue = &$this->_service->get_application('queue');
-		$ret = $appqueue->userskills_add($rs);
-
-		return $ret;
 	}
 
 	function add_schedule_path($userfeaturesid)
@@ -1623,7 +1557,6 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		|| $this->delete_dialaction() === false
 		|| $this->delete_phonefunckey() === false
 		|| $this->delete_callfiltermember() === false
-		|| $this->delete_queueskill() === false
         || $this->delete_groupmember() === false
 		|| $this->delete_queuemember() === false
 		|| $this->delete_schedule_path() === false)
@@ -1706,12 +1639,6 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		$callfiltermember->delete_where($where);
 
 		return(true);
-	}
-
-	function delete_queueskill()
-	{
-		$appqueue = &$this->_service->get_application('queue');
-		return $appqueue->userskills_delete($this->_info['userfeatures']['id']);
 	}
 
 	function delete_schedule_path()
