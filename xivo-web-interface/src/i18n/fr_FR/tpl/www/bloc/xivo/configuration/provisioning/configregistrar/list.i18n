@@ -10,3 +10,6 @@ Enregistrement secondaire
 
 ; opt_delete_confirm
 Etes-vous certain de vouloir supprimer ce modele de ligne ?
+
+; no_config
+Aucun modèle trouvé

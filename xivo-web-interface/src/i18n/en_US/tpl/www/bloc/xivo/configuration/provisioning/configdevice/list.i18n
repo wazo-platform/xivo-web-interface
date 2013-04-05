@@ -2,8 +2,8 @@
 ; col_name
 Name
 
-; no_device
-No device found
-
 ; opt_delete_confirm
 Are you sure you want to delete this template device?
+
+; no_config
+No device found
