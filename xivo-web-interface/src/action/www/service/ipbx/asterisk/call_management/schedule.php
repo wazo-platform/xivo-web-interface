@@ -132,7 +132,7 @@ case 'add':
 			array_shift($cdialaction); // shift schedule_fallback
 
 			$closed = array();
-			for($i = 0; $i < count($_QR['closed']['hours'])-1; $i++)
+			foreach($_QR['closed']['hours'] as $i => $hour)
 			{
 				$closed[] = array(
 					'hours'      => $_QR['closed']['hours'][$i],
@@ -143,7 +143,7 @@ case 'add':
 				);
 
 			}
-			$_QR['closed'] = $closed;
+			$_QR['closed'] = array_slice($closed, 0, -1);
 
 			if($appschedule->set_edit($_QR) === false
 			|| $appschedule->edit() === false)
