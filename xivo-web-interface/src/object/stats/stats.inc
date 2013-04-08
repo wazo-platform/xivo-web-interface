@@ -444,11 +444,7 @@ class xivo_stats_lib
 		|| isset($arr['id']) === false
 		|| isset($arr['fullname']) === false
 		|| isset($arr['identity']) === false
-		|| isset($arr['number']) === false
-		|| isset($arr['commented']) === false)
-			return(false);
-
-		if (((bool) $arr['commented']) === true)
+		|| isset($arr['number']) === false)
 			return(false);
 
 		$rs = array();
