@@ -285,6 +285,7 @@ class dwho_datastorage_adapter_ldap extends dwho_datastorage_adapter_abstract
 		}
 
 		$this->set_option('protocol',$this->_param['protocol']);
+		$this->set_option(LDAP_OPT_REFERRALS, false);
 
 		if((bool) $this->_param['tls'] === true
 				&& $this->get_option('protocol') > 2
