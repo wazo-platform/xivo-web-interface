@@ -788,9 +788,12 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 		}
 
 		$switchboard_directory_context = array(
-			'name' => '__switchboard_directory',
-			'displayname' => 'Switchboard',
-			'entity' => $this->_wizsess['entity']['name']
+			'context' => array(
+				'name' => '__switchboard_directory',
+				'displayname' => 'Switchboard',
+				'entity' => $this->_wizsess['entity']['name'],
+				'contexttype' => 'others'
+			)
 		);
 
 		if($appcontext->set_add($switchboard_directory_context) === false
