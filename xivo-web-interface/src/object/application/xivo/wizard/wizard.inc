@@ -768,6 +768,7 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 		$context_internal = true;
 		$context_incall = true;
 		$context_outcall = true;
+		$context_switchboard = true;
 
 		$listcontext = $this->_wizsess['context'];
 
@@ -784,6 +785,22 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 
 				$appcontext->delete();
 			}
+		}
+
+		$switchboard_directory_context = array(
+			'context' => array(
+				'name' => '__switchboard_directory',
+				'displayname' => 'Switchboard',
+				'entity' => $this->_wizsess['entity']['name'],
+				'contexttype' => 'others'
+			)
+		);
+
+		if($appcontext->set_add($switchboard_directory_context) === false
+		|| $appcontext->add() === false)
+		{
+			$context_switchboard = false;
+			$this->_set_error('context_switchboard','save');
 		}
 
 		if($appcontext->set_add($listcontext['internal']) === false
@@ -809,7 +826,8 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 
 		if($context_internal === false
 		|| $context_incall === false
-		|| $context_outcall === false)
+		|| $context_outcall === false
+		|| $context_switchboard === false)
 			return(false);
 
 		return(true);
