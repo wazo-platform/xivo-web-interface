@@ -33,3 +33,6 @@ password must be at least 4 characters long
 
 ; error_fm_password(maximumlength)
 password must be at most 64 characters long
+
+; error_fm_password(cast)
+password contains invalid characters
