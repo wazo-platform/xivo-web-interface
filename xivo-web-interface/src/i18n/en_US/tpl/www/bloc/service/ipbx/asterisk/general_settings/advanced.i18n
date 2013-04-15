@@ -1,9 +1,6 @@
 ; title_content_name
 Global advanced parameters
 
-; smenu_userinternal
-Internal users
-
 ; smenu_agents
 Agents
 
@@ -12,12 +9,6 @@ Queues
 
 ; smenu_meetme
 Conference rooms
-
-; fm_userinternal_guest
-Guest:
-
-; hlp_fm_userinternal_guest
-Asterisk config: guest
 
 ;;; agents
 
