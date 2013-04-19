@@ -93,28 +93,25 @@ $yesno = array($this->bbf('no'), $this->bbf('yes'));
 </div>
 
 <div id="sb-part-xlets" class="b-nodisplay">
-<?php
-	$type = 'xlets';
-?>
 	<div class="sb-list">
 		<table>
 			<thead>
 			<tr class="sb-top">
-				<th class="th-left"><?=$this->bbf('col_'.$type.'-name');?></th>
-				<th class="th-center"><?=$this->bbf('col_'.$type.'-args');?></th>
-				<th class="th-center"><?=$this->bbf('col_'.$type.'-f');?></th>
-				<th class="th-center"><?=$this->bbf('col_'.$type.'-c');?></th>
-				<th class="th-center"><?=$this->bbf('col_'.$type.'-m');?></th>
-				<th class="th-center"><?=$this->bbf('col_'.$type.'-s');?></th>
-				<th class="th-center"><?=$this->bbf('col_'.$type.'-num');?></th>
+				<th class="th-left"><?=$this->bbf('col_xlets-name');?></th>
+				<th class="th-center"><?=$this->bbf('col_xlets-args');?></th>
+				<th class="th-center"><?=$this->bbf('col_xlets-f');?></th>
+				<th class="th-center"><?=$this->bbf('col_xlets-c');?></th>
+				<th class="th-center"><?=$this->bbf('col_xlets-m');?></th>
+				<th class="th-center"><?=$this->bbf('col_xlets-s');?></th>
+				<th class="th-center"><?=$this->bbf('col_xlets-num');?></th>
 				<th class="th-right">
 					<?=$url->href_html($url->img_html('img/site/button/mini/orange/bo-add.gif',
-									  $this->bbf('col_'.$type.'-add'),
+									  $this->bbf('col_xlets-add'),
 									  'border="0"'),
 								'#',
 								null,
 								'onclick="dwho.dom.make_table_list(\''.$type.'\',this); return(dwho.dom.free_focus());"',
-								$this->bbf('col_'.$type.'-add'));?>
+								$this->bbf('col_xlets-add'));?>
 				</th>
 			</tr>
 			</thead>
@@ -195,12 +192,12 @@ $yesno = array($this->bbf('no'), $this->bbf('yes'));
 				</td>
 				<td class="td-right">
 					<?=$url->href_html($url->img_html('img/site/button/mini/blue/delete.gif',
-									$this->bbf('opt_'.$type.'-delete'),
+									$this->bbf('opt_xlets-delete'),
 									'border="0"'),
 								'#',
 								null,
-								'onclick="dwho.dom.make_table_list(\''.$type.'\',this,1); return(dwho.dom.free_focus());"',
-								$this->bbf('opt_'.$type.'-delete'));?>
+								'onclick="dwho.dom.make_table_list(\'xlets\',this,1); return(dwho.dom.free_focus());"',
+								$this->bbf('opt_xlets-delete'));?>
 				</td>
 			</tr>
 
@@ -210,13 +207,13 @@ $yesno = array($this->bbf('no'), $this->bbf('yes'));
 ?>
 			</tbody>
 			<tfoot>
-			<tr id="no-<?=$type?>"<?=($info['xlet']) ? ' class="b-nodisplay"' : ''?>>
-				<td colspan="8" class="td-single"><?=$this->bbf('no_'.$type);?></td>
+			<tr id="no-xlets"<?=($info['xlet']) ? ' class="b-nodisplay"' : ''??>>
+				<td colspan="8" class="td-single"><?=$this->bbf('no_xlets');?></td>
 			</tr>
 			</tfoot>
 		</table>
 		<table class="b-nodisplay">
-			<tbody id="ex-<?=$type?>">
+			<tbody id="ex-xlets">
 			<tr class="fm-paragraph">
 				<td class="td-left txt-center">
 					<?=$form->select(array('paragraph'	=> false,
@@ -280,12 +277,12 @@ $yesno = array($this->bbf('no'), $this->bbf('yes'));
 				</td>
 				<td class="td-right">
 					<?=$url->href_html($url->img_html('img/site/button/mini/blue/delete.gif',
-									$this->bbf('opt_'.$type.'-delete'),
+									$this->bbf('opt_xlets-delete'),
 									'border="0"'),
 									'#',
 									null,
-									'onclick="dwho.dom.make_table_list(\''.$type.'\',this,1); return(dwho.dom.free_focus());"',
-									$this->bbf('opt_'.$type.'-delete'));?>
+									'onclick="dwho.dom.make_table_list(\'xlets\',this,1); return(dwho.dom.free_focus());"',
+									$this->bbf('opt_xlets-delete'));?>
 				</td>
 			</tr>
 			</tbody>
