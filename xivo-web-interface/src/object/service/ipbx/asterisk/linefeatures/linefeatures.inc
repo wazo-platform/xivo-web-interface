@@ -189,9 +189,6 @@ class xivo_service_asterisk_linefeatures extends xivo_service_asterisk_abstract
 		else
 			$arr['line_num'] = 0;
 
-		if (dwho_has_len($arr['configregistrar']) === false)
-			$arr['configregistrar'] = 'default';
-
 		$arr['ipfrom'] = $_SERVER['SERVER_ADDR'];
 
 		return(parent::edit($id,$arr,$disable));
