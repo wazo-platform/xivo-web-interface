@@ -94,7 +94,7 @@ $yesno = array($this->bbf('no'), $this->bbf('yes'));
 
 <div id="sb-part-xlets" class="b-nodisplay">
 	<div class="sb-list">
-		<table>
+		<table id="list_xlet">
 			<thead>
 			<tr class="sb-top">
 				<th class="th-left"><?=$this->bbf('col_xlets-name');?></th>
@@ -108,14 +108,14 @@ $yesno = array($this->bbf('no'), $this->bbf('yes'));
 					<?=$url->href_html($url->img_html('img/site/button/mini/orange/bo-add.gif',
 									  $this->bbf('col_xlets-add'),
 									  'border="0"'),
-								'#',
+								'#xlets',
 								null,
-								'onclick="dwho.dom.make_table_list(\''.$type.'\',this); return(dwho.dom.free_focus());"',
+								'id="lnk-add-row"',
 								$this->bbf('col_xlets-add'));?>
 				</th>
 			</tr>
 			</thead>
-			<tbody id="xlets">
+			<tbody>
 <?php
 		if ($info['xlet']):
 			$xlet_count = count($info['xlet']);
@@ -191,6 +191,7 @@ $yesno = array($this->bbf('no'), $this->bbf('yes'));
 								'name'		=> 'xlet[order][]',
 								'id'		=> false,
 								'label'		=> false,
+								'labelid'	=> 'xlet-order',
 								'size'		=> 4,
 								'disabled'	=> false,
 								'value'		=> $current_xlet_info['order']));?>
@@ -199,9 +200,9 @@ $yesno = array($this->bbf('no'), $this->bbf('yes'));
 					<?=$url->href_html($url->img_html('img/site/button/mini/blue/delete.gif',
 									$this->bbf('opt_xlets-delete'),
 									'border="0"'),
-								'#',
+								'#xlets',
 								null,
-								'onclick="dwho.dom.make_table_list(\'xlets\',this,1); return(dwho.dom.free_focus());"',
+								'id="lnk-del-row"',
 								$this->bbf('opt_xlets-delete'));?>
 				</td>
 			</tr>
@@ -218,7 +219,7 @@ $yesno = array($this->bbf('no'), $this->bbf('yes'));
 			</tfoot>
 		</table>
 		<table class="b-nodisplay">
-			<tbody id="ex-xlets">
+			<tbody id="ex-row">
 			<tr class="fm-paragraph">
 				<td class="td-left txt-center">
 					<?=$form->select(array('paragraph'	=> false,
@@ -278,15 +279,17 @@ $yesno = array($this->bbf('no'), $this->bbf('yes'));
 				<td>
 					<?=$form->text(array('paragraph'	=> false,
 								 'name'		=> 'xlet[order][]',
+								 'label'	=> false,
+								 'labelid'	=> 'xlet-order',
 								 'size'		=> 4));?>
 				</td>
 				<td class="td-right">
 					<?=$url->href_html($url->img_html('img/site/button/mini/blue/delete.gif',
 									$this->bbf('opt_xlets-delete'),
 									'border="0"'),
-									'#',
+									'#xlets',
 									null,
-									'onclick="dwho.dom.make_table_list(\'xlets\',this,1); return(dwho.dom.free_focus());"',
+									'id="lnk-del-row"',
 									$this->bbf('opt_xlets-delete'));?>
 				</td>
 			</tr>

@@ -84,7 +84,8 @@ switch($act)
 
 		$dhtml = &$_TPL->get_module('dhtml');
 		$dhtml->set_js('js/dwho/submenu.js');
-		$dhtml->set_js('js/jscolor/jscolor.js');
+		$dhtml->set_js('js/cti/profiles.js');
+		$dhtml->set_js('js/utils/dyntable.js');
 		$dhtml->load_js_multiselect_files();
 		break;
 	case 'edit':
@@ -138,7 +139,8 @@ switch($act)
 
 		$dhtml = &$_TPL->get_module('dhtml');
 		$dhtml->set_js('js/dwho/submenu.js');
-		$dhtml->set_js('js/jscolor/jscolor.js');
+		$dhtml->set_js('js/cti/profiles.js');
+		$dhtml->set_js('js/utils/dyntable.js');
 		$dhtml->load_js_multiselect_files();
 		break;
 	case 'delete':
