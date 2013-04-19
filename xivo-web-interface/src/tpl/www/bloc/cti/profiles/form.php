@@ -118,11 +118,16 @@ $yesno = array($this->bbf('no'), $this->bbf('yes'));
 			<tbody id="xlets">
 <?php
 		if ($info['xlet']):
-			$count = count($info['xlet']);
-			for($i = 0;$i < $count;$i++):
-				$errdisplay = '';
+			$xlet_count = count($info['xlet']);
+			for($xlet_iteration_index = 0; $xlet_iteration_index < $xlet_count; $xlet_iteration_index++):
+				$current_xlet_info = &$info['xlet'][$xlet_iteration_index];
+				if(isset($err[$xlet_iteration_index]) === true):
+					$row_error_flag = ' l-infos-error';
+				else:
+					$row_error_flag = '';
+				endif;
 ?>
-			<tr class="fm-paragraph<?=$errdisplay?>">
+			<tr class="fm-paragraph<?=$row_error_flag?>">
 				<td class="td-left txt-center">
 					<?=$form->select(array('paragraph'	=> false,
 									'name'		=> 'xlet[id][]',
@@ -131,7 +136,7 @@ $yesno = array($this->bbf('no'), $this->bbf('yes'));
 									'bbf'		=> 'xlet-',
 									'key'		=> 'plugin_name',
 									'altkey'	=> 'id',
-									'selected'	=> $info['xlet'][$i]['xlet_id']),
+									'selected'	=> $current_xlet_info['xlet_id']),
 								$all_xlet_list);?>
 				</td>
 				<td>
@@ -142,7 +147,7 @@ $yesno = array($this->bbf('no'), $this->bbf('yes'));
 									'size'		=> 15,
 									'key'		=> 'name',
 									'altkey'	=> 'id',
-									'selected'	=> $info['xlet'][$i]['layout_id']),
+									'selected'	=> $current_xlet_info['layout_id']),
 								$all_layout_list);?>
 				</td>
 				<td>
@@ -150,7 +155,7 @@ $yesno = array($this->bbf('no'), $this->bbf('yes'));
 									'name'		=> 'xlet[floating][]',
 									'id'		=> false,
 									'label'		=> false,
-									'selected'	=> $info['xlet'][$i]['floating']
+									'selected'	=> $current_xlet_info['floating']
 							 ),
 							 $yesno);?>
 				</td>
@@ -159,7 +164,7 @@ $yesno = array($this->bbf('no'), $this->bbf('yes'));
 									'name'		=> 'xlet[closable][]',
 									'id'		=> false,
 									'label'		=> false,
-									'selected'	=> $info['xlet'][$i]['closable']
+									'selected'	=> $current_xlet_info['closable']
 							 ),
 							 $yesno);?>
 				</td>
@@ -168,7 +173,7 @@ $yesno = array($this->bbf('no'), $this->bbf('yes'));
 									'name'		=> 'xlet[movable][]',
 									'id'		=> false,
 									'label'		=> false,
-									'selected'	=> $info['xlet'][$i]['movable']
+									'selected'	=> $current_xlet_info['movable']
 							 ),
 							 $yesno);?>
 				</td>
@@ -177,7 +182,7 @@ $yesno = array($this->bbf('no'), $this->bbf('yes'));
 									'name'		=> 'xlet[scrollable][]',
 									'id'		=> false,
 									'label'		=> false,
-									'selected'	=> $info['xlet'][$i]['scrollable']
+									'selected'	=> $current_xlet_info['scrollable']
 							 ),
 							 $yesno);?>
 				</td>
@@ -188,7 +193,7 @@ $yesno = array($this->bbf('no'), $this->bbf('yes'));
 								'label'		=> false,
 								'size'		=> 4,
 								'disabled'	=> false,
-								'value'		=> $info['xlet'][$i]['order']));?>
+								'value'		=> $current_xlet_info['order']));?>
 				</td>
 				<td class="td-right">
 					<?=$url->href_html($url->img_html('img/site/button/mini/blue/delete.gif',
@@ -207,7 +212,7 @@ $yesno = array($this->bbf('no'), $this->bbf('yes'));
 ?>
 			</tbody>
 			<tfoot>
-			<tr id="no-xlets"<?=($info['xlet']) ? ' class="b-nodisplay"' : ''??>>
+			<tr id="no-xlets"<?=(($xlet_count === 0) ? '' : ' class="b-nodisplay"')?>>
 				<td colspan="8" class="td-single"><?=$this->bbf('no_xlets');?></td>
 			</tr>
 			</tfoot>
