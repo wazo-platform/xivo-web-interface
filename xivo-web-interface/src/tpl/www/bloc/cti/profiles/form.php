@@ -128,7 +128,7 @@ $yesno = array($this->bbf('no'), $this->bbf('yes'));
 			<tr class="fm-paragraph<?=$errdisplay?>">
 				<td class="td-left txt-center">
 					<?=$form->select(array('paragraph'	=> false,
-									'name'		=> 'xlet[id]['.$i.']',
+									'name'		=> 'xlet[id][]',
 									'id'		=> false,
 									'label'		=> false,
 									'bbf'		=> 'xlet-',
@@ -139,7 +139,7 @@ $yesno = array($this->bbf('no'), $this->bbf('yes'));
 				</td>
 				<td>
 					<?=$form->select(array('paragraph'	=> false,
-									'name'		=> 'xlet[layout]['.$i.']',
+									'name'		=> 'xlet[layout][]',
 									'id'		=> false,
 									'label'		=> false,
 									'size'		=> 15,
@@ -186,7 +186,7 @@ $yesno = array($this->bbf('no'), $this->bbf('yes'));
 				</td>
 				<td>
 					<?=$form->text(array('paragraph'	=> false,
-								'name'		=> 'xlet[order]['.$i.']',
+								'name'		=> 'xlet[order][]',
 								'id'		=> false,
 								'label'		=> false,
 								'size'		=> 4,
