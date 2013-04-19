@@ -27,8 +27,8 @@ $info = $this->get_var('info');
 $service = $this->get_var('service');
 $presences = $this->get_var('presences_group');
 $phonehints = $this->get_var('phonehints_group');
-$xlet_layout = $this->get_var('xlet_layout');
-$xlet = $this->get_var('xlet');
+$all_layout_list = $this->get_var('all_layout_list');
+$all_xlet_list = $this->get_var('all_xlet_list');
 $preference = $this->get_var('preference');
 
 $yesno = array($this->bbf('no'), $this->bbf('yes'));
@@ -135,7 +135,7 @@ $yesno = array($this->bbf('no'), $this->bbf('yes'));
 									'key'		=> 'plugin_name',
 									'altkey'	=> 'id',
 									'selected'	=> $info['xlet'][$i]['xlet_id']),
-								$xlet);?>
+								$all_xlet_list);?>
 				</td>
 				<td>
 					<?=$form->select(array('paragraph'	=> false,
@@ -146,7 +146,7 @@ $yesno = array($this->bbf('no'), $this->bbf('yes'));
 									'key'		=> 'name',
 									'altkey'	=> 'id',
 									'selected'	=> $info['xlet'][$i]['layout_id']),
-								$xlet_layout);?>
+								$all_layout_list);?>
 				</td>
 				<td>
 					<?=$form->select(array('paragraph'	=> false,
@@ -226,7 +226,7 @@ $yesno = array($this->bbf('no'), $this->bbf('yes'));
 									'bbf'		=> 'xlet-',
 									'key'		=> 'plugin_name',
 									'altkey'	=> 'id'),
-							$xlet);?>
+							$all_xlet_list);?>
 				</td>
 				<td>
 					<?=$form->select(array('paragraph'	=> false,
@@ -235,7 +235,7 @@ $yesno = array($this->bbf('no'), $this->bbf('yes'));
 									'label'		=> false,
 									'key'		=> 'name',
 									'altkey'	=> 'id'),
-							$xlet_layout);?>
+							$all_layout_list);?>
 				</td>
 				<td>
 					<?=$form->select(array('paragraph'	=> false,

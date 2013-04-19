@@ -78,8 +78,8 @@ switch($act)
 		$_TPL->set_var('service',$service);
 		$_TPL->set_var('phonehints_group',$phonehintsgroup);
 		$_TPL->set_var('presences_group',$presencesgroup);
-		$_TPL->set_var('xlet_layout',$list_xlet_layout);
-		$_TPL->set_var('xlet',$list_xlet);
+		$_TPL->set_var('all_layout_list',$list_xlet_layout);
+		$_TPL->set_var('all_xlet_list',$list_xlet);
 		$_TPL->set_var('preference',$list_preference);
 
 		$dhtml = &$_TPL->get_module('dhtml');
@@ -132,8 +132,8 @@ switch($act)
 		$_TPL->set_var('service',$service);
 		$_TPL->set_var('phonehints_group',$phonehintsgroup);
 		$_TPL->set_var('presences_group',$presencesgroup);
-		$_TPL->set_var('xlet_layout',$list_xlet_layout);
-		$_TPL->set_var('xlet',$list_xlet);
+		$_TPL->set_var('all_layout_list',$list_xlet_layout);
+		$_TPL->set_var('all_xlet_list',$list_xlet);
 		$_TPL->set_var('preference',$list_preference);
 
 		$dhtml = &$_TPL->get_module('dhtml');
