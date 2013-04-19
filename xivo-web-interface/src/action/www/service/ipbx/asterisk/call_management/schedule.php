@@ -117,7 +117,7 @@ case 'add':
 			$return = &$result;
 
 			$opened = array();
-			for($i = 0; $i < count($_QR['opened']['hours'])-1; $i++)
+			foreach($_QR['opened']['hours'] as $i => $hour)
 			{
 				$opened[] = array(
 					'hours'      => $_QR['opened']['hours'][$i],
@@ -126,7 +126,7 @@ case 'add':
 					'months'     => $_QR['opened']['months'][$i],
 				);
 			}
-			$_QR['opened'] = $opened;
+			$_QR['opened'] = array_slice($opened, 0, -1);
 
 			$cdialaction = $_QR['dialaction'];
 			array_shift($cdialaction); // shift schedule_fallback
