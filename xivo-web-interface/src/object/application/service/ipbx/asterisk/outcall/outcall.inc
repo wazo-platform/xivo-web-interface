@@ -251,21 +251,9 @@ class xivo_application_service_asterisk_outcall extends xivo_application_asteris
 		|| $this->_dialpattern === false)
 			return(false);
 
-		$reslist = $error = array();
+		$error = array();
 
-		foreach($arr as $key => $list)
-		{
-			for($i = 0;$i < count($list);$i++)
-			{
-				if (isset($arr[$key][$i]) === false
-				|| $arr[$key][$i] === '')
-					$reslist[$i][$key] = '';
-				else
-					$reslist[$i][$key] = $arr[$key][$i];
-			}
-		}
-
-		array_pop($reslist);
+		$reslist = $this->_prepare_list_data_from_form($arr);
 
 		/* Do not return false if $reslist is empty, this prevents deleting
 		 * all entries

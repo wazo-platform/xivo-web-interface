@@ -78,13 +78,14 @@ switch($act)
 		$_TPL->set_var('service',$service);
 		$_TPL->set_var('phonehints_group',$phonehintsgroup);
 		$_TPL->set_var('presences_group',$presencesgroup);
-		$_TPL->set_var('xlet_layout',$list_xlet_layout);
-		$_TPL->set_var('xlet',$list_xlet);
+		$_TPL->set_var('all_layout_list',$list_xlet_layout);
+		$_TPL->set_var('all_xlet_list',$list_xlet);
 		$_TPL->set_var('preference',$list_preference);
 
 		$dhtml = &$_TPL->get_module('dhtml');
 		$dhtml->set_js('js/dwho/submenu.js');
-		$dhtml->set_js('js/jscolor/jscolor.js');
+		$dhtml->set_js('js/cti/profiles.js');
+		$dhtml->set_js('js/utils/dyntable.js');
 		$dhtml->load_js_multiselect_files();
 		break;
 	case 'edit':
@@ -132,13 +133,14 @@ switch($act)
 		$_TPL->set_var('service',$service);
 		$_TPL->set_var('phonehints_group',$phonehintsgroup);
 		$_TPL->set_var('presences_group',$presencesgroup);
-		$_TPL->set_var('xlet_layout',$list_xlet_layout);
-		$_TPL->set_var('xlet',$list_xlet);
+		$_TPL->set_var('all_layout_list',$list_xlet_layout);
+		$_TPL->set_var('all_xlet_list',$list_xlet);
 		$_TPL->set_var('preference',$list_preference);
 
 		$dhtml = &$_TPL->get_module('dhtml');
 		$dhtml->set_js('js/dwho/submenu.js');
-		$dhtml->set_js('js/jscolor/jscolor.js');
+		$dhtml->set_js('js/cti/profiles.js');
+		$dhtml->set_js('js/utils/dyntable.js');
 		$dhtml->load_js_multiselect_files();
 		break;
 	case 'delete':
