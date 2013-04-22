@@ -175,11 +175,11 @@ class xivo_service_asterisk_linefeatures extends xivo_service_asterisk_abstract
 
 			if($this->_sre->chk_protocol($arr['protocol']) === false)
 				return(false);
-		}
 
-		if ($arr['protocol'] === XIVO_SRE_IPBX_AST_PROTO_SCCP
-		&& isset($arr['number']) === true)
-			$arr['name'] = $arr['number'];
+			if ($arr['protocol'] === XIVO_SRE_IPBX_AST_PROTO_SCCP
+			&& isset($arr['number']) === true)
+				$arr['name'] = $arr['number'];
+		}
 
 		if (isset($arr['num']) === true)
 			$arr['num'] = (int) $arr['num'];
@@ -188,9 +188,6 @@ class xivo_service_asterisk_linefeatures extends xivo_service_asterisk_abstract
 			$arr['line_num'] = (int) $arr['line_num'];
 		else
 			$arr['line_num'] = 0;
-
-		if (dwho_has_len($arr['configregistrar']) === false)
-			$arr['configregistrar'] = 'default';
 
 		$arr['ipfrom'] = $_SERVER['SERVER_ADDR'];
 
@@ -274,24 +271,6 @@ class xivo_service_asterisk_linefeatures extends xivo_service_asterisk_abstract
 			$r = false;
 
 		return($r);
-	}
-
-	public function disassociate_line($id)
-	{
-		if($this->get($id) === false)
-			return(false);
-
-		$arr = array();
-		$arr['iduserfeatures'] = 0;
-		$arr['config'] = '';
-		$arr['device'] = 0;
-		$arr['configregistrar'] = '';
-		$arr['number'] = '';
-
-		if($this->edit($id,$arr) === false)
-			return(false);
-
-		return(true);
 	}
 
 	public function reset_device($iddevice)

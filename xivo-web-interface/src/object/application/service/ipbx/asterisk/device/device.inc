@@ -340,7 +340,6 @@ class xivo_application_service_asterisk_device extends xivo_application_asterisk
 		if(dwho_issa('devicefeatures',$this->_info) === false)
 			return(false);
 
-		$appline = &$this->_service->get_application('line');
 		$userfeatures = &$this->_service->get_module('userfeatures');
 
 		$id = $this->_info['devicefeatures']['id'];
