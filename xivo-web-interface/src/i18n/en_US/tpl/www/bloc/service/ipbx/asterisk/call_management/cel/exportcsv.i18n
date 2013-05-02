@@ -33,19 +33,19 @@ user Field
 ; fm_dubeg
 Beginning of the term
 
-; Fm_dubeg-seconds
+; fm_dubeg-seconds
 %s second(s)
 
-; Fm_dubeg-minutes
+; fm_dubeg-minutes
 %s minute(s)
 
 ; fm_duend
 End of the term
 
-; Fm_duend-seconds
+; fm_duend-seconds
 %s second(s)
 
-; Fm_duend-minutes
+; fm_duend-minutes
 %s minute(s)
 
 ; col_channel
