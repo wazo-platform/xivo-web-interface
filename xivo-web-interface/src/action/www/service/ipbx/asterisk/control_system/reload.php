@@ -18,8 +18,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-require_once('xivo.php');
-
 if(xivo_user::chk_acl(true) === false)
 	$_QRY->go($_TPL->url('xivo'));
 
