@@ -34,12 +34,6 @@ Modèles
 ; mn_left_ctisettings-sheetevents
 Événements
 
-; mn_left_ctisettings-restart
-Redémarrer le serveur CTI
-
-; ctisettings_restart_confirm
-Êtes-vous sûr de vouloir redémarrer le serveur CTI ?
-
 ; mn_left_ti_generalsettings
 Paramètres globaux
 

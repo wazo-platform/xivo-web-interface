@@ -162,3 +162,9 @@ Etes-vous certain de vouloir redémarrer ?
 
 ; controlsystem_ipbxrestart_confirm
 Etes-vous certain de vouloir redémarrer %s ?
+
+; mn_left_ctisettings-restart
+Redémarrer le serveur CTI
+
+; ctisettings_restart_confirm
+Êtes-vous sûr de vouloir redémarrer le serveur CTI ?

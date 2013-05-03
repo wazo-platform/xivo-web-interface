@@ -34,12 +34,6 @@ Models
 ; mn_left_ctisettings-sheetevents
 Events
 
-; mn_left_ctisettings-restart
-Restart CTI server
-
-; ctisettings_restart_confirm
-Are you sure you want to restart CTI server ?
-
 ; mn_left_ti_generalsettings
 General settings
 
