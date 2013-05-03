@@ -72,6 +72,8 @@ $array['tree']['service']['ipbx']['control_system'] = array();
 $array['tree']['service']['ipbx']['control_system']['logfiles'] = true;
 $array['tree']['service']['ipbx']['control_system']['reload'] = true;
 $array['tree']['service']['ipbx']['control_system']['restart'] = true;
+$array['tree']['service']['ipbx']['control_system']['cti_restart'] = true;
+
 
 // cti
 $array['tree']['service']['cti'] = array();
@@ -88,8 +90,6 @@ $array['tree']['service']['cti']['directories']['contexts'] = true;
 $array['tree']['service']['cti']['sheets'] = array();
 $array['tree']['service']['cti']['sheets']['sheetactions'] = true;
 $array['tree']['service']['cti']['sheets']['sheetevents'] = true;
-$array['tree']['service']['cti']['control_system'] = array();
-$array['tree']['service']['cti']['control_system']['restart'] = true;
 
 // monitoring
 $array['tree']['service']['monitoring'] = array();

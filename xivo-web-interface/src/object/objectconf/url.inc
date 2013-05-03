@@ -266,6 +266,7 @@ $array['service/ipbx/json/private/system_management/context'] = 'service/ipbx/js
 $array['service/ipbx/control_system/logfiles'] = 'service/ipbx/index.php/control_system/logfiles/';
 $array['service/ipbx/control_system/reload'] = 'service/ipbx/index.php/control_system/reload/';
 $array['service/ipbx/control_system/restart'] = 'service/ipbx/index.php/control_system/restart/';
+$array['service/ipbx/control_system/cti_restart'] = 'service/ipbx/index.php/control_system/cti_restart/';
 
 
 // cost_center
@@ -289,7 +290,6 @@ $array['cti/displays'] = 'cti/index.php/displays/';
 $array['cti/contexts'] = 'cti/index.php/contexts/';
 $array['cti/sheetactions'] = 'cti/index.php/sheetactions/';
 $array['cti/sheetevents'] = 'cti/index.php/sheetevents/';
-$array['cti/restart'] = 'cti/index.php/restart/';
 
 
 $array['service/ipbx/json/restricted/ctiserver/configuration'] = 'service/ipbx/json.php/restricted/ctiserver/configuration/';

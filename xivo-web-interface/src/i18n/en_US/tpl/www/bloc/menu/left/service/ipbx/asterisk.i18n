@@ -177,3 +177,9 @@ Are you sure you want to restart?
 
 ; controlsystem_ipbxrestart_confirm
 Are you sure you want to restart %s?
+
+; mn_left_ctisettings-restart
+Restart CTI server
+
+; ctisettings_restart_confirm
+Are you sure you want to restart CTI server ?

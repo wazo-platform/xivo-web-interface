@@ -390,8 +390,21 @@ $dhtml = &$this->get_module('dhtml');
 				'</dd>';
 		endif;
 
+		if(xivo_user::chk_acl('control_system','cti_restart') === true):
+			echo	'<dd id="mn-restart">',
+			$url->href_html($this->bbf('mn_left_ctisettings-restart'),
+				'service/ipbx/control_system/cti_restart',
+				null,
+				'onclick="return(confirm(\''.
+				$dhtml->escape($this->bbf('ctisettings_restart_confirm')).
+				'\'));"'),
+			'</dd>';
+		endif;
+
 		echo	'</dl>';
+
 	endif;
+
 ?>
 	</dd>
 	<dd class="b-nosize">
