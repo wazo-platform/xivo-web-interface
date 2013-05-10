@@ -448,10 +448,6 @@ $array['userfeatures'] = array();
 $array['userfeatures']['table'] = 'userfeatures';
 $array['userfeatures']['primary'] = array('id' => '');
 
-$array['useriax'] = array();
-$array['useriax']['table'] = 'useriax';
-$array['useriax']['primary'] = array('id' => '');
-
 $array['usersip'] = array();
 $array['usersip']['table'] = 'usersip';
 $array['usersip']['primary'] = array('id' => '');

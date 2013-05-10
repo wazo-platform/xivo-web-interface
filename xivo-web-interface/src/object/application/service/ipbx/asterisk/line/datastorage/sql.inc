@@ -26,7 +26,6 @@ class xivo_application_service_asterisk_line_sql extends xivo_application_abstra
 				'linefeatures' 	=> '',
 				'userfeatures' 	=> '',
 				'usersip'		=> '',
-				'useriax'		=> '',
 				'sccpline'		=> '',
 				'usercustom'	=> '');
 
@@ -38,22 +37,19 @@ class xivo_application_service_asterisk_line_sql extends xivo_application_abstra
 		$this->_dso->new_select($this->_table['linefeatures']);
 		$this->_dso->leftjoin($this->_table['usersip'],
 				      $this->_table['linefeatures'].'.protocolid = '.$this->_table['usersip'].'.id');
-		$this->_dso->leftjoin($this->_table['useriax'],
-				      $this->_table['linefeatures'].'.protocolid = '.$this->_table['useriax'].'.id');
 		$this->_dso->leftjoin($this->_table['sccpline'],
 				      $this->_table['linefeatures'].'.protocolid = '.$this->_table['sccpline'].'.id');
 		$this->_dso->leftjoin($this->_table['usercustom'],
 				      $this->_table['linefeatures'].'.protocolid = '.$this->_table['usercustom'].'.id');
 
 		$this->_dso->where($this->_table['usersip'].'.id IS NOT NULL');
-		$this->_dso->orwhere($this->_table['useriax'].'.id IS NOT NULL');
 		$this->_dso->orwhere($this->_table['sccpline'].'.id IS NOT NULL');
 		$this->_dso->orwhere($this->_table['usercustom'].'.id IS NOT NULL');
 
 		$this->_dso->aggregate_where();
 
-		$sip = $iax = $sccp = $custom = array();
-		$sip['category'] = $iax['category'] = $custom['category'] = 'user';
+		$sip = $sccp = $custom = array();
+		$sip['category'] = $custom['category'] = 'user';
 
 		$arr['internal'] = 0;
 
@@ -62,22 +58,17 @@ class xivo_application_service_asterisk_line_sql extends xivo_application_abstra
 			$disable = intval((bool) $disable);
 			$arr['commented'] = $disable;
 			$sip['commented'] = $disable;
-			$iax['commented'] = $disable;
 			$sccp['commented'] = $disable;
 			$custom['commented'] = $disable;
 		}
 
 		$this->_dso->andwhere($arr,$this->_table['linefeatures']);
 		$this->_dso->joinwhere($this->_table['usersip'] ,$sip);
-		$this->_dso->joinwhere($this->_table['useriax'] ,$iax);
 		$this->_dso->joinwhere($this->_table['sccpline'] ,$sccp);
 		$this->_dso->joinwhere($this->_table['usercustom'],$custom);
 
 		$this->_dso->andjoinwhere($this->_table['usersip'],
 					  $this->_table['linefeatures'].'.protocol = '.$this->_table['usersip'].'.protocol');
-
-		$this->_dso->andjoinwhere($this->_table['useriax'],
-					  $this->_table['linefeatures'].'.protocol = '.$this->_table['useriax'].'.protocol');
 
 		$this->_dso->andjoinwhere($this->_table['sccpline'],
 					  $this->_table['linefeatures'].'.protocol = '.$this->_table['sccpline'].'.protocol');
@@ -117,17 +108,16 @@ class xivo_application_service_asterisk_line_sql extends xivo_application_abstra
 		$this->_dso->new_select($this->_table['linefeatures']);
 
 		if(is_array($protocols) === false)
-			$use_sip = $use_iax = $use_sccp = $use_custom = true;
+			$use_sip = $use_sccp = $use_custom = true;
 		else
 		{
 			$use_sip  = in_array(XIVO_SRE_IPBX_AST_PROTO_SIP, $protocols);
-			$use_iax  = in_array(XIVO_SRE_IPBX_AST_PROTO_IAX, $protocols);
-			$use_iax  = in_array(XIVO_SRE_IPBX_AST_PROTO_SCCP, $protocols);
+			$use_sccp  = in_array(XIVO_SRE_IPBX_AST_PROTO_SCCP, $protocols);
 			$use_custom = in_array(XIVO_SRE_IPBX_AST_PROTO_CUSTOM, $protocols);
 			$this->_dso->wherein('protocol',$protocols,$this->_table['linefeatures']);
 		}
 
-		if($use_sip === false && $use_iax === false && $use_sccp === false && $use_custom === false)
+		if($use_sip === false && $use_sccp === false && $use_custom === false)
 			return(false);
 
 		if(!$internal)
@@ -141,15 +131,14 @@ class xivo_application_service_asterisk_line_sql extends xivo_application_abstra
 		elseif($free === true)
 			$this->_dso->andwhere(array('iduserfeatures' => 0),$this->_table['linefeatures']);
 
-		$sip = $iax = $sccp = $custom = array();
-		$sip['category'] = $iax['category'] = $custom['category'] = 'user';
+		$sip = $sccp = $custom = array();
+		$sip['category'] = $custom['category'] = 'user';
 
 		if($disable !== null)
 		{
 			$disable = intval((bool) $disable);
 			$arr['commented'] = $disable;
 			$sip['commented'] = $disable;
-			$iax['commented'] = $disable;
 			$sccp['commented'] = $disable;
 			$custom['commented'] = $disable;
 		}
@@ -180,19 +169,6 @@ class xivo_application_service_asterisk_line_sql extends xivo_application_abstra
 					$this->_dso->andjoinwherenot($this->_table['usersip'],
 								  'COALESCE('.$this->_table['usersip'].'.fullcontact,\'\') = \'\'');
 			}
-		}
-
-		if($use_iax === true)
-		{
-			$this->_dso->leftjoin($this->_table['useriax'],
-					      $this->_table['linefeatures'].'.protocolid = '.$this->_table['useriax'].'.id',
-					      null,
-					      '*');
-
-			$this->_dso->joinwhere($this->_table['useriax'],$iax);
-
-			$this->_dso->andjoinwhere($this->_table['useriax'],
-						  $this->_table['linefeatures'].'.protocol = '.$this->_table['useriax'].'.protocol');
 		}
 
 		if($use_sccp === true)
@@ -243,9 +219,6 @@ class xivo_application_service_asterisk_line_sql extends xivo_application_abstra
 
 		if($use_sip === true)
 			$this->_dso->orwhere($this->_table['usersip'].'.id IS NOT NULL');
-
-		if($use_iax === true)
-			$this->_dso->orwhere($this->_table['useriax'].'.id IS NOT NULL');
 
 		if($use_sccp === true)
 			$this->_dso->orwhere($this->_table['sccpline'].'.id IS NOT NULL');
@@ -298,22 +271,21 @@ class xivo_application_service_asterisk_line_sql extends xivo_application_abstra
 
 		$this->_dso->new_select($this->_table['linefeatures']);
 
-		$use_sip = $use_iax = $use_custom = true;
+		$use_sip = $use_custom = true;
 
 		if($free === false)
 				$this->_dso->andwherenot(array('iduserfeatures' => 0),$this->_table['linefeatures']);
 		elseif($free === true)
 			$this->_dso->andwhere(array('iduserfeatures' => 0),$this->_table['linefeatures']);
 
-		$sip = $iax = $custom = array();
-		$sip['category'] = $iax['category'] = $custom['category'] = 'user';
+		$sip = $custom = array();
+		$sip['category'] = $custom['category'] = 'user';
 
 		if($disable !== null)
 		{
 			$disable = intval((bool) $disable);
 			$arr['commented'] = $disable;
 			$sip['commented'] = $disable;
-			$iax['commented'] = $disable;
 			$custom['commented'] = $disable;
 		}
 
@@ -330,19 +302,6 @@ class xivo_application_service_asterisk_line_sql extends xivo_application_abstra
 
 			$this->_dso->andjoinwhere($this->_table['usersip'],
 								  $this->_table['linefeatures'].'.protocol = '.$this->_table['usersip'].'.protocol');
-		}
-
-		if($use_iax === true)
-		{
-			$this->_dso->leftjoin($this->_table['useriax'],
-							      $this->_table['linefeatures'].'.protocolid = '.$this->_table['useriax'].'.id',
-							      null,
-							      '*');
-
-			$this->_dso->joinwhere($this->_table['useriax'],$iax);
-
-			$this->_dso->andjoinwhere($this->_table['useriax'],
-								  $this->_table['linefeatures'].'.protocol = '.$this->_table['useriax'].'.protocol');
 		}
 
 		if($use_custom === true)
@@ -375,9 +334,6 @@ class xivo_application_service_asterisk_line_sql extends xivo_application_abstra
 
 		if($use_sip === true)
 				$this->_dso->orwhere($this->_table['usersip'].'.id IS NOT NULL');
-
-		if($use_iax === true)
-				$this->_dso->orwhere($this->_table['useriax'].'.id IS NOT NULL');
 
 		if($use_custom === true)
 				$this->_dso->orwhere($this->_table['usercustom'].'.id IS NOT NULL');

@@ -367,9 +367,6 @@ $array['module']['usercustom']['datastorage'] = true;
 $array['module']['userfeatures'] = array();
 $array['module']['userfeatures']['datastorage'] = true;
 
-$array['module']['useriax'] = array();
-$array['module']['useriax']['datastorage'] = true;
-
 $array['module']['usersip'] = array();
 $array['module']['usersip']['datastorage'] = true;
 
@@ -382,7 +379,6 @@ $array['module']['voicemenu']['datastorage'] = true;
 
 $array['protocol'] = array();
 $array['protocol'][XIVO_SRE_IPBX_AST_PROTO_SIP]    = array('module' => 'usersip');
-$array['protocol'][XIVO_SRE_IPBX_AST_PROTO_IAX]    = array('module' => 'useriax');
 $array['protocol'][XIVO_SRE_IPBX_AST_PROTO_SCCP]    = array('module' => 'sccpline');
 $array['protocol'][XIVO_SRE_IPBX_AST_PROTO_CUSTOM] = array('module' => 'usercustom');
 

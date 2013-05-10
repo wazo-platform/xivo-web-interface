@@ -25,17 +25,11 @@ class xivo_application_service_asterisk_context_sql extends xivo_application_abs
 	var $_table	= array(
 				'userfeatures'		=> '',
 				'usersip'		=> '',
-				'useriax'		=> '',
 				'voicemail'		=> '');
 
 	function update_usersip_mailbox($context,$newcontext)
 	{
 		return($this->_update_user_mailbox(XIVO_SRE_IPBX_AST_PROTO_SIP,$context,$newcontext));
-	}
-
-	function update_useriax_mailbox($context,$newcontext)
-	{
-		return($this->_update_user_mailbox(XIVO_SRE_IPBX_AST_PROTO_IAX,$context,$newcontext));
 	}
 
 	function _update_user_mailbox($protocol,$context,$newcontext)
@@ -48,9 +42,6 @@ class xivo_application_service_asterisk_context_sql extends xivo_application_abs
 		{
 			case XIVO_SRE_IPBX_AST_PROTO_SIP:
 				$usertable = $this->_table['usersip'];
-				break;
-			case XIVO_SRE_IPBX_AST_PROTO_IAX:
-				$usertable = $this->_table['useriax'];
 				break;
 			default:
 				return(false);

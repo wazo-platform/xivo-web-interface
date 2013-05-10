@@ -67,12 +67,6 @@ SIP
 ; line_protocol-opt(sip)
 SIP
 
-; line_protocol-iax
-IAX
-
-; line_protocol-opt(iax)
-IAX
-
 ; line_protocol-sccp
 SCCP
 

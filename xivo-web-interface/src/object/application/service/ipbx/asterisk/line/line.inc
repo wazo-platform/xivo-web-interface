@@ -218,7 +218,6 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 	{
 		$show_peer_command = array(
 			'sip'  => 'sip show peer',
-			'iax'  => 'iax2 show peer',
 		);
 
 		$this->_info['ipbx'] = false;
@@ -405,12 +404,6 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 					unset($sip['fullcontact']);
 					$sip['identity'] = strtoupper($sip['protocol']).'/'.$sip['name'];
 					$r[$linefeatures['id']] = array_merge($sip,$linefeatures);
-					break;
-				case XIVO_SRE_IPBX_AST_PROTO_IAX:
-					$iax = dwho_array_startswith_key($ref,'useriax.',true);
-					$iax['initialized'] = true;
-					$iax['identity'] = strtoupper($iax['protocol']).'/'.$iax['name'];
-					$r[$linefeatures['id']] = array_merge($iax,$linefeatures);
 					break;
 				case XIVO_SRE_IPBX_AST_PROTO_SCCP:
 					$sccp = dwho_array_startswith_key($ref,'sccpline.',true);
