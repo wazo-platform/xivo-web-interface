@@ -21,12 +21,8 @@
 $form = &$this->get_module('form');
 $url = &$this->get_module('url');
 
-$act = $this->get_var('act');
 $proto = $this->get_var('proto');
 
-if (is_null($proto) === true):
-	include(dirname(__FILE__).'/wizard/chooseproto.php');
-else:
 ?>
 <div id="sr-users" class="b-infos b-form">
 	<h3 class="sb-top xspan">
@@ -55,6 +51,3 @@ else:
 		<span class="span-right">&nbsp;</span>
 	</div>
 </div>
-<?php
-endif;
-?>

@@ -19,6 +19,7 @@
 #
 
 $form = &$this->get_module('form');
+
 $info = $this->get_var('info');
 $proto = $info['linefeatures']['protocol'];
 
