@@ -70,15 +70,6 @@ $array['element']['info_active']['value'] = array(0,1);
 $array['element']['info_active']['default'] = 1;
 $array['element']['info_active']['set'] = true;
 
-$array['element']['announce_ip'] = array();
-$array['element']['announce_ip']['default'] = '127.0.0.1';
-$array['element']['announce_port'] = array();
-$array['element']['announce_port']['default'] = 5006;
-$array['element']['announce_active'] = array();
-$array['element']['announce_active']['value'] = array(0,1);
-$array['element']['announce_active']['default'] = 1;
-$array['element']['announce_active']['set'] = true;
-
 $array['element']['tlscertfile'] = array();
 $array['element']['tlscertfile']['default'] = '';
 $array['element']['tlsprivkeyfile'] = array();
@@ -118,9 +109,6 @@ $array['filter']['webi_port'] 		= array('set' => false, 'chk' => 2, 'cast' => 'u
 $array['filter']['info_active'] = array('set' => true, 'chk' => 2, 'cast' => 'bool');
 $array['filter']['info_ip'] 		= array('callback' => 'dwho_network::valid_host_subnet_ipv4');
 $array['filter']['info_port'] 		= array('set' => false, 'chk' => 2, 'cast' => 'uint', 'between' => array(1,65535));
-$array['filter']['announce_active'] = array('set' => true, 'chk' => 2, 'cast' => 'bool');
-$array['filter']['announce_ip'] 	= array('callback' => 'dwho_network::valid_host_subnet_ipv4');
-$array['filter']['announce_port'] 	= array('set' => false, 'chk' => 2, 'cast' => 'uint', 'between' => array(1,65535));
 $array['filter']['tlscertfile'] 	= array('set' => false, 'chk' => 2, 'cast' => 'sgraph', 'maxlen' => 128);
 $array['filter']['tlsprivkeyfile'] 		= array('set' => false, 'chk' => 2, 'cast' => 'sgraph', 'maxlen' => 128);
 $array['filter']['socket_timeout'] 	= array('set' => false, 'chk' => 2, 'cast' => 'uint', 'between' => array(1,20));

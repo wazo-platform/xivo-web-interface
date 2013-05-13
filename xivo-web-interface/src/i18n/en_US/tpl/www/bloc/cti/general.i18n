@@ -79,18 +79,6 @@ address info help
 ; hlp_fm_cti_info_port
 port info help
 
-; fm_cti_announce_ip
-Announce server:
-
-; hlp_fm_cti_announce_ip
-Announce server help
-
-; fm_cti_annouce_port
--
-
-; hlp_fm_cti_announce_port
-Announce server help
-
 ; fm_tlscertfile
 Certificate:
 
