@@ -83,10 +83,6 @@ $array['cti/web_services/private/profiles'] = array(
 	'path'		=> 'cti/web_services/profiles',
 	'define'	=> array('XIVO_LOC_WEBSERVICES_MODE'	=> 'private'));
 
-$array['cti/web_services/private/configuration'] = array(
-	'path'		=> 'cti/web_services/configuration',
-	'define'	=> array('XIVO_LOC_WEBSERVICES_MODE'	=> 'private'));
-
 ###################################################################
 # XIVO
 ###################################################################
@@ -165,11 +161,6 @@ $array['xivo/configuration/web_services/private/provisioning/configregistrar'] =
 ###################################################################
 # SERVICE IPBX ASTERISK
 ###################################################################
-
-# ctiserver
-$array['service/ipbx/asterisk/web_services/restricted/ctiserver/configuration'] = array(
-	'path'		=> 'cti/web_services/configuration',
-	'define'	=> array('XIVO_LOC_WEBSERVICES_MODE'	=> 'restricted'));
 
 
 # general_settings
