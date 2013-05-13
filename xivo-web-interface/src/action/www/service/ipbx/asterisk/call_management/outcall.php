@@ -40,7 +40,6 @@ switch($act)
 		$appoutcall = &$ipbx->get_application('outcall');
 
 		$result = $fm_save = $error = null;
-		$result['schedule_id'] = false;
 		$outcalltrunk = $rightcall = array();
 		$outcalltrunk['slt'] = $rightcall['slt'] = array();
 
@@ -90,7 +89,6 @@ switch($act)
 		$_TPL->set_var('context_list',$appoutcall->get_context_list(null,null,null,false,'outcall'));
 		$_TPL->set_var('element',$appoutcall->get_elements());
 		$_TPL->set_var('info',$result);
-		$_TPL->set_var('schedule_id', $result['schedule_id']);
 		break;
 	case 'edit':
 		$appoutcall = &$ipbx->get_application('outcall');
@@ -100,7 +98,6 @@ switch($act)
 
 		$result = $fm_save = $error = null;
 		$return = &$info;
-		$return['schedule_id'] = false;
 		$outcalltrunk = $rightcall = array();
 		$outcalltrunk['slt'] = $rightcall['slt'] = array();
 
@@ -152,7 +149,6 @@ switch($act)
 		$_TPL->set_var('context_list',$appoutcall->get_context_list(null,null,null,false,'outcall'));
 		$_TPL->set_var('element',$appoutcall->get_elements());
 		$_TPL->set_var('info',$return);
-		$_TPL->set_var('schedule_id', $return['schedule_id']);
 		break;
 	case 'delete':
 		$param['page'] = $page;

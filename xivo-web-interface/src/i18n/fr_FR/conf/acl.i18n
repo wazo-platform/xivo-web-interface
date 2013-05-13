@@ -40,9 +40,6 @@ Serveur CTI
 ; acl(service-cti-control_system)
 Système de contrôle
 
-; acl(service-cti-control_system-restart)
-Redémarrage du serveur CTI
-
 ; acl(service-cti-directories)
 Répertoires
 
@@ -132,6 +129,9 @@ Recharger IPBX
 
 ; acl(service-ipbx-control_system-restart)
 Redémarrer IPBX
+
+; acl(service-ipbx-control_system-cti_restart)
+Redémarrage du serveur CTI
 
 ; acl(service-ipbx-general_settings)
 Paramètres globaux

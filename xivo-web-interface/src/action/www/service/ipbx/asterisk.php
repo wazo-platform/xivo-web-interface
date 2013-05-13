@@ -87,7 +87,7 @@ if(($enableagent = $appagent->get_nb(null,false)) !== false)
 	$agentstat['enable'] = $enableagent;
 
 if(($disableagent = $appagent->get_nb(null,true)) !== false)
-	$agentstat['disable'] = $disableagent;
+	$agentstat['disable'] = 0;
 
 $agentstat['total'] = $agentstat['enable'] + $agentstat['disable'];
 

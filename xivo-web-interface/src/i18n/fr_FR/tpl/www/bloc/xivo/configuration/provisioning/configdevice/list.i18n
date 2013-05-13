@@ -2,8 +2,8 @@
 ; col_name
 Nom
 
-; no_device
-Aucune terminaison trouvée
-
 ; opt_delete_confirm
 Etes-vous certain de vouloir supprimer ce modele de configuration terminaison ?
+
+; no_config
+Aucune terminaison trouvée

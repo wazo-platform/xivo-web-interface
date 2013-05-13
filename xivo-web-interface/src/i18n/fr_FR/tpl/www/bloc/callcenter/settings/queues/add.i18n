@@ -109,9 +109,6 @@ Suffixer
 ; fm_queuefeatures_preprocess-subroutine
 Sous-routine de prétraitement:
 
-; fm_queuefeatures_stats_qos
-Qualité de service (statistiques): 
-
 ; fm_queuefeatures_timeout
 Temps de sonnerie:
 
@@ -520,9 +517,6 @@ Config asterisk: monitor-format
 
 ; hlp_fm_queue-monitor-type
 Config asterisk: monitor-type
-
-; hlp_fm_queue-musiconhold
-Config asterisk: musiconhold
 
 ; hlp_fm_queue-name
 Config asterisk: name

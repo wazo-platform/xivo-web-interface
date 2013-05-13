@@ -109,19 +109,15 @@ if($act === 'list'):
 <div class="sb-advanced-menu">
 	<ul id="toolbar-advanced-menu">
 		<li>
-			<a href="#" id="toolbar-advanced-menu-enable"><?=$this->bbf('toolbar_adv_menu_enable');?></a>
-		</li>
-		<li>
-			<a href="#" id="toolbar-advanced-menu-disable"><?=$this->bbf('toolbar_adv_menu_disable');?></a>
-		</li>
-		<li>
 			<a href="#" id="toolbar-advanced-menu-select-all"><?=$this->bbf('toolbar_adv_menu_select-all');?></a>
 		</li>
 		<li>
 			<a href="#" id="toolbar-advanced-menu-delete"><?=$this->bbf('toolbar_adv_menu_delete');?></a>
 		</li>
 	</ul>
-</div><?php
+</div>
+
+<?php
 
 elseif($act === 'listagent'):
 	echo	$url->img_html('img/menu/top/toolbar/bt-more.gif',
@@ -132,12 +128,6 @@ elseif($act === 'listagent'):
 <div class="sb-advanced-menu">
 	<ul id="toolbar-advanced-menu">
 		<li>
-			<a href="#" id="toolbar-advanced-menu-enable"><?=$this->bbf('toolbar_adv_menu_enable');?></a>
-		</li>
-		<li>
-			<a href="#" id="toolbar-advanced-menu-disable"><?=$this->bbf('toolbar_adv_menu_disable');?></a>
-		</li>
-		<li>
 			<a href="#" id="toolbar-advanced-menu-select-all"><?=$this->bbf('toolbar_adv_menu_select-all');?></a>
 		</li>
 		<li>
@@ -146,40 +136,6 @@ elseif($act === 'listagent'):
 	</ul>
 </div>
 
-<script type="text/javascript">
-dwho.dom.set_onload(function()
-{
-	dwho.dom.remove_event('click',
-			      dwho_eid('toolbar-advanced-menu-enable'),
-			      xivo_toolbar_fn_adv_menu_enable);
-
-	dwho.dom.add_event('click',
-			   dwho_eid('toolbar-advanced-menu-enable'),
-			   function(e)
-			   {
-				if(dwho_is_function(e.preventDefault) === true)
-					e.preventDefault();
-
-				dwho.fm[xivo_toolbar_form_name]['act'].value = 'enableagents';
-				dwho.fm[xivo_toolbar_form_name].submit();
-			   });
-
-	dwho.dom.remove_event('click',
-			      dwho_eid('toolbar-advanced-menu-disable'),
-			      xivo_toolbar_fn_adv_menu_disable);
-
-	dwho.dom.add_event('click',
-			   dwho_eid('toolbar-advanced-menu-disable'),
-			   function(e)
-			   {
-				if(dwho_is_function(e.preventDefault) === true)
-					e.preventDefault();
-
-				dwho.fm[xivo_toolbar_form_name]['act'].value = 'disableagents';
-				dwho.fm[xivo_toolbar_form_name].submit();
-			   });
-});
-</script>
 <?php
 
 endif;

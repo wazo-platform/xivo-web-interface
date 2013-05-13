@@ -183,8 +183,7 @@ endif;
 						'key'	      => 'name',
 						'altkey'    => 'id',
 						'empty'     => true,
-				   // 'default'  	=> $element['schedule_id']['default'],
-				    'selected'	=> $this->get_var('schedule_id')),
+				    'selected'	=> $this->get_var('info', 'schedule_id')),
 			      $schedules);
 	endif;
 ?>

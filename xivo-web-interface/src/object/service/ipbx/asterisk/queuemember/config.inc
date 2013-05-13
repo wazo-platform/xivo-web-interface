@@ -31,16 +31,6 @@ $array['element']['penalty']['default'] = 0;
 $array['element']['penalty']['value'] = range(0,20);
 $array['element']['penalty']['setdef'] = true;
 
-$array['element']['call-limit'] = array();
-$array['element']['call-limit']['default'] = 0;
-$array['element']['call-limit']['value'] = range(0,20);
-$array['element']['call-limit']['setdef'] = true;
-
-$array['element']['paused'] = array();
-$array['element']['paused']['value'] = array(1,0);
-$array['element']['paused']['default'] = '';
-$array['element']['paused']['null'] = true;
-
 $array['element']['chantype'] = array();
 $array['element']['chantype']['default'] = 'default';
 $array['element']['chantype']['value'] = array('default',XIVO_SRE_IPBX_AST_CHAN_LOCAL);
@@ -64,9 +54,6 @@ $array['element']['channel']['value'] = array(
 $array['element']['category'] = array();
 $array['element']['category']['value'] = array('queue','group');
 
-$array['element']['skills'] = array();
-$array['element']['skills']['default'] = '';
-
 $array['element']['position'] = array();
 $array['element']['position']['default'] = 0;
 $array['element']['position']['setdef'] = true;
@@ -76,8 +63,6 @@ $array['filter'] = array();
 $array['filter']['queue_name'] = array('regexp' => '/^[a-z0-9_\.-]+$/i','minlen' => 1,'maxlen' => 128);
 $array['filter']['interface'] = array('regexp' => '/^[a-z0-9#\*\.\/_@:-]+$/i','minlen' => 1,'maxlen' => 128);
 $array['filter']['penalty'] = array('set' => false,'chk' => 2,'cast' => 'uint','between' => array(0,20));
-$array['filter']['call-limit'] = array('set' => false,'chk' => 2,'cast' => 'uint','between' => array(0,20));
-$array['filter']['paused'] = array('set' => false,'chk' => 2,'bool' => true);
 $array['filter']['usertype'] = array('key' => array('user','agent'));
 $array['filter']['userid'] = array('cast' => 'ulongint');
 $array['filter']['channel'] = array('key' => array(
@@ -88,7 +73,6 @@ $array['filter']['channel'] = array('key' => array(
 							XIVO_SRE_IPBX_AST_CHAN_AGENT,
 							XIVO_SRE_IPBX_AST_CHAN_UNKNOWN));
 $array['filter']['category'] = array('key' => array('queue','group'));
-$array['filter']['skills'] = array('set' => false, 'chk' => 2, 'maxlen' => 64);
 $array['filter']['position'] = array('cast' => 'ulongint');
 
 ?>

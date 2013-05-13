@@ -10,3 +10,6 @@ Proxy main
 
 ; opt_delete_confirm
 Are you sure you want to delete this template line ?
+
+; no_config
+No template found

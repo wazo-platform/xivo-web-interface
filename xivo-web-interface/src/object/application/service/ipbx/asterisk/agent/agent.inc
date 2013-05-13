@@ -394,7 +394,6 @@ class xivo_application_service_asterisk_agent extends xivo_application_asterisk_
 		$info['usertype'] = 'agent';
 		$info['userid'] = 0;
 		$info['category'] = 'queue';
-		$info['call-limit'] = 0;
 		$info['position'] = 0;
 
 		$tmp = $reslist = array();
@@ -907,94 +906,6 @@ class xivo_application_service_asterisk_agent extends xivo_application_asterisk_
 					if(isset($this->_origin['queuemember']) === true
 					&& $this->_origin['queuemember'] !== false)
 						$this->_queuemember->add_origin_list($this->_origin['queuemember']);
-					break;
-			}
-		}
-
-		return(true);
-	}
-
-	function enable()
-	{
-		$r = true;
-
-		$this->_status = 'enable';
-		$this->_return = array();
-
-		if($this->enable_agentfeatures() === false)
-		{
-			$r = false;
-			$this->_reverse_enable_disable();
-		}
-
-		$this->_status = '';
-
-		return($r);
-	}
-
-	function disable()
-	{
-		$r = true;
-
-		$this->_status = 'disable';
-		$this->_return = array();
-
-		if( $this->disable_agentfeatures() === false)
-		{
-			$r = false;
-			$this->_reverse_enable_disable();
-		}
-
-		$this->_status = '';
-
-		return(true);
-	}
-
-	function enable_agentfeatures()
-	{
-		return($this->_enable_disable_agentfeatures(false));
-	}
-
-	function disable_agentfeatures()
-	{
-		return($this->_enable_disable_agentfeatures(true));
-	}
-
-	function _enable_disable_agentfeatures($disable=false)
-	{
-		if(dwho_issa('agentfeatures',$this->_info) === false)
-			return(false);
-		else if((bool) $disable === false)
-			$r = $this->_agentfeatures->enable($this->_info['agentfeatures']['id']);
-		else
-			$r = $this->_agentfeatures->disable($this->_info['agentfeatures']['id']);
-
-		if($this->_status === 'enable' || $this->_status === 'disable')
-			$this->_return['agentfeatures'] = $r;
-
-		return($r);
-	}
-
-	function _reverse_enable_disable()
-	{
-		if(($this->_status !== 'enable' && $this->_status !== 'disable') === true
-		|| is_array($this->_return) === false
-		|| empty($this->_return) === true)
-			return(false);
-
-		$disable = $this->_status === 'enable';
-
-		$this->_status = '';
-
-		foreach($this->_return as $key => $val)
-		{
-			if($val === false)
-				continue;
-
-			switch($key)
-			{
-				case 'agentfeatures':
-					$this->_enable_disable_agentfeatures($disable);
 					break;
 			}
 		}

@@ -92,7 +92,7 @@ Appellant:
 Called:
 
 ; fm_clid
-Name of Appeal:
+Caller ID:
 
 ; fm_accountcode
 Number of deposit:
@@ -125,7 +125,7 @@ Search
 Call Date
 
 ; col_src
-Appellant
+Caller
 
 ; col_dst
 Called
@@ -173,7 +173,7 @@ Unknown
 Flag billing:
 
 ; entry_clid
-Name of Appeal:
+Caller ID:
 
 ; entry_accountcode
 Number of deposit:

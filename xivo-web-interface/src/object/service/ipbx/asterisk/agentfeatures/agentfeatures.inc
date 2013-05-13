@@ -28,6 +28,7 @@ class xivo_service_asterisk_agentfeatures extends xivo_service_asterisk_abstract
 	var $_origin		= false;
 	var $_origin_list	= false;
 	var $_identity		= false;
+	var $_disable       = false;
 
 	public function __construct(&$sre,&$dso)
 	{
@@ -49,7 +50,6 @@ class xivo_service_asterisk_agentfeatures extends xivo_service_asterisk_abstract
 		$this->_identity->_prepare_identity($data);
 
 		$data['id'] = (int) $data['id'];
-		$data['commented'] = (bool) $data['commented'];
 
 		return($data);
 	}

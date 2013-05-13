@@ -452,10 +452,6 @@ $array['useriax'] = array();
 $array['useriax']['table'] = 'useriax';
 $array['useriax']['primary'] = array('id' => '');
 
-$array['userqueueskill'] = array();
-$array['userqueueskill']['table'] = 'userqueueskill';
-$array['userqueueskill']['primary'] = array('userid' => '', 'skillid' => '');
-
 $array['usersip'] = array();
 $array['usersip']['table'] = 'usersip';
 $array['usersip']['primary'] = array('id' => '');

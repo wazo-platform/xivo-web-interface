@@ -18,9 +18,15 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+if(xivo_user::chk_acl(true) === false)
+	$_QRY->go($_TPL->url('xivo'));
+
 $sysconfd     = &$_XOBJ->get_module('sysconfd');
 $res          = $sysconfd->request_post('/services', array('xivo-ctid' => 'restart'));
 
-$_QRY->go($_TPL->url('cti/general'));
+if(isset($_SERVER['HTTP_REFERER']) === true)
+	$_QRY->go($_SERVER['HTTP_REFERER'],false);
+else
+	$_QRY->go($_TPL->url('service/ipbx'));
 
 ?>

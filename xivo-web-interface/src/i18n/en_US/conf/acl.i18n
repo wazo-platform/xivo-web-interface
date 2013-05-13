@@ -40,9 +40,6 @@ CTI server
 ; acl(service-cti-control_system)
 Control system
 
-; acl(service-cti-control_system-restart)
-Restart CTI server
-
 ; acl(service-cti-directories)
 Directories
 
@@ -132,6 +129,9 @@ Reload IPBX
 
 ; acl(service-ipbx-control_system-restart)
 Restart IPBX
+
+; acl(service-ipbx-control_system-cti_restart)
+Restart CTI server
 
 ; acl(service-ipbx-general_settings)
 General settings

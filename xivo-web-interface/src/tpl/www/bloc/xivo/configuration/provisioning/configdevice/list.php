@@ -22,26 +22,13 @@ $url = &$this->get_module('url');
 $form = &$this->get_module('form');
 $dhtml = &$this->get_module('dhtml');
 
-$pager = $this->get_var('pager');
 $act = $this->get_var('act');
 
-$page = $url->pager($pager['pages'],
-		    $pager['page'],
-		    $pager['prev'],
-		    $pager['next'],
-		    'xivo/configuration/provisioning/config',
-		    array('act' => $act));
 ?>
 <div class="b-list">
-<?php
-	if($page !== ''):
-		echo '<div class="b-page">',$page,'</div>';
-	endif;
-?>
 <form action="#" name="fm-config-list" method="post" accept-charset="utf-8">
 <?=$form->hidden(array('name' => DWHO_SESS_NAME,'value'	=> DWHO_SESS_ID));?>
 <?=$form->hidden(array('name' => 'act','value'	=> $act));?>
-<?=$form->hidden(array('name' => 'page','value' => $pager['page']));?>
 <table id="table-main-listing">
 	<tr class="sb-top">
 		<th class="th-left xspan"><span class="span-left">&nbsp;</span></th>
@@ -87,8 +74,7 @@ $page = $url->pager($pager['pages'],
 								       'border="0"'),
 							'xivo/configuration/provisioning/configdevice',
 							array('act'	=> 'delete',
-				      			      'id'	=> $ref['id'],
-				      			      'page'	=> $pager['page']),
+				      			      'id'	=> $ref['id']),
 							'onclick="return(confirm(\''.$dhtml->escape($this->bbf('opt_delete_confirm')).'\'));"',
 							$this->bbf('opt_delete'));
 			endif;
@@ -106,9 +92,4 @@ $page = $url->pager($pager['pages'],
 	</tr>
 </table>
 </form>
-<?php
-	if($page !== ''):
-		echo '<div class="b-page">',$page,'</div>';
-	endif;
-?>
 </div>

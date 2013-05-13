@@ -3,10 +3,13 @@
 Nom
 
 ; col_registrar_main
-Enregistrement principal
+Serveur d'enregistrement principal
 
 ; col_proxy_main
-Enregistrement secondaire
+Proxy principal
 
 ; opt_delete_confirm
 Etes-vous certain de vouloir supprimer ce modele de ligne ?
+
+; no_config
+Aucun modèle trouvé

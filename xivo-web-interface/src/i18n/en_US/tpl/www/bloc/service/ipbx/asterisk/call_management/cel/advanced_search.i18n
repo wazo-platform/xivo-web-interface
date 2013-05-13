@@ -22,7 +22,7 @@ Exact
 ; fm_search-format(begin)
 Begins
 
-; fm_search-format(container)
+; fm_search-format(contain)
 Contains
 
 ; fm_search-format(end)
