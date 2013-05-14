@@ -270,39 +270,6 @@ if(isset($error_js[0]) === true)
 				?>
 			</td>
 		</tr>
-		<tr onmouseover="this.tmp = this.className; this.className = 'sb-content l-infos-over';"
-		    onmouseout="this.className = this.tmp;">
-			<td class="td-left">
-			<?=$form->checkbox(array('name'	=> 'cti[announce_active]',
-				'checked' => $info['ctimain']['announce_active'],
-				'label'		=> false,
-				'id'		=> 'it-announce_active',
-				'paragraph'	=> false));?>
-			</td>
-			<td>
-			<?=$form->text(array('desc'	=> $this->bbf('fm_cti_announce_ip'),
-				'name'		=> 'cti[announce_ip]',
-				'labelid'	=> 'cti_announce_ip',
-				'value'		=> $info['ctimain']['announce_ip'],
-				'required'	=> 1,
-				'regexp'	=> '[[:ipv4:]]',
-				'default'	=> $element['ctimain']['announce_ip']['default'] //,
-				/* 'help'		=> $this->bbf('hlp_fm_cti_announce_ip') */ ))
-			?>
-			</td>
-			<td class="td-right">
-			<?=$form->text(array(#'desc'	=> $this->bbf('fm_cti_annouce_port'),
-					'name'		=> 'cti[announce_port]',
-					'labelid'	=> 'cti_announce_port',
-					'value'		=> $info['ctimain']['announce_port'],
-					'required'	=> 1,
-					'regexp'	=> '[[:port:]]',
-					'default'	=> $element['ctimain']['announce_port']['default'],
-#					'help'		=> $this->bbf('hlp_fm_cti_announce_port')
-					))
-				?>
-			</td>
-		</tr>
 		</table>
 	</div>
 </fieldset>

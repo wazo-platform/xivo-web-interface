@@ -79,18 +79,6 @@ aide adresse info
 ; hlp_fm_cti_info_port
 aide port info
 
-; fm_cti_announce_ip
-Serveur d'annonces:
-
-; hlp_fm_cti_announce_ip
-aide adresse annonce
-
-; fm_cti_annouce_port
--
-
-; hlp_fm_cti_announce_port
-aide port annonce
-
 ; fm_tlscertfile
 Certificat:
 
