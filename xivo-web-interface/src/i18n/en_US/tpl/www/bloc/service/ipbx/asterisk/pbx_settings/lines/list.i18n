@@ -28,9 +28,6 @@ Provisioning
 ; line_protocol-sip
 SIP
 
-; line_protocol-iax
-IAX
-
 ; line_protocol-sccp
 SCCP
 

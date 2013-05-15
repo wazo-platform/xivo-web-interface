@@ -65,17 +65,6 @@ endif;
 				    'selected'	=> $amaflags),
 			      $element['protocol']['sip']['amaflags']['value']),
 
-		$form->select(array('desc'	=> $this->bbf('fm_protocol_amaflags'),
-				    'name'	=> 'protocol[amaflags]',
-				    'labelid'	=> 'iax-protocol-amaflags',
-				    'empty'	=> true,
-				    'key'	=> false,
-				    'bbf'	=> 'ast_amaflag_name_info',
-				    'bbfopt'	=> array('argmode' => 'paramvalue'),
-				    'default'	=> $element['protocol']['iax']['amaflags']['default'],
-				    'selected'	=> $amaflags),
-			      $element['protocol']['iax']['amaflags']['value']),
-
      $form->select(array('desc'  => $this->bbf('fm_userfeatures_servicesgroup'),
             'name'      => 'userfeatures[servicesgroup_id]',
             'labelid'   => 'userfeatures-servicesgroup_id',

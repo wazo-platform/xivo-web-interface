@@ -46,9 +46,6 @@ Protocole :
 ; fm_protocol_protocol-opt(sip)
 SIP
 
-; fm_protocol_protocol-opt(iax)
-IAX
-
 ; fm_protocol_protocol-opt(custom)
 Personnalisé
 

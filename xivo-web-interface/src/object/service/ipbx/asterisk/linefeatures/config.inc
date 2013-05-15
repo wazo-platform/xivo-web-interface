@@ -26,10 +26,6 @@ $array['provisioning_id']['sip'] = array();
 $array['provisioning_id']['sip']['prefix'] = 1;
 $array['provisioning_id']['sip']['range'] = 100000;
 
-$array['provisioning_id']['iax'] = array();
-$array['provisioning_id']['iax']['prefix'] = 2;
-$array['provisioning_id']['iax']['range'] = 100000;
-
 $array['element'] = array();
 
 $array['element']['protocol'] = array();

@@ -1031,9 +1031,6 @@ class xivo_application_service_asterisk_context extends xivo_application_asteris
 		if(((isset($this->_modules['usersip']) === false
 		    || is_object($this->_modules['usersip']) === false) === true
 		   && ($this->_modules['usersip'] = $this->_service->get_module('usersip')) === false) === true
-		|| ((isset($this->_modules['useriax']) === false
-		    || is_object($this->_modules['useriax']) === false) === true
-		   && ($this->_modules['useriax'] = $this->_service->get_module('useriax')) === false) === true
 		|| ((isset($this->_modules['usercustom']) === false
 		    || is_object($this->_modules['usercustom']) === false) === true
 		   && ($this->_modules['usercustom'] = $this->_service->get_module('usercustom')) === false) === true
@@ -1041,8 +1038,6 @@ class xivo_application_service_asterisk_context extends xivo_application_asteris
 		    || is_object($this->_modules['userfeatures']) === false) === true
 		   && ($this->_modules['userfeatures'] = $this->_service->get_module('userfeatures')) === false) === true
 		|| ($ref['user']['usersip'] = $this->_modules['usersip']->edit_where($where,$value,
-									     null,null,false)) === false
-		|| ($ref['user']['useriax'] = $this->_modules['useriax']->edit_where($where,$value,
 									     null,null,false)) === false
 		|| ($ref['user']['usercustom'] = $this->_modules['usercustom']->edit_where($where,$value,
 										   null,null,false)) === false
@@ -1326,9 +1321,6 @@ class xivo_application_service_asterisk_context extends xivo_application_asteris
 							array('context'		=> $newcontext),
 							null,null,false)) === false
 		    || ($ref['voicemail']['usersip'] = $this->_dso->update_usersip_mailbox(
-							$newcontext,
-							$newcontext)) === false
-		    || ($ref['voicemail']['useriax'] = $this->_dso->update_useriax_mailbox(
 							$newcontext,
 							$newcontext)) === false) === true)
 			return(false);

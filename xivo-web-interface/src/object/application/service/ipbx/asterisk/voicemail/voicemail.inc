@@ -418,12 +418,7 @@ class xivo_application_service_asterisk_voicemail extends xivo_application_aster
 		if(((isset($this->_modules['usersip']) === false
 		    || is_object($this->_modules['usersip']) === false) === true
 		   && ($this->_modules['usersip'] = &$this->_service->get_module('usersip')) === false) === true
-		|| ((isset($this->_modules['useriax']) === false
-		    || is_object($this->_modules['useriax']) === false) === true
-		   && ($this->_modules['useriax'] = &$this->_service->get_module('useriax')) === false) === true
 		|| ($ref['usersip'] = $this->_modules['usersip']->edit_where($where,$value,
-									     null,null,false)) === false
-		|| ($ref['useriax'] = $this->_modules['useriax']->edit_where($where,$value,
 									     null,null,false)) === false)
 			return(false);
 
@@ -573,17 +568,6 @@ class xivo_application_service_asterisk_voicemail extends xivo_application_aster
 					    '@'.$this->_info['voicemail']['context'];
 
 			$this->_modules['usersip']->edit_where($where,array('mailbox' => null));
-		}
-
-		if((isset($this->_modules['useriax']) === true
-		   && is_object($this->_modules['useriax']) === true) === true
-		|| ($this->_modules['useriax'] = &$this->_service->get_module('useriax')) !== false)
-		{
-			$where = array();
-			$where['mailbox'] = $this->_info['voicemail']['mailbox'].
-					    '@'.$this->_info['voicemail']['context'];
-
-			$this->_modules['useriax']->edit_where($where,array('mailbox' => null));
 		}
 
 		return(true);

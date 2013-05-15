@@ -44,7 +44,9 @@ switch($act)
 {
 	case 'add':
 		if (isset($_QR['proto']) === false)
-			break;
+		{
+			$_QRY->go($_TPL->url('service/ipbx/pbx_settings/lines'), array('act' => 'list'));
+		}
 		$appline = &$ipbx->get_application('line');
 		//$modpark = &$ipbx->get_module('parkinglot');
 
