@@ -62,11 +62,6 @@ $array['element']['configregistrar']['set'] = true;
 $array['element']['device'] = array();
 $array['element']['device']['default'] = '';
 
-$array['element']['rules_type'] = array();
-$array['element']['rules_type']['value'] = array('simul');
-$array['element']['rules_type']['empty'] = true;
-$array['element']['rules_type']['default'] = '';
-
 $array['element']['rules_time'] = array();
 $array['element']['rules_time']['default'] = '';
 
@@ -107,7 +102,6 @@ $array['filter']['context'] = array('callback' => 'xivo_service_asterisk::chk_co
 							XIVO_SRE_IPBX_AST_CONTEXT_AUTHENTICATION,
 							XIVO_SRE_IPBX_AST_CONTEXT_ZONEMESSAGES)));
 $array['filter']['number'] = array('set' => false,'chk' => 2,'regexp' => '/^[0-9\*#]+$/','maxlen' => 40);
-$array['filter']['rules_type'] = array('set' => false,'chk' => 2,'maxlen' => 40,'regexp' => '/^[a-z0-9_-]+$/i');
 $array['filter']['rules_time'] = array('set' => false,'chk' => 2,'maxlen' => 8,'regexp' => '/^[0-9]+$/');
 $array['filter']['rules_order'] = array('set' => false,'chk' => 2,'cast' => 'ulongint');
 $array['filter']['rules_group'] =array('set' => false,'chk' => 2,'maxlen' => 16,'regexp' => '/^[a-z0-9_\.-]+$/i');
