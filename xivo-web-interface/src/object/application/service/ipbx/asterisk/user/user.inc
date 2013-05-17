@@ -1022,6 +1022,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			return(false);
 
 		$reslist = $errlist = $tmp = array();
+		$bsfilter = $this->get_result_var('userfeatures','bsfilter');
 
 		$nb = count($list);
 
@@ -1036,6 +1037,12 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			{
 				$errlist[$j] = $this->_phonefunckey->get_filter_error();
 				$reslist[$j++] = $this->_phonefunckey->get_filter_result();
+			}
+			else if($info['typeextenumbers'] === 'extenfeatures'
+			&& $info['typevalextenumbers'] === 'bsfilter'
+			&& $bsfilter === 'no')
+			{
+				continue;
 			}
 			else if(isset($tmp[$info['fknum']]) === true)
 			{
@@ -1060,7 +1067,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			else if($info['typeextenumbers'] === 'extenfeatures'
 			&& $info['typevalextenumbers'] === 'bsfilter'
 			&& $this->_dso->chk_bsfilter($info['iduserfeatures'],
-						     $this->get_result_var('userfeatures','bsfilter'),
+						     $bsfilter,
 						     $info['typevalextenumbersright']) === false)
 				return(false);
 		}
@@ -1175,8 +1182,6 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		|| ($rs = $this->get_result('phonefunckey')) === null
 		|| $rs === false)
 			return($rs);
-
-		$bsfilter = $this->get_result_var('userfeatures','bsfilter');
 
 		$id = $this->_return['phonefunckey'] = array();
 		$id['iduserfeatures'] = $userfeaturesid;
