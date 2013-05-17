@@ -478,6 +478,16 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 		&& $this->_protocolname === XIVO_SRE_IPBX_AST_PROTO_SIP)
 			$arr['protocol']['call-limit'] = (2 * (int) $arr['userfeatures']['simultcalls']);
 
+		if (dwho_issa('userfeatures', $arr) === true) {
+			if(isset($arr['protocol']['allow']) === true && dwho_issa('allow', $arr['protocol']) === false) {
+				$arr['protocol']['allow'] = explode(',', $arr['protocol']['allow']);
+			}
+		} else {
+			if(dwho_issa('allow', $arr['protocol']) === false) {
+				$arr['protocol']['allow'] = null;
+			}
+		}
+
 		$this->set_protocol($arr['protocol'],$protocolname);
 
 		if($protocolname === XIVO_SRE_IPBX_AST_PROTO_CUSTOM)
@@ -604,9 +614,6 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 
 		if(isset($arr['host-static']) === true && $arr['host'] === 'static')
 			$arr['host'] = $arr['host-static'];
-
-		if(dwho_issa('allow',$arr) === false)
-			$arr['allow'] = null;
 
 		$this->_set_result('mailbox',$arr['mailbox']);
 
