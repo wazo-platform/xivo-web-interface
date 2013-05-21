@@ -74,24 +74,6 @@ endfor;
 						$this->bbf('col_line-add_free'));?>
 	</span>
 </p>
-
-<p class="fm-paragraph" id="box-rules_group">
-	<span class="fm-desc clearboth">
-		<label id="lb-rules_group" for="it-rules_group"><?=$this->bbf('fm_rules_group');?></label>
-	</span>
-	<?=$form->text(array('paragraph'	=> false,
-			     'name'		=> false,
-			     'id'		=> 'it-rules_group',
-			     'label'	=> false,
-			     'size'		=> 10));?>
-	<?=$url->href_html($url->img_html('img/site/button/mini/orange/bo-add.gif',
-									       $this->bbf('col_rules_group-add'),
-									       'border="0"'),
-								'#lines',
-								null,
-								'id="lnk-add-row-rules_group"',
-								$this->bbf('col_rules_group-add'));?>
-</p>
 */ ?>
 <table id="list_linefeatures">
 	<thead>
@@ -130,47 +112,10 @@ if($list !== false):
 			$ref['errdisplay'] = '';
 		endif;
 
-		$rulesgroup = $ref['rules_group'];
-		if ($rulesgroup === '')
-			$rulesgroup = 0;
-
-		if (isset($rs[$rulesgroup]) === false)
-			$rs[$rulesgroup] = array();
-
-		array_push($rs[$rulesgroup],$ref);
-	endfor;
-
-	foreach($rs as $rulesgroup => $list):
-
-		if (empty($rulesgroup) === false
-		|| $rulesgroup !== 0):
-?>
-	<tr class="fm-paragraph l-subth" id="tr-rules_group">
-		<td class="td-left">
-		</td>
-		<td colspan="7" class="txt-center" id="td_rules_group_name">
-			<?=$rulesgroup?>
-		</td>
-		<td class="td-right">
-			<?=$url->href_html($url->img_html('img/site/button/mini/blue/delete.gif',
-							       $this->bbf('opt_row-delete'),
-							       'border="0"'),
-							'#lines',
-							null,
-							'onclick="lnkdroprow(this);"',
-							$this->bbf('opt_row-delete'));?>
-		</td>
-	</tr>
-<?php
-		endif;
-		if (($nblinegroup = count($list)) === 0)
-			continue;
-		for($i = 0;$i < $nblinegroup;$i++):
-			$ref = &$list[$i];
-			$secureclass = '';
-			if(isset($ref['encryption']) === true
-			&& $ref['encryption'] === true)
-				$secureclass = 'xivo-icon xivo-icon-secure';
+		$secureclass = '';
+		if(isset($ref['encryption']) === true
+		&& $ref['encryption'] === true)
+			$secureclass = 'xivo-icon xivo-icon-secure';
 ?>
 	<tr class="fm-paragraph<?=$ref['errdisplay']?>" style="cursor: move;">
 		<td class="td-left">
@@ -185,9 +130,6 @@ if($list !== false):
 			<?=$form->hidden(array('name' => 'linefeatures[name][]',
 				    	'id'		=> 'linefeatures-name',
 						'value' 	=> $ref['name']));?>
-			<?=$form->hidden(array('name' => 'linefeatures[rules_group][]',
-					    'id'		=> 'linefeatures-rules_group',
-					    'value'		=> $ref['rules_group']));?>
 			<?=$form->hidden(array('name' => 'linefeatures[line_num][]',
 					    'id'		=> 'linefeatures-line_num',
 					    'value'		=> $ref['line_num']));?>
@@ -272,8 +214,7 @@ if($list !== false):
 		</td>
 	</tr>
 <?php
-		endfor;
-	endforeach;
+	endfor;
 endif;
 ?>
 	</tbody>
@@ -285,32 +226,9 @@ endif;
 </table>
 
 <table class="b-nodisplay">
-	<tbody id="ex-rules_group">
-	<tr class="fm-paragraph l-subth" id="tr-rules_group">
-		<td class="td-left">
-		</td>
-		<td colspan="7" class="txt-center" id="td_rules_group_name">
-		</td>
-		<td class="td-right">
-			<?=$url->href_html($url->img_html('img/site/button/mini/blue/delete.gif',
-							       $this->bbf('opt_row-delete'),
-							       'border="0"'),
-							'#lines',
-							null,
-							'onclick="lnkdroprow(this);"',
-							$this->bbf('opt_row-delete'));?>
-		</td>
-	</tr>
-	</tbody>
-</table>
-
-<table class="b-nodisplay">
 	<tbody id="ex-linefeatures">
 	<tr class="fm-paragraph" style="cursor: move;">
 		<td class="td-left txt-center">
-			<?=$form->hidden(array('name' => 'linefeatures[rules_group][]',
-					    'id'		=> 'linefeatures-rules_group',
-					    'value'		=> 0));?>
 			<?=$form->hidden(array('name' => 'linefeatures[line_num][]',
 					    'id'		=> 'linefeatures-line_num',
 					    'value'		=> 0));?>

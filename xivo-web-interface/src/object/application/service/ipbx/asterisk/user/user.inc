@@ -182,15 +182,10 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		if(is_object($this->_linefeatures) === false)
 			return(false);
 
-		$order = array();
-		$order['rules_group'] = SORT_ASC;
-
 		$where = array();
 		$where['iduserfeatures'] = $this->_info['userfeatures']['id'];
 
-		$this->_info['linefeatures'] = $this->_linefeatures->get_all_where($where,
-										   null,
-										   $order);
+		$this->_info['linefeatures'] = $this->_linefeatures->get_all_where($where);
 		$this->_origin['linefeatures'] = $this->_linefeatures->get_origin_list();
 
 		return($this->_info['linefeatures']);
@@ -962,7 +957,6 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			}
 
 			$ref['iduserfeatures'] = (int) $iduserfeatures;
-			$ref['rules_group'] = isset($ref['rules_group']) ? $ref['rules_group'] : '';
 			$ref['num'] = isset($ref['num']) ? (int) $ref['num'] : 1;
 			$ref['callerid'] = $this->_service->mk_callerid($userfeatures['callerid'],$number,$protocolname);
 

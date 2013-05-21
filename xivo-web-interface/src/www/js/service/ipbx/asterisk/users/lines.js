@@ -193,64 +193,49 @@ function update_row_infos()
         it_userfeatures_entityid.addClass('it-disabled');
     }
     
-    var groupval = '';
     var line_num = 0;
-    var idx = 0;
     $('#list_linefeatures > tbody').find('tr').each(function() {
-        tr_group = false;
-        
-        if($(this).attr('id') == 'tr-rules_group') {
-            if (idx > 0)
-                line_num++;
-            groupval = $(this).find('#td_rules_group_name').text();
-            tr_group = true;
-        }
-        
-        if(tr_group === false) {
+
+        context = $(this).find("#linefeatures-context");
+        $(this).find('#linefeatures-line_num').val(line_num);
+
+        context_selected = context.parents('tr').find('#context-selected').val();
+        if (context_selected !== null)
+            context.find("option[value='"+context_selected+"']").attr("selected","selected");
+
+        if (context.val() !== null) {
+            devicenumline = $(context).parents('tr').find("#linefeatures-num");
+            config = $(context).parents('tr').find('#linefeatures-device').val();
+            xivo_http_search_line_from_provd(devicenumline,config,devicenumline.val());
             
-            context = $(this).find("#linefeatures-context");
-            $(this).find('#linefeatures-rules_group').val(groupval);
-            $(this).find('#linefeatures-line_num').val(line_num);
+            var number = context.parents('tr').find('#linefeatures-number');
+            number.focus(function(){
+                helper = $(this).parent().find('#numberpool_helper');
+                context = $(this).parents('tr').find("#linefeatures-context");
+                xivo_http_search_numpool(context.val(),helper);
+                helper.show('slow');
+                map_autocomplete_extension_to($(this),context.val());
+            });
+            number.blur(function(){
+                $(this).parent().find('#numberpool_helper').hide('slow');
+            });
+            device = $(this).find('#linefeatures-device').val();
+            devicenumline = $(this).find("#linefeatures-num");
+            if (device == '')
+                devicenumline.hide();
 
-            context_selected = context.parents('tr').find('#context-selected').val();
-            if (context_selected !== null)
-                context.find("option[value='"+context_selected+"']").attr("selected","selected");
-            
-            if (context.val() !== null) {                
-                devicenumline = $(context).parents('tr').find("#linefeatures-num");
-                config = $(context).parents('tr').find('#linefeatures-device').val();
-                xivo_http_search_line_from_provd(devicenumline,config,devicenumline.val());
-                
-                var number = context.parents('tr').find('#linefeatures-number');
-                number.focus(function(){
-                    helper = $(this).parent().find('#numberpool_helper');
-                    context = $(this).parents('tr').find("#linefeatures-context");
-                    xivo_http_search_numpool(context.val(),helper);
-                    helper.show('slow');
-                    map_autocomplete_extension_to($(this),context.val());
-                });
-                number.blur(function(){
-                    $(this).parent().find('#numberpool_helper').hide('slow');
-                });
-                device = $(this).find('#linefeatures-device').val();
-                devicenumline = $(this).find("#linefeatures-num");
-                if (device == '')
-                    devicenumline.hide();
+            $(this).find('#linefeatures-device').select2();
 
-                $(this).find('#linefeatures-device').select2();
-
-                $(this).find('#linefeatures-device').change(function() {
-                    devicenumline = $(this).parents('tr').find("#linefeatures-num");
-                    $(devicenumline).each(function(){
-                        $(this).find('option').remove();
-                        for (var i=1; i<=12; i++)
-                            $(this).append("<option value="+i+">"+i+"</option>");
-                    });
-                    xivo_http_search_line_from_provd(devicenumline,$(this).val());
+            $(this).find('#linefeatures-device').change(function() {
+                devicenumline = $(this).parents('tr').find("#linefeatures-num");
+                $(devicenumline).each(function(){
+                    $(this).find('option').remove();
+                    for (var i=1; i<=12; i++)
+                        $(this).append("<option value="+i+">"+i+"</option>");
                 });
-            }
+                xivo_http_search_line_from_provd(devicenumline,$(this).val());
+            });
         }
-        idx++;
     });
 }
 
@@ -294,38 +279,6 @@ $(document).ready(function() {
         });
 
         update_row_infos();
-        return false;
-    });
-
-    $('#lnk-add-row-rules_group').click(function(){        
-        groupval = $('#it-rules_group').val();
-        
-        if (groupval === '' || groupval === null)
-            return false;
-        
-        exist = false;
-        $('#list_linefeatures').find('#td_rules_group_name').each(function () {
-            if ($(this).text() == groupval)
-                exist = true;
-        });
-        
-        if (exist === true)
-            return false;
-
-        groupval = groupval.replace(/[^a-z0-9_\.-]+/g,'');
-        groupval = groupval.toLowerCase();
-        
-        td_rules_group = $('#ex-rules_group').find('#td_rules_group_name');
-        td_rules_group.text(groupval);
-        
-        row = $('#ex-rules_group').html();
-        
-        $('#list_linefeatures > tbody:last').fadeIn(400, function () {
-            $(this).append(row);
-        });
-        
-        td_rules_group.text('');
-        update_row_infos();    
         return false;
     });
 
