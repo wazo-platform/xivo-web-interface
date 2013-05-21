@@ -82,7 +82,6 @@ class xivo_service_asterisk_linefeatures_sql extends xivo_service_asterisk_abstr
 		{
 			$this->_dso->where(array('iduserfeatures' => $userid));
 			$this->_dso->where(array('line_num' => 0));
-			$this->_dso->where(array('rules_order' => 1));
 		}
 		if(((int) $deviceid = dwho_ulongint($deviceid)) !== 0)
 		{

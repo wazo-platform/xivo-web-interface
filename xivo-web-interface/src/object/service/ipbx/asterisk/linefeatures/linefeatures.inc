@@ -48,7 +48,6 @@ class xivo_service_asterisk_linefeatures extends xivo_service_asterisk_abstract
 		$data['protocolid'] = (int) $data['protocolid'];
 		$data['provisioningid'] = (int) $data['provisioningid'];
 		$data['iduserfeatures'] = (int) $data['iduserfeatures'];
-		$data['rules_order'] = (int) $data['rules_order'];
 		$data['num'] = (int) $data['num'];
 		$data['line_num'] = (int) $data['line_num'];
 		$data['internal'] = (bool) $data['internal'];

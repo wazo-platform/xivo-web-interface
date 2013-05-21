@@ -68,7 +68,6 @@ class xivo_application_service_asterisk_user_sql extends xivo_application_abstra
 					       null,
 					       'id');
 			$this->_dso->joinwhere($this->_table['linefeatures'],array('line_num' => 0));
-			$this->_dso->andjoinwhere($this->_table['linefeatures'],array('rules_order' => 1));
 		}
 		elseif($initialized === false)
 		{
@@ -77,7 +76,6 @@ class xivo_application_service_asterisk_user_sql extends xivo_application_abstra
 					       null,
 					       'id');
 			$this->_dso->andjoinwherenot($this->_table['linefeatures'],array('line_num' => 0));
-			$this->_dso->andjoinwherenot($this->_table['linefeatures'],array('rules_order' => 1));
 		}
 		else
 		{

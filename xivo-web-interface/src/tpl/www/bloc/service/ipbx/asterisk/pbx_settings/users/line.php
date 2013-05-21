@@ -131,8 +131,6 @@ if($list !== false):
 		endif;
 
 		$rulesgroup = $ref['rules_group'];
-		if (($rulesorder = (int) $ref['rules_order']) === 0)
-			$rulesgroup = 0;
 		if ($rulesgroup === '')
 			$rulesgroup = 0;
 
@@ -149,7 +147,6 @@ if($list !== false):
 ?>
 	<tr class="fm-paragraph l-subth" id="tr-rules_group">
 		<td class="td-left">
-			<span class="ui-icon ui-icon-arrowthick-2-n-s" style="float:left;"></span>
 		</td>
 		<td colspan="7" class="txt-center" id="td_rules_group_name">
 			<?=$rulesgroup?>
@@ -191,14 +188,9 @@ if($list !== false):
 			<?=$form->hidden(array('name' => 'linefeatures[rules_group][]',
 					    'id'		=> 'linefeatures-rules_group',
 					    'value'		=> $ref['rules_group']));?>
-			<?=$form->hidden(array('name' => 'linefeatures[rules_order][]',
-					    'id'		=> 'linefeatures-rules_order',
-					    'value'		=> $ref['rules_order']));?>
 			<?=$form->hidden(array('name' => 'linefeatures[line_num][]',
 					    'id'		=> 'linefeatures-line_num',
 					    'value'		=> $ref['line_num']));?>
-			<span class="ui-icon ui-icon-arrowthick-2-n-s" style="float:left;"></span>
-			<span id="box-grouporder" style="float:left;font-weight:bold;"></span>
 		</td>
 		<td>
 			<span>
@@ -296,7 +288,6 @@ endif;
 	<tbody id="ex-rules_group">
 	<tr class="fm-paragraph l-subth" id="tr-rules_group">
 		<td class="td-left">
-			<span class="ui-icon ui-icon-arrowthick-2-n-s" style="float:left;"></span>
 		</td>
 		<td colspan="7" class="txt-center" id="td_rules_group_name">
 		</td>
@@ -317,13 +308,8 @@ endif;
 	<tbody id="ex-linefeatures">
 	<tr class="fm-paragraph" style="cursor: move;">
 		<td class="td-left txt-center">
-			<span class="ui-icon ui-icon-arrowthick-2-n-s" style="float:left;"></span>
-			<span id="box-grouporder" style="float:left;font-weight:bold;"></span>
 			<?=$form->hidden(array('name' => 'linefeatures[rules_group][]',
 					    'id'		=> 'linefeatures-rules_group',
-					    'value'		=> 0));?>
-			<?=$form->hidden(array('name' => 'linefeatures[rules_order][]',
-					    'id'		=> 'linefeatures-rules_order',
 					    'value'		=> 0));?>
 			<?=$form->hidden(array('name' => 'linefeatures[line_num][]',
 					    'id'		=> 'linefeatures-line_num',

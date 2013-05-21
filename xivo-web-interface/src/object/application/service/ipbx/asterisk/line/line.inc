@@ -490,7 +490,6 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 		if (dwho_issa('linefeatures',$arr) === false)
 		{
 			$arr['linefeatures']['protocolid'] = 0;
-			$arr['linefeatures']['rules_order'] = 0;
 			$arr['linefeatures']['rules_group'] = '';
 			$arr['linefeatures']['iduserfeatures'] = 0;
 		}
