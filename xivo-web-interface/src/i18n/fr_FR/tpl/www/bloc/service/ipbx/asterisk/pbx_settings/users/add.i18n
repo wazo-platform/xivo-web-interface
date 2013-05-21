@@ -700,9 +700,6 @@ Groupe de services :
 ; col_line-add
 Ajouter une nouvelle ligne
 
-; col_line-add_free
-Ajouter une ligne existante
-
 ; opt_line-delete
 Supprimer la ligne
 
@@ -759,12 +756,6 @@ Personnalisé
 
 ; fm_type-opt(simul)
 Simultané
-
-; no_lines_free
-Aucune ligne existante disponible
-
-; fm_lines_free
-Lignes disponible :
 
 ; fm_register-transport
 Transport : 

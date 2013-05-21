@@ -175,7 +175,6 @@ $array['service/ipbx/json/private/pbx_settings/meetme'] = 'service/ipbx/json.php
 $array['service/ipbx/json/private/pbx_settings/voicemail'] = 'service/ipbx/json.php/private/pbx_settings/voicemail/';
 
 $array['service/ipbx/ui/pbx_settings/users'] = 'service/ipbx/ui.php/pbx_settings/users/';
-$array['service/ipbx/ui/pbx_settings/lines'] = 'service/ipbx/ui.php/pbx_settings/lines/';
 $array['service/ipbx/ui/pbx_settings/users/search'] = 'service/ipbx/ui.php/pbx_settings/users/search/';
 $array['service/ipbx/ui/pbx_settings/users/groups'] = 'service/ipbx/ui.php/pbx_settings/users/groups/';
 $array['service/ipbx/ui/pbx_settings/users/groups/search'] = 'service/ipbx/ui.php/pbx_settings/users/groups/search/';

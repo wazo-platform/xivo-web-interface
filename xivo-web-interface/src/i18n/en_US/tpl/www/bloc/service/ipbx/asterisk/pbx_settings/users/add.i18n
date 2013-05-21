@@ -755,12 +755,6 @@ Parking lot :
 
 ; hlp_fm_parkinglot
 
-; no_lines_free
-No free lines
-
-; fm_lines_free
-Free lines: 
-
 ; no_context_for_this_entity
 No context for this entity
 
@@ -796,9 +790,6 @@ Device
 
 ; col_line-add
 Add a new line
-
-; col_line-add_free
-Add an existing line
 
 ; opt_line-delete
 Delete this line

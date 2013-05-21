@@ -44,41 +44,11 @@ for($i=0; $i<$nb_device; $i++):
 endfor;
 
 ?>
-<!--
-<fieldset>
-	<legend><?=$this->bbf('linefeatures-description_legend');?></legend>
-	<?=$this->bbf('linefeatures-description');?>
-</fieldset>
--->
 <span id="box-entityid"></span>
-<?php /*
-<p id="box-lines_free" class="fm-paragraph b-nodisplay">
-	<span class="fm-desc clearboth">
-		<label id="lb-lines_free" for="it-lines_free"><?=$this->bbf('fm_lines_free');?></label>
-	</span>
-	<span id="box-no_lines_free" class="b-nodisplay">
-		<?=$this->bbf('no_lines_free');?>
-	</span>
-	<span id="box-list_lines_free">
-		<?=$form->select(array('paragraph'	=> false,
-			    'name'		=> 'list_lines_free',
-			    'id'		=> 'list_lines_free',
-			    'key'		=> 'identity',
-			    'altkey'	=> 'id'));?>
-		<?=$url->href_html($url->img_html('img/site/button/mini/orange/bo-add.gif',
-							       $this->bbf('col_line-add_free'),
-							       'border="0"'),
-						'#lines',
-						null,
-						'id="lnk-add-row-line_free"',
-						$this->bbf('col_line-add_free'));?>
-	</span>
-</p>
-*/ ?>
+
 <table id="list_linefeatures">
 	<thead>
 	<tr class="sb-top">
-		<th class="th-left th-rule">&nbsp;</th>
 		<th class="th-center"><?=$this->bbf('col_line-protocol');?></th>
 		<th class="th-center"><?=$this->bbf('col_line-name');?></th>
 		<th class="th-center"><?=$this->bbf('col_line-context');?></th>
@@ -117,7 +87,7 @@ if($list !== false):
 		&& $ref['encryption'] === true)
 			$secureclass = 'xivo-icon xivo-icon-secure';
 ?>
-	<tr class="fm-paragraph<?=$ref['errdisplay']?>" style="cursor: move;">
+	<tr class="fm-paragraph<?=$ref['errdisplay']?>">
 		<td class="td-left">
 			<?=$form->hidden(array('name' => 'linefeatures[id][]',
 						'value' 	=> $ref['id']));?>
@@ -130,8 +100,6 @@ if($list !== false):
 			<?=$form->hidden(array('name' => 'linefeatures[name][]',
 				    	'id'		=> 'linefeatures-name',
 						'value' 	=> $ref['name']));?>
-		</td>
-		<td>
 			<span>
 				<span class="<?=$secureclass?>">&nbsp;</span>
 				<?=$this->bbf('line_protocol-'.$ref['protocol'])?>
@@ -217,20 +185,18 @@ endif;
 	</tbody>
 	<tfoot>
 	<tr id="no-linefeatures"<?=($list !== false ? ' class="b-nodisplay"' : '')?>>
-		<td colspan="9" class="td-single"><?=$this->bbf('no_linefeatures');?></td>
+		<td colspan="8" class="td-single"><?=$this->bbf('no_linefeatures');?></td>
 	</tr>
 	</tfoot>
 </table>
 
 <table class="b-nodisplay">
 	<tbody id="ex-linefeatures">
-	<tr class="fm-paragraph" style="cursor: move;">
-		<td class="td-left txt-center">
+	<tr class="fm-paragraph">
+		<td class="td-left" id="td_ex-linefeatures-protocol">
 			<?=$form->hidden(array('name' => 'linefeatures[id][]',
 						'value' 	=> 0,
 					    'id'		=> 'linefeatures-id'));?>
-		</td>
-		<td id="td_ex-linefeatures-protocol">
 			<?=$form->select(array('paragraph'	=> false,
 					'name'		=> 'linefeatures[protocol][]',
 					'id'		=> 'linefeatures-protocol',

@@ -318,11 +318,6 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 		return($this->_get_lines('context',$protocols,$disable,null,$context,$order,$limit,$assoc,$initialized,$free,$internal));
 	}
 
-	public function get_lines_contexts($contexts,$protocols=null,$disable=null,$order=null,$limit=null,$assoc=false,$initialized=null,$free=null,$internal=null)
-	{
-		return($this->_get_lines('contexts',$protocols,$disable,null,$contexts,$order,$limit,$assoc,$initialized,$free,$internal));
-	}
-
 	public function get_lines_list($protocols=null,$disable=null,$order=null,$limit=null,$assoc=false,$initialized=null,$free=null,$internal=null)
 	{
 		return($this->_get_lines('list',$protocols,$disable,null,null,$order,$limit,$assoc,$initialized,$free,$internal));
@@ -363,9 +358,6 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 				break;
 			case 'context':
 				$rs = $this->_dso->get_all($protocols,$disable,$initialized,$order,$limit,null,$context,null,$internal,$free);
-				break;
-			case 'contexts':
-				$rs = $this->_dso->get_all_in_contexts($context,$protocols,$disable,$initialized,$order,$limit,$internal,$free);
 				break;
 			case 'list':
 			default:

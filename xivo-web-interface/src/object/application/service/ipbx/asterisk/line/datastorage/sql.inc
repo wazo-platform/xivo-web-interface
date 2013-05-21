@@ -253,14 +253,6 @@ class xivo_application_service_asterisk_line_sql extends xivo_application_abstra
 		return($this->get_all($protocols,$disable,$initialized,$order,$limit,$value,$context,$mode,$internal,$free));
 	}
 
-	public function get_all_in_contexts($contexts,$protocols,$disable=null,$initialized=null,$order=null,$limit=null,$internal=null,$free=null)
-	{
-		if (is_array($contexts) === false)
-			return(false);
-
-		return($this->get_all($protocols,$disable,$initialized,$order,$limit,null,$contexts,$mode,$internal,$free));
-	}
-
 	public function device($deviceid,$context=null,$disable=null,$order=null,$limit=null,$free=null)
 	{
 		$this->_cnt = 0;
