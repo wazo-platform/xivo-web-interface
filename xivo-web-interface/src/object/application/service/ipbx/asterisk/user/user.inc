@@ -1648,7 +1648,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 
 	function delete_schedule_path()
 	{
-		return $this->_schedule_path->delete_where(array('path' => 'user', 'pathid' =>	$this->_info['user']['id']));
+		return $this->_schedule_path->delete_where(array('path' => 'user', 'pathid' =>	$this->_info['userfeatures']['id']));
 	}
 
 	function delete_groupmember()
