@@ -967,7 +967,6 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			$ref['iduserfeatures'] = (int) $iduserfeatures;
 			$ref['rules_order'] = isset($ref['rules_order']) ? (int) $ref['rules_order'] : 0;
 			$ref['rules_group'] = isset($ref['rules_group']) ? $ref['rules_group'] : '';
-			$ref['rules_time'] = (int) $userfeatures['ringseconds'];
 			$ref['num'] = isset($ref['num']) ? (int) $ref['num'] : 1;
 			$ref['callerid'] = $this->_service->mk_callerid($userfeatures['callerid'],$number,$protocolname);
 

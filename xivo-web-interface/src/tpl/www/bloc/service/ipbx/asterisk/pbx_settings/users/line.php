@@ -102,7 +102,6 @@ endfor;
 		<th class="th-center"><?=$this->bbf('col_line-context');?></th>
 		<th class="th-center"><?=$this->bbf('col_line-number');?></th>
 		<th class="th-center"><?=$this->bbf('col_line-config_registrar');?></th>
-		<?php /*<th class="th-center th-rule"><?=$this->bbf('col_line-rules_time');?></th> */ ?>
 		<th class="th-center"><?=$this->bbf('col_line-device');?></th>
 		<th class="th-center"><?=$this->bbf('col_line-num');?></th>
 		<th class="th-right">
@@ -240,16 +239,6 @@ if($list !== false):
 					'selected'	=> $ref['configregistrar']),
 			      $list_configregistrar);?>
 		</td>
-		<?php /*
-		<td>
-			<?=$form->text(array('paragraph'	=> false,
-				  'name'	=> 'linefeatures[rules_time][]',
-				  'id'		=> 'linefeatures-rules_time',
-				  'label'	=> false,
-				  'size'	=> 2,
-				  'value'	=> $ref['rules_time']));?>
-		</td>
-		*/ ?>
 		<td>
 		<?php if ($list_device === false): ?>
 			 -
@@ -386,15 +375,6 @@ endif;
 				    'default'	=> $element['linefeatures']['configregistrar']['default']),
 			      $list_configregistrar);?>
 		</td>
-		<?php /*
-		<td>
-			<?=$form->text(array('paragraph'	=> false,
-				  'name'	=> 'linefeatures[rules_time][]',
-				  'id'		=> 'linefeatures-rules_time',
-				  'label'	=> false,
-				  'size'	=> 2));?>
-		</td>
-		*/ ?>
 		<td id="td_ex-linefeatures-device">
 		<?php if ($list_device === false): ?>
 			 -

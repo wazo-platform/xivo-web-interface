@@ -791,9 +791,6 @@ Context
 ; col_line-number
 Number
 
-; col_line-rules_time
-Time
-
 ; col_line-rules_order
 Order
 

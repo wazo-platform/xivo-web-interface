@@ -172,19 +172,6 @@ function get_entityid_val()
     return(entityid_val);
 }
 
-function update_row_time(time,group)
-{
-    var groupval = '';
-    $('#list_linefeatures > tbody').find('tr').each(function() {
-        if($(this).attr('id') == 'tr-rules_group')
-            groupval = $(this).find('#td_rules_group_name').text();
-        else{
-            if(groupval == group)
-                $(this).find('#linefeatures-rules_time').val(time);
-        }
-    });
-}
-
 function update_row_infos()
 {
     if ((entityid_val = get_entityid_val()) === false)
@@ -239,23 +226,6 @@ function update_row_infos()
                 devicenumline = $(context).parents('tr').find("#linefeatures-num");
                 config = $(context).parents('tr').find('#linefeatures-device').val();
                 xivo_http_search_line_from_provd(devicenumline,config,devicenumline.val());
-
-                $(context).parents('tr').find('#linefeatures-rules_time').
-                change(function(){
-                    update_row_time($(this).val(),
-                            $(this).parents('tr').find('#linefeatures-rules_group').val());
-                });
-                /*
-                timepicker({
-                    timeFormat: 's',
-                    showHour: false,
-                    showMinute: false,
-                    showSecond: true,
-                    onClose: function(a){
-                        update_row_time(a,group);
-                    }
-                });
-                */
                 
                 var number = context.parents('tr').find('#linefeatures-number');
                 number.focus(function(){
