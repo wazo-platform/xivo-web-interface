@@ -193,11 +193,9 @@ function update_row_infos()
         it_userfeatures_entityid.addClass('it-disabled');
     }
     
-    var line_num = 0;
     $('#list_linefeatures > tbody').find('tr').each(function() {
 
         context = $(this).find("#linefeatures-context");
-        $(this).find('#linefeatures-line_num').val(line_num);
 
         context_selected = context.parents('tr').find('#context-selected').val();
         if (context_selected !== null)

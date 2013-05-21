@@ -130,9 +130,6 @@ if($list !== false):
 			<?=$form->hidden(array('name' => 'linefeatures[name][]',
 				    	'id'		=> 'linefeatures-name',
 						'value' 	=> $ref['name']));?>
-			<?=$form->hidden(array('name' => 'linefeatures[line_num][]',
-					    'id'		=> 'linefeatures-line_num',
-					    'value'		=> $ref['line_num']));?>
 		</td>
 		<td>
 			<span>
@@ -229,9 +226,6 @@ endif;
 	<tbody id="ex-linefeatures">
 	<tr class="fm-paragraph" style="cursor: move;">
 		<td class="td-left txt-center">
-			<?=$form->hidden(array('name' => 'linefeatures[line_num][]',
-					    'id'		=> 'linefeatures-line_num',
-					    'value'		=> 0));?>
 			<?=$form->hidden(array('name' => 'linefeatures[id][]',
 						'value' 	=> 0,
 					    'id'		=> 'linefeatures-id'));?>

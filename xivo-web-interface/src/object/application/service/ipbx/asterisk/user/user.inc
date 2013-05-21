@@ -475,7 +475,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		switch($action)
 		{
 			case 'search':
-				$rs = $this->_dso->search($search,$disable,$initialized,$order,$limit);
+				$rs = $this->_dso->search($search,$disable,null,$order,$limit);
 				break;
 			case 'search_number':
 				$rs = $this->_dso->search($search,$disable,true,$order,$limit);
