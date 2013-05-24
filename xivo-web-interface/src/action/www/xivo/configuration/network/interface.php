@@ -56,7 +56,7 @@ switch($act)
 		{
 			dwho::load_class('dwho_sort');
 			$ifacesort = new dwho_sort();
-			uksort($interfaces,array(&$ifacesort,'str_usort'));
+			uksort($interfaces,array($ifacesort,'str_usort'));
 		}
 
 		$hwtype = 'virtual';
@@ -100,7 +100,7 @@ switch($act)
 		{
 			dwho::load_class('dwho_sort');
 			$ifacesort = new dwho_sort();
-			uksort($interfaces,array(&$ifacesort,'str_usort'));
+			uksort($interfaces,array($ifacesort,'str_usort'));
 		}
 
 		$_TPL->set_var('id',$info['netiface']['id']);

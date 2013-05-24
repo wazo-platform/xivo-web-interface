@@ -194,7 +194,7 @@ switch($act)
 			$rcallexten = $return['rightcallexten'];
 
 			$extensort = new dwho_sort(array('key' => 'exten'));
-			uasort($rcallexten,array(&$extensort,'str_usort'));
+			uasort($rcallexten,array($extensort,'str_usort'));
 		}
 
 		$dhtml = &$_TPL->get_module('dhtml');

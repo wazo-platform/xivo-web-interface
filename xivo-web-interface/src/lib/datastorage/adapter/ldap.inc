@@ -875,7 +875,7 @@ class dwho_datastorage_adapter_ldap extends dwho_datastorage_adapter_abstract
 		{
 			$val = (array) $val;
 			$r = vsprintf(dwho_printf_escape($cond,count($val)),
-					array_map(array(&$this,'escape'),$val));
+					array_map(array($this,'escape'),$val));
 		}
 		else if(dwho_has_len($cond) === true)
 			$r = (string) $cond;
@@ -937,7 +937,7 @@ class dwho_datastorage_adapter_ldap extends dwho_datastorage_adapter_abstract
 		if($this->chk_attribute($column) === 0)
 			return(false);
 
-		return(sprintf('(&(%s>=%s)(%s<=%s))',$column,$this->escape($beg),$column,$this->escape($end)));
+		return(sprintf('((%s>=%s)(%s<=%s))',$column,$this->escape($beg),$column,$this->escape($end)));
 	}
 
 	function _set_wherein($column,&$list,$table='',$keys=false,$and=true,$not=false,$join=false)
@@ -965,7 +965,7 @@ class dwho_datastorage_adapter_ldap extends dwho_datastorage_adapter_abstract
 		else if((bool) $keys === true)
 			$list = array_keys($list);
 
-		$strlist = implode(')('.$column.'=',array_map(array(&$this,'escape'),$list));
+		$strlist = implode(')('.$column.'=',array_map(array($this,'escape'),$list));
 
 		if(trim($strlist) === '')
 			return(false);

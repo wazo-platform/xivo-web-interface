@@ -293,7 +293,7 @@ class xivo_application_service_asterisk_webservices_phonebook extends xivo_appli
 				$search = array();
 				$search['from'] = $ldapfilter['basedn'];
 				$search['column'] = array_merge($ldapfilter['attrdisplayname'],$ldapfilter['attrphonenumber']);
-				$search['where'] = '(&'.$filter.'(|('.implode('=*)(',$ldapfilter['attrdisplayname']).'=*))'.
+				$search['where'] = '('.$filter.'(|('.implode('=*)(',$ldapfilter['attrdisplayname']).'=*))'.
 						   '(|('.implode('=*)(',$ldapfilter['attrphonenumber']).'=*)))';
 
 				if(($res = $dso->select_all($search,true,true)) !== false

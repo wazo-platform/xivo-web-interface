@@ -167,7 +167,7 @@ if($this->get_var('showdashboard_call_center') === true):
 <?php
 	if($conf && $listobject && $axetype !== 'type'):
 		foreach ($listobject as $k => &$v)
-			$v['identity'] = dwho_trunc(&$v['identity'],25,'...',5);
+			$v['identity'] = dwho_trunc($v['identity'],25,'...',5);
 ?>
 			<div id="it-cal-object" class="fm-paragraph">
 <?php

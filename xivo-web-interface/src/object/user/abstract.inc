@@ -428,7 +428,7 @@ abstract class xivo_user_abstract extends xivo_libdatastorage_abstract
 			trigger_error('Invalid user authentication object',E_USER_ERROR);
 			return(false);
 		}
-		else if(is_callable(array(&$this->_authent,$func)) === false)
+		else if(is_callable(array($this->_authent,$func)) === false)
 		{
 			trigger_error('Invalid user authentication method',E_USER_ERROR);
 			return(false);

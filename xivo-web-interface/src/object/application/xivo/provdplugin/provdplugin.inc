@@ -28,7 +28,7 @@ class xivo_application_xivo_object_provdplugin extends xivo_application_xivo_obj
 
 	public function __construct(&$xobj)
 	{
-		parent::__construct(&$xobj);
+		parent::__construct($xobj);
 
 		if(($this->_commonconf = &$this->_xobj->get_module('commonconf')) === false
 		|| ($this->_provdplugin = &$this->_xobj->get_module('provdplugin')) === false)

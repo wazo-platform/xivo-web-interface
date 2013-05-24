@@ -29,7 +29,7 @@ abstract class xivo_application_service_asterisk_realstatic_abstract extends xiv
 
 	protected function _init(&$service)
 	{
-		parent::__construct(&$service);
+		parent::__construct($service);
 
 		$param = array();
 

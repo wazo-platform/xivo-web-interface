@@ -27,7 +27,7 @@ class xivo_application_service_asterisk_ldapfilter extends xivo_application_aste
 
 	function xivo_application_service_asterisk_ldapfilter(&$service)
 	{
-		parent::__construct(&$service);
+		parent::__construct($service);
 
 		if(($this->_ldapfilter = &$this->_service->get_module('ldapfilter')) === false
 		|| xivo::load_class('xivo_ldapserver',XIVO_PATH_OBJECT,null,false) === false

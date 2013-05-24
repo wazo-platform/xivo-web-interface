@@ -27,7 +27,7 @@ class xivo_application_xivo_object_monitoring extends xivo_application_xivo_obje
 
 	public function __construct(&$xobj)
 	{
-		parent::__construct(&$xobj);
+		parent::__construct($xobj);
 
 		if(($this->_monitoring    = &$this->_xobj->get_module('monitoring'))    === false
 		|| ($this->_commonconf    = &$this->_xobj->get_module('commonconf'))    === false)

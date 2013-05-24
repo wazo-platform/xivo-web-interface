@@ -29,7 +29,7 @@ class xivo_application_xivo_object_ha extends xivo_application_xivo_object_abstr
 
 	public function __construct(&$xobj)
 	{
-		parent::__construct(&$xobj);
+		parent::__construct($xobj);
 
 		if(($this->_sysconfd = &$this->_xobj->get_module('sysconfd')) === false
 		|| ($this->_ha = &$this->_xobj->get_module('ha')) === false
@@ -180,7 +180,7 @@ class xivo_application_xivo_object_ha extends xivo_application_xivo_object_abstr
 	{
 		$this->_reset();
 
-		if(!$this->_set_check(&$arr))
+		if(!$this->_set_check($arr))
 			return false;
 
 		if($this->_set_save($arr) === false)

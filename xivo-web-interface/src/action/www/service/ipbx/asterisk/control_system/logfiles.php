@@ -48,7 +48,7 @@ switch($act)
 			$total = count($files);
 			dwho::load_class('dwho_sort');
 			$sort = new dwho_sort(array('key' => 'name'));
-			usort($files,array(&$sort,'strnat_usort'));
+			usort($files,array($sort,'strnat_usort'));
 		}
 
 		$_TPL->set_var('pager',dwho_calc_page($page,20,$total));

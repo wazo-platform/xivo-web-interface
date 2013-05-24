@@ -267,7 +267,7 @@ class dwho_tpl
 		$default = $args[$argc - 1];
 		unset($args[$argc - 1]);
 
-		if(($r = call_user_func_array(array(&$this,'get_var'),$args)) !== null)
+		if(($r = call_user_func_array(array($this,'get_var'),$args)) !== null)
 			return($r);
 
 		return($default);

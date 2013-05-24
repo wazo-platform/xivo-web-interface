@@ -22,7 +22,7 @@ include(dwho_file::joinpath(dirname(__FILE__),'_common.php'));
 
 $_STS->load_ressource('period');
 
-$stats_period = new stats_ressource_period(&$_XS);
+$stats_period = new stats_ressource_period($_XS);
 $stats_period->get_data();
 
 $tpl_statistics->set_name('period');
@@ -128,7 +128,7 @@ $_TPL->set_var('mem_info',(memory_get_usage() - $base_memory));
 $_TPL->set_var('bench',(microtime(true) - $bench_start));
 
 $dhtml = &$_TPL->get_module('dhtml');
-$xivo_jqplot->write_js_loaded_plugin(&$dhtml);
+$xivo_jqplot->write_js_loaded_plugin($dhtml);
 
 $menu = &$_TPL->get_module('menu');
 $menu->set_top('top/user/'.$_USR->get_info('meta'));

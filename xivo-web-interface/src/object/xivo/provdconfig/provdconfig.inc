@@ -644,7 +644,7 @@ class xivo_object_provdconfig extends xivo_object_provd_abstract
 
 		$raw_config = &$globalconfig['raw_config'];
 
-		$this->_build_exten_config(&$raw_config);
+		$this->_build_exten_config($raw_config);
 
 		$funckeys = $this->_phonefunckey->build_provd_conf_funckey($iduserfeatures);
 
@@ -659,11 +659,11 @@ class xivo_object_provdconfig extends xivo_object_provd_abstract
 		switch($protocolname)
 		{
 			case 'sip':
-				$this->_build_sip_secure_config(&$globalconfig);
-				$this->_build_sip_config(&$raw_config, $linefeatures);
+				$this->_build_sip_secure_config($globalconfig);
+				$this->_build_sip_config($raw_config, $linefeatures);
 				break;
 			case 'sccp':
-				$this->_build_sccp_config(&$raw_config, $linefeatures);
+				$this->_build_sccp_config($raw_config, $linefeatures);
 				break;
 		}
 
@@ -690,7 +690,7 @@ class xivo_object_provdconfig extends xivo_object_provd_abstract
 			unset($config[$key]);
 		}
 
-		$this->_build_sip_secure_config(&$config);
+		$this->_build_sip_secure_config($config);
 
 		if (empty($config) === true)
 			$config = array('X_Key' => '');

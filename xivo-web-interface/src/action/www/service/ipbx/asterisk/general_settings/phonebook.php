@@ -30,19 +30,19 @@ dwho::load_class('dwho_sort');
 $accessfeaturessort = new dwho_sort(array('key' => 'host'));
 
 if(($info['accessfeatures'] = $appaccessfeatures->get()) !== false)
-	uasort($info['accessfeatures'],array(&$accessfeaturessort,'str_usort'));
+	uasort($info['accessfeatures'],array($accessfeaturessort,'str_usort'));
 
 $serversort = new dwho_sort(array('key' => 'identity'));
 
 $appxivoserver = $ipbx->get_application('serverfeatures',array('feature' => 'phonebook','type' => 'xivo'));
 $info['xivoserver']['info'] = $appxivoserver->get();
 if(($info['xivoserver']['list'] = $appxivoserver->get_server_list()) !== false)
-	uasort($info['xivoserver']['list'],array(&$serversort,'str_usort'));
+	uasort($info['xivoserver']['list'],array($serversort,'str_usort'));
 
 $appldapfilter = $ipbx->get_application('serverfeatures',array('feature' => 'phonebook','type' => 'ldap'));
 $info['ldapfilter']['info'] = $appldapfilter->get();
 if(($info['ldapfilter']['list'] = $appldapfilter->get_server_list()) !== false)
-	uasort($info['ldapfilter']['list'],array(&$serversort,'str_usort'));
+	uasort($info['ldapfilter']['list'],array($serversort,'str_usort'));
 
 $error = array();
 $error['accessfeatures'] = array();
@@ -62,7 +62,7 @@ if(isset($_QR['fm_send']) === true)
 	$info['accessfeatures'] = $appaccessfeatures->get_result();
 
 	if(is_array($info['accessfeatures']) === true)
-		uasort($info['accessfeatures'],array(&$accessfeaturessort,'str_usort'));
+		uasort($info['accessfeatures'],array($accessfeaturessort,'str_usort'));
 
 	$error['accessfeatures'] = $appaccessfeatures->get_error();
 
@@ -116,7 +116,7 @@ if($info['xivoserver']['list'] !== false
 	{
 		$info['xivoserver']['list'] = dwho_array_diff_key($info['xivoserver']['list'],
 								  $info['xivoserver']['slt']);
-		uasort($info['xivoserver']['slt'],array(&$serversort,'str_usort'));
+		uasort($info['xivoserver']['slt'],array($serversort,'str_usort'));
 	}
 }
 
@@ -131,7 +131,7 @@ if($info['ldapfilter']['list'] !== false
 	{
 		$info['ldapfilter']['list'] = dwho_array_diff_key($info['ldapfilter']['list'],
 								  $info['ldapfilter']['slt']);
-		uasort($info['ldapfilter']['slt'],array(&$serversort,'str_usort'));
+		uasort($info['ldapfilter']['slt'],array($serversort,'str_usort'));
 	}
 }
 

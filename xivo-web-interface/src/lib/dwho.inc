@@ -73,7 +73,7 @@ class dwho
 	{
 		self::load_class('dwho_tracerror');
 		$_ERR = dwho_gct::set_get(new dwho_tracerror($this->_conf['dwho']['ini']['error']));
-		set_error_handler(array(&$_ERR,'report_e_err'));
+		set_error_handler(array($_ERR,'report_e_err'));
 	}
 
 	protected function _set_query()

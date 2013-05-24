@@ -252,11 +252,11 @@ class xivo_service_asterisk extends xivo_service_abstract
 		if($this->_load_apprealstatic($name) === false)
 			$r = false;
 		else if($args === null)
-			$r = call_user_func(array(&$this->_apprealstatic[$name],$func));
+			$r = call_user_func(array($this->_apprealstatic[$name],$func));
 		else
 		{
 			$args = (array) $args;
-			$r = call_user_func_array(array(&$this->_apprealstatic[$name],$func),$args);
+			$r = call_user_func_array(array($this->_apprealstatic[$name],$func),$args);
 		}
 
 		return(($ref = &$r));

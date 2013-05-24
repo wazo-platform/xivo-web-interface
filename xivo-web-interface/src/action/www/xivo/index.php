@@ -30,13 +30,13 @@ dwho::load_class('dwho_sort');
 $sort = new dwho_sort(array('key' => 'name'));
 
 if(is_array($mon_telephony) === true)
-	usort($mon_telephony,array(&$sort,'strnat_usort'));
+	usort($mon_telephony,array($sort,'strnat_usort'));
 
 if(is_array($mon_grpundef) === true)
-	usort($mon_grpundef,array(&$sort,'strnat_usort'));
+	usort($mon_grpundef,array($sort,'strnat_usort'));
 
 if(is_array($devstats) === true)
-	usort($devstats,array(&$sort,'strnat_usort'));
+	usort($devstats,array($sort,'strnat_usort'));
 
 $_TPL->set_var('sysinfo',$monitoring->get_system());
 $_TPL->set_var('uptime',$_SYSINFO->uptime());

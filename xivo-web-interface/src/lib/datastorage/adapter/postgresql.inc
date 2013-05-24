@@ -118,7 +118,7 @@ class dwho_datastorage_adapter_postgresql extends dwho_datastorage_adapter_abstr
 		if(is_array($list) === false)
 			return(false);
 
-		return(implode('||',array_map(array(&$this,'escape'),$list)));
+		return(implode('||',array_map(array($this,'escape'),$list)));
 	}
 	/*
 	 function _set_flag()

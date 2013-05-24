@@ -29,7 +29,7 @@ class xivo_application_xivo_object_provdconfig extends xivo_application_xivo_obj
 
 	public function __construct(&$xobj,$param=array())
 	{
-		parent::__construct(&$xobj);
+		parent::__construct($xobj);
 
 		if(($this->_commonconf = &$this->_xobj->get_module('commonconf')) === false
 		|| ($this->_provdconfig = &$this->_xobj->get_module('provdconfig')) === false

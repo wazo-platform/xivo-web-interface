@@ -88,7 +88,7 @@ if($gmember['list'] !== false && dwho_ak('groupmember',$result) === true)
 		$gmember['list'] = dwho_array_diff_key($gmember['list'],$gmember['slt']);
 
 		$groupsort = new dwho_sort(array('key' => 'name'));
-		uasort($gmember['slt'],array(&$groupsort,'str_usort'));
+		uasort($gmember['slt'],array($groupsort,'str_usort'));
 	}
 }
 
@@ -106,7 +106,7 @@ if($qmember['list'] !== false && dwho_ak('queuemember',$result) === true)
 		$qmember['list'] = dwho_array_diff_key($qmember['list'],$qmember['slt']);
 
 		$queuesort = new dwho_sort(array('key' => 'name'));
-		uasort($qmember['slt'],array(&$queuesort,'str_usort'));
+		uasort($qmember['slt'],array($queuesort,'str_usort'));
 	}
 }
 

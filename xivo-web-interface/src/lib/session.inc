@@ -39,12 +39,12 @@ class dwho_session
 
 				session_module_name('user');
 				session_set_save_handler(
-						array(&$this->_dso,'open'),
-						array(&$this->_dso,'close'),
-						array(&$this->_dso,'read'),
-						array(&$this->_dso,'write'),
-						array(&$this->_dso,'destroy'),
-						array(&$this->_dso,'gc'));
+						array($this->_dso,'open'),
+						array($this->_dso,'close'),
+						array($this->_dso,'read'),
+						array($this->_dso,'write'),
+						array($this->_dso,'destroy'),
+						array($this->_dso,'gc'));
 
 				register_shutdown_function(array(&$this->_dso,'write_close'));
 			}

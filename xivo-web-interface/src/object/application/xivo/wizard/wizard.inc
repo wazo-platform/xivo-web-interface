@@ -41,7 +41,7 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 
 	public function __construct(&$xobj,$param=null,$components=true)
 	{
-		parent::__construct(&$xobj);
+		parent::__construct($xobj);
 
 		if(($this->_sysconfd = &$this->_xobj->get_module('sysconfd')) === false)
 			trigger_error('Unable to load sysconfd module',E_USER_ERROR);
@@ -1020,7 +1020,7 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 			trigger_error('Unable to load commonconf module',E_USER_ERROR);
 
 		$content = '';
-		if($commonconf->generate(&$content) !== false)
+		if($commonconf->generate($content) !== false)
 		{
 			$content = str_replace("\n", "<br/>\n", $content);
 			$content = $commonconf->apply();
