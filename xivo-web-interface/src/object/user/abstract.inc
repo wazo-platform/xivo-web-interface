@@ -190,7 +190,6 @@ abstract class xivo_user_abstract extends xivo_libdatastorage_abstract
 				$this->_info['passwd'] = $passwd;
 				$this->_info['type'] = $type;
 				$infos = $this->_info;
-				require_once(DWHO_PATH_ROOT.DIRECTORY_SEPARATOR.'logaccess.inc');
 				dwho_logw('logon',$login,'logon');
 			}
 		}
