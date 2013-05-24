@@ -29,6 +29,7 @@ abstract class xivo_user_abstract extends xivo_libdatastorage_abstract
 	var $_acl	= null;
 	var $_error		= null;
 	var $_errornb	= 0;
+	var $_name	= 'xivo_user';
 
 	function get_info($name)
 	{
