@@ -516,7 +516,7 @@ class dwho_datastorage_adapter_ldap extends dwho_datastorage_adapter_abstract
 				&& is_resource($this->_result) === true
 				&& (is_resource($this->_entry) === true
 						|| ($this->_entry = ldap_first_entry($this->_link,$this->_result)) !== false) === true
-				&& ($r = ldap_first_attribute($this->_link,$this->_entry,&$this->_ber)) !== false)
+				&& ($r = ldap_first_attribute($this->_link,$this->_entry,$this->_ber)) !== false)
 			return(strtolower($r));
 
 		return(false);
@@ -527,7 +527,7 @@ class dwho_datastorage_adapter_ldap extends dwho_datastorage_adapter_abstract
 		if(is_resource($this->_link) === true
 				&& is_resource($this->_result) === true
 				&& is_resource($this->_entry) === true
-				&& ($r = ldap_next_attribute($this->_link,$this->_entry,&$this->_ber)) !== false)
+				&& ($r = ldap_next_attribute($this->_link,$this->_entry,$this->_ber)) !== false)
 			return(strtolower($r));
 
 		return(false);
