@@ -22,7 +22,7 @@ include(dwho_file::joinpath(dirname(__FILE__),'_common.php'));
 
 $_STS->load_ressource('queue');
 
-$stats_queue = new stats_ressource_queue(&$_XS);
+$stats_queue = new stats_ressource_queue($_XS);
 $stats_queue->get_data();
 
 $tpl_statistics->set_name('queue');

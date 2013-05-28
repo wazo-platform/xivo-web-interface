@@ -29,6 +29,7 @@ abstract class xivo_user_abstract extends xivo_libdatastorage_abstract
 	var $_acl	= null;
 	var $_error		= null;
 	var $_errornb	= 0;
+	var $_name	= 'xivo_user';
 
 	function get_info($name)
 	{
@@ -189,7 +190,6 @@ abstract class xivo_user_abstract extends xivo_libdatastorage_abstract
 				$this->_info['passwd'] = $passwd;
 				$this->_info['type'] = $type;
 				$infos = $this->_info;
-				require_once(DWHO_PATH_ROOT.DIRECTORY_SEPARATOR.'logaccess.inc');
 				dwho_logw('logon',$login,'logon');
 			}
 		}
@@ -427,7 +427,7 @@ abstract class xivo_user_abstract extends xivo_libdatastorage_abstract
 			trigger_error('Invalid user authentication object',E_USER_ERROR);
 			return(false);
 		}
-		else if(is_callable(array(&$this->_authent,$func)) === false)
+		else if(is_callable(array($this->_authent,$func)) === false)
 		{
 			trigger_error('Invalid user authentication method',E_USER_ERROR);
 			return(false);

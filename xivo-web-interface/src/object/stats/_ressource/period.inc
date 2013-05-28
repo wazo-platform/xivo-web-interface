@@ -26,7 +26,7 @@ class stats_ressource_period extends xivo_stats_ressource_abstract
 
 	public function __construct(&$_XS)
 	{
-		parent::__construct(&$_XS);
+		parent::__construct($_XS);
 	}
 
 	protected function _build_stat($obj_process, $key, $interval)

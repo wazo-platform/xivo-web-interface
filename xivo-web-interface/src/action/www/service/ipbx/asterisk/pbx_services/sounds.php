@@ -32,7 +32,7 @@ if(($list_dirs = $sounds->get_list_dirs()) !== false)
 {
 	dwho::load_class('dwho_sort');
 	$sort = new dwho_sort();
-	usort($list_dirs,array(&$sort,'strnat_usort'));
+	usort($list_dirs,array($sort,'strnat_usort'));
 }
 
 switch($act)

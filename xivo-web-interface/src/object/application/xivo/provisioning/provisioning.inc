@@ -27,7 +27,7 @@ class xivo_application_xivo_object_provisioning extends xivo_application_xivo_ob
 
 	public function __construct(&$xobj)
 	{
-		parent::__construct(&$xobj);
+		parent::__construct($xobj);
 
 		if(($this->_commonconf = &$this->_xobj->get_module('commonconf'))    === false
 		|| ($this->_prov       = &$this->_xobj->get_module('provisioning'))  === false)

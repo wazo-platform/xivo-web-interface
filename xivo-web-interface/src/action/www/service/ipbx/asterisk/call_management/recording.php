@@ -204,7 +204,7 @@ function refactor_queue_list($queues_list) {
 	$queues_list_refactored = array();
 	for($i = 0; $i < count($queues_list); $i++) {
 		$new_item = array();
-		$item = get_object_vars(&$queues_list[$i]);
+		$item = get_object_vars($queues_list[$i]);
 		$new_item['id'] = $item['id'];
 		$new_item['ext_name'] = $item['number'] . ': ' . $item['displayname'];
 		$queues_list_refactored[$i] = $new_item;

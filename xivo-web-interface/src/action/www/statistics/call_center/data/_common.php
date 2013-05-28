@@ -51,7 +51,7 @@ $_TPL->set_var('confid',$_XS->get_idconf());
 $_TPL->set_var('conf',$_XS->get_conf());
 
 $tpl_statistics = &$_TPL->get_module('statistics');
-$tpl_statistics->set_xs(&$_XS);
+$tpl_statistics->set_xs($_XS);
 
 $dhtml = &$_TPL->get_module('dhtml');
 $dhtml->set_js('js/statistics/common.js');

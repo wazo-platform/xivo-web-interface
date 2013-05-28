@@ -516,7 +516,7 @@ class dwho_datastorage_adapter_ldap extends dwho_datastorage_adapter_abstract
 				&& is_resource($this->_result) === true
 				&& (is_resource($this->_entry) === true
 						|| ($this->_entry = ldap_first_entry($this->_link,$this->_result)) !== false) === true
-				&& ($r = ldap_first_attribute($this->_link,$this->_entry,&$this->_ber)) !== false)
+				&& ($r = ldap_first_attribute($this->_link,$this->_entry,$this->_ber)) !== false)
 			return(strtolower($r));
 
 		return(false);
@@ -527,7 +527,7 @@ class dwho_datastorage_adapter_ldap extends dwho_datastorage_adapter_abstract
 		if(is_resource($this->_link) === true
 				&& is_resource($this->_result) === true
 				&& is_resource($this->_entry) === true
-				&& ($r = ldap_next_attribute($this->_link,$this->_entry,&$this->_ber)) !== false)
+				&& ($r = ldap_next_attribute($this->_link,$this->_entry,$this->_ber)) !== false)
 			return(strtolower($r));
 
 		return(false);
@@ -875,7 +875,7 @@ class dwho_datastorage_adapter_ldap extends dwho_datastorage_adapter_abstract
 		{
 			$val = (array) $val;
 			$r = vsprintf(dwho_printf_escape($cond,count($val)),
-					array_map(array(&$this,'escape'),$val));
+					array_map(array($this,'escape'),$val));
 		}
 		else if(dwho_has_len($cond) === true)
 			$r = (string) $cond;
@@ -965,7 +965,7 @@ class dwho_datastorage_adapter_ldap extends dwho_datastorage_adapter_abstract
 		else if((bool) $keys === true)
 			$list = array_keys($list);
 
-		$strlist = implode(')('.$column.'=',array_map(array(&$this,'escape'),$list));
+		$strlist = implode(')('.$column.'=',array_map(array($this,'escape'),$list));
 
 		if(trim($strlist) === '')
 			return(false);

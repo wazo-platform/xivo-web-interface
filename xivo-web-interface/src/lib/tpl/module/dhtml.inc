@@ -114,7 +114,7 @@ class dwho_tpl_dhtml extends dwho_tpl_module
 		if(is_array($parameters) === false || empty($parameters) === true)
 			return($this->_uri->build_uri($uri));
 
-		array_walk($parameters,array(&$this,'escape_walk'),$entquote);
+		array_walk($parameters,array($this,'escape_walk'),$entquote);
 
 		$uri['path'] = $function.'('.implode(',',$parameters).');';
 

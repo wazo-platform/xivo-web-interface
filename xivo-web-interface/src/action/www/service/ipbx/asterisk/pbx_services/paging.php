@@ -44,7 +44,7 @@ switch($act)
 		{
 			dwho::load_class('dwho_sort');
 			$sort = new dwho_sort(array('key' => 'name'));
-			usort($files,array(&$sort,'strnat_usort'));
+			usort($files,array($sort,'strnat_usort'));
 		}
 
 		$paginguser = $pagingcaller = array();
@@ -104,7 +104,7 @@ switch($act)
 		{
 			dwho::load_class('dwho_sort');
 			$sort = new dwho_sort(array('key' => 'name'));
-			usort($files,array(&$sort,'strnat_usort'));
+			usort($files,array($sort,'strnat_usort'));
 		}
 
 		$paginguser = $pagingcaller = array();

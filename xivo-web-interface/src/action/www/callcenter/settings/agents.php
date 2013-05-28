@@ -295,7 +295,7 @@ switch($act)
 
 				$queuesort = new dwho_sort(array('key'	=> 'name'));
 
-				uasort($qmember['slt'],array(&$queuesort,'str_usort'));
+				uasort($qmember['slt'],array($queuesort,'str_usort'));
 			}
 		}
 
@@ -412,7 +412,7 @@ switch($act)
 
 				$queuesort = new dwho_sort(array('key'	=> 'name'));
 
-				uasort($qmember['slt'],array(&$queuesort,'str_usort'));
+				uasort($qmember['slt'],array($queuesort,'str_usort'));
 			}
 		}
 

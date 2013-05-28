@@ -88,7 +88,7 @@ function print_recordings_list($recordings_list, $nb, $form, $url, $dhtml, $this
 {
 	for($i = 0;$i < $nb;$i++):
 
-		$recording = get_object_vars(&$recordings_list[$i]);
+		$recording = get_object_vars($recordings_list[$i]);
 
 		if($recording['activated']):
 			$icon = 'enable';

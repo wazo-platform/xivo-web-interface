@@ -136,7 +136,7 @@ $cnt = pow($nbbypage,floor($node));
 
 dwho::load_class('dwho_sort');
 $sort = new dwho_sort(array('key' => 'identity'));
-usort($rs,array(&$sort,'str_usort'));
+usort($rs,array($sort,'str_usort'));
 
 if($directory === true)
 {

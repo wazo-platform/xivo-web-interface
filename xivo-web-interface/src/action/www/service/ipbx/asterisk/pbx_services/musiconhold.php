@@ -33,7 +33,7 @@ if(($list_cats = $musiconhold->get_all_by_category()) !== false)
 {
 	dwho::load_class('dwho_sort');
 	$sort = new dwho_sort(array('key' => 'category'));
-	usort($list_cats,array(&$sort,'strnat_usort'));
+	usort($list_cats,array($sort,'strnat_usort'));
 }
 
 $_TPL->set_var('list_cats',$list_cats);

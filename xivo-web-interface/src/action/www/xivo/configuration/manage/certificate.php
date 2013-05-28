@@ -178,7 +178,7 @@ switch($act)
 		$limit[0] = $prevpage * $nbbypage;
 		$limit[1] = $nbbypage;
 
-		$list  = $modcert->get_all(null,$order,$limit, &$total);
+		$list  = $modcert->get_all(null,$order,$limit, $total);
 
 		if($list === false && $total > 0 && $prevpage > 0)
 		{

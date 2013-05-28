@@ -98,4 +98,6 @@ switch($tpl_area)
 		dwho_die('Invalid TPL AREA');
 }
 
+require_once(DWHO_PATH_ROOT.DIRECTORY_SEPARATOR.'logaccess.inc');
+
 ?>

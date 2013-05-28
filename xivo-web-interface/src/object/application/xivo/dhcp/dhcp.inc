@@ -27,7 +27,7 @@ class xivo_application_xivo_object_dhcp extends xivo_application_xivo_object_abs
 
 	public function __construct(&$xobj)
 	{
-		parent::__construct(&$xobj);
+		parent::__construct($xobj);
 
 		if(($this->_commonconf  = &$this->_xobj->get_module('commonconf')) === false
 				|| ($this->_dhcp = &$this->_xobj->get_module('dhcp')) === false)

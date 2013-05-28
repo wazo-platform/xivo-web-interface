@@ -32,7 +32,7 @@ class xivo_application_xivo_object_netiface extends xivo_application_xivo_object
 
 	public function __construct(&$xobj)
 	{
-		parent::__construct(&$xobj);
+		parent::__construct($xobj);
 
 		if(($this->_netiface = &$this->_xobj->get_module('netiface')) === false
 		|| ($this->_sysconfd = &$this->_xobj->get_module('sysconfd')) === false
@@ -648,7 +648,7 @@ class xivo_application_xivo_object_netiface extends xivo_application_xivo_object
 
 		dwho::load_class('dwho_sort');
 		$ifacesort = new dwho_sort();
-		uksort($r,array(&$ifacesort,'str_usort'));
+		uksort($r,array($ifacesort,'str_usort'));
 
 		if($limit !== null)
 		{

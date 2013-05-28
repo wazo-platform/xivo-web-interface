@@ -29,7 +29,7 @@ abstract class xivo_ldapserver_abstract_sql extends dwho_datastorage_helper_tabl
 
 	public function __construct(&$dso,$param=array())
 	{
-		parent::_init(&$dso,$param);
+		parent::_init($dso,$param);
 	}
 }
 

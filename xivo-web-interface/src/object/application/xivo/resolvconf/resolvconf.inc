@@ -28,7 +28,7 @@ class xivo_application_xivo_object_resolvconf extends xivo_application_xivo_obje
 
 	public function __construct(&$xobj)
 	{
-		parent::__construct(&$xobj);
+		parent::__construct($xobj);
 
 		if(($this->_resolvconf = &$this->_xobj->get_module('resolvconf')) === false
 		|| ($this->_sysconfd   = &$this->_xobj->get_module('sysconfd'))   === false

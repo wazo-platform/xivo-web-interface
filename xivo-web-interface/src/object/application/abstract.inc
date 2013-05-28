@@ -315,7 +315,7 @@ abstract class xivo_application_abstract extends xivo_libconfig_abstract
 			$tmp = $args;
 			$tmp[] = $key;
 			$tmp[] = $value;
-			call_user_func_array(array(&$this,'_set_error'),$tmp);
+			call_user_func_array(array($this,'_set_error'),$tmp);
 		}
 
 		return(true);

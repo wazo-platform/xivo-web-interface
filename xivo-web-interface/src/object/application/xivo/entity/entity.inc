@@ -27,7 +27,7 @@ class xivo_application_xivo_object_entity extends xivo_application_xivo_object_a
 
 	function __construct(&$xobj,&$dso,$param=null,$components=true)
 	{
-		parent::__construct(&$xobj);
+		parent::__construct($xobj);
 
 		if(is_object($dso) === false)
 			trigger_error('Invalid Datastorage object',E_USER_ERROR);

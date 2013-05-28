@@ -22,7 +22,7 @@ $commonconf = &$_XOBJ->get_module('commonconf');
 
 $status = 0;
 $content = '';
-if($commonconf->generate(&$content) !== false)
+if($commonconf->generate($content) !== false)
 {
 	$content = $commonconf->apply();
 	$status = $commonconf->last_status_code();

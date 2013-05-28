@@ -68,7 +68,7 @@ switch($act)
 
 		$_TPL->set_var('info',$result);
 		$_TPL->set_var('error',$error);
-		$_TPL->set_var('voicemenuevent',&$result['voicemenuevent-data']);
+		$_TPL->set_var('voicemenuevent',$result['voicemenuevent-data']);
 		$_TPL->set_var('fm_save',$fm_save);
 		$_TPL->set_var('element',$appvoicemenu->get_elements());
 		$_TPL->set_var('voicemail_list',$appvoicemenu->get_voicemail_list());
@@ -127,7 +127,7 @@ switch($act)
 		$_TPL->set_var('id',$info['voicemenu']['id']);
 		$_TPL->set_var('info',$return);
 		$_TPL->set_var('error',$error);
-		$_TPL->set_var('voicemenuevent',&$return['voicemenuevent-data']);
+		$_TPL->set_var('voicemenuevent',$return['voicemenuevent-data']);
 		$_TPL->set_var('fm_save',$fm_save);
 		$_TPL->set_var('element',$appvoicemenu->get_elements());
 		$_TPL->set_var('voicemail_list',$appvoicemenu->get_voicemail_list());

@@ -49,7 +49,7 @@ switch($act)
 		if(($outcalltrunk['list'] = $apptrunk->get_trunks_list(null,null,null,null,true)) !== false)
 		{
 			$trunksort = new dwho_sort(array('key' => 'identity'));
-			uasort($outcalltrunk['list'],array(&$trunksort,'str_usort'));
+			uasort($outcalltrunk['list'],array($trunksort,'str_usort'));
 		}
 
 		$apprightcall = &$ipbx->get_application('rightcall',null,false);
@@ -107,7 +107,7 @@ switch($act)
 		if(($outcalltrunk['list'] = $apptrunk->get_trunks_list(null,null,null,null,true)) !== false)
 		{
 			$trunksort = new dwho_sort(array('key' => 'identity'));
-			uasort($outcalltrunk['list'],array(&$trunksort,'str_usort'));
+			uasort($outcalltrunk['list'],array($trunksort,'str_usort'));
 		}
 
 		$apprightcall = &$ipbx->get_application('rightcall',null,false);

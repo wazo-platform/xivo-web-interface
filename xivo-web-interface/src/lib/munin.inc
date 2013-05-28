@@ -80,7 +80,7 @@ function _get_caption($graph_id)
 	$caption['caption_argument'] = '';
 	foreach($caption_id_overrides as $regexp => $override) {
 		$matches = array();
-		if(preg_match("/^$regexp$/", $graph_id, &$matches) > 0) {
+		if(preg_match("/^$regexp$/", $graph_id, $matches) > 0) {
 			$caption['caption_id'] = $override['caption_id'];
 			$caption['caption_argument'] = $matches[1];
 			break;

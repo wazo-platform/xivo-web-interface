@@ -220,7 +220,7 @@ class stats_ressource_cel
 		{
 			case 'max':
 				$sort = new dwho_sort(array('key' => 'val'));
-				uasort($result,array(&$sort,'num_usort'));
+				uasort($result,array($sort,'num_usort'));
 				$result = array_values($result);
 				krsort($result);
 				$ret = array_values($result);
@@ -236,7 +236,7 @@ class stats_ressource_cel
 					array_push($tmp,$arr);
 				}
 				$sort = new dwho_sort(array('key' => 'val'));
-				uasort($tmp,array(&$sort,'num_usort'));
+				uasort($tmp,array($sort,'num_usort'));
 				$tmp = array_values($tmp);
 				krsort($tmp);
 				$ret = array_values($tmp);

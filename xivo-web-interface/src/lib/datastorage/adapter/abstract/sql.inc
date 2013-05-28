@@ -122,7 +122,7 @@ abstract class dwho_datastorage_adapter_abstract_sql extends dwho_datastorage_ad
 		if(is_array($list) === false)
 			return(false);
 
-		return(implode('||',array_map(array(&$this,'escape'),$list)));
+		return(implode('||',array_map(array($this,'escape'),$list)));
 	}
 
 	function reset_all()
@@ -324,7 +324,7 @@ abstract class dwho_datastorage_adapter_abstract_sql extends dwho_datastorage_ad
 	function get_column()
 	{
 		if(isset($this->_colall[0]) === true
-				&& ($join = implode('.*, ',array_map(array(&$this,'quote_identifier'),$this->_colall))) !== '')
+				&& ($join = implode('.*, ',array_map(array($this,'quote_identifier'),$this->_colall))) !== '')
 			$r = $join.'.*';
 		else
 			$r = '';
@@ -667,7 +667,7 @@ abstract class dwho_datastorage_adapter_abstract_sql extends dwho_datastorage_ad
 		{
 			$val = (array) $val;
 
-			$map = array_map(array(&$this,'escape'),$val);
+			$map = array_map(array($this,'escape'),$val);
 
 			// XXX Fix condition with SQLite2
 			// when there are multi left join with comparison of constant.
@@ -682,7 +682,7 @@ abstract class dwho_datastorage_adapter_abstract_sql extends dwho_datastorage_ad
 				else
 					$this->_fix_leftjoin_column = $this->_tablecolumn[key($this->_tablecolumn)][0];
 
-				$map = array_map(array(&$this,'_fix_leftjoin_condition'),$map);
+				$map = array_map(array($this,'_fix_leftjoin_condition'),$map);
 
 				$this->_fix_leftjoin_condition = false;
 			}
@@ -1128,7 +1128,7 @@ abstract class dwho_datastorage_adapter_abstract_sql extends dwho_datastorage_ad
 		if((bool) $keys === true)
 			$list = array_keys($list);
 
-		$strlist = implode(',',array_map(array(&$this,'escape'),$list));
+		$strlist = implode(',',array_map(array($this,'escape'),$list));
 
 		if(trim($strlist) === '')
 			return(false);

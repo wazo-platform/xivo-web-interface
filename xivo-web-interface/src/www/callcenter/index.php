@@ -36,8 +36,6 @@ $_TPL->load_i18n_file('struct/service/ipbx/'.$ipbx->get_name());
 
 $action_path = $_LOC->get_action_path('callcenter',0);
 
-require_once(DWHO_PATH_ROOT.DIRECTORY_SEPARATOR.'logaccess.inc');
-
 if($action_path === false)
 	$_QRY->go($_TPL->url('xivo/logoff'));
 
