@@ -937,7 +937,7 @@ class dwho_datastorage_adapter_ldap extends dwho_datastorage_adapter_abstract
 		if($this->chk_attribute($column) === 0)
 			return(false);
 
-		return(sprintf('((%s>=%s)(%s<=%s))',$column,$this->escape($beg),$column,$this->escape($end)));
+		return(sprintf('(&(%s>=%s)(%s<=%s))',$column,$this->escape($beg),$column,$this->escape($end)));
 	}
 
 	function _set_wherein($column,&$list,$table='',$keys=false,$and=true,$not=false,$join=false)
