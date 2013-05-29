@@ -87,13 +87,11 @@ function xivo_http_search_context_from_entity(entityid)
         dataType: 'json',
         success: function(data) {
             if (data === null || (nb = data.length) === 0) {
-                $('#box-lines_free').hide('slow');
                 $('#list_linefeatures').hide();
                 $('#box-no_context').show();
                 return false;
             }
             $('#box-no_context').hide();
-            //$('#box-lines_free').show();
             $('#list_linefeatures').show();
             $('#list_linefeatures').find("#linefeatures-context").each(function(){
                 $(this).find('option').remove();
@@ -106,31 +104,8 @@ function xivo_http_search_context_from_entity(entityid)
                     $(this).append("<option value=" + data[i]['name'] + ">" + data[i]['displayname'] + "</option>");
             });
             update_row_infos();
-            xivo_http_search_linefree_by_entity(entityid);
         }
     });        
-}
-
-//get list line free available for a entity
-function xivo_http_search_linefree_by_entity(entityid)
-{
-    $.ajax({
-        url: '/service/ipbx/ui.php/pbx_settings/lines/?act=contexts&entityid='+entityid+'&contexttype=internal&free=1',
-        async: false,
-        dataType: 'json',
-        success: function(data) {
-            if (data === null || data.length === 0){
-                $('#box-lines_free').hide('slow');
-                return false;
-            }
-            $('#box-lines_free').show();
-            $("#list_lines_free").each(function(){
-                $(this).find('option').remove();
-                for (var i = 0; i< data.length; i++)
-                    $(this).append("<option value=" + data[i]['id'] + ">" + data[i]['identity'] + "</option>");
-            });
-        }
-    });
 }
 
 function lnkdroprow(obj)
@@ -140,22 +115,6 @@ function lnkdroprow(obj)
     });    
     
     setTimeout(update_row_infos, 420);
-    
-    it_id = $(obj).parents('tr').find('#linefeatures-id');
-    it_lineid_val = it_id.val();
-    
-    if (it_lineid_val == 0 || it_lineid_val == undefined) {
-        return false;
-    }
-    
-    it_protocol = $(obj).parents('tr').find('#linefeatures-protocol');
-    it_name = $(obj).parents('tr').find('#linefeatures-name');
-    
-    $('#list_lines_free').append("<option value=" + it_lineid_val + ">" + it_protocol.val()+'/'+it_name.val() + "</option>");
-    
-    if ($('#list_lines_free option').length > 0) {
-        $('#box-lines_free').show();
-    }
 }
 
 function get_entityid_val()
@@ -170,19 +129,6 @@ function get_entityid_val()
         return false;
     
     return(entityid_val);
-}
-
-function update_row_time(time,group)
-{
-    var groupval = '';
-    $('#list_linefeatures > tbody').find('tr').each(function() {
-        if($(this).attr('id') == 'tr-rules_group')
-            groupval = $(this).find('#td_rules_group_name').text();
-        else{
-            if(groupval == group)
-                $(this).find('#linefeatures-rules_time').val(time);
-        }
-    });
 }
 
 function update_row_infos()
@@ -206,87 +152,47 @@ function update_row_infos()
         it_userfeatures_entityid.addClass('it-disabled');
     }
     
-    var groupval = '';
-    var grouporder = 0;
-    var line_num = 0;
-    var idx = 0;
     $('#list_linefeatures > tbody').find('tr').each(function() {
-        tr_group = false;
-        
-        if($(this).attr('id') == 'tr-rules_group') {
-            grouporder = 0;
-            if (idx > 0)
-                line_num++;
-            groupval = $(this).find('#td_rules_group_name').text();
-            tr_group = true;
-        } else
-            grouporder++;
-        
-        $(this).find('#box-grouporder').html(grouporder);        
-        
-        if(tr_group === false) {
+
+        context = $(this).find("#linefeatures-context");
+
+        context_selected = context.parents('tr').find('#context-selected').val();
+        if (context_selected !== null)
+            context.find("option[value='"+context_selected+"']").attr("selected","selected");
+
+        if (context.val() !== null) {
+            devicenumline = $(context).parents('tr').find("#linefeatures-num");
+            config = $(context).parents('tr').find('#linefeatures-device').val();
+            xivo_http_search_line_from_provd(devicenumline,config,devicenumline.val());
             
-            context = $(this).find("#linefeatures-context");
-            $(this).find('#linefeatures-rules_group').val(groupval);
-            $(this).find('#linefeatures-line_num').val(line_num);
-            $(this).find('#linefeatures-rules_order').val(grouporder);
+            var number = context.parents('tr').find('#linefeatures-number');
+            number.focus(function(){
+                helper = $(this).parent().find('#numberpool_helper');
+                context = $(this).parents('tr').find("#linefeatures-context");
+                xivo_http_search_numpool(context.val(),helper);
+                helper.show('slow');
+                map_autocomplete_extension_to($(this),context.val());
+            });
+            number.blur(function(){
+                $(this).parent().find('#numberpool_helper').hide('slow');
+            });
+            device = $(this).find('#linefeatures-device').val();
+            devicenumline = $(this).find("#linefeatures-num");
+            if (device == '')
+                devicenumline.hide();
 
-            context_selected = context.parents('tr').find('#context-selected').val();
-            if (context_selected !== null)
-                context.find("option[value='"+context_selected+"']").attr("selected","selected");
-            
-            if (context.val() !== null) {                
-                devicenumline = $(context).parents('tr').find("#linefeatures-num");
-                config = $(context).parents('tr').find('#linefeatures-device').val();
-                xivo_http_search_line_from_provd(devicenumline,config,devicenumline.val());
+            $(this).find('#linefeatures-device').select2();
 
-                $(context).parents('tr').find('#linefeatures-rules_time').
-                change(function(){
-                    update_row_time($(this).val(),
-                            $(this).parents('tr').find('#linefeatures-rules_group').val());
+            $(this).find('#linefeatures-device').change(function() {
+                devicenumline = $(this).parents('tr').find("#linefeatures-num");
+                $(devicenumline).each(function(){
+                    $(this).find('option').remove();
+                    for (var i=1; i<=12; i++)
+                        $(this).append("<option value="+i+">"+i+"</option>");
                 });
-                /*
-                timepicker({
-                    timeFormat: 's',
-                    showHour: false,
-                    showMinute: false,
-                    showSecond: true,
-                    onClose: function(a){
-                        update_row_time(a,group);
-                    }
-                });
-                */
-                
-                var number = context.parents('tr').find('#linefeatures-number');
-                number.focus(function(){
-                    helper = $(this).parent().find('#numberpool_helper');
-                    context = $(this).parents('tr').find("#linefeatures-context");
-                    xivo_http_search_numpool(context.val(),helper);
-                    helper.show('slow');
-                    map_autocomplete_extension_to($(this),context.val());
-                });
-                number.blur(function(){
-                    $(this).parent().find('#numberpool_helper').hide('slow');
-                });
-                device = $(this).find('#linefeatures-device').val();
-                devicenumline = $(this).find("#linefeatures-num");
-                if (device == '')
-                    devicenumline.hide();
-
-                $(this).find('#linefeatures-device').select2();
-
-                $(this).find('#linefeatures-device').change(function() {
-                    devicenumline = $(this).parents('tr').find("#linefeatures-num");
-                    $(devicenumline).each(function(){
-                        $(this).find('option').remove();
-                        for (var i=1; i<=12; i++)
-                            $(this).append("<option value="+i+">"+i+"</option>");
-                    });
-                    xivo_http_search_line_from_provd(devicenumline,$(this).val());
-                });
-            }
+                xivo_http_search_line_from_provd(devicenumline,$(this).val());
+            });
         }
-        idx++;
     });
 }
 
@@ -308,12 +214,6 @@ $(document).ready(function() {
     $('#it-userfeatures-entityid').change(function() {
         xivo_http_search_context_from_entity($(this).val());
     });
-
-    $("#list_linefeatures tbody").sortable({
-        helper: fixHelper,
-        cursor: 'crosshair',
-        update: update_row_infos
-    });
     
     enable_disable_add_button();
     
@@ -329,87 +229,6 @@ $(document).ready(function() {
             $(this).append(row);
         });
 
-        update_row_infos();
-        return false;
-    });
-
-    $('#lnk-add-row-rules_group').click(function(){        
-        groupval = $('#it-rules_group').val();
-        
-        if (groupval === '' || groupval === null)
-            return false;
-        
-        exist = false;
-        $('#list_linefeatures').find('#td_rules_group_name').each(function () {
-            if ($(this).text() == groupval)
-                exist = true;
-        });
-        
-        if (exist === true)
-            return false;
-
-        groupval = groupval.replace(/[^a-z0-9_\.-]+/g,'');
-        groupval = groupval.toLowerCase();
-        
-        td_rules_group = $('#ex-rules_group').find('#td_rules_group_name');
-        td_rules_group.text(groupval);
-        
-        row = $('#ex-rules_group').html();
-        
-        $('#list_linefeatures > tbody:last').fadeIn(400, function () {
-            $(this).append(row);
-        });
-        
-        td_rules_group.text('');
-        update_row_infos();    
-        return false;
-    });
-
-    $('#lnk-add-row-line_free').click(function(){
-        $('#no-linefeatures').hide('fast');
-        
-        idlinefeatures = $('#list_lines_free').val();
-        $('#ex-linefeatures').find('#linefeatures-id').val(idlinefeatures);
-        row = $('#ex-linefeatures').html();
-        
-        $('#list_linefeatures > tbody:last').fadeIn(400, function () {
-            $(this).append(row);
-        });
-
-        $('#ex-linefeatures').find('#linefeatures-id').val(0);
-        
-        it_context = $('#list_linefeatures > tbody:last > tr').find("#linefeatures-context");
-        
-        td_protocol = it_context.parents('tr:last').find('#td_ex-linefeatures-protocol');
-        td_name = it_context.parents('tr:last').find('#td_ex-linefeatures-name');
-
-        it_context.parents('tr:last').find('#linefeatures-protocol').remove();
-        it_context.parents('tr:last').find('#linefeatures-name').remove();
-
-        protoname = $('#list_lines_free option[value='+idlinefeatures+']').text();
-        
-        if (protoname.indexOf('/') == -1) {
-            td_protocol.append('fatal error: undefined protocol');
-            td_name.append('fatal error: undefined peer');
-        }
-        else {
-            str_protocol = protoname.substring(0, protoname.indexOf('/')).toLowerCase();
-            str_name = protoname.substring(protoname.indexOf('/')+1);
-            
-            td_protocol.append(str_protocol.toUpperCase());
-            it_proto = '<input type="hidden" id="linefeatures-protocol" name="linefeatures[protocol][]" value="'+str_protocol+'" />';
-            td_protocol.append(it_proto);
-            
-            td_name.append(str_name);
-            it_name = '<input type="hidden" id="linefeatures-name" name="linefeatures[name][]" value="'+str_name+'" />';
-            td_name.append(it_name);
-        }
-        
-        $('#list_lines_free option[value='+idlinefeatures+']').remove();
-        
-        if ($('#list_lines_free option').length == 0)
-            $('#box-lines_free').hide('slow');
-        
         update_row_infos();
         return false;
     });

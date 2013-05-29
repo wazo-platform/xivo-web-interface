@@ -44,65 +44,16 @@ for($i=0; $i<$nb_device; $i++):
 endfor;
 
 ?>
-<!--
-<fieldset>
-	<legend><?=$this->bbf('linefeatures-description_legend');?></legend>
-	<?=$this->bbf('linefeatures-description');?>
-</fieldset>
--->
 <span id="box-entityid"></span>
-<?php /*
-<p id="box-lines_free" class="fm-paragraph b-nodisplay">
-	<span class="fm-desc clearboth">
-		<label id="lb-lines_free" for="it-lines_free"><?=$this->bbf('fm_lines_free');?></label>
-	</span>
-	<span id="box-no_lines_free" class="b-nodisplay">
-		<?=$this->bbf('no_lines_free');?>
-	</span>
-	<span id="box-list_lines_free">
-		<?=$form->select(array('paragraph'	=> false,
-			    'name'		=> 'list_lines_free',
-			    'id'		=> 'list_lines_free',
-			    'key'		=> 'identity',
-			    'altkey'	=> 'id'));?>
-		<?=$url->href_html($url->img_html('img/site/button/mini/orange/bo-add.gif',
-							       $this->bbf('col_line-add_free'),
-							       'border="0"'),
-						'#lines',
-						null,
-						'id="lnk-add-row-line_free"',
-						$this->bbf('col_line-add_free'));?>
-	</span>
-</p>
 
-<p class="fm-paragraph" id="box-rules_group">
-	<span class="fm-desc clearboth">
-		<label id="lb-rules_group" for="it-rules_group"><?=$this->bbf('fm_rules_group');?></label>
-	</span>
-	<?=$form->text(array('paragraph'	=> false,
-			     'name'		=> false,
-			     'id'		=> 'it-rules_group',
-			     'label'	=> false,
-			     'size'		=> 10));?>
-	<?=$url->href_html($url->img_html('img/site/button/mini/orange/bo-add.gif',
-									       $this->bbf('col_rules_group-add'),
-									       'border="0"'),
-								'#lines',
-								null,
-								'id="lnk-add-row-rules_group"',
-								$this->bbf('col_rules_group-add'));?>
-</p>
-*/ ?>
 <table id="list_linefeatures">
 	<thead>
 	<tr class="sb-top">
-		<th class="th-left th-rule">&nbsp;</th>
 		<th class="th-center"><?=$this->bbf('col_line-protocol');?></th>
 		<th class="th-center"><?=$this->bbf('col_line-name');?></th>
 		<th class="th-center"><?=$this->bbf('col_line-context');?></th>
 		<th class="th-center"><?=$this->bbf('col_line-number');?></th>
 		<th class="th-center"><?=$this->bbf('col_line-config_registrar');?></th>
-		<?php /*<th class="th-center th-rule"><?=$this->bbf('col_line-rules_time');?></th> */ ?>
 		<th class="th-center"><?=$this->bbf('col_line-device');?></th>
 		<th class="th-center"><?=$this->bbf('col_line-num');?></th>
 		<th class="th-right">
@@ -131,52 +82,12 @@ if($list !== false):
 			$ref['errdisplay'] = '';
 		endif;
 
-		$rulesgroup = $ref['rules_group'];
-		if (($rulesorder = (int) $ref['rules_order']) === 0)
-			$rulesgroup = 0;
-		if ($rulesgroup === '')
-			$rulesgroup = 0;
-
-		if (isset($rs[$rulesgroup]) === false)
-			$rs[$rulesgroup] = array();
-
-		array_push($rs[$rulesgroup],$ref);
-	endfor;
-
-	foreach($rs as $rulesgroup => $list):
-
-		if (empty($rulesgroup) === false
-		|| $rulesgroup !== 0):
+		$secureclass = '';
+		if(isset($ref['encryption']) === true
+		&& $ref['encryption'] === true)
+			$secureclass = 'xivo-icon xivo-icon-secure';
 ?>
-	<tr class="fm-paragraph l-subth" id="tr-rules_group">
-		<td class="td-left">
-			<span class="ui-icon ui-icon-arrowthick-2-n-s" style="float:left;"></span>
-		</td>
-		<td colspan="7" class="txt-center" id="td_rules_group_name">
-			<?=$rulesgroup?>
-		</td>
-		<td class="td-right">
-			<?=$url->href_html($url->img_html('img/site/button/mini/blue/delete.gif',
-							       $this->bbf('opt_row-delete'),
-							       'border="0"'),
-							'#lines',
-							null,
-							'onclick="lnkdroprow(this);"',
-							$this->bbf('opt_row-delete'));?>
-		</td>
-	</tr>
-<?php
-		endif;
-		if (($nblinegroup = count($list)) === 0)
-			continue;
-		for($i = 0;$i < $nblinegroup;$i++):
-			$ref = &$list[$i];
-			$secureclass = '';
-			if(isset($ref['encryption']) === true
-			&& $ref['encryption'] === true)
-				$secureclass = 'xivo-icon xivo-icon-secure';
-?>
-	<tr class="fm-paragraph<?=$ref['errdisplay']?>" style="cursor: move;">
+	<tr class="fm-paragraph<?=$ref['errdisplay']?>">
 		<td class="td-left">
 			<?=$form->hidden(array('name' => 'linefeatures[id][]',
 						'value' 	=> $ref['id']));?>
@@ -189,19 +100,6 @@ if($list !== false):
 			<?=$form->hidden(array('name' => 'linefeatures[name][]',
 				    	'id'		=> 'linefeatures-name',
 						'value' 	=> $ref['name']));?>
-			<?=$form->hidden(array('name' => 'linefeatures[rules_group][]',
-					    'id'		=> 'linefeatures-rules_group',
-					    'value'		=> $ref['rules_group']));?>
-			<?=$form->hidden(array('name' => 'linefeatures[rules_order][]',
-					    'id'		=> 'linefeatures-rules_order',
-					    'value'		=> $ref['rules_order']));?>
-			<?=$form->hidden(array('name' => 'linefeatures[line_num][]',
-					    'id'		=> 'linefeatures-line_num',
-					    'value'		=> $ref['line_num']));?>
-			<span class="ui-icon ui-icon-arrowthick-2-n-s" style="float:left;"></span>
-			<span id="box-grouporder" style="float:left;font-weight:bold;"></span>
-		</td>
-		<td>
 			<span>
 				<span class="<?=$secureclass?>">&nbsp;</span>
 				<?=$this->bbf('line_protocol-'.$ref['protocol'])?>
@@ -240,16 +138,6 @@ if($list !== false):
 					'selected'	=> $ref['configregistrar']),
 			      $list_configregistrar);?>
 		</td>
-		<?php /*
-		<td>
-			<?=$form->text(array('paragraph'	=> false,
-				  'name'	=> 'linefeatures[rules_time][]',
-				  'id'		=> 'linefeatures-rules_time',
-				  'label'	=> false,
-				  'size'	=> 2,
-				  'value'	=> $ref['rules_time']));?>
-		</td>
-		*/ ?>
 		<td>
 		<?php if ($list_device === false): ?>
 			 -
@@ -291,59 +179,24 @@ if($list !== false):
 		</td>
 	</tr>
 <?php
-		endfor;
-	endforeach;
+	endfor;
 endif;
 ?>
 	</tbody>
 	<tfoot>
 	<tr id="no-linefeatures"<?=($list !== false ? ' class="b-nodisplay"' : '')?>>
-		<td colspan="9" class="td-single"><?=$this->bbf('no_linefeatures');?></td>
+		<td colspan="8" class="td-single"><?=$this->bbf('no_linefeatures');?></td>
 	</tr>
 	</tfoot>
 </table>
 
 <table class="b-nodisplay">
-	<tbody id="ex-rules_group">
-	<tr class="fm-paragraph l-subth" id="tr-rules_group">
-		<td class="td-left">
-			<span class="ui-icon ui-icon-arrowthick-2-n-s" style="float:left;"></span>
-		</td>
-		<td colspan="7" class="txt-center" id="td_rules_group_name">
-		</td>
-		<td class="td-right">
-			<?=$url->href_html($url->img_html('img/site/button/mini/blue/delete.gif',
-							       $this->bbf('opt_row-delete'),
-							       'border="0"'),
-							'#lines',
-							null,
-							'onclick="lnkdroprow(this);"',
-							$this->bbf('opt_row-delete'));?>
-		</td>
-	</tr>
-	</tbody>
-</table>
-
-<table class="b-nodisplay">
 	<tbody id="ex-linefeatures">
-	<tr class="fm-paragraph" style="cursor: move;">
-		<td class="td-left txt-center">
-			<span class="ui-icon ui-icon-arrowthick-2-n-s" style="float:left;"></span>
-			<span id="box-grouporder" style="float:left;font-weight:bold;"></span>
-			<?=$form->hidden(array('name' => 'linefeatures[rules_group][]',
-					    'id'		=> 'linefeatures-rules_group',
-					    'value'		=> 0));?>
-			<?=$form->hidden(array('name' => 'linefeatures[rules_order][]',
-					    'id'		=> 'linefeatures-rules_order',
-					    'value'		=> 0));?>
-			<?=$form->hidden(array('name' => 'linefeatures[line_num][]',
-					    'id'		=> 'linefeatures-line_num',
-					    'value'		=> 0));?>
+	<tr class="fm-paragraph">
+		<td class="td-left" id="td_ex-linefeatures-protocol">
 			<?=$form->hidden(array('name' => 'linefeatures[id][]',
 						'value' 	=> 0,
 					    'id'		=> 'linefeatures-id'));?>
-		</td>
-		<td id="td_ex-linefeatures-protocol">
 			<?=$form->select(array('paragraph'	=> false,
 					'name'		=> 'linefeatures[protocol][]',
 					'id'		=> 'linefeatures-protocol',
@@ -386,15 +239,6 @@ endif;
 				    'default'	=> $element['linefeatures']['configregistrar']['default']),
 			      $list_configregistrar);?>
 		</td>
-		<?php /*
-		<td>
-			<?=$form->text(array('paragraph'	=> false,
-				  'name'	=> 'linefeatures[rules_time][]',
-				  'id'		=> 'linefeatures-rules_time',
-				  'label'	=> false,
-				  'size'	=> 2));?>
-		</td>
-		*/ ?>
 		<td id="td_ex-linefeatures-device">
 		<?php if ($list_device === false): ?>
 			 -

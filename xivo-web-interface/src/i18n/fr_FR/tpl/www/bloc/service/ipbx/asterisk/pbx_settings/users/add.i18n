@@ -700,15 +700,6 @@ Groupe de services :
 ; col_line-add
 Ajouter une nouvelle ligne
 
-; col_line-add_free
-Ajouter une ligne existante
-
-; col_rules_group-add
-Ajouter un groupe
-
-; fm_rules_group
-Ajouter un groupe : 
-
 ; opt_line-delete
 Supprimer la ligne
 
@@ -732,18 +723,6 @@ Contexte
 
 ; col_line-number
 Numéro
-
-; col_line-rules_type
-Type
-
-; col_line-rules_order
-Ordre
-
-; col_line-rules_time
-Temps
-
-; col_line-rules_group
-Groupe
 
 ; col_line-config_registrar
 Site
@@ -777,12 +756,6 @@ Personnalisé
 
 ; fm_type-opt(simul)
 Simultané
-
-; no_lines_free
-Aucune ligne existante disponible
-
-; fm_lines_free
-Lignes disponible :
 
 ; fm_register-transport
 Transport : 
