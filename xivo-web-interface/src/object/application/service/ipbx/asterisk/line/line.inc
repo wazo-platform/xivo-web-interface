@@ -1247,7 +1247,7 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 			$old_qm = dwho_array_set_value_to_key($this->_info[$key], $keyid);
 
 			$to_delete = array_diff_key($old_qm, $new_qm);
-			$to_edit = array_intersect_key($old_qm, $new_qm);
+			$to_edit = array_intersect_key($new_qm, $old_qm);
 
 			foreach ($to_delete as $element)
 			{
@@ -1262,9 +1262,17 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 
 			foreach ($to_edit as $element)
 			{
+				$old_element = $old_qm[$element[$keyid]];
+
+				$element['userid'] = $old_element['userid'];
+				$element['position'] = $old_element['position'];
+				$element['commented'] = $old_element['commented'];
+
 				unset($element['groupfeaturesid'],$element['queuefeaturesid']);
-				$where = array('queue_name' => $element['queue_name'], 'interface' => $element['interface']);
-				if($this->_queuemember->edit($where, $element) === false)
+
+				$id = array('queue_name' => $old_element['queue_name'],
+							'interface' => $old_element['interface']);
+				if($this->_queuemember->edit($id, $element) === false)
 					return(false);
 
 				$this->_return[$key][] = $element;
