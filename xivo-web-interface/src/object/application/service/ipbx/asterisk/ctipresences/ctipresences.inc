@@ -19,7 +19,6 @@
 #
 
 dwho_file::required(array(XIVO_PATH_OBJECT,'application','service','ipbx','asterisk.inc'),true);
-dwho_file::required(array(XIVO_PATH_OBJECT,'application','service','ipbx','asterisk','ctistatus','ctistatus.inc'),true);
 
 class xivo_application_service_asterisk_ctipresences extends xivo_application_asterisk_abstract
 {
@@ -30,12 +29,11 @@ class xivo_application_service_asterisk_ctipresences extends xivo_application_as
 	{
 		parent::__construct($service);
 
-		if(($this->_ctipresences = &$this->_service->get_module('ctipresences')) === false)
+		if(($this->_ctipresences = &$this->_service->get_module('ctipresences')) === false
+		|| ($this->_ctistatus = &$this->_service->get_module('ctistatus')) === false)
 			return(false);
 		else if((bool) $components === true)
 			$this->load_components();
-
-		$this->_ctistatus = new xivo_application_service_asterisk_ctistatus($service,$param,$components);
 
 		return(true);
 	}
@@ -64,19 +62,16 @@ class xivo_application_service_asterisk_ctipresences extends xivo_application_as
 		return($r);
 	}
 
-	function get_presences_edit()
-	{
-		return(false);
-	}
-
 	function get($id,$disable=null)
 	{
 		$this->_info = $this->_origin = array();
 
-		$this->_info['presences'] = $this->_ctipresences->get($id);
+		if(($this->_info['presences'] = $this->_ctipresences->get($id)) === false)
+			return(false);
 
-		if($this->_components === false)
-			return($this->_info);
+		$this->_origin['presences'] = $this->_ctipresences->get_origin();
+
+		$this->_info['deletable'] = $this->_info['presences']['deletable'];
 
 		return($this->_info);
 	}
@@ -176,23 +171,21 @@ class xivo_application_service_asterisk_ctipresences extends xivo_application_as
 		$status = array();
 		$status['available']['name'] = 'available';
 		$status['available']['presence_id'] = $this->_return['presences'];
-		$status['available']['display_name'] = $tpl->bbf(mandatory_status_available);
+		$status['available']['display_name'] = $tpl->bbf('mandatory_status_available');
 		$status['available']['actions'] = '';
 		$status['available']['color'] = '#08FD20';
 		$status['available']['access_status'] = '';
 		$status['available']['deletable'] = 0;
 		$status['disconnected']['name'] = 'disconnected';
 		$status['disconnected']['presence_id'] = $this->_return['presences'];
-		$status['disconnected']['display_name'] = $tpl->bbf(mandatory_status_disconnected);
+		$status['disconnected']['display_name'] = $tpl->bbf('mandatory_status_disconnected');
 		$status['disconnected']['actions'] = '';
 		$status['disconnected']['color'] = '#202020';
 		$status['disconnected']['access_status'] = '';
 		$status['disconnected']['deletable'] = 0;
-		$this->_ctistatus->set_status($status['available']);
-		if ($this->_ctistatus->add() === false)
+		if ($this->_ctistatus->add($status['available']) === false)
 			return false;
-		$this->_ctistatus->set_status($status['disconnected']);
-		if ($this->_ctistatus->add() === false)
+		if ($this->_ctistatus->add($status['disconnected']) === false)
 			return false;
 
 		return($this->_return['presences']);
@@ -281,13 +274,19 @@ class xivo_application_service_asterisk_ctipresences extends xivo_application_as
 
 	function delete()
 	{
+		if(isset($this->_info['deletable']) === false)
+			return(false);
+		else if($this->_info['deletable'] === false)
+			return(null);
+
 		$r = true;
 
 		$this->_status = 'delete';
 		$this->_return = array();
 
 		if($this->get_errnb() > 0
-		|| $this->delete_presences() === false)
+		|| $this->delete_presences() === false
+		|| $this->delete_status() === false)
 		{
 			$r = false;
 			$this->_reverse_delete();
@@ -300,14 +299,23 @@ class xivo_application_service_asterisk_ctipresences extends xivo_application_as
 
 	function delete_presences()
 	{
-		if(dwho_issa('presences',$this->_info) === false
-		|| (string) $this->_info['presences']['id'] === '1')
+		if(dwho_issa('presences',$this->_info) === false)
 			return(false);
 
 		$r = $this->_ctipresences->delete($this->_info['presences']['id']);
 
 		if($this->_status === 'delete')
 			$this->_return['presences'] = $r;
+
+		return($r);
+	}
+
+	function delete_status()
+	{
+		if(dwho_issa('presences',$this->_info) === false)
+			return(false);
+
+		$r = $this->_ctistatus->delete_where(array('presence_id' => $this->_info['presences']['id']));
 
 		return($r);
 	}
@@ -330,94 +338,6 @@ class xivo_application_service_asterisk_ctipresences extends xivo_application_as
 					if(isset($this->_origin['presences']) === true
 					&& $this->_origin['presences'] !== false)
 						$this->_ctipresences->add_origin($this->_origin['presences']);
-					break;
-			}
-		}
-
-		return(true);
-	}
-
-	function enable()
-	{
-		$r = true;
-
-		$this->_status = 'enable';
-		$this->_return = array();
-
-		if($this->enable_presences() === false)
-		{
-			$r = false;
-			$this->_reverse_enable_disable();
-		}
-
-		$this->_status = '';
-
-		return($r);
-	}
-
-	function disable()
-	{
-		$r = true;
-
-		$this->_status = 'disable';
-		$this->_return = array();
-
-		if($this->disable_presences() === false)
-		{
-			$r = false;
-			$this->_reverse_enable_disable();
-		}
-
-		$this->_status = '';
-
-		return(true);
-	}
-
-	function enable_presences()
-	{
-		return($this->_enable_disable_presences(false));
-	}
-
-	function disable_presences()
-	{
-		return($this->_enable_disable_presences(true));
-	}
-
-	function _enable_disable_presences($disable=false)
-	{
-		if(dwho_issa('presences',$this->_info) === false)
-			return(false);
-		else if((bool) $disable === false)
-			$r = $this->_ctipresences->enable($this->_info['presences']['id']);
-		else
-			$r = $this->_ctipresences->disable($this->_info['presences']['id']);
-
-		if($this->_status === 'enable' || $this->_status === 'disable')
-			$this->_return['presences'] = $r;
-
-		return($r);
-	}
-
-	function _reverse_enable_disable()
-	{
-		if(($this->_status !== 'enable' && $this->_status !== 'disable') === true
-		|| is_array($this->_return) === false
-		|| empty($this->_return) === true)
-			return(false);
-
-		$disable = $this->_status === 'enable';
-
-		$this->_status = '';
-
-		foreach($this->_return as $key => $val)
-		{
-			if($val === false)
-				continue;
-
-			switch($key)
-			{
-				case 'presences':
-					$this->_enable_disable_presences($disable);
 					break;
 			}
 		}
