@@ -41,6 +41,13 @@ class xivo_service_asterisk_ctipresences extends xivo_service_asterisk_abstract
 
 		$this->_load_config();
 	}
+
+	function _prepare($data)
+	{
+		$data['deletable'] = (bool) $data['deletable'];
+
+		return($data);
+	}
 }
 
 ?>
