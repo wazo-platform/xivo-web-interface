@@ -169,7 +169,7 @@ $page = $url->pager($pager['pages'],
 			<label for="it-devices-<?=$i?>" id="lb-devices-<?=$i?>">
 <?php
 				echo $url->img_html('img/site/utils/'.$provdexist.'.png',null,'class="icons-list"');
-				echo $url->img_html('img/site/utils/cercle-'.$icon.'.png',null,'class="icons-list"');
+				echo $url->img_html('img/site/utils/cercle-'.$icon.'.png',null,'class="icons-list col_configured"');
 				echo dwho_has_len($devicefeatures['mac']) === true ? dwho_htmlen(dwho_trunc($devicefeatures['mac'],25,'...',false)) : '-';
 ?>
 			</label>
