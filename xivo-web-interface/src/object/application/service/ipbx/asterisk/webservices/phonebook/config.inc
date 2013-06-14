@@ -25,12 +25,15 @@ $array['xivoserver']['option']['ssl_verifypeer'] = false;
 
 $array['ldapfilter'] = array();
 
-$array['vendor'] = array();
-$array['vendor']['aastra']  = 'aastra';
-$array['vendor']['polycom'] = 'polycom';
-$array['vendor']['snom']    = 'snom';
-$array['vendor']['thomson'] = 'thomson';
-$array['vendor']['yealink'] = 'yealink';
-$array['vendor']['cisco']   = 'allegro';
+$array['supported_vendors'] = array('aastra', 'polycom', 'snom', 'thomson', 'yealink', 'cisco');
+
+$array['useragent_to_vendor'] = array();
+$array['useragent_to_vendor']['aastra'] = 'aastra';
+$array['useragent_to_vendor']['polycom'] = 'polycom';
+$array['useragent_to_vendor']['snom'] = 'snom';
+$array['useragent_to_vendor']['thomson'] = 'thomson';
+$array['useragent_to_vendor']['yealink'] = 'yealink';
+$array['useragent_to_vendor']['allegro'] = 'cisco';
+$array['useragent_to_vendor']['cisco'] = 'cisco';
 
 ?>
