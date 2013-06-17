@@ -110,16 +110,16 @@ class xivo_application_service_asterisk_webservices_phonebook extends xivo_appli
 	function get_vendor_from_useragent()
 	{
 		if(isset($_SERVER['HTTP_USER_AGENT']) === false
-		|| is_array($this->_conf['vendor']) === false
-		|| empty($this->_conf['vendor']) === true)
+		|| is_array($this->_conf['useragent_to_vendor']) === false
+		|| empty($this->_conf['useragent_to_vendor']) === true)
 			return(false);
 
 		$useragent = strtolower($_SERVER['HTTP_USER_AGENT']);
 
-		foreach($this->_conf['vendor'] as $key => $val)
+		foreach($this->_conf['useragent_to_vendor'] as $useragent_substring => $vendor)
 		{
-			if(strpos($useragent,$val) !== false)
-				return($key);
+			if(strpos($useragent,$useragent_substring) !== false)
+				return($vendor);
 		}
 
 		return(false);
@@ -127,12 +127,12 @@ class xivo_application_service_asterisk_webservices_phonebook extends xivo_appli
 
 	function chk_vendor($vendor)
 	{
-		$r = strval($vendor);
-
-		if(isset($this->_conf['vendor'][$vendor]) === false)
-			$r = false;
-
-		return($r);
+		$vendor_str = strval($vendor);
+		if (! in_array($vendor_str, $this->_conf['supported_vendors'])) {
+			return false;
+		} else {
+			return $vendor_str;
+		}
 	}
 
 	function get_phonebook_search($search)
