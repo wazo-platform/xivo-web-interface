@@ -165,20 +165,20 @@ $page = $url->pager($pager['pages'],
 						 'checked'	=> false,
 						 'paragraph'	=> false));?>
 		</td>
-		<td class="txt-left" title="<?=dwho_alttitle($devicefeatures['mac']);?>">
+		<td class="txt-left col_mac_address" title="<?=dwho_alttitle($devicefeatures['mac']);?>">
 			<label for="it-devices-<?=$i?>" id="lb-devices-<?=$i?>">
 <?php
 				echo $url->img_html('img/site/utils/'.$provdexist.'.png',null,'class="icons-list"');
-				echo $url->img_html('img/site/utils/cercle-'.$icon.'.png',null,'class="icons-list"');
+				echo $url->img_html('img/site/utils/cercle-'.$icon.'.png',null,'class="icons-list col_configured"');
 				echo dwho_has_len($devicefeatures['mac']) === true ? dwho_htmlen(dwho_trunc($devicefeatures['mac'],25,'...',false)) : '-';
 ?>
 			</label>
 		</td>
-		<td><?=(dwho_has_len($phonenumber) === true ? $phonenumber : '-')?></td>
-		<td><?=(dwho_has_len($devicefeatures['ip']) === true ? $devicefeatures['ip'] : '-')?></td>
-		<td><?=(dwho_has_len($devicefeatures['vendor']) === true ? $devicefeatures['vendor'] : '-')?></td>
-		<td><?=(dwho_has_len($devicefeatures['model']) === true ? $devicefeatures['model'] : '-')?></td>
-		<td><?=(dwho_has_len($devicefeatures['plugin']) === true ? $devicefeatures['plugin'] : '-')?></td>
+		<td class="col_phone_number"><?=(dwho_has_len($phonenumber) === true ? $phonenumber : '-')?></td>
+		<td class="col_ip_address"><?=(dwho_has_len($devicefeatures['ip']) === true ? $devicefeatures['ip'] : '-')?></td>
+		<td class="col_vendor"><?=(dwho_has_len($devicefeatures['vendor']) === true ? $devicefeatures['vendor'] : '-')?></td>
+		<td class="col_model"><?=(dwho_has_len($devicefeatures['model']) === true ? $devicefeatures['model'] : '-')?></td>
+		<td class="col_plugin"><?=(dwho_has_len($devicefeatures['plugin']) === true ? $devicefeatures['plugin'] : '-')?></td>
 		<td class="td-right" colspan="2">
 <?php
 		$protocol = $linefeatures['protocol'];

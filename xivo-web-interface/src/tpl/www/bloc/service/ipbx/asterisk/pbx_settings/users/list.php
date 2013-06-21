@@ -105,16 +105,16 @@ $page = $url->pager($pager['pages'],
 						 'checked'	=> false,
 						 'paragraph'	=> false));?>
 		</td>
-		<td class="txt-left" title="<?=dwho_alttitle($ref['fullname']);?>">
+		<td class="txt-left col_fullname" title="<?=dwho_alttitle($ref['fullname']);?>">
 			<label for="it-users-<?=$i?>" id="lb-users-<?=$i?>">
 			<?=$url->img_html('img/site/flag/'.$icon.'.gif',null,'class="icons-list"');?>
 			<?=dwho_htmlen(dwho_trunc($ref['fullname'],25,'...',false))?>
 			</label>
 		</td>
-		<td class="txt-center"><?=(!isset($line['provisioningid'])) ? '-' : $line['provisioningid']?></td>
-		<td class="txt-center"><?=(!isset($line['number'])) ? '-' : $line['number']?></td>
-		<td class="txt-center"><?=($ref['nb_line']);?></td>
-		<td class="td-right" colspan="2">
+		<td class="txt-center col_provisioning_code"><?=(!isset($line['provisioningid'])) ? '-' : $line['provisioningid']?></td>
+		<td class="txt-center col_number"><?=(!isset($line['number'])) ? '-' : $line['number']?></td>
+		<td class="txt-center col_line_count"><?=($ref['nb_line']);?></td>
+		<td class="td-right col_actions" colspan="2">
 <?php
 		echo	$url->href_html($url->img_html('img/site/button/edit.gif',
 						       $this->bbf('opt_modify'),
