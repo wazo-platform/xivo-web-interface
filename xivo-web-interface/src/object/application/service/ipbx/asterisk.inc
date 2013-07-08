@@ -174,19 +174,6 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		return($this->_info['dialaction']);
 	}
 
-	public function _get_contextnummember($typeval)
-	{
-		$this->_info['contextnummember'] = false;
-		$this->_origin['contextnummember'] = false;
-
-		$typeval = (string) $typeval;
-
-		if(($this->_info['contextnummember'] = $this->_contextnummember->get($typeval)) !== false)
-			$this->_origin['contextnummember'] = $this->_contextnummember->get_origin();
-
-		return($this->_info['contextnummember']);
-	}
-
 	public function _get_contextmember($typeval='',$varname='')
 	{
 		$this->_info['contextmember'] = false;
@@ -275,19 +262,6 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		return($r);
 	}
 
-	public function set_contextnummember($context,$number='')
-	{
-		if(($r = $this->_contextnummember->set($context,$number)) === false)
-		{
-			$this->_set_error('contextnummember',$this->_contextnummember->get_error());
-			dwho_report::push('error', dwho_i18n::babelfish('error('.$this->_contextnummember->get_error().')'));
-		}
-
-		$this->_set_result('contextnummember',$this->_contextnummember->get_result());
-
-		return($r);
-	}
-
 	public function set_contextmember($list)
 	{
 		if(($r = $this->_contextmember->set($list)) === false)
@@ -338,15 +312,6 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		$r = $this->_dialaction->add($categoryval);
 
 		$this->_return['dialaction'] = $this->_dialaction->get_return();
-
-		return($r);
-	}
-
-	public function add_contextnummember($typeval)
-	{
-		$r = $this->_contextnummember->add((string) $typeval);
-
-		$this->_return['contextnummember'] = $this->_contextnummember->get_return();
 
 		return($r);
 	}
@@ -405,15 +370,6 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		$r = $this->_dialaction->edit($this->_status,$categoryval);
 
 		$this->_return['dialaction'] = $this->_dialaction->get_return();
-
-		return($r);
-	}
-
-	public function edit_contextnummember($typeval)
-	{
-		$r = $this->_contextnummember->edit($this->_status,$typeval);
-
-		$this->_return['contextnummember'] = $this->_contextnummember->get_return();
 
 		return($r);
 	}
@@ -485,16 +441,6 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 
 		if($this->_status === 'delete')
 			$this->_return['dialaction'] = $r;
-
-		return($r);
-	}
-
-	public function delete_contextnummember()
-	{
-		$r = $this->_contextnummember->delete($this->_status);
-
-		if($this->_status === 'delete')
-			$this->_return['contextnummember'] = $r;
 
 		return($r);
 	}
@@ -690,6 +636,16 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		array_pop($reslist);
 
 		return($reslist);
+	}
+
+	public function get_extens_for_context_and_object($context_id, $object)
+	{
+		return($this->_service->get_extens_for_context_and_object($context_id, $object));
+	}
+
+	public function exten_is_available_for_context_and_object($context_id, $object, $search_exten)
+	{
+		return($this->_service->exten_is_available_for_context_and_object($context_id, $object, $search_exten));
 	}
 }
 

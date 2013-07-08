@@ -112,9 +112,6 @@ $array['module']['contextmember']['datastorage'] = true;
 $array['module']['contextnumbers'] = array();
 $array['module']['contextnumbers']['datastorage'] = true;
 
-$array['module']['contextnummember'] = array();
-$array['module']['contextnummember']['datastorage'] = true;
-
 $array['module']['contexttype'] = array();
 $array['module']['contexttype']['datastorage'] = true;
 

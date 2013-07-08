@@ -30,11 +30,7 @@ switch($act)
 	case 'view':
 		$appincall = &$ipbx->get_application('incall');
 
-		$nocomponents = array('contextnummember'	=> true);
-
-		if(($info = $appincall->get($_QRY->get('id'),
-					    null,
-					    $nocomponents)) === false)
+		if(($info = $appincall->get($_QRY->get('id'))) === false)
 		{
 			$http_response->set_status_line(404);
 			$http_response->send(true);

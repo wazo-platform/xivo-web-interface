@@ -30,7 +30,6 @@ class xivo_application_service_asterisk_meetme extends xivo_application_asterisk
 	var $_userfeatures	= false;
 	var $_extensions	= false;
 	var $_extenumbers	= false;
-	var $_contextnummember	= false;
 	var $_contextmember	= false;
 	var $_musiconhold	= array();
 	var $_contextlist	= array();
@@ -62,7 +61,6 @@ class xivo_application_service_asterisk_meetme extends xivo_application_asterisk
 		|| ($this->_userfeatures = &$this->_service->get_module('userfeatures')) === false
 		|| ($this->_extensions = &$this->_service->get_module('extensions')) === false
 		|| ($this->_extenumbers = $this->get_abstract('extenumbers',array('type' => 'meetme'))) === false
-		|| ($this->_contextnummember = $this->get_abstract('contextnummember',array('type' => 'meetme'))) === false
 		|| ($this->_contextmember = $this->get_abstract('contextmember',array('type' => 'meetme'))) === false)
 			return(false);
 
@@ -98,9 +96,6 @@ class xivo_application_service_asterisk_meetme extends xivo_application_asterisk
 
 		if(dwho_ak('extenumbers',$nocomponents,true) === false)
 			$this->_get_extenumbers($this->_info['meetmefeatures']['id']);
-
-		if(dwho_ak('contextnummember',$nocomponents,true) === false)
-			$this->_get_contextnummember($this->_info['meetmefeatures']['id']);
 
 		if(dwho_ak('contextmember',$nocomponents,true) === false)
 			$this->_get_contextmember($this->_info['meetmefeatures']['id']);
@@ -274,12 +269,7 @@ class xivo_application_service_asterisk_meetme extends xivo_application_asterisk
 			$this->set_extenumbers($action,$number,$context);
 		}
 
-		$this->set_contextnummember($context,$number);
-
 		$this->set_contextmember();
-
-		if (($err = $this->get_error('contextnummember')))
-			$this->_set_error('meetmefeatures',array('confno' => $err));
 
 		return(($this->get_errnb() < 1));
 	}
@@ -480,7 +470,6 @@ class xivo_application_service_asterisk_meetme extends xivo_application_asterisk
 		|| $this->add_meetmeguest($meetmefeaturesid) === false
 		|| $this->add_extenumbers($meetmefeaturesid) === false
 		|| $this->add_meetmemacro($meetmefeaturesid) === false
-		|| $this->add_contextnummember($meetmefeaturesid) === false
 		|| $this->add_contextmember($meetmefeaturesid) === false)
 		{
 			$r = false;
@@ -589,9 +578,6 @@ class xivo_application_service_asterisk_meetme extends xivo_application_asterisk
 				case 'extenumbers':
 					$this->_extenumbers->reverse_add();
 					break;
-				case 'contextnummember':
-					$this->_contextnummember->reverse_add();
-					break;
 				case 'contextmember':
 					$this->_contextmember->reverse_add();
 					break;
@@ -641,7 +627,6 @@ class xivo_application_service_asterisk_meetme extends xivo_application_asterisk
 		}
 
 		if($this->edit_meetmeguest() === false
-		|| $this->edit_contextnummember() === false
 		|| $this->edit_contextmember() === false)
 		{
 			$r = false;
@@ -729,14 +714,6 @@ class xivo_application_service_asterisk_meetme extends xivo_application_asterisk
 		return(parent::edit_macro('meetmemacro'));
 	}
 
-	function edit_contextnummember()
-	{
-		if(dwho_issa('meetmefeatures',$this->_info) === false)
-			return(false);
-
-		return(parent::edit_contextnummember($this->_info['meetmefeatures']['id']));
-	}
-
 	function edit_contextmember()
 	{
 		if(dwho_issa('meetmefeatures',$this->_info) === false)
@@ -790,9 +767,6 @@ class xivo_application_service_asterisk_meetme extends xivo_application_asterisk
 					break;
 				case 'extenumbers':
 					$this->_extenumbers->reverse_edit($this->_status);
-					break;
-				case 'contextnummember':
-					$this->_contextnummember->reverse_edit($this->_status);
 					break;
 				case 'contextmember':
 					$this->_contextmember->reverse_edit($this->_status);
@@ -864,7 +838,6 @@ class xivo_application_service_asterisk_meetme extends xivo_application_asterisk
 		|| $this->delete_meetmeguest() === false
 		|| $this->delete_extenumbers() === false
 		|| $this->delete_macro('meetmemacro') === false
-		|| $this->delete_contextnummember() === false
 		|| $this->delete_contextmember() === false)
 		{
 			$r = false;
@@ -961,9 +934,6 @@ class xivo_application_service_asterisk_meetme extends xivo_application_asterisk
 					if(isset($this->_origin['extenumbers']) === true
 					&& $this->_origin['extenumbers'] !== false)
 						$this->_extenumbers->add_origin($this->_origin['extenumbers']);
-					break;
-				case 'contextnummember':
-					$this->_contextnummember->add_origin();
 					break;
 				case 'contextmember':
 					$this->_contextmember->add_origin_list();

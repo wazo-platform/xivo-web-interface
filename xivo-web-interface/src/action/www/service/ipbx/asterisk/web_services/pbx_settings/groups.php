@@ -31,8 +31,7 @@ switch($act)
 		$appgroup = &$ipbx->get_application('group');
 
 		$nocomponents = array('groupmacro'		=> true,
-				      'extenumbers'		=> true,
-				      'contextnummember'	=> true);
+							'extenumbers'		=> true);
 
 		if(($info = $appgroup->get($_QRY->get('id'),
 					   null,

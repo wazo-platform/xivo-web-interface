@@ -36,9 +36,8 @@ switch($act)
 		$appqueue = &$ipbx->get_application('queue');
 
 		$nocomponents = array('queuemacro'		=> true,
-				      'extenumbers'		=> true,
-				      'contextnummember'	=> true,
-				      'contextmember'		=> true);
+							'extenumbers'		=> true,
+							'contextmember'		=> true);
 
 		if(($info = $appqueue->get($_QRY->get('id'),
 					   null,

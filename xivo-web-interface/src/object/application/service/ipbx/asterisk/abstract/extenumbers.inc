@@ -84,6 +84,13 @@ class xivo_application_service_asterisk_extenumbers_abstract extends xivo_applic
 		if($action !== 'add' && $action !== 'edit' && $action !== 'save')
 			return(false);
 
+		if (($action === 'add' || $this->_info['exten'] !== $number)
+		&& $this->_service->exten_is_available_for_context_and_object($context, $this->_param['type'], $number) === false)
+		{
+			dwho_report::push('error', dwho_i18n::babelfish('exten_already_exist', array($number.'@'.$context)));
+			return(false);
+		}
+
 		$extenum = array();
 		$extenum['exten'] = $number;
 		$extenum['context'] = $context;
