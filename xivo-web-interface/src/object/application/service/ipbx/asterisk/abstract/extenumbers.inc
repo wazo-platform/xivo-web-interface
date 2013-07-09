@@ -84,6 +84,14 @@ class xivo_application_service_asterisk_extenumbers_abstract extends xivo_applic
 		if($action !== 'add' && $action !== 'edit' && $action !== 'save')
 			return(false);
 
+        $contextnumbers = $this->_service->get_module('contextnumbers');
+        if ($contextnumbers->interval_number_exists($context, $this->_param['type'], $number) === false)
+        {
+            dwho_report::push('error', dwho_i18n::babelfish('error(number_out_of_context_interval)'));
+            $this->_set_error('number_out_of_context_interval');
+            return(false);
+        }
+
 		if (($action === 'add' || $this->_info['exten'] !== $number)
 		&& $this->_service->exten_is_available_for_context_and_object($context, $this->_param['type'], $number) === false)
 		{
