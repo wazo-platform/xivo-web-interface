@@ -32,7 +32,6 @@ switch($act)
 
 		$nocomponents = array('meetmemacro'		=> true,
 							'meetmeadmininternal'	=> true,
-							'extenumbers'		=> true,
 							'contextmember'		=> true);
 
 		if(($info = $appmeetme->get($_QRY->get('id'),

@@ -23,6 +23,43 @@ xivo_service_asterisk::required(array('abstract','datastorage','abstract','sql.i
 class xivo_service_asterisk_extensions_sql extends xivo_service_asterisk_abstract_sql
 {
 
+	function search($exten,$extenhash,$context='',$type='',$typeval='')
+	{
+		$this->_cnt = 0;
+
+		$this->_dso->new_select($this->_table);
+		$this->_dso->wherecontain('exten',$exten);
+		$this->_dso->orwhere(array('extenhash' => $extenhash));
+
+		if($this->_dso->aggregate_where() === false)
+			return(false);
+
+		$where = array();
+
+		if(dwho_has_len($context) === true)
+			$where['context'] = (string) $context;
+
+		if(dwho_has_len($type) === true)
+			$where['type'] = (string) $type;
+
+		if(dwho_has_len($typeval) === true)
+			$where['typeval'] = (string) $typeval;
+
+		if(empty($where) === false)
+			$this->_dso->andwhere($where);
+
+		$r = $this->_dso->select_all();
+
+		$this->_dso->reset_order();
+		$this->_dso->reset_limit();
+
+		if(($this->_cnt = $this->_dso->select_count()) === false
+		|| isset($r[0]) === false)
+			$r = false;
+
+		return($r);
+	}
+
 }
 
 ?>

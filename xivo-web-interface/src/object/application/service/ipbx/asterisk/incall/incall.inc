@@ -25,7 +25,6 @@ class xivo_application_service_asterisk_incall extends xivo_application_asterisk
 	var $_dso		= null;
 	var $_incall		= false;
 	var $_dialaction	= false;
-	var $_extenumbers	= false;
 	var $_extensions	= false;
 	var $_rightcall		= false;
 	var $_callerid		= false;
@@ -44,7 +43,6 @@ class xivo_application_service_asterisk_incall extends xivo_application_asterisk
 
 		if(($this->_incall = &$this->_service->get_module('incall')) === false
 		|| ($this->_dialaction = $this->get_abstract('dialaction',array('category' => 'incall'))) === false
-		|| ($this->_extenumbers = $this->get_abstract('extenumbers',array('type' => 'incall'))) === false
 		|| ($this->_extensions = &$this->_service->get_module('extensions')) === false
 		|| ($this->_schedule_path = &$this->_service->get_module('schedule_path')) === false)
 			return(false);
@@ -71,12 +69,10 @@ class xivo_application_service_asterisk_incall extends xivo_application_asterisk
 
 		if(($this->_info['incall'] = $this->_incall->get($id,$disable)) === false
 		|| $this->_get_dialaction($this->_info['incall']['id']) === false
-		|| ($this->_info['extenumbers'] = $this->_get_extenumbers($this->_info['incall']['id'])) === false
 		|| $this->_get_exten() === false)
 			return(false);
 
 		$this->_origin['incall'] = $this->_incall->get_origin();
-		$this->_origin['extenumbers'] = $this->_extenumbers->get_origin();
 
 		if($this->_components === false)
 			return($this->_info);
@@ -124,7 +120,6 @@ class xivo_application_service_asterisk_incall extends xivo_application_asterisk
 		$r = array();
 
 		$r['incall'] = $this->_incall->get_element();
-		$r['extenumbers'] = $this->_extenumbers->get_element();
 		$r['dialaction'] = $this->_dialaction->get_element();
 		$r['callerid'] = $this->_callerid->get_element();
 
@@ -298,15 +293,20 @@ class xivo_application_service_asterisk_incall extends xivo_application_asterisk
 		$number = (string) $this->get_result_var('incall','exten');
 		$context = (string) $this->get_result_var('incall','context');
 
+		if($this->_errnb === 0
+		&& $number !== ''
+		&& ($rsincallmacro = $this->chk_exten('exten',
+												$number,
+												$this->_mk_exten_appdata($number),
+												$context,
+												'incall',
+												0)) !== false)
+			$this->_set_result('exten',$rsincallmacro);
+
 		if(dwho_issa('dialaction',$arr) === false
 		|| $this->set_dialaction($arr['dialaction']) === null
 		|| is_array(($dialaction_answer = $this->get_result_var('dialaction','answer'))) === false)
 			$this->_set_error('dialaction','invalid data');
-
-		if(($rsexten = $this->set_macro($action,'exten',$number,$this->_mk_exten_appdata($number),$context)) !== false)
-			$this->_set_result('exten',$rsexten);
-
-		$this->set_extenumbers($action,$number,$context);
 
 		if(dwho_issa('rightcall',$arr) === true)
 			$this->set_rightcall($arr['rightcall']);
@@ -317,8 +317,6 @@ class xivo_application_service_asterisk_incall extends xivo_application_asterisk
 		// schedule
 		if(array_key_exists('schedule_id', $arr))
 			$this->_set_result('schedule_id', intval($arr['schedule_id']));
-
-		error_log(dwho_json::encode($this->get_error()));
 
 		return(($this->get_errnb() < 1));
 	}
@@ -346,6 +344,28 @@ class xivo_application_service_asterisk_incall extends xivo_application_asterisk
 		return(true);
 	}
 
+	function _set_incallmacro($action,$incallid)
+	{
+		$rs = false;
+
+		if(($incallid = dwho_ulongint($incallid)) === 0
+		|| ($rs = $this->get_result('exten')) === null
+		|| $rs === false)
+			return($rs);
+		else if(($rsmacro = $this->set_exten($action,
+											'exten',
+											$rs['exten'],
+											$this->_mk_exten_appdata($rs['exten']),
+											$rs['context'],
+											'incall',
+											$incallid)) === false)
+			return(false);
+
+		$this->_set_result('exten',$rsmacro);
+
+		return(true);
+	}
+
 	function add()
 	{
 		$r = true;
@@ -356,9 +376,8 @@ class xivo_application_service_asterisk_incall extends xivo_application_asterisk
 
 		if($this->get_errnb() > 0
 		|| ($incallid = $this->add_incall()) === false
+		|| $this->add_incallmacro($incallid) === false
 		|| $this->add_dialaction($incallid) === false
-		|| $this->add_extenumbers($incallid) === false
-		|| $this->add_macro('exten') === false
 		|| $this->add_rightcall($incallid) === false
 		|| $this->add_callerid($incallid) === false
 		|| $this->add_schedule_path($incallid) === false)
@@ -380,6 +399,14 @@ class xivo_application_service_asterisk_incall extends xivo_application_asterisk
 			return(false);
 
 		return(($this->_return['incall'] = $this->_incall->add($rs)));
+	}
+
+	function add_incallmacro($incallid)
+	{
+		if(($rs = $this->_set_incallmacro('add',$incallid)) !== true)
+			return($rs);
+
+		return(parent::add_macro('exten'));
 	}
 
 	function add_schedule_path($incallid)
@@ -414,9 +441,6 @@ class xivo_application_service_asterisk_incall extends xivo_application_asterisk
 				case 'exten':
 					$this->_extensions->delete_exten($val);
 					break;
-				case 'extenumbers':
-					$this->_extenumbers->reverse_add();
-					break;
 				case 'rightcall':
 					$this->_rightcall->reverse_add();
 					break;
@@ -438,9 +462,8 @@ class xivo_application_service_asterisk_incall extends xivo_application_asterisk
 
 		if($this->get_errnb() > 0
 		|| $this->edit_incall() === false
+		|| $this->edit_incallmacro() === false
 		|| $this->edit_dialaction() === false
-		|| $this->edit_extenumbers() === false
-		|| $this->edit_macro('exten') === false
 		|| $this->edit_rightcall() === false
 		|| $this->edit_callerid() === false
 		|| $this->edit_schedule_path() === false)
@@ -464,6 +487,14 @@ class xivo_application_service_asterisk_incall extends xivo_application_asterisk
 		$rs['commented'] = $this->_info['incall']['commented'];
 
 		return(($this->_return['incall'] = $this->_incall->edit($this->_info['incall']['id'],$rs)));
+	}
+
+	function edit_incallmacro()
+	{
+		if(($rs = $this->_set_incallmacro('edit',$this->_info['incall']['id'])) !== true)
+			return($rs);
+
+		return(parent::edit_macro('exten'));
 	}
 
 	function edit_schedule_path()
@@ -532,9 +563,6 @@ class xivo_application_service_asterisk_incall extends xivo_application_asterisk
 					else
 						$this->_extensions->edit_origin($this->_origin['exten']);
 					break;
-				case 'extenumbers':
-					$this->_extenumbers->reverse_edit($this->_status);
-					break;
 				case 'rightcall':
 					$this->_rightcall->reverse_edit($this->_status);
 					break;
@@ -555,7 +583,6 @@ class xivo_application_service_asterisk_incall extends xivo_application_asterisk
 
 		if($this->delete_incall() === false
 		|| $this->delete_dialaction() === false
-		|| $this->delete_extenumbers() === false
 		|| $this->delete_macro('exten') === false
 		|| $this->delete_rightcall() === false
 		|| $this->delete_callerid() === false
@@ -617,11 +644,6 @@ class xivo_application_service_asterisk_incall extends xivo_application_asterisk
 					break;
 				case 'rightcall':
 					$this->_rightcall->add_origin_list();
-					break;
-				case 'extenumbers':
-					if(isset($this->_origin['extenumbers']) === true
-					&& $this->_origin['extenumbers'] !== false)
-						$this->_extenumbers->add_origin($this->_origin['extenumbers']);
 					break;
 				case 'callerid':
 					$this->_callerid->add_origin();

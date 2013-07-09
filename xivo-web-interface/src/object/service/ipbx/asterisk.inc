@@ -931,7 +931,8 @@ class xivo_service_asterisk extends xivo_service_abstract
 	{
 		$where = array('context' => $context_id);
 
-		switch ($object) {
+		switch ($object)
+		{
 			case 'user':
 				$mod = &$this->get_module('linefeatures');
 				return($this->_get_valid_extens_of_object($mod, $where));
@@ -960,7 +961,8 @@ class xivo_service_asterisk extends xivo_service_abstract
 	{
 		$res = array();
 		$elems = $module->get_all_where($where);
-		foreach ($elems as $elem) {
+		foreach ($elems as $elem)
+		{
 			$exten = $elem[$key_exten];
 			if (strlen($exten) > 0)
 				array_push($res, (int) $exten);

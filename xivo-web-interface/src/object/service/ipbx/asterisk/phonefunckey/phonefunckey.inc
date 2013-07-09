@@ -423,7 +423,7 @@ class xivo_service_asterisk_phonefunckey extends xivo_service_asterisk_abstract
 		|| ($modgroupfeatures = &$ipbx->get_module('groupfeatures')) === false
 		|| ($modlinefeatures = &$ipbx->get_module('linefeatures')) === false
 		|| ($moduserfeatures = &$ipbx->get_module('userfeatures')) === false
-		|| ($modextenumbers = &$ipbx->get_module('extenumbers')) === false)
+		|| ($modextensions = &$ipbx->get_module('extensions')) === false)
 			return(false);
 
 		$where = array();
@@ -489,12 +489,12 @@ class xivo_service_asterisk_phonefunckey extends xivo_service_asterisk_abstract
 							$typevalright = '*'.$ref['typevalextenumbersright'];
 
 						$where = array('typeval' => 'phoneprogfunckey');
-						if (($rsextenmbers = $modextenumbers->get_where($where)) === false)
+						if (($rsextenmbers = $modextensions->get_where($where)) === false)
 							break;
 						$where = array();
 						$where['type'] = $ref['typeextenumbers'];
 						$where['typeval'] = $ref['typevalextenumbers'];
-						if (($extenumleftexten = $modextenumbers->get_where($where)) === false)
+						if (($extenumleftexten = $modextensions->get_where($where)) === false)
 							break;
 
 						$exten = $this->fkey_extension($rsextenmbers['extenbrut'],
@@ -510,7 +510,7 @@ class xivo_service_asterisk_phonefunckey extends xivo_service_asterisk_abstract
 					$where['type'] = $type['type'];
 					$where['typeval'] = $type['val'];
 
-					if (($rsextenmbers = $modextenumbers->get_where($where)) !== false)
+					if (($rsextenmbers = $modextensions->get_where($where)) !== false)
 						$rsexten = $rsextenmbers['exten'];
 
 					switch($type['val'])
@@ -543,7 +543,7 @@ class xivo_service_asterisk_phonefunckey extends xivo_service_asterisk_abstract
 							if($ref['progfunckey'] === true)
 							{
 								$where = array('typeval' => 'phoneprogfunckey');
-								if (($progfunckey = $modextenumbers->get_where($where)) === false)
+								if (($progfunckey = $modextensions->get_where($where)) === false)
 									break;
 								$exten = $this->fkey_extension($progfunckey['extenbrut'],
 										array($ref['iduserfeatures'],

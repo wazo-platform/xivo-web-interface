@@ -23,7 +23,6 @@ dwho_file::required(array(XIVO_PATH_OBJECT,'application','service','ipbx','aster
 class xivo_application_service_asterisk_dialpattern_abstract extends xivo_application_asterisk_abstract
 {
 	var $_dialpattern	= false;
-	var $_extenumbers	= false;
 	var $_extensions	= false;
 	var $_param			= array('type'	=> '');
 
@@ -32,7 +31,6 @@ class xivo_application_service_asterisk_dialpattern_abstract extends xivo_applic
 		parent::__construct($service);
 
 		if(($this->_dialpattern = &$this->_service->get_module('dialpattern')) === false
-		|| ($this->_extenumbers = $this->get_abstract('extenumbers',array('type' => 'outcall'))) === false
 		|| ($this->_extensions = &$this->_service->get_module('extensions')) === false)
 			return(false);
 
@@ -72,7 +70,6 @@ class xivo_application_service_asterisk_dialpattern_abstract extends xivo_applic
 		$where['type'] = $this->_param['type'];
 
 		if(($this->_info['dialpattern'] = $this->_dialpattern->get($id)) === false
-		|| ($extenumbers = $this->_get_extenumbers($this->_info['dialpattern']['id'])) === false
 		|| $this->_get_outcallmacro($context) === false)
 			return(false);
 
@@ -152,13 +149,13 @@ class xivo_application_service_asterisk_dialpattern_abstract extends xivo_applic
 		$number = (string) $arr['exten'];
 		$context = (string) $context;
 
-		if(($rsoutcallmacro = $this->chk_macro('outcallmacro',
+		if(($rsoutcallmacro = $this->chk_exten('outcallmacro',
 						       $number,
 						       $this->_mk_outcallmacro_appdata(0),
-						       $context)) !== false)
+						       $context,
+						       'ouctcall',
+						       0)) !== false)
 			$this->_set_result('outcallmacro',$rsoutcallmacro);
-
-		$this->set_extenumbers($action,$number,$context,$outcallerid);
 
 		if(($rs = $this->_dialpattern->chk_values($arr)) === false)
 		{
@@ -177,11 +174,13 @@ class xivo_application_service_asterisk_dialpattern_abstract extends xivo_applic
 		if(($outcallid = dwho_ulongint($outcallid)) === 0
 		|| ($rs = $this->get_result('outcallmacro')) === null
 		|| $rs === false
-		|| ($rsmacro = $this->set_macro($action,
+		|| ($rsmacro = $this->set_exten($action,
 						'outcallmacro',
 						$rs['exten'],
 						$this->_mk_outcallmacro_appdata($outcallid),
-						$rs['context'])) === false)
+						$rs['context'],
+						'outcall',
+						$outcallid)) === false)
 			return(false);
 
 		$this->_set_result('outcallmacro',$rsmacro);
@@ -195,7 +194,6 @@ class xivo_application_service_asterisk_dialpattern_abstract extends xivo_applic
 			return($rs);
 
 		if(($dialpatternid = $this->_dialpattern->add($rs)) === false
-		|| $this->add_extenumbers($dialpatternid) === false
 		|| $this->add_outcallmacro($dialpatternid) === false)
 			return(false);
 
@@ -231,9 +229,6 @@ class xivo_application_service_asterisk_dialpattern_abstract extends xivo_applic
 				case 'outcallmacro':
 					$this->_extensions->delete_exten($val);
 					break;
-				case 'extenumbers':
-					$this->_extenumbers->reverse_add();
-					break;
 			}
 		}
 
@@ -252,7 +247,6 @@ class xivo_application_service_asterisk_dialpattern_abstract extends xivo_applic
 			return($rs);
 
 		if($this->_dialpattern->edit($dialpatternid,$rs) === false
-		|| $this->edit_extenumbers() === false
 		|| $this->edit_outcallmacro($dialpatternid) === false)
 			$this->_return = $dialpatternid;
 
@@ -286,9 +280,6 @@ class xivo_application_service_asterisk_dialpattern_abstract extends xivo_applic
 				case 'dialpattern':
 					$this->_dialpattern->edit_origin($this->_origin['dialpattern']);
 					break;
-				case 'extenumbers':
-					$this->_extenumbers->reverse_edit($this->_status);
-					break;
 				case 'outcallmacro':
 					if(isset($this->_origin['outcallmacro']) === false
 					|| $this->_origin['outcallmacro'] === false)
@@ -313,7 +304,6 @@ class xivo_application_service_asterisk_dialpattern_abstract extends xivo_applic
 		$this->_return = array();
 
 		if ($this->_dialpattern->delete($this->_info['dialpattern']['id']) === false
-		|| $this->delete_extenumbers() === false
 		|| $this->delete_macro('outcallmacro') === false)
 		{
 			$r = false;
@@ -348,11 +338,6 @@ class xivo_application_service_asterisk_dialpattern_abstract extends xivo_applic
 					if(isset($this->_origin['outcallmacro']) === true
 					&& $this->_origin['outcallmacro'] !== false)
 						$this->_extensions->add_origin($this->_origin['outcallmacro']);
-					break;
-				case 'extenumbers':
-					if(isset($this->_origin['extenumbers']) === true
-					&& $this->_origin['extenumbers'] !== false)
-						$this->_extenumbers->add_origin($this->_origin['extenumbers']);
 					break;
 			}
 		}

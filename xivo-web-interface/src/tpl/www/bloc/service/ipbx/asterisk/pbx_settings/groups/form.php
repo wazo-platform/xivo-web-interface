@@ -44,10 +44,7 @@ $dhtml->write_js('var xivo_fm_user_suggest = \''.$dhtml->escape($user_suggest).'
 <div id="sb-part-first" class="b-nodisplay">
 <?php
 
-if (is_null($this->get_var('error','groupfeatures','number')))
-	$err_number = $this->get_var('error','extenumbers');
-else
-	$err_number = $this->get_var('error','groupfeatures','number');
+$err_number = $this->get_var('error','groupfeatures','number');
 
 	echo	$form->text(array('desc'	=> $this->bbf('fm_groupfeatures_name'),
 				  'name'	=> 'groupfeatures[name]',

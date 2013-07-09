@@ -190,9 +190,6 @@ $array['module']['dialpattern']['datastorage'] = true;
 $array['module']['extensions'] = array();
 $array['module']['extensions']['datastorage'] = true;
 
-$array['module']['extenumbers'] = array();
-$array['module']['extenumbers']['datastorage'] = true;
-
 $array['module']['general'] = array();
 $array['module']['general']['datastorage'] = true;
 

@@ -480,6 +480,9 @@ $array['element'] = array();
 $array['element']['exten'] = array();
 $array['element']['exten']['default'] = '';
 
+$array['element']['extenhash'] = array();
+$array['element']['extenhash']['default'] = '';
+
 $array['element']['context'] = array();
 $array['element']['context']['default'] = 'default';
 
@@ -493,8 +496,21 @@ $array['element']['app']['default'] = '';
 $array['element']['appdata'] = array();
 $array['element']['appdata']['default'] = '';
 
-$array['element']['name'] = array();
-$array['element']['name']['default'] = '';
+$array['element']['type'] = array();
+$array['element']['type']['value'] = array('extenfeatures',
+					   'featuremap',
+					   'generalfeatures',
+					   'group',
+					   'incall',
+					   'meetme',
+					   'outcall',
+					   'queue',
+					   'user',
+					   'voicemenu');
+$array['element']['type']['default'] = '';
+
+$array['element']['typeval'] = array();
+$array['element']['typeval']['default'] = '';
 
 $array['element']['commented'] = array();
 $array['element']['commented']['value'] = array(0,1);
@@ -509,7 +525,18 @@ $array['filter']['context'] = array('chk' => 2,'maxlen' => 39,'regexp' => '/^(?:
 $array['filter']['priority'] = array('set' => false,'chk' => 2,'cast' => 'uint','between' => array(1,255));
 $array['filter']['app'] = array('minlen' => 1,'maxlen' => 128,'regexp' => '/^[a-z0-9#\*\.\/_@:-]+$/i');
 $array['filter']['appdata'] = array('set' => false,'chk' => 2,'maxlen' => 128,'cast' => 'sgraph','notag' => false);
-$array['filter']['name'] = array('set' => false,'chk' => 2,'maxlen' => 128,'regexp' => '/^[a-z0-9_-]+$/');
+$array['filter']['extenhash'] = array('set' => false,'chk' => 2,'maxlen' => 40,'cast' => 'xdigit');
+$array['filter']['type'] = array('key' => array('extenfeatures',
+						'featuremap',
+						'generalfeatures',
+						'group',
+						'incall',
+						'meetme',
+						'outcall',
+						'queue',
+						'user',
+						'voicemenu'));
+$array['filter']['typeval'] = array('set' => false,'chk' => 2,'maxlen' => 255,'cast' => 'sgraph');
 $array['filter']['commented'] = array('bool' => true);
 
 ?>
