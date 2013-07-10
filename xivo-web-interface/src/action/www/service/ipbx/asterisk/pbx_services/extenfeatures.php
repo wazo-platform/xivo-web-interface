@@ -52,42 +52,38 @@ if(isset($_QR['fm_send']) === true)
 		if($info['extenfeatures'] === false)
 			$info['extenfeatures'] = array();
 
-		$extens = $appextenfeatures->get_config_exten();
+		$rs = array();
+		$element_extenfeatures = array_keys($element['extenfeatures']);
 
-		if(is_array($extens) === true && empty($extens) === false)
+		foreach ($element_extenfeatures as $key)
 		{
-			$rs = array();
+			if (dwho_issa($key, $_QR['extenfeatures']) === false)
+				continue;
 
-			reset($extens);
+			$data_exten = $_QR['extenfeatures'][$key];
 
-			while(list($key) = each($extens))
+			if(isset($data_exten['exten']) === true)
+				$exten = $data_exten['exten'];
+			else
+				$exten = '';
+
+			$rs['commented'] = isset($data_exten['enable']) === false;
+			$rs['typeval'] = $key;
+			$rs['exten'] = $exten;
+
+			if(isset($info['extenfeatures'][$key]) === false)
+				$info['extenfeatures'][$key] = $rs;
+			else
 			{
+				$info['extenfeatures'][$key]['exten'] = $rs['exten'];
+				$info['extenfeatures'][$key]['commented'] = $rs['commented'];
+			}
 
-				if(dwho_issa($key,$_QR['extenfeatures']) === false)
-					continue;
-				else if(isset($_QR['extenfeatures'][$key]['exten']) === true)
-					$exten = $_QR['extenfeatures'][$key]['exten'];
-				else
-					$exten = '';
-
-				$rs['commented'] = isset($_QR['extenfeatures'][$key]['enable']) === false;
-				$rs['typeval'] = $key;
-				$rs['exten'] = $exten;
-
-				if(isset($info['extenfeatures'][$key]) === false)
-					$info['extenfeatures'][$key] = $rs;
-				else
-				{
-					$info['extenfeatures'][$key]['exten'] = $rs['exten'];
-					$info['extenfeatures'][$key]['commented'] = $rs['commented'];
-				}
-
-				if($appextenfeatures->set($rs) === false
-				|| $appextenfeatures->save() === false)
-				{
-					$info['extenfeatures'][$key]['exten'] = '';
-					$error['extenfeatures'][] = $key;
-				}
+			if($appextenfeatures->set($rs) === false
+			|| $appextenfeatures->save() === false)
+			{
+				$info['extenfeatures'][$key]['exten'] = '';
+				$error['extenfeatures'][] = $key;
 			}
 
 			if(empty($error['extenfeatures']) === false)

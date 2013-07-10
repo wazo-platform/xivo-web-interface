@@ -66,18 +66,10 @@ class xivo_application_service_asterisk_extenfeatures extends xivo_application_a
 		$arr['typeval'] = $name;
 		$arr['context'] = $this->_context;
 
-		if(($this->_info['extenfeatures'] = $this->_extensions->get_all_by_name_context($arr,$disable)) !== false)
+		if(($this->_info['extenfeatures'] = $this->_extensions->get_where($arr,$disable)) !== false)
 			$this->_origin['extenfeatures'] = $this->_extensions->get_origin_list();
 
 		return($this->_info['extenfeatures']);
-	}
-
-	function get_config_exten()
-	{
-		if(dwho_issa('exten',$this->_conf) === false)
-			return(false);
-
-		return($this->_conf['exten']);
 	}
 
 	function get_elements()
@@ -88,96 +80,11 @@ class xivo_application_service_asterisk_extenfeatures extends xivo_application_a
 	function _chk_extenfeatures_exists($name,$cmd='')
 	{
 		$name = (string) $name;
-		$cmd = (string) $cmd;
 
-		if(dwho_issa('exten',$this->_conf) === false
-		|| dwho_issa($name,$this->_conf['exten']) === false)
-			return(false);
-		else if($cmd !== '' && isset($this->_conf['exten'][$name][$cmd]) === false)
+		if($cmd !== '' && isset($this->_conf['element'][$name]) === false)
 			return(false);
 
 		return(true);
-	}
-
-	function _mk_extenfeatures_appdata_vars($appdata,$exten)
-	{
-		if(is_scalar($exten) === false
-		|| preg_match('/^[_]?([0-9\*#]+)/',$exten,$extmatch) !== 1)
-			return($appdata);
-
-		$vars = array('$<EXTNUM>' => '','$<EXTNUMLEN>' => 0);
-
-		$extnum = $extmatch[1];
-		$vars['$<EXTNUM>'] = $extnum;
-		$vars['$<EXTNUMLEN>'] = strlen($extnum);
-
-		if(is_string($appdata) === true)
-			return(strtr($appdata,$vars));
-		else if(is_array($appdata) === false)
-			return($appdata);
-
-		$nb = count($appdata);
-
-		for($i = 0;$i < $nb;$i++)
-			$appdata[$i] = strtr($appdata[$i],$vars);
-
-		return($appdata);
-	}
-
-	function _mk_extenfeatures_dialplan($name,$val,$disable=null)
-	{
-		$name = (string) $name;
-		$val = (string) $val;
-		$disable = $disable === null ? $disable : intval((bool) $disable);
-
-		if($this->_chk_extenfeatures_exists($name) === false)
-			return(false);
-
-		$arr = $this->_conf['exten'][$name];
-		$arr['commented'] = $disable;
-
-		if(isset($arr['_line']) === false)
-		{
-			if(isset($arr['app']) === false)
-				return(false);
-			else if(isset($arr['appdata']) === true)
-				$arr['appdata'] = $this->_mk_extenfeatures_appdata_vars($arr['appdata'],$val);
-
-			return($this->_extensions->new_exten($val,$this->_context,$arr['app'],'extenfeatures',$name,$arr));
-		}
-
-		unset($arr['_line']);
-
-		$ref = &$this->_conf['exten'];
-
-		if(is_array($ref[$name]) === false || ($nb = count($ref[$name]['_line'])) === 0)
-			return(false);
-
-		$lines = array_values($ref[$name]['_line']);
-		$line = array_merge($arr,$lines[0]);
-
-		if(isset($line['app']) === false)
-			return(false);
-		else if(isset($line['appdata']) === true)
-			$line['appdata'] = $this->_mk_extenfeatures_appdata_vars($line['appdata'],$val);
-
-		if(($id = $this->_extensions->new_exten($val,$this->_context,$line['app'],'extenfeatures',$name,$line)) === false)
-			return(false);
-
-		for($i = 1;$i < $nb;$i++)
-		{
-			$line = array_merge($arr,$lines[$i]);
-
-			if(isset($line['app']) === false)
-				return(false);
-			else if(isset($line['appdata']) === true)
-				$line['appdata'] = $this->_mk_extenfeatures_appdata_vars($line['appdata'],$val);
-
-			if($this->_extensions->set_exten($line['app'],$id,$line) === false)
-				return(false);
-		}
-
-		return($id);
 	}
 
 	function set($arr)
@@ -228,6 +135,7 @@ class xivo_application_service_asterisk_extenfeatures extends xivo_application_a
 		}
 
 		$rs['exten'] = $exten;
+
 		$this->_set_result('extenfeatures',$rs);
 
 		return(true);
@@ -261,28 +169,13 @@ class xivo_application_service_asterisk_extenfeatures extends xivo_application_a
 			return(false);
 		else if($this->_info['extenfeatures'] === false)
 			return($this->_add_extenfeatures());
-		else if(($rs = $this->get_result('extenfeatures')) === null
-		|| is_array($rs) === false
-		|| ($id = $this->_mk_extenfeatures_dialplan($rs['typeval'],$rs['exten'],$rs['commented'])) === false
-		|| ($list = $this->_extensions->get_loaded_exten($id)) === false
-		|| ($nb = count($list)) === 0)
+		else if(($rs = $this->get_result('extenfeatures')) === null)
 			return(false);
-
-		$this->delete_extenfeatures();
 
 		$this->_return['extenfeatures'] = $rs['typeval'];
 
-		for($i = 0;$i < $nb;$i++)
-		{
-			if($this->_origin['extenfeatures'] !== false
-			&& isset($this->_origin['extenfeatures'][$i]) === true)
-				$eid = $this->_origin['extenfeatures'][$i]['id'];
-			else
-				$eid = 0;
-
-			if($this->_extensions->add($list[$i],$eid) === false)
-				return(false);
-		}
+		if($this->_extensions->edit($this->_info['extenfeatures']['id'], $rs) === false)
+			return(false);
 
 		return($rs['typeval']);
 	}
@@ -317,10 +210,9 @@ class xivo_application_service_asterisk_extenfeatures extends xivo_application_a
 	function _add_extenfeatures()
 	{
 		if(($rs = $this->get_result('extenfeatures')) === null
-		|| $rs === false
-		|| ($id = $this->_mk_extenfeatures_dialplan($rs['typeval'],$rs['exten'],$rs['commented'])) === false)
+		|| $rs === false)
 			return(false);
-		else if($this->_extensions->add_exten($id) === false)
+		else if($this->_extensions->add($rs) === false)
 			$this->_return['extenfeatures'] = false;
 		else
 			$this->_return['extenfeatures'] = $rs['typeval'];
