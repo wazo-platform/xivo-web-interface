@@ -22,17 +22,15 @@ dwho_file::required(array(XIVO_PATH_OBJECT,'application','service','ipbx','aster
 
 class xivo_application_service_asterisk_realstatic_features_featuremap extends xivo_application_service_asterisk_realstatic_abstract
 {
-	var $_name		= 'featuremap';
+	var $_name			= 'featuremap';
 	var $_modulename	= 'features';
-	var $_extenumbers	= null;
 	var $_category		= 'featuremap';
 	var $_cat_metric	= 1;
 	var $_filename		= 'features.conf';
 
 	public function __construct(&$service)
 	{
-		if(parent::_init($service) === false
-		|| ($this->_extenumbers = $this->get_abstract('extenumbers',array('type' => $this->_name))) === false)
+		if(parent::_init($service) === false)
 			return(false);
 
 		return(true);
@@ -48,7 +46,6 @@ class xivo_application_service_asterisk_realstatic_features_featuremap extends x
 		$this->_info = $this->_origin = array();
 
 		$this->_realstatic_get($name,$disable);
-		$this->_get_extenumbers($name);
 
 		return($this->_info);
 	}
@@ -63,8 +60,6 @@ class xivo_application_service_asterisk_realstatic_features_featuremap extends x
 		$number = (string) $this->get_result_var('var_val');
 		$context = '';
 
-		$this->set_extenumbers('save',$number,$context);
-
 		return(($this->get_errnb() < 1));
 	}
 
@@ -78,22 +73,13 @@ class xivo_application_service_asterisk_realstatic_features_featuremap extends x
 		if(is_array($this->_info) === false
 		|| empty($this->_info) === true
 		|| $this->get_errnb() > 0
-		|| ($name = $this->_realstatic_save()) === false
-		|| $this->save_extenumbers($name) === false)
+		|| ($name = $this->_realstatic_save()) === false)
 		{
 			$r = false;
 			$this->_reverse_save();
 		}
 
 		$this->_status = '';
-
-		return($r);
-	}
-
-	function save_extenumbers($name)
-	{
-		if(($r = parent::save_extenumbers($name)) === null)
-			$r = false;
 
 		return($r);
 	}
@@ -115,9 +101,6 @@ class xivo_application_service_asterisk_realstatic_features_featuremap extends x
 			{
 				case $this->_name:
 					$this->_realstatic_reverse($val);
-					break;
-				case 'extenumbers':
-					$this->_extenumbers->reverse_edit($this->_status);
 					break;
 			}
 		}

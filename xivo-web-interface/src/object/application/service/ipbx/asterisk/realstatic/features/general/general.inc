@@ -22,18 +22,16 @@ dwho_file::required(array(XIVO_PATH_OBJECT,'application','service','ipbx','aster
 
 class xivo_application_service_asterisk_realstatic_features_general extends xivo_application_service_asterisk_realstatic_abstract
 {
-	var $_name		= 'generalfeatures';
+	var $_name			= 'generalfeatures';
 	var $_modulename	= 'features';
-	var $_extenumbers	= null;
-	var $_sound		= array();
+	var $_sound			= array();
 	var $_category		= 'general';
 	var $_cat_metric	= 0;
 	var $_filename		= 'features.conf';
 
 	public function __construct(&$service)
 	{
-		if(parent::_init($service) === false
-		|| ($this->_extenumbers = $this->get_abstract('extenumbers',array('type' => $this->_name))) === false)
+		if(parent::_init($service) === false)
 			return(false);
 
 		return(true);
@@ -49,9 +47,6 @@ class xivo_application_service_asterisk_realstatic_features_general extends xivo
 		$this->_info = $this->_origin = array();
 
 		$this->_realstatic_get($name);
-
-		if($this->_chk_exists_cfg('exten',$name) === true)
-			$this->_get_extenumbers($name);
 
 		return($this->_info);
 	}
@@ -111,8 +106,6 @@ class xivo_application_service_asterisk_realstatic_features_general extends xivo
 		{
 			$number = (string) $this->get_result_var('var_val');
 			$context = '';
-
-			$this->set_extenumbers('save',$number,$context);
 		}
 
 		return(($this->get_errnb() < 1));
@@ -145,24 +138,13 @@ class xivo_application_service_asterisk_realstatic_features_general extends xivo
 		if(is_array($this->_info) === false
 		|| empty($this->_info) === true
 		|| $this->get_errnb() > 0
-		|| ($name = $this->_realstatic_save()) === false
-		|| $this->save_extenumbers($name) === false)
+		|| ($name = $this->_realstatic_save()) === false)
 		{
 			$r = false;
 			$this->_reverse_save();
 		}
 
 		$this->_status = '';
-
-		return($r);
-	}
-
-	function save_extenumbers($name)
-	{
-		if($this->_chk_exists_cfg('exten',$name) === false)
-			return(null);
-		else if(($r = parent::save_extenumbers($name)) === null)
-			$r = false;
 
 		return($r);
 	}
@@ -184,9 +166,6 @@ class xivo_application_service_asterisk_realstatic_features_general extends xivo
 			{
 				case $this->_name:
 					$this->_realstatic_reverse($val);
-					break;
-				case 'extenumbers':
-					$this->_extenumbers->reverse_edit($this->_status);
 					break;
 			}
 		}
