@@ -327,16 +327,6 @@ class xivo_application_service_asterisk_voicemenu extends xivo_application_aster
 		return(false);
 	}
 
-	function _mk_voicemenumacro_appdata($voicemenuid,$priority=1)
-	{
-		$arr = array();
-		$arr['appdata'][0] = XIVO_SRE_IPBX_AST_VOICEMENU_MACRO;
-		$arr['appdata'][1] = dwho_ulongint($voicemenuid);
-		$arr['appdata'][2] = dwho_uint($priority,1);
-
-		return($arr);
-	}
-
 	function set_add($arr)
 	{
 		return($this->_set('add',$arr));
@@ -379,9 +369,10 @@ class xivo_application_service_asterisk_voicemenu extends xivo_application_aster
 		if($this->_errnb === 0 && dwho_has_len($number) === true)
 		{
 			if(($rsvoicemenumacro = $this->chk_exten('voicemenumacro',
-								 $number,
-								 $this->_mk_voicemenumacro_appdata(0),
-								 $context)) !== false)
+													$number,
+													$context,
+													'voicemenu',
+													$voicemenuid)) !== false)
 				$this->_set_result('voicemenumacro',$rsvoicemenumacro);
 		}
 
@@ -424,10 +415,11 @@ class xivo_application_service_asterisk_voicemenu extends xivo_application_aster
 		|| $rs === false)
 			return($rs);
 		else if(($rsmacro = $this->set_exten($action,
-						     'voicemenumacro',
-						     $rs['exten'],
-						     $this->_mk_voicemenumacro_appdata($voicemenuid),
-						     $rs['context'])) === false)
+											'voicemenumacro',
+											$rs['exten'],
+											$rs['context'],
+											'voicemenu',
+											$voicemenuid)) === false)
 			return(false);
 
 		$this->_set_result('voicemenumacro',$rsmacro);

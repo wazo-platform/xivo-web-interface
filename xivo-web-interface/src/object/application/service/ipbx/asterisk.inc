@@ -187,7 +187,7 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		return($this->_info['callerid']);
 	}
 
-	public function chk_exten($name,$exten,$arr,$context,$type,$typeval)
+	public function chk_exten($name,$exten,$context,$type,$typeval)
 	{
 		if ((empty($this->_info)
 			|| (isset($this->_info[$name])
@@ -208,25 +208,25 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 			return(false);
 		}
 
-		if(($r = $this->_extensions->chk_exten($exten,$context,'macro',$type,$typeval,$arr)) !== false)
+		if(($r = $this->_extensions->chk_exten($exten,$context,$type,$typeval)) !== false)
 			return($r);
 		else if($this->_extensions->get_filter_errnb() > 0)
 			$this->_set_error($name,$this->_extensions->get_filter_error());
 		else
-			$this->_set_error($name,'invalid macro');
+			$this->_set_error($name,'invalid extension');
 
 		return($r);
 	}
 
-	public function set_exten($action,$name,$exten,$arr,$context,$type,$typeval)
+	public function set_exten($action,$name,$exten,$context,$type,$typeval)
 	{
 		if(($action !== 'add' && $action !== 'edit') === true
 		|| dwho_has_len($name) === false)
 			return(false);
 		else if($action === 'edit' && dwho_issa($name,$this->_info) !== false)
-			$r = $this->_extensions->chk_exten($exten,$context,'macro',$type,$typeval,$arr);
+			$r = $this->_extensions->chk_exten($exten,$context,$type,$typeval);
 		else
-			$r = $this->_extensions->new_exten($exten,$context,'macro',$type,$typeval,$arr);
+			$r = $this->_extensions->new_exten($exten,$context,$type,$typeval);
 
 		if($r !== false)
 			return($r);

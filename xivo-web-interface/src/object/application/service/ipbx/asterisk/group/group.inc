@@ -115,19 +115,6 @@ class xivo_application_service_asterisk_group extends xivo_application_asterisk_
 		return($this->_queue->get_nb($arr,$disable));
 	}
 
-	function _get_groupmacro()
-	{
-		$this->_info['groupmacro'] = false;
-		$this->_origin['groupmacro'] = false;
-
-		if(($this->_info['groupmacro'] = $this->_extensions->get_exten($this->_info['groupfeatures']['number'],
-									       $this->_info['groupfeatures']['context'],
-									       'macro')) !== false)
-			$this->_origin['groupmacro'] = $this->_extensions->get_origin();
-
-		return($this->_info['groupmacro']);
-	}
-
 	function _get_user()
 	{
 		$this->_info['user'] = false;
@@ -233,16 +220,6 @@ class xivo_application_service_asterisk_group extends xivo_application_asterisk_
 		return($r);
 	}
 
-	function _mk_groupmacro_appdata($groupfeaturesid,$timeout='')
-	{
-		$arr = array();
-		$arr['appdata'][0] = XIVO_SRE_IPBX_AST_GROUP_MACRO;
-		$arr['appdata'][1] = dwho_ulongint($groupfeaturesid);
-		$arr['appdata'][2] = dwho_has_len($timeout) === true ? dwho_ufloat($timeout) : '';
-
-		return($arr);
-	}
-
 	function set_add($arr)
 	{
 		return($this->_set('add',$arr));
@@ -279,7 +256,6 @@ class xivo_application_service_asterisk_group extends xivo_application_asterisk_
 		{
 			if(($rsgroupmacro = $this->chk_exten('groupmacro',
 												$number,
-												$this->_mk_groupmacro_appdata(0),
 												$context,
 												'group',
 												0)) !== false)
@@ -378,7 +354,6 @@ class xivo_application_service_asterisk_group extends xivo_application_asterisk_
 		else if(($rsmacro = $this->set_exten($action,
 											'groupmacro',
 											$rs['exten'],
-											$this->_mk_groupmacro_appdata($groupfeaturesid),
 											$rs['context'],
 											'group',
 											$groupfeaturesid)) === false)

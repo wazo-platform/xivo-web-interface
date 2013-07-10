@@ -277,16 +277,6 @@ class xivo_application_service_asterisk_queue extends xivo_application_asterisk_
 		return($r);
 	}
 
-	function _mk_queuemacro_appdata($queuefeaturesid,$timeout='')
-	{
-		$arr = array();
-		$arr['appdata'][0] = XIVO_SRE_IPBX_AST_QUEUE_MACRO;
-		$arr['appdata'][1] = dwho_ulongint($queuefeaturesid);
-		$arr['appdata'][2] = dwho_has_len($timeout) === true ? dwho_ufloat($timeout) : '';
-
-		return($arr);
-	}
-
 	function set_add($arr)
 	{
 		return($this->_set('add',$arr));
@@ -330,7 +320,6 @@ class xivo_application_service_asterisk_queue extends xivo_application_asterisk_
 		{
 			if(($rsqueuemacro = $this->chk_exten('queuemacro',
 												$number,
-												$this->_mk_queuemacro_appdata(0),
 												$context,
 												'queue',
 												0)) !== false)
@@ -499,7 +488,6 @@ class xivo_application_service_asterisk_queue extends xivo_application_asterisk_
 		else if(($rsmacro = $this->set_exten($action,
 											'queuemacro',
 											$rs['exten'],
-											$this->_mk_queuemacro_appdata($queuefeaturesid),
 											$rs['context'],
 											'queue',
 											$queuefeaturesid)) === false)

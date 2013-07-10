@@ -111,6 +111,9 @@ class xivo_service_asterisk_contextnumbers extends xivo_service_asterisk_abstrac
 
 	function interval_number_exists($context,$type,$number)
 	{
+		if($type === 'outcall')
+			return(true);
+
 		$where = array();
 		$where['context'] = $context;
 		$where['type'] = $type;

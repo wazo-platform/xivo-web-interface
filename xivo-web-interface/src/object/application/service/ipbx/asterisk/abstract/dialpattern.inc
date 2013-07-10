@@ -131,15 +131,6 @@ class xivo_application_service_asterisk_dialpattern_abstract extends xivo_applic
 		return($this->_dialpattern->get_element());
 	}
 
-	function _mk_outcallmacro_appdata($outcallid)
-	{
-		$arr = array();
-		$arr['appdata'][0] = XIVO_SRE_IPBX_AST_OUTCALL_MACRO;
-		$arr['appdata'][1] = dwho_ulongint($outcallid);
-
-		return($arr);
-	}
-
 	function set($action,$arr,$context='',$outcallerid='')
 	{
 		$this->_reset();
@@ -150,11 +141,10 @@ class xivo_application_service_asterisk_dialpattern_abstract extends xivo_applic
 		$context = (string) $context;
 
 		if(($rsoutcallmacro = $this->chk_exten('outcallmacro',
-						       $number,
-						       $this->_mk_outcallmacro_appdata(0),
-						       $context,
-						       'ouctcall',
-						       0)) !== false)
+												$number,
+												$context,
+												'outcall',
+												0)) !== false)
 			$this->_set_result('outcallmacro',$rsoutcallmacro);
 
 		if(($rs = $this->_dialpattern->chk_values($arr)) === false)
@@ -175,12 +165,11 @@ class xivo_application_service_asterisk_dialpattern_abstract extends xivo_applic
 		|| ($rs = $this->get_result('outcallmacro')) === null
 		|| $rs === false
 		|| ($rsmacro = $this->set_exten($action,
-						'outcallmacro',
-						$rs['exten'],
-						$this->_mk_outcallmacro_appdata($outcallid),
-						$rs['context'],
-						'outcall',
-						$outcallid)) === false)
+										'outcallmacro',
+										$rs['exten'],
+										$rs['context'],
+										'outcall',
+										$outcallid)) === false)
 			return(false);
 
 		$this->_set_result('outcallmacro',$rsmacro);

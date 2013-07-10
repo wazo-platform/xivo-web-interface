@@ -207,15 +207,6 @@ class xivo_application_service_asterisk_meetme extends xivo_application_asterisk
 		return($r);
 	}
 
-	function _mk_meetmemacro_appdata($meetmefeaturesid)
-	{
-		$arr = array();
-		$arr['appdata'][0] = XIVO_SRE_IPBX_AST_MEETME_MACRO;
-		$arr['appdata'][1] = dwho_ulongint($meetmefeaturesid);
-
-		return($arr);
-	}
-
 	function set_add($arr)
 	{
 		return($this->_set('add',$arr));
@@ -257,7 +248,6 @@ class xivo_application_service_asterisk_meetme extends xivo_application_asterisk
 		&& $number !== ''
 		&&($rsmeetmemacro = $this->chk_exten('meetmemacro',
 												$number,
-												$this->_mk_meetmemacro_appdata(0),
 												$context,
 												'meetme',
 												0)) !== false)
@@ -427,7 +417,6 @@ class xivo_application_service_asterisk_meetme extends xivo_application_asterisk
 		else if(($rsmacro = $this->set_exten($action,
 											'meetmemacro',
 											$rs['exten'],
-											$this->_mk_meetmemacro_appdata($meetmefeaturesid),
 											$rs['context'],
 											'meetme',
 											$meetmefeaturesid)) === false)
