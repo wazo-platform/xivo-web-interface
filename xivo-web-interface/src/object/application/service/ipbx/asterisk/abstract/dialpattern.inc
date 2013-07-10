@@ -153,7 +153,7 @@ class xivo_application_service_asterisk_dialpattern_abstract extends xivo_applic
 						       $number,
 						       $this->_mk_outcallmacro_appdata(0),
 						       $context,
-						       'ouctcall',
+						       'outcall',
 						       0)) !== false)
 			$this->_set_result('outcallmacro',$rsoutcallmacro);
 
