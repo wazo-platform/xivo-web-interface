@@ -23,13 +23,12 @@ xivo_service_asterisk::required(array('abstract','datastorage','abstract','sql.i
 class xivo_service_asterisk_extensions_sql extends xivo_service_asterisk_abstract_sql
 {
 
-	function search($exten,$extenhash,$context='',$type='',$typeval='')
+	function search($exten,$context='',$type='',$typeval='')
 	{
 		$this->_cnt = 0;
 
 		$this->_dso->new_select($this->_table);
 		$this->_dso->wherecontain('exten',$exten);
-		$this->_dso->orwhere(array('extenhash' => $extenhash));
 
 		if($this->_dso->aggregate_where() === false)
 			return(false);

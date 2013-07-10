@@ -480,9 +480,6 @@ $array['element'] = array();
 $array['element']['exten'] = array();
 $array['element']['exten']['default'] = '';
 
-$array['element']['extenhash'] = array();
-$array['element']['extenhash']['default'] = '';
-
 $array['element']['context'] = array();
 $array['element']['context']['default'] = 'default';
 
@@ -525,7 +522,6 @@ $array['filter']['context'] = array('chk' => 2,'maxlen' => 39,'regexp' => '/^(?:
 $array['filter']['priority'] = array('set' => false,'chk' => 2,'cast' => 'uint','between' => array(1,255));
 $array['filter']['app'] = array('minlen' => 1,'maxlen' => 128,'regexp' => '/^[a-z0-9#\*\.\/_@:-]+$/i');
 $array['filter']['appdata'] = array('set' => false,'chk' => 2,'maxlen' => 128,'cast' => 'sgraph','notag' => false);
-$array['filter']['extenhash'] = array('set' => false,'chk' => 2,'maxlen' => 40,'cast' => 'xdigit');
 $array['filter']['type'] = array('key' => array('extenfeatures',
 						'featuremap',
 						'generalfeatures',

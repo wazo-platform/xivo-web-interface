@@ -61,7 +61,6 @@ class xivo_service_asterisk_rightcallexten extends xivo_service_asterisk_abstrac
 		|| ($exten = $this->_sre->chk_extension($arr['exten'])) === false)
 			return(false);
 
-		$arr['extenhash'] = sha1($exten);
 		$arr['exten'] = $this->_sre->clean_extension($arr['exten']);
 
 		return(parent::add($arr,$id));
@@ -72,14 +71,11 @@ class xivo_service_asterisk_rightcallexten extends xivo_service_asterisk_abstrac
 		if(is_array($arr) === false)
 			return(false);
 
-		unset($arr['extenhash']);
-
 		if(dwho_has_len($arr,'exten') === true)
 		{
 			if(($exten = $this->_sre->chk_extension($arr['exten'])) === false)
 				return(false);
 
-			$arr['extenhash'] = sha1($exten);
 			$arr['exten'] = $this->_sre->clean_extension($arr['exten']);
 		}
 

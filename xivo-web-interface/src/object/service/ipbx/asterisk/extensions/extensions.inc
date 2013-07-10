@@ -97,7 +97,6 @@ class xivo_service_asterisk_extensions extends xivo_service_asterisk_abstract
 		$r['context'] = $arr['context'];
 		$r['exten'] = $this->_sre->clean_extension($arr['exten']);
 		$r['app'] = $arr['app'];
-		$r['extenhash'] = sha1($exten);
 		$r['typeval'] = (string) $arr['typeval'];
 
 		if(isset($arr['priority']) === false)
@@ -126,15 +125,11 @@ class xivo_service_asterisk_extensions extends xivo_service_asterisk_abstract
 
 		$r = array();
 
-		if(isset($arr['extenhash']) === true)
-			unset($arr['extenhash']);
-
 		if(dwho_has_len($arr,'exten') === true)
 		{
 			if(($exten = $this->_sre->chk_extension($arr['exten'])) === false)
 				return(false);
 
-			$r['extenhash'] = sha1($exten);
 			$r['exten'] = $this->_sre->clean_extension($arr['exten']);
 		}
 
@@ -605,12 +600,10 @@ class xivo_service_asterisk_extensions extends xivo_service_asterisk_abstract
 		if(($extenchk = $this->_sre->chk_extension($exten)) === false)
 			return(false);
 
-		$extenhash = sha1($extenchk);
-
 		$type = (string) $type;
 		$typeval = (string) $typeval;
 
-		if(($list = $this->_dso->search($exten,$extenhash,$context,$type,$typeval)) === false)
+		if(($list = $this->_dso->search($exten,$context,$type,$typeval)) === false)
 			return(false);
 
 		$nb = count($list);
