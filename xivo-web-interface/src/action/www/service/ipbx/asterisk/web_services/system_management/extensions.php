@@ -35,62 +35,52 @@ switch($act)
 		$act = 'search';
 		$appcontext = &$ipbx->get_application('context');
 
-		$context = $_QRY->get('context');
+		$context_id = $_QRY->get('context');
 
-		if(($context = $appcontext->get($context)) === false)
-		{
+		if(($context = $appcontext->get($context_id)) === false) {
 			$http_response->set_status_line(404);
 			$http_response->send(true);
 		}
 
 		$obj = $_QRY->get('obj');
-		if(is_null($obj) || !array_key_exists($obj, $context['contextnumbers']))
-		{
+
+		if (($numbers_unavailable = $appcontext->get_extens_for_context_and_object($context_id, $obj)) === false) {
 			$http_response->set_status_line(204);
 			$http_response->send(true);
 		}
 
 		$number  = $_QRY->get('number');
-		if(strlen($number) > 0 && !is_numeric($number))
-		{   
+		if(strlen($number) > 0 && !is_numeric($number)) {
 			$http_response->set_status_line(500);
 			$http_response->send(true);
-		}   
+		}
 
-		$numbers = array();
-		foreach($context['contextnumbers'][$obj] as $numb)
-		{   
+		$numbers_available = array();
+		foreach($context['contextnumbers'][$obj] as $numb) {
 			$start = intval($numb['numberbeg']);
-			if(strlen($numb['numberend']) == 0)
-			{
-				array_push($numbers, $start);
+			if(strlen($numb['numberend']) === 0) {
+				array_push($numbers_available, $start);
 				continue;
 			}
 
-			$end     = intval($numb['numberend']);
-			$numbers = array_merge($numbers, range($start, $end));
+			$end = intval($numb['numberend']);
+			$numbers_available = array_merge($numbers_available, range($start, $end));
 		}
 
-		if(strlen($number) > 0)
-		{
-			function match($val)
-			{
+		if(strlen($number) > 0) {
+			function match($val) {
 				global $number;
 				return (strpos(strval($val), $number) !== false);
 			}
-			$numbers = array_filter($numbers, "match");
+			$numbers_available = array_filter($numbers_available, "match");
 		}
 
-
-		foreach($context['contextnummember'][$obj] as $user)
-		{
-			if(strlen($user['number']) > 0 &&
-			  ($idx = array_search(intval($user['number']), $numbers)) !== false)
-					unset($numbers[$idx]);
+		foreach($numbers_unavailable as $number_unavailable) {
+			if(($idx = array_search($number_unavailable, $numbers_available)) !== false)
+				unset($numbers_available[$idx]);
 		}
 
-
-		$_TPL->set_var('list', array_values($numbers));
+		$_TPL->set_var('list', array_values($numbers_available));
 		break;
 }
 

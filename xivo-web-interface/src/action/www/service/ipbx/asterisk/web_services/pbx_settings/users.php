@@ -31,8 +31,7 @@ switch($act)
 		$appuser = &$ipbx->get_application('user');
 
 		$nocomponents = array('usermacro'		=> true,
-							'extenumbers'		=> true,
-							'contextnummember'	=> true);
+							'extenumbers'		=> true);
 
 		if(($info = $appuser->get($_QRY->get('id'),
 					  null,

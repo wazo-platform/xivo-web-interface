@@ -96,10 +96,6 @@ $array['contextnumbers'] = array();
 $array['contextnumbers']['table'] = 'contextnumbers';
 $array['contextnumbers']['primary'] = array('context' => '','type' => '','numberbeg' => '','numberend' => '');
 
-$array['contextnummember'] = array();
-$array['contextnummember']['table'] = 'contextnummember';
-$array['contextnummember']['primary'] = array('context' => '','type' => '','typeval' => '');
-
 $array['contexttype'] = array();
 $array['contexttype']['table'] = 'contexttype';
 $array['contexttype']['primary'] = array('id' => '');

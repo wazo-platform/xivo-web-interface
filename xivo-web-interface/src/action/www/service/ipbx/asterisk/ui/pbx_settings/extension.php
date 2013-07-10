@@ -49,15 +49,14 @@ switch($act)
 	default:
 		$act = 'search';
 		$appcontext = &$ipbx->get_application('context');
-		$context = $_QRY->get('context');
+		$context_id = $_QRY->get('context');
 
-		if(($context = $appcontext->get($context)) === false)
+		if(($context = $appcontext->get($context_id)) === false)
 		{
 			$http_response->set_status_line(404);
 			$http_response->send(true);
 		}
 
-		$contextnummember = $context['contextnummember'];
 		$contextnumbers = $context['contextnumbers'];
 
 		$obj = $_QRY->get('obj');
@@ -67,8 +66,13 @@ switch($act)
 			$http_response->send(true);
 		}
 
+		if (($numbers_unavailable = $appcontext->get_extens_for_context_and_object($context_id, $obj)) === false)
+		{
+			$http_response->set_status_line(204);
+			$http_response->send(true);
+		}
+
 		$contextnumbers_obj = $contextnumbers[$obj];
-		$contextnummember_obj = $contextnummember[$obj];
 
 		$has_getnumpull = (bool) $_QRY->get('getnumpool');
 
@@ -128,12 +132,9 @@ switch($act)
 			$_TPL->display('genericjson');
 		}
 
-		$nb = count($contextnummember_obj);
-		for($i=0; $i<$nb; $i++)
-		{
-			$ref = &$contextnummember_obj[$i];
-			if($key = array_search($ref['number'], $numbers))
-				unset($numbers[$key]);
+		foreach($numbers_unavailable as $number_unavailable) {
+			if(($idx = array_search($number_unavailable, $numbers)) !== false)
+				unset($numbers[$idx]);
 		}
 
 		switch ($_QRY->get('format'))

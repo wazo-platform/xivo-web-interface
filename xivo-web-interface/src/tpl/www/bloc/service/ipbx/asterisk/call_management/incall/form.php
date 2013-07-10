@@ -49,9 +49,7 @@ if($context_list !== false):
 				    'key'	=> 'identity',
 				    'altkey'	=> 'name',
 				    'default'	=> $element['incall']['context']['default'],
-				    'selected'	=> $this->get_var('incall','context'),
-					'error'	=> $this->bbf_args('error',
-					   $this->get_var('error','contextnummember'))),
+				    'selected'	=> $this->get_var('incall','context')),
 			      $context_list);
 else:
 	echo	'<div id="fd-incall-context" class="txt-center">',

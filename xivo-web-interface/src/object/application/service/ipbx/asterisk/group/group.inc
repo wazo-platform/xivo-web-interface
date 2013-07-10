@@ -29,7 +29,6 @@ class xivo_application_service_asterisk_group extends xivo_application_asterisk_
 	var $_extenumbers	= false;
 	var $_rightcall		= false;
 	var $_dialaction	= false;
-	var $_contextnummember	= false;
 	var $_callerid		= false;
 	var $_queuemember	= null;
 	var $_schedule_path = false;
@@ -62,7 +61,6 @@ class xivo_application_service_asterisk_group extends xivo_application_asterisk_
 		|| ($this->_extenumbers = $this->get_abstract('extenumbers',array('type' => 'group'))) === false
 		|| ($this->_rightcall = $this->get_abstract('rightcall',array('type' => 'group'))) === false
 		|| ($this->_dialaction = $this->get_abstract('dialaction',array('category' => 'group'))) === false
-		|| ($this->_contextnummember = $this->get_abstract('contextnummember',array('type' => 'group'))) === false
 		|| ($this->_schedule_path = &$this->_service->get_module('schedule_path')) === false
 		|| ($this->_callerid = $this->get_abstract('callerid',array('type' => 'group'))) === false)
 			return(false);
@@ -100,9 +98,6 @@ class xivo_application_service_asterisk_group extends xivo_application_asterisk_
 
 		if(dwho_ak('dialaction',$nocomponents,true) === false)
 			$this->_get_dialaction($this->_info['groupfeatures']['id']);
-
-		if(dwho_ak('contextnummember',$nocomponents,true) === false)
-			$this->_get_contextnummember($this->_info['groupfeatures']['id']);
 
 		if(dwho_ak('callerid',$nocomponents,true) === false)
 			$this->_get_callerid($this->_info['groupfeatures']['id']);
@@ -305,8 +300,6 @@ class xivo_application_service_asterisk_group extends xivo_application_asterisk_
 		if(dwho_issa('dialaction',$arr) === true)
 			$this->set_dialaction($arr['dialaction']);
 
-		$this->set_contextnummember($context,$number);
-
 		if(dwho_issa('callerid',$arr) === true)
 			$this->set_callerid($arr['callerid']);
 
@@ -503,7 +496,6 @@ class xivo_application_service_asterisk_group extends xivo_application_asterisk_
 		|| $this->add_user() === false
 		|| $this->add_rightcall($groupfeaturesid) === false
 		|| $this->add_dialaction($groupfeaturesid) === false
-		|| $this->add_contextnummember($groupfeaturesid) === false
 		|| $this->add_callerid($groupfeaturesid) === false
 		|| $this->add_schedule_path($groupfeaturesid) === false)
 		{
@@ -624,9 +616,6 @@ class xivo_application_service_asterisk_group extends xivo_application_asterisk_
 				case 'dialaction':
 					$this->_dialaction->reverse_add();
 					break;
-				case 'contextnummember':
-					$this->_contextnummember->reverse_add();
-					break;
 				case 'callerid':
 					$this->_callerid->reverse_add();
 					break;
@@ -682,7 +671,6 @@ class xivo_application_service_asterisk_group extends xivo_application_asterisk_
 		if($this->edit_user($this->_info['groupfeatures']['name']) === false
 		|| $this->edit_rightcall() === false
 		|| $this->edit_dialaction() === false
-		|| $this->edit_contextnummember() === false
 		|| $this->edit_callerid() === false
 		|| $this->edit_schedule_path() === false)
 		{
@@ -780,14 +768,6 @@ class xivo_application_service_asterisk_group extends xivo_application_asterisk_
 		return(parent::edit_dialaction($this->_info['groupfeatures']['id']));
 	}
 
-	function edit_contextnummember()
-	{
-		if(dwho_issa('groupfeatures',$this->_info) === false)
-			return(false);
-
-		return(parent::edit_contextnummember($this->_info['groupfeatures']['id']));
-	}
-
 	function edit_callerid()
 	{
 		if(dwho_issa('groupfeatures',$this->_info) === false)
@@ -861,9 +841,6 @@ class xivo_application_service_asterisk_group extends xivo_application_asterisk_
 				case 'dialaction':
 					$this->_dialaction->reverse_edit($this->_status);
 					break;
-				case 'contextnummember':
-					$this->_contextnummember->reverse_edit($this->_status);
-					break;
 				case 'callerid':
 					$this->_callerid->reverse_edit($this->_status);
 					break;
@@ -887,7 +864,6 @@ class xivo_application_service_asterisk_group extends xivo_application_asterisk_
 		|| $this->delete_user($this->_info['groupfeatures']['name']) === false
 		|| $this->delete_rightcall() === false
 		|| $this->delete_dialaction() === false
-		|| $this->delete_contextnummember() === false
 		|| $this->delete_callerid() === false
 		|| $this->delete_schedule_path() === false)
 		{
@@ -999,9 +975,6 @@ class xivo_application_service_asterisk_group extends xivo_application_asterisk_
 					break;
 				case 'dialaction':
 					$this->_dialaction->add_origin_list();
-					break;
-				case 'contextnummember':
-					$this->_contextnummember->add_origin();
 					break;
 				case 'callerid':
 					$this->_callerid->add_origin();

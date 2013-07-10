@@ -926,6 +926,55 @@ class xivo_service_asterisk extends xivo_service_abstract
 
 		return($context);
 	}
+
+	public function get_extens_for_context_and_object($context_id, $object)
+	{
+		$where = array('context' => $context_id);
+
+		switch ($object) {
+			case 'user':
+				$mod = &$this->get_module('linefeatures');
+				return($this->_get_valid_extens_of_object($mod, $where));
+				break;
+			case 'group':
+				$mod = &$this->get_module('groupfeatures');
+				return($this->_get_valid_extens_of_object($mod, $where));
+				break;
+			case 'queue':
+				$mod = &$this->get_module('queuefeatures');
+				return($this->_get_valid_extens_of_object($mod, $where));
+				break;
+			case 'meetme':
+				$mod = &$this->get_module('meetmefeatures');
+				return($this->_get_valid_extens_of_object($mod, $where, 'confno'));
+			case 'incall':
+				$mod = &$this->get_module('incall');
+				return($this->_get_valid_extens_of_object($mod, $where, 'exten'));
+				break;
+			default:
+				return(false);
+		}
+	}
+
+	private function _get_valid_extens_of_object($module, $where, $key_exten='number')
+	{
+		$res = array();
+		$elems = $module->get_all_where($where);
+		foreach ($elems as $elem) {
+			$exten = $elem[$key_exten];
+			if (strlen($exten) > 0)
+				array_push($res, (int) $exten);
+		}
+		return($res);
+	}
+
+	public function exten_is_available_for_context_and_object($context_id, $object, $search_exten)
+	{
+		if (($extens = $this->get_extens_for_context_and_object($context_id, $object)) === false
+		|| array_search((int) $search_exten, $extens) === false)
+			return(true);
+		return(false);
+	}
 }
 
 ?>
