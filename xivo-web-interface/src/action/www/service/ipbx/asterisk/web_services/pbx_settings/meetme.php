@@ -30,7 +30,7 @@ switch($act)
 	case 'view':
 		$appmeetme = &$ipbx->get_application('meetme');
 
-		$nocomponents = array('meetmemacro'		=> true,
+		$nocomponents = array('exten'		=> true,
 							'meetmeadmininternal'	=> true,
 							'contextmember'		=> true);
 

@@ -233,7 +233,7 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		else if($this->_extensions->get_filter_errnb() > 0)
 			$this->_set_error($name,$this->_extensions->get_filter_error());
 		else
-			$this->_set_error($name,'invalid macro');
+			$this->_set_error($name,'invalid exten');
 
 		return($r);
 	}
@@ -278,7 +278,7 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		return($r);
 	}
 
-	public function add_macro($name)
+	public function add_exten($name)
 	{
 		if(($rs = $this->get_result($name)) === null || $rs === false)
 			return($rs);
@@ -322,7 +322,7 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		return($r);
 	}
 
-	public function edit_macro($name)
+	public function edit_exten($name)
 	{
 		$rs = false;
 
@@ -372,7 +372,7 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		return($r);
 	}
 
-	public function delete_macro($name)
+	public function delete_exten($name)
 	{
 		if(dwho_issa($name,$this->_info) === false)
 			return(null);

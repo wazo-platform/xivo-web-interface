@@ -622,8 +622,7 @@ class xivo_application_service_asterisk_paging extends xivo_application_asterisk
 		$this->_status = 'enable';
 		$this->_return = array();
 
-		if($this->enable_paging() === false
-		|| $this->enable_pagingmacro() === false)
+		if($this->enable_paging() === false)
 		{
 			$r = false;
 			$this->_reverse_enable_disable();
@@ -640,8 +639,7 @@ class xivo_application_service_asterisk_paging extends xivo_application_asterisk
 		$this->_status = 'disable';
 		$this->_return = array();
 
-		if($this->disable_paging() === false
-		|| $this->disable_pagingmacro() === false)
+		if($this->disable_paging() === false)
 		{
 			$r = false;
 			$this->_reverse_enable_disable();

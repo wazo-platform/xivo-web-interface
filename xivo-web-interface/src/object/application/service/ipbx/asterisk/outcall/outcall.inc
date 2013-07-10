@@ -811,7 +811,7 @@ class xivo_application_service_asterisk_outcall extends xivo_application_asteris
 		$this->_return = array();
 
 		if($this->enable_outcall() === false
-		|| $this->enable_outcallmacro() === false)
+		|| $this->enable_exten() === false)
 		{
 			$r = false;
 			$this->_reverse_enable_disable();
@@ -829,7 +829,7 @@ class xivo_application_service_asterisk_outcall extends xivo_application_asteris
 		$this->_return = array();
 
 		if($this->disable_outcall() === false
-		|| $this->disable_outcallmacro() === false)
+		|| $this->disable_exten() === false)
 		{
 			$r = false;
 			$this->_reverse_enable_disable();
@@ -865,17 +865,17 @@ class xivo_application_service_asterisk_outcall extends xivo_application_asteris
 		return($r);
 	}
 
-	function enable_outcallmacro()
+	function enable_exten()
 	{
-		return($this->_enable_disable_outcallmacro(false));
+		return($this->_enable_disable_exten(false));
 	}
 
-	function disable_outcallmacro()
+	function disable_exten()
 	{
-		return($this->_enable_disable_outcallmacro(true));
+		return($this->_enable_disable_exten(true));
 	}
 
-	function _enable_disable_outcallmacro($disable=false)
+	function _enable_disable_exten($disable=false)
 	{
 		if(dwho_issa('outcall',$this->_info) === false)
 			return(false);
@@ -896,7 +896,7 @@ class xivo_application_service_asterisk_outcall extends xivo_application_asteris
 		}
 
 		if($this->_status === 'enable' || $this->_status === 'disable')
-			$this->_return['outcallmacro'] = $r;
+			$this->_return['exten'] = $r;
 
 		return($r);
 	}
@@ -922,8 +922,8 @@ class xivo_application_service_asterisk_outcall extends xivo_application_asteris
 				case 'outcall':
 					$this->_enable_disable_outcall($disable);
 					break;
-				case 'outcallmacro':
-					$this->_enable_disable_outcallmacro($disable);
+				case 'exten':
+					$this->_enable_disable_exten($disable);
 					break;
 			}
 		}

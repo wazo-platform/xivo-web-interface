@@ -30,7 +30,7 @@ switch($act)
 	case 'view':
 		$appgroup = &$ipbx->get_application('group');
 
-		$nocomponents = array('groupmacro'		=> true);
+		$nocomponents = array('exten' => true);
 
 		if(($info = $appgroup->get($_QRY->get('id'),
 					   null,

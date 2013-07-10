@@ -82,8 +82,8 @@ class xivo_application_service_asterisk_group extends xivo_application_asterisk_
 		if($this->_components === false)
 			return($this->_info);
 
-		if(dwho_ak('groupmacro',$nocomponents,true) === false)
-			$this->_get_groupmacro();
+		if(dwho_ak('exten',$nocomponents,true) === false)
+			$this->_get_exten();
 
 		if(dwho_ak('user',$nocomponents,true) === false)
 			$this->_get_user();
@@ -254,12 +254,12 @@ class xivo_application_service_asterisk_group extends xivo_application_asterisk_
 
 		if($this->_errnb === 0 && $number !== '')
 		{
-			if(($rsgroupmacro = $this->chk_exten('groupmacro',
+			if(($rsexten = $this->chk_exten('exten',
 												$number,
 												$context,
 												'group',
 												0)) !== false)
-				$this->_set_result('groupmacro',$rsgroupmacro);
+				$this->_set_result('exten',$rsexten);
 		}
 
 		if(dwho_issa('user',$arr) === true)
@@ -343,23 +343,23 @@ class xivo_application_service_asterisk_group extends xivo_application_asterisk_
 		return(true);
 	}
 
-	function _set_groupmacro($action,$groupfeaturesid)
+	function _set_exten($action,$groupfeaturesid)
 	{
 		$rs = false;
 
 		if(($groupfeaturesid = dwho_ulongint($groupfeaturesid)) === 0
-		|| ($rs = $this->get_result('groupmacro')) === null
+		|| ($rs = $this->get_result('exten')) === null
 		|| $rs === false)
 			return($rs);
-		else if(($rsmacro = $this->set_exten($action,
-											'groupmacro',
+		else if(($rsexten = $this->set_exten($action,
+											'exten',
 											$rs['exten'],
 											$rs['context'],
 											'group',
 											$groupfeaturesid)) === false)
 			return(false);
 
-		$this->_set_result('groupmacro',$rsmacro);
+		$this->_set_result('exten',$rsexten);
 
 		return(true);
 	}
@@ -463,7 +463,7 @@ class xivo_application_service_asterisk_group extends xivo_application_asterisk_
 		if($this->get_errnb() > 0
 		|| ($groupfeaturesid = $this->add_groupfeatures()) === false
 		|| $this->add_queue() === false
-		|| $this->add_groupmacro($groupfeaturesid) === false
+		|| $this->add_exten($groupfeaturesid) === false
 		|| $this->add_user() === false
 		|| $this->add_rightcall($groupfeaturesid) === false
 		|| $this->add_dialaction($groupfeaturesid) === false
@@ -505,12 +505,12 @@ class xivo_application_service_asterisk_group extends xivo_application_asterisk_
 		return($this->_return['queue']);
 	}
 
-	function add_groupmacro($groupfeaturesid)
+	function add_exten($groupfeaturesid)
 	{
-		if(($rs = $this->_set_groupmacro('add',$groupfeaturesid)) !== true)
+		if(($rs = $this->_set_exten('add',$groupfeaturesid)) !== true)
 			return($rs);
 
-		return(parent::add_macro('groupmacro'));
+		return(parent::add_exten('exten'));
 	}
 
 	function add_user()
@@ -568,7 +568,7 @@ class xivo_application_service_asterisk_group extends xivo_application_asterisk_
 				case 'queue':
 					$this->_queue->delete($val);
 					break;
-				case 'groupmacro':
+				case 'exten':
 					$this->_extensions->delete_exten($val);
 					break;
 				case 'user':
@@ -614,18 +614,18 @@ class xivo_application_service_asterisk_group extends xivo_application_asterisk_
 		}
 		else if($this->_info['groupfeatures']['number'] !== '')
 		{
-			if($this->get_result('groupmacro') === null)
+			if($this->get_result('exten') === null)
 			{
-				$this->delete_macro('groupmacro');
+				$this->delete_exten('exten');
 			}
-			else if($this->edit_groupmacro($this->_info['groupfeatures']['id']) === false)
+			else if($this->edit_exten($this->_info['groupfeatures']['id']) === false)
 			{
 				$this->_reverse_edit();
 				$this->_status = '';
 				return(false);
 			}
 		}
-		else if($this->add_groupmacro($this->_info['groupfeatures']['id']) === false)
+		else if($this->add_exten($this->_info['groupfeatures']['id']) === false)
 		{
 			$this->_reverse_edit();
 			$this->_status = '';
@@ -673,12 +673,12 @@ class xivo_application_service_asterisk_group extends xivo_application_asterisk_
 		return($this->_return['queue']);
 	}
 
-	function edit_groupmacro($groupfeaturesid)
+	function edit_exten($groupfeaturesid)
 	{
-		if(($rs = $this->_set_groupmacro('edit',$groupfeaturesid)) !== true)
+		if(($rs = $this->_set_exten('edit',$groupfeaturesid)) !== true)
 			return($rs);
 
-		return(parent::edit_macro('groupmacro'));
+		return(parent::edit_exten('exten'));
 	}
 
 	function edit_user($name)
@@ -779,12 +779,12 @@ class xivo_application_service_asterisk_group extends xivo_application_asterisk_
 					else
 						$this->_queue->edit_origin($this->_origin['queue']);
 					break;
-				case 'groupmacro':
-					if(isset($this->_origin['groupmacro']) === false
-					|| $this->_origin['groupmacro'] === false)
-						$this->delete_macro('groupmacro');
+				case 'exten':
+					if(isset($this->_origin['exten']) === false
+					|| $this->_origin['exten'] === false)
+						$this->delete_exten('exten');
 					else
-						$this->_extensions->edit_origin($this->_origin['groupmacro']);
+						$this->_extensions->edit_origin($this->_origin['exten']);
 					break;
 				case 'user':
 					if(dwho_issa('groupfeatures',$this->_info) === false)
@@ -820,7 +820,7 @@ class xivo_application_service_asterisk_group extends xivo_application_asterisk_
 
 		if($this->delete_groupfeatures() === false
 		|| $this->delete_queue() === false
-		|| $this->delete_macro('groupmacro') === false
+		|| $this->delete_exten('exten') === false
 		|| $this->delete_user($this->_info['groupfeatures']['name']) === false
 		|| $this->delete_rightcall() === false
 		|| $this->delete_dialaction() === false
@@ -915,10 +915,10 @@ class xivo_application_service_asterisk_group extends xivo_application_asterisk_
 					&& $this->_origin['queue'] !== false)
 						$this->_queue->add_origin($this->_origin['queue']);
 					break;
-				case 'groupmacro':
-					if(isset($this->_origin['groupmacro']) === true
-					&& $this->_origin['groupmacro'] !== false)
-						$this->_extensions->add_origin($this->_origin['groupmacro']);
+				case 'exten':
+					if(isset($this->_origin['exten']) === true
+					&& $this->_origin['exten'] !== false)
+						$this->_extensions->add_origin($this->_origin['exten']);
 					break;
 				case 'user':
 					if(isset($this->_origin['user']) === true
