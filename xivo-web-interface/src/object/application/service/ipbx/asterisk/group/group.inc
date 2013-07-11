@@ -115,6 +115,19 @@ class xivo_application_service_asterisk_group extends xivo_application_asterisk_
 		return($this->_queue->get_nb($arr,$disable));
 	}
 
+	function _get_exten()
+	{
+		$this->_info['exten'] = false;
+		$this->_origin['exten'] = false;
+
+		if(isset($this->_info['groupfeatures']['context']) === true
+		&& ($this->_info['exten'] = $this->_extensions->get_exten($this->_info['groupfeatures']['number'],
+										$this->_info['groupfeatures']['context'])) !== false)
+			$this->_origin['exten'] = $this->_extensions->get_origin();
+
+		return($this->_info['exten']);
+	}
+
 	function _get_user()
 	{
 		$this->_info['user'] = false;
