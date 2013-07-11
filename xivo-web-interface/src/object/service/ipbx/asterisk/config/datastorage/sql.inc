@@ -408,6 +408,10 @@ $array['trunksip'] = array();
 $array['trunksip']['table'] = 'usersip';
 $array['trunksip']['primary'] = array('id' => '');
 
+$array['user_line'] = array();
+$array['user_line']['table'] = 'user_line';
+$array['user_line']['primary'] = array('user_id' => '', 'line_id' => '');
+
 $array['usercustom'] = array();
 $array['usercustom']['table'] = 'usercustom';
 $array['usercustom']['primary'] = array('id' => '');

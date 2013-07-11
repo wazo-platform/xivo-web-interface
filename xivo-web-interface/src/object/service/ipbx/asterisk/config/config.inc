@@ -337,6 +337,9 @@ $array['module']['trunkiax']['datastorage'] = true;
 $array['module']['trunksip'] = array();
 $array['module']['trunksip']['datastorage'] = true;
 
+$array['module']['user_line'] = array();
+$array['module']['user_line']['datastorage'] = true;
+
 $array['module']['usercustom'] = array();
 $array['module']['usercustom']['datastorage'] = true;
 
