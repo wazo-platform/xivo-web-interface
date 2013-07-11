@@ -91,7 +91,7 @@ class xivo_application_service_asterisk_context extends xivo_application_asteris
 		$this->_get_contexttype();
 
 		$this->_info['deletablemember'] = $this->_get_contextmember() === false;
-		$this->_info['deletable'] = $this->_info['deletablenumber'] === true && $this->_info['deletablemember'] === true;
+		$this->_info['deletable'] = $this->_info['deletablemember'] === true;
 
 		return($this->_info);
 	}
