@@ -458,15 +458,9 @@ class xivo_application_service_asterisk_context extends xivo_application_asteris
 		}
 		else if(empty($reslist) === true)
 		{
-			if(isset($this->_info['deletablenumber']) === true
-			&& $this->_info['deletablenumber'] === true)
-				return(null);
-			else
-			{
-				$this->_set_error('contextnumbers','empty');
-				$this->_set_result('contextnumbers',false);
-				return(false);
-			}
+			$this->_set_error('contextnumbers','empty');
+			$this->_set_result('contextnumbers',false);
+			return(false);
 		}
 
 		$this->_set_result('contextnumbers',$reslist);
@@ -710,8 +704,8 @@ class xivo_application_service_asterisk_context extends xivo_application_asteris
 
 	function edit_contextnumbers()
 	{
-		if(isset($this->_info['deletablenumber']) === true
-		&& $this->_info['deletablenumber'] === true)
+		if(isset($this->_info['deletable']) === true
+		&& $this->_info['deletable'] === true)
 			$deletable = true;
 		else
 			$deletable = false;
