@@ -120,13 +120,9 @@ class xivo_object_restapi extends xivo_object_abstract
 		if(is_array($query) === true)
 			$url['query'] = $query;
 
-		dwho_var_dump($url);
-
 		if(($uri = $this->_uri->build_uri($url)) === false
 		|| $this->_curl->set_option('url',$uri) === false)
 			return(false);
-
-		dwho_var_dump($uri);
 
 		return($this->_curl->connect());
 	}
