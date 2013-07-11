@@ -25,7 +25,7 @@ $http_response = dwho_http::factory('response');
 if($this->get_var('act') === 'view')
 {
 	$info = $this->get_var('info');
-	unset($info['extenumbers'],$info['outcallmacro']);
+	unset($info['outcallmacro']);
 
 	$data = dwho_json::encode($info);
 }

@@ -93,9 +93,6 @@ $array['trunkiax']['ipbx'] = array('dialplan reload', 'iax2 reload');
 $array['extensions'] = array();
 $array['extensions']['ipbx'] = array('dialplan reload', 'features reload');
 
-$array['extenumbers'] = array();
-$array['extenumbers']['ipbx'] = array('dialplan reload', 'features reload');
-
 $array['musiconhold'] = array();
 $array['musiconhold']['ipbx'] = array('moh reload');
 

@@ -28,7 +28,7 @@ class xivo_object_provdconfig extends xivo_object_provd_abstract
 	protected $_base_url 		= '/provd/cfg_mgr';
 	protected $_internal 		= array('base','autoprov');
 	protected $_confdefault 	= false;
-	protected $_extenumbers		= false;
+	protected $_extensions		= false;
 	protected $_devicefeatures 	= false;
 	protected $_sccpdevice		= false;
 	protected $_linefeatures	= false;
@@ -40,7 +40,7 @@ class xivo_object_provdconfig extends xivo_object_provd_abstract
 	{
 		if(($_SRE = &dwho_gct::get('xivo_service')) === false
 		|| ($this->_service = &$_SRE->get('ipbx')) === false
-		|| ($this->_extenumbers = &$this->_service->get_module('extenumbers')) === false
+		|| ($this->_extensions = &$this->_service->get_module('extensions')) === false
 		|| ($this->_devicefeatures = &$this->_service->get_module('devicefeatures')) === false
 		|| ($this->_sccpdevice = &$this->_service->get_module('sccpdevice')) === false
 		|| ($this->_linefeatures = &$this->_service->get_module('linefeatures')) === false
@@ -446,8 +446,8 @@ class xivo_object_provdconfig extends xivo_object_provd_abstract
 
 	public function get_exten($name)
 	{
-		if($this->_extenumbers === false
-		|| ($rs = $this->_extenumbers->get_where(array('typeval' => $name))) === false)
+		if($this->_extensions === false
+		|| ($rs = $this->_extensions->get_where(array('typeval' => $name))) === false)
 			return(null);
 
 		$pattern_symbols = array('_', '.', '!', 'X', 'Z', 'N');

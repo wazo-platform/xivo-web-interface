@@ -1025,16 +1025,11 @@ class xivo_application_service_asterisk_context extends xivo_application_asteris
 		if(((isset($this->_modules['extensions']) === false
 		    || is_object($this->_modules['extensions']) === false) === true
 		   && ($this->_modules['extensions'] = $this->_service->get_module('extensions')) === false) === true
-		|| ((isset($this->_modules['extenumbers']) === false
-		    || is_object($this->_modules['extenumbers']) === false) === true
-		   && ($this->_modules['extenumbers'] = $this->_service->get_module('extenumbers')) === false) === true
 		|| ((isset($this->_modules['outcall']) === false
 		    || is_object($this->_modules['outcall']) === false) === true
 		   && ($this->_modules['outcall'] = $this->_service->get_module('outcall')) === false) === true
 		|| ($ref['extensions'] = $this->_modules['extensions']->edit_where($where,$value,
 										   null,null,false)) === false
-		|| ($ref['extenumbers'] = $this->_modules['extenumbers']->edit_where($where,$value,
-										     null,null,false)) === false
 		|| ($ref['outcall'] = $this->_modules['outcall']->edit_where($where,$value,
 									     null,null,false)) === false)
 			return(false);

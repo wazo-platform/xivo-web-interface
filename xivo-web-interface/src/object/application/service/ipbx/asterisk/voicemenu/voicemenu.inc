@@ -26,7 +26,6 @@ class xivo_application_service_asterisk_voicemenu extends xivo_application_aster
 	var $_contextmember	= false;
 	var $_dialaction	= false;
 	var $_extensions	= false;
-	var $_extenumbers	= false;
 	var $_voicemail		= null;
 	var $_sound		= array();
 	var $_musiconhold	= array();
@@ -54,7 +53,6 @@ class xivo_application_service_asterisk_voicemenu extends xivo_application_aster
 
 		if(($this->_dialaction = &$this->_service->get_module('dialaction')) === false
 		|| ($this->_extensions = &$this->_service->get_module('extensions')) === false
-		|| ($this->_extenumbers = $this->get_abstract('extenumbers',array('type' => 'voicemenu'))) === false
 		|| ($this->_contextmember = $this->get_abstract('contextmember',array('type' => 'voicemenu'))) === false
 		|| ($this->_schedule_path = &$this->_service->get_module('schedule_path')) === false)
 			return(false);
@@ -77,7 +75,6 @@ class xivo_application_service_asterisk_voicemenu extends xivo_application_aster
 			return($this->_info);
 
 		$this->_get_voicemenumacro();
-		$this->_get_extenumbers($this->_info['voicemenu']['id']);
 		$this->_get_voicemenuflow();
 		$this->_get_voicemenuevent();
 		$this->_get_contextmember($this->_info['voicemenu']['id']);
@@ -381,13 +378,11 @@ class xivo_application_service_asterisk_voicemenu extends xivo_application_aster
 
 		if($this->_errnb === 0 && dwho_has_len($number) === true)
 		{
-			if(($rsvoicemenumacro = $this->chk_macro('voicemenumacro',
+			if(($rsvoicemenumacro = $this->chk_exten('voicemenumacro',
 								 $number,
 								 $this->_mk_voicemenumacro_appdata(0),
 								 $context)) !== false)
 				$this->_set_result('voicemenumacro',$rsvoicemenumacro);
-
-			$this->set_extenumbers($action,$number,$context);
 		}
 
 		// schedule
@@ -428,7 +423,7 @@ class xivo_application_service_asterisk_voicemenu extends xivo_application_aster
 		|| ($rs = $this->get_result('voicemenumacro')) === null
 		|| $rs === false)
 			return($rs);
-		else if(($rsmacro = $this->set_macro($action,
+		else if(($rsmacro = $this->set_exten($action,
 						     'voicemenumacro',
 						     $rs['exten'],
 						     $this->_mk_voicemenumacro_appdata($voicemenuid),
@@ -623,7 +618,6 @@ class xivo_application_service_asterisk_voicemenu extends xivo_application_aster
 
 		if($this->get_errnb() > 0
 		|| ($voicemenuid = $this->add_voicemenu()) === false
-		|| $this->add_extenumbers($voicemenuid) === false
 		|| $this->add_voicemenumacro($voicemenuid) === false
 		|| $this->add_voicemenuflow() === false
 		|| $this->add_voicemenuevent() === false
@@ -712,9 +706,6 @@ class xivo_application_service_asterisk_voicemenu extends xivo_application_aster
 				case 'voicemenumacro':
 					$this->_extensions->delete_exten($val);
 					break;
-				case 'extenumbers':
-					$this->_extenumbers->reverse_add();
-					break;
 				case 'contextmember':
 					$this->_contextmember->reverse_add();
 					break;
@@ -740,22 +731,18 @@ class xivo_application_service_asterisk_voicemenu extends xivo_application_aster
 		}
 		else if($this->_info['voicemenu']['number'] !== '')
 		{
-			if($this->get_result('voicemenumacro') === null
-			|| $this->get_result('extenumbers') === null)
+			if($this->get_result('voicemenumacro') === null)
 			{
 				$this->delete_macro('voicemenumacro');
-				$this->delete_extenumbers();
 			}
-			else if($this->edit_voicemenumacro($this->_info['voicemenu']['id']) === false
-			|| $this->edit_extenumbers() === false)
+			else if($this->edit_voicemenumacro($this->_info['voicemenu']['id']) === false)
 			{
 				$this->_reverse_edit();
 				$this->_status = '';
 				return(false);
 			}
 		}
-		else if($this->add_voicemenumacro($this->_info['voicemenu']['id']) === false
-		|| $this->add_extenumbers($this->_info['voicemenu']['id']) === false)
+		else if($this->add_voicemenumacro($this->_info['voicemenu']['id']) === false)
 		{
 			$this->_reverse_edit();
 			$this->_status = '';
@@ -888,9 +875,6 @@ class xivo_application_service_asterisk_voicemenu extends xivo_application_aster
 					else
 						$this->_extensions->edit_origin($this->_origin['voicemenumacro']);
 					break;
-				case 'extenumbers':
-					$this->_extenumbers->reverse_edit($this->_status);
-					break;
 				case 'contextmember':
 					$this->_contextmember->reverse_edit($this->_status);
 					break;
@@ -909,7 +893,6 @@ class xivo_application_service_asterisk_voicemenu extends xivo_application_aster
 
 		if($this->delete_voicemenu() === false
 		|| $this->delete_macro('voicemenumacro') === false
-		|| $this->delete_extenumbers() === false
 		|| $this->delete_voicemenuflow() === false
 		|| ($delvoicemenuevent = $this->delete_voicemenuevent()) === false
 		|| $delvoicemenuevent === 'error'
@@ -1026,11 +1009,6 @@ class xivo_application_service_asterisk_voicemenu extends xivo_application_aster
 					if(isset($this->_origin['voicemenumacro']) === true
 					&& $this->_origin['voicemenumacro'] !== false)
 						$this->_extensions->add_origin($this->_origin['voicemenumacro']);
-					break;
-				case 'extenumbers':
-					if(isset($this->_origin['extenumbers']) === true
-					&& $this->_origin['extenumbers'] !== false)
-						$this->_extenumbers->add_origin($this->_origin['extenumbers']);
 					break;
 				case 'contextmember':
 					$this->_contextmember->add_origin_list();

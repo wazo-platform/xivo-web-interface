@@ -71,7 +71,7 @@ if(isset($_QR['fm_send']) === true)
 					$exten = '';
 
 				$rs['commented'] = isset($_QR['extenfeatures'][$key]['enable']) === false;
-				$rs['name'] = $key;
+				$rs['typeval'] = $key;
 				$rs['exten'] = $exten;
 
 				if(isset($info['extenfeatures'][$key]) === false)

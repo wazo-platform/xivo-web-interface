@@ -137,19 +137,6 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		return($this->_musiconhold);
 	}
 
-	public function _get_extenumbers($typeval)
-	{
-		$this->_info['extenumbers'] = false;
-		$this->_origin['extenumbers'] = false;
-
-		$typeval = (string) $typeval;
-
-		if(($this->_info['extenumbers'] = $this->_extenumbers->get($typeval)) !== false)
-			$this->_origin['extenumbers'] = $this->_extenumbers->get_origin();
-
-		return($this->_info['extenumbers']);
-	}
-
 	public function _get_rightcall($typeval)
 	{
 		$this->_info['rightcall'] = false;
@@ -200,19 +187,28 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		return($this->_info['callerid']);
 	}
 
-	public function set_extenumbers($action,$number,$context='',$typeval='')
+	public function chk_exten($name,$exten,$arr,$context,$type,$typeval)
 	{
-		if(($r = $this->_extenumbers->set($action,$number,$context,$typeval)) === false)
-			$this->_set_error('extenumbers',$this->_extenumbers->get_error());
+		if ((empty($this->_info)
+			|| (isset($this->_info[$name])
+				&& isset($this->_info[$name]['exten'])
+				&& $this->_info[$name]['exten'] !== $exten))
+		&& $this->exten_is_available_for_context_and_object($context, $type, $exten) === false)
+		{
+			dwho_report::push('error', dwho_i18n::babelfish('exten_already_exist', array($exten.'@'.$context)));
+			$this->_set_error($name,'exten_already_exist');
+			return(false);
+		}
 
-		$this->_set_result('extenumbers',$this->_extenumbers->get_result());
+		$contextnumbers = $this->_service->get_module('contextnumbers');
+		if ($contextnumbers->interval_number_exists($context, $type, $exten) === false)
+		{
+			dwho_report::push('error', dwho_i18n::babelfish('error(number_out_of_context_interval)'));
+			$this->_set_error('number_out_of_context_interval');
+			return(false);
+		}
 
-		return($r);
-	}
-
-	public function chk_macro($name,$exten,$arr,$context)
-	{
-		if(($r = $this->_extensions->chk_exten($exten,$context,'macro',$arr)) !== false)
+		if(($r = $this->_extensions->chk_exten($exten,$context,'macro',$type,$typeval,$arr)) !== false)
 			return($r);
 		else if($this->_extensions->get_filter_errnb() > 0)
 			$this->_set_error($name,$this->_extensions->get_filter_error());
@@ -222,15 +218,15 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		return($r);
 	}
 
-	public function set_macro($action,$name,$exten,$arr,$context)
+	public function set_exten($action,$name,$exten,$arr,$context,$type,$typeval)
 	{
 		if(($action !== 'add' && $action !== 'edit') === true
 		|| dwho_has_len($name) === false)
 			return(false);
 		else if($action === 'edit' && dwho_issa($name,$this->_info) !== false)
-			$r = $this->_extensions->chk_exten($exten,$context,'macro',$arr);
+			$r = $this->_extensions->chk_exten($exten,$context,'macro',$type,$typeval,$arr);
 		else
-			$r = $this->_extensions->new_exten($exten,$context,'macro',$arr);
+			$r = $this->_extensions->new_exten($exten,$context,'macro',$type,$typeval,$arr);
 
 		if($r !== false)
 			return($r);
@@ -282,14 +278,6 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		return($r);
 	}
 
-	public function add_extenumbers($typeval)
-	{
-		if(($rs = $this->_extenumbers->add((string) $typeval)) === null || $rs === false)
-			return($rs);
-
-		return(($this->_return['extenumbers'] = $this->_extenumbers->get_return()));
-	}
-
 	public function add_macro($name)
 	{
 		if(($rs = $this->get_result($name)) === null || $rs === false)
@@ -332,14 +320,6 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		$this->_return['callerid'] = $this->_callerid->get_return();
 
 		return($r);
-	}
-
-	public function edit_extenumbers()
-	{
-		if(($rs = $this->_extenumbers->edit()) === null || $rs === false)
-			return($rs);
-
-		return(($this->_return['extenumbers'] = $this->_extenumbers->get_return()));
 	}
 
 	public function edit_macro($name)
@@ -390,26 +370,6 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		$this->_return['callerid'] = $this->_callerid->get_return();
 
 		return($r);
-	}
-
-	public function save_extenumbers($typeval)
-	{
-		if(($rs = $this->_extenumbers->save($this->_status,$typeval)) === null || $rs === false)
-			return($rs);
-
-		return(($this->_return['extenumbers'] = $this->_extenumbers->get_return()));
-	}
-
-	public function delete_extenumbers()
-	{
-		if(($rs = $this->_extenumbers->delete($this->_status)) === null
-		|| $rs === false)
-			return($rs);
-
-		if($this->_status === 'delete')
-			$this->_return['extenumbers'] = $rs;
-
-		return($rs);
 	}
 
 	public function delete_macro($name)

@@ -117,20 +117,23 @@ switch($act)
 		&& ($secretary['slt'] = dwho_array_intersect_key($callfiltermember['secretary'],$secretary['list'],'typeval')) !== false)
 			$secretary['slt'] = array_keys($secretary['slt']);
 
-		$extenumbers = &$ipbx->get_module('extenumbers');
+		$extensions = &$ipbx->get_module('extensions');
 		$where = array();
 		$where['type'] = 'extenfeatures';
 		$where['typeval'] = 'bsfilter';
-		$bsfilter_extenmbers = $extenumbers->get_where($where);
+		$bsfilter_extenmbers = $extensions->get_where($where);
 
 		$list = $callfiltermember['secretary'];
-		foreach ($list as $secretary_data)
+		if (is_array($list))
 		{
-			if (array_key_exists($secretary_data['typeval'], $secretary['list']))
+			foreach ($list as $secretary_data)
 			{
-				$bs_exten = str_replace('.', $secretary_data['id'], $bsfilter_extenmbers['exten']);
-				$identity = $secretary['list'][$secretary_data['typeval']]['identity'];
-				$secretary['list'][$secretary_data['typeval']]['identity'] = $identity . ' ( '.$bs_exten.' )';
+				if (array_key_exists($secretary_data['typeval'], $secretary['list']))
+				{
+					$bs_exten = str_replace('.', $secretary_data['id'], $bsfilter_extenmbers['exten']);
+					$identity = $secretary['list'][$secretary_data['typeval']]['identity'];
+					$secretary['list'][$secretary_data['typeval']]['identity'] = $identity . ' ( '.$bs_exten.' )';
+				}
 			}
 		}
 

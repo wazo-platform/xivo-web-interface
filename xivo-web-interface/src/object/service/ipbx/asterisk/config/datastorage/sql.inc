@@ -196,10 +196,6 @@ $array['extensions'] = array();
 $array['extensions']['table'] = 'extensions';
 $array['extensions']['primary'] = array('id' => '');
 
-$array['extenumbers'] = array();
-$array['extenumbers']['table'] = 'extenumbers';
-$array['extenumbers']['primary'] = array('id' => '');
-
 $array['features'] = array();
 $array['features']['table'] = 'features';
 $array['features']['primary'] = array('id' => '');

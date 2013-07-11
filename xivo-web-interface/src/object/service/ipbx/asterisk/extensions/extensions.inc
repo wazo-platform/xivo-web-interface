@@ -58,8 +58,11 @@ class xivo_service_asterisk_extensions extends xivo_service_asterisk_abstract
 
 	function _prepare($data)
 	{
+		$data['id'] = (int) $data['id'];
+		$data['typeval'] = (string) $data['typeval'];
 		$data['commented'] = (bool) $data['commented'];
-		$data['exten'] = $this->_sre->clean_extension($data['exten']);
+		$data['extenbrut'] = $data['exten'];
+		$data['exten'] = $this->_sre->display_extension($data['exten']);
 
 		return($data);
 	}
@@ -78,6 +81,9 @@ class xivo_service_asterisk_extensions extends xivo_service_asterisk_abstract
 	{
 		if(is_array($arr) === false)
 			return(false);
+		else if(dwho_has_len($arr,'exten') === false
+		|| ($exten = $this->_sre->chk_extension($arr['exten'])) === false)
+			return(false);
 
 		$r = array();
 
@@ -91,6 +97,8 @@ class xivo_service_asterisk_extensions extends xivo_service_asterisk_abstract
 		$r['context'] = $arr['context'];
 		$r['exten'] = $this->_sre->clean_extension($arr['exten']);
 		$r['app'] = $arr['app'];
+		$r['extenhash'] = sha1($exten);
+		$r['typeval'] = (string) $arr['typeval'];
 
 		if(isset($arr['priority']) === false)
 			$r['priority'] = 1;
@@ -100,11 +108,11 @@ class xivo_service_asterisk_extensions extends xivo_service_asterisk_abstract
 		if(isset($arr['appdata']) === true)
 			$r['appdata'] = (string) $arr['appdata'];
 
-		if(isset($arr['name']) === true)
-			$r['name'] = (string) $arr['name'];
-
 		if(isset($arr['commented']) === false)
 			$arr['commented'] = false;
+
+		if(isset($arr['type']) === true)
+			$r['type'] = (string) $arr['type'];
 
 		$r['commented'] = intval((bool) $arr['commented']);
 
@@ -118,11 +126,22 @@ class xivo_service_asterisk_extensions extends xivo_service_asterisk_abstract
 
 		$r = array();
 
+		if(isset($arr['extenhash']) === true)
+			unset($arr['extenhash']);
+
+		if(dwho_has_len($arr,'exten') === true)
+		{
+			if(($exten = $this->_sre->chk_extension($arr['exten'])) === false)
+				return(false);
+
+			$r['extenhash'] = sha1($exten);
+			$r['exten'] = $this->_sre->clean_extension($arr['exten']);
+		}
+
+		$r['typeval'] = (string) $arr['typeval'];
+
 		if(isset($arr['context']) === true)
 			$r['context'] = (string) $arr['context'];
-
-		if(isset($arr['exten']) === true)
-			$r['exten'] = $this->_sre->clean_extension($arr['exten']);
 
 		if(isset($arr['priority']) === true)
 			$r['priority'] = dwho_uint($arr['priority'],1);
@@ -133,11 +152,14 @@ class xivo_service_asterisk_extensions extends xivo_service_asterisk_abstract
 		if(isset($arr['appdata']) === true)
 			$r['appdata'] = (string) $arr['appdata'];
 
-		if(isset($arr['name']) === true)
-			$r['name'] = (string) $arr['name'];
-
 		if(isset($arr['commented']) === true)
 			$r['commented'] = intval((bool) $arr['commented']);
+
+		if(isset($arr['type']) === true)
+			$r['type'] = (string) $arr['type'];
+
+		if(isset($arr['typeval']) === true)
+			$r['typeval'] = (string) $arr['typeval'];
 
 		$r['priority'] = 1;
 
@@ -154,12 +176,12 @@ class xivo_service_asterisk_extensions extends xivo_service_asterisk_abstract
 		return(parent::edit_where($where,$arr,$disable,$id,$chkunique));
 	}
 
-	function new_exten($exten,$context,$app,$arr=null)
+	function new_exten($exten,$context,$app,$type,$typeval,$arr=null)
 	{
-		return($this->set_exten($app,0,$arr,$exten,$context));
+		return($this->set_exten($app,$type,$typeval,0,$arr,$exten,$context));
 	}
 
-	function set_exten($app,$id=0,$arr=null,$exten='',$context='')
+	function set_exten($app,$type,$typeval,$id=0,$arr=null,$exten='',$context='')
 	{
 		if(($id = dwho_uint($id)) === 0)
 		{
@@ -179,7 +201,7 @@ class xivo_service_asterisk_extensions extends xivo_service_asterisk_abstract
 			$context = $this->_exten[$id][0]['context'];
 		}
 
-		if(($r = $this->chk_exten($exten,$context,$app,$arr)) === false)
+		if(($r = $this->chk_exten($exten,$context,$app,$type,$typeval,$arr)) === false)
 			return(false);
 		else if(isset($r['priority']) === false)
 			$r['priority'] = count($this->_exten[$id]) + 1;
@@ -189,12 +211,12 @@ class xivo_service_asterisk_extensions extends xivo_service_asterisk_abstract
 		return($id);
 	}
 
-	function chk_exten($exten,$context,$app,$arr=null)
+	function chk_exten($exten,$context,$app,$type,$typeval='',$arr=null)
 	{
-		return($this->_chk_element_value($exten,$context,$app,$arr));
+		return($this->_chk_element_value($exten,$context,$app,$type,$typeval,$arr));
 	}
 
-	function _chk_element_value($exten,$context,$app,$arr=null)
+	function _chk_element_value($exten,$context,$app,$type,$typeval='',$arr=null)
 	{
 		if(is_array($arr) === false)
 			$arr = array();
@@ -206,9 +228,6 @@ class xivo_service_asterisk_extensions extends xivo_service_asterisk_abstract
 		else
 			$appdata = null;
 
-		if(isset($arr['name']) === true)
-			$r['name'] = $arr['name'];
-
 		if(($rs = $this->chk_app_appdata($app,$appdata)) === false)
 			return(false);
 
@@ -216,6 +235,8 @@ class xivo_service_asterisk_extensions extends xivo_service_asterisk_abstract
 		$r['appdata'] = $rs['appdata'];
 		$r['exten'] = $this->_sre->clean_extension($exten);
 		$r['context'] = $context;
+		$r['type'] = (string) $type;
+		$r['typeval'] = (string) $typeval;
 
 		if(isset($arr['commented']) === true)
 			$r['commented'] = $arr['commented'];
@@ -256,9 +277,6 @@ class xivo_service_asterisk_extensions extends xivo_service_asterisk_abstract
 
 		if(isset($arr['appdata']) === true)
 			$where['appdata'] = $arr['appdata'];
-
-		if(isset($arr['name']) === true)
-			$where['name'] = $arr['name'];
 
 		return($this->get_where($where));
 	}
@@ -377,8 +395,8 @@ class xivo_service_asterisk_extensions extends xivo_service_asterisk_abstract
 		if(isset($arr['appdata']) === true)
 			$where['appdata'] = $arr['appdata'];
 
-		if(isset($arr['name']) === true)
-			$where['name'] = $arr['name'];
+		if(isset($arr['typeval']) === true)
+			$where['typeval'] = $arr['typeval'];
 
 		return($this->get_all_where($where,null,true,$order));
 	}
@@ -531,22 +549,22 @@ class xivo_service_asterisk_extensions extends xivo_service_asterisk_abstract
 		{
 			$ref = &$list[$i];
 
-			if(isset($r[$ref['name']]) === false)
+			if(isset($r[$ref['typeval']]) === false)
 			{
-				$r[$ref['name']] = array();
-				$r[$ref['name']]['name'] = $ref['name'];
+				$r[$ref['typeval']] = array();
+				$r[$ref['typeval']]['name'] = $ref['typeval'];
 
 				if($display === true)
-					$r[$ref['name']]['exten'] = $this->_sre->display_extension($ref['exten']);
+					$r[$ref['typeval']]['exten'] = $this->_sre->display_extension($ref['exten']);
 				else
-					$r[$ref['name']]['exten'] = $ref['exten'];
+					$r[$ref['typeval']]['exten'] = $ref['exten'];
 
-				$r[$ref['name']]['context'] = $ref['context'];
-				$r[$ref['name']]['commented'] = $ref['commented'];
-				$r[$ref['name']]['line'] = array();
+				$r[$ref['typeval']]['context'] = $ref['context'];
+				$r[$ref['typeval']]['commented'] = $ref['commented'];
+				$r[$ref['typeval']]['line'] = array();
 			}
 
-			$r[$ref['name']]['line'][$ref['priority']] = $ref;
+			$r[$ref['typeval']]['line'][$ref['priority']] = $ref;
 		}
 
 		if(empty($r) === true)
@@ -558,12 +576,12 @@ class xivo_service_asterisk_extensions extends xivo_service_asterisk_abstract
 	function get_all_by_name_context($arr,$disable=null,$display=false)
 	{
 		if(is_array($arr) === false
-		|| isset($arr['name'],$arr['context']) === false
+		|| isset($arr['typeval'],$arr['context']) === false
 		|| ($list = $this->get_all_where($arr,$disable)) === false)
 			return(false);
 
 		$r = array();
-		$r['name'] = $list[0]['name'];
+		$r['typeval'] = $list[0]['typeval'];
 
 		if((bool) $display === false)
 			$r['exten'] = $list[0]['exten'];
@@ -578,6 +596,32 @@ class xivo_service_asterisk_extensions extends xivo_service_asterisk_abstract
 
 		for($i = 0;$i < $nb;$i++)
 			$r['line'][$list[$i]['priority']] = $list[$i];
+
+		return($r);
+	}
+
+	function search($exten,$context='',$type='',$typeval='')
+	{
+		if(($extenchk = $this->_sre->chk_extension($exten)) === false)
+			return(false);
+
+		$extenhash = sha1($extenchk);
+
+		$type = (string) $type;
+		$typeval = (string) $typeval;
+
+		if(($list = $this->_dso->search($exten,$extenhash,$context,$type,$typeval)) === false)
+			return(false);
+
+		$nb = count($list);
+
+		$r = array();
+
+		for($i = 0;$i < $nb;$i++)
+			$r[] = $this->_prepare($list[$i]);
+
+		if(isset($r[0]) === false)
+			$r = false;
 
 		return($r);
 	}

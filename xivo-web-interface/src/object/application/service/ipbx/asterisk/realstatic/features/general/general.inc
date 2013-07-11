@@ -102,11 +102,6 @@ class xivo_application_service_asterisk_realstatic_features_general extends xivo
 
 		if(is_array($arr) === false || isset($arr['var_name']) === false)
 			return(false);
-		else if($this->_chk_exists_cfg('exten',$arr['var_name']) === true)
-		{
-			$number = (string) $this->get_result_var('var_val');
-			$context = '';
-		}
 
 		return(($this->get_errnb() < 1));
 	}
