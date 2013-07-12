@@ -201,7 +201,6 @@ $array['service/ipbx/call_management/pickup'] = 'service/ipbx/index.php/call_man
 $array['service/ipbx/call_management/schedule'] = 'service/ipbx/index.php/call_management/schedule/';
 $array['service/ipbx/call_management/voicemenu'] = 'service/ipbx/index.php/call_management/voicemenu/';
 $array['service/ipbx/call_management/cel'] = 'service/ipbx/index.php/call_management/cel/';
-$array['service/ipbx/call_management/recording'] = 'service/ipbx/index.php/call_management/recording/';
 
 $array['service/ipbx/json/restricted/call_management/incall'] = 'service/ipbx/json.php/restricted/call_management/incall/';
 $array['service/ipbx/json/restricted/call_management/outcall'] = 'service/ipbx/json.php/restricted/call_management/outcall/';
@@ -369,5 +368,7 @@ $array['statistics/call_center/json/restricted/data/stats1'] = 'statistics/call_
 $array['statistics/call_center/json/restricted/data/stats2'] = 'statistics/call_center/json.php/restricted/data/stats2/';
 #$array['statistics/call_center/json/restricted/data/stats3'] = 'statistics/call_center/json.php/restricted/data/stats3/';
 $array['statistics/call_center/json/restricted/data/stats4'] = 'statistics/call_center/json.php/restricted/data/stats4/';
+
+dwho_include_extra_files_from_dir(XIVO_EXTRA.'/url.d', $array);
 
 ?>

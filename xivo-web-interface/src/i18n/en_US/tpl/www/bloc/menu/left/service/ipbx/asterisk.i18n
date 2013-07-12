@@ -73,9 +73,6 @@ Call pickups
 ; mn_left_callmanagement-schedule
 Schedules
 
-; mn_left_callmanagement-recording
-Recordings
-
 ; mn_left_callmanagement-voicemenu
 Voice menus
 
@@ -183,3 +180,6 @@ Restart CTI server
 
 ; ctisettings_restart_confirm
 Are you sure you want to restart CTI server ?
+
+; mn_left_ti_extra
+Extra

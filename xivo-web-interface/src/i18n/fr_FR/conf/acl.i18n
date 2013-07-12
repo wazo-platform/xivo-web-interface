@@ -82,6 +82,9 @@ Graphiques munin
 ; acl(service-ipbx)
 IPBX
 
+; acl(service-ipbx-extra)
+Extra
+
 ; acl(service-ipbx-call_management)
 Gestion des appels
 
@@ -105,9 +108,6 @@ Droits d'appels
 
 ; acl(service-ipbx-call_management-schedule)
 Horaires
-
-; acl(service-ipbx-call_management-recording)
-Enregistrement
 
 ; acl(service-ipbx-call_management-voicemenu)
 Menus vocaux

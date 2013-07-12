@@ -24,5 +24,6 @@ define('DWHO_PATH_ROOT','/usr/share/xivo-web-interface/lib');
 define('XIVO_PATH_CONF','/etc/pf-xivo/xivo-web-interface');
 define('XIVO_CONF','/etc/pf-xivo');
 define('XIVO_LIB','/var/lib/pf-xivo');
+define('XIVO_EXTRA','/usr/share/xivo-web-interface/extra');
 
 ?>

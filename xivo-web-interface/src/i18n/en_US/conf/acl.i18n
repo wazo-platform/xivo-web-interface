@@ -82,6 +82,9 @@ Munin graphs
 ; acl(service-ipbx)
 IPBX
 
+; acl(service-ipbx-extra)
+Extra
+
 ; acl(service-ipbx-call_management)
 Call management
 
@@ -105,9 +108,6 @@ Call permissions
 
 ; acl(service-ipbx-call_management-schedule)
 Schedules
-
-; acl(service-ipbx-call_management-recording)
-Recording
 
 ; acl(service-ipbx-call_management-voicemenu)
 Voice menus
