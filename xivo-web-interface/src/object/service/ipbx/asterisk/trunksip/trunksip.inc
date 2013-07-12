@@ -57,9 +57,6 @@ class xivo_service_asterisk_trunksip extends xivo_service_asterisk_abstract
 		if(is_array($arr) === false)
 			return(false);
 
-		if(isset($arr['name']) === true)
-			$arr['name'] = strtolower($arr['name']);
-
 		$arr['mailbox'] = null;
 		$arr['subscribemwi'] = 0;
 		$arr['buggymwi'] = null;
@@ -88,9 +85,6 @@ class xivo_service_asterisk_trunksip extends xivo_service_asterisk_abstract
 	{
 		if(is_array($arr) === false)
 			return(false);
-
-		if(isset($arr['name']) === true)
-			$arr['name'] = strtolower($arr['name']);
 
 		unset($arr['mailbox'],
 		      $arr['buggymwi'],
