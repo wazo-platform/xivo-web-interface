@@ -82,14 +82,14 @@ NAT:
 ; fm_protocol_nat-opt(no)
 No
 
-; fm_protocol_nat-opt(yes)
-Yes
-
 ; fm_protocol_nat-opt(force_rport)
 Force rport
 
 ; fm_protocol_nat-opt(comedia)
 Comedia
+
+; fm_protocol_nat-opt(force_rport,comedia)
+Yes (force rport + comedia)
 
 ; fm_protocol_parkinglot
 Parking:
