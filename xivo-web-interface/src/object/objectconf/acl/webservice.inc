@@ -100,8 +100,6 @@ $array['tree']['service']['callcenter']['settings']['agents'] = true;
 $array['tree']['service']['callcenter']['settings']['queues'] = true;
 $array['tree']['service']['callcenter']['settings']['queueskills'] = true;
 $array['tree']['service']['callcenter']['settings']['queueskillrules'] = true;
-#$array['tree']['service']['callcenter']['registrationcampaign'] = array();
-#$array['tree']['service']['callcenter']['registrationcampaign']['campaigns'] = true;
 
 $array['tree']['cti'] = array();
 $array['tree']['cti']['profiles'] = true;

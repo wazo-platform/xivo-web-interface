@@ -33,6 +33,7 @@ $_ACTION_MISC = dwho_gat::load_get('action_misc',XIVO_PATH_OBJECTCONF);
 
 $_I18N = dwho_gct::get('dwho_i18n');
 $_I18N->load_file('xivo');
+dwho_load_extra_i18n($_I18N);
 
 $_QRY = dwho_gct::get('dwho_query');
 

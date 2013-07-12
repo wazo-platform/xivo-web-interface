@@ -117,9 +117,6 @@ Operator (experimental)
 ; xlet-(mylocaldir)
 MyDirectory
 
-; xlet-(callcampaign)
-Call campaigns (experimental)
-
 ; xlet-(tabber)
 Tabber
 

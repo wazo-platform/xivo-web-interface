@@ -188,13 +188,6 @@ $dhtml = &$this->get_module('dhtml');
 						'act=list'),
 				'</dd>';
 		endif;
-		if(xivo_user::chk_acl('call_management','recording') === true):
-			echo	'<dd id="mn-call-management--recording">',
- 				$url->href_html($this->bbf('mn_left_callmanagement-recording'),
-						'service/ipbx/call_management/recording',
-						'act=list'),
-				'</dd>';
-		endif;
 /*
 		if(xivo_user::chk_acl('call_management','voicemenu') === true):
 			echo	'<dd id="mn-call-management--voicemenu">',
@@ -355,6 +348,19 @@ $dhtml = &$this->get_module('dhtml');
 		endif;
 
 		echo	'</dl>';
+	endif;
+
+	$files = scandir(XIVO_EXTRA.'/menu.d');
+
+	if(count($files) > 2 && xivo_user::chk_acl('extra') === true):
+		echo '<dl><dt>',$this->bbf('mn_left_ti_extra'),'</dt>';
+		foreach ($files as $file)
+		{
+			if (substr($file, -3) !== 'inc')
+				continue;
+			require_once(XIVO_EXTRA.'/menu.d'.'/'.$file);
+		}
+		echo '</dl>';
 	endif;
 
 	if(xivo_user::chk_acl('control_system') === true):

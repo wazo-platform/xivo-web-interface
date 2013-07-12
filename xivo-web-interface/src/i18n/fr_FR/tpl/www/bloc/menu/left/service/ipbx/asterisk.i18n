@@ -67,9 +67,6 @@ Interceptions d'appels
 ; mn_left_callmanagement-schedule
 Horaires
 
-; mn_left_callmanagement-recording
-Enregistrements
-
 ; mn_left_callmanagement-voicemenu
 Menus vocaux
 
@@ -168,3 +165,6 @@ Redémarrer le serveur CTI
 
 ; ctisettings_restart_confirm
 Êtes-vous sûr de vouloir redémarrer le serveur CTI ?
+
+; mn_left_ti_extra
+Extra
