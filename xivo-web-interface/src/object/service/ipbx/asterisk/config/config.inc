@@ -82,18 +82,6 @@ $array['module']['callfilter']['datastorage'] = true;
 $array['module']['callfiltermember'] = array();
 $array['module']['callfiltermember']['datastorage'] = true;
 
-$array['module']['campaign_general'] = array();
-$array['module']['campaign_general']['datastorage'] = true;
-
-$array['module']['campaign_tag'] = array();
-$array['module']['campaign_tag']['datastorage'] = true;
-
-$array['module']['campaign_campaign'] = array();
-$array['module']['campaign_campaign']['datastorage'] = true;
-
-$array['module']['campaign_campaign_filter'] = array();
-$array['module']['campaign_campaign_filter']['datastorage'] = true;
-
 $array['module']['cel'] = array();
 $array['module']['cel']['datastorage'] = true;
 

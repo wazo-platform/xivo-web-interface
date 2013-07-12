@@ -7,12 +7,6 @@ Call Center
 ; acl(service-callcenter-general)
 General
 
-; acl(service-callcenter-registrationcampaign)
-Record campaigns
-
-; acl(service-callcenter-registrationcampaign-campaigns)
-Campaigns
-
 ; acl(service-callcenter-settings)
 Configuration
 
