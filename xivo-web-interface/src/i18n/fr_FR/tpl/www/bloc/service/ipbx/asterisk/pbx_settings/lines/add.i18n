@@ -64,14 +64,14 @@ NAT :
 ; fm_protocol_nat-opt(no)
 Non
 
-; fm_protocol_nat-opt(yes)
-Oui
-
 ; fm_protocol_nat-opt(force_rport)
 Force rport
 
 ; fm_protocol_nat-opt(comedia)
 Comedia
+
+; fm_protocol_nat-opt(force_rport,comedia)
+Oui (force rport + comedia)
 
 ; fm_protocol_subscribemwi
 Envoyer message-summary seulement sur souscription explicite :

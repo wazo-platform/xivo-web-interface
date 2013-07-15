@@ -333,7 +333,7 @@ $array['element']['context']['default'] = '';
 $array['element']['context']['null'] = true;
 
 $array['element']['nat'] = array();
-$array['element']['nat']['value'] = array('no','yes','force_rport','comedia');
+$array['element']['nat']['value'] = array('no','force_rport','comedia','force_rport,comedia');
 $array['element']['nat']['default'] = 'no';
 
 $array['element']['dtmfmode'] = array();
@@ -832,7 +832,7 @@ $array['filter']['jblog'] = array('bool' => true);
 $array['filter']['context'] = array('set' => false,'chk' => 2,
 				    'callback' => 'xivo_service_asterisk::chk_context',
 				    'callbackarg' => array(array(XIVO_SRE_IPBX_AST_CONTEXT_AUTHENTICATION)));
-$array['filter']['nat'] = array('key' => array('no','yes','force_rport','comedia'));
+$array['filter']['nat'] = array('key' => array('no','force_rport','comedia','force_rport,comedia'));
 $array['filter']['dtmfmode'] = array('key' => array('rfc2833','inband','info','shortinfo','auto'));
 $array['filter']['qualify'] = array('key' => array('no','yes',500,1000,1500,2000,2500,3000,3500,4000));
 $array['filter']['useclientcode'] = array('bool' => true);
