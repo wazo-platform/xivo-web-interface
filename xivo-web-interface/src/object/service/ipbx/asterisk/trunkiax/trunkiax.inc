@@ -72,9 +72,6 @@ class xivo_service_asterisk_trunkiax extends xivo_service_asterisk_abstract
 		$arr['protocol'] = XIVO_SRE_IPBX_AST_PROTO_IAX;
 		$arr['category'] = 'trunk';
 
-		if(isset($arr['name']) === true)
-			$arr['name'] = strtolower($arr['name']);
-
 		return(parent::add($arr,$id));
 	}
 
@@ -82,9 +79,6 @@ class xivo_service_asterisk_trunkiax extends xivo_service_asterisk_abstract
 	{
 		if(is_array($arr) === false)
 			return(false);
-
-		if(isset($arr['name']) === true)
-			$arr['name'] = strtolower($arr['name']);
 
 		unset($arr['mailbox'],
 		      $arr['fullname'],

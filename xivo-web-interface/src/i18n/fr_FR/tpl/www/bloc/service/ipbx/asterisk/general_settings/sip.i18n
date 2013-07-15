@@ -592,14 +592,14 @@ Config asterisk: nat
 ; fm_nat-opt(no)
 Non
 
-; fm_nat-opt(yes)
-Oui
-
 ; fm_nat-opt(force_rport)
 Force rport
 
 ; fm_nat-opt(comedia)
 Comedia
+
+; fm_protocol_nat-opt(force_rport,comedia)
+Oui (force rport + comedia)
 
 ; fm_dtmfmode
 DTMF :

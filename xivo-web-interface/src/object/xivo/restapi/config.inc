@@ -1,8 +1,7 @@
 <?php
-
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2010  Avencall
+# Copyright (C) 2013  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,12 +17,13 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-define('DWHO_PATH_I18N','/usr/share/xivo-web-interface/i18n');
-define('DWHO_PATH_ROOT','/usr/share/xivo-web-interface/lib');
+$array = array();
 
-define('XIVO_PATH_CONF','/etc/pf-xivo/xivo-web-interface');
-define('XIVO_CONF','/etc/pf-xivo');
-define('XIVO_LIB','/var/lib/pf-xivo');
-define('XIVO_EXTRA','/usr/share/xivo-web-interface/extra');
+$array['restapi'] = array();
+$array['restapi']['host'] = '127.0.0.1';
+$array['restapi']['port'] = 50050;
+$array['restapi']['protocol'] = '1.1';
+$array['restapi']['connect_timeout'] = 180;
+$array['restapi']['timeout'] = 90;
 
 ?>

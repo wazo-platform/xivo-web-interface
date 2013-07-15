@@ -730,14 +730,14 @@ Asterisk config: nat
 ; fm_nat-opt(no)
 No
 
-; fm_nat-opt(yes)
-Yes
-
 ; fm_nat-opt(force_rport)
 Force rport
 
 ; fm_nat-opt(comedia)
 Comedia
+
+; fm_nat-opt(force_rport,comedia)
+Yes (force rport + comedia)
 
 ; fm_dtmfmode
 DTMF:

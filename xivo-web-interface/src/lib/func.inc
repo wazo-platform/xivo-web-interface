@@ -18,6 +18,32 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+
+function dwho_load_extra_i18n($_I18N)
+{
+	$i18n_directory = XIVO_EXTRA.'/i18n.d'.'/'.DWHO_I18N_BABELFISH_LOCALE;
+	$files = scandir($i18n_directory);
+	foreach ($files as $file)
+	{
+		if (substr($file, -4) !== 'i18n')
+			continue;
+		$_I18N->load_file('extra/'.$file);
+	}
+}
+
+function dwho_include_extra_files_from_dir($directory, &$extra_array=null)
+{
+	$files = scandir($directory);
+	foreach ($files as $file)
+	{
+		if (substr($file, -3) !== 'inc')
+			continue;
+		require_once($directory.'/'.$file);
+		if ($extra_array !== null)
+			$extra_array = array_merge_recursive($array, $extra_array);
+	}
+}
+
 function dwho_array_set_value_to_key($arr, $key_of_expected_value, $only_value=false)
 {
 	$r = array();

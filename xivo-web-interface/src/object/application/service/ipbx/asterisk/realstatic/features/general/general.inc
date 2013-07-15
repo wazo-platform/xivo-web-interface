@@ -22,9 +22,9 @@ dwho_file::required(array(XIVO_PATH_OBJECT,'application','service','ipbx','aster
 
 class xivo_application_service_asterisk_realstatic_features_general extends xivo_application_service_asterisk_realstatic_abstract
 {
-	var $_name		= 'generalfeatures';
+	var $_name			= 'generalfeatures';
 	var $_modulename	= 'features';
-	var $_sound		= array();
+	var $_sound			= array();
 	var $_category		= 'general';
 	var $_cat_metric	= 0;
 	var $_filename		= 'features.conf';

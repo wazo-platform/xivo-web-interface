@@ -47,10 +47,6 @@ $array['callcenter/web_services/restricted/settings/queueskillrules'] = array(
 	'path'		=> 'callcenter/web_services/settings/queueskillrules',
 	'define'	=> array('XIVO_LOC_WEBSERVICES_MODE'	=> 'restricted'));
 
-$array['callcenter/web_services/restricted/registrationcampaign/campaigns'] = array(
-	'path'		=> 'callcenter/web_services/registrationcampaign/campaigns',
-	'define'	=> array('XIVO_LOC_WEBSERVICES_MODE'	=> 'restricted'));
-
 $array['callcenter/web_services/private/settings/agents'] = array(
 	'path'		=> 'callcenter/web_services/settings/agents',
 	'define'	=> array('XIVO_LOC_WEBSERVICES_MODE'	=> 'private'));
@@ -65,10 +61,6 @@ $array['callcenter/web_services/private/settings/queueskills'] = array(
 	'define'	=> array('XIVO_LOC_WEBSERVICES_MODE'	=> 'private'));
 $array['callcenter/web_services/private/settings/queueskillrules'] = array(
 	'path'		=> 'callcenter/web_services/settings/queueskillrules',
-	'define'	=> array('XIVO_LOC_WEBSERVICES_MODE'	=> 'private'));
-
-$array['callcenter/web_services/private/registrationcampaign/campaigns'] = array(
-	'path'		=> 'callcenter/web_services/registrationcampaign/campaigns',
 	'define'	=> array('XIVO_LOC_WEBSERVICES_MODE'	=> 'private'));
 
 ###################################################################

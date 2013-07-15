@@ -22,7 +22,7 @@ dwho_file::required(array(XIVO_PATH_OBJECT,'application','service','ipbx','aster
 
 class xivo_application_service_asterisk_realstatic_features_featuremap extends xivo_application_service_asterisk_realstatic_abstract
 {
-	var $_name		= 'featuremap';
+	var $_name			= 'featuremap';
 	var $_modulename	= 'features';
 	var $_category		= 'featuremap';
 	var $_cat_metric	= 1;

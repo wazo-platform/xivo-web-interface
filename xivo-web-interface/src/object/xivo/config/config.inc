@@ -76,6 +76,9 @@ $array['module']['provdplugin']['datastorage'] = false;
 $array['module']['provisioning'] = array();
 $array['module']['provisioning']['datastorage'] = true;
 
+$array['module']['restapi'] = array();
+$array['module']['restapi']['datastorage'] = false;
+
 $array['module']['request_handlers'] = array();
 $array['module']['request_handlers']['datastorage'] = false;
 
