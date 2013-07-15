@@ -319,14 +319,11 @@ class xivo_application_service_asterisk_rightcall extends xivo_application_aster
 				continue;
 			}
 
-			$extenhash = sha1($exten);
 			$info['exten'] = $list[$i];
 
-			if(($rs = $this->_rightcallexten->chk_values($info)) === false
-			|| isset($tmp[$extenhash]) === true)
+			if(($rs = $this->_rightcallexten->chk_values($info)) === false)
 				continue;
 
-			$tmp[$extenhash] = 1;
 			$reslist[] = $rs;
 		}
 
