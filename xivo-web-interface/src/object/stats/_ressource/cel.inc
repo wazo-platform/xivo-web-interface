@@ -603,6 +603,8 @@ class stats_ressource_cel
 									$ref['from'] = $call['cid_name'].' ('.$call['cid_num'].')';
 								if (isset($ref['context']) && $ref['context'] == 'default')
 									$ref['context'] = $call['context'];
+								if (!isset($ref['userfield']) || !dwho_has_len($ref['userfield']))
+									$ref['userfield'] = $call['userfield'];
 								break;
 							case 2:
 								if (!dwho_has_len($ref['to']))
