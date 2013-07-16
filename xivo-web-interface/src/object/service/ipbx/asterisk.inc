@@ -927,11 +927,11 @@ class xivo_service_asterisk extends xivo_service_abstract
 		return($context);
 	}
 
-	public function get_extens_for_context_and_object($context_id, $object)
+	public function get_extens_for_context_and_object($context, $type)
 	{
-		$where = array('context' => $context_id);
+		$where = array('context' => $context);
 
-		switch ($object)
+		switch ($type)
 		{
 			case 'user':
 				$mod = &$this->get_module('linefeatures');
@@ -970,10 +970,14 @@ class xivo_service_asterisk extends xivo_service_abstract
 		return($res);
 	}
 
-	public function exten_is_available_for_context_and_object($context_id, $object, $search_exten)
+	public function exten_is_available_for_context_type($exten, $context, $type)
 	{
-		if (($extens = $this->get_extens_for_context_and_object($context_id, $object)) === false
-		|| array_search((int) $search_exten, $extens) === false)
+		$mod = &$this->get_module('extensions');
+		$where = array('context' => $context,
+					   'exten' => $exten,
+					   'type' => $type);
+
+		if ($mod->get_nb($where) === 0)
 			return(true);
 		return(false);
 	}

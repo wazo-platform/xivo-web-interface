@@ -193,7 +193,7 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 			|| (isset($this->_info[$name])
 				&& isset($this->_info[$name]['exten'])
 				&& $this->_info[$name]['exten'] !== $exten))
-		&& $this->exten_is_available_for_context_and_object($context, $type, $exten) === false)
+		&& $this->_service->exten_is_available_for_context_type($exten, $context, $type) === false)
 		{
 			dwho_report::push('error', dwho_i18n::babelfish('exten_already_exist', array($exten.'@'.$context)));
 			$this->_set_error($name,'exten_already_exist');
@@ -601,11 +601,6 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 	public function get_extens_for_context_and_object($context_id, $object)
 	{
 		return($this->_service->get_extens_for_context_and_object($context_id, $object));
-	}
-
-	public function exten_is_available_for_context_and_object($context_id, $object, $search_exten)
-	{
-		return($this->_service->exten_is_available_for_context_and_object($context_id, $object, $search_exten));
 	}
 }
 
