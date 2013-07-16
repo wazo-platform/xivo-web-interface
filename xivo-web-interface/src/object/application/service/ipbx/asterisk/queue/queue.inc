@@ -92,8 +92,8 @@ class xivo_application_service_asterisk_queue extends xivo_application_asterisk_
 		if($this->_components === false)
 			return($this->_info);
 
-		if(dwho_ak('queuemacro',$nocomponents,true) === false)
-			$this->_get_queuemacro();
+		if(dwho_ak('exten',$nocomponents,true) === false)
+			$this->_get_exten();
 
 		if(dwho_ak('user',$nocomponents,true) === false)
 			$this->_get_user();
@@ -134,17 +134,16 @@ class xivo_application_service_asterisk_queue extends xivo_application_asterisk_
 		return($this->_queue->get_nb($arr,$disable));
 	}
 
-	function _get_queuemacro()
+	function _get_exten()
 	{
-		$this->_info['queuemacro'] = false;
-		$this->_origin['queuemacro'] = false;
+		$this->_info['exten'] = false;
+		$this->_origin['exten'] = false;
 
-		if(($this->_info['queuemacro'] = $this->_extensions->get_exten($this->_info['queuefeatures']['number'],
-									       $this->_info['queuefeatures']['context'],
-									       'macro')) !== false)
-			$this->_origin['queuemacro'] = $this->_extensions->get_origin();
+		if(($this->_info['exten'] = $this->_extensions->get_exten($this->_info['queuefeatures']['number'],
+										$this->_info['queuefeatures']['context'])) !== false)
+			$this->_origin['exten'] = $this->_extensions->get_origin();
 
-		return($this->_info['queuemacro']);
+		return($this->_info['exten']);
 	}
 
 	function _get_user()
@@ -277,16 +276,6 @@ class xivo_application_service_asterisk_queue extends xivo_application_asterisk_
 		return($r);
 	}
 
-	function _mk_queuemacro_appdata($queuefeaturesid,$timeout='')
-	{
-		$arr = array();
-		$arr['appdata'][0] = XIVO_SRE_IPBX_AST_QUEUE_MACRO;
-		$arr['appdata'][1] = dwho_ulongint($queuefeaturesid);
-		$arr['appdata'][2] = dwho_has_len($timeout) === true ? dwho_ufloat($timeout) : '';
-
-		return($arr);
-	}
-
 	function set_add($arr)
 	{
 		return($this->_set('add',$arr));
@@ -328,13 +317,12 @@ class xivo_application_service_asterisk_queue extends xivo_application_asterisk_
 
 		if($this->_errnb === 0 && $number !== '')
 		{
-			if(($rsqueuemacro = $this->chk_exten('queuemacro',
+			if(($rsexten = $this->chk_exten('exten',
 												$number,
-												$this->_mk_queuemacro_appdata(0),
 												$context,
 												'queue',
 												0)) !== false)
-				$this->_set_result('queuemacro',$rsqueuemacro);
+				$this->_set_result('exten',$rsexten);
 		}
 
 		if(dwho_issa('user',$arr) === true)
@@ -488,24 +476,23 @@ class xivo_application_service_asterisk_queue extends xivo_application_asterisk_
 		return($arr);
 	}
 
-	function _set_queuemacro($action,$queuefeaturesid)
+	function _set_exten($action,$queuefeaturesid)
 	{
 		$rs = false;
 
 		if(($queuefeaturesid = dwho_ulongint($queuefeaturesid)) === 0
-		|| ($rs = $this->get_result('queuemacro')) === null
+		|| ($rs = $this->get_result('exten')) === null
 		|| $rs === false)
 			return($rs);
-		else if(($rsmacro = $this->set_exten($action,
-											'queuemacro',
+		else if(($rsexten = $this->set_exten($action,
+											'exten',
 											$rs['exten'],
-											$this->_mk_queuemacro_appdata($queuefeaturesid),
 											$rs['context'],
 											'queue',
 											$queuefeaturesid)) === false)
 			return(false);
 
-		$this->_set_result('queuemacro',$rsmacro);
+		$this->_set_result('exten',$rsexten);
 
 		return(true);
 	}
@@ -641,7 +628,7 @@ class xivo_application_service_asterisk_queue extends xivo_application_asterisk_
 		if($this->get_errnb() > 0
 		|| ($queuefeaturesid = $this->add_queuefeatures()) === false
 		|| ($queuename = $this->add_queue()) === false
-		|| $this->add_queuemacro($queuefeaturesid) === false
+		|| $this->add_exten($queuefeaturesid) === false
 		|| $this->add_user() === false
 		|| $this->add_agent() === false
 		|| $this->add_dialaction($queuefeaturesid) === false
@@ -682,12 +669,12 @@ class xivo_application_service_asterisk_queue extends xivo_application_asterisk_
 		return($this->_return['queue']);
 	}
 
-	function add_queuemacro($queuefeaturesid)
+	function add_exten($queuefeaturesid)
 	{
-		if(($rs = $this->_set_queuemacro('add',$queuefeaturesid)) !== true)
+		if(($rs = $this->_set_exten('add',$queuefeaturesid)) !== true)
 			return($rs);
 
-		return(parent::add_macro('queuemacro'));
+		return(parent::add_exten('exten'));
 	}
 
 	function add_user()
@@ -759,7 +746,7 @@ class xivo_application_service_asterisk_queue extends xivo_application_asterisk_
 				case 'queue':
 					$this->_queue->delete($val);
 					break;
-				case 'queuemacro':
+				case 'exten':
 					$this->_extensions->delete_exten($val);
 					break;
 				case 'user':
@@ -806,18 +793,18 @@ class xivo_application_service_asterisk_queue extends xivo_application_asterisk_
 		}
 		else if($this->_info['queuefeatures']['number'] !== '')
 		{
-			if($this->get_result('queuemacro') === null)
+			if($this->get_result('exten') === null)
 			{
-				$this->delete_macro('queuemacro');
+				$this->delete_exten('exten');
 			}
-			else if($this->edit_queuemacro($this->_info['queuefeatures']['id']) === false)
+			else if($this->edit_exten($this->_info['queuefeatures']['id']) === false)
 			{
 				$this->_reverse_edit();
 				$this->_status = '';
 				return(false);
 			}
 		}
-		else if($this->add_queuemacro($this->_info['queuefeatures']['id']) === false)
+		else if($this->add_exten($this->_info['queuefeatures']['id']) === false)
 		{
 			$this->_reverse_edit();
 			$this->_status = '';
@@ -866,12 +853,12 @@ class xivo_application_service_asterisk_queue extends xivo_application_asterisk_
 		return($this->_return['queue']);
 	}
 
-	function edit_queuemacro($queuefeaturesid)
+	function edit_exten($queuefeaturesid)
 	{
-		if(($rs = $this->_set_queuemacro('edit',$queuefeaturesid)) !== true)
+		if(($rs = $this->_set_exten('edit',$queuefeaturesid)) !== true)
 			return($rs);
 
-		return(parent::edit_macro('queuemacro'));
+		return(parent::edit_exten('exten'));
 	}
 
 	function edit_user($name)
@@ -987,12 +974,12 @@ class xivo_application_service_asterisk_queue extends xivo_application_asterisk_
 					else
 						$this->_queue->edit_origin($this->_origin['queue']);
 					break;
-				case 'queuemacro':
-					if(isset($this->_origin['queuemacro']) === false
-					|| $this->_origin['queuemacro'] === false)
-						$this->delete_macro('queuemacro');
+				case 'exten':
+					if(isset($this->_origin['exten']) === false
+					|| $this->_origin['exten'] === false)
+						$this->delete_exten('exten');
 					else
-						$this->_extensions->edit_origin($this->_origin['queuemacro']);
+						$this->_extensions->edit_origin($this->_origin['exten']);
 					break;
 				case 'user':
 				case 'agent':
@@ -1029,7 +1016,7 @@ class xivo_application_service_asterisk_queue extends xivo_application_asterisk_
 
 		if($this->delete_queuefeatures() === false
 		|| $this->delete_queue() === false
-		|| $this->delete_macro('queuemacro') === false
+		|| $this->delete_exten('exten') === false
 		|| $this->delete_user($this->_info['queuefeatures']['name']) === false
 		|| $this->delete_agent($this->_info['queuefeatures']['name']) === false
 		|| $this->delete_dialaction() === false
@@ -1138,10 +1125,10 @@ class xivo_application_service_asterisk_queue extends xivo_application_asterisk_
 					&& $this->_origin['queue'] !== false)
 						$this->_queue->add_origin($this->_origin['queue']);
 					break;
-				case 'queuemacro':
-					if(isset($this->_origin['queuemacro']) === true
-					&& $this->_origin['queuemacro'] !== false)
-						$this->_extensions->add_origin($this->_origin['queuemacro']);
+				case 'exten':
+					if(isset($this->_origin['exten']) === true
+					&& $this->_origin['exten'] !== false)
+						$this->_extensions->add_origin($this->_origin['exten']);
 					break;
 				case 'user':
 				case 'agent':

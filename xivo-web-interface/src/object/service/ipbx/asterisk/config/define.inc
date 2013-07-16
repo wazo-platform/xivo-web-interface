@@ -92,7 +92,7 @@ define('XIVO_SRE_IPBX_AST_REGEXP_AUDIO_FILE_PATTERN','a-zA-Z0-9_\-\.');
 define('XIVO_SRE_IPBX_AST_REGEXP_AUDIO_FILE_LENGTH','{1,194}');
 define('XIVO_SRE_IPBX_AST_REGEXP_AIDIO_FILE_EXTENSION','wav|WAV|wav49|ogg|ul|ulaw|um|pcm|al|alaw|au|vox|sln|raw');
 
-define('XIVO_SRE_IPBX_AST_REGEXP_CONTEXT','(?!(?i:macro|voicemenu|xivo)-)[a-zA-Z0-9_-]{1,39}');
+define('XIVO_SRE_IPBX_AST_REGEXP_CONTEXT','(?!(?i:voicemenu|xivo)-)[a-zA-Z0-9_-]{1,39}');
 define('XIVO_SRE_IPBX_AST_REGEXP_CALLERID','(?:"(?:[^\x00-\x08\x0A-\x1F\x22\x5C]'.
 					   '|\\\[\x00-\x09\x0B-\x0C\x0E-\x7F])+"'.
 					   '|[a-zA-Z0-9\-\.\!%\*_\+`\'\~]+)'.
@@ -122,14 +122,6 @@ define('XIVO_SRE_IPBX_AST_REGEXP_DIALPLAN_AUDIOFILE','(?:[a-zA-Z0-9%_-]{1,50}'.
 						     '[a-zA-Z0-9%_-]*)+'.
 						     '(?:\.(?:(?:'.XIVO_SRE_IPBX_AST_REGEXP_AIDIO_FILE_EXTENSION.')'.
 						     '|'.XIVO_SRE_IPBX_AST_REGEXP_DIALPLAN.'))?))');
-
-define('XIVO_SRE_IPBX_AST_USER_MACRO','user');
-define('XIVO_SRE_IPBX_AST_GROUP_MACRO','group');
-define('XIVO_SRE_IPBX_AST_QUEUE_MACRO','queue');
-define('XIVO_SRE_IPBX_AST_MEETME_MACRO','meetme');
-define('XIVO_SRE_IPBX_AST_INCALL_MACRO','did');
-define('XIVO_SRE_IPBX_AST_OUTCALL_MACRO','outcall');
-define('XIVO_SRE_IPBX_AST_VOICEMENU_MACRO','voicemenu');
 
 define('XIVO_SRE_IPBX_AST_CONTEXT_AUTHENTICATION','authentication');
 define('XIVO_SRE_IPBX_AST_CONTEXT_FEATURES','xivo-features');

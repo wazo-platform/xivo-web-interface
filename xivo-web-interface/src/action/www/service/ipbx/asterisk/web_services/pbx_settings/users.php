@@ -30,7 +30,7 @@ switch($act)
 	case 'view':
 		$appuser = &$ipbx->get_application('user');
 
-		$nocomponents = array('usermacro'		=> true);
+		$nocomponents = array('exten'		=> true);
 
 		if(($info = $appuser->get($_QRY->get('id'),
 					  null,

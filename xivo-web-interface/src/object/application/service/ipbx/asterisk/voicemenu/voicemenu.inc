@@ -74,7 +74,7 @@ class xivo_application_service_asterisk_voicemenu extends xivo_application_aster
 		if($this->_components === false)
 			return($this->_info);
 
-		$this->_get_voicemenumacro();
+		$this->_get_exten();
 		$this->_get_voicemenuflow();
 		$this->_get_voicemenuevent();
 		$this->_get_contextmember($this->_info['voicemenu']['id']);
@@ -86,17 +86,16 @@ class xivo_application_service_asterisk_voicemenu extends xivo_application_aster
 		return($this->_info);
 	}
 
-	function _get_voicemenumacro()
+	function _get_exten()
 	{
-		$this->_info['voicemenumacro'] = false;
-		$this->_origin['voicemenumacro'] = false;
+		$this->_info['exten'] = false;
+		$this->_origin['exten'] = false;
 
-		if(($this->_info['voicemenumacro'] = $this->_extensions->get_exten($this->_info['voicemenu']['number'],
-										   $this->_info['voicemenu']['context'],
-										   'macro')) !== false)
-			$this->_origin['voicemenumacro'] = $this->_extensions->get_origin();
+		if(($this->_info['exten'] = $this->_extensions->get_exten($this->_info['voicemenu']['number'],
+										   $this->_info['voicemenu']['context'])) !== false)
+			$this->_origin['exten'] = $this->_extensions->get_origin();
 
-		return($this->_info['voicemenumacro']);
+		return($this->_info['exten']);
 	}
 
 	function _get_voicemenuflow()
@@ -327,16 +326,6 @@ class xivo_application_service_asterisk_voicemenu extends xivo_application_aster
 		return(false);
 	}
 
-	function _mk_voicemenumacro_appdata($voicemenuid,$priority=1)
-	{
-		$arr = array();
-		$arr['appdata'][0] = XIVO_SRE_IPBX_AST_VOICEMENU_MACRO;
-		$arr['appdata'][1] = dwho_ulongint($voicemenuid);
-		$arr['appdata'][2] = dwho_uint($priority,1);
-
-		return($arr);
-	}
-
 	function set_add($arr)
 	{
 		return($this->_set('add',$arr));
@@ -378,11 +367,12 @@ class xivo_application_service_asterisk_voicemenu extends xivo_application_aster
 
 		if($this->_errnb === 0 && dwho_has_len($number) === true)
 		{
-			if(($rsvoicemenumacro = $this->chk_exten('voicemenumacro',
-								 $number,
-								 $this->_mk_voicemenumacro_appdata(0),
-								 $context)) !== false)
-				$this->_set_result('voicemenumacro',$rsvoicemenumacro);
+			if(($rsexten = $this->chk_exten('exten',
+													$number,
+													$context,
+													'voicemenu',
+													$voicemenuid)) !== false)
+				$this->_set_result('exten',$rsexten);
 		}
 
 		// schedule
@@ -415,22 +405,23 @@ class xivo_application_service_asterisk_voicemenu extends xivo_application_aster
 		return(true);
 	}
 
-	function _set_voicemenumacro($action,$voicemenuid)
+	function _set_exten($action,$voicemenuid)
 	{
 		$rs = false;
 
 		if(($voicemenuid = dwho_ulongint($voicemenuid)) === 0
-		|| ($rs = $this->get_result('voicemenumacro')) === null
+		|| ($rs = $this->get_result('exten')) === null
 		|| $rs === false)
 			return($rs);
-		else if(($rsmacro = $this->set_exten($action,
-						     'voicemenumacro',
-						     $rs['exten'],
-						     $this->_mk_voicemenumacro_appdata($voicemenuid),
-						     $rs['context'])) === false)
+		else if(($rsexten = $this->set_exten($action,
+											'exten',
+											$rs['exten'],
+											$rs['context'],
+											'voicemenu',
+											$voicemenuid)) === false)
 			return(false);
 
-		$this->_set_result('voicemenumacro',$rsmacro);
+		$this->_set_result('exten',$rsexten);
 
 		return(true);
 	}
@@ -618,7 +609,7 @@ class xivo_application_service_asterisk_voicemenu extends xivo_application_aster
 
 		if($this->get_errnb() > 0
 		|| ($voicemenuid = $this->add_voicemenu()) === false
-		|| $this->add_voicemenumacro($voicemenuid) === false
+		|| $this->add_exten($voicemenuid) === false
 		|| $this->add_voicemenuflow() === false
 		|| $this->add_voicemenuevent() === false
 		|| $this->add_contextmember($voicemenuid) === false
@@ -644,12 +635,12 @@ class xivo_application_service_asterisk_voicemenu extends xivo_application_aster
 		return(($this->_return['voicemenu'] = $this->_voicemenu->add($rs)));
 	}
 
-	function add_voicemenumacro($voicemenuid)
+	function add_exten($voicemenuid)
 	{
-		if(($rs = $this->_set_voicemenumacro('add',$voicemenuid)) !== true)
+		if(($rs = $this->_set_exten('add',$voicemenuid)) !== true)
 			return($rs);
 
-		return(parent::add_macro('voicemenumacro'));
+		return(parent::add_exten('exten'));
 	}
 
 	function add_voicemenuflow()
@@ -703,7 +694,7 @@ class xivo_application_service_asterisk_voicemenu extends xivo_application_aster
 				case 'voicemenuevent':
 					$this->_extensions->delete_context($val);
 					break;
-				case 'voicemenumacro':
+				case 'exten':
 					$this->_extensions->delete_exten($val);
 					break;
 				case 'contextmember':
@@ -731,18 +722,18 @@ class xivo_application_service_asterisk_voicemenu extends xivo_application_aster
 		}
 		else if($this->_info['voicemenu']['number'] !== '')
 		{
-			if($this->get_result('voicemenumacro') === null)
+			if($this->get_result('exten') === null)
 			{
-				$this->delete_macro('voicemenumacro');
+				$this->delete_exten('exten');
 			}
-			else if($this->edit_voicemenumacro($this->_info['voicemenu']['id']) === false)
+			else if($this->edit_exten($this->_info['voicemenu']['id']) === false)
 			{
 				$this->_reverse_edit();
 				$this->_status = '';
 				return(false);
 			}
 		}
-		else if($this->add_voicemenumacro($this->_info['voicemenu']['id']) === false)
+		else if($this->add_exten($this->_info['voicemenu']['id']) === false)
 		{
 			$this->_reverse_edit();
 			$this->_status = '';
@@ -775,12 +766,12 @@ class xivo_application_service_asterisk_voicemenu extends xivo_application_aster
 		return(($this->_return['voicemenu'] = $this->_voicemenu->edit($this->_info['voicemenu']['id'],$rs)));
 	}
 
-	function edit_voicemenumacro($voicemenuid)
+	function edit_exten($voicemenuid)
 	{
-		if(($rs = $this->_set_voicemenumacro('edit',$voicemenuid)) !== true)
+		if(($rs = $this->_set_exten('edit',$voicemenuid)) !== true)
 			return($rs);
 
-		return(parent::edit_macro('voicemenumacro'));
+		return(parent::edit_exten('exten'));
 	}
 
 	function edit_voicemenuflow()
@@ -868,12 +859,12 @@ class xivo_application_service_asterisk_voicemenu extends xivo_application_aster
 					&& $this->_origin['voicemenuevent'] !== false)
 						$this->_extensions->add_origin_list($this->_origin['voicemenuevent']);
 					break;
-				case 'voicemenumacro':
-					if(isset($this->_origin['voicemenumacro']) === false
-					|| $this->_origin['voicemenumacro'] === false)
-						$this->delete_macro('voicemenumacro');
+				case 'exten':
+					if(isset($this->_origin['exten']) === false
+					|| $this->_origin['exten'] === false)
+						$this->delete_exten('exten');
 					else
-						$this->_extensions->edit_origin($this->_origin['voicemenumacro']);
+						$this->_extensions->edit_origin($this->_origin['exten']);
 					break;
 				case 'contextmember':
 					$this->_contextmember->reverse_edit($this->_status);
@@ -892,7 +883,7 @@ class xivo_application_service_asterisk_voicemenu extends xivo_application_aster
 		$this->_return = array();
 
 		if($this->delete_voicemenu() === false
-		|| $this->delete_macro('voicemenumacro') === false
+		|| $this->delete_exten('exten') === false
 		|| $this->delete_voicemenuflow() === false
 		|| ($delvoicemenuevent = $this->delete_voicemenuevent()) === false
 		|| $delvoicemenuevent === 'error'
@@ -1005,10 +996,10 @@ class xivo_application_service_asterisk_voicemenu extends xivo_application_aster
 					&& $this->_origin['voicemenuevent'] !== false)
 						$this->_extensions->add_origin_list($this->_origin['voicemenuevent']);
 					break;
-				case 'voicemenumacro':
-					if(isset($this->_origin['voicemenumacro']) === true
-					&& $this->_origin['voicemenumacro'] !== false)
-						$this->_extensions->add_origin($this->_origin['voicemenumacro']);
+				case 'exten':
+					if(isset($this->_origin['exten']) === true
+					&& $this->_origin['exten'] !== false)
+						$this->_extensions->add_origin($this->_origin['exten']);
 					break;
 				case 'contextmember':
 					$this->_contextmember->add_origin_list();
