@@ -304,12 +304,6 @@ $array['module']['schedule_time']['datastorage'] = true;
 $array['module']['serverfeatures'] = array();
 $array['module']['serverfeatures']['datastorage'] = true;
 
-$array['module']['servicesgroup'] = array();
-$array['module']['servicesgroup']['datastorage'] = true;
-
-$array['module']['servicesgroup_user'] = array();
-$array['module']['servicesgroup_user']['datastorage'] = true;
-
 $array['module']['sipauthentication'] = array();
 $array['module']['sipauthentication']['datastorage'] = true;
 

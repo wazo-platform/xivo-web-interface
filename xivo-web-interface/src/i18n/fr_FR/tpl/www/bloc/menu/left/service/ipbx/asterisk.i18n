@@ -85,15 +85,6 @@ Protocole IAX
 ; mn_left_trunkmanagement-custom
 Personnalisée
 
-; mn_left_ti_cost_center
-Centre de coût
-
-; mn_left_cost_center-operator
-Opérateurs
-
-; mn_left_cost_center-servicesgroup
-Groupe de services
-
 ; mn_left_ti_pbxservices
 Services IPBX
 

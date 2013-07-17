@@ -52,9 +52,6 @@ Language:
 ; fm_userfeatures_entity
 Entity: 
 
-; fm_userfeatures_servicesgroup
-Services group: 
-
 ; hlp_fm_userfeatures_entity
 You can't modify entity if it has a line.
 

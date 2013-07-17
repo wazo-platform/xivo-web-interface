@@ -344,14 +344,6 @@ $array['schedule_time'] = array();
 $array['schedule_time']['table'] = 'schedule_time';
 $array['schedule_time']['primary'] = array('id' => '');
 
-$array['servicesgroup'] = array();
-$array['servicesgroup']['table'] = 'servicesgroup';
-$array['servicesgroup']['primary'] = array('id' => '');
-
-$array['servicesgroup_user'] = array();
-$array['servicesgroup_user']['table'] = 'servicesgroup_user';
-$array['servicesgroup_user']['primary'] = array('servicesgroup_id' => '','userfeatures_id' => '');
-
 $array['serverfeatures'] = array();
 $array['serverfeatures']['table'] = 'serverfeatures';
 $array['serverfeatures']['primary'] = array('id' => '');

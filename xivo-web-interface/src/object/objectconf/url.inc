@@ -267,11 +267,6 @@ $array['service/ipbx/control_system/restart'] = 'service/ipbx/index.php/control_
 $array['service/ipbx/control_system/cti_restart'] = 'service/ipbx/index.php/control_system/cti_restart/';
 
 
-// cost_center
-$array['service/ipbx/cost_center/operator'] = 'service/ipbx/index.php/cost_center/operator/';
-$array['service/ipbx/cost_center/servicesgroup'] = 'service/ipbx/index.php/cost_center/servicesgroup/';
-
-
 /*
  * CTI SECTION
  *

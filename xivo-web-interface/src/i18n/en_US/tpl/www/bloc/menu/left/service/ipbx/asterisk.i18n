@@ -91,15 +91,6 @@ IAX Protocol
 ; mn_left_trunkmanagement-custom
 Customized
 
-; mn_left_ti_cost_center
-Cost Center
-
-; mn_left_cost_center-operator
-Operator
-    
-; mn_left_cost_center-servicesgroup
-Services group
-
 ; mn_left_ti_pbxservices
 IPBX services
 
