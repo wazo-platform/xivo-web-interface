@@ -39,7 +39,6 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 	protected $_device		 	= false;
 	protected $_sccpdevice		= false;
 	protected $_conf			= array();
-	protected $_param			= array('internal'	=> false);
 
 	public function __construct(&$service,&$dso,$param=null,$components=true)
 	{
@@ -64,10 +63,6 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 		$this->_reset_info();
 		$this->_reset_params();
 		$this->_reset();
-
-		if(is_array($param) === true
-		&& isset($param['internal']) === true)
-			$this->_param['internal'] = (bool) $param['internal'];
 
 		return(true);
 	}
@@ -100,8 +95,6 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 	public function get($id,$disable=null,$nocomponents=null,$ipbxinfos=false,$userid=0)
 	{
 		$this->_info = $this->_origin = array();
-
-		$this->_linefeatures->set_dso_param('internal',$this->_param['internal']);
 
 		if(($this->_info['linefeatures'] = $this->_linefeatures->get($id)) === false)
 			return(false);
@@ -282,62 +275,35 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 		return($r);
 	}
 
-	public function get_lines_device($deviceid,$context='',$disable=null,$order=null,$limit=null,$assoc=false,$free=null)
+	public function get_lines_search($search,$where=array(),$disable=null,$order=null,$limit=null,$assoc=false)
 	{
-		return($this->_get_lines('device',null,$disable,'',$context,$order,$limit,$assoc,null,$free,null,$deviceid));
+		return($this->_get_lines('search',$disable,$search,$where,$order,$limit,$assoc));
 	}
 
-	public function get_lines_search($search,$context='',$protocols=null,$disable=null,$order=null,$limit=null,$assoc=false,$initialized=null,$free=null,$internal=null)
+	public function get_lines_list($where=array(),$disable=null,$order=null,$limit=null,$assoc=false)
 	{
-		return($this->_get_lines('search',$protocols,$disable,$search,$context,$order,$limit,$assoc,$initialized,$free,$internal));
+		return($this->_get_lines('list',$disable,'',$where,$order,$limit,$assoc));
 	}
 
-	public function get_lines_list($protocols=null,$disable=null,$order=null,$limit=null,$assoc=false,$initialized=null,$free=null,$internal=null,$context=null)
-	{
-		return($this->_get_lines('list',$protocols,$disable,null,$context,$order,$limit,$assoc,$initialized,$free,$internal));
-	}
-
-	/*
-	 * options:
-	 *		- internal: if true, also return internal accounts (*guest* account indeed)
-	 *		- free: if true, also return iduserfeatures=0, null = both, false return iduserfeatures != 0	 *
-	*/
 	private function _get_lines(
 			$action,
-			$protocols=null,
 			$disable=null,
 			$search='',
-			$context='',
+			$where=array(),
 			$order=null,
 			$limit=null,
-			$assoc=false,
-			$initialized=null,
-			$free=null,
-			$internal=null,
-			$deviceid=null,
-			$userfeaturesid=null)
+			$assoc=false)
 	{
 		$search = strval($search);
 
-		if(is_array($protocols) === true && empty($protocols) === false)
-			$protocols = array_values($protocols);
-		else
-			$protocols = null;
-
-		if (is_null($free) === false)
-			$free = (bool) intval($free);
-
 		switch($action)
 		{
-			case 'device':
-				$rs = $this->_dso->device($deviceid,$context,$disable,$order,$limit,$free);
-				break;
 			case 'search':
-				$rs = $this->_dso->search($search,$context,$protocols,$disable,$initialized,$order,$limit);
+				$rs = $this->_dso->search($search,$where,$disable,$order,$limit);
 				break;
 			case 'list':
 			default:
-				$rs = $this->_dso->get_all($protocols,$disable,$initialized,$order,$limit,null,$context,null,$internal,$free);
+				$rs = $this->_dso->get_all($where,$disable,$order,$limit);
 		}
 
 		$this->_cnt = $this->_dso->get_cnt();

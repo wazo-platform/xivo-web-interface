@@ -98,16 +98,18 @@ switch($act)
 	case 'search':
 		$appline = &$ipbx->get_application('line',null,false);
 
+		$where = array();
+
 		if (($context = $_QRY->get('context')) !== null)
-			$context = $context;
+			$where['context'] = $context;
 
 		if (($protocols = $_QRY->get('protocol')) !== null)
-			$protocols = array($protocols);
+			$where['protocols'] = array($protocols);
 
 		if (($free = $_QRY->get('free')) !== null)
-			$free = ((bool) $free);
+			$where['free'] = ((bool) $free);
 
-		if(($list = $appline->get_lines_search($_QRY->get('search'),$context,$protocols,null,null,null,false,null,$free)) === false)
+		if(($list = $appline->get_lines_search($_QRY->get('search'),$where)) === false)
 		{
 			$http_response->set_status_line(204);
 			$http_response->send(true);
@@ -119,15 +121,17 @@ switch($act)
 	default:
 		$act = 'list';
 
+		$where = array();
+
 		$appline = &$ipbx->get_application('line',null,false);
 
 		if (($protocols = $_QRY->get('protocol')) !== null)
-			$protocols = array($protocols);
+			$where['protocols'] = array($protocols);
 
 		if (($free = $_QRY->get('free')) !== null)
-			$free = ((bool) $free);
+			$where['free'] = ((bool) $free);
 
-		if(($list = $appline->get_lines_list($protocols,null,null,null,false,null,$free)) === false)
+		if(($list = $appline->get_lines_list($where)) === false)
 		{
 			$http_response->set_status_line(204);
 			$http_response->send(true);

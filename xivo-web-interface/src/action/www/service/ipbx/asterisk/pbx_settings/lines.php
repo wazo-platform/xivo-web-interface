@@ -275,14 +275,16 @@ switch($act)
 		$limit[0] = $prevpage * $nbbypage;
 		$limit[1] = $nbbypage;
 
+		$where = array();
+		if (dwho_has_len($free))
+			$where['free'] = $free;
+		if (dwho_has_len($context))
+			$where['context'] = $context;
+
 		if($search !== '')
-			$list = $appline->get_lines_search($search,'',null,null,$order,$limit);
-		else if($context !== '')
-			$list = $appline->get_lines_list(null,null,$order,$limit,false,null,$free,null,$context);
-		elseif($free !== '')
-			$list = $appline->get_lines_list(null,null,$order,$limit,false,null,$free);
+			$list = $appline->get_lines_search($search,$where,null,$order,$limit);
 		else
-			$list = $appline->get_lines_list(null,null,$order,$limit);
+			$list = $appline->get_lines_list($where,null,$order,$limit);
 
 		$total = $appline->get_cnt();
 

@@ -23,24 +23,12 @@ xivo_service_asterisk::required(array('abstract','datastorage','abstract','sql.i
 class xivo_service_asterisk_linefeatures_sql extends xivo_service_asterisk_abstract_sql
 {
 	var $_unique	= array(array('protocol','name'),array('protocol','protocolid'));
-	var $_param		= array('internal' => 0);
-
-	function _set_param_internal()
-	{
-		if($this->_param['internal'] !== null)
-			$this->_param['internal'] = intval((bool) $this->_param['internal']);
-
-		return($this->_param['internal']);
-	}
 
 	function get($arr,$disable=null,$primary=false)
 	{
 		if(is_array($arr) === false
 		&& ($arr = $this->mk_primary_key_value($arr)) === false)
 			return(false);
-
-		if(($arr['internal'] = $this->_set_param_internal()) === null)
-			unset($arr['internal']);
 
 		return(parent::get($arr,$disable,$primary));
 	}
@@ -54,9 +42,6 @@ class xivo_service_asterisk_linefeatures_sql extends xivo_service_asterisk_abstr
 	{
 		if(is_array($arr) === false)
 			$arr = array();
-
-		if(($arr['internal'] = $this->_set_param_internal()) === null)
-			unset($arr['internal']);
 
 		return(parent::get_nb($arr,$disable));
 	}
@@ -118,9 +103,6 @@ class xivo_service_asterisk_linefeatures_sql extends xivo_service_asterisk_abstr
 		if($disable !== null && isset($this->_disable) === true)
 			$arr[$this->_disable] = intval((bool) $disable);
 
-		if(($internal = $this->_set_param_internal()) !== null)
-			$arr['internal'] = $internal;
-
 		if(empty($arr) === false)
 			$this->_dso->andwhere($arr);
 
@@ -147,12 +129,6 @@ class xivo_service_asterisk_linefeatures_sql extends xivo_service_asterisk_abstr
 		$this->_dso->new_select($this->_table,'*');
 
 		$arr = array();
-
-		if(isset($this->_forcecolumn) === true)
-			$arr = $this->_forcecolumn;
-
-		if(($internal = $this->_set_param_internal()) !== null)
-			$arr['internal'] = $internal;
 
 		if(empty($arr) === false)
 			$this->_dso->where($arr);
@@ -188,9 +164,6 @@ class xivo_service_asterisk_linefeatures_sql extends xivo_service_asterisk_abstr
 		if($disable !== null && isset($this->_disable) === true)
 			$arr[$this->_disable] = intval((bool) $disable);
 
-		if(($internal = $this->_set_param_internal()) !== null)
-			$arr['internal'] = $internal;
-
 		if(empty($arr) === false)
 			$this->_dso->where($arr);
 
@@ -215,8 +188,6 @@ class xivo_service_asterisk_linefeatures_sql extends xivo_service_asterisk_abstr
 	{
 		if(is_array($arr) === false && ($arr = $this->mk_primary_key_value($arr)) === false)
 			return(false);
-		else if(($arr['internal'] = $this->_set_param_internal()) === null)
-			unset($arr['internal']);
 
 		return(parent::edit($arr,$value,$disable));
 	}
@@ -227,22 +198,7 @@ class xivo_service_asterisk_linefeatures_sql extends xivo_service_asterisk_abstr
 		&& ($arr = $this->mk_primary_key_value($arr)) === false)
 			return(false);
 
-		if(($arr['internal'] = $this->_set_param_internal()) === null)
-			unset($arr['internal']);
-
 		return(parent::delete($arr,$disable));
-	}
-
-	function get_list($disable=null,$order=null,$limit=null)
-	{
-		$arr = array();
-
-		if(($arr['internal'] = $this->_set_param_internal()) === null)
-			$r = parent::get_list($disable,$order,$limit);
-		else
-			$r = parent::get_list_where($arr,$disable,$order,$limit);
-
-		return($r);
 	}
 
 	function get_list_where($arr,$disable=null,$order=null,$limit=null)
@@ -251,22 +207,7 @@ class xivo_service_asterisk_linefeatures_sql extends xivo_service_asterisk_abstr
 
 		if(is_array($arr) === false || empty($arr) === true)
 			return(false);
-		else if(($arr['internal'] = $this->_set_param_internal()) === null)
-			unset($arr['internal']);
-
 		return(parent::get_list_where($arr,$disable,$order,$limit));
-	}
-
-	function get_all($disable=null,$order=null,$limit=null)
-	{
-		$arr = array();
-
-		if(($arr['internal'] = $this->_set_param_internal()) === null)
-			$r = parent::get_list($disable,$order,$limit,true);
-		else
-			$r = parent::get_list_where($arr,$disable,$order,$limit,true);
-
-		return($r);
 	}
 
 	function list_device_associated()
@@ -276,9 +217,6 @@ class xivo_service_asterisk_linefeatures_sql extends xivo_service_asterisk_abstr
 		$this->_dso->new_select($this->_table);
 
 		$arr = array();
-
-		if(($internal = $this->_set_param_internal()) !== null)
-			$arr['internal'] = $internal;
 
 		$this->_dso->andwherenot(array('device' => ''), $this->_table);
 		$this->_dso->andwherenotnull('device', $this->_table);
@@ -304,9 +242,6 @@ class xivo_service_asterisk_linefeatures_sql extends xivo_service_asterisk_abstr
 
 		if($disable !== null && isset($this->_disable) === true)
 			$arr[$this->_disable] = intval((bool) $disable);
-
-		if(($internal = $this->_set_param_internal()) !== null)
-			$arr['internal'] = $internal;
 
 		if(empty($arr) === false)
 			$this->_dso->andwhere($arr,$this->_table);

@@ -104,9 +104,6 @@ class xivo_service_asterisk_userfeatures_sql extends xivo_service_asterisk_abstr
 		if(isset($this->_forcecolumn) === true)
 			$arr = $this->_forcecolumn;
 
-		//if(($internal = $this->_set_param_internal()) !== null)
-		//	$arr['internal'] = $internal;
-
 		if(empty($arr) === false)
 			$this->_dso->where($arr);
 

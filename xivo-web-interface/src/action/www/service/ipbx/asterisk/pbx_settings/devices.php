@@ -129,7 +129,8 @@ switch($act)
 
 		$appline = &$ipbx->get_application('line');
 		$order = array('num' => SORT_ASC);
-		$listline = $appline->get_lines_device((int) $_QR['id'],'',null,$order);
+		$where = array('device' => (int) $_QR['id']);
+		$listline = $appline->get_lines_list($where,null,$order);
 
 		$fm_save = $error = null;
 

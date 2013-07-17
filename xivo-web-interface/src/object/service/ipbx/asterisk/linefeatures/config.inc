@@ -66,11 +66,6 @@ $array['element']['num'] = array();
 $array['element']['num']['value'] = array(1,2,3,4,5,6,7,8,9,10,11,12);
 $array['element']['num']['default'] = 1;
 
-$array['element']['internal'] = array();
-$array['element']['internal']['value'] = array(0,1);
-$array['element']['internal']['default'] = 0;
-$array['element']['internal']['forcedef'] = true;
-
 $array['element']['description'] = array();
 $array['element']['description']['default'] = '';
 
@@ -89,7 +84,6 @@ $array['filter']['context'] = array('callback' => 'xivo_service_asterisk::chk_co
 							XIVO_SRE_IPBX_AST_CONTEXT_AUTHENTICATION,
 							XIVO_SRE_IPBX_AST_CONTEXT_ZONEMESSAGES)));
 $array['filter']['number'] = array('set' => false,'chk' => 2,'regexp' => '/^[0-9\*#]+$/','maxlen' => 40);
-$array['filter']['internal'] = array('set' => false,'chk' => 0);
 $array['filter']['description'] = array('set' => false,'chk' => 2,'maxlen' => 1000,'cast' => 'sgraph_crlf_tab','eol' => true);
 
 ?>
