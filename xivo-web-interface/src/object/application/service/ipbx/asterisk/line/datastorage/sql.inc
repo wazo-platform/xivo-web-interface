@@ -95,8 +95,18 @@ class xivo_application_service_asterisk_line_sql extends xivo_application_abstra
 	 *		- internal: if true, also return internal accounts (*guest* account indeed)
 	 *		- free: if true, also return iduserfeatures=0, null = both, false return iduserfeatures != 0
 	*/
-	public function get_all($protocols,$disable=null,$initialized=null,$order=null,$limit=null,
-	$value=null,$context=null,$mode=null,$internal=false,$free=null,$userfeaturesid=null)
+	public function get_all(
+			$protocols,
+			$disable=null,
+			$initialized=null,
+			$order=null,
+			$limit=null,
+			$value=null,
+			$context=null,
+			$mode=null,
+			$internal=false,
+			$free=null,
+			$userfeaturesid=null)
 	{
 		$this->_cnt = 0;
 
@@ -210,9 +220,6 @@ class xivo_application_service_asterisk_line_sql extends xivo_application_abstra
 			$this->_dso->aggregate_where();
 			$this->_dso->wherecontain('number',$value,true,$this->_table['linefeatures']);
 			$this->_dso->orwherecontain('name',$value,true,$this->_table['linefeatures']);
-
-			if($mode === null && $has_context === false && $context !== false)
-				$this->_dso->orwherecontain('context',$value,true,$this->_table['linefeatures']);
 		}
 
 		$this->_dso->aggregate_where();

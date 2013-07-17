@@ -282,11 +282,6 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 		return($r);
 	}
 
-	public function get_lines_user($userfeaturesid,$order=null,$limit=null,$assoc=false,$free=null)
-	{
-		return($this->_get_lines('user',null,null,'','',$order,$limit,$assoc,null,$free,null,null,$userfeaturesid));
-	}
-
 	public function get_lines_device($deviceid,$context='',$disable=null,$order=null,$limit=null,$assoc=false,$free=null)
 	{
 		return($this->_get_lines('device',null,$disable,'',$context,$order,$limit,$assoc,null,$free,null,$deviceid));
@@ -297,19 +292,9 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 		return($this->_get_lines('search',$protocols,$disable,$search,$context,$order,$limit,$assoc,$initialized,$free,$internal));
 	}
 
-	public function get_lines_search_number($search,$context='',$protocols=null,$disable=null,$order=null,$limit=null,$assoc=false,$initialized=null,$free=null,$internal=null)
+	public function get_lines_list($protocols=null,$disable=null,$order=null,$limit=null,$assoc=false,$initialized=null,$free=null,$internal=null,$context=null)
 	{
-		return($this->_get_lines('search_number',$protocols,$disable,$search,$context,$order,$limit,$assoc,$initialized,$free,$internal));
-	}
-
-	public function get_lines_context($context,$protocols=null,$disable=null,$order=null,$limit=null,$assoc=false,$initialized=null,$free=null,$internal=null)
-	{
-		return($this->_get_lines('context',$protocols,$disable,null,$context,$order,$limit,$assoc,$initialized,$free,$internal));
-	}
-
-	public function get_lines_list($protocols=null,$disable=null,$order=null,$limit=null,$assoc=false,$initialized=null,$free=null,$internal=null)
-	{
-		return($this->_get_lines('list',$protocols,$disable,null,null,$order,$limit,$assoc,$initialized,$free,$internal));
+		return($this->_get_lines('list',$protocols,$disable,null,$context,$order,$limit,$assoc,$initialized,$free,$internal));
 	}
 
 	/*
@@ -317,9 +302,20 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 	 *		- internal: if true, also return internal accounts (*guest* account indeed)
 	 *		- free: if true, also return iduserfeatures=0, null = both, false return iduserfeatures != 0	 *
 	*/
-	private function _get_lines($action,$protocols=null,$disable=null,$search='',$context='',
-	$order=null,$limit=null,$assoc=false,$initialized=null,$free=null,$internal=null,
-	$deviceid=null,$userfeaturesid=null)
+	private function _get_lines(
+			$action,
+			$protocols=null,
+			$disable=null,
+			$search='',
+			$context='',
+			$order=null,
+			$limit=null,
+			$assoc=false,
+			$initialized=null,
+			$free=null,
+			$internal=null,
+			$deviceid=null,
+			$userfeaturesid=null)
 	{
 		$search = strval($search);
 
@@ -333,24 +329,15 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 
 		switch($action)
 		{
-			case 'user':
-				$rs = $this->_dso->get_all(null,null,null,$order,$limit,null,null,null,null,$free,$userfeaturesid);
-				break;
 			case 'device':
 				$rs = $this->_dso->device($deviceid,$context,$disable,$order,$limit,$free);
 				break;
 			case 'search':
 				$rs = $this->_dso->search($search,$context,$protocols,$disable,$initialized,$order,$limit);
 				break;
-			case 'search_number':
-				$rs = $this->_dso->search($search,$context,$protocols,$disable,$initialized,$order,$limit,'number');
-				break;
-			case 'context':
-				$rs = $this->_dso->get_all($protocols,$disable,$initialized,$order,$limit,null,$context,null,$internal,$free);
-				break;
 			case 'list':
 			default:
-				$rs = $this->_dso->get_all($protocols,$disable,$initialized,$order,$limit,null,null,null,$internal,$free);
+				$rs = $this->_dso->get_all($protocols,$disable,$initialized,$order,$limit,null,$context,null,$internal,$free);
 		}
 
 		$this->_cnt = $this->_dso->get_cnt();

@@ -278,7 +278,7 @@ switch($act)
 		if($search !== '')
 			$list = $appline->get_lines_search($search,'',null,null,$order,$limit);
 		else if($context !== '')
-			$list = $appline->get_lines_context($context,null,null,$order,$limit,false,null,$free);
+			$list = $appline->get_lines_list(null,null,$order,$limit,false,null,$free,null,$context);
 		elseif($free !== '')
 			$list = $appline->get_lines_list(null,null,$order,$limit,false,null,$free);
 		else
