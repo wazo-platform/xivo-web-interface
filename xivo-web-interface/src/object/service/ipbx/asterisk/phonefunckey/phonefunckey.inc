@@ -556,11 +556,7 @@ class xivo_service_asterisk_phonefunckey extends xivo_service_asterisk_abstract
 					}
 			}
 
-			if ($exten == '')
-				dwho_report::push('error', 'error during get funckey of user');
-
 			$conf[$ref['fknum']]['value'] = $exten;
-
 		}
 
 		return((empty($conf) ? false : $conf));
