@@ -423,6 +423,8 @@ class xivo_service_asterisk_phonefunckey extends xivo_service_asterisk_abstract
 		|| ($modgroupfeatures = &$ipbx->get_module('groupfeatures')) === false
 		|| ($modlinefeatures = &$ipbx->get_module('linefeatures')) === false
 		|| ($moduserfeatures = &$ipbx->get_module('userfeatures')) === false
+		|| ($appfeatures = &$ipbx->get_apprealstatic('features')) === false
+		|| ($appfeaturemap = &$appfeatures->get_module('featuremap')) === false
 		|| ($modextensions = &$ipbx->get_module('extensions')) === false)
 			return(false);
 
@@ -505,6 +507,14 @@ class xivo_service_asterisk_phonefunckey extends xivo_service_asterisk_abstract
 					}
 					break;
 				case 'featuremap':
+					if (($rsextenmbers = $appfeaturemap->get($type['val'])) === false)
+					{
+						dwho_report::push('error', 'error during get featuremap: '.$type['val']);
+						break;
+					}
+					$rsexten = $rsextenmbers['featuremap']['var_val'];
+					$exten = str_replace('.', $callfiltermember['id'], $rsexten);
+					break;
 				case 'extenfeatures':
 					$where = array();
 					$where['type'] = $type['type'];
