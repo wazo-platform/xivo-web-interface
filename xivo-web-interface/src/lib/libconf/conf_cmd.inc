@@ -125,4 +125,7 @@ $array['iax.conf']['ipbx'] = array('iax2 reload');
 $array['sip.conf'] = array();
 $array['sip.conf']['ipbx'] = array('sip reload');
 
+$array['features.conf'] = array();
+$array['features.conf']['ipbx'] = array('dialplan reload', 'features reload');
+
 ?>
