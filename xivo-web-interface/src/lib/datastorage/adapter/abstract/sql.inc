@@ -666,27 +666,7 @@ abstract class dwho_datastorage_adapter_abstract_sql extends dwho_datastorage_ad
 		else if(is_array($val) === true || dwho_has_len($val) === true)
 		{
 			$val = (array) $val;
-
 			$map = array_map(array($this,'escape'),$val);
-
-			// XXX Fix condition with SQLite2
-			// when there are multi left join with comparison of constant.
-
-			if($join !== false
-					&& $this->get_type() === 'sqlite'
-					&& isset($this->_jointype['left'],$this->_jointype['left'][$join]) === true
-					&& empty($this->_tablecolumn[$join]) === false)
-			{
-				if(isset($this->_tablecolumn[$join],$this->_tablecolumn[$join][0]) === true)
-					$this->_fix_leftjoin_column = $this->_tablecolumn[$join][0];
-				else
-					$this->_fix_leftjoin_column = $this->_tablecolumn[key($this->_tablecolumn)][0];
-
-				$map = array_map(array($this,'_fix_leftjoin_condition'),$map);
-
-				$this->_fix_leftjoin_condition = false;
-			}
-
 			$r = vsprintf(dwho_printf_escape($cond,count($val)),$map);
 		}
 		else if(dwho_has_len($cond) === true)
