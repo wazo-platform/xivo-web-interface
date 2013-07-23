@@ -184,7 +184,10 @@ class stats_ressource_cel
 	private function _build_data($search=null, $order=null, $limit=null)
 	{
 		$rs = array();
-		if (($listcall = $this->get_list_call($search, $order)) === false)
+
+		#Hardcode 20000 as absolute limit number of cel records the call logs can handle
+		#Helps not busting the 128M PHP memory limit (and thus not getting blank page)
+		if (($listcall = $this->get_list_call($search, $order, 20000)) === false)
 			return(false);
 
 		$total = count($listcall);
