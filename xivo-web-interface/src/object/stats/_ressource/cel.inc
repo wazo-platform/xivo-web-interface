@@ -260,8 +260,6 @@ class stats_ressource_cel
 								$ref['answer'] = false;
 								$ref['userfield'] = $call['userfield'];
 								$ref['accountcode'] = $call['accountcode'];
-								$ref['amaflags'] = $call['amaflags'];
-								$ref['amaflagsmeta'] = $call['amaflagsmeta'];
 								$ref['peer'] = $call['peer'];
 
 								$cc['ringing'] = $eventtime;

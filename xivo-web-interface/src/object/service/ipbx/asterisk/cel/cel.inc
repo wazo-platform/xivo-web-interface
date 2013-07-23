@@ -87,9 +87,6 @@ class xivo_service_asterisk_cel extends xivo_service_asterisk_abstract
 			$search['dend'] = $date['dend']['date'];
 		}
 
-		if(dwho_has_len($arr,'amaflags') === true)
-			$search['amaflags'] = $arr['amaflags'];
-
 		if(dwho_has_len($arr,'dcontext') === true)
 			$search['dcontext'] = $arr['dcontext'];
 
@@ -101,18 +98,6 @@ class xivo_service_asterisk_cel extends xivo_service_asterisk_abstract
 
 		if(($result = $this->_dso->search($search,$order,$limit)) === false)
 			return(null);
-
-		$nb = count($result);
-
-		for($i = 0;$i < $nb;$i++)
-		{
-			$ref = &$result[$i];
-
-			if(isset($ref['amaflags']) === false)
-				$ref['amaflags'] = 0;
-
-			$ref['amaflagsmeta'] = $this->amaflags_meta($ref['amaflags']);
-		}
 
 		return($result);
 	}

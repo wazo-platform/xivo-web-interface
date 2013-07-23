@@ -35,12 +35,6 @@ else:
 	$dcontext = (string) $info['dcontext'];
 endif;
 
-if(dwho_has_len($info['amaflags']) === false):
-	$amaflags = null;
-else:
-	$amaflags = dwho_uint($info['amaflags']);
-endif;
-
 $page = $exportcsv = '';
 
 if($result === false):
@@ -173,36 +167,6 @@ endif;
 				    'default'	=> $element['channel']['default'],
 				    'selected'	=> $info['channel']),
 			      $element['channel']['value']);
-/*
-		$form->select(array('desc'	=> $this->bbf('fm_amaflags'),
-				    'name'	=> 'amaflags',
-				    'labelid'	=> 'amaflags',
-				    'empty'	=> true,
-				    'bbf'	=> 'ast_amaflag_name_info',
-				    'bbfopt'	=> array('argmode' => 'paramvalue'),
-				    'default'	=> $element['amaflags']['default'],
-				    'selected'	=> $amaflags),
-			      $element['amaflags']['value']);
-
-if($context_list !== false):
-	echo	$form->select(array('desc'	=> $this->bbf('fm_dcontext'),
-				    'name'	=> 'dcontext',
-				    'labelid'	=> 'dcontext',
-				    'empty'	=> true,
-				    'key'	=> 'identity',
-				    'altkey'	=> 'name',
-				    'bbf'	=> 'fm_dcontext-opt',
-				    'bbfopt'	=> array('argmode' => 'paramvalue'),
-				    'selected'	=> $dcontext),
-			      $context_list);
-else:
-	echo	$form->text(array('desc'	=> $this->bbf('fm_dcontext'),
-				  'name'	=> 'dcontext',
-				  'labelid'	=> 'dcontext',
-				  'default'	=> $element['dcontext']['default'],
-				  'value'	=> $info['dcontext']));
-endif;
-*/
 ?>
 
 
@@ -419,11 +383,6 @@ endif;
 					'<dd title="',dwho_htmlen($ref0['channame']),'">',
 					dwho_htmlen(dwho_trunc($ref0['channame'],35,'...',false)),
 					'<br /></dd>';
-			endif;
-
-			if(dwho_has_len($ref0['amaflagsmeta']) === true):
-				echo	'<dt>',$this->bbf('entry_amaflagsmeta'),'</dt>',
-					'<dd>',$this->bbf('ast_amaflag_name_info',$ref0['amaflagsmeta']),'<br /></dd>';
 			endif;
 
 			echo	'<dt>',$this->bbf('entry_answer'),'</dt>',
