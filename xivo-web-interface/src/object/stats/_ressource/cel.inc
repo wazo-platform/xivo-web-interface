@@ -209,8 +209,7 @@ class stats_ressource_cel
 			{
 				$call = &$ticketcall[$i];
 
-				$eventtime = dwho_date::all_to_unixtime($call['eventtime']);
-				#$linkedid = $call['linkedid'];
+				$eventtime = (int) strtotime($call['eventtime']);
 				$uniqueid = $call['uniqueid'];
 				$eventtype = $call['eventtype'];
 				$channame = $call['channame'];
