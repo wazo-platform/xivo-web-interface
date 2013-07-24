@@ -181,6 +181,26 @@ class stats_ressource_cel
 		return($this->_build_data($search, $order, $limit));
 	}
 
+	private function _build_search($pattern, $type)
+	{
+		switch($type)
+		{
+			case 'begin':
+				$like_format = '/^%s/i';
+				break;
+			case 'contain':
+				$like_format = '/%s/i';
+				break;
+			case 'end':
+				$like_format = '/%s$/i';
+				break;
+			default:
+				$like_format = '/^%s$/i';
+		}
+
+		return(sprintf($like_format,$pattern));
+	}
+
 	private function _build_data($search=null, $order=null, $limit=null)
 	{
 		$rs = array();
