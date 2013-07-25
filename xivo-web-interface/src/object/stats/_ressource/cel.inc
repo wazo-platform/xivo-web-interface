@@ -36,18 +36,9 @@ class stats_ressource_cel
 									'max_concurrent_calls_out'		=> array('type' => 'int'),
 									'max_concurrent_calls_intern'	=> array('type' => 'int'),
 									'max_concurrent_calls_total'	=> array('type' => 'int'));
-	public		$_fieldtop10	= array('call_duration_intern'	=> array('type' => 'time','mode' => 'max'),
-										'call_duration_in'		=> array('type' => 'time','mode' => 'max'),
-										'call_duration_out'		=> array('type' => 'time','mode' => 'max'),
-										'call_nb_intern'		=> array('type' => 'int','mode' => 'sum'),
-										'call_nb_in'			=> array('type' => 'int','mode' => 'sum'),
-										'call_nb_out'			=> array('type' => 'int','mode' => 'sum'),
-										'call_price'			=> array('type' => 'string','mode' => 'max'));
 	private		$_result	= false;
-	private		$_top10		= false;
 	private		$_cel		= false;
 	private		$_trunk		= false;
-	private		$_trunklist	= false;
 	private		$_operatorlist	= false;
 	private		$_ipbx		= false;
 	private		$_total		= 0;
