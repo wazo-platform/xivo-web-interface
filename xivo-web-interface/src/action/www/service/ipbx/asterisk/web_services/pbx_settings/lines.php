@@ -46,6 +46,9 @@ switch($act)
 		else
 			$status = 400;
 
+		if ($status !== 200)
+			error_log(dwho_json::encode($appline->get_error()));
+
 		$http_response->set_status_line($status);
 		$http_response->send(true);
 		break;
@@ -59,6 +62,9 @@ switch($act)
 		else
 			$status = 400;
 
+		if ($status !== 200)
+			error_log(dwho_json::encode($appline->get_error()));
+
 		$http_response->set_status_line($status);
 		$http_response->send(true);
 		break;
@@ -71,6 +77,9 @@ switch($act)
 			$status = 200;
 		else
 			$status = 500;
+
+		if ($status !== 200)
+			error_log(dwho_json::encode($appline->get_error()));
 
 		$http_response->set_status_line($status);
 		$http_response->send(true);

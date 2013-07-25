@@ -55,10 +55,10 @@ switch($act)
 		}
 		else
 		{
+			error_log(dwho_json::encode($appuser->get_error()));
 			$http_response->set_status_line(400);
 			$http_response->send(true);
 		}
-
 		break;
 	case 'edit':
 		$appuser = &$ipbx->get_application('user');
@@ -74,6 +74,9 @@ switch($act)
 		else
 			$status = 400;
 
+		if ($status !== 200)
+			error_log(dwho_json::encode($appuser->get_error()));
+
 		$http_response->set_status_line($status);
 		$http_response->send(true);
 		break;
@@ -85,7 +88,8 @@ switch($act)
 		else
 			$status = 400;
 
-		error_log(dwho_json::encode($appuser->get_error()));
+		if ($status !== 200)
+			error_log(dwho_json::encode($appuser->get_error()));
 
 		$http_response->set_status_line($status);
 		$http_response->send(true);
@@ -99,6 +103,9 @@ switch($act)
 			$status = 200;
 		else
 			$status = 500;
+
+		if ($status !== 200)
+			error_log(dwho_json::encode($appuser->get_error()));
 
 		$http_response->set_status_line($status);
 		$http_response->send(true);
