@@ -20,6 +20,10 @@
 
 require_once(dwho_file::joinpath(DWHO_PATH_ROOT,'date.inc'));
 
+#Hardcode 20000 as absolute limit number of cel records the call logs can handle
+#Helps not busting the 128M PHP memory limit (and thus not getting blank page)
+define("CEL_FETCH_LIMIT",20000);
+
 class stats_ressource_cel
 {
 
@@ -129,6 +133,12 @@ class stats_ressource_cel
 
 		$rs = array();
 		$nb = count($list);
+
+		if ($nb === CEL_FETCH_LIMIT)
+		{
+			dwho_report::push('error', dwho_i18n::babelfish('call_log_reached_cel_fetch_limit'));
+		}
+
 		for($i=0;$i<$nb;$i++)
 		{
 			$ref = &$list[$i];
@@ -196,10 +206,10 @@ class stats_ressource_cel
 	{
 		$rs = array();
 
-		#Hardcode 20000 as absolute limit number of cel records the call logs can handle
-		#Helps not busting the 128M PHP memory limit (and thus not getting blank page)
-		if (($listcall = $this->get_list_call($search, $order, 20000)) === false)
+		if (($listcall = $this->get_list_call($search, $order, CEL_FETCH_LIMIT)) === false)
+		{
 			return(false);
+		}
 
 		$total = count($listcall);
 
