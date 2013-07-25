@@ -35,24 +35,13 @@ $element = $this->get_var('element');
 				  'default'	=> $element['protocol']['custom']['interface']['default'],
 				  'value'	=> $this->get_var('info','protocol','interface'),
 				  'error'	=> $this->bbf_args('error',
-						   $this->get_var('error', 'protocol', 'interface')) )),
-
-	$form->text(array('desc'	=> $this->bbf('fm_linefeatures_number'),
-					  'name'	=> 'linefeatures[number]',
-					  'labelid'	=> 'linefeatures-number',
-					  'size'	=> 6,
-					  'disabled'	=> true,
-					  'readonly' => true,
-					  'class'    => 'it-disabled',
-					  'value'	=> $this->get_var('info','linefeatures','number'),
-					  'error'	=> $this->bbf_args('error',$this->get_var('error', 'linefeatures', 'number')) ));
+						   $this->get_var('error', 'protocol', 'interface')) ));
 
 	if($context_list !== false):
 		echo	$form->select(array('desc'	=> $this->bbf('fm_protocol_context'),
 					    'name'		=> 'protocol[context]',
 					    'labelid'	=> 'protocol-context',
-					 	'disabled'	=> $hasnumber,
-						'class'    	=> ($hasnumber ? 'it-disabled' : ''),
+						'class'    	=> 'it-disabled',
 					    'key'		=> 'identity',
 					    'altkey'	=> 'name',
 					    'selected'	=> $context),

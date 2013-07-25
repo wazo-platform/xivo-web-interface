@@ -335,20 +335,19 @@ class xivo_application_service_asterisk_device extends xivo_application_asterisk
 		return(true);
 	}
 
-	public function associate_line($idlinefeatures,$iduserfeatures,$synchronize=false)
+	public function associate_line($linefeatures_id,$userfeatures_id,$synchronize=false)
 	{
 		if(dwho_issa('devicefeatures',$this->_info) === false)
 			return(false);
 
-		$userfeatures = &$this->_service->get_module('userfeatures');
-
 		$id = $this->_info['devicefeatures']['id'];
 		$deviceid = $this->_info['devicefeatures']['deviceid'];
 
-		if($this->_provddevice->update_config_from_line($deviceid,$iduserfeatures,$synchronize) === false)
-			return(false);
+		$this->_linefeatures->edit($linefeatures_id,array('device' => $id,
+				'config' => $deviceid));
 
-		$this->_linefeatures->edit($idlinefeatures,array('device' => $id));
+		if($this->_provddevice->update_config_from_line($deviceid,$userfeatures_id,$synchronize) === false)
+			return(false);
 
 		return(true);
 	}

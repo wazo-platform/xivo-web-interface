@@ -45,6 +45,8 @@ if (XIVO_LOG_TYPE === 'json')
 			case 'delete':
 			case 'enables':
 			case 'disables':
+				if (isset($_USR->_info['login']) === false)
+					$_USR->_info['login'] = 'accesswebservice';
 				dwho_logw($str_log,$_USR->_info['login'],$_QR['act']);
 				break;
 		}

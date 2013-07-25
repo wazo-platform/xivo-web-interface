@@ -47,7 +47,6 @@ class xivo_service_asterisk_linefeatures extends xivo_service_asterisk_abstract
 		$data['id'] = (int) $data['id'];
 		$data['protocolid'] = (int) $data['protocolid'];
 		$data['provisioningid'] = (int) $data['provisioningid'];
-		$data['iduserfeatures'] = (int) $data['iduserfeatures'];
 		$data['num'] = (int) $data['num'];
 		$data['commented'] = (bool) $data['commented'];
 		$data['encryption'] = isset($data['encryption']) ? (bool) $data['encryption'] : false;
@@ -75,9 +74,9 @@ class xivo_service_asterisk_linefeatures extends xivo_service_asterisk_abstract
 		return($this->_prepare($rs));
 	}
 
-	function get_from_userid($userid)
+	function get_from_config($config)
 	{
-		if(($rs = $this->_dso->from_userid($userid)) === false)
+		if(($rs = $this->_dso->from_config($config)) === false)
 			return(false);
 
 		return($this->_prepare($rs));

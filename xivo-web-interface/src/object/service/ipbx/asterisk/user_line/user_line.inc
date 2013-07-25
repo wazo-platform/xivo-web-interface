@@ -43,35 +43,57 @@ class xivo_service_asterisk_user_line extends xivo_service_asterisk_abstract
 
 	function _prepare($data)
 	{
+		$data['id'] = (int) $data['id'];
 		$data['user_id'] = (int) $data['user_id'];
 		$data['line_id'] = (int) $data['line_id'];
+		$data['extension_id'] = (int) $data['extension_id'];
 		$data['main_user'] = (bool) $data['main_user'];
+		$data['main_line'] = (bool) $data['main_line'];
 
 		return($data);
 	}
 
 	function add($arr,$id=0)
 	{
-		if(is_array($arr) === false
-		|| isset($arr['user_id']) === false
-		|| isset($arr['line_id']) === false)
+		if(is_array($arr) === false)
 			return(false);
 
-		$arr = $this->_prepare($arr);
+		$data = $this->chk_values($arr);
 
-		return(parent::add($arr,$id));
+		return(parent::add($data,$id));
 	}
 
 	function edit($id,$arr,$provisioning=false,$disable=null)
 	{
-		if(is_array($arr) === false
-		|| isset($arr['user_id']) === false
-		|| isset($arr['line_id']) === false)
+		if(is_array($arr) === false)
 			return(false);
 
-		$arr = $this->_prepare($arr);
+		$data = $this->chk_values($arr);
 
-		return(parent::edit($id,$arr,$disable));
+		return(parent::edit($id,$data,$disable));
+	}
+
+	function find_by_user_id($user_id)
+	{
+		$where = array();
+		$where['user_id'] = (int) $user_id;
+
+		return($this->get_all_where($where));
+	}
+
+	function get_master_user_id_by_line_id($line_id)
+	{
+		$where = array();
+		$where['line_id'] = (int) $line_id;
+		$where['master_user'] = true;
+		$where['master_line'] = true;
+
+		if(($rs = $this->get_where($where)) ===false
+		|| count($rs) === 0
+		|| isset($rs['id']) === false)
+			return(false);
+
+		return((int) $rs['id']);
 	}
 }
 

@@ -235,9 +235,11 @@ class xivo_service_asterisk_extensions extends xivo_service_asterisk_abstract
 		for($i = 0;$i < $nb;$i++)
 		{
 			if(($ret = $this->add($this->_exten[$id][$i])) !== false)
+			{
+				$this->_exten[$id][$i]['id'] = (int) $ret;
 				$r[] = $ret;
+			}
 		}
-
 		if(isset($r[0]) === false)
 			return(false);
 		else if($ret === false)

@@ -40,26 +40,13 @@
 				  'class'    => $this->get_var('element','protocol','secret','class'),
 				  'default'	=> $this->get_var('element', 'protocol', 'secret', 'default'),
 				  'value'	=> $this->get_var('info','protocol','secret'),
-				  'error'	=> $this->bbf_args('error',$this->get_var('error', 'protocol', 'secret')) )),
-
-		$form->text(array('desc'	=> $this->bbf('fm_linefeatures_number'),
-				  'name'	=> 'linefeatures[number]',
-				  'labelid'	=> 'linefeatures-number',
-				  'size'	=> 6,
-				  'disabled'	=> true,
-				  'readonly' => true,
-				  'class'    => 'it-disabled',
-				  #'readonly' => $this->get_var('element','linefeatures','number','readonly'),
-				  #'class'    => $this->get_var('element','linefeatures','number','class'),
-				  'value'	=> $this->get_var('info','linefeatures','number'),
-				  'error'	=> $this->bbf_args('error',$this->get_var('error', 'linefeatures', 'number')) ));
+				  'error'	=> $this->bbf_args('error',$this->get_var('error', 'protocol', 'secret')) ));
 
 	if($context_list !== false):
 		echo	$form->select(array('desc'	=> $this->bbf('fm_protocol_context'),
 					    'name'		=> 'protocol[context]',
 					    'labelid'	=> 'protocol-context',
-					 	'disabled'	=> $hasnumber,
-						'class'    	=> ($hasnumber ? 'it-disabled' : ''),
+						'class'    	=> 'it-disabled',
 					    'key'		=> 'identity',
 					    'altkey'	=> 'name',
 					    'selected'	=> $context),

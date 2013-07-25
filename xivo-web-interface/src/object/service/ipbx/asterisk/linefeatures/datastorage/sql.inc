@@ -65,21 +65,24 @@ class xivo_service_asterisk_linefeatures_sql extends xivo_service_asterisk_abstr
 		$this->_dso->new_select($this->_table);
 		if(((int) $userid = dwho_ulongint($userid)) !== 0)
 		{
-			$this->_dso->where(array('iduserfeatures' => $userid));
+			$this->_dso->innerjoin('user_line', 'user_line.user_id = '.$userid);
+			$this->_dso->joinwhere('user_line', array('main_user' => 'true'));
+			$this->_dso->andjoinwhere('user_line', array('main_line' => 'true'));
+			$this->_dso->where($this->_table.'."id" = "user_line"."line_id"');
 		}
+
 		if(((int) $deviceid = dwho_ulongint($deviceid)) !== 0)
 		{
 			$this->_dso->where(array('device' => $deviceid));
 			$this->_dso->where(array('num' => 1));
 		}
-		$r = $this->_dso->select_single();
-		return($r);
+		return($this->_dso->select_single());
 	}
 
-	function from_userid($userid)
+	function from_config($config)
 	{
 		$this->_dso->new_select($this->_table);
-		$this->_dso->where(array('iduserfeatures' => $userid));
+		$this->_dso->where(array('config' => $config));
 		return($this->_dso->select_single());
 	}
 

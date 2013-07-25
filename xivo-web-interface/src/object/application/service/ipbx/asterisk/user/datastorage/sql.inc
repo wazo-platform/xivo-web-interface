@@ -31,7 +31,8 @@ class xivo_application_service_asterisk_user_sql extends xivo_application_abstra
 				'linefeatures'		=> '',
 				'groupfeatures'		=> '',
 				'queuefeatures'		=> '',
-				'meetmefeatures'	=> '');
+				'meetmefeatures'	=> '',
+				'user_line'			=> '');
 
 	function get_nb($arr=null,$disable=null,$initialized=null)
 	{
@@ -63,18 +64,23 @@ class xivo_application_service_asterisk_user_sql extends xivo_application_abstra
 
 		if($initialized === true)
 		{
-			$this->_dso->innerjoin($this->_table['linefeatures'],
-					       $this->_table['linefeatures'].'.iduserfeatures = '. $this->_dso->cast($this->_table['userfeatures'].'.id', 'int'),
-					       null,
-					       'id');
+			$this->_dso->innerjoin($this->_table['user_line'],
+							$this->_table['user_line'].'.user_id = '. $this->_table['userfeatures'].'.id',
+							null,
+							'id');
 		}
 		else
 		{
-			$this->_dso->leftjoin($this->_table['linefeatures'],
-					       $this->_table['linefeatures'].'.iduserfeatures = '. $this->_dso->cast($this->_table['userfeatures'].'.id', 'int'),
-					       null,
-					       'id');
+			$this->_dso->leftjoin($this->_table['user_line'],
+							$this->_table['user_line'].'.user_id = '. $this->_table['userfeatures'].'.id',
+							null,
+					 		'id');
 		}
+
+		$this->_dso->leftjoin($this->_table['linefeatures'],
+				 		$this->_table['user_line'].'.line_id = '. $this->_table['linefeatures'].'.id',
+						null,
+						'number');
 
 		$this->_dso->aggregate_where();
 

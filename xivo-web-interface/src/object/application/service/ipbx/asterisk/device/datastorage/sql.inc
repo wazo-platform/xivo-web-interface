@@ -24,7 +24,8 @@ class xivo_application_service_asterisk_device_sql extends xivo_application_abst
 {
 	var $_table	= array('devicefeatures' => '',
 						'linefeatures' => '',
-						'userfeatures' => '');
+						'userfeatures' => '',
+						'user_line' => '');
 
 	function get_nb($arr=null,$disable=null,$initialized=null)
 	{
@@ -97,19 +98,25 @@ class xivo_application_service_asterisk_device_sql extends xivo_application_abst
 
 	public function get_has_bsfilter()
 	{
-		$this->_dso->new_select($this->_table['userfeatures'], null);
+		$this->_dso->new_select($this->_table['user_line'], null);
+
+		$this->_dso->innerjoin($this->_table['userfeatures'],
+				$this->_table['user_line'].'.user_id = '.$this->_table['userfeatures'].'.id');
+		$this->_dso->joinwhere($this->_table['userfeatures'],
+				$this->_table['userfeatures'].'.bsfilter IN (\'boss\', \'secretary\')');
 
 		$this->_dso->innerjoin($this->_table['linefeatures'],
-							$this->_table['userfeatures'].'.id = '.$this->_table['linefeatures'].'.iduserfeatures',
-							null);
+				$this->_table['linefeatures'].'.id = '.$this->_table['user_line'].'.line_id',
+				null,
+				'device');
 
 		$this->_dso->innerjoin($this->_table['devicefeatures'],
-							$this->_dso->cast($this->_table['devicefeatures'].'.id', 'varchar').' = '.$this->_table['linefeatures'].'.device',
-							null,
-							'*');
+				$this->_dso->cast($this->_table['devicefeatures'].'.id', 'varchar').' = '.$this->_table['linefeatures'].'.device',
+				null,
+				'*');
 
-		$this->_dso->where(array('bsfilter' => 'boss'), $this->_table['userfeatures']);
-		$this->_dso->orwhere(array('bsfilter' => 'secretary'), $this->_table['userfeatures']);
+		$this->_dso->where(array('main_user' => 'true'), $this->_table['user_line']);
+		$this->_dso->orwhere(array('main_line' => 'true'), $this->_table['user_line']);
 
 		$r = $this->_dso->select_all();
 

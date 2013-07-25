@@ -486,6 +486,7 @@ abstract class dwho_datastorage_adapter_abstract_sql extends dwho_datastorage_ad
 
 		$query = sprintf('DELETE FROM %s WHERE %s%s',$this->quote_identifier($table),$where,$other);
 
+
 		return(($this->query($query) !== false ? $this->affected_rows() : false));
 	}
 

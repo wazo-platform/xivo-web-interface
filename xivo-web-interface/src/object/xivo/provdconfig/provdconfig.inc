@@ -45,6 +45,7 @@ class xivo_object_provdconfig extends xivo_object_provd_abstract
 		|| ($this->_sccpdevice = &$this->_service->get_module('sccpdevice')) === false
 		|| ($this->_linefeatures = &$this->_service->get_module('linefeatures')) === false
 		|| ($this->_phonefunckey = &$this->_service->get_module('phonefunckey')) === false
+		|| ($this->_user_line = &$this->_service->get_module('user_line')) === false
 		|| ($this->_appsip = &$this->_service->get_apprealstatic('sip')) === false)
 			return(false);
 
@@ -638,7 +639,7 @@ class xivo_object_provdconfig extends xivo_object_provd_abstract
 		}
 	}
 
-	public function build_device_config($configid, $iduserfeatures)
+	public function build_device_config($configid, $userfeatures_id)
 	{
 		$globalconfig = $this->init_device_config($configid);
 
@@ -646,14 +647,14 @@ class xivo_object_provdconfig extends xivo_object_provd_abstract
 
 		$this->_build_exten_config($raw_config);
 
-		$funckeys = $this->_phonefunckey->build_provd_conf_funckey($iduserfeatures);
+		$funckeys = $this->_phonefunckey->build_provd_conf_funckey($userfeatures_id);
 
 		if (empty($funckeys))
 			unset($raw_config['funckeys']);
 		else
 			$raw_config['funckeys'] = $funckeys;
 
-		$linefeatures = $this->_linefeatures->get_from_userid($iduserfeatures);
+		$linefeatures = $this->_linefeatures->get_from_config($configid);
 		$protocolname = $linefeatures['protocol'];
 
 		switch($protocolname)
@@ -713,7 +714,8 @@ class xivo_object_provdconfig extends xivo_object_provd_abstract
 
 		foreach ($listline as $line)
 		{
-			$globalconfig = $this->build_device_config($devicefeatures['deviceid'], $line['iduserfeatures']);
+			$user_id = $this->_user_line->get_master_user_id_by_line_id($line['id']);
+			$globalconfig = $this->build_device_config($devicefeatures['deviceid'], $user_id);
 
 			if ($this->edit($devicefeatures['deviceid'],$globalconfig) === false)
 			{

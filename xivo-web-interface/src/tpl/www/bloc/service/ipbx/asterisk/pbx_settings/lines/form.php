@@ -29,34 +29,26 @@ $context_list = $this->get_var('context_list');
 $ipbxinfos = $this->get_var('info','ipbx');
 
 $allow = array();
-if(isset($info['protocol']) === true) {
-	$allow =  $info['protocol']['allow'];
+if(isset($info['protocol'])):
+	if (isset($info['protocol']['allow']))
+		$allow =  $info['protocol']['allow'];
 	$protocol = (string) dwho_ak('protocol',$info['protocol'],true);
 	$context = (string) dwho_ak('context',$info['protocol'],true);
 	$amaflags = (string) dwho_ak('amaflags',$info['protocol'],true);
 	$qualify = (string) dwho_ak('qualify',$info['protocol'],true);
 	$host = (string) dwho_ak('host',$info['protocol'],true);
-	$number = (string) dwho_ak('number',$info['linefeatures'],true);
-}
-else {
+else:
 	$protocol = $this->get_var('proto');
-	$context = $amaflags = $qualify = $host = $number = '';
-}
-
-if ($protocol === ''):
-	$protocol = $info['linefeatures']['protocol'];
+	$context = $amaflags = $qualify = $host = '';
 endif;
+
+if ($protocol === '')
+	$protocol = $info['linefeatures']['protocol'];
 
 $codec_active = empty($allow) === false;
 $host_static = ($host !== '' && $host !== 'dynamic');
 
 echo $form->hidden(array('name' => 'proto','value' => $protocol));
-
-$hasnumber = false;
-if (empty($number) === false):
-	echo $form->hidden(array('name' => 'protocol[context]','value' => $context));
-	$hasnumber = true;
-endif;
 
 $filename = dirname(__FILE__).'/protocol/'.$protocol.'.php';
 if (is_readable($filename) === true):

@@ -70,8 +70,9 @@ $page = $url->pager($pager['pages'],
 ?>
 		</th>
 		<th class="th-center xspan"><?=$this->bbf('col_provisioning');?></th>
+		<th class="th-center xspan"><?=$this->bbf('col_protocol');?></th>
 		<th class="th-center xspan"><?=$this->bbf('col_phone');?></th>
-		<th class="th-center xspan"><?=$this->bbf('col_nb_line');?></th>
+		<th class="th-center xspan"><?=$this->bbf('col_context');?></th>
 		<th class="th-center col-action"><?=$this->bbf('col_action');?></th>
 		<th class="th-right xspan"><span class="span-right">&nbsp;</span></th>
 	</tr>
@@ -79,7 +80,7 @@ $page = $url->pager($pager['pages'],
 	if(($list = $this->get_var('list')) === false || ($nb = count($list)) === 0):
 ?>
 	<tr class="sb-content">
-		<td colspan="7" class="td-single"><?=$this->bbf('no_user');?></td>
+		<td colspan="8" class="td-single"><?=$this->bbf('no_user');?></td>
 	</tr>
 <?php
 	else:
@@ -112,8 +113,9 @@ $page = $url->pager($pager['pages'],
 			</label>
 		</td>
 		<td class="txt-center col_provisioning_code"><?=(!isset($line['provisioningid'])) ? '-' : $line['provisioningid']?></td>
+		<td class="txt-center"><?=($line['protocol']);?></td>
 		<td class="txt-center col_number"><?=(!isset($line['number'])) ? '-' : $line['number']?></td>
-		<td class="txt-center col_line_count"><?=($ref['nb_line']);?></td>
+		<td class="txt-center"><?=($line['context']);?></td>
 		<td class="td-right col_actions" colspan="2">
 <?php
 		echo	$url->href_html($url->img_html('img/site/button/edit.gif',
@@ -143,7 +145,7 @@ $page = $url->pager($pager['pages'],
 ?>
 	<tr class="sb-foot">
 		<td class="td-left xspan b-nosize"><span class="span-left b-nosize">&nbsp;</span></td>
-		<td class="td-center" colspan="5"><span class="b-nosize">&nbsp;</span></td>
+		<td class="td-center" colspan="6"><span class="b-nosize">&nbsp;</span></td>
 		<td class="td-right xspan b-nosize"><span class="span-right b-nosize">&nbsp;</span></td>
 	</tr>
 </table>

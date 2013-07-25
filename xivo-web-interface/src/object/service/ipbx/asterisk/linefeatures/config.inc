@@ -37,9 +37,6 @@ $array['element']['protocol']['default'] = XIVO_SRE_IPBX_AST_PROTO_SIP;
 $array['element']['protocolid'] = array();
 $array['element']['protocolid']['default'] = 0;
 
-$array['element']['iduserfeatures'] = array();
-$array['element']['iduserfeatures']['default'] = 0;
-
 $array['element']['provisioningid'] = array();
 $array['element']['provisioningid']['default'] = 0;
 
@@ -73,7 +70,6 @@ $array['element']['description']['default'] = '';
 $array['filter'] = array();
 $array['filter']['protocol'] = array('key' => $array['element']['protocol']['value']);
 $array['filter']['protocolid'] = array('cast' => 'ulongint');
-$array['filter']['iduserfeatures'] = array('set' => false,'cast' => 'ulongint');
 $array['filter']['num'] = array('set' => false,'cast' => 'ulongint');
 $array['filter']['name'] = array('minlen' => 1,'maxlen' => 128,'regexp' => '/^[a-z0-9#\*\.\/_@:-]+$/i');
 $array['filter']['config'] = array('set' => false,'chk' => 2,'maxlen' => 128,'regexp' => '/^[a-z0-9#\*\.\/_@:-]+$/i');

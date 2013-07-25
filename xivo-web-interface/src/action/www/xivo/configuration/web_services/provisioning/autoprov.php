@@ -38,8 +38,10 @@ switch($act)
 			$http_response->set_status_line(400);
 			$http_response->send(true);
 		}
+
 		$appdevice = &$ipbx->get_application('device',null,false);
 		$linefeatures = &$ipbx->get_module('linefeatures');
+		$user_line = &$ipbx->get_module('user_line');
 
 		if($appdevice->update_by_ip($data['ip']) === false)
 			$http_response->set_status_line(400);
@@ -51,7 +53,8 @@ switch($act)
 				$http_response->set_status_line(200);
 		}
 		elseif(($line = $linefeatures->get_line_provisioniable($data['code'])) === false
-		|| $appdevice->associate_line($line['id'],$line['iduserfeatures'],true) === false)
+		|| ($user_master_id = $user_line->get_master_user_id_by_line_id($line['id'])) === false
+		|| $appdevice->associate_line($line['id'],$user_master_id,true) === false)
 			$http_response->set_status_line(400);
 		else
 			$http_response->set_status_line(200);

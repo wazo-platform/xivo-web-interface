@@ -602,6 +602,22 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 	{
 		return($this->_service->get_extens_for_context_and_object($context_id, $object));
 	}
+
+	function update_protocol_setvar($protocol, $protocolid, $user_id)
+	{
+		if($protocol === XIVO_SRE_IPBX_AST_PROTO_CUSTOM
+		|| $protocol === XIVO_SRE_IPBX_AST_PROTO_SCCP)
+			return(null);
+		else if(($protocolid = dwho_ulongint($protocolid)) === 0
+		|| ($user_id = dwho_ulongint($user_id)) === 0
+		|| ($protocol = &$this->_service->get_protocol_module($protocol)) === false)
+			return(false);
+
+		$val = array();
+		$val['setvar'] = 'XIVO_USERID='.$user_id;
+
+		return($protocol->edit($protocolid,$val));
+	}
 }
 
 ?>
