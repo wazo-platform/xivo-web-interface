@@ -96,9 +96,6 @@ Dialogic VOX (ADPCM)
 ; ast_format_name_info(sln)
 Signed Linear (SLN)
 
-; ast_amaflag_name_info
-
-
 ; ast_amaflag_name_info(default)
 Défaut
 

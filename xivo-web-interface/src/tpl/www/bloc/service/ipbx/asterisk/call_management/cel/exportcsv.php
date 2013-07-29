@@ -55,12 +55,6 @@ if($info['channel'] !== '')
 		'"',str_replace('"','""',$info['channel']),'"',"\n";
 }
 
-if($info['amaflags'] !== '')
-{
-	echo	'"',str_replace('"','""',$this->bbf('fm_amaflags')),'";',
-		'"',str_replace('"','""',$this->bbf('ast_amaflag_name_info',$info['amaflagsmeta'])),'"',"\n";
-}
-
 if($info['dcontext'] !== '')
 {
 	echo	'"',str_replace('"','""',$this->bbf('fm_dcontext')),'";',
@@ -130,7 +124,7 @@ for($i = 0;$i < $nb;$i++)
 		'"',str_replace('"','""',$ref0['to']),'";',
 		'"',str_replace('"','""',$ref0['duration']),'";',
 		'"',str_replace('"','""',$ref0['channame']),'";',
-		'"',str_replace('"','""',$this->bbf('ast_amaflag_name_info',$ref0['amaflagsmeta'])),'";',
+		'"";',	// empty amaflags column
 		'"',str_replace('"','""',$ref0['accountcode']),'";',
 		'"',str_replace('"','""',$ref0['userfield']),'";',
 		'"',str_replace('"','""',$ref0['context']),'";',
