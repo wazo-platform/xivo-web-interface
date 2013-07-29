@@ -85,3 +85,6 @@ Une ligne doit être associée à l'utilisateur afin de créer une boite vocale
 
 ; user_no_remove_lines_when_voicemail
 Impossible de supprimer une ligne pour un utilisateur ayant une boite vocale, vous devez dabord la disassocier ou l'effacer avant d'effacer l'utilisateur.
+
+; call_log_reached_cel_fetch_limit
+Les dernières entrées sont absentes des journaux d'appels. Veuillez réduire votre période de recherche.

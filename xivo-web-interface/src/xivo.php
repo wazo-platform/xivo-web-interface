@@ -63,7 +63,7 @@ switch($tpl_area)
 		dwho::load_class('dwho_tpl');
 		define('XIVO_LOG_TYPE', 'www');
 
-		$_TPL = &new dwho_tpl($_CF['template']['www']['path'],
+		$_TPL = new dwho_tpl($_CF['template']['www']['path'],
 				array('menu','url','dhtml'),
 				$_URL);
 
@@ -78,7 +78,7 @@ switch($tpl_area)
 	case 'json':
 		dwho::load_class('dwho_tpl');
 		define('XIVO_LOG_TYPE', 'json');
-		$_TPL = &new dwho_tpl($_CF['template'][$tpl_area]['path'],
+		$_TPL = new dwho_tpl($_CF['template'][$tpl_area]['path'],
 				array('json','url','dhtml'),
 				$_URL);
 

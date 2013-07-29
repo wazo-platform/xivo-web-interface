@@ -83,9 +83,6 @@ if(isset($_QR['fm_send']) === true || isset($_QR['search']) === true)
 
 		$_TPL->set_var('pager',dwho_calc_page($page,$nbbypage,$total));
 	}
-
-	if($act === 'exportcsv' && $info !== null)
-		$info['amaflagsmeta'] = $info['amaflags'] !== '' ? $cel->amaflags_meta($info['amaflags']) : '';
 }
 
 $_TPL->set_var('total',$total);
