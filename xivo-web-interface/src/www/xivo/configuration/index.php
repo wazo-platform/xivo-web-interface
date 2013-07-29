@@ -23,7 +23,7 @@ require_once('xivo.php');
 if($_USR->mk_active() === false)
 	$_QRY->go($_TPL->url('xivo'), array('go' => urlencode($_SERVER['REQUEST_URI'])));
 
-if(xivo_user::chk_acl() === false)
+if(xivo_user::chk_acl(true) === false)
 	$_QRY->go($_TPL->url('xivo'), array('go' => urlencode($_SERVER['REQUEST_URI'])));
 
 $dhtml = &$_TPL->get_module('dhtml');
