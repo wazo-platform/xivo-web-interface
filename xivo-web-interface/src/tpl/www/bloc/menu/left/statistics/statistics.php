@@ -82,7 +82,6 @@ if(xivo_user::chk_acl_section('statistics/call_center') === true):
 		endif;
 	endif;
 	if(xivo_user::chk_acl('data') === true):
-
 		$pi = $_SERVER['PATH_INFO'];
 		$params = array();
 		if (is_null($axetype) === false)
@@ -103,26 +102,33 @@ if(xivo_user::chk_acl_section('statistics/call_center') === true):
 			if (isset($infocal['dyear']) === true)
 				$params['dyear'] = $infocal['dyear'];
 		endif;
-?>
-			<dd id="mn-data--stats1">
-				<?=$url->href_html($this->bbf('mn_left_statistics_call_center-1'),
-						'statistics/call_center/data/stats1',(($pi == '/stats1') ? null : $params));?>
-			</dd>
-			<dd id="mn-data--stats2">
-				<?=$url->href_html($this->bbf('mn_left_statistics_call_center-2'),
-						'statistics/call_center/data/stats2',(($pi == '/stats2') ? null : $params));?>
-			</dd>
-			<?php /*
-			<dd id="mn-data--stats3">
-				<?=$url->href_html($this->bbf('mn_left_statistics_call_center-3'),
-						'statistics/call_center/data/stats3',(($pi == '/stats3') ? null : $params));?>
-			</dd>
-			*/  ?>
-			<dd id="mn-data--stats4">
-				<?=$url->href_html($this->bbf('mn_left_statistics_call_center-4'),
-						'statistics/call_center/data/stats4',(($pi == '/stats4') ? null : $params));?>
-			</dd>
-<?php
+
+		if (xivo_user::chk_acl('data', 'stats1') === true):
+			echo '<dd id="mn-data--stats1">',
+			      $url->href_html($this->bbf('mn_left_statistics_call_center-1'),
+			                      'statistics/call_center/data/stats1',(($pi == '/stats1') ? null : $params)),
+			     '</dd>';
+		endif;
+		if (xivo_user::chk_acl('data', 'stats2') === true):
+			echo '<dd id="mn-data--stats2">',
+			      $url->href_html($this->bbf('mn_left_statistics_call_center-2'),
+			                      'statistics/call_center/data/stats2',(($pi == '/stats2') ? null : $params)),
+			     '</dd>';
+		endif;
+		/*
+		if (xivo_user::chk_acl('data', 'stats3') === true):
+			echo '<dd id="mn-data--stats3">',
+			      $url->href_html($this->bbf('mn_left_statistics_call_center-3'),
+			                      'statistics/call_center/data/stats3',(($pi == '/stats3') ? null : $params)),
+			     '</dd>';
+		endif;
+		*/
+		if (xivo_user::chk_acl('data', 'stats4') === true):
+			echo '<dd id="mn-data--stats4">',
+			      $url->href_html($this->bbf('mn_left_statistics_call_center-4'),
+			                      'statistics/call_center/data/stats4',(($pi == '/stats4') ? null : $params)),
+			     '</dd>';
+		endif;
 	endif;
 endif;
 ?>
