@@ -347,6 +347,7 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 			$name = $arr['protocol']['name'];
 
 		$arr['linefeatures']['protocol'] = $protocolname;
+		$arr['linefeatures']['protocolid'] = 0;
 		$arr['linefeatures']['name'] = $name;
 		$arr['linefeatures']['context'] = (string) $arr['protocol']['context'];
 
