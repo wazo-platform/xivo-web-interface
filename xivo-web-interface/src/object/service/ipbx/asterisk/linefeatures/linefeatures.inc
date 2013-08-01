@@ -51,7 +51,7 @@ class xivo_service_asterisk_linefeatures extends xivo_service_asterisk_abstract
 		$data['commented'] = (bool) $data['commented'];
 		$data['encryption'] = isset($data['encryption']) ? (bool) $data['encryption'] : false;
 		$user_line = $this->_sre->get_module('user_line');
-		$data['iduserfeatures'] = $user_line->get_master_user_id_by_line_id($data['id']);
+		$data['iduserfeatures'] = (int) $user_line->get_master_user_id_by_line_id($data['id']);
 
 		return($data);
 	}
