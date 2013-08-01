@@ -1297,7 +1297,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 				dwho_report::push('error', 'Can\'t edit device');
 				return(false);
 			}
-			elseif ($rs['protocol'] === XIVO_SRE_IPBX_AST_PROTO_SCCP
+			elseif ($new_device['protocol'] === XIVO_SRE_IPBX_AST_PROTO_SCCP
 			&& $this->_sccpdevice->init_device($device['mac'],$new_device['name'],$vm_number) === false)
 			{
 				dwho_report::push('error', 'Can\'t initialize SCCP device');
