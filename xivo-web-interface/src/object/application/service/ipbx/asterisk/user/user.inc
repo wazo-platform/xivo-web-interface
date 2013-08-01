@@ -1541,7 +1541,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			else if($this->add_exten($user_id) === false
 			|| ($line_id = $existingline[0]['id']) === 0
 			|| $this->add_user_line($user_id, $line_id) === false
-			|| $this->add_config_config($user_id) === false
+			|| $this->add_device_config($user_id) === false
 			|| $this->add_groupmember($user_id) === false
 			|| $this->add_queuemember($user_id) === false)
 			{
