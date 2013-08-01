@@ -719,7 +719,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		&& $this->set_linefeatures($arr['linefeatures']) !== false
 		&& isset($this->_result['linefeatures'][0]))
 		{
-			$protocolname = $this->get_result('protocolname');
+			$protocolname = $this->_result['linefeatures'][0]['protocol'];
 			$name = $this->_result['linefeatures'][0]['name'];
 			$number = $this->_result['linefeatures'][0]['number'];
 			$context = $this->_result['linefeatures'][0]['context'];
@@ -736,6 +736,8 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 
 				if($vmaction !== 'disable')
 					$this->set_voicemail($vmaction,$arr['voicemail']);
+
+				$this->_set_result('mailbox', $arr['voicemail']['mailbox'].'@'.$context);
 			}
 			else
 			{
@@ -964,23 +966,10 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 				$ref['name'] = $this->gen_password(6,true);
 
 			$protocolname = $ref['protocol'];
-			$this->_set_result('protocolname', $protocolname);
 			$number = $ref['number'];
 
 			if($protocolname === XIVO_SRE_IPBX_AST_PROTO_CUSTOM)
 				$this->_set_result_var('userfeatures','voicemailtype',null);
-
-			switch($userfeatures['voicemailtype'])
-			{
-				case 'asterisk':
-				break;
-				case 'exchange':
-					if($number === '')
-						$this->_set_result_var('userfeatures','voicemailtype',null);
-				default:
-					$vmaction = 'none';
-					$this->_set_result_var('userfeatures','voicemailid',null);
-			}
 
 			$ref['num'] = isset($ref['num']) ? (int) $ref['num'] : 1;
 			$ref['callerid'] = $this->_service->mk_callerid($userfeatures['callerid'],$number,$protocolname);
@@ -1296,8 +1285,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		// new device associated
 		if (empty($new_device['device']) === false)
 		{
-			$mailbox = $this->get_result_var('voicemail', 'mailbox');
-			$vm_number = $mailbox !== null ? strstr($mailbox, '@', true) : '';
+			$vm_number = (string) $this->get_result_var('voicemail', 'mailbox');
 
 			if (($device = $this->_devicefeatures->get($new_device['device'])) === false)
 			{
@@ -1711,11 +1699,9 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			if ($protocolname === XIVO_SRE_IPBX_AST_PROTO_SIP)
 				$arr['protocol']['call-limit'] = (2 * (int) $this->get_result_var('userfeatures', 'simultcalls'));
 			$arr['protocol']['language'] = $this->get_result_var('userfeatures', 'language');
-			$arr['protocol']['mailbox'] = $this->get_result_var('voicemail', 'mailbox');
+			$arr['protocol']['mailbox'] = $this->get_result('mailbox');
 			$arr['protocol']['name'] = $line['name'];
 			$arr['protocol']['context'] = $line['context'];
-
-			$this->_set_result('protocol', $arr['protocol']);
 
 			if($protocolname === XIVO_SRE_IPBX_AST_PROTO_CUSTOM)
 				$arr['protocol']['interface'] = $line['name'];
@@ -1832,8 +1818,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		|| $rs === false)
 			return(false);
 
-		$mailbox = $this->get_result_var('voicemail', 'mailbox');
-		$vm_number = $mailbox !== null ? strstr($mailbox, '@', true) : '';
+		$vm_number = (string) $this->get_result_var('voicemail', 'mailbox');
 
 		$existing_device = $this->_info['linefeatures'][0];
 		$new_device = $rs[0];

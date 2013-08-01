@@ -374,7 +374,7 @@ class xivo_application_service_asterisk_voicemail extends xivo_application_aster
 		$rs['commented'] = $this->_info['voicemail']['commented'];
 		if(!isset($rs['skipcheckpass']))
 			$rs['skipcheckpass'] = false;
-		
+
 		if(($this->_return['voicemail'] = $this->_voicemail->edit(
 								$this->_origin['voicemail']['uniqueid'],
 								$rs,
@@ -554,7 +554,7 @@ class xivo_application_service_asterisk_voicemail extends xivo_application_aster
 			$where = array();
 			$where['voicemailid'] = $this->_info['voicemail']['uniqueid'];
 
-			$userfeatures->edit_where($where,array('voicemailid' => null,
+			$userfeatures->edit_where($where,array('voicemailid' => 0,
 												'voicemailtype' => null,
 												'enablevoicemail' => 0));
 		}
@@ -564,8 +564,7 @@ class xivo_application_service_asterisk_voicemail extends xivo_application_aster
 		|| ($this->_modules['usersip'] = &$this->_service->get_module('usersip')) !== false)
 		{
 			$where = array();
-			$where['mailbox'] = $this->_info['voicemail']['mailbox'].
-					    '@'.$this->_info['voicemail']['context'];
+			$where['mailbox'] = $this->_info['voicemail']['mailbox'].'@'.$this->_info['voicemail']['context'];
 
 			$this->_modules['usersip']->edit_where($where,array('mailbox' => null));
 		}
