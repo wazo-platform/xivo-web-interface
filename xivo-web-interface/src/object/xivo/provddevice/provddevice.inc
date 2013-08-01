@@ -238,10 +238,13 @@ class xivo_object_provddevice extends xivo_object_provd_abstract
 		return(true);
 	}
 
-	public function update_config_from_line($deviceid,$userfeatures_id,$synchronize=false)
+	public function update_config_from_line($deviceid,$line_id,$synchronize=false)
 	{
-		if (($conf = $this->_provdconfig->build_device_config($deviceid,$userfeatures_id)) === false)
+		if (($conf = $this->_provdconfig->build_device_config($deviceid,$line_id)) === false)
+		{
+			dwho_report::push('error', 'fail to build config device: '.$deviceid);
 			return(false);
+		}
 		elseif ($this->_provdconfig->edit($deviceid,$conf) === false)
 		{
 			dwho_report::push('error', 'fail to edit config for this device: " '.$deviceid.' "');

@@ -1233,7 +1233,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			|| $this->add_voicemail($user_id) === false
 			|| ($extension_id = $this->add_exten($user_id)) === false
 			|| $this->add_user_line($user_id, $line_id, $extension_id) === false
-			|| $this->add_device_config($user_id) === false)
+			|| $this->add_device_config($line_id) === false)
 				$r = false;
 		}
 
@@ -1273,7 +1273,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		return(($this->_return['user_line'] = $this->_user_line->add($rs)));
 	}
 
-	function add_device_config($user_id)
+	function add_device_config($line_id)
 	{
 		if($this->_provddevice === false
 		|| ($rs = $this->get_result('linefeatures')) === null
@@ -1292,7 +1292,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 				dwho_report::push('error', 'device doesn\'t exist');
 				return(false);
 			}
-			elseif($this->_provddevice->update_config_from_line($device['deviceid'], $user_id) === false)
+			elseif($this->_provddevice->update_config_from_line($device['deviceid'], $line_id) === false)
 			{
 				dwho_report::push('error', 'Can\'t edit device');
 				return(false);
@@ -1529,7 +1529,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			{
 				if($this->edit_exten($user_id) === false
 				|| $this->edit_user_line($user_id, $this->_info['linefeatures'][0]['id']) === false
-				|| $this->edit_device_config($user_id) === false
+				|| $this->edit_device_config() === false
 				|| $this->edit_groupmember($user_id) === false
 				|| $this->edit_queuemember($user_id) === false)
 				{
@@ -1539,9 +1539,9 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 				}
 			}
 			else if($this->add_exten($user_id) === false
-			|| ($line_id = $existingline[0]['id']) === 0
+			|| ($line_id = $this->_return['linefeatures'][0]['id']) === 0
 			|| $this->add_user_line($user_id, $line_id) === false
-			|| $this->add_device_config($user_id) === false
+			|| $this->add_device_config($line_id) === false
 			|| $this->add_groupmember($user_id) === false
 			|| $this->add_queuemember($user_id) === false)
 			{
@@ -1811,7 +1811,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		return parent::edit_exten('exten');
 	}
 
-	function edit_device_config($user_id)
+	function edit_device_config()
 	{
 		if(dwho_issa('linefeatures',$this->_info) === false
 		|| ($rs = $this->get_result('linefeatures')) === null
@@ -1854,7 +1854,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 					dwho_report::push('error', 'device doesn\'t exist: '.$new_device['device']);
 					return(false);
 				}
-				elseif($this->_provddevice->update_config_from_line($device['deviceid'],$user_id) === false)
+				elseif($this->_provddevice->update_config_from_line($device['deviceid'],$new_device['id']) === false)
 				{
 					dwho_report::push('error', 'Can\'t update config device');
 					return(false);

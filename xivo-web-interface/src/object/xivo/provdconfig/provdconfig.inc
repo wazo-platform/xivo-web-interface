@@ -34,6 +34,7 @@ class xivo_object_provdconfig extends xivo_object_provd_abstract
 	protected $_linefeatures	= false;
 	protected $_phonefunckey 	= false;
 	protected $_appsip			= false;
+	protected $_user_line 	= false;
 	protected $_service			= false;
 
 	public function __construct(&$xobj,$param=array())
@@ -639,7 +640,7 @@ class xivo_object_provdconfig extends xivo_object_provd_abstract
 		}
 	}
 
-	public function build_device_config($configid, $userfeatures_id)
+	public function build_device_config($configid, $line_id)
 	{
 		$globalconfig = $this->init_device_config($configid);
 
@@ -647,14 +648,15 @@ class xivo_object_provdconfig extends xivo_object_provd_abstract
 
 		$this->_build_exten_config($raw_config);
 
-		$funckeys = $this->_phonefunckey->build_provd_conf_funckey($userfeatures_id);
+		$user_id = $this->_user_line->get_master_user_id_by_line_id($line_id);
+		$funckeys = $this->_phonefunckey->build_provd_conf_funckey($user_id);
 
 		if (empty($funckeys))
 			unset($raw_config['funckeys']);
 		else
 			$raw_config['funckeys'] = $funckeys;
 
-		$linefeatures = $this->_linefeatures->get_from_config($configid);
+		$linefeatures = $this->_linefeatures->get($line_id);
 		$protocolname = $linefeatures['protocol'];
 
 		switch($protocolname)
@@ -714,8 +716,7 @@ class xivo_object_provdconfig extends xivo_object_provd_abstract
 
 		foreach ($listline as $line)
 		{
-			$user_id = $this->_user_line->get_master_user_id_by_line_id($line['id']);
-			$globalconfig = $this->build_device_config($devicefeatures['deviceid'], $user_id);
+			$globalconfig = $this->build_device_config($devicefeatures['deviceid'], $line['id']);
 
 			if ($this->edit($devicefeatures['deviceid'],$globalconfig) === false)
 			{

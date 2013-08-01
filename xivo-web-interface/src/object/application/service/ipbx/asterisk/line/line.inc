@@ -532,7 +532,7 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 			$this->update_protocol_setvar($this->_protocolname, $protocol_id, $user_id);
 
 		$this->_status = '';
-		return(true);
+		return($this->_info['linefeatures']['id']);
 	}
 
 	function edit_protocol()
