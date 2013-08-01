@@ -2120,11 +2120,11 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		if(dwho_issa('linefeatures',$this->_info) === false)
 			return(null);
 		// remove device if associated
-		elseif(($device = $this->_device->get($this->_info['linefeatures']['device'],null,true)) === false)
+		elseif(($device = $this->_device->get($this->_info['linefeatures'][0]['device'],null,true)) === false)
 			return(true);
-		elseif($this->_device->remove_line($this->_info['linefeatures']['num']) === false)
+		elseif($this->_device->remove_line($this->_info['linefeatures'][0]['num']) === false)
 			return(false);
-		elseif ($this->_info['linefeatures']['protocol'] === XIVO_SRE_IPBX_AST_PROTO_SCCP
+		elseif ($this->_info['linefeatures'][0]['protocol'] === XIVO_SRE_IPBX_AST_PROTO_SCCP
 		&& $this->_sccpdevice->init_device($device['devicefeatures']['mac'],'') === false)
 			return(false);
 
