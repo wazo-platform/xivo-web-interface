@@ -46,6 +46,7 @@ function dwho_include_extra_files_from_dir($directory, &$extra_array=null)
 
 function dwho_array_set_value_to_key($arr, $key_of_expected_value, $only_value=false)
 {
+	$arr = (array) $arr;
 	$r = array();
 	foreach($arr as $old_key => $element)
 	{
