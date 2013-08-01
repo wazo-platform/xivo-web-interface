@@ -777,7 +777,8 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			}
 		}
 		elseif(dwho_issa('voicemail',$arr) === true
-		&& isset($this->_info['linefeatures']) === false)
+		&& (isset($this->_info['linefeatures']) === false
+			|| $this->_info['linefeatures'] === false))
 		{
 			$this->_set_error('voicemail', dwho_i18n::babelfish('user_need_lines_to_have_voicemail'));
 			dwho_report::push('error', dwho_i18n::babelfish('user_need_lines_to_have_voicemail'));
