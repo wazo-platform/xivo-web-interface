@@ -1024,7 +1024,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		return($r);
 	}
 
-	function set_phonefunckey($list,$iduserfeatures)
+	function set_phonefunckey($list)
 	{
 		if(($list = dwho_group_array('fknum',$list)) === false)
 			return(false);
