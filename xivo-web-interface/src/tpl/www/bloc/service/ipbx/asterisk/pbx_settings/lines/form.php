@@ -45,6 +45,10 @@ endif;
 if ($protocol === '')
 	$protocol = $info['linefeatures']['protocol'];
 
+if ($this->get_var('act') == 'edit')
+	echo $form->hidden(array('name' => 'protocol[context]','value' => $context));
+
+
 $codec_active = empty($allow) === false;
 $host_static = ($host !== '' && $host !== 'dynamic');
 

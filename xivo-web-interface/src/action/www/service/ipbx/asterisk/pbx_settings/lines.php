@@ -92,10 +92,6 @@ switch($act)
 				'readonly' => $ro,
 				'class'    => 'it-'.($ro?'disabled':'enabled')
 			);
-			$element['linefeatures']['number']   = array(
-				'readonly' => $ro,
-				'class'    => 'it-'.($ro?'disabled':'enabled')
-			);
 		}
 
 		if(dwho_issa('allow',$element['protocol']['sip']) === true
@@ -166,10 +162,6 @@ switch($act)
 				'class'    => 'it-'.($ro?'disabled':'enabled')
 			);
 			$element['protocol']['secret']   = array(
-				'readonly' => $ro,
-				'class'    => 'it-'.($ro?'disabled':'enabled')
-			);
-			$element['linefeatures']['number']   = array(
 				'readonly' => $ro,
 				'class'    => 'it-'.($ro?'disabled':'enabled')
 			);
