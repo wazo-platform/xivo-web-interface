@@ -776,7 +776,8 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 				$this->_set_result('exten',$rsexten);
 			}
 		}
-		elseif(dwho_issa('voicemail',$arr) === true)
+		elseif(dwho_issa('voicemail',$arr) === true
+		&& isset($this->_info['linefeatures']) === false)
 		{
 			$this->_set_error('voicemail', dwho_i18n::babelfish('user_need_lines_to_have_voicemail'));
 			dwho_report::push('error', dwho_i18n::babelfish('user_need_lines_to_have_voicemail'));
@@ -950,6 +951,9 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		}
 
 		array_pop($reslist);
+
+		if (empty($reslist) === true)
+			return(null);
 
 		for($i = 0;$i < count($reslist);$i++)
 		{
@@ -1544,6 +1548,26 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			|| $this->add_device_config($line_id) === false
 			|| $this->add_groupmember($user_id) === false
 			|| $this->add_queuemember($user_id) === false)
+			{
+				$this->_reverse_edit();
+				$this->_status = '';
+				return(false);
+			}
+		}
+		elseif($this->get_result('linefeatures') === null
+		&& $this->_info['linefeatures'] !== false)
+		{
+			if(isset($this->_info['userfeatures']['voicemailid'])
+			&& (int) $this->_info['userfeatures']['voicemailid'] !== 0)
+			{
+				$this->_set_error('voicemail', dwho_i18n::babelfish('user_no_remove_lines_when_voicemail'));
+				dwho_report::push('error', dwho_i18n::babelfish('user_no_remove_lines_when_voicemail'));
+				return(false);
+			}
+
+			if ($this->delete_linefeatures() === false
+			|| $this->delete_exten('exten') === false
+			|| $this->delete_device_config() === false)
 			{
 				$this->_reverse_edit();
 				$this->_status = '';
