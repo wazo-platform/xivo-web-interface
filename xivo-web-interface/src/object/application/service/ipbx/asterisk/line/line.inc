@@ -389,6 +389,10 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 				$arr = array_merge($protocolret, $arr);
 		}
 
+		if(empty($arr['allow']) === false
+		&& is_array($arr['allow']) === false)
+			$arr['allow'] = explode(',',$arr['allow']);
+
 		if(($rs = $protocol->chk_values($arr)) === false)
 		{
 			$this->_set_result('protocol',$protocol->get_filter_result());
