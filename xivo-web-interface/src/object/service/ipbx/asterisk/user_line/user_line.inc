@@ -90,10 +90,10 @@ class xivo_service_asterisk_user_line extends xivo_service_asterisk_abstract
 
 		if(($rs = $this->get_where($where)) ===false
 		|| count($rs) === 0
-		|| isset($rs['id']) === false)
+		|| isset($rs['user_id']) === false)
 			return(false);
 
-		return((int) $rs['id']);
+		return((int) $rs['user_id']);
 	}
 }
 

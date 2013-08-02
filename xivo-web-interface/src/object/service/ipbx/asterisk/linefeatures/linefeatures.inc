@@ -27,6 +27,7 @@ class xivo_service_asterisk_linefeatures extends xivo_service_asterisk_abstract
 	var $_filter	= false;
 	var $_origin	= false;
 	var $_identity	= false;
+	private $_user_line = false;
 
 	public function __construct(&$sre,&$dso)
 	{
@@ -35,6 +36,8 @@ class xivo_service_asterisk_linefeatures extends xivo_service_asterisk_abstract
 
 		if(is_object($dso) === false)
 			trigger_error('Invalid datastorage in '.__CLASS__,E_USER_ERROR);
+
+		$this->_user_line = $sre->get_module('user_line');
 
 		$this->_sre = &$sre;
 		$this->_dso = &$dso;
@@ -50,8 +53,7 @@ class xivo_service_asterisk_linefeatures extends xivo_service_asterisk_abstract
 		$data['num'] = (int) $data['num'];
 		$data['commented'] = (bool) $data['commented'];
 		$data['encryption'] = isset($data['encryption']) ? (bool) $data['encryption'] : false;
-		$user_line = $this->_sre->get_module('user_line');
-		$data['iduserfeatures'] = (int) $user_line->get_master_user_id_by_line_id($data['id']);
+		$data['iduserfeatures'] = (int) $this->_user_line->get_master_user_id_by_line_id($data['id']);
 
 		return($data);
 	}
