@@ -182,42 +182,6 @@ class xivo_application_service_asterisk_user_sql extends xivo_application_abstra
 		return($r);
 	}
 
-	function chk_bsfilter($id,$bsfilter,$user2id)
-	{
-		if(($id = dwho_ulongint($id)) === 0
-		|| ($user2id = dwho_ulongint($user2id)) === 0)
-			return(false);
-
-		$this->_dso->new_select($this->_table['callfilter'],null);
-		$this->_dso->where(array('type' => 'bosssecretary'),$this->_table['callfilter']);
-		$this->_dso->andwhere($this->_table['callfilter'].'.bosssecretary IS NOT NULL');
-
-		$this->_dso->innerjoin(array('cfilterm1' => $this->_table['callfiltermember']),
-				       $this->_table['callfilter'].'.id = cfilterm1.callfilterid');
-		$this->_dso->joinwhere('cfilterm1',array('type'		=> 'user',
-							 'bstype'	=> $bsfilter));
-
-		$this->_dso->innerjoin(array('user1' => $this->_table['userfeatures']),
-				       $this->_dso->cast('cfilterm1.typeval','int').' = user1.id');
-		$this->_dso->joinwhere('user1','cfilterm1.bstype = user1.bsfilter');
-		$this->_dso->andjoinwhere('user1',array('id' => $id));
-		//$this->_dso->andjoinwherenot('user1','COALESCE(user1.number,\'\') = \'\'');
-
-		$this->_dso->innerjoin(array('cfilterm2' => $this->_table['callfiltermember']),
-				       $this->_table['callfilter'].'.id = cfilterm2.callfilterid',
-				       null,
-				       'id');
-		$this->_dso->joinwhere('cfilterm2',array('type' => 'user'));
-		$this->_dso->andjoinwherenot('cfilterm2',array('bstype' => $bsfilter));
-
-		$this->_dso->innerjoin(array('user2' => $this->_table['userfeatures']),
-				       $this->_dso->cast('cfilterm2.typeval','int').' = user2.id');
-		$this->_dso->joinwhere('user2','cfilterm2.bstype = user2.bsfilter');
-		//$this->_dso->andjoinwherenot('user2','COALESCE(user2.number,\'\') = \'\'');
-
-		return($this->_dso->select_one());
-	}
-
 	function get_phonefunckey($id)
 	{
 		if(($id = dwho_ulongint($id)) === 0)

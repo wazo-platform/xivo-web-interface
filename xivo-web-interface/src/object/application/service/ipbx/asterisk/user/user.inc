@@ -1072,12 +1072,6 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 							  $info['iduserfeatures'],
 							  null) === false)
 				return(false);
-			else if($info['typeextenumbers'] === 'extenfeatures'
-			&& $info['typevalextenumbers'] === 'bsfilter'
-			&& $this->_dso->chk_bsfilter($info['iduserfeatures'],
-						     $bsfilter,
-						     $info['typevalextenumbersright']) === false)
-				return(false);
 		}
 
 		$this->_set_result('phonefunckey',$reslist);
