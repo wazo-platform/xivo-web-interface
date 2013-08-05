@@ -45,6 +45,7 @@ class xivo_service_asterisk_phonefunckey extends xivo_service_asterisk_abstract
 
 	function _prepare($data)
 	{
+		$data['iduserfeatures'] = (int) $data['iduserfeatures'];
 		$data['type'] = '';
 		$data['typeval'] = '';
 		$data['user'] = '';
@@ -147,7 +148,7 @@ class xivo_service_asterisk_phonefunckey extends xivo_service_asterisk_abstract
 			return(false);
 
 		$r = array();
-		$r['iduserfeatures'] = $arr['iduserfeatures'];
+		$r['iduserfeatures'] = (int) $arr['iduserfeatures'];
 		$r['fknum'] = $arr['fknum'];
 		$r['exten'] = '';
 		$r['typeextenumbers'] = '';
@@ -421,7 +422,6 @@ class xivo_service_asterisk_phonefunckey extends xivo_service_asterisk_abstract
 		|| ($modqueuefeatures = &$ipbx->get_module('queuefeatures')) === false
 		|| ($modmeetmefeatures = &$ipbx->get_module('meetmefeatures')) === false
 		|| ($modgroupfeatures = &$ipbx->get_module('groupfeatures')) === false
-		|| ($modlinefeatures = &$ipbx->get_module('linefeatures')) === false
 		|| ($moduserfeatures = &$ipbx->get_module('userfeatures')) === false
 		|| ($appfeatures = &$ipbx->get_apprealstatic('features')) === false
 		|| ($appfeaturemap = &$appfeatures->get_module('featuremap')) === false
@@ -464,10 +464,8 @@ class xivo_service_asterisk_phonefunckey extends xivo_service_asterisk_abstract
 					$exten = $ref['exten'];
 					break;
 				case 'user':
-					$where = array();
-					$where['iduserfeatures'] = $type['val'];
-					if(($linefeatures = $modlinefeatures->get_all_where($where)) !== false)
-						$exten = $linefeatures[0]['number'];
+					if(($extension = $modextensions->get_by_user_id($type['val'])) !== false)
+						$exten = $extension['exten'];
 					break;
 				case 'queue':
 					$queue_id = $type['val'];

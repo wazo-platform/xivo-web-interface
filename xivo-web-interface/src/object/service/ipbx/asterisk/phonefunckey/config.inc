@@ -212,6 +212,7 @@ $array['element'] = array();
 
 $array['element']['iduserfeatures'] = array();
 $array['element']['iduserfeatures']['default'] = 0;
+$array['element']['iduserfeatures']['forcedef'] = true;
 
 $array['element']['fknum'] = array();
 $array['element']['fknum']['value'] = range(1,100);
