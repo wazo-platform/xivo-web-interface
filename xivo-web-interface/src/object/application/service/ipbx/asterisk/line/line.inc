@@ -381,17 +381,17 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 			$arr['host'] = $arr['host-static'];
 
 		if (isset($this->_info['protocol']['id']) === true
-		&& ($protocolret = $protocol->get($this->_info['protocol']['id'])) !== false)
+		&& ($protocolret = $protocol->get($this->_info['protocol']['id'])) !== false
+		&& $this->get_result('user_id') !== null)
 		{
-			if ($this->get_result('user_id') !== null)
-				$arr = array_merge($arr, $protocolret);
-			else
-				$arr = array_merge($protocolret, $arr);
-		}
+			if($arr['allow'] === null)
+				unset($arr['allow']);
+			$arr = array_merge($protocolret, $arr);
 
-		if(empty($arr['allow']) === false
-		&& is_array($arr['allow']) === false)
-			$arr['allow'] = explode(',',$arr['allow']);
+			if(empty($arr['allow']) === false
+			&& is_array($arr['allow']) === false)
+				$arr['allow'] = explode(',',$arr['allow']);
+		}
 
 		if(($rs = $protocol->chk_values($arr)) === false)
 		{
