@@ -51,6 +51,7 @@ switch($act)
 			$_TPL->set_var('list',$trunkid);
 		else
 		{
+			dwho_error_log($apptrunk->get_error());
 			$http_response->set_status_line(400);
 			$http_response->send(true);
 		}
@@ -67,7 +68,7 @@ switch($act)
 		else
 			$status = 400;
 
-		error_log(dwho_json::encode($apptrunk->get_error()));
+		dwho_error_log($apptrunk->get_error(), $status);
 
 		$http_response->set_status_line($status);
 		$http_response->send(true);
@@ -82,6 +83,8 @@ switch($act)
 			$status = 200;
 		else
 			$status = 500;
+
+		dwho_error_log($apptrunk->get_error(), $status);
 
 		$http_response->set_status_line($status);
 		$http_response->send(true);

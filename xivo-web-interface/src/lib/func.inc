@@ -79,6 +79,12 @@ function dwho_clean_cmd_list_to_process()
 	$_SESSION['cmd_list_to_process'] = array();
 }
 
+function dwho_error_log($msg, $status=null)
+{
+	if ($status !== 200)
+		error_log(dwho_json::encode($msg));
+}
+
 function dwho_logw($str,$login,$act)
 {
 	if (defined('XIVO_LOG_FILE') === false)

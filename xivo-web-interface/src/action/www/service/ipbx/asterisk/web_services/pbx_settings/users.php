@@ -55,7 +55,7 @@ switch($act)
 		}
 		else
 		{
-			error_log(dwho_json::encode($appuser->get_error()));
+			dwho_error_log($appuser->get_error());
 			$http_response->set_status_line(400);
 			$http_response->send(true);
 		}
@@ -74,8 +74,7 @@ switch($act)
 		else
 			$status = 400;
 
-		if ($status !== 200)
-			error_log(dwho_json::encode($appuser->get_error()));
+		dwho_error_log($appuser->get_error(), $status);
 
 		$http_response->set_status_line($status);
 		$http_response->send(true);
@@ -88,8 +87,7 @@ switch($act)
 		else
 			$status = 400;
 
-		if ($status !== 200)
-			error_log(dwho_json::encode($appuser->get_error()));
+		dwho_error_log($appuser->get_error(), $status);
 
 		$http_response->set_status_line($status);
 		$http_response->send(true);
@@ -104,8 +102,7 @@ switch($act)
 		else
 			$status = 500;
 
-		if ($status !== 200)
-			error_log(dwho_json::encode($appuser->get_error()));
+		dwho_error_log($appuser->get_error(), $status);
 
 		$http_response->set_status_line($status);
 		$http_response->send(true);

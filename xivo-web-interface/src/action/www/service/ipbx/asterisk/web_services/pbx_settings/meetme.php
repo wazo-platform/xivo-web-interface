@@ -38,6 +38,8 @@ switch($act)
 					    null,
 					    $nocomponents)) === false)
 		{
+
+			dwho_error_log($appmeetme->get_error());
 			$http_response->set_status_line(404);
 			$http_response->send(true);
 		}
@@ -48,6 +50,8 @@ switch($act)
 		$appmeetme = &$ipbx->get_application('meetme');
 
 		$status = $appmeetme->add_from_json() === true ? 200 : 400;
+
+		dwho_error_log($appmeetme->get_error(), $status);
 
 		$http_response->set_status_line($status);
 		$http_response->send(true);
@@ -61,6 +65,8 @@ switch($act)
 			$status = 200;
 		else
 			$status = 500;
+
+		dwho_error_log($appmeetme->get_error(), $status);
 
 		$http_response->set_status_line($status);
 		$http_response->send(true);

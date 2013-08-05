@@ -50,6 +50,8 @@ switch($act)
 		else
 			$status = 400;
 
+		dwho_error_log($appgroup->get_error(), $status);
+
 		$http_response->set_status_line($status);
 		$http_response->send(true);
 		break;
@@ -63,6 +65,8 @@ switch($act)
 		else
 			$status = 400;
 
+		dwho_error_log($appgroup->get_error(), $status);
+
 		$http_response->set_status_line($status);
 		$http_response->send(true);
 		break;
@@ -75,6 +79,8 @@ switch($act)
 			$status = 200;
 		else
 			$status = 500;
+
+		dwho_error_log($appgroup->get_error(), $status);
 
 		$http_response->set_status_line($status);
 		$http_response->send(true);
