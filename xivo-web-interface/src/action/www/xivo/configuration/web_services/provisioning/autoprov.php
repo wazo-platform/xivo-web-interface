@@ -53,8 +53,7 @@ switch($act)
 				$http_response->set_status_line(200);
 		}
 		elseif(($line = $linefeatures->get_line_provisioniable($data['code'])) === false
-		|| ($user_master_id = $user_line->get_master_user_id_by_line_id($line['id'])) === false
-		|| $appdevice->associate_line($line['id'],$user_master_id,true) === false)
+		|| $appdevice->associate_line($line['id'],true) === false)
 			$http_response->set_status_line(400);
 		else
 			$http_response->set_status_line(200);
