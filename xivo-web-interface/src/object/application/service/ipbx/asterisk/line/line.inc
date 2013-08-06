@@ -619,7 +619,8 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 
 	public function update_device_config()
 	{
-		if(empty($this->_info['linefeatures']['device']) === false)
+		if($this->get_result('user_id') === null
+		&& empty($this->_info['linefeatures']['device']) === false)
 		{
 			if(($device = $this->_devicefeatures->get($this->_info['linefeatures']['device'])) === false)
 			{
