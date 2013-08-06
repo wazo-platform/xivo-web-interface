@@ -530,7 +530,8 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 			$this->_status = '';
 			return(false);
 		}
-		elseif($this->edit_linefeatures($protocol_id) === false)
+		elseif($this->edit_linefeatures($protocol_id) === false
+		|| $this->update_device_config() === false)
 		{
 			$this->_reverse_edit($protocol_id);
 			$this->_status = '';
@@ -610,6 +611,14 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 		else
 			return(false);
 
+		return(($this->_return['linefeatures'] = $this->_linefeatures->edit(
+											$this->_info['linefeatures']['id'],
+											$rs,
+											$provisioning)));
+	}
+
+	public function update_device_config()
+	{
 		if(empty($this->_info['linefeatures']['device']) === false)
 		{
 			if(($device = $this->_devicefeatures->get($this->_info['linefeatures']['device'])) === false)
@@ -623,11 +632,7 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 				return(false);
 			}
 		}
-
-		return(($this->_return['linefeatures'] = $this->_linefeatures->edit(
-											$this->_info['linefeatures']['id'],
-											$rs,
-											$provisioning)));
+		return(true);
 	}
 
 	function _reverse_edit($protocol_id=0)
