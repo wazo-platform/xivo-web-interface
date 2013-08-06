@@ -41,7 +41,6 @@ switch($act)
 
 		$appdevice = &$ipbx->get_application('device',null,false);
 		$linefeatures = &$ipbx->get_module('linefeatures');
-		$user_line = &$ipbx->get_module('user_line');
 
 		if($appdevice->update_by_ip($data['ip']) === false)
 			$http_response->set_status_line(400);
