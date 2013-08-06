@@ -376,26 +376,33 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 			return(false);
 		}
 
-		if(isset($arr['host-type']) === true)
-			$arr['host'] = $arr['host-type'];
-		else if(isset($arr['host']) === false)
-			$arr['host'] = '';
+		if ($this->get_result('user_id') === null)
+		{
+			if(isset($arr['host-type']) === true)
+				$arr['host'] = $arr['host-type'];
+			else if(isset($arr['host']) === false)
+				$arr['host'] = '';
 
-		if(isset($arr['host-static']) === true
-		&& $arr['host'] === 'static')
-			$arr['host'] = $arr['host-static'];
+			if(isset($arr['host-static']) === true
+			&& $arr['host'] === 'static')
+				$arr['host'] = $arr['host-static'];
+		}
 
 		if (isset($this->_info['protocol']['id']) === true
-		&& ($protocolret = $protocol->get($this->_info['protocol']['id'])) !== false
-		&& $this->get_result('user_id') !== null)
+		&& ($protocolret = $protocol->get($this->_info['protocol']['id'])) !== false)
 		{
-			if($arr['allow'] === null)
-				unset($arr['allow']);
-			$arr = array_merge($protocolret, $arr);
+			if($this->get_result('user_id') !== null)
+			{
+				if($arr['allow'] === null)
+					unset($arr['allow']);
+				$arr = array_merge($protocolret, $arr);
 
-			if(empty($arr['allow']) === false
-			&& is_array($arr['allow']) === false)
-				$arr['allow'] = explode(',',$arr['allow']);
+				if(empty($arr['allow']) === false
+				&& is_array($arr['allow']) === false)
+					$arr['allow'] = explode(',',$arr['allow']);
+			}
+			else
+				$arr['call-limit'] = $protocolret['call-limit'];
 		}
 
 		if(($rs = $protocol->chk_values($arr)) === false)
