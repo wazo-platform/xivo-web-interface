@@ -66,7 +66,6 @@ class xivo_service_asterisk_linefeatures_sql extends xivo_service_asterisk_abstr
 		if(((int) $userid = dwho_ulongint($userid)) !== 0)
 		{
 			$this->_dso->innerjoin('user_line', 'user_line.user_id = '.$userid);
-			$this->_dso->joinwhere('user_line', array('main_user' => 'true'));
 			$this->_dso->andjoinwhere('user_line', array('main_line' => 'true'));
 			$this->_dso->where($this->_table.'."id" = "user_line"."line_id"');
 		}
