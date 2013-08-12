@@ -113,9 +113,9 @@ $page = $url->pager($pager['pages'],
 			</label>
 		</td>
 		<td class="txt-center col_provisioning_code"><?=(!isset($line['provisioningid'])) ? '-' : $line['provisioningid']?></td>
-		<td class="txt-center"><?=($line['protocol']);?></td>
+		<td class="txt-center col_protocol"><?=($line['protocol']);?></td>
 		<td class="txt-center col_number"><?=(!isset($line['number'])) ? '-' : $line['number']?></td>
-		<td class="txt-center"><?=($line['context']);?></td>
+		<td class="txt-center col_context"><?=($line['context']);?></td>
 		<td class="td-right col_actions" colspan="2">
 <?php
 		echo	$url->href_html($url->img_html('img/site/button/edit.gif',
