@@ -79,13 +79,6 @@ class xivo_service_asterisk_linefeatures_sql extends xivo_service_asterisk_abstr
 		return($this->_dso->select_single());
 	}
 
-	function from_config($config)
-	{
-		$this->_dso->new_select($this->_table);
-		$this->_dso->where(array('config' => $config));
-		return($this->_dso->select_single());
-	}
-
 	function search($value,$disable=null,$order=null,$limit=null,$number=false)
 	{
 		$this->_cnt = 0;
