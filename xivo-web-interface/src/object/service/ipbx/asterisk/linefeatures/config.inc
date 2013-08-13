@@ -49,9 +49,6 @@ $array['element']['context']['default'] = 'default';
 $array['element']['number'] = array();
 $array['element']['number']['default'] = '';
 
-$array['element']['config'] = array();
-$array['element']['config']['default'] = '';
-
 $array['element']['configregistrar'] = array();
 $array['element']['configregistrar']['default'] = 'default';
 $array['element']['configregistrar']['set'] = true;
@@ -72,7 +69,6 @@ $array['filter']['protocol'] = array('key' => $array['element']['protocol']['val
 $array['filter']['protocolid'] = array('cast' => 'ulongint');
 $array['filter']['num'] = array('set' => false,'cast' => 'ulongint');
 $array['filter']['name'] = array('minlen' => 1,'maxlen' => 128,'regexp' => '/^[a-z0-9#\*\.\/_@:-]+$/i');
-$array['filter']['config'] = array('set' => false,'chk' => 2,'maxlen' => 128,'regexp' => '/^[a-z0-9#\*\.\/_@:-]+$/i');
 $array['filter']['configregistrar'] = array('set' => false,'chk' => 2,'maxlen' => 128,'regexp' => '/^[a-z0-9#\*\.\/_@:-]+$/i');
 $array['filter']['device'] =  array('set' => false,'chk' => 2,'regexp' => '/^[a-z0-9]+$/','maxlen' => 32);
 $array['filter']['context'] = array('callback' => 'xivo_service_asterisk::chk_context',

@@ -343,8 +343,8 @@ class xivo_application_service_asterisk_device extends xivo_application_asterisk
 		$id = $this->_info['devicefeatures']['id'];
 		$deviceid = $this->_info['devicefeatures']['deviceid'];
 
-		$this->_linefeatures->edit($linefeatures_id,array('device' => $id,
-				'config' => $deviceid));
+		$this->_linefeatures->edit($linefeatures_id, array('device' => $id));
+		$this->_devicefeatures->edit($id, array('config' => $deviceid));
 
 		if($this->_provddevice->update_config_from_line($deviceid,$linefeatures_id,$synchronize) === false)
 			return(false);
