@@ -32,6 +32,7 @@ switch($act)
 
 		if(($info = $appincall->get($_QRY->get('id'))) === false)
 		{
+			dwho_error_log($appincall->get_error(), 404);
 			$http_response->set_status_line(404);
 			$http_response->send(true);
 		}
@@ -41,6 +42,8 @@ switch($act)
 	case 'add':
 		$appincall = &$ipbx->get_application('incall');
 		$status = $appincall->add_from_json() === true ? 200 : 400;
+
+		dwho_error_log($appincall->get_error(), $status);
 
 		$http_response->set_status_line($status);
 		$http_response->send(true);
@@ -55,6 +58,8 @@ switch($act)
 		else
 			$status = 400;
 
+		dwho_error_log($appincall->get_error(), $status);
+
 		$http_response->set_status_line($status);
 		$http_response->send(true);
 		break;
@@ -67,6 +72,8 @@ switch($act)
 			$status = 200;
 		else
 			$status = 500;
+
+		dwho_error_log($appincall->get_error(), $status);
 
 		$http_response->set_status_line($status);
 		$http_response->send(true);
