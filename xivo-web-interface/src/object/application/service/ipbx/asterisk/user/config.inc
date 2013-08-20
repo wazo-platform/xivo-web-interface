@@ -38,6 +38,7 @@ $array['import']['field']['enableclient'] = array('userfeatures','enableclient')
 $array['import']['field']['username'] = array('userfeatures','loginclient');
 $array['import']['field']['password'] = array('userfeatures','passwdclient');
 $array['import']['field']['profileclient'] = array('userfeatures','profileclient');
+$array['import']['field']['enablexfer'] = array('userfeatures','enablexfer');
 $array['import']['field']['enablehint'] = array('userfeatures','enablehint');
 $array['import']['field']['agentnumber'] = array('userfeatures','agentnumber');
 $array['import']['field']['mobilephonenumber'] = array('userfeatures','mobilephonenumber');

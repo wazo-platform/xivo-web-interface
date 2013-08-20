@@ -2394,6 +2394,10 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		if (isset($arr['userfeatures']['entityid']) === false)
 			$arr['userfeatures']['entityid'] = 1;
 
+		if (isset($arr['userfeatures']['enablexfer']) === false
+		|| dwho_has_len($arr['userfeatures']['enablexfer']) === false)
+			$arr['userfeatures']['enablexfer'] = 1;
+
 		if(dwho_has_len($arr['userfeatures'],'firstname') === true)
 			$arr['userfeatures']['callerid'] = $arr['userfeatures']['firstname'].' ';
 
