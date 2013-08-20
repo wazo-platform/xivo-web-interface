@@ -74,7 +74,7 @@ $array['element']['description']['default'] = '';
 
 
 $array['filter'] = array();
-$array['filter']['number'] = array('minlen' => 1,'maxlen' => 40,'regexp' => '/^(?:[saotTih]|_?\+?[0-9NXZ\*#\-\[\]]+[\.\!]?)$/');
+$array['filter']['number'] = array('minlen' => 1,'maxlen' => 40,'regexp' =>  '/^[0-9]+$/');
 $array['filter']['duplex'] = array('bool' => true);
 $array['filter']['ignore'] = array('bool' => true);
 $array['filter']['quiet'] = array('bool' => true);
