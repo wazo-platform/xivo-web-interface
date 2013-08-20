@@ -25,15 +25,6 @@ User
 ; fm_dialaction_user-actionarg1
 Redirect to :
 
-; fm_dialaction_user-actionarg2
-Ring time :
-
-; fm_dialaction_actiontype-opt(outcall|Asterisk)
-Outcall
-
-; fm_dialaction_outcall-actionarg1
-Redirect to :
-
 ; fm_dialaction_outcall-actionarg2
 Number to : 
 
@@ -252,6 +243,3 @@ Add sound file
 
 ; create_callfilter
 Create callfilter
-
-; create_outcall
-Create outcall
