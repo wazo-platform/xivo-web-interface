@@ -57,7 +57,8 @@ class xivo_application_service_asterisk_ctistatus extends xivo_application_aster
 		$this->_return = array();
 
 		if($this->get_errnb() > 0
-		|| $this->delete_status() === false)
+		|| $this->delete_status() === false
+		|| $this->clean_access_status() === false)
 		{
 			$r = false;
 			$this->_reverse_delete();
@@ -80,6 +81,30 @@ class xivo_application_service_asterisk_ctistatus extends xivo_application_aster
 			$this->_return['status'] = $r;
 
 		return($r);
+	}
+
+	function clean_access_status()
+	{
+		if(dwho_issa('ctistatus',$this->_info) === false
+		|| (string) $this->_info['ctistatus']['id'] === '1')
+			return(false);
+
+		$arr['presence_id'] = $this->_info['ctistatus']['presence_id'];
+		$status_list = $this->_ctistatus->get_all_where($arr);
+
+		foreach($status_list as $status)
+		{
+			$tmp = array();
+			$access_status = explode(',', $status['access_status']);
+			foreach($access_status as $status_id)
+			{
+				if ($status_id == $this->_info['ctistatus']['id'])
+					continue;
+				array_push($tmp, $status_id);
+			}
+			$status_res = array('access_status' => implode(',', $tmp));
+			$this->_ctistatus->edit($status['id'],$status_res);
+		}
 	}
 
 	function _reverse_delete()
