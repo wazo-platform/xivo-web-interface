@@ -25,8 +25,8 @@ User
 ; fm_dialaction_user-actionarg1
 Redirect to :
 
-; fm_dialaction_user-actionarg2
-Ring time :
+; fm_dialaction_outcall-actionarg2
+Number to : 
 
 ; fm_dialaction_actiontype-opt(trunk)
 Trunk
