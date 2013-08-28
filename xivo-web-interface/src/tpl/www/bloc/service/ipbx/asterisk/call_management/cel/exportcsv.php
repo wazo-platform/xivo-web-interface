@@ -28,7 +28,7 @@ header('Cache-Control: private, must-revalidate');
 header('Last-Modified: '.
 	date('D, d M Y H:i:s',mktime()).' '.
 	dwho_i18n::strftime_l('%Z',null));
-header('Content-Disposition: attachment; filename=xivo_cel-'.
+header('Content-Disposition: attachment; filename=xivo_call-logs-'.
 	dwho_i18n::strftime_l('%Y-%m-%d-%H:%M:%S',null).'.csv');
 header('Content-Type: text/csv; charset=UTF-8');
 
