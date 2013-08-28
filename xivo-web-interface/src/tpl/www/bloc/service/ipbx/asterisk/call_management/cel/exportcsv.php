@@ -39,50 +39,9 @@ if($result === null || ($nb = count($result)) === 0)
 	ob_end_flush();
 	die();
 }
-
-echo	'"',str_replace('"','""',$this->bbf('col_calldate')),'";',
-	'"',str_replace('"','""',$this->bbf('col_src')),'";',
-	'"',str_replace('"','""',$this->bbf('col_dst')),'";',
-	'"',str_replace('"','""',$this->bbf('col_duration')),'";',
-	'"',str_replace('"','""',$this->bbf('col_channel')),'";',
-	'"',str_replace('"','""',$this->bbf('col_amaflags')),'";',
-	'"',str_replace('"','""',$this->bbf('col_accountcode')),'";',
-	'"',str_replace('"','""',$this->bbf('col_userfield')),'";',
-	'"',str_replace('"','""',$this->bbf('col_dcontext')),'";',
-	'"',str_replace('"','""',$this->bbf('col_dstchannel')),'";',
-	'"',str_replace('"','""',$this->bbf('col_uniqueid')),'"',"\n";
-
-for($i = 0;$i < $nb;$i++)
-{
-	$ref = &$result[$i];
-
-	$ref0 = array_shift($ref);
-	$ref1 = array_shift($ref);
-
-	if(!isset($ref0['from']) || !dwho_has_len($ref0['from']))
-		$ref0['from'] = '-';
-
-	if(!isset($ref0['to']) || !dwho_has_len($ref0['to']))
-		$ref0['to'] = '-';
-
-	if($ref0['channame'] === XIVO_SRE_IPBX_AST_CHAN_UNKNOWN)
-		$ref0['channame'] = $this->bbf('entry_channel','unknown');
-
-	echo	'"',str_replace('"','""',strftime($this->bbf('date_format_yymmddhhiiss'),strtotime($ref0['dstart']))),'";',
-		'"',str_replace('"','""',$ref0['from']),'";',
-		'"',str_replace('"','""',$ref0['to']),'";',
-		'"',str_replace('"','""',$ref0['duration']),'";',
-		'"',str_replace('"','""',$ref0['channame']),'";',
-		'"";',	// empty amaflags column
-		'"',str_replace('"','""',$ref0['accountcode']),'";',
-		'"',str_replace('"','""',$ref0['userfield']),'";',
-		'"',str_replace('"','""',$ref0['context']),'";',
-		'"',str_replace('"','""',$ref1['channame']),'";',
-		'"',str_replace('"','""',$ref0['uniqueid']),'"',"\n";
-}
+echo $result;
 
 header('Content-Length: '.ob_get_length());
 ob_end_flush();
 die();
-
 ?>

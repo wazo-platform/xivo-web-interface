@@ -33,19 +33,25 @@ $result = false;
 
 if(isset($_QR['fm_send']) === true || isset($_QR['search']) === true)
 {
-	if(($info = $cel->chk_values($_QR,false)) === false)
+	$query = "";
+	if(isset($_QR['dbeg']) === true && isset($_QR['dend']) === true)
 	{
-		$info = $cel->get_filter_result();
+		$start = date("Y-m-d", strtotime($_QR['dbeg'])) . 'T00:00:00';
+		$end = date("Y-m-d", strtotime($_QR['dend'])) . 'T23:59:59';
+		$query = "?start_date=" . $start . "&end_date=" . $end;
 	}
 
-		if($result === false)
-			$info = null;
+	$restapi = &$_XOBJ->get_module('restapi');
+	$restapi_uri_csv = $restapi->get_uri('call_logs');
 
-		$_TPL->set_var('pager',dwho_calc_page($page,$nbbypage,$total));
-	}
+	$result = file_get_contents($restapi_uri_csv . $query);
+	$_TPL->set_var('result',$result);
+	$_TPL->display('/bloc/service/ipbx/'.$ipbx->get_name().'/call_management/cel/exportcsv');
+	die();
 }
 
 $_TPL->set_var('result',$result);
+$_TPL->set_var('info',$info);
 $_TPL->set_var('act',$act);
 
 $menu = &$_TPL->get_module('menu');
