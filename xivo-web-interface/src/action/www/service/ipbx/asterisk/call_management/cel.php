@@ -22,38 +22,11 @@
 $_TPL->load_i18n_file('tpl/www/bloc/statistics/statistics', 'global');
 $_TPL->load_i18n_file('tpl/www/bloc/service/ipbx/'.$ipbx->get_name().'/call_management/cel/index.i18n', 'global');
 
-$page = isset($_QR['page']) === true ? dwho_uint($_QR['page'],1) : 1;
 $act = isset($_QR['act']) === false || $_QR['act'] !== 'exportcsv' ? 'advanced_search' : 'exportcsv';
 
 $_STS->load_ressource('cel');
 
-$stats_cel = new stats_ressource_cel();
-$cel = &$ipbx->get_module('cel');
 
-if($act !== 'exportcsv')
-{
-	$appcontext = &$ipbx->get_application('context');
-
-	$order = array();
-	$order['displayname'] = SORT_ASC;
-	$order['name'] = SORT_ASC;
-
-	if(($list = $appcontext->get_contexts_list(null,$order)) === false
-	|| ($nb = count($list)) === 0)
-		$context_list = array();
-
-	$context_list = array();
-	for($i=0;$i<$nb;$i++)
-	{
-		$ref = $list[$i];
-		$context_list[$i] = $ref['context'];
-	}
-
-	$_TPL->set_var('context_list',$context_list);
-}
-
-$total = 0;
-$nbbypage = 25;
 
 $info = null;
 $result = false;
@@ -64,19 +37,6 @@ if(isset($_QR['fm_send']) === true || isset($_QR['search']) === true)
 	{
 		$info = $cel->get_filter_result();
 	}
-	else
-	{
-		if($act === 'exportcsv')
-			$limit = null;
-		else
-		{
-			$limit = array();
-			$limit[0] = ($page - 1) * $nbbypage;
-			$limit[1] = $nbbypage;
-		}
-
-		if(($result = $stats_cel->get_calls_records($_QR,'eventtime',$limit)) !== false && $result !== null)
-			$total = $stats_cel->get_cnt();
 
 		if($result === false)
 			$info = null;
@@ -85,20 +45,8 @@ if(isset($_QR['fm_send']) === true || isset($_QR['search']) === true)
 	}
 }
 
-$_TPL->set_var('total',$total);
-$_TPL->set_var('element',$cel->get_element());
-$_TPL->set_var('info',$info);
 $_TPL->set_var('result',$result);
 $_TPL->set_var('act',$act);
-
-if($act === 'exportcsv')
-{
-	if($result === false)
-		$_QRY->go($_TPL->url('service/ipbx/'.$ipbx->get_name().'/call_management/cel/advanced_search'));
-
-	$_TPL->display('/bloc/service/ipbx/'.$ipbx->get_name().'/call_management/cel/exportcsv');
-	die();
-}
 
 $menu = &$_TPL->get_module('menu');
 $menu->set_top('top/user/'.$_USR->get_info('meta'));
@@ -111,7 +59,6 @@ $dhtml->set_css('/css/statistics/statistics.css');
 $dhtml->add_js('/struct/js/date.js.php');
 $dhtml->set_js('js/service/ipbx/'.$ipbx->get_name().'/cel.js');
 
-$_TPL->set_var('act',$act);
 $_TPL->set_bloc('main','service/ipbx/'.$ipbx->get_name().'/call_management/cel/'.$act);
 $_TPL->set_struct('service/ipbx/'.$ipbx->get_name());
 $_TPL->display('index');

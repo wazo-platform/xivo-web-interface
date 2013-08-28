@@ -18,10 +18,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-$url = &$this->get_module('url');
-
 $result = $this->get_var('result');
-$info = $this->get_var('info');
 
 if($result === false)
 	die();
@@ -34,54 +31,6 @@ header('Last-Modified: '.
 header('Content-Disposition: attachment; filename=xivo_cel-'.
 	dwho_i18n::strftime_l('%Y-%m-%d-%H:%M:%S',null).'.csv');
 header('Content-Type: text/csv; charset=UTF-8');
-
-
-
-echo	'"',str_replace('"','""',$this->bbf('fm_dbeg')),'";',
-	'"',str_replace('"','""',$info['dbeg']),'"',"\n";
-
-if($info['dend'] !== '')
-{
-	echo	'"',str_replace('"','""',$this->bbf('fm_dend')),'";',
-		'"',str_replace('"','""',$info['dend']),'"',"\n";
-}
-
-if($info['channel'] !== '')
-{
-	if($info['channel'] === XIVO_SRE_IPBX_AST_CHAN_UNKNOWN)
-		$info['channel'] = $this->bbf('fm_channel-opt','unknown');
-
-	echo	'"',str_replace('"','""',$this->bbf('fm_channel')),'";',
-		'"',str_replace('"','""',$info['channel']),'"',"\n";
-}
-
-if($info['dcontext'] !== '')
-{
-	echo	'"',str_replace('"','""',$this->bbf('fm_dcontext')),'";',
-		'"',str_replace('"','""',$info['dcontext']),'"',"\n";
-}
-
-if($info['dst'] !== '')
-{
-	echo	'"',str_replace('"','""',$this->bbf('fm_dst')),'";',
-		'"',str_replace('"','""',$info['dst']),'"',"\n";
-}
-
-
-if($info['accountcode'] !== '')
-{
-	echo	'"',str_replace('"','""',$this->bbf('fm_accountcode')),'";',
-		'"',str_replace('"','""',$info['accountcode']),'"',"\n";
-}
-
-if($info['userfield'] !== '')
-{
-	echo	'"',str_replace('"','""',$this->bbf('fm_userfield')),'";',
-		'"',str_replace('"','""',$info['userfield']),'"',"\n";
-}
-
-
-echo "\n";
 
 if($result === null || ($nb = count($result)) === 0)
 {
