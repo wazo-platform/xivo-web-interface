@@ -16,23 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-var xivo_fm_dcontext = {
-    'fd-dcontext-custom':    {'style':    [{display: 'none'},{display: 'block'}],
-                 'link':    'it-dcontext-custom'},
-    'it-dcontext-custom':    {'property':    [{disabled: true},{disabled: false}]}};
-
-xivo_attrib_register('fm_dcontext',xivo_fm_dcontext);
-
-function xivo_cel_onload()
-{
-    if((dcontext = dwho_eid('it-dcontext')) !== false)
-        xivo_chg_attrib('fm_dcontext','fd-dcontext-custom',Number(dcontext.value === 'custom'));
-}
 
 $(document).ready(function() {
-    
-    xivo_cel_onload();
-    
     $.datepicker.setDefaults({
         currentText: 'Now',
         changeYear: true,
@@ -60,5 +45,4 @@ $(document).ready(function() {
         dateFormat: 'yy-mm-dd',
         altFormat: 'yy-mm-dd'
     });
-    
 });

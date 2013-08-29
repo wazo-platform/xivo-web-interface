@@ -20,9 +20,6 @@
 
 $result = $this->get_var('result');
 
-if($result === false)
-	die();
-
 header('Pragma: no-cache');
 header('Cache-Control: private, must-revalidate');
 header('Last-Modified: '.
@@ -32,9 +29,9 @@ header('Content-Disposition: attachment; filename=xivo_call-logs-'.
 	dwho_i18n::strftime_l('%Y-%m-%d-%H:%M:%S',null).'.csv');
 header('Content-Type: text/csv; charset=UTF-8');
 
-if($result === null || ($nb = count($result)) === 0)
+if(!$result || ($nb = count($result)) === 0)
 {
-	echo	$this->bbf('no_cel-result');
+	echo	$this->bbf('no_call_logs');
 	header('Content-Length: '.ob_get_length());
 	ob_end_flush();
 	die();

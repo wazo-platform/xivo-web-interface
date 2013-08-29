@@ -19,14 +19,9 @@
 #
 
 $form = &$this->get_module('form');
-$dhtml = &$this->get_module('dhtml');
-
-$element = $this->get_var('element');
 
 $result = $this->get_var('result');
-$info = $this->get_var('info');
 
-	$dcontext = (string) $info['dcontext'];
 ?>
 <div id="sr-cel" class="b-infos b-form">
 	<h3 class="sb-top xspan">
@@ -49,8 +44,7 @@ $info = $this->get_var('info');
 				  'paragraph'	=> false,
 				  'name'	=> 'dbeg',
 				  'labelid'	=> 'dbeg',
-				  'default'	=> dwho_i18n::strftime_l('%Y-%m-%d',null),
-				  'value'	=> $info['dbeg']));
+				  'default'	=> dwho_i18n::strftime_l('%Y-%m-%d',null)));
 ?>
 	</div>
 	<div class="fm-multifield">
@@ -58,8 +52,7 @@ $info = $this->get_var('info');
 	echo	$form->text(array('desc'	=> $this->bbf('fm_dend'),
 				  'paragraph'	=> false,
 				  'name'	=> 'dend',
-				  'labelid'	=> 'dend',
-				  'value'	=> $info['dend']));
+				  'labelid'	=> 'dend'));
 ?>
 	</div>
 </div>
