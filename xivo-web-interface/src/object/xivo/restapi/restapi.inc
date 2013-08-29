@@ -110,17 +110,7 @@ class xivo_object_restapi extends xivo_object_abstract
 
 	function _connect($path,$query=null)
 	{
-		if(dwho_has_len($path) === false)
-			return(false);
-
-		$url = $this->_url;
-		$path = '/'.$this->_conf['restapi']['protocol'].'/'.$path;
-		$url['path'] = $path;
-
-		if(is_array($query) === true)
-			$url['query'] = $query;
-
-		if(($uri = $this->_uri->build_uri($url)) === false
+		if(($uri = $this->get_uri($path, $query)) === false
 		|| $this->_curl->set_option('url',$uri) === false)
 			return(false);
 
@@ -214,6 +204,21 @@ class xivo_object_restapi extends xivo_object_abstract
 		$this->_curl->close();
 
 		return($r);
+	}
+
+	function get_uri($path, $query=null)
+	{
+		if(dwho_has_len($path) === false)
+			return(false);
+
+		$url = $this->_url;
+		$path = '/'.$this->_conf['restapi']['protocol'].'/'.$path;
+		$url['path'] = $path;
+
+		if(is_array($query) === true)
+			$url['query'] = $query;
+
+		return $this->_uri->build_uri($url);
 	}
 }
 

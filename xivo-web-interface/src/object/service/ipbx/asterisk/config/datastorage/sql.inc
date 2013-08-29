@@ -60,10 +60,6 @@ $array['callfiltermember'] = array();
 $array['callfiltermember']['table'] = 'callfiltermember';
 $array['callfiltermember']['primary'] = array('id' => '');
 
-$array['cel'] = array();
-$array['cel']['table'] = 'cel';
-$array['cel']['primary'] = array('id' => '');
-
 $array['context'] = array();
 $array['context']['table'] = 'context';
 $array['context']['primary'] = array('name' => '');
