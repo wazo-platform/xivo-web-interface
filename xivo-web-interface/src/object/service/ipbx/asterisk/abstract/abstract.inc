@@ -353,6 +353,21 @@ abstract class xivo_service_asterisk_abstract extends xivo_libdatastorage_abstra
 					null));
 	}
 
+	public function chk_dest_outcall($actionarg1,$actionarg2='',$id=null,$disable=null,$chknumber=false,$chkcontext=false,$context=null)
+	{
+		$actionarg2 = dwho_has_len($actionarg2) === true ? dwho_ufloat($actionarg2) : '';
+
+		return($this->_chk_dest('outcall',
+					'outcall',
+					$actionarg1,
+					$actionarg2,
+					$id,
+					$disable,
+					$chknumber,
+					$chkcontext,
+					$context));
+	}
+
 	public function chk_dest_trunk($actionarg1,$actionarg2='',$id=null,$disable=null,$chknumber=false,$chkcontext=false,$context=null)
 	{
 		$actionarg2 = dwho_has_len($actionarg2) === true ? dwho_ufloat($actionarg2) : '';

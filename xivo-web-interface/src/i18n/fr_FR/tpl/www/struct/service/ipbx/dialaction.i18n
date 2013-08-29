@@ -243,3 +243,15 @@ Ajouter un fichier son
 
 ; create_callfilter
 Créer un filtrage d'appel
+
+; fm_dialaction_actiontype-opt(outcall)
+Appel sortant
+
+; fm_dialaction_outcall-actionarg1
+Appel sortant : 
+
+; fm_dialaction_outcall-actionarg2
+Numéro destinataire : 
+
+; create_outcall
+Créer un appel sortant
