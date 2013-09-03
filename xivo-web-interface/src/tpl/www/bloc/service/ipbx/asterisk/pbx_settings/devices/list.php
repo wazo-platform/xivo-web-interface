@@ -147,12 +147,6 @@ $page = $url->pager($pager['pages'],
 			if($linefeatures !== false):
 				$phonenumber = $linefeatures['number'];
 			endif;
-
-			if($ref['provdexist'] === true):
-				$provdexist = 'stock_link';
-			else:
-				$provdexist = 'stock_unlink';
-			endif;
 ?>
 	<tr onmouseover="this.tmp = this.className; this.className = 'sb-content l-infos-over';"
 	    onmouseout="this.className = this.tmp;"
@@ -168,7 +162,6 @@ $page = $url->pager($pager['pages'],
 		<td class="txt-left col_mac_address" title="<?=dwho_alttitle($devicefeatures['mac']);?>">
 			<label for="it-devices-<?=$i?>" id="lb-devices-<?=$i?>">
 <?php
-				echo $url->img_html('img/site/utils/'.$provdexist.'.png',null,'class="icons-list"');
 				echo $url->img_html('img/site/utils/cercle-'.$icon.'.png',null,'class="icons-list col_configured"');
 				echo dwho_has_len($devicefeatures['mac']) === true ? dwho_htmlen(dwho_trunc($devicefeatures['mac'],25,'...',false)) : '-';
 ?>
@@ -240,8 +233,6 @@ $page = $url->pager($pager['pages'],
 
 <fieldset>
 	<legend><?=$this->bbf('device-list_legend');?></legend>
-	<p><?=$url->img_html('img/site/utils/stock_link.png');?> <?=$this->bbf('device-list_legend-opt',array('link_provd_exist'));?></p>
-	<p><?=$url->img_html('img/site/utils/stock_unlink.png');?> <?=$this->bbf('device-list_legend-opt',array('link_provd_not_exist'));?></p>
 	<p><?=$url->img_html('img/site/utils/cercle-green.png');?> <?=$this->bbf('device-list_legend-opt',array('configured'));?></p>
 	<p><?=$url->img_html('img/site/utils/cercle-yellow.png');?> <?=$this->bbf('device-list_legend-opt',array('autoprov-mode'));?></p>
 	<p><?=$url->img_html('img/site/utils/cercle-red.png');?> <?=$this->bbf('device-list_legend-opt',array('not_configured'));?></p>

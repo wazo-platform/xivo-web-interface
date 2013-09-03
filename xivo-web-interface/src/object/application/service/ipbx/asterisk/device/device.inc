@@ -403,12 +403,6 @@ class xivo_application_service_asterisk_device extends xivo_application_asterisk
 			$devicefeatures = $this->_devicefeatures->_prepare($devicefeatures);
 			$r[$devicefeatures['id']]['devicefeatures'] = $devicefeatures;
 
-			$r[$devicefeatures['id']]['provdexist'] = false;
-			if (isset($this->_prodv_exist_list[$devicefeatures['deviceid']]) === true)
-				$r[$devicefeatures['id']]['provdexist'] = true;
-
-			#$r[$devicefeatures['id']]['capabilities'] = $this->get_capabilities_by_plugin($devicefeatures['plugin']);
-
 			$linefeatures = dwho_array_startswith_key($ref,'linefeatures.',true);
 			$r[$devicefeatures['id']]['linefeatures'] = false;
 			if ($linefeatures['id'] !== null) {
