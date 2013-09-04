@@ -23,10 +23,16 @@ $result = false;
 if(isset($_QR['fm_send']) === true || isset($_QR['search']) === true)
 {
 	$query = null;
-	if(isset($_QR['dbeg']) === true && $_QR['dbeg'] && isset($_QR['dend']) === true && $_QR['dend'])
+	if(isset($_QR['dbeg']) === true && $_QR['dbeg'])
 	{
 		$start = date("Y-m-d\TH:i:s", strtotime($_QR['dbeg']));
-		$end = date("Y-m-d\TH:i:s", strtotime($_QR['dend']));
+		if(isset($_QR['dend']) === true && $_QR['dend'])
+		{
+			$end = date("Y-m-d\TH:i:s", strtotime($_QR['dend']));
+		} else
+		{
+			$end = date("Y-m-d\TH:i:s");
+		}
 		$query= array(array('start_date', $start), array('end_date', $end));
 	}
 	$restapi = &$_XOBJ->get_module('restapi');
