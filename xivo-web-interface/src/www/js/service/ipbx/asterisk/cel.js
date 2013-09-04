@@ -19,7 +19,7 @@
 
 $(document).ready(function() {
     $.datepicker.setDefaults({
-        currentText: 'Now',
+        defaultDate: null,
         changeYear: true,
         firstDay: 1,
         selectOtherMonths: true,
@@ -33,16 +33,21 @@ $(document).ready(function() {
         showAnim: 'fold',
         showMonthAfterYear: true,
         showWeek: true,
-        weekHeader: 'W'
+        weekHeader: 'W',
+        showTime: true,
     });
-    
-    $("#it-dbeg").datepicker({
-        dateFormat: 'yy-mm-dd',
-        altFormat: 'yy-mm-dd'
+
+    $("#it-dbeg").datetimepicker({
+        dateFormat: 'y-mm-dd',
+        timeFormat: 'hh:mm:ss',
+        stepMinutes: 1,
+        stepHours: 1,
     });
-    
-    $("#it-dend").datepicker({
-        dateFormat: 'yy-mm-dd',
-        altFormat: 'yy-mm-dd'
+
+    $("#it-dend").datetimepicker({
+        dateFormat: 'y-mm-dd',
+        timeFormat: 'hh:mm:ss',
+        stepMinutes: 1,
+        stepHours: 1,
     });
 });
