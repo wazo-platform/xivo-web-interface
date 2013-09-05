@@ -38,14 +38,14 @@ $(document).ready(function() {
     });
 
     $("#it-dbeg").datetimepicker({
-        dateFormat: 'y-mm-dd',
+        dateFormat: 'yy-mm-dd',
         timeFormat: 'hh:mm:ss',
         stepMinutes: 1,
         stepHours: 1,
     });
 
     $("#it-dend").datetimepicker({
-        dateFormat: 'y-mm-dd',
+        dateFormat: 'yy-mm-dd',
         timeFormat: 'hh:mm:ss',
         stepMinutes: 1,
         stepHours: 1,
