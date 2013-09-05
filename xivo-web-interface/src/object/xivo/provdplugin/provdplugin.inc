@@ -27,7 +27,6 @@ class xivo_object_provdplugin extends xivo_object_provd_abstract
 
 	public function __construct(&$xobj,$param=array())
 	{
-		$this->_load_config(true);
 		$this->_load_init();
 	}
 

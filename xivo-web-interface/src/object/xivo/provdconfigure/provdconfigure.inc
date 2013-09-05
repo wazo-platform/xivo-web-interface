@@ -24,33 +24,32 @@ class xivo_object_provdconfigure extends xivo_object_provd_abstract
 {
 	protected $_name 		= 'provdconfigure';
 	protected $_base_url 	= '/provd/configure';
-	
+
 	public function __construct(&$xobj,$param=array())
 	{
-		$this->_load_config(true);
 		$this->_load_init();
 	}
-	
+
 	public function get($param)
 	{
 		$uri = $this->_build_uri(array('configure',$param));
 		if (($rs = $this->get_params($uri)) === false)
 		    return(false);
-		
+
 		return($rs);
 	}
-	
+
 	public function get_configures($search='',$assoc=false)
 	{
 		$uri = $this->_build_uri(array());
 		$rs = $this->request_get($uri);
-		
+
 		if (is_array($rs) === false
 		|| $this->_status_code !== 200
 		|| ($rs = $rs['params']) === false
 		|| ($nb = count($rs)) === 0)
 			return(false);
-			
+
 		$res = array();
 		for($i=0;$i<$nb;$i++)
 		{
@@ -68,7 +67,7 @@ class xivo_object_provdconfigure extends xivo_object_provd_abstract
 
 		return($rs);
 	}
-	
+
 	public function edit($arr)
 	{
 	    $err = 0;
@@ -78,10 +77,10 @@ class xivo_object_provdconfigure extends xivo_object_provd_abstract
     		if ($this->edit_params($uri,$value) === false)
     		    $err++;
 		}
-		
+
 		if ($err > 0)
 		    return(false);
-		    
+
 		return(true);
 	}
 }
