@@ -68,8 +68,7 @@ class xivo_service_asterisk_linefeatures extends xivo_service_asterisk_abstract
 
 	function get_user_masterline($userid=null,$deviceid=null)
 	{
-		if ($userid === null
-		&& $deviceid === null)
+		if ($userid === null && $deviceid === null)
 			return(false);
 
 		if(($rs = $this->_dso->user_masterline($userid,$deviceid)) === false)
@@ -80,10 +79,8 @@ class xivo_service_asterisk_linefeatures extends xivo_service_asterisk_abstract
 
 	function get_line_provisioniable($provisioningid)
 	{
-		if(($rs = $this->_dso->get(array('provisioningid' => $provisioningid))) === false)
-			return(false);
-
-		if ((int) $rs['device'] > 0)
+		if(($rs = $this->_dso->get(array('provisioningid' => $provisioningid))) === false
+		|| empty($rs['device']))
 			return(false);
 
 		return($this->_prepare($rs));
@@ -260,7 +257,7 @@ class xivo_service_asterisk_linefeatures extends xivo_service_asterisk_abstract
 	public function reset_device($iddevice)
 	{
 		$arr = array();
-		$arr['device'] = 0;
+		$arr['device'] = '';
 
 		$where = array('device' => (string) $iddevice);
 
