@@ -240,9 +240,9 @@ class xivo_application_service_asterisk_device extends xivo_application_asterisk
 		$this->_info['config'] = false;
 		$this->_info['deviceconfig'] = false;
 
-		if (isset($this->_info['devicefeatures'], $this->_info['devicefeatures']['deviceid']) === false
-		|| ($deviceconfig = $this->_provdconfig->get($this->_info['devicefeatures']['deviceid'])) === false
-		|| isset($deviceconfig['raw_config']) === false)
+		if (isset($this->_info['device'], $this->_info['device']['id']) === false
+		|| ($config = $this->_provdconfig->get($this->_info['device']['id'])) === false
+		|| isset($config['raw_config']) === false)
 			return(false);
 
 		$this->_info['config'] = $deviceconfig['raw_config'];
@@ -260,23 +260,22 @@ class xivo_application_service_asterisk_device extends xivo_application_asterisk
 	public function get_sep()
 	{
 		$this->_info['sep'] = '';
-		if (isset($this->_info['config']['protocol'], $this->_info['devicefeatures']['mac']) === false
+		if (isset($this->_info['config']['protocol'], $this->_info['device']['mac']) === false
 		|| strcasecmp($this->_info['config']['protocol'],'SCCP') != 0)
 			return(false);
-		$raw_mac = $this->_info['devicefeatures']['mac'];
+		$raw_mac = $this->_info['device']['mac'];
 		$mac = strtoupper(str_replace(':','',$raw_mac));
 		$this->_info['sep'] = 'SEP' . $mac;
 	}
 
 	public function mode_autoprov($synchronize=false)
 	{
-		if(dwho_issa('devicefeatures',$this->_info) === false)
+		if(dwho_issa('device',$this->_info) === false)
 			return(false);
 
-		$id = $this->_info['devicefeatures']['id'];
-		$deviceid = $this->_info['devicefeatures']['deviceid'];
-		$mac = $this->_info['devicefeatures']['mac'];
-		$plugin = $this->_info['devicefeatures']['plugin'];
+		$id = $this->_info['device']['id'];
+		$mac = $this->_info['device']['mac'];
+		$plugin = $this->_info['device']['plugin'];
 
 		if (($confid = $this->_provdconfig->autocreate()) === false
 		|| $this->_provddevice->update_configid($deviceid,$confid,$synchronize) === false
@@ -291,9 +290,7 @@ class xivo_application_service_asterisk_device extends xivo_application_asterisk
 
 	public function remove_all_line()
 	{
-		if(dwho_issa('devicefeatures',$this->_info) === false
-		|| ($globalconfig = $this->_provdconfig->get($this->_info['devicefeatures']['deviceid'])) === false
-		|| isset($globalconfig['raw_config']) === false)
+		if(dwho_issa('device',$this->_info) === false)
 			return(false);
 
 		$raw_config = &$globalconfig['raw_config'];
@@ -309,9 +306,7 @@ class xivo_application_service_asterisk_device extends xivo_application_asterisk
 
 	public function remove_line($line_num, $all=false, $synchronize=false)
 	{
-		if(dwho_issa('devicefeatures',$this->_info) === false
-		|| ($globalconfig = $this->_provdconfig->get($this->_info['devicefeatures']['deviceid'])) === false
-		|| isset($globalconfig['raw_config']) === false)
+		if(dwho_issa('device',$this->_info) === false)
 			return(false);
 
 		$raw_config = &$globalconfig['raw_config'];
@@ -337,11 +332,10 @@ class xivo_application_service_asterisk_device extends xivo_application_asterisk
 
 	public function associate_line($linefeatures_id,$synchronize=false)
 	{
-		if(dwho_issa('devicefeatures',$this->_info) === false)
+		if(dwho_issa('device',$this->_info) === false)
 			return(false);
 
-		$id = $this->_info['devicefeatures']['id'];
-		$deviceid = $this->_info['devicefeatures']['deviceid'];
+		$rs = $this->_device_api->associate_line($this->_info['device']['id'], $line_id);
 
 		$this->_linefeatures->edit($linefeatures_id, array('device' => $id));
 		$this->_devicefeatures->edit($id, array('config' => $deviceid));
@@ -437,10 +431,10 @@ class xivo_application_service_asterisk_device extends xivo_application_asterisk
 		$this->_reset();
 
 		if(($action !== 'add' && $action !== 'edit') === true
-		|| dwho_issa('devicefeatures',$arr) === false)
+		|| dwho_issa('device',$arr) === false)
 			return(false);
 
-		$this->set_devicefeatures($arr['devicefeatures']);
+		$this->set_device($arr['device']);
 
 		if (dwho_issa('config',$arr) === true)
 			$this->set_config($arr['config']);
@@ -458,25 +452,24 @@ class xivo_application_service_asterisk_device extends xivo_application_asterisk
 		return($r);
 	}
 
-	function set_devicefeatures($arr)
+	function set_device($arr)
 	{
 		if(is_array($arr) === false)
 		{
-			$this->_set_result('devicefeatures',null);
-			$this->_set_error('devicefeatures','invalid data');
+			$this->_set_result('device',null);
+			$this->_set_error('device','invalid data');
 			return(false);
 		}
 
-		if(($rs = $this->_devicefeatures->chk_values($arr)) === false)
-		{
-			$this->_set_result('devicefeatures',$this->_devicefeatures->get_filter_result());
-			$this->_set_error('devicefeatures',$this->_devicefeatures->get_filter_error());
-			return(false);
-		}
+		if (!empty($arr['mac']))
+			$arr['mac'] = strtolower($arr['mac']);
+		else
+			unset($arr['mac']);
 
-		$rs['mac'] = strtolower($rs['mac']);
+		if (empty($arr['ip']))
+			unset($arr['ip']);
 
-		$this->_set_result('devicefeatures',$rs);
+		$this->_set_result('device',$arr);
 
 		return(true);
 	}

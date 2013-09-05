@@ -11,16 +11,16 @@ Advanced
 ; smenu_lines
 Lines
 
-; fm_devicefeatures_ip
+; fm_device_ip
 IP: 
 
-; fm_devicefeatures_mac
+; fm_device_mac
 MAC: 
 
-; fm_devicefeatures_configdevice 
+; fm_device_configdevice 
 Device config template: 
 
-; fm_devicefeatures_plugin
+; fm_device_plugin
 Plugin: 
 
 ; fm_config_language

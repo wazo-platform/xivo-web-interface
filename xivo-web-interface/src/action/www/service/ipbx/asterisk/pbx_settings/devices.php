@@ -53,22 +53,21 @@ switch($act)
 			$_QRY->go($_TPL->url('service/ipbx/pbx_settings/devices'),$param);
 
 		$appdevice = &$ipbx->get_application('device',null,false);
-		$modprovddevice = &$_XOBJ->get_module('provddevice');
 
 		$nb = count($values);
 
 		$res = array();
-
 
 		for($i = 0;$i < $nb;$i++)
 		{
 			if(($info = $appdevice->get($values[$i])) !== false)
 			{
 				switch($info['protocol']) {
-				case 'SCCP':
-					$status = $ipbx->discuss_ipbx('sccp resync ' . $info['sep'],true);
-				default:
-					$modprovddevice->synchronize($info['devicefeatures']['deviceid']);
+					case 'SCCP':
+						$status = $ipbx->discuss_ipbx('sccp resync ' . $info['sep'],true);
+						break;
+					default:
+						$appdevice->synchronize();
 				}
 			}
 		}
@@ -88,7 +87,7 @@ switch($act)
 		$result = $fm_save = $error = null;
 
 		if(isset($_QR['fm_send']) === true
-		&& dwho_issa('devicefeatures',$_QR) === true)
+		&& dwho_issa('device',$_QR) === true)
 		{
 			if($appdevice->set_add($_QR) === false
 			|| $appdevice->add('provd') === false)
@@ -139,7 +138,7 @@ switch($act)
 			$configdevice = $appprovdconfig->get($info['deviceconfig']['configdevice']);
 
 		if(isset($_QR['fm_send']) === true
-		&& dwho_issa('devicefeatures',$_QR) === true)
+		&& dwho_issa('device',$_QR) === true)
 		{
 			if($appdevice->set_edit($_QR) === false
 			|| $appdevice->edit('provd') === false)
