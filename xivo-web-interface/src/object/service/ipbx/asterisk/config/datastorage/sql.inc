@@ -160,10 +160,6 @@ $array['ctisheetactions'] = array();
 $array['ctisheetactions']['table'] = 'ctisheetactions';
 $array['ctisheetactions']['primary'] = array('id' => '');
 
-$array['devicefeatures'] = array();
-$array['devicefeatures']['table'] = 'devicefeatures';
-$array['devicefeatures']['primary'] = array('id' => '');
-
 $array['dialaction'] = array();
 $array['dialaction']['table'] = 'dialaction';
 $array['dialaction']['primary'] = array('event' => '','category' => '','categoryval' => '');
