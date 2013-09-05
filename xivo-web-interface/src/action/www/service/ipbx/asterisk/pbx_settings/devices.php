@@ -90,7 +90,7 @@ switch($act)
 		&& dwho_issa('device',$_QR) === true)
 		{
 			if($appdevice->set_add($_QR) === false
-			|| $appdevice->add('provd') === false)
+			|| $appdevice->add() === false)
 			{
 				$fm_save = false;
 				$result = $appdevice->get_result();
@@ -126,22 +126,13 @@ switch($act)
 		$order = array('label' => SORT_ASC);
 		$listconfigdevice = $appprovdconfig->get_config_list('',$order,null,false,false,'device');
 
-		$appline = &$ipbx->get_application('line');
-		$order = array('num' => SORT_ASC);
-		$where = array('device' => (int) $_QR['id']);
-		$listline = $appline->get_lines_list($where,null,$order);
-
 		$fm_save = $error = null;
-
-		$configdevice = false;
-		if (isset($info['deviceconfig']))
-			$configdevice = $appprovdconfig->get($info['deviceconfig']['configdevice']);
 
 		if(isset($_QR['fm_send']) === true
 		&& dwho_issa('device',$_QR) === true)
 		{
 			if($appdevice->set_edit($_QR) === false
-			|| $appdevice->edit('provd') === false)
+			|| $appdevice->edit() === false)
 			{
 				$fm_save = false;
 				$result = $appdevice->get_result();
@@ -159,14 +150,11 @@ switch($act)
 		$dhtml->set_js('js/service/ipbx/'.$ipbx->get_name().'/devices.js');
 
 		$_TPL->set_var('id',$_QR['id']);
-		$_TPL->set_var('deviceid',$info['devicefeatures']['deviceid']);
 		$_TPL->set_var('info',$info);
 		$_TPL->set_var('error',$error);
 		$_TPL->set_var('fm_save',$fm_save);
 		$_TPL->set_var('plugininstalled',$plugininstalled);
 		$_TPL->set_var('listconfigdevice',$listconfigdevice);
-		$_TPL->set_var('configdevice',$configdevice['config']);
-		$_TPL->set_var('listline',$listline);
 		$_TPL->set_var('element',$element);
 		break;
 	case 'delete':
@@ -199,38 +187,13 @@ switch($act)
 
 		$_QRY->go($_TPL->url('service/ipbx/pbx_settings/devices'),$param);
 		break;
-	case 'enables':
-	case 'disables':
-		$param['page'] = $page;
-
-		if(($values = dwho_issa_val('devices',$_QR)) === false)
-			$_QRY->go($_TPL->url('service/ipbx/pbx_settings/devices'),$param);
-
-		$appdevice = &$ipbx->get_application('device',null,false);
-
-		$nb = count($values);
-
-		for($i = 0;$i < $nb;$i++)
-		{
-			if($appdevice->get($values[$i]) === false)
-				continue;
-			else if($act === 'disables')
-				$appdevice->disable();
-			else
-				$appdevice->enable();
-		}
-
-		$_QRY->go($_TPL->url('service/ipbx/pbx_settings/devices'),$param);
-		break;
 	case 'list':
 	default:
 		$act = 'list';
 		$prevpage = $page - 1;
 		$nbbypage = XIVO_SRE_IPBX_AST_NBBYPAGE;
 
-		$appdevice = &$ipbx->get_application('device');
-
-		$appdevice->update();
+		$device_api = &$_RAPI->get_ressource('device');
 
 		$order = array();
 		if($sort[1] == 'ip')
@@ -242,12 +205,9 @@ switch($act)
 		$limit[0] = $prevpage * $nbbypage;
 		$limit[1] = $nbbypage;
 
-		if($search !== '')
-			$list = $appdevice->get_devices_search($search,null,$order,$limit);
-		else
-			$list = $appdevice->get_devices_list(null,$order,$limit);
+		$list = $device_api->find_all($search,$order,$limit);
 
-		$total = $appdevice->get_cnt();
+		$total = count($list);
 
 		if($list === false && $total > 0 && $prevpage > 0)
 		{

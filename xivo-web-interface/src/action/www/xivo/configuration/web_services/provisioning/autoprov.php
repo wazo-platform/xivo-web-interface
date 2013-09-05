@@ -38,11 +38,12 @@ switch($act)
 			$http_response->set_status_line(400);
 			$http_response->send(true);
 		}
-
 		$appdevice = &$ipbx->get_application('device',null,false);
 		$linefeatures = &$ipbx->get_module('linefeatures');
+		$device_api = $_RAPI->get_ressource('device');
 
-		if($appdevice->update_by_ip($data['ip']) === false)
+		if(($device = $device_api->get_device_by_ip($data['ip'])) === false
+		|| $appdevice->get($device['id']) === false)
 			$http_response->set_status_line(400);
 		elseif($data['code'] === 'autoprov')
 		{

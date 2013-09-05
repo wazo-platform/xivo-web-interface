@@ -84,12 +84,6 @@ if($act === 'list'):
 <div class="sb-advanced-menu">
 	<ul id="toolbar-advanced-menu">
 		<li>
-			<a href="#" id="toolbar-advanced-menu-enable"><?=$this->bbf('toolbar_adv_menu_enable');?></a>
-		</li>
-		<li>
-			<a href="#" id="toolbar-advanced-menu-disable"><?=$this->bbf('toolbar_adv_menu_disable');?></a>
-		</li>
-		<li>
 			<a href="#" id="toolbar-advanced-menu-autoprov"><?=$this->bbf('toolbar_adv_menu_autoprov');?></a>
 		</li>
 		<li>

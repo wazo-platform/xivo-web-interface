@@ -46,8 +46,7 @@ switch($act)
 			for($i=0; $i<$nb; $i++)
 			{
 				$ref = &$list[$i];
-				$deviceid = (int) $ref['device'];
-				$provdconfig->rebuild_device_config($deviceid);
+				$provdconfig->rebuild_device_config($ref['device']);
 			}
 		}
 		$provdconfig->rebuild_required_config();
@@ -67,7 +66,7 @@ switch($act)
 			for($i=0; $i<$nb; $i++)
 			{
 				$ref = &$list[$i];
-				$provddevice->synchronize($ref['deviceid']);
+				$provddevice->synchronize($ref['id']);
 			}
 		}
 
@@ -76,17 +75,16 @@ switch($act)
 		break;
 	case 'sync_devices':
 		$provddevice = &$_XOBJ->get_module('provddevice');
-		$devicefeatures = &$ipbx->get_module('devicefeatures');
 
 		$status = 204;
-		if (($list = $devicefeatures->get_all()) !== false
+		if (($list = $provddevice->get_all()) !== false
 		&& ($nb = count($list)) > 0)
 		{
 			$status = 200;
 			for($i=0; $i<$nb; $i++)
 			{
 				$ref = &$list[$i];
-				$provddevice->synchronize($ref['deviceid']);
+				$provddevice->synchronize($ref['id']);
 			}
 		}
 

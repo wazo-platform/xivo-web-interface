@@ -21,13 +21,11 @@
 $form = &$this->get_module('form');
 $url = &$this->get_module('url');
 
-$act    = $this->get_var('act');
-$info    = $this->get_var('info');
-$error   = $this->get_var('error');
+$act = $this->get_var('act');
+$info = $this->get_var('info');
+$error = $this->get_var('error');
 $plugininstalled = $this->get_var('plugininstalled');
 $listconfigdevice = $this->get_var('listconfigdevice');
-$configdevice = $this->get_var('configdevice');
-#$listline = $this->get_var('listline');
 $listline = $this->get_var('info','config','sip_lines');
 $element = $this->get_var('element');
 
@@ -35,44 +33,41 @@ $element = $this->get_var('element');
 
 <div id="sb-part-first" class="b-nodisplay">
 <?php
-	echo	$form->text(array('desc'	=> $this->bbf('fm_devicefeatures_ip'),
-				  'name'	=> 'devicefeatures[ip]',
-				  'labelid'	=> 'devicefeatures-ip',
+	echo	$form->text(array('desc'	=> $this->bbf('fm_device_ip'),
+				  'name'	=> 'device[ip]',
+				  'labelid'	=> 'device-ip',
 				  'size'	=> 15,
 				  'readonly'=> ($act === 'add') ? false : true,
-				  'default'	=> $element['devicefeatures']['ip']['default'],
-				  'value'	=> $this->get_var('info','devicefeatures','ip'),
+				  'value'	=> $this->get_var('info','device','ip'),
 				  'error'	=> $this->bbf_args('error',
-						   $this->get_var('error', 'devicefeatures', 'ip')) )),
+						   $this->get_var('error', 'device', 'ip')) )),
 
-		$form->text(array('desc'	=> $this->bbf('fm_devicefeatures_mac'),
-				  'name'	=> 'devicefeatures[mac]',
-				  'labelid'	=> 'devicefeatures-mac',
+		$form->text(array('desc'	=> $this->bbf('fm_device_mac'),
+				  'name'	=> 'device[mac]',
+				  'labelid'	=> 'device-mac',
 				  'size'	=> 15,
 				  'readonly'=> ($act === 'add') ? false : true,
-				  'default'	=> $element['devicefeatures']['mac']['default'],
-				  'value'	=> $this->get_var('info','devicefeatures','mac'),
+				  'value'	=> $this->get_var('info','device','mac'),
 				  'error'	=> $this->bbf_args('error',
-						   $this->get_var('error', 'devicefeatures', 'mac')) )),
+						   $this->get_var('error', 'device', 'mac')) )),
 
-		$form->select(array('desc'	=> $this->bbf('fm_devicefeatures_plugin'),
-				  'name'	=> 'devicefeatures[plugin]',
-				  'labelid'	=> 'devicefeatures-plugin',
+		$form->select(array('desc'	=> $this->bbf('fm_device_plugin'),
+				  'name'	=> 'device[plugin]',
+				  'labelid'	=> 'device-plugin',
 				  'empty'	=> true,
 				  'key'		=> 'name',
 				  'altkey'	=> 'name',
-				  'default'	=> $element['devicefeatures']['plugin']['default'],
-				  'selected'	=> $this->get_var('info','devicefeatures','plugin'),
+				  'selected'	=> $this->get_var('info','device','plugin'),
 				  'error'	=> $this->bbf_args('error',
-						   $this->get_var('error', 'devicefeatures', 'plugin'))),
+						   $this->get_var('error', 'device', 'plugin'))),
 			      $plugininstalled),
 
-		$form->select(array('desc'	=> $this->bbf('fm_devicefeatures_configdevice'),
+		$form->select(array('desc'	=> $this->bbf('fm_device_configdevice'),
 				  'name'	=> 'configdevice',
 				  'labelid'	=> 'configdevice',
 				  'key'		=> 'label',
 				  'altkey'	=> 'id',
-				  'selected'	=> $this->get_var('info','deviceconfig','configdevice')),
+				  'selected'	=> $this->get_var('info','configdevice')),
 			      $listconfigdevice),
 
 		$form->select(array('desc'	=> $this->bbf('fm_config_language'),
@@ -385,7 +380,7 @@ endif;
 ?>
 	</tbody>
 	<tfoot>
-	<tr id="no-devicefeatures"<?=($listline !== false ? ' class="b-nodisplay"' : '')?>>
+	<tr id="no-device"<?=($listline !== false ? ' class="b-nodisplay"' : '')?>>
 		<td colspan="7" class="td-single"><?=$this->bbf('no_lines');?></td>
 	</tr>
 	</tfoot>

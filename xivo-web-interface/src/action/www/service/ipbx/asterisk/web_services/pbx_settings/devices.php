@@ -23,13 +23,13 @@ $access_subcategory = 'devices';
 
 include(dwho_file::joinpath(dirname(__FILE__),'..','_common.php'));
 
-$appdevice = &$ipbx->get_application('device',null,false);
+$device_api = &$_RAPI->get_ressource('device');
 $act = $_QRY->get('act');
 
 switch($act)
 {
 	case 'view':
-		if(($info = $appdevice->get($_QRY->get('id'))) === false)
+		if(($info = $device_api->get($_QRY->get('id'))) === false)
 		{
 			$http_response->set_status_line(404);
 			$http_response->send(true);
@@ -39,7 +39,7 @@ switch($act)
 		break;
 
 	case 'search':
-		if(($list = $appdevice->get_devices_search($_QRY->get('search'))) === false)
+		if(($list = $device_api->find_all($_QRY->get('search'))) === false)
 		{
 			$http_response->set_status_line(204);
 			$http_response->send(true);
@@ -52,9 +52,7 @@ switch($act)
 	default:
 		$act = 'list';
 
-		$appdevice->update();
-
-		if(($list = $appdevice->get_devices_list()) === false)
+		if(($list = $device_api->find_all()) === false)
 		{
 			$http_response->set_status_line(204);
 			$http_response->send(true);

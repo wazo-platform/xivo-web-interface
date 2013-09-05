@@ -32,16 +32,6 @@ $appdevice = &$ipbx->get_application('device',null,false);
 
 switch($act)
 {
-	case 'getbydeviceid':
-		if (isset($_QR['id']) === false
-		|| ($device = $appdevice->get($_QR['id'])) === false
-		|| isset($device['devicefeatures']) === false
-		|| ($deviceid = $device['devicefeatures']['deviceid']) === false)
-		{
-			$http_response->set_status_line(204);
-			$http_response->send(true);
-		}
-		$_QR['id'] = $deviceid;
 	case 'get':
 		if (isset($_QR['id']) === false
 		|| ($res = $provdconfig->get($_QR['id'])) === false
