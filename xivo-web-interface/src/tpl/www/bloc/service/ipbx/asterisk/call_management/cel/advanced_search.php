@@ -44,6 +44,7 @@ $result = $this->get_var('result');
 				  'paragraph'	=> false,
 				  'name'	=> 'dbeg',
 				  'labelid'	=> 'dbeg',
+				  'size'=> '20',
 				  'default'	=> dwho_i18n::strftime_l('%Y-%m-%d',null)));
 ?>
 	</div>
@@ -52,6 +53,7 @@ $result = $this->get_var('result');
 	echo	$form->text(array('desc'	=> $this->bbf('fm_dend'),
 				  'paragraph'	=> false,
 				  'name'	=> 'dend',
+				  'size'=> '20',
 				  'labelid'	=> 'dend'));
 ?>
 	</div>

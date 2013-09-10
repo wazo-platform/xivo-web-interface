@@ -598,7 +598,7 @@ Force rport
 ; fm_nat-opt(comedia)
 Comedia
 
-; fm_protocol_nat-opt(force_rport,comedia)
+; fm_nat-opt(force_rport,comedia)
 Oui (force rport + comedia)
 
 ; fm_dtmfmode
