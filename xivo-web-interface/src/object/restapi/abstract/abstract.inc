@@ -102,10 +102,7 @@ abstract class xivo_restapi_ressource_abstract
 
 		if(isset($ref['protocol']) === true)
 		{
-			if(dwho_network::valid_port_number($ref['protocol']) === true)
-				$this->_conf['restapi']['protocol'] = $ref['protocol'];
-			else
-				trigger_error('Invalid option protocol for section restapi in XIVO init file',E_USER_WARNING);
+			$this->_conf['restapi']['protocol'] = $ref['protocol'];
 		}
 
 		if(isset($ref['connect_timeout']) === true)
