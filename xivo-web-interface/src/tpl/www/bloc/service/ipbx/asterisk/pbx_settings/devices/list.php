@@ -128,14 +128,17 @@ $page = $url->pager($pager['pages'],
 
 			$ref = &$list[$i];
 
-			if($ref['configured'] === false):
-				$icon = 'red';
-			else:
-				if(strncmp($ref['config'],'autoprov',strlen('autoprov')) === 0)
-					$icon = 'yellow';
-				else
+			switch ($ref['status']):
+				case 'configured':
 					$icon = 'green';
-			endif;
+					break;
+				case 'autoprov':
+					$icon = 'yellow';
+					break;
+				case 'not_configured':
+				default:
+					$icon = 'red';
+			endswitch;
 ?>
 	<tr onmouseover="this.tmp = this.className; this.className = 'sb-content l-infos-over';"
 	    onmouseout="this.className = this.tmp;"

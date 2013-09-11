@@ -87,9 +87,12 @@ class restapi_ressource_device extends xivo_restapi_ressource_abstract
 		$rs = $this->request_get($uri, $query);
 
 		if (is_array($rs) === false
-		|| ($rs = $rs['items']) === false
-		|| ($nb = count($rs)) === 0)
+		|| isset($rs['items']) === false
+		|| ($rs = $rs['items']) === false)
+		{
+			dwho_report::push('error', 'An Error occured while retrieving the list of devices');
 			return(false);
+		}
 /*
 		if (dwho_has_len($search) === true)
 		{
