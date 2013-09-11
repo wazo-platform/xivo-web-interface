@@ -293,8 +293,7 @@ class xivo_application_service_asterisk_device extends xivo_application_asterisk
 		$this->_status = 'delete';
 		$this->_return = array();
 
-		if($this->delete_device() === false
-		|| $this->reset_linefeatures() === false)
+		if($this->delete_device() === false)
 			$r = false;
 
 		$this->_status = '';
@@ -307,7 +306,7 @@ class xivo_application_service_asterisk_device extends xivo_application_asterisk
 		if(dwho_issa('device',$this->_info) === false)
 			return(false);
 
-		$this->_device_api->delete($this->_info['device']['id']);
+		$r = $this->_device_api->delete($this->_info['device']['id']);
 		$this->_sccpdevice->delete_by_mac($this->_info['device']['mac']);
 
 		if($this->_status === 'delete')
