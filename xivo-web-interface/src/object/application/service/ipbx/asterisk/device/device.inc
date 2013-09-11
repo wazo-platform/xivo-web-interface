@@ -115,7 +115,8 @@ class xivo_application_service_asterisk_device extends xivo_application_asterisk
 	public function get_sep()
 	{
 		$this->_info['sep'] = '';
-		if (!isset($this->_info['device']['mac']) === false)
+		if (!isset($this->_info['device']['mac']) === false
+		|| preg_match('/'.XIVO_SRE_IPBX_AST_PROTO_SCCP.'/',$this->_info['device']['plugin']) === 0)
 			return(false);
 		$this->_info['sep'] = 'SEP'.strtoupper(str_replace(':','', $this->_info['device']['mac']));
 	}
@@ -125,18 +126,13 @@ class xivo_application_service_asterisk_device extends xivo_application_asterisk
 		if(dwho_issa('device',$this->_info) === false)
 			return(false);
 
-		$id = $this->_info['device']['id'];
-		$mac = $this->_info['device']['mac'];
-		$plugin = $this->_info['device']['plugin'];
-
-		if ($this->_device_api->reset_to_autoprov($id) === false
-		|| $this->_linefeatures->reset_device($id) === false)
+		if ($this->_device_api->reset_to_autoprov($this->_info['device']['id']) === false)
 			return(false);
-		elseif(preg_match('/'.XIVO_SRE_IPBX_AST_PROTO_SCCP.'/',$plugin) === 1)
-			$this->_sccpdevice->init_device($mac,'');
+		elseif(preg_match('/'.XIVO_SRE_IPBX_AST_PROTO_SCCP.'/',$this->_info['device']['plugin']) === 1)
+			$this->_sccpdevice->init_device($this->_info['device']['mac'],'');
 
-		if ($synchronize === true && $this->synchronize() === false)
-			dwho_report::push('warning', 'fail to synchronize this device: '.$id);
+		if ($synchronize === true)
+			$this->synchronize();
 
 		return(true);
 	}
@@ -156,8 +152,8 @@ class xivo_application_service_asterisk_device extends xivo_application_asterisk
 
 		$rs = $this->_device_api->remove_line($this->_info['device']['id'], $line_id);
 
-		if ($synchronize === true && $this->synchronize() === false)
-			dwho_report::push('warning', 'fail to synchronize this device: '.$this->_info['device']['id']);
+		if ($synchronize === true)
+			$this->synchronize();
 
 		return($rs);
 	}
@@ -169,8 +165,8 @@ class xivo_application_service_asterisk_device extends xivo_application_asterisk
 
 		$rs = $this->_device_api->associate_line($this->_info['device']['id'], $line_id);
 
-		if ($synchronize === true && $this->synchronize() === false)
-			dwho_report::push('warning', 'fail to synchronize this device: '.$this->_info['device']['id']);
+		if ($synchronize === true)
+			$this->synchronize();
 
 		return($rs);
 	}
@@ -316,16 +312,6 @@ class xivo_application_service_asterisk_device extends xivo_application_asterisk
 
 		if($this->_status === 'delete')
 			$this->_return['device'] = $r;
-
-		return($r);
-	}
-
-	function reset_linefeatures()
-	{
-		if(dwho_issa('device',$this->_info) === false)
-			return(false);
-
-		$r = $this->_linefeatures->reset_device($this->_info['device']['id']);
 
 		return($r);
 	}
