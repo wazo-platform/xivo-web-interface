@@ -118,7 +118,7 @@ class restapi_ressource_device extends xivo_restapi_ressource_abstract
 
 		if($this->_status_code !== 201)
 		{
-			dwho_report::push('error', 'fail to create device');
+			dwho_report::push('error', 'fail to create device: '.$rs[0]);
 			return(false);
 		}
 
@@ -136,7 +136,7 @@ class restapi_ressource_device extends xivo_restapi_ressource_abstract
 
 		if($this->_status_code !== 204)
 		{
-			dwho_report::push('error', 'fail to edit device: '.$id);
+			dwho_report::push('error', 'fail to edit device: '.$rs[0]);
 			return(false);
 		}
 
@@ -152,7 +152,10 @@ class restapi_ressource_device extends xivo_restapi_ressource_abstract
 		$rs = $this->request_delete($uri);
 
 		if($this->_status_code !== 204)
+		{
+			dwho_report::push('error', 'fail to delete device: '.$rs[0]);
 			return(false);
+		}
 
 		return(true);
 	}
@@ -174,7 +177,10 @@ class restapi_ressource_device extends xivo_restapi_ressource_abstract
 		$rs = $this->request_get($uri);
 
 		if($this->_status_code !== 204)
+		{
+			dwho_report::push('error', 'fail to synchronize device: '.$rs[0]);
 			return(false);
+		}
 
 		return(true);
 	}
@@ -185,7 +191,10 @@ class restapi_ressource_device extends xivo_restapi_ressource_abstract
 		$rs = $this->request_get($uri);
 
 		if($this->_status_code !== 204)
+		{
+			dwho_report::push('error', 'fail to associate line on the device: '.$rs[0]);
 			return(false);
+		}
 
 		return(true);
 	}
@@ -196,7 +205,10 @@ class restapi_ressource_device extends xivo_restapi_ressource_abstract
 		$rs = $this->request_get($uri);
 
 		if($this->_status_code !== 204)
+		{
+			dwho_report::push('error', 'fail to remove line on the device: '.$rs[0]);
 			return(false);
+		}
 
 		return(true);
 	}
