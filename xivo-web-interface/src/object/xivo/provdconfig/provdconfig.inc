@@ -29,12 +29,11 @@ class xivo_object_provdconfig extends xivo_object_provd_abstract
 	protected $_internal 		= array('base','autoprov');
 	protected $_confdefault 	= false;
 	protected $_extensions		= false;
-	protected $_devicefeatures 	= false;
 	protected $_sccpdevice		= false;
 	protected $_linefeatures	= false;
 	protected $_phonefunckey 	= false;
 	protected $_appsip			= false;
-	protected $_user_line 	= false;
+	protected $_user_line 		= false;
 	protected $_service			= false;
 
 	public function __construct(&$xobj,$param=array())
@@ -42,7 +41,6 @@ class xivo_object_provdconfig extends xivo_object_provd_abstract
 		if(($_SRE = &dwho_gct::get('xivo_service')) === false
 		|| ($this->_service = &$_SRE->get('ipbx')) === false
 		|| ($this->_extensions = &$this->_service->get_module('extensions')) === false
-		|| ($this->_devicefeatures = &$this->_service->get_module('devicefeatures')) === false
 		|| ($this->_sccpdevice = &$this->_service->get_module('sccpdevice')) === false
 		|| ($this->_linefeatures = &$this->_service->get_module('linefeatures')) === false
 		|| ($this->_phonefunckey = &$this->_service->get_module('phonefunckey')) === false
@@ -710,17 +708,16 @@ class xivo_object_provdconfig extends xivo_object_provd_abstract
 
 	public function rebuild_device_config($deviceid)
 	{
-		if (($listline = $this->_linefeatures->get_all_where(array('device' => (string) $deviceid))) === false
-		|| ($devicefeatures = $this->_devicefeatures->get($deviceid)) === false)
+		if (($listline = $this->_linefeatures->get_all_where(array('device' => (string) $deviceid))) === false)
 			return(false);
 
 		foreach ($listline as $line)
 		{
-			$globalconfig = $this->build_device_config($devicefeatures['deviceid'], $line['id']);
+			$globalconfig = $this->build_device_config($deviceid, $line['id']);
 
-			if ($this->edit($devicefeatures['deviceid'],$globalconfig) === false)
+			if ($this->edit($deviceid, $globalconfig) === false)
 			{
-				dwho_report::push('error', 'fail to edit config for this device: '.$device['deviceid']);
+				dwho_report::push('error', 'fail to edit config for this device: '.$deviceid);
 				return(false);
 			}
 		}

@@ -31,12 +31,6 @@ Greffon
 ; device-list_legend
 Legende
 
-; device-list_legend-opt(link_provd_exist)
-Bien existant dans le serveur d'approvisionnement
-
-; device-list_legend-opt(link_provd_not_exist)
-Non existant dans le serveur d'approvisionnement
-
 ; device-list_legend-opt(configured)
 Terminaison correctement configurée
 

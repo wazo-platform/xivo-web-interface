@@ -33,9 +33,6 @@ $array['element']['plugin']['default'] = '';
 $array['element']['config'] = array();
 $array['element']['config']['default'] = '';
 
-$array['element']['deviceid'] = array();
-$array['element']['deviceid']['default'] = '';
-
 $array['element']['sn'] = array();
 $array['element']['sn']['default'] = '';
 
@@ -56,17 +53,8 @@ $array['element']['configured']['value'] = array(0,1);
 $array['element']['configured']['default'] = 0;
 $array['element']['configured']['set'] = true;
 
-$array['element']['commented'] = array();
-$array['element']['commented']['value'] = array(0,1);
-$array['element']['commented']['default'] = 0;
-$array['element']['commented']['set'] = true;
-
-$array['element']['description'] = array();
-$array['element']['description']['default'] = '';
-
 
 $array['filter'] = array();
-$array['filter']['deviceid'] = array('set' => false,'chk' => 2,'regexp' => '/^[a-z0-9_-]+$/','minlen' => 1,'maxlen' => 32);
 $array['filter']['config'] = array('set' => false,'chk' => 2,'regexp' => '/^[a-z0-9_-]+$/','minlen' => 1,'maxlen' => 32);
 $array['filter']['plugin'] = array('set' => false,'chk' => 2,'minlen' => 1,'maxlen' => 64);
 $array['filter']['ip'] = array('set' => false,
@@ -82,7 +70,5 @@ $array['filter']['model'] = array('set' => false,'chk' => 2,'minlen' => 1,'maxle
 $array['filter']['version'] = array('set' => false,'chk' => 2,'minlen' => 1,'maxlen' => 32);
 $array['filter']['proto'] = array('set' => false,'chk' => 2,'key' => array('sip'));
 $array['filter']['configured'] = array('bool' => true);
-$array['filter']['commented'] = array('bool' => true);
-$array['filter']['description'] = array('set' => false,'chk' => 2,'maxlen' => 1000,'cast' => 'sgraph_crlf_tab','eol' => true);
 
 ?>

@@ -14,16 +14,16 @@ Lignes
 ; fm_config_label
 Label: 
 
-; fm_devicefeatures_ip
+; fm_device_ip
 IP: 
 
-; fm_devicefeatures_mac
+; fm_device_mac
 MAC: 
 
-; fm_devicefeatures_configdevice 
+; fm_device_configdevice 
 Modele de configuration de la terminaison : 
 
-; fm_devicefeatures_plugin
+; fm_device_plugin
 Greffon: 
 
 ; fm_config_language

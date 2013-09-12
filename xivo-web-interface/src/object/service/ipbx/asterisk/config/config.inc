@@ -163,9 +163,6 @@ $array['module']['ctisheetactions']['datastorage'] = true;
 $array['module']['ctisheetevents'] = array();
 $array['module']['ctisheetevents']['datastorage'] = true;
 
-$array['module']['devicefeatures'] = array();
-$array['module']['devicefeatures']['datastorage'] = true;
-
 $array['module']['dialaction'] = array();
 $array['module']['dialaction']['datastorage'] = true;
 

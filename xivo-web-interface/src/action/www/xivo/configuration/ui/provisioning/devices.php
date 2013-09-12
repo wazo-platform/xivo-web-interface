@@ -32,32 +32,26 @@ switch($act)
 		$appdevice = &$ipbx->get_application('device',null,false);
 		try
 		{
-			if(isset($_QR['id']) === false) {
+			if(isset($_QR['id']) === false)
 				throw new Exception('No id given');
-			}
-			if( ($info = $appdevice->get($_QR['id'])) === false) {
+			elseif( ($info = $appdevice->get($_QR['id'])) === false)
 				throw new Exception('No associated device');
-			}
-			switch($info['protocol']) {
-			case 'SCCP':
-				$status = $ipbx->discuss_ipbx('sccp resync ' . $info['sep'],true);
-				if($status) {
-					dwho_report::push('info',dwho_i18n::babelfish('successfully_synchronize',array($_QR['id'])));
-				} else {
-					dwho_report::push('error',dwho_i18n::babelfish('error_during_synchronize',array($_QR['id'])));
-				}
-				$query = array();
-				$q = $_QRY->build_query_str($query);
-				$uri = $_TPL->url('service/ipbx/pbx_settings/devices').'?'.$q;
-				$msg = 'redirecturi::'.($uri);
-				die($msg);
-			default:
-				$location = $provddevice->synchronize($info['devicefeatures']['deviceid']);
-				if(!$location)
-				{
-					throw new Exception('Unable to synchronize device');
-				}
-				die($location);
+
+			switch($info['protocol'])
+			{
+				case 'SCCP':
+					$status = $ipbx->discuss_ipbx('sccp resync ' . $info['sep'],true);
+					if($status)
+						dwho_report::push('info',dwho_i18n::babelfish('successfully_synchronize',array($_QR['id'])));
+					else
+						dwho_report::push('error',dwho_i18n::babelfish('error_during_synchronize',array($_QR['id'])));
+					$msg = 'redirecturi::'.($_TPL->url('service/ipbx/pbx_settings/devices'));
+					die($msg);
+				default:
+					$location = $provddevice->synchronize($info['device']['id']);
+					if(!$location)
+						throw new Exception('Unable to synchronize device');
+					die($location);
 			}
 		} catch (Exception $e)
 		{

@@ -42,7 +42,6 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 	protected $_phonefunckey	= null;
 	protected $_provdconfig		= false;
 	protected $_provddevice		= false;
-	protected $_devicefeatures 	= false;
 	protected $_device		 	= false;
 	protected $_sccpdevice		= false;
 	protected $_musiconhold		= array();
@@ -95,8 +94,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 	{
 		$this->_components = true;
 
-		if(($this->_devicefeatures = &$this->_service->get_module('devicefeatures')) === false
-		|| ($this->_sccpdevice = &$this->_service->get_module('sccpdevice')) === false
+		if(($this->_sccpdevice = &$this->_service->get_module('sccpdevice')) === false
 		|| ($this->_device = &$this->_service->get_application('device')) === false
 		|| ($this->_extensions = &$this->_service->get_module('extensions')) === false
 		|| ($this->_rightcall = $this->get_abstract('rightcall',array('type' => 'user'))) === false
@@ -1286,18 +1284,18 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		{
 			$vm_number = (string) $this->get_result_var('voicemail', 'mailbox');
 
-			if (($device = $this->_devicefeatures->get($new_device['device'])) === false)
+			if (($device = $this->_device->get($new_device['device'])) === false)
 			{
 				dwho_report::push('error', 'device doesn\'t exist');
 				return(false);
 			}
-			elseif($this->_provddevice->update_config_from_line($device['deviceid'], $line_id) === false)
+			elseif($this->_provddevice->update_config_from_line($device['device']['id'], $line_id) === false)
 			{
 				dwho_report::push('error', 'Can\'t edit device');
 				return(false);
 			}
 			elseif ($new_device['protocol'] === XIVO_SRE_IPBX_AST_PROTO_SCCP
-			&& $this->_sccpdevice->init_device($device['mac'],$new_device['name'],$vm_number) === false)
+			&& $this->_sccpdevice->init_device($device['device']['mac'],$new_device['name'],$vm_number) === false)
 			{
 				dwho_report::push('error', 'Can\'t initialize SCCP device');
 				return(false);
@@ -1853,13 +1851,13 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 					dwho_report::push('error', 'device doesn\'t exist: '.$existing_device['device']);
 					return(false);
 				}
-				elseif ($this->_device->remove_line($existing_device['num']) === false)
+				elseif ($this->_device->remove_line($new_device['id']) === false)
 				{
 					dwho_report::push('error', 'Can\'t remove line device');
 					return(false);
 				}
 				elseif ($existing_device['protocol'] === XIVO_SRE_IPBX_AST_PROTO_SCCP
-				&& $this->_sccpdevice->init_device($device['devicefeatures']['mac'],'') === false)
+				&& $this->_sccpdevice->init_device($device['device']['mac'],'') === false)
 				{
 					dwho_report::push('error', 'Can\'t initialize SCCP device');
 					return(false);
@@ -1868,18 +1866,18 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			// Add the new device associated.
 			if (empty($new_device['device']) === false)
 			{
-				if (($device = $this->_devicefeatures->get($new_device['device'])) === false)
+				if (($device = $this->_device->get($new_device['device'])) === false)
 				{
 					dwho_report::push('error', 'device doesn\'t exist: '.$new_device['device']);
 					return(false);
 				}
-				elseif($this->_provddevice->update_config_from_line($device['deviceid'],$new_device['id']) === false)
+				elseif($this->_provddevice->update_config_from_line($device['device']['id'],$new_device['id']) === false)
 				{
 					dwho_report::push('error', 'Can\'t update config device');
 					return(false);
 				}
 				elseif ($new_device['protocol'] === XIVO_SRE_IPBX_AST_PROTO_SCCP
-				&& $this->_sccpdevice->init_device($device['mac'],$new_device['number'],$vm_number) === false)
+				&& $this->_sccpdevice->init_device($device['device']['mac'],$new_device['number'],$vm_number) === false)
 				{
 					dwho_report::push('error', 'Can\'t initialize SCCP device');
 					return(false);
@@ -1890,18 +1888,18 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		elseif (empty($new_device['device']) === false
 		&& empty($existing_device['device']) === false)
 		{
-			if (($device = $this->_devicefeatures->get($existing_device['device'])) === false)
+			if (($device = $this->_device->get($existing_device['device'])) === false)
 			{
 				dwho_report::push('error', 'device doesn\'t exist: '.$existing_device['device']);
 				return(false);
 			}
-			elseif($this->_provdconfig->rebuild_device_config($device['id']) === false)
+			elseif($this->_provdconfig->rebuild_device_config($device['device']['id']) === false)
 			{
 				dwho_report::push('error', 'Can\'t rebuild config device');
 				return(false);
 			}
 			elseif ($new_device['protocol'] === XIVO_SRE_IPBX_AST_PROTO_SCCP
-			&& $this->_sccpdevice->init_device($device['mac'],$new_device['number'],$vm_number) === false)
+			&& $this->_sccpdevice->init_device($device['device']['mac'],$new_device['number'],$vm_number) === false)
 			{
 				dwho_report::push('error', 'Can\'t initialize SCCP device');
 				return(false);
@@ -2141,10 +2139,10 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		// remove device if associated
 		elseif(($device = $this->_device->get($this->_info['linefeatures'][0]['device'],null,true)) === false)
 			return(true);
-		elseif($this->_device->remove_line($this->_info['linefeatures'][0]['num']) === false)
+		elseif($this->_device->remove_line($this->_info['linefeatures'][0]['id']) === false)
 			return(false);
 		elseif ($this->_info['linefeatures'][0]['protocol'] === XIVO_SRE_IPBX_AST_PROTO_SCCP
-		&& $this->_sccpdevice->init_device($device['devicefeatures']['mac'],'') === false)
+		&& $this->_sccpdevice->init_device($device['device']['mac'],'') === false)
 			return(false);
 
 		return(true);

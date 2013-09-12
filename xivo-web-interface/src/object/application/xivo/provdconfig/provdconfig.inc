@@ -243,7 +243,7 @@ class xivo_application_xivo_object_provdconfig extends xivo_application_xivo_obj
 		{
 			if (($_SRE = &dwho_gct::get('xivo_service')) === false
 			|| ($modlinefeatures = &$_SRE->get_module('ipbx','linefeatures')) === false
-			|| ($moddevicefeatures = &$_SRE->get_module('ipbx','devicefeatures')) === false)
+			|| ($moddevice = &$_SRE->get_module('ipbx','device')) === false)
 				return(false);
 
 			if (($list = $modlinefeatures->get_all_where(array('configregistrar' => $rs['id']))) !== false
@@ -254,7 +254,7 @@ class xivo_application_xivo_object_provdconfig extends xivo_application_xivo_obj
 				{
 					$ref = &$list[$i];
 					$deviceid = $ref['device'];
-					if (($device = $moddevicefeatures->get($deviceid)) === false
+					if (($device = $moddevice->get($deviceid)) === false
 					|| ($config = $device['config']) === null)
 						continue;
 					array_push($res,$device['id']);

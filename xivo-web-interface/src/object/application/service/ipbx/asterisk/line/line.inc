@@ -34,7 +34,7 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 	protected $_user_line		= false;
 	protected $_extensions		= false;
 	protected $_provdconfig		= false;
-	protected $_devicefeatures 	= false;
+	protected $_provddevice		= false;
 	protected $_conf			= array();
 
 	public function __construct(&$service,&$dso,$param=null,$components=true)
@@ -70,8 +70,8 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 
 		if(($this->_user_line = &$this->_service->get_module('user_line')) === false
 		|| ($this->_extensions = &$this->_service->get_module('extensions')) === false
-		|| ($this->_devicefeatures = &$this->_service->get_module('devicefeatures')) === false
 		|| ($_XOBJ = &dwho_gct::get('xivo_object')) === false
+		|| ($this->_provddevice = &$_XOBJ->get_module('provddevice')) === false
 		|| ($this->_provdconfig = &$_XOBJ->get_module('provdconfig')) === false)
 			return(false);
 
@@ -629,7 +629,7 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 		if($this->get_result('user_id') === null
 		&& empty($this->_info['linefeatures']['device']) === false)
 		{
-			if(($device = $this->_devicefeatures->get($this->_info['linefeatures']['device'])) === false)
+			if(($device = $this->_provddevice->get($this->_info['linefeatures']['device'])) === false)
 			{
 				dwho_report::push('error', 'device doesn\'t exist: '.$device['device']);
 				return(false);

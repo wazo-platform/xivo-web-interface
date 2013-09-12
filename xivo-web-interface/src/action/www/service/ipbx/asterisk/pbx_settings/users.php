@@ -77,9 +77,8 @@ switch($act)
 		$order = array('displayname' => SORT_ASC);
 		$list_configregistrar = $appprovdconfig->get_config_list('',$order,false,false,false,'registrar');
 
-		$appdevice = &$ipbx->get_application('device');
-		$order = array('ip' => SORT_ASC);
-		$list_device_line = $appdevice->get_devices_list(null,$order,false);
+		$device_api = &$_RAPI->get_ressource('device');
+		$list_device_line = $device_api->find_all();
 
 		$_TPL->set_var('entity_list',$entity_list);
 		$_TPL->set_var('list_configregistrar',$list_configregistrar);

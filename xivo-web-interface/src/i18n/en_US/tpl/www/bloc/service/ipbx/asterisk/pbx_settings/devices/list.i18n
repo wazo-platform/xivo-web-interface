@@ -31,12 +31,6 @@ Plugin
 ; device-list_legend
 Legend
 
-; device-list_legend-opt(link_provd_exist)
-Existent on the provisioning server
-
-; device-list_legend-opt(link_provd_not_exist)
-Inexistent on the provisioning server
-
 ; device-list_legend-opt(configured)
 Device properly configured
 

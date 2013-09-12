@@ -1,8 +1,7 @@
 <?php
-
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2011  Avencall
+# Copyright (C) 2013  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,12 +17,13 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-xivo_service_asterisk::required(array('abstract','datastorage','abstract','sql.inc'),true);
+$array = array();
 
-class xivo_service_asterisk_devicefeatures_sql extends xivo_service_asterisk_abstract_sql
-{
-	var $_disable		= 'commented';
-	var $_unique		= array(array('deviceid'));
-}
+$array['restapi'] = array();
+$array['restapi']['host'] = '127.0.0.1';
+$array['restapi']['port'] = 50050;
+$array['restapi']['protocol'] = '1.1';
+$array['restapi']['connect_timeout'] = 180;
+$array['restapi']['timeout'] = 90;
 
 ?>

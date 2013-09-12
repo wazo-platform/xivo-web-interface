@@ -73,7 +73,6 @@ $page = $url->pager($pager['pages'],
 					$this->bbf('col_sort_mac'));
 ?>
 		</th>
-		<th class="th-center"><?=$this->bbf('col_phonenumber');?></th>
 		<th class="th-center">
 			<span class="title <?= $sort[1]=='ip'?'underline':''?>">
 				<?=$this->bbf('col_ip');?>
@@ -129,74 +128,58 @@ $page = $url->pager($pager['pages'],
 
 			$ref = &$list[$i];
 
-			$linefeatures = $ref['linefeatures'];
-			$devicefeatures = $ref['devicefeatures'];
-
-			if($devicefeatures['commented'] === true):
-				$icon = 'disable';
-			elseif($devicefeatures['configured'] === false):
-				$icon = 'red';
-			else:
-				if(strncmp($devicefeatures['config'],'autoprov',strlen('autoprov')) === 0)
-					$icon = 'yellow';
-				else
+			switch ($ref['status']):
+				case 'configured':
 					$icon = 'green';
-			endif;
-
-			$phonenumber = '-';
-			if($linefeatures !== false):
-				$phonenumber = $linefeatures['number'];
-			endif;
-
-			if($ref['provdexist'] === true):
-				$provdexist = 'stock_link';
-			else:
-				$provdexist = 'stock_unlink';
-			endif;
+					break;
+				case 'autoprov':
+					$icon = 'yellow';
+					break;
+				case 'not_configured':
+				default:
+					$icon = 'red';
+			endswitch;
 ?>
 	<tr onmouseover="this.tmp = this.className; this.className = 'sb-content l-infos-over';"
 	    onmouseout="this.className = this.tmp;"
 	    class="sb-content l-infos-<?=(($i % 2) + 1)?>on2">
 		<td class="td-left">
 			<?=$form->checkbox(array('name'		=> 'devices[]',
-						 'value'	=> $devicefeatures['id'],
+						 'value'	=> $ref['id'],
 						 'label'	=> false,
 						 'id'		=> 'it-devices-'.$i,
 						 'checked'	=> false,
 						 'paragraph'	=> false));?>
 		</td>
-		<td class="txt-left col_mac_address" title="<?=dwho_alttitle($devicefeatures['mac']);?>">
+		<td class="txt-left col_mac_address">
 			<label for="it-devices-<?=$i?>" id="lb-devices-<?=$i?>">
 <?php
-				echo $url->img_html('img/site/utils/'.$provdexist.'.png',null,'class="icons-list"');
 				echo $url->img_html('img/site/utils/cercle-'.$icon.'.png',null,'class="icons-list col_configured"');
-				echo dwho_has_len($devicefeatures['mac']) === true ? dwho_htmlen(dwho_trunc($devicefeatures['mac'],25,'...',false)) : '-';
+				echo dwho_has_len($ref, 'mac') === true ? dwho_htmlen(dwho_trunc($ref['mac'],25,'...',false)) : '-';
 ?>
 			</label>
 		</td>
-		<td class="col_phone_number"><?=(dwho_has_len($phonenumber) === true ? $phonenumber : '-')?></td>
-		<td class="col_ip_address"><?=(dwho_has_len($devicefeatures['ip']) === true ? $devicefeatures['ip'] : '-')?></td>
-		<td class="col_vendor"><?=(dwho_has_len($devicefeatures['vendor']) === true ? $devicefeatures['vendor'] : '-')?></td>
-		<td class="col_model"><?=(dwho_has_len($devicefeatures['model']) === true ? $devicefeatures['model'] : '-')?></td>
-		<td class="col_plugin"><?=(dwho_has_len($devicefeatures['plugin']) === true ? $devicefeatures['plugin'] : '-')?></td>
+		<td class="col_ip_address"><?=(dwho_has_len($ref, 'ip') === true ? $ref['ip'] : '-')?></td>
+		<td class="col_vendor"><?=(dwho_has_len($ref, 'vendor') === true ? $ref['vendor'] : '-')?></td>
+		<td class="col_model"><?=(dwho_has_len($ref, 'model') === true ? $ref['model'] : '-')?></td>
+		<td class="col_plugin"><?=(dwho_has_len($ref, 'plugin') === true ? $ref['plugin'] : '-')?></td>
 		<td class="td-right" colspan="2">
 <?php
-		$protocol = $linefeatures['protocol'];
 		echo	$url->href_html($url->img_html('img/site/utils/updating.png',
 						       $this->bbf('opt_synchronize'),
 						       'border="0"'),
 					'service/ipbx/pbx_settings/devices',
 					array('act'	=> 'synchronize',
-					      'id'	=> $devicefeatures['id']),
+					      'id'	=> $ref['id']),
 					'onclick="if(confirm(\''.$dhtml->escape($this->bbf('opt_synchronize_confirm')).'\'))
-						{init_synchronize(\''.$devicefeatures['id'].'\',\''.$protocol.'\');}return(false);"',
+						{init_synchronize(\''.$ref['id'].'\');}return(false);"',
 					$this->bbf('opt_synchronize')),"\n";
 		echo	$url->href_html($url->img_html('img/site/utils/reset.png',
 						       $this->bbf('opt_reset-autoprov'),
 						       'border="0" width="16" height="16"'),
 					'service/ipbx/pbx_settings/devices',
 					array('act'	=> 'modeautoprov',
-					      'id'	=> $devicefeatures['id']),
+					      'id'	=> $ref['id']),
 					'onclick="return(confirm(\''.$dhtml->escape($this->bbf('opt_modeautoprov_confirm')).'\'));"',
 					$this->bbf('opt_reset-autoprov')),"\n";
 		echo	$url->href_html($url->img_html('img/site/button/edit.gif',
@@ -204,15 +187,15 @@ $page = $url->pager($pager['pages'],
 						       'border="0"'),
 					'service/ipbx/pbx_settings/devices',
 					array('act'	=> 'edit',
-					      'id'	=> $devicefeatures['id']),
+					      'id'	=> $ref['id']),
 					null,
 					$this->bbf('opt_modify')),"\n",
-			$url->href_html($url->img_html('img/site/button/delete.gif',
+				$url->href_html($url->img_html('img/site/button/delete.gif',
 						       $this->bbf('opt_delete'),
 						       'border="0"'),
 					'service/ipbx/pbx_settings/devices',
 					array('act'	=> 'delete',
-					      'id'	=> $devicefeatures['id'],
+					      'id'	=> $ref['id'],
 					      'page'	=> $pager['page'],
 					      $param),
 					'onclick="return(confirm(\''.$dhtml->escape($this->bbf('opt_delete_confirm')).'\'));"',
@@ -226,7 +209,7 @@ $page = $url->pager($pager['pages'],
 ?>
 	<tr class="sb-foot">
 		<td class="td-left xspan b-nosize"><span class="span-left b-nosize">&nbsp;</span></td>
-		<td class="td-center" colspan="7"><span class="b-nosize">&nbsp;</span></td>
+		<td class="td-center" colspan="6"><span class="b-nosize">&nbsp;</span></td>
 		<td class="td-right xspan b-nosize"><span class="span-right b-nosize">&nbsp;</span></td>
 	</tr>
 </table>
@@ -240,8 +223,6 @@ $page = $url->pager($pager['pages'],
 
 <fieldset>
 	<legend><?=$this->bbf('device-list_legend');?></legend>
-	<p><?=$url->img_html('img/site/utils/stock_link.png');?> <?=$this->bbf('device-list_legend-opt',array('link_provd_exist'));?></p>
-	<p><?=$url->img_html('img/site/utils/stock_unlink.png');?> <?=$this->bbf('device-list_legend-opt',array('link_provd_not_exist'));?></p>
 	<p><?=$url->img_html('img/site/utils/cercle-green.png');?> <?=$this->bbf('device-list_legend-opt',array('configured'));?></p>
 	<p><?=$url->img_html('img/site/utils/cercle-yellow.png');?> <?=$this->bbf('device-list_legend-opt',array('autoprov-mode'));?></p>
 	<p><?=$url->img_html('img/site/utils/cercle-red.png');?> <?=$this->bbf('device-list_legend-opt',array('not_configured'));?></p>

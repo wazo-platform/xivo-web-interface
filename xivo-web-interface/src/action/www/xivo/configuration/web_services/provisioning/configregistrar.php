@@ -46,8 +46,7 @@ switch($act)
 			for($i=0; $i<$nb; $i++)
 			{
 				$ref = &$list[$i];
-				$deviceid = (int) $ref['device'];
-				$provdconfig->rebuild_device_config($deviceid);
+				$provdconfig->rebuild_device_config($ref['device']);
 			}
 		}
 		$provdconfig->rebuild_required_config();
@@ -56,18 +55,17 @@ switch($act)
 		$http_response->send(true);
 		break;
 	case 'sync_bsfilter_devices':
-		$appdevice = &$ipbx->get_application('device');
-		$provddevice = &$_XOBJ->get_module('provddevice');
+		$device_api = &$_RAPI->get_ressource('device');
 
 		$status = 204;
-		if (($list = $appdevice->get_devices_has_bsfilter()) !== false
+		if (($list = $device_api->find_all()) !== false
 		&& ($nb = count($list)) > 0)
 		{
 			$status = 200;
 			for($i=0; $i<$nb; $i++)
 			{
 				$ref = &$list[$i];
-				$provddevice->synchronize($ref['deviceid']);
+				$device_api->synchronize($ref['id']);
 			}
 		}
 
@@ -75,18 +73,17 @@ switch($act)
 		$http_response->send(true);
 		break;
 	case 'sync_devices':
-		$provddevice = &$_XOBJ->get_module('provddevice');
-		$devicefeatures = &$ipbx->get_module('devicefeatures');
+		$device_api = &$_RAPI->get_ressource('device');
 
 		$status = 204;
-		if (($list = $devicefeatures->get_all()) !== false
+		if (($list = $device_api->find_all()) !== false
 		&& ($nb = count($list)) > 0)
 		{
 			$status = 200;
 			for($i=0; $i<$nb; $i++)
 			{
 				$ref = &$list[$i];
-				$provddevice->synchronize($ref['deviceid']);
+				$device_api->synchronize($ref['id']);
 			}
 		}
 

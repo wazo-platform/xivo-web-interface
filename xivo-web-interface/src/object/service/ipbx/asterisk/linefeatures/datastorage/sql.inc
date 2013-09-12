@@ -70,7 +70,7 @@ class xivo_service_asterisk_linefeatures_sql extends xivo_service_asterisk_abstr
 			$this->_dso->where($this->_table.'."id" = "user_line"."line_id"');
 		}
 
-		if(((int) $deviceid = dwho_ulongint($deviceid)) !== 0)
+		if(dwho_has_len($deviceid))
 		{
 			$this->_dso->where(array('device' => $deviceid));
 			$this->_dso->where(array('num' => 1));
