@@ -206,8 +206,7 @@ switch($act)
 		$limit[1] = $nbbypage;
 
 		$list = $device_api->find_all($search,$order,$limit);
-
-		$total = count($list);
+		$total = $device_api->get_total();
 
 		if($list === false && $total > 0 && $prevpage > 0)
 		{

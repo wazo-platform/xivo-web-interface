@@ -22,10 +22,16 @@ class restapi_ressource_device extends xivo_restapi_ressource_abstract
 
 	protected $_name      = 'device';
 	protected $_base_url  = 'devices';
+	private $_cnt         = 0;
 
 	public function __construct($_RAPI, $param=null)
 	{
 		parent::__construct($_RAPI, $param);
+	}
+
+	public function get_total()
+	{
+		return($this->_cnt);
 	}
 
 	public function get($id)
@@ -88,24 +94,14 @@ class restapi_ressource_device extends xivo_restapi_ressource_abstract
 
 		if (is_array($rs) === false
 		|| isset($rs['items']) === false
-		|| ($rs = $rs['items']) === false)
+		|| ($items = $rs['items']) === false
+		|| ($this->_cnt = $rs['total']) === 0)
 		{
 			dwho_report::push('error', 'An Error occured while retrieving the list of devices');
 			return(false);
 		}
-/*
-		if (dwho_has_len($search) === true)
-		{
-			for ($i=0; $i<$nb; $i++)
-			{
-				$ref = &$devices[$i];
-				foreach ($ref as $value)
-					if (!is_string($value) || !preg_match('/'.$search.'/', $value))
-						unset($ref[$i]);
-			}
-		}
-*/
-		return($rs);
+
+		return($items);
 	}
 
 	public function add($data)
