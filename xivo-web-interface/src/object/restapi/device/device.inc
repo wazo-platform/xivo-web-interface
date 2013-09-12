@@ -64,7 +64,7 @@ class restapi_ressource_device extends xivo_restapi_ressource_abstract
 
 		$query = array();
 		if (dwho_has_len($search) === true)
-			array_push($query, array('q','{"*":"'.$search.'"}'));
+			array_push($query, array('search',$search));
 
 		if (is_array($order))
 		{
