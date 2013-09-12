@@ -1558,9 +1558,9 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 				return(false);
 			}
 
-			if ($this->delete_linefeatures() === false
-			|| $this->delete_exten('exten') === false
-			|| $this->delete_device_config() === false)
+			if ($this->delete_device_config() === false
+			|| $this->delete_linefeatures() === false
+			|| $this->delete_exten('exten') === false)
 			{
 				$this->_reverse_edit();
 				$this->_status = '';
