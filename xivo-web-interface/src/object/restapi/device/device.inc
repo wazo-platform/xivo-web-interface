@@ -44,7 +44,10 @@ class restapi_ressource_device extends xivo_restapi_ressource_abstract
 
 		if($this->_status_code !== 200
 		|| empty($rs) === true)
+		{
+			dwho_report::push('error', 'An Error occured while retrieving the device. '.$rs[0]);
 			return(false);
+		}
 
 		return($rs);
 	}
@@ -53,13 +56,16 @@ class restapi_ressource_device extends xivo_restapi_ressource_abstract
 	{
 		$uri = $this->_build_uri();
 		$query = array();
-		array_push($query, array('q','{"ip":"'.$ip.'"}'));
+		array_push($query, array('search',$ip));
 		$rs = $this->request_get($uri, $query);
 
 		if($this->_status_code !== 200
 		|| empty($rs) === true
 		|| (int) $rs['total'] === 0)
+		{
+			dwho_report::push('error', 'An Error occured while retrieving the device. '.$rs[0]);
 			return(false);
+		}
 
 		return($rs['items'][0]);
 	}
@@ -95,11 +101,13 @@ class restapi_ressource_device extends xivo_restapi_ressource_abstract
 		if (is_array($rs) === false
 		|| isset($rs['items']) === false
 		|| ($items = $rs['items']) === false
-		|| ($this->_cnt = $rs['total']) === 0)
+		|| isset($rs['total']) === false)
 		{
-			dwho_report::push('error', 'An Error occured while retrieving the list of devices');
+			dwho_report::push('error', 'An Error occured while retrieving the list of devices. '.$rs[0]);
 			return(false);
 		}
+
+		$this->_cnt = $rs['total'];
 
 		return($items);
 	}
