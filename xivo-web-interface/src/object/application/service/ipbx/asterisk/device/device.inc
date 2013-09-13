@@ -163,12 +163,22 @@ class xivo_application_service_asterisk_device extends xivo_application_asterisk
 	{
 		if(dwho_issa('device',$this->_info) === false)
 			return(false);
-
-		$this->_provdconfig->build_device_config($this->_info['device']['id'], $line_id);
-
-		$rs = $this->_device_api->associate_line($this->_info['device']['id'], $line_id);
-
-		if ($synchronize === true)
+		elseif (($conf = $this->_provdconfig->build_device_config($this->_info['device']['id'], $line_id)) === false)
+		{
+			dwho_report::push('error', 'fail to build config device: '.$this->_info['device']['id']);
+			return(false);
+		}
+		elseif ($this->_provdconfig->edit($this->_info['device']['id'], $conf) === false)
+		{
+			dwho_report::push('error', 'fail to edit config for this device: '.$this->_info['device']['id']);
+			return(false);
+		}
+		elseif (($rs = $this->_device_api->associate_line($this->_info['device']['id'], $line_id)) === false)
+		{
+			dwho_report::push('error', 'fail to associate line to device: '.$this->_info['device']['id']);
+			return(false);
+		}
+		elseif ($synchronize === true)
 			$this->synchronize();
 
 		return($rs);
