@@ -242,30 +242,23 @@ class xivo_application_xivo_object_provdconfig extends xivo_application_xivo_obj
 		&& $rs['X_type'] === 'registrar')
 		{
 			if (($_SRE = &dwho_gct::get('xivo_service')) === false
-			|| ($modlinefeatures = &$_SRE->get_module('ipbx','linefeatures')) === false
-			|| ($moddevice = &$_SRE->get_module('ipbx','device')) === false)
+			|| ($modlinefeatures = &$_SRE->get_module('ipbx','linefeatures')) === false)
 				return(false);
 
 			if (($list = $modlinefeatures->get_all_where(array('configregistrar' => $rs['id']))) !== false
 			&& ($nb = count($list)) > 0)
 			{
-				$res = array();
+				$processed = array();
 				for($i=0;$i<$nb;$i++)
 				{
 					$ref = &$list[$i];
-					$deviceid = $ref['device'];
-					if (($device = $moddevice->get($deviceid)) === false
-					|| ($config = $device['config']) === null)
-						continue;
-					array_push($res,$device['id']);
+					if (empty($ref['device']) === false
+					&& array_search($ref['device'], $processed) === false)
+					{
+						$this->_provdconfig->rebuild_device_config($ref['device']);
+						array_push($processed,$ref['device']);
+					}
 				}
-
-				$listid = array_unique($res);
-				$listid = array_values($listid);
-
-				$nb = count($listid);
-				for($i=0;$i<$nb;$i++)
-					$this->_provdconfig->rebuild_device_config($listid[$i]);
 			}
 
 			if($this->_info['config']['id'] === 'default')
