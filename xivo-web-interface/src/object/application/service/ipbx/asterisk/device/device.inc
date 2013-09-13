@@ -239,6 +239,9 @@ class xivo_application_service_asterisk_device extends xivo_application_asterisk
 		if (empty($arr['ip']))
 			unset($arr['ip']);
 
+		if (empty($arr['plugin']))
+			unset($arr['plugin']);
+
 		$this->_set_result('device',$arr);
 
 		return(true);
