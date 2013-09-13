@@ -77,11 +77,11 @@ class restapi_ressource_device extends xivo_restapi_ressource_abstract
 			$sort_key = array_keys($order);
 			$sort_order = array_values($order);
 			if ($sort_order[0] == SORT_DESC)
-				$sort_order[0] = -1;
+				$sort_order[0] = 'desc';
 			elseif ($sort_order[0] == SORT_ASC)
-				$sort_order[0] = 1;
-			array_push($query, array('sort_key', $sort_key[0]));
-			array_push($query, array('sort_order', $sort_order[0]));
+				$sort_order[0] = 'asc';
+			array_push($query, array('order', $sort_key[0]));
+			array_push($query, array('direction', $sort_order[0]));
 		}
 
 		if (is_array($limit))
