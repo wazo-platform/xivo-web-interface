@@ -39,6 +39,7 @@ class xivo_application_service_asterisk_device extends xivo_application_asterisk
 		|| ($this->_sccpdevice = &$this->_service->get_module('sccpdevice')) === false
 		|| ($_XOBJ = &dwho_gct::get('xivo_object')) === false
 		|| ($this->_provdplugin = &$_XOBJ->get_module('provdplugin')) === false
+		|| ($this->_provdconfig = &$_XOBJ->get_module('provdconfig')) === false
 		|| ($_RAPI = &dwho_gct::get('xivo_restapi')) === false
 		|| ($this->_device_api = $_RAPI->get_ressource('device')) === false)
 			return(false);
@@ -162,6 +163,8 @@ class xivo_application_service_asterisk_device extends xivo_application_asterisk
 	{
 		if(dwho_issa('device',$this->_info) === false)
 			return(false);
+
+		$this->_provdconfig->build_device_config($this->_info['device']['id'], $line_id);
 
 		$rs = $this->_device_api->associate_line($this->_info['device']['id'], $line_id);
 
