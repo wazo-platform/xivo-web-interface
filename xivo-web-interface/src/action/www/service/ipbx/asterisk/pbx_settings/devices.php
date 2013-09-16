@@ -62,13 +62,10 @@ switch($act)
 		{
 			if(($info = $appdevice->get($values[$i])) !== false)
 			{
-				switch($info['protocol']) {
-					case 'SCCP':
-						$status = $ipbx->discuss_ipbx('sccp resync ' . $info['sep'],true);
-						break;
-					default:
-						$appdevice->synchronize();
-				}
+				if ($appdevice->is_sccp())
+					$status = $ipbx->discuss_ipbx('sccp resync ' . $info['sep'],true);
+				else
+					$appdevice->synchronize();
 			}
 		}
 		dwho_report::push('info', 'send_mass_synchronize');
