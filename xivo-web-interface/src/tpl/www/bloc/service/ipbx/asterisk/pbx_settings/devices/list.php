@@ -139,6 +139,8 @@ $page = $url->pager($pager['pages'],
 				default:
 					$icon = 'red';
 			endswitch;
+
+			$mac = dwho_has_len($ref, 'mac') === true ? dwho_htmlen(dwho_trunc($ref['mac'],25,'...',false)) : '-';
 ?>
 	<tr onmouseover="this.tmp = this.className; this.className = 'sb-content l-infos-over';"
 	    onmouseout="this.className = this.tmp;"
@@ -151,13 +153,11 @@ $page = $url->pager($pager['pages'],
 						 'checked'	=> false,
 						 'paragraph'	=> false));?>
 		</td>
-		<td class="txt-left col_mac_address">
-			<label for="it-devices-<?=$i?>" id="lb-devices-<?=$i?>">
-<?php
+		<td class="txt-left col_mac_address"  title="<?=$mac?>">
+			<label for="it-devices-<?=$i?>" id="lb-devices-<?=$i?>"><?php
 				echo $url->img_html('img/site/utils/cercle-'.$icon.'.png',null,'class="icons-list col_configured"');
-				echo dwho_has_len($ref, 'mac') === true ? dwho_htmlen(dwho_trunc($ref['mac'],25,'...',false)) : '-';
-?>
-			</label>
+				echo $mac;
+			?></label>
 		</td>
 		<td class="col_ip_address"><?=(dwho_has_len($ref, 'ip') === true ? $ref['ip'] : '-')?></td>
 		<td class="col_vendor"><?=(dwho_has_len($ref, 'vendor') === true ? $ref['vendor'] : '-')?></td>
