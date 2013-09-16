@@ -68,6 +68,15 @@ class xivo_application_service_asterisk_device extends xivo_application_asterisk
 		return($this->_dso->get_nb($arr));
 	}
 
+	public function is_sccp()
+	{
+		if ($this->_info['device'] === false
+		|| isset($this->_info['device']['plugin']) === false)
+			return(false);
+
+		return((bool) preg_match('/'.XIVO_SRE_IPBX_AST_PROTO_SCCP.'/',$this->_info['device']['plugin']));
+	}
+
 	public function get_capabilities()
 	{
 		$this->_info['capabilities'] = false;
@@ -116,8 +125,8 @@ class xivo_application_service_asterisk_device extends xivo_application_asterisk
 	public function get_sep()
 	{
 		$this->_info['sep'] = '';
-		if (!isset($this->_info['device']['mac']) === false
-		|| preg_match('/'.XIVO_SRE_IPBX_AST_PROTO_SCCP.'/',$this->_info['device']['plugin']) === 0)
+		if (isset($this->_info['device']['mac']) === false
+		|| $this->is_sccp() === false)
 			return(false);
 		$this->_info['sep'] = 'SEP'.strtoupper(str_replace(':','', $this->_info['device']['mac']));
 	}
@@ -129,7 +138,7 @@ class xivo_application_service_asterisk_device extends xivo_application_asterisk
 
 		if ($this->_device_api->reset_to_autoprov($this->_info['device']['id']) === false)
 			return(false);
-		elseif(preg_match('/'.XIVO_SRE_IPBX_AST_PROTO_SCCP.'/',$this->_info['device']['plugin']) === 1)
+		elseif($this->is_sccp() === true)
 			$this->_sccpdevice->init_device($this->_info['device']['mac'],'');
 
 		if ($synchronize === true)

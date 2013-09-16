@@ -34,29 +34,27 @@ switch($act)
 		{
 			if(isset($_QR['id']) === false)
 				throw new Exception('No id given');
-			elseif( ($info = $appdevice->get($_QR['id'])) === false)
+			elseif(($info = $appdevice->get($_QR['id'])) === false)
 				throw new Exception('No associated device');
 
-			switch($info['protocol'])
+			if ($appdevice->is_sccp())
 			{
-				case 'SCCP':
-					$status = $ipbx->discuss_ipbx('sccp resync ' . $info['sep'],true);
-					if($status)
-						dwho_report::push('info',dwho_i18n::babelfish('successfully_synchronize',array($_QR['id'])));
-					else
-						dwho_report::push('error',dwho_i18n::babelfish('error_during_synchronize',array($_QR['id'])));
-					$msg = 'redirecturi::'.($_TPL->url('service/ipbx/pbx_settings/devices'));
-					die($msg);
-				default:
-					$location = $provddevice->synchronize($info['device']['id']);
-					if(!$location)
-						throw new Exception('Unable to synchronize device');
-					die($location);
+				if($ipbx->discuss_ipbx('sccp resync ' . $info['sep'],true))
+					dwho_report::push('info',dwho_i18n::babelfish('successfully_synchronize',array($_QR['id'])));
+				else
+					dwho_report::push('error',dwho_i18n::babelfish('error_during_synchronize',array($_QR['id'])));
+				die('redirecturi::'.$_TPL->url('service/ipbx/pbx_settings/devices'));
+			}
+			else
+			{
+				if(!($location = $provddevice->synchronize($info['device']['id'])))
+					throw new Exception('Unable to synchronize device');
+				die($location);
 			}
 		} catch (Exception $e)
 		{
 			$http_response->set_status_line(400);
-			$http_response->send(true);
+			$http_response->send(true, $e);
 		}
 		break;
 	case 'request_oip':
@@ -66,8 +64,16 @@ switch($act)
 			$http_response->send(true);
 		}
 		elseif (isset($_QR['path']) === false
-		|| ($path = urldecode($_QR['path'])) === false
-		|| ($data = $provddevice->request_oip($path)) === false
+		|| ($path = urldecode($_QR['path'])) === false)
+		{
+			$http_response->set_status_line(400);
+			$http_response->send(true);
+		}
+
+		if (preg_match('/^redirecturi::/', $path))
+			die($path);
+
+		if (($data = $provddevice->request_oip($path)) === false
 		|| isset($data['status']) === false)
 		{
 			$http_response->set_status_line(400);
