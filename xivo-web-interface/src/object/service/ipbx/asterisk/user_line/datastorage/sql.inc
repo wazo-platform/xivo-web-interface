@@ -22,6 +22,28 @@ xivo_service_asterisk::required(array('abstract','datastorage','abstract','sql.i
 class xivo_service_asterisk_user_line_sql extends xivo_service_asterisk_abstract_sql
 {
 	var $_unique	= array(array('user_id','line_id'));
+
+	public function find_main_user_id($line_id)
+	{
+		if ($this->_dso->new_select($this->_table, 'user_id') === false) {
+			return false;
+		}
+
+		if ($this->_dso->where(array('line_id' => $line_id)) === false) {
+			return false;
+		}
+
+		if ($this->_dso->andwhere("main_user = true") === false) {
+			return false;
+		}
+
+		if ($this->_dso->andwhere("main_line = true") === false) {
+			return false;
+		}
+
+		$user_id = $this->_dso->select_one();
+		return $user_id;
+	}
 }
 
 ?>
