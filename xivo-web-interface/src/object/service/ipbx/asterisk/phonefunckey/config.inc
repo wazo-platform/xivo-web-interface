@@ -215,7 +215,7 @@ $array['element']['iduserfeatures']['default'] = 0;
 $array['element']['iduserfeatures']['forcedef'] = true;
 
 $array['element']['fknum'] = array();
-$array['element']['fknum']['value'] = range(1,100);
+$array['element']['fknum']['value'] = range(1,150);
 $array['element']['fknum']['default'] = 1;
 
 $array['element']['exten'] = array();
@@ -261,7 +261,7 @@ $array['element']['progfunckey']['set'] = true;
 
 $array['filter'] = array();
 $array['filter']['iduserfeatures'] = array('cast' => 'ulongint');
-$array['filter']['fknum'] = array('cast' => 'uint','between' => array(1,100));
+$array['filter']['fknum'] = array('cast' => 'uint','between' => array(1,150));
 $array['filter']['exten'] = array('set' => false,'chk' => 2,'maxlen' => 40,'regexp' => '/^[0-9\*#]+$/');
 $array['filter']['typeextenumbers'] = array('set' => false,'chk' => 2,'key' => array('extenfeatures','featuremap','generalfeatures'));
 $array['filter']['typevalextenumbers'] = array('set' => false,'chk' => 2,'maxlen' => 255,'cast' => 'sgraph');
