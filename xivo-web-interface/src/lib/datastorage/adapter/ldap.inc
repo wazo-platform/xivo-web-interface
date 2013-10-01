@@ -123,6 +123,9 @@ class dwho_datastorage_adapter_ldap extends dwho_datastorage_adapter_abstract
 			case 'timelimit':
 			case LDAP_OPT_TIMELIMIT:
 				return(LDAP_OPT_TIMELIMIT);
+			case 'network_timeout':
+			case LDAP_OPT_NETWORK_TIMEOUT:
+				return(LDAP_OPT_NETWORK_TIMEOUT);
 			case 'protocol':
 			case 'protocol_version':
 			case LDAP_OPT_PROTOCOL_VERSION:
@@ -196,6 +199,9 @@ class dwho_datastorage_adapter_ldap extends dwho_datastorage_adapter_abstract
 				if(($value = dwho_uint($value)) === 0
 				|| ($value !== 2 && $value !== 3) === true)
 					return(false);
+				break;
+			case LDAP_OPT_TIMELIMIT:
+			case LDAP_OPT_NETWORK_TIMEOUT:
 				break;
 			default:
 				if(ctype_digit(strval($value)) === false)
@@ -286,6 +292,8 @@ class dwho_datastorage_adapter_ldap extends dwho_datastorage_adapter_abstract
 
 		$this->set_option('protocol',$this->_param['protocol']);
 		$this->set_option(LDAP_OPT_REFERRALS, false);
+		$this->set_option(LDAP_OPT_TIMELIMIT, 1);
+		$this->set_option(LDAP_OPT_NETWORK_TIMEOUT, 1);
 
 		if((bool) $this->_param['tls'] === true
 				&& $this->get_option('protocol') > 2
