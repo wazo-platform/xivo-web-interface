@@ -21,9 +21,9 @@
 $dhtml = &$this->get_module('dhtml');
 
 ?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html lang="<?=DWHO_I18N_BABELFISH_LANGUAGE?>">
-	<head id="t-head">
+	<head>
 		<title><?=dwho_htmlsc($this->bbf('page_title',php_uname('n')));?></title>
 
 		<script type="text/javascript">
