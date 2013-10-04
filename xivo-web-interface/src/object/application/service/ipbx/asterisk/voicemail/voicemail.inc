@@ -543,8 +543,8 @@ class xivo_application_service_asterisk_voicemail extends xivo_application_aster
 		else if(($dialaction = &$this->_service->get_module('dialaction')) !== false)
 		{
 			$where = array();
-			$where['type'] = 'voicemail';
-			$where['typeval'] = $this->_info['voicemail']['uniqueid'];
+			$where['action'] = 'voicemail';
+			$where['actionarg1'] = (string) $this->_info['voicemail']['uniqueid'];
 
 			$dialaction->unlinked_where($where);
 		}
