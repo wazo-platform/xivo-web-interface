@@ -156,6 +156,13 @@ abstract class xivo_restapi_ressource_abstract
 		return($path);
 	}
 
+	protected function _get_error_msg($msg)
+	{
+		if (is_array($msg))
+			return($rs[0]);
+		return($msg);
+	}
+
 	protected function last_status_code()
 	{
 		return($this->_status_code);

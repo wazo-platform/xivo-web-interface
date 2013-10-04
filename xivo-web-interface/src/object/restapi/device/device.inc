@@ -17,39 +17,17 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-class restapi_ressource_device extends xivo_restapi_ressource_abstract
+require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'restapi', 'abstract.inc'));
+
+class restapi_ressource_device extends xivo_restapi_helpers_abstract
 {
 
 	protected $_name      = 'device';
 	protected $_base_url  = 'devices';
-	private $_cnt         = 0;
 
 	public function __construct($_RAPI, $param=null)
 	{
 		parent::__construct($_RAPI, $param);
-	}
-
-	public function get_total()
-	{
-		return($this->_cnt);
-	}
-
-	public function get($id)
-	{
-		if(dwho_has_len($id) === false)
-			return(false);
-
-		$uri = $this->_build_uri(array($id));
-		$rs = $this->request_get($uri);
-
-		if($this->_status_code !== 200
-		|| empty($rs) === true)
-		{
-			dwho_report::push('error', 'An Error occured while retrieving the device. '.$rs[0]);
-			return(false);
-		}
-
-		return($rs);
 	}
 
 	public function get_device_by_ip($ip)
@@ -63,105 +41,11 @@ class restapi_ressource_device extends xivo_restapi_ressource_abstract
 		|| empty($rs) === true
 		|| (int) $rs['total'] === 0)
 		{
-			dwho_report::push('error', 'An Error occured while retrieving the device. '.$rs[0]);
+			dwho_report::push('error', 'An Error occured while retrieving the device. '.$this->_get_error_msg($rs));
 			return(false);
 		}
 
 		return($rs['items'][0]);
-	}
-
-	public function find_all($search='',$order=false,$limit=false)
-	{
-		$uri = $this->_build_uri();
-
-		$query = array();
-		if (dwho_has_len($search) === true)
-			array_push($query, array('search',$search));
-
-		if (is_array($order))
-		{
-			$sort_key = array_keys($order);
-			$sort_order = array_values($order);
-			if ($sort_order[0] == SORT_DESC)
-				$sort_order[0] = 'desc';
-			elseif ($sort_order[0] == SORT_ASC)
-				$sort_order[0] = 'asc';
-			array_push($query, array('order', $sort_key[0]));
-			array_push($query, array('direction', $sort_order[0]));
-		}
-
-		if (is_array($limit))
-		{
-			array_push($query, array('skip', $limit[0]));
-			array_push($query, array('limit', $limit[1]));
-		}
-
-		$rs = $this->request_get($uri, $query);
-
-		if (is_array($rs) === false
-		|| isset($rs['items']) === false
-		|| ($items = $rs['items']) === false
-		|| isset($rs['total']) === false)
-		{
-			dwho_report::push('error', 'An Error occured while retrieving the list of devices. '.$rs[0]);
-			return(false);
-		}
-
-		$this->_cnt = $rs['total'];
-
-		return($items);
-	}
-
-	public function add($data)
-	{
-		if (is_array($data) === false)
-			return(false);
-
-		$uri = $this->_build_uri();
-		$rs = $this->request_post($uri,$data);
-
-		if($this->_status_code !== 201)
-		{
-			dwho_report::push('error', 'fail to create device: '.$rs[0]);
-			return(false);
-		}
-
-		return($rs['id']);
-	}
-
-	public function edit($id, $data)
-	{
-		if (is_array($data) === false
-		|| dwho_has_len($id) === false)
-			return(false);
-
-		$uri = $this->_build_uri(array($id));
-		$rs = $this->request_put($uri,$data);
-
-		if($this->_status_code !== 204)
-		{
-			dwho_report::push('error', 'fail to edit device: '.$rs[0]);
-			return(false);
-		}
-
-		return(true);
-	}
-
-	public function delete($id)
-	{
-		if(dwho_has_len($id) === false)
-			return(false);
-
-		$uri = $this->_build_uri(array($id));
-		$rs = $this->request_delete($uri);
-
-		if($this->_status_code !== 204)
-		{
-			dwho_report::push('error', 'fail to delete device: '.$rs[0]);
-			return(false);
-		}
-
-		return(true);
 	}
 
 	public function reset_to_autoprov($id)
@@ -182,7 +66,7 @@ class restapi_ressource_device extends xivo_restapi_ressource_abstract
 
 		if($this->_status_code !== 204)
 		{
-			dwho_report::push('error', 'fail to synchronize device: '.$rs[0]);
+			dwho_report::push('error', 'An Error occured while synchronizing the device: '.$this->_get_error_msg($rs));
 			return(false);
 		}
 
@@ -196,7 +80,7 @@ class restapi_ressource_device extends xivo_restapi_ressource_abstract
 
 		if($this->_status_code !== 204)
 		{
-			dwho_report::push('error', 'fail to associate line on the device: '.$rs[0]);
+			dwho_report::push('error', 'An Error occured while associating line on the device: '.$this->_get_error_msg($rs));
 			return(false);
 		}
 
@@ -210,7 +94,7 @@ class restapi_ressource_device extends xivo_restapi_ressource_abstract
 
 		if($this->_status_code !== 204)
 		{
-			dwho_report::push('error', 'fail to remove line on the device: '.$rs[0]);
+			dwho_report::push('error', 'An Error occured while removing line on the device: '.$this->_get_error_msg($rs));
 			return(false);
 		}
 
