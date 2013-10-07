@@ -170,6 +170,7 @@ $array['element']['imapvmsharedid']['null'] = true;
 
 $array['element']['attachfmt'] = array();
 $array['element']['attachfmt']['value'] = array(
+					XIVO_SRE_IPBX_AST_FORMAT_AUDIO_G729,
 					XIVO_SRE_IPBX_AST_FORMAT_AUDIO_WAV,
 					XIVO_SRE_IPBX_AST_FORMAT_AUDIO_WAV49,
 					XIVO_SRE_IPBX_AST_FORMAT_AUDIO_GSM,

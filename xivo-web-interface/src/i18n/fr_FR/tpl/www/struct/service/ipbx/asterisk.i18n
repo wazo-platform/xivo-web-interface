@@ -69,6 +69,9 @@ H.263+ (Vidéo)
 ; ast_codec_name_type(h264)
 H.264 (Vidéo)
 
+; ast_format_name_info(g729)
+G729
+
 ; ast_format_name_info(wav)
 Microsoft WAV 8khz
 
