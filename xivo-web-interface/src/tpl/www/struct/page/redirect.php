@@ -23,9 +23,9 @@ $url = &$this->get_module('url');
 $seconds = $this->get_var('redirect_seconds');
 
 ?>
-<!DOCTYPE html>
-<html>
-	<head>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="<?=DWHO_I18N_BABELFISH_LANGUAGE?>">
+	<head id="t-head">
 		<title><?=dwho_htmlsc($this->bbf('page_title',php_uname('n')));?></title>
 		<!-- Date: <?=gmstrftime('%Y-%m-%d %H:%M:%S %Z');?> -->
 
