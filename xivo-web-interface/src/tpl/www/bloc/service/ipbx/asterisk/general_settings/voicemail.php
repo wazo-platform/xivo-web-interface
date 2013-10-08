@@ -1038,12 +1038,12 @@ if($zmsg_nb > 0):
               'default' => $element['voicemail']['forward_urgent_auto']['default'])),
 
 		$form->select(array('desc'	=> $this->bbf('fm_userscontext'),
-				    'name'	=> 'voicemail[callback]',
+				    'name'		=> 'voicemail[userscontext]',
 				    'labelid'	=> 'userscontext',
-				    'empty'	=> true,
-				    'key'	=> 'identity',
+				    'empty'		=> true,
+				    'key'		=> 'identity',
 				    'altkey'	=> 'name',
-				    'default'	=> $element['voicemail']['callback']['default'],
+				    'default'	=> $element['voicemail']['userscontext']['default'],
 				    'help'	=> $this->bbf('hlp_fm_userscontext'),
 				    'selected'	=> $this->get_var('voicemail','userscontext','var_val')),
 			      $context_list);
