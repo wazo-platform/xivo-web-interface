@@ -411,8 +411,7 @@ class xivo_service_asterisk_sounds extends xivo_service_asterisk_abstract
 			$match_file = '/^(?:['.XIVO_SRE_IPBX_AST_REGEXP_AUDIO_FILE_PATTERN.']*'.
 				      preg_quote($search).
 				      '['.XIVO_SRE_IPBX_AST_REGEXP_AUDIO_FILE_PATTERN.']*)'.
-				      XIVO_SRE_IPBX_AST_REGEXP_AUDIO_FILE_LENGTH.
-				      '\.'.$this->_fileoption['extensionregexp'].'$/';
+				      XIVO_SRE_IPBX_AST_REGEXP_AUDIO_FILE_LENGTH.'$/';
 
 		if($dir !== '')
 		{
