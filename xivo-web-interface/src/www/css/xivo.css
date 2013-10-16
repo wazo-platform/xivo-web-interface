@@ -180,7 +180,7 @@ input.fm-error, textarea.fm-error, select.fm-error, option.fm-error {background-
 #b-tmenu .nav .mov ul {display: block;}
 
 #b-tmenu .nav .stab {position: relative;margin: 22px 0px 0px 2px;}
-#b-tmenu .nav ul ul {clear: both;position: absolute;min-width: 96%;width: auto;display: none;border: 1px solid #057ab1;border-bottom-width: 0px;}
+#b-tmenu .nav ul ul {clear: both;position: absolute;min-width: 100%;width: auto;display: none;border: 1px solid #057ab1;border-bottom-width: 0px;}
 #b-tmenu .nav li li {float: none;margin: 0px;text-align: center; padding: 1px 2px 0px;background-image: url(../img/menu/top/bt-smn-bg.gif); color: #fff; font-weight: bold;border: 0px solid #057ab1;border-bottom-width: 1px;}
 #b-tmenu .nav li li a {font-size: 8pt;display: block;}
 
