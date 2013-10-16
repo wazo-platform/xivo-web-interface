@@ -16,6 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+XIVO_SRE_IPBX_AST_REGEXP_DIALPLAN_EXTEN_PATTERN = '_?\\+?[0-9NXZ\\*#\\-\\[\\]]+[\\.\\!]?'
+
 function xivo_ast_inqueue()
 {
     dwho.form.move_selected('it-queuelist','it-queue');
@@ -125,7 +127,8 @@ function xivo_chk_exten_pattern(value)
     if(value.charAt(0) === '_')
         value = dwho_substr(value,1);
 
-    if(value.match(/^[0-9NXZ\*#\-\[\]]+[\.\!]?$/) === null)
+    var re = new RegExp('^' + XIVO_SRE_IPBX_AST_REGEXP_DIALPLAN_EXTEN_PATTERN + '$', "g");
+    if(value.match(re) === null)
         return(false);
 
     return(value);
