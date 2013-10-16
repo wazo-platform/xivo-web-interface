@@ -44,7 +44,7 @@ $array['element']['commented']['set'] = true;
 dwho::load_class('dwho_network');
 
 $array['filter'] = array();
-$array['filter']['exten'] = array('maxlen' => 40,'regexp' => '/^_?[0-9NXZ\*#\-\[\]]+[\.\!]?$/');
+$array['filter']['exten'] = array('maxlen' => 40,'regexp' => '/^'.XIVO_SRE_IPBX_AST_REGEXP_DIALPLAN_EXTEN_PATTERN_NO_PLUS.'$/');
 $array['filter']['context'] = array('callback' => 'xivo_service_asterisk::chk_context');
 $array['filter']['preprocess_subroutine'] = array('set' => false,'chk' => 2,'callback' => 'xivo_service_asterisk::chk_context');
 $array['filter']['description'] = array('set' => false,'chk' => 2,'maxlen' => 1000,'cast' => 'sgraph_crlf_tab','eol' => true);

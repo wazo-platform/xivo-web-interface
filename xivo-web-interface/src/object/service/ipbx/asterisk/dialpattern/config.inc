@@ -54,7 +54,7 @@ $array['filter']['callerid'] = array('set'	=> false,
 				     'regexp'	=> '/^'.XIVO_SRE_IPBX_AST_REGEXP_CALLERID.'$/u',
 				     'notag'	=> false);
 $array['filter']['type'] =  array('maxlen' => 32,'regexp' => '/^[a-z\-_]+$/');
-$array['filter']['exten'] = array('maxlen' => 40,'regexp' => '/^_?\+?[0-9NXZ\*#\-\[\]]+[\.\!]?$/');
+$array['filter']['exten'] = array('maxlen' => 40,'regexp' => '/^'.XIVO_SRE_IPBX_AST_REGEXP_DIALPLAN_EXTEN_PATTERN.'$/');
 $array['filter']['stripnum'] = array('set' => false,'chk' => 2,'cast' => 'uint','between' => array(0,20));
 
 ?>
