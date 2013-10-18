@@ -205,10 +205,12 @@ $array['service/ipbx/call_management/cel'] = 'service/ipbx/index.php/call_manage
 $array['service/ipbx/json/restricted/call_management/incall'] = 'service/ipbx/json.php/restricted/call_management/incall/';
 $array['service/ipbx/json/restricted/call_management/outcall'] = 'service/ipbx/json.php/restricted/call_management/outcall/';
 $array['service/ipbx/json/restricted/call_management/pickup'] = 'service/ipbx/json.php/restricted/call_management/pickup/';
+$array['service/ipbx/json/restricted/call_management/cel'] = 'service/ipbx/json.php/restricted/call_management/cel/';
 $array['service/ipbx/json/restricted/call_management/schedule'] = 'service/ipbx/json.php/restricted/call_management/schedule/';
 
 $array['service/ipbx/json/private/call_management/incall'] = 'service/ipbx/json.php/private/call_management/incall/';
 $array['service/ipbx/json/private/call_management/pickup'] = 'service/ipbx/json.php/private/call_management/pickup/';
+$array['service/ipbx/json/private/call_management/cel'] = 'service/ipbx/json.php/private/call_management/cel/';
 $array['service/ipbx/json/private/call_management/schedule'] = 'service/ipbx/json.php/private/call_management/schedule/';
 
 $array['service/ipbx/ui/call_management/schedule'] = 'service/ipbx/ui.php/call_management/schedule/';
