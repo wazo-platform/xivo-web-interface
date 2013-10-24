@@ -387,7 +387,7 @@ $array['filter']['maxsecs'] = array('key' => array(0,1,2,3,4,5,6,7,8,9,10,20,30,
 						      100,110,120,130,140,150,160,170,180,190,
 						      200,210,220,230,240,250,260,270,280,290,
 						      300,310,320,330,340,350,360));
-$array['filter']['maxsilence'] = array('cast' => 'uint','between' => $array['element']['maxsilence']['value']);
+$array['filter']['maxsilence'] = array('cast' => 'uint','key' => $array['element']['maxsilence']['value']);
 $array['filter']['review'] = array('bool' => true);
 $array['filter']['operator'] = array('bool' => true);
 $array['filter']['format'] = array('set' => false,'chk' => 2,'uvalue' => $array['element']['format']['value']);
