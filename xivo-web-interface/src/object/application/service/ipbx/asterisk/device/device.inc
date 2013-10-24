@@ -318,7 +318,8 @@ class xivo_application_service_asterisk_device extends xivo_application_asterisk
 		$this->_status = 'delete';
 		$this->_return = array();
 
-		if($this->delete_device() === false)
+		if($this->_linefeatures->reset_device($this->_info['device']['id']) === false
+		||$this->delete_device() === false)
 			$r = false;
 
 		$this->_status = '';
