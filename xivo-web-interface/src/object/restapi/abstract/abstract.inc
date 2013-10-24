@@ -156,16 +156,22 @@ abstract class xivo_restapi_ressource_abstract
 		return($path);
 	}
 
-	protected function _get_error_msg($msg)
-	{
-		if (is_array($msg))
-			return($rs[0]);
-		return($msg);
-	}
-
 	protected function last_status_code()
 	{
 		return($this->_status_code);
+	}
+
+	private function fetch_response($response)
+	{
+		$decoded = dwho_json::decode(rtrim($response),true);
+		if(!is_null($decoded))
+		{
+			if (is_array($decoded))
+				$r = $decoded;
+			else
+				$r = $decoded;
+		}
+		return($r);
 	}
 
 	protected function request_delete($path,$query=null,$decode_assoc=true)
@@ -178,16 +184,12 @@ abstract class xivo_restapi_ressource_abstract
 		 $this->_curl->set_option(CURLOPT_CUSTOMREQUEST, 'DELETE');
 
 		if(($r = $this->_connect($path,$query)) !== false)
-		{
-			$decoded = dwho_json::decode(rtrim($r),$decode_assoc);
-			if(!is_null($decoded))
-				$r = $decoded;
-		}
+			$response = $this->fetch_response($r);
 
 		$this->_status_code = $this->_curl->get_info('http_code');
 		$this->_curl->close();
 
-		return($r);
+		return($response);
 	}
 
 	protected function request_get($path,$query=null,$decode_assoc=true)
@@ -200,16 +202,12 @@ abstract class xivo_restapi_ressource_abstract
 		$this->_curl->set_option('get',true);
 
 		if(($r = $this->_connect($path,$query)) !== false)
-		{
-			$decoded = dwho_json::decode(rtrim($r),$decode_assoc);
-			if(!is_null($decoded))
-				$r = $decoded;
-		}
+			$response = $this->fetch_response($r);
 
 		$this->_status_code = $this->_curl->get_info('http_code');
 		$this->_curl->close();
 
-		return($r);
+		return($response);
 	}
 
 	protected function request_put($path,$data,$query=null,$decode_assoc=true)
@@ -223,13 +221,13 @@ abstract class xivo_restapi_ressource_abstract
 		$this->_curl->set_option('postfields',dwho_json::encode($data));
 
 		if(($r = $this->_connect($path,$query)) !== false)
-			$r = dwho_json::decode(rtrim($r),$decode_assoc);
+			$response = $this->fetch_response($r);
 
 		$this->_status_code = $this->_curl->get_info('http_code');
 
 		$this->_curl->close();
 
-		return($r);
+		return($response);
 	}
 
 	protected function request_post($path,$data,$query=null,$decode_assoc=true)
@@ -243,13 +241,13 @@ abstract class xivo_restapi_ressource_abstract
 		$this->_curl->set_option('postfields',dwho_json::encode($data));
 
 		if(($r = $this->_connect($path,$query)) !== false)
-			$r = dwho_json::decode(rtrim($r),$decode_assoc);
+			$response = $this->fetch_response($r);
 
 		$this->_status_code = $this->_curl->get_info('http_code');
 
 		$this->_curl->close();
 
-		return($r);
+		return($response);
 	}
 
 	protected function get_uri($path, $query=null)

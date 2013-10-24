@@ -45,7 +45,7 @@ abstract class xivo_restapi_helpers_abstract extends xivo_restapi_ressource_abst
 		if($this->_status_code !== 200
 		|| empty($rs) === true)
 		{
-			dwho_report::push('error', 'An Error occured while retrieving the '.$this->_name.': '.$this->_get_error_msg($rs));
+			$this->_build_error_message($rs);
 			return(false);
 		}
 
@@ -85,7 +85,7 @@ abstract class xivo_restapi_helpers_abstract extends xivo_restapi_ressource_abst
 		|| ($items = $rs['items']) === false
 		|| isset($rs['total']) === false)
 		{
-			dwho_report::push('error', 'An Error occured while retrieving the list of '.$this->_name.'s: '.$this->_get_error_msg($rs));
+			$this->_build_error_message($rs);
 			return(false);
 		}
 
@@ -104,7 +104,7 @@ abstract class xivo_restapi_helpers_abstract extends xivo_restapi_ressource_abst
 
 		if($this->_status_code !== 201)
 		{
-			dwho_report::push('error', 'An Error occured while creating the '.$this->_name.': '.$this->_get_error_msg($rs));
+			$this->_build_error_message($rs);
 			return(false);
 		}
 
@@ -122,7 +122,7 @@ abstract class xivo_restapi_helpers_abstract extends xivo_restapi_ressource_abst
 
 		if($this->_status_code !== 204)
 		{
-			dwho_report::push('error', 'An Error occured while editing the '.$this->_name.': '.$this->_get_error_msg($rs));
+			$this->_build_error_message($rs);
 			return(false);
 		}
 
@@ -139,11 +139,16 @@ abstract class xivo_restapi_helpers_abstract extends xivo_restapi_ressource_abst
 
 		if($this->_status_code !== 204)
 		{
-			dwho_report::push('error', 'An Error occured while deleting the '.$this->_name.': '.$this->_get_error_msg($rs));
+			$this->_build_error_message($rs);
 			return(false);
 		}
 
 		return(true);
+	}
+
+	private function _build_error_message($msg)
+	{
+		dwho_report::push('error', $msg);
 	}
 
 }

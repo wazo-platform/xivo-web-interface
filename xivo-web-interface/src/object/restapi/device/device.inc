@@ -41,7 +41,7 @@ class restapi_ressource_device extends xivo_restapi_helpers_abstract
 		|| empty($rs) === true
 		|| (int) $rs['total'] === 0)
 		{
-			dwho_report::push('error', 'An Error occured while retrieving the device. '.$this->_get_error_msg($rs));
+			$this->_build_error_message($rs);
 			return(false);
 		}
 
@@ -54,7 +54,10 @@ class restapi_ressource_device extends xivo_restapi_helpers_abstract
 		$rs = $this->request_get($uri);
 
 		if($this->_status_code !== 204)
+		{
+			$this->_build_error_message($rs);
 			return(false);
+		}
 
 		return(true);
 	}
@@ -66,7 +69,7 @@ class restapi_ressource_device extends xivo_restapi_helpers_abstract
 
 		if($this->_status_code !== 204)
 		{
-			dwho_report::push('error', 'An Error occured while synchronizing the device: '.$this->_get_error_msg($rs));
+			$this->_build_error_message($rs);
 			return(false);
 		}
 
@@ -80,7 +83,7 @@ class restapi_ressource_device extends xivo_restapi_helpers_abstract
 
 		if($this->_status_code !== 204)
 		{
-			dwho_report::push('error', 'An Error occured while associating line on the device: '.$this->_get_error_msg($rs));
+			$this->_build_error_message($rs);
 			return(false);
 		}
 
@@ -94,7 +97,7 @@ class restapi_ressource_device extends xivo_restapi_helpers_abstract
 
 		if($this->_status_code !== 204)
 		{
-			dwho_report::push('error', 'An Error occured while removing line on the device: '.$this->_get_error_msg($rs));
+			$this->_build_error_message($rs);
 			return(false);
 		}
 
