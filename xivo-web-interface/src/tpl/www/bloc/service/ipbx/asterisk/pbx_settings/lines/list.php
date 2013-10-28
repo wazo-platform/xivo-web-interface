@@ -105,7 +105,7 @@ $page = $url->pager($pager['pages'],
 			$ref = &$list[$i];
 
 			$phone = 'green';
-			if((int) ($ref['device']) === 0)
+			if(strlen($ref['device']) === 0)
 				$phone = 'red';
 
 			if($ref['commented'] === true):
