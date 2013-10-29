@@ -23,6 +23,10 @@ require_once('xivo.php');
 if($_USR->mk_active() === false)
 	$_QRY->go($_TPL->url('xivo/logoff'));
 
+if(xivo_user::chk_acl('system_management','backupfiles', 'service/ipbx') === false) {
+	$_QRY->go($_TPL->url('xivo'));
+}
+
 $file = '/var/backups/xivo/'.$_QR['path'];
 
 if(dwho_file::is_f_r($file) === false)
