@@ -105,7 +105,7 @@ $page = $url->pager($pager['pages'],
 			$ref = &$list[$i];
 
 			$phone = 'green';
-			if((int) ($ref['device']) === 0)
+			if(strlen($ref['device']) === 0)
 				$phone = 'red';
 
 			if($ref['commented'] === true):
@@ -127,7 +127,7 @@ $page = $url->pager($pager['pages'],
 						 'checked'	=> false,
 						 'paragraph'	=> false));?>
 		</td>
-		<td class="txt-left" title="<?=dwho_alttitle($ref['identity']);?>">
+		<td class="txt-left col_identity" title="<?=dwho_alttitle($ref['identity']);?>">
 			<label for="it-lines-<?=$i?>" id="lb-lines-<?=$i?>">
 <?php
 				echo $url->img_html('img/site/phone/'.$icon.'.gif',null,'class="icons-list"');
@@ -136,14 +136,14 @@ $page = $url->pager($pager['pages'],
 ?>
 			</label>
 		</td>
-		<td><?=$this->bbf('line_protocol-'.$ref['protocol']);?></td>
-		<td class="txt-center">
+		<td class="col_protocol"><?=$this->bbf('line_protocol-'.$ref['protocol']);?></td>
+		<td class="txt-center col_provisioningid">
 			<?=(empty($ref['provisioningid']) || ($ref['useridentity'] === '-')) ? '-' : $ref['provisioningid']?>
 		</td>
-		<td class="txt-center">
+		<td class="txt-center col_user">
 			<?=dwho_htmlen(dwho_trunc($ref['useridentity'],25,'...',false))?>
 		</td>
-		<td class="txt-center">
+		<td class="txt-center col_number">
 			<?=empty($ref['number']) ? '-' : $ref['number']?>
 		</td>
 		<td class="td-right" colspan="2">
