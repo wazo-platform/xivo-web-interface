@@ -32,8 +32,6 @@ $list_device = array();
 $nb_device = count($list_device_line);
 for($i=0; $i<$nb_device; $i++):
 	$cur_device = $list_device_line[$i];
-	if (!isset($cur_device['mac']) || !isset($cur_device['ip']))
-		continue;
 	$trimmed_mac = trim($cur_device['mac']);
 	$trimmed_ip = trim($cur_device['ip']);
 	if(empty($trimmed_mac) === false) {
