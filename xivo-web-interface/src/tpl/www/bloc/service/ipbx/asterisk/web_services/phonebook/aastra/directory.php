@@ -81,8 +81,8 @@ else:
 
 		echo	'<MenuItem>',"\n",
 			'<Prompt>',$xmlvendor->escape($name),'</Prompt>',"\n",
-			'<URI>Dial:',
-				$xmlvendor->escape($ref['phone']),'</URI>',"\n",
+			'<URI>Dial:',$xmlvendor->escape($ref['phone']),'</URI>',"\n",
+			'<Dial>',$xmlvendor->escape($ref['phone']),'</Dial>',"\n",
 			'</MenuItem>',"\n";
 	endfor;
 endif;
