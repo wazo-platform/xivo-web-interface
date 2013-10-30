@@ -39,13 +39,20 @@ class restapi_ressource_device extends xivo_restapi_helpers_abstract
 
 		if($this->_status_code !== 200
 		|| empty($rs) === true
-		|| (int) $rs['total'] === 0)
+		|| ($nb_device = (int) $rs['total']) === 0)
 		{
 			$this->_build_error_message($rs);
 			return(false);
 		}
 
-		return($rs['items'][0]);
+		for ($i=0; $i<$nb_device; $i++)
+		{
+			$ref = &$rs['items'][$i];
+			if ($ip === $ref['ip'])
+				return($ref);
+		}
+
+		return(false);
 	}
 
 	public function reset_to_autoprov($id)
