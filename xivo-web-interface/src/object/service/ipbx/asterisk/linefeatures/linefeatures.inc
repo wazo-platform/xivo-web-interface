@@ -212,7 +212,7 @@ class xivo_service_asterisk_linefeatures extends xivo_service_asterisk_abstract
 
 	function search_number($value,$disable=null,$order=null,$limit=null)
 	{
-		return($this->search($value,$disable,$order,$limit,true));
+		return($this->_dso->search_number($value,$disable,$order,$limit));
 	}
 
 	function get_all_except($id=0,$number=false,$order=null,$limit=null)
