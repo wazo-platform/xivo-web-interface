@@ -57,6 +57,14 @@ $linked_js = $dhtml->escape($linked);
 					  'value'	=> $search,
 					  'default'	=> $this->bbf('toolbar_fm_search'))),
 
+			$form->select(array('name'	=> 'search_column',
+					    'id'		=> 'it-toolbar-column',
+					    'paragraph'	=> false,
+					    'selected'	=> $this->get_var('search_column')),
+					array('all'	=> $this->bbf('search_all_fields_except_number'),
+						  'number'	=> $this->bbf('only_number_field')),
+					'style="margin-left: 10px;"'),
+
 			$form->image(array('name'	=> 'submit',
 					   'id'		=> 'it-toolbar-subsearch',
 					   'src'	=> $url->img('img/menu/top/toolbar/bt-search.gif'),

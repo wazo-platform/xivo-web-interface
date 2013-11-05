@@ -24,6 +24,7 @@ $prefs = new dwho_prefs('devices');
 $act     = isset($_QR['act']) === true ? $_QR['act'] : '';
 $page    = dwho_uint($prefs->get('page', 1));
 $search  = strval($prefs->get('search', ''));
+$search_column  = strval($prefs->get('search_column', ''));
 $sort    = $prefs->flipflop('sort', 'ip');
 
 $param = array();
@@ -202,7 +203,7 @@ switch($act)
 		$limit[0] = $prevpage * $nbbypage;
 		$limit[1] = $nbbypage;
 
-		$list = $device_api->find_all($search,$order,$limit);
+		$list = $device_api->find_all($search,$order,$limit,$search_column);
 		$total = $device_api->get_total();
 
 		if($list === false && $total > 0 && $prevpage > 0)
@@ -215,6 +216,7 @@ switch($act)
 		$_TPL->set_var('list',$list);
 		$_TPL->set_var('search',$search);
 		$_TPL->set_var('sort',$sort);
+		$_TPL->set_var('search_column',$search_column);
 
 		$dhtml = &$_TPL->get_module('dhtml');
 		$dhtml->set_js('js/service/ipbx/'.$ipbx->get_name().'/devices.js');

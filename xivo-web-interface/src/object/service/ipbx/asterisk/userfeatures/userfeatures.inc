@@ -224,11 +224,6 @@ class xivo_service_asterisk_userfeatures extends xivo_service_asterisk_abstract
 		return($list);
 	}
 
-	function search_number($value,$disable=null,$order=null,$limit=null)
-	{
-		return($this->search($value,$disable,$order,$limit,true));
-	}
-
 	function get_all_except($id=0,$number=false,$order=null,$limit=null)
 	{
 		if(($id = dwho_ulongint($id)) === 0 && (bool) $number === false)

@@ -30,6 +30,46 @@ class restapi_ressource_device extends xivo_restapi_helpers_abstract
 		parent::__construct($_RAPI, $param);
 	}
 
+	public function find_all($search='',$order=false,$limit=false,$search_column=null)
+	{
+		$_SRE = dwho_gct::get('xivo_service');
+		$line_module = $_SRE->get_module('ipbx', 'linefeatures');
+
+		$result = array();
+		switch($search_column)
+		{
+			case 'number':
+				if (($lines = $line_module->search_number($search)) === false)
+					return(false);
+				foreach ($lines as $line)
+				{
+					if (dwho_has_len($line['device']))
+					{
+						$device = $this->get($line['device']);
+						$device['number'] = $line['number'];
+						array_push($result, $device);
+					}
+				}
+				break;
+			default:
+				$devices = parent::find_all($search,$order,$limit);
+				$lines = $line_module->get_all();
+				$nb_line = count($lines);
+				foreach ($devices as &$device)
+				{
+					$device['number'] = '';
+					for ($n=0; $n<$nb_line; $n++)
+					{
+						if ($lines[$n]['device'] === $device['id'])
+							$device['number'] = $lines[$n]['number'];
+					}
+				}
+				$result = $devices;
+		}
+
+		return($result);
+	}
+
 	public function get_device_by_ip($ip)
 	{
 		$uri = $this->_build_uri();

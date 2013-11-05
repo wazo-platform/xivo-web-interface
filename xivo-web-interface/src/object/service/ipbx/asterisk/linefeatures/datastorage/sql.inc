@@ -102,7 +102,38 @@ class xivo_service_asterisk_linefeatures_sql extends xivo_service_asterisk_abstr
 			$this->_dso->andwhere($arr);
 
 		if($number === true)
-			$this->_dso->andwhere('IFNULL(number,\'\') != \'\'');
+			$this->_dso->orwherecontain('number', $number);
+
+		$this->_dso->new_order($order);
+		$this->_dso->limit($limit);
+
+		$r = $this->_dso->select_all();
+
+		$this->_dso->reset_order();
+		$this->_dso->reset_limit();
+
+		if(($this->_cnt = $this->_dso->select_count()) === false
+		|| isset($r[0]) === false)
+			$r = false;
+
+		return($r);
+	}
+
+	function search_number($number,$disable=null,$order=null,$limit=null)
+	{
+		$this->_cnt = 0;
+
+		$this->_dso->new_select($this->_table);
+
+		$arr = array();
+
+		if($disable !== null && isset($this->_disable) === true)
+			$arr[$this->_disable] = intval((bool) $disable);
+
+		if(empty($arr) === false)
+			$this->_dso->andwhere($arr);
+
+		$this->_dso->andwherecontain('number', $number);
 
 		$this->_dso->new_order($order);
 		$this->_dso->limit($limit);
