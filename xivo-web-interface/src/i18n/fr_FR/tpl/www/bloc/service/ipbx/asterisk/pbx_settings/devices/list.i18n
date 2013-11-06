@@ -1,3 +1,5 @@
+; load ./common
+
 ; col_mac
 MAC
 
@@ -54,9 +56,3 @@ Etes-vous certain de vouloir supprimer cette terminaison ?
 
 ; toolbar_adv_menu_delete_confirm
 Etes-vous certain de vouloir supprimer cette ou ces terminaisons ?
-
-; search_all_fields_except_number
-Tous les champs excepté le numéro
-
-; only_number_field
-Seulement le champ numéro
