@@ -146,7 +146,7 @@ abstract class xivo_restapi_helpers_abstract extends xivo_restapi_ressource_abst
 		return(true);
 	}
 
-	private function _build_error_message($msg)
+	protected function _build_error_message($msg)
 	{
 		dwho_report::push('error', $msg);
 	}

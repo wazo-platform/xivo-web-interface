@@ -52,7 +52,8 @@ class restapi_ressource_device extends xivo_restapi_helpers_abstract
 				}
 				break;
 			default:
-				$devices = parent::find_all($search,$order,$limit);
+				if (($devices = parent::find_all($search,$order,$limit)) === false)
+					return(false);
 				$lines = $line_module->get_all();
 				$nb_line = count($lines);
 				foreach ($devices as &$device)
