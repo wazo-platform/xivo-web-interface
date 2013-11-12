@@ -330,6 +330,9 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 		&& dwho_has_len($arr['protocol'], 'secret') === false)
 			$arr['protocol']['secret'] = $this->gen_password(6);
 
+		if (dwho_has_len($arr['linefeatures'], 'secret') === true)
+			$arr['protocol']['secret'] = $arr['linefeatures']['secret'];
+
 		$callerid = '';
 		if(isset($arr['protocol']['callerid']) === true)
 			$callerid =$arr['protocol']['callerid'];
