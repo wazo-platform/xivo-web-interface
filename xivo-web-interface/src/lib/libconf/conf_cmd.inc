@@ -13,7 +13,7 @@ $array['groupfeatures']['ipbx'] = array('dialplan reload', 'module reload app_qu
 
 $array['linefeatures'] = array();
 $array['linefeatures']['ctibus'] = array('xivo[phone,%s,%s]');
-$array['linefeatures']['ipbx'] = array('dialplan reload', 'sip reload');
+$array['linefeatures']['ipbx'] = array('module reload app_queue.so', 'dialplan reload', 'sip reload');
 
 $array['meetmefeatures'] = array();
 $array['meetmefeatures']['ctibus'] = array('xivo[meetme,%s,%s]');
