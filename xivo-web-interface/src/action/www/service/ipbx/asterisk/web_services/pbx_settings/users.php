@@ -55,7 +55,7 @@ switch($act)
 		}
 		else
 		{
-			dwho_error_log($appuser->get_error());
+			dwho_error_log(array_merge($appuser->get_error(), dwho_report::get('error')));
 			$http_response->set_status_line(400);
 			$http_response->send(true);
 		}
