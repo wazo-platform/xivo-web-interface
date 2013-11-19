@@ -20,6 +20,7 @@
 
 $act = isset($_QR['act']) === true ? $_QR['act'] : '';
 $page = isset($_QR['page']) === true ? dwho_uint($_QR['page'],1) : 1;
+$reload_dialplan = isset($_QR['reload-dialplan']) === true ? dwho_bool($_QR['reload-dialplan']) : false;
 
 $param = array();
 $param['act'] = 'list';
@@ -33,7 +34,7 @@ switch($act)
 
 		if(isset($_QR['fm_send'], $_QR['configfile']['content']) === true)
 		{
-			if($configfiles->add($_QR['configfile']['filename'],$_QR['configfile']['content']) !== false)
+			if($configfiles->add($_QR['configfile']['filename'],$_QR['configfile']['content'], $reload_dialplan) !== false)
 				$_QRY->go($_TPL->url('service/ipbx/system_management/configfiles'),$param);
 
 			$info['configfile'] = $_QR['configfile'];
@@ -57,7 +58,7 @@ switch($act)
 
 		if(isset($_QR['fm_send'],$_QR['content']) === true)
 		{
-			if($configfiles->edit($info['name'],$_QRY->get_uqr('content')) !== false)
+			if($configfiles->edit($info['name'],$_QRY->get_uqr('content'), $reload_dialplan) !== false)
 				$_QRY->go($_TPL->url('service/ipbx/system_management/configfiles'),$param);
 
 			$info['content'] = $_QR['content'];

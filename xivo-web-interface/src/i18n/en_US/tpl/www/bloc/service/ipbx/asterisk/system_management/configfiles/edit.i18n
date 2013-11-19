@@ -6,3 +6,6 @@ File:
 
 ; fm_content
 File content
+
+; fm_configfiles_reload_dialplan
+Reload dialplan:

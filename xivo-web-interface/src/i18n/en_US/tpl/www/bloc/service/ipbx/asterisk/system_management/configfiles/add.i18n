@@ -21,3 +21,5 @@ Cannot record the file on disk
 
 ; toolbar_adv_menu_delete_confirm
 
+; fm_configfiles_reload_dialplan
+Reload dialplan:

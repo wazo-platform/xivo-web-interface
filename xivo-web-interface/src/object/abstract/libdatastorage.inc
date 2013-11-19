@@ -486,6 +486,11 @@ abstract class xivo_libdatastorage_abstract extends xivo_libconfig_abstract
 			$cmd = sprintf($cmd, $state, $id);
 	}
 
+	public function append_queue()
+	{
+		$this->_append_queue(null);
+	}
+
 	private function _append_queue($state, $id=null)
 	{
 		if (!isset($_SESSION['cmd_list_to_process']))
