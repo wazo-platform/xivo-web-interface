@@ -16,4 +16,5 @@ Another configuration file own this name
 ; error_fm_import(importerror)
 Cannot record the file on disk
 
-
+; fm_configfiles_reload_dialplan
+Reload dialplan:

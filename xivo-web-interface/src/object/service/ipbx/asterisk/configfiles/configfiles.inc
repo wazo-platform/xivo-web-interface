@@ -162,7 +162,7 @@ class xivo_service_asterisk_configfiles extends xivo_service_asterisk_abstract
 		return($this->_chk_exists_cfg('import','file',true));
 	}
 
-	function import()
+	function import($dialplan_reload)
 	{
 		$this->_error = array();
 
@@ -186,6 +186,8 @@ class xivo_service_asterisk_configfiles extends xivo_service_asterisk_abstract
 			$this->_error['import'] = 'creationerror';
 			return(false);
 		}
+
+		$this->_check_reload_dialplan($dialplan_reload);
 
 		return(true);
 	}

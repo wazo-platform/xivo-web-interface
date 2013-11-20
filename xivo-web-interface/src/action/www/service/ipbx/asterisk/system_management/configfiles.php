@@ -45,7 +45,7 @@ switch($act)
 		break;
 
 	case 'import':
-		if(isset($_QR['fm_send']) === true && $configfiles->import())
+		if(isset($_QR['fm_send']) === true && $configfiles->import($reload_dialplan))
 			$_QRY->go($_TPL->url('service/ipbx/system_management/configfiles'), $param);
 
 		$_TPL->set_var('error'	    , $configfiles->get_error());
