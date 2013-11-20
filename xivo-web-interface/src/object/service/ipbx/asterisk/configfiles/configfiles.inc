@@ -208,6 +208,8 @@ class xivo_service_asterisk_configfiles extends xivo_service_asterisk_abstract
 			return(false);
 		}
 
+        $this->_check_reload_dialplan(true);
+
 		return(dwho_file::rm($filename));
 	}
 
