@@ -55,6 +55,11 @@ $element = $this->get_var('element');
 				      'error'		=> $this->bbf_args('error_fm_content',
 					$this->get_var('error', 'content'))),
 		   		$info['configfile']['content']);
+
+    echo $form->checkbox(array('desc' => $this->bbf('fm_configfiles_reload_dialplan'),
+                               'name' => 'reload-dialplan',
+                               'labelid' => 'configfile-reload-dialplan',
+                               'default' => true));
 ?>
 </div>
 </div>

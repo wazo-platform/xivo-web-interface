@@ -80,8 +80,9 @@ class xivo_service_asterisk_configfiles extends xivo_service_asterisk_abstract
 		return($r);
 	}
 
-	function edit($name,$contents)
+	function edit($name,$contents,$reload_dialplan)
 	{
+		$this->_check_reload_dialplan($reload_dialplan);
 		if(($file = $this->_chk_file($name)) !== false)
 			return(dwho_file::put_contents($file, dwho_eol($contents)));
 
@@ -116,7 +117,15 @@ class xivo_service_asterisk_configfiles extends xivo_service_asterisk_abstract
 		return $filename;
 	}
 
-	function add($shortname, $contents)
+	function _check_reload_dialplan($reload_dialplan)
+	{
+		if (((bool) $reload_dialplan) === true)
+		{
+			$this->append_queue();
+		}
+	}
+
+	function add($shortname, $contents, $reload_dialplan)
 	{
 		$this->_error = array();
 		if(($filename = $this->_checkfile($shortname)) === false)
@@ -127,6 +136,8 @@ class xivo_service_asterisk_configfiles extends xivo_service_asterisk_abstract
 			$this->_error['filename'] = 'creationerror';
 			return(false);
 		}
+
+		$this->_check_reload_dialplan($reload_dialplan);
 
 		if(dwho_file::put_contents($filename, dwho_eol($contents)) === false)
 			return(false);
@@ -151,7 +162,7 @@ class xivo_service_asterisk_configfiles extends xivo_service_asterisk_abstract
 		return($this->_chk_exists_cfg('import','file',true));
 	}
 
-	function import()
+	function import($dialplan_reload)
 	{
 		$this->_error = array();
 
@@ -176,6 +187,8 @@ class xivo_service_asterisk_configfiles extends xivo_service_asterisk_abstract
 			return(false);
 		}
 
+		$this->_check_reload_dialplan($dialplan_reload);
+
 		return(true);
 	}
 
@@ -196,6 +209,8 @@ class xivo_service_asterisk_configfiles extends xivo_service_asterisk_abstract
 			$this->_error['filename'] = 'notexists';
 			return(false);
 		}
+
+        $this->_check_reload_dialplan(true);
 
 		return(dwho_file::rm($filename));
 	}

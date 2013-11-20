@@ -106,6 +106,9 @@ $array['phonebook']['ctibus'] = array('xivo[phonebook,%s,%s]');
 $array['sccp*'] = array();
 $array['sccp*']['ipbx'] = array('sccp update config');
 
+$array['configfiles'] = array();
+$array['configfiles']['ipbx'] = array('dialplan reload');
+
 # REALSTATIC FILE
 
 $array['queues.conf'] = array();

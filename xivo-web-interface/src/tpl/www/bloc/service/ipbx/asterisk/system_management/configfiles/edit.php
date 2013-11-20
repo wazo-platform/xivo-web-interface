@@ -46,14 +46,21 @@ $info = $this->get_var('info');
 		<p class="fm-paragraph txt-center width-auto"><?=$this->bbf('fm_filename').' '.$info['name']?></p>
 		<div class="fm-paragraph txt-center width-auto">
 			<p><label id="lb-content" for="it-content"><?=$this->bbf('fm_content');?></label></p>
-				<?=$form->textarea(array('paragraph'	=> false,
-							 'name'		=> 'content',
-							 'label'	=> false,
-							 'notag'	=> false,
-							 'id'		=> 'it-content',
-							 'cols'		=> 90,
-							 'rows'		=> 30),
-						   $info['content']);?>
+<?php
+    echo $form->textarea(array('paragraph'	=> false,
+                               'name'		=> 'content',
+                               'label'	=> false,
+                               'notag'	=> false,
+                               'id'		=> 'it-content',
+                               'cols'		=> 90,
+                               'rows'		=> 30),
+                         $info['content']);
+
+    echo $form->checkbox(array('desc' => $this->bbf('fm_configfiles_reload_dialplan'),
+                               'name' => 'reload-dialplan',
+                               'labelid' => 'configfile-reload-dialplan',
+                               'default' => true));
+?>
 		</div>
 		<?=$form->submit(array('name'	=> 'submit',
 				       'id'	=> 'it-submit',

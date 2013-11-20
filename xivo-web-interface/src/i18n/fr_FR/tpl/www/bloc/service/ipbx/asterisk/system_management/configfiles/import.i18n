@@ -16,4 +16,5 @@ Un fichier du même nom a déjà été importé
 ; error_fm_import(importerror)
 Impossible d'importer le fichier
 
-
+; fm_configfiles_reload_dialplan
+Recharger le dialplan :

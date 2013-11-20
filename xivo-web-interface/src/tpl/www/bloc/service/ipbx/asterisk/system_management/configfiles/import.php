@@ -50,6 +50,11 @@ $import_file = $this->get_var('import_file');
 					  'error'	=> $this->bbf_args('error_fm_import', 
 						$this->get_var('error', 'filename')))),
 
+			$form->checkbox(array('desc' => $this->bbf('fm_configfiles_reload_dialplan'),
+			                      'name' => 'reload-dialplan',
+			                      'labelid' => 'configfile-reload-dialplan',
+			                      'default' => true)),
+
 			$form->submit(array('name'	=> 'submit',
 					    'id'	=> 'it-submit',
 					    'value'	=> $this->bbf('fm_bt-save')));
