@@ -213,15 +213,15 @@ $array['element']['compactheaders']['default'] = 'no';
 $array['element']['compactheaders']['set'] = true;
 
 $array['element']['rtptimeout'] = array();
-$array['element']['rtptimeout']['value'] = array(0,5,10,15,20,25,30,35,40,45,50,55,60);
+$array['element']['rtptimeout']['value'] = array(0,15,30,45,60,120,180,240,300,600,1200);
 $array['element']['rtptimeout']['default'] = 0;
 
 $array['element']['rtpholdtimeout'] = array();
-$array['element']['rtpholdtimeout']['value'] = array(0,5,10,15,20,25,30,35,40,45,50,55,60);
+$array['element']['rtpholdtimeout']['value'] = array(0,15,30,45,60,120,180,240,300,600,1200);
 $array['element']['rtpholdtimeout']['default'] = 0;
 
 $array['element']['rtpkeepalive'] = array();
-$array['element']['rtpkeepalive']['value'] = array(0,5,10,15,20,25,30,35,40,45,50,55,60);
+$array['element']['rtpkeepalive']['value'] = array(0,15,30,45,60,120,180,240,300,600,1200);
 $array['element']['rtpkeepalive']['default'] = 0;
 
 $array['element']['directrtpsetup'] = array();
@@ -787,9 +787,9 @@ $array['filter']['t1min'] = array('key' => array(0,10,20,30,40,50,60,70,80,90,10
 $array['filter']['relaxdtmf'] = array('bool' => true);
 $array['filter']['rfc2833compensate'] = array('bool' => true);
 $array['filter']['compactheaders'] = array('bool' => true);
-$array['filter']['rtptimeout'] = array('cast' => 'uint','between' => array(0,60,5));
-$array['filter']['rtpholdtimeout'] = array('cast' => 'uint','between' => array(0,60,5));
-$array['filter']['rtpkeepalive'] = array('cast' => 'uint','between' => array(0,60,5));
+$array['filter']['rtptimeout'] = array('cast' => 'uint');
+$array['filter']['rtpholdtimeout'] = array('cast' => 'uint');
+$array['filter']['rtpkeepalive'] = array('cast' => 'uint');
 $array['filter']['directrtpsetup'] = array('bool' => true);
 $array['filter']['notifymimetype'] = array('set' => false,'chk' => 2,'maxlen' => 80,
 					   'regexp' => '#^(?:text|application)/[a-zA-Z][a-zA-Z0-9][a-zA-Z0-9\+][a-zA-Z0-9\-\+\.]*$#');

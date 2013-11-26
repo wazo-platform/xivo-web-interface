@@ -310,35 +310,17 @@ Délai d'attente pour le RTP :
 ; hlp_fm_rtptimeout
 Config asterisk: rtptimeout
 
-; fm_rtptimeout-opt(0)
-Désactivé
-
-; fm_rtptimeout-opt
-%s secondes
-
 ; fm_rtpholdtimeout
 Délai du RTP sur attente :
 
 ; hlp_fm_rtpholdtimeout
 Config asterisk: rtpholdtimeout
 
-; fm_rtpholdtimeout-opt(0)
-Désactivé
-
-; fm_rtpholdtimeout-opt
-%s secondes
-
 ; fm_rtpkeepalive
 Présence du RTP :
 
 ; hlp_fm_rtpkeepalive
 Config asterisk: rtpkeepalive
-
-; fm_rtpkeepalive-opt(0)
-Désactivée
-
-; fm_rtpkeepalive-opt
-%s secondes
 
 ; fm_directrtpsetup
 Activer le RTP direct :

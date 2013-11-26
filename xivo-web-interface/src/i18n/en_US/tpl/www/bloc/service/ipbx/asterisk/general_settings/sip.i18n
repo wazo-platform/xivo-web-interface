@@ -356,19 +356,13 @@ Asterisk config: compactheaders
 Asterisk config: compactheaders
 
 ; fm_rtptimeout
-RTP Timeout:
+RTP timeout:
 
 ; cmt_fm_rtptimeout
 Asterisk config: rtptimeout
 
 ; hlp_fm_rtptimeout
 Asterisk config: rtptimeout
-
-; fm_rtptimeout-opt(0)
-Disabled
-
-; fm_rtptimeout-opt
-%s seconds
 
 ; fm_rtpholdtimeout
 RTP hold timeout:
@@ -379,26 +373,14 @@ Asterisk config: rtpholdtimeout
 ; hlp_fm_rtpholdtimeout
 Asterisk config: rtpholdtimeout
 
-; fm_rtpholdtimeout-opt(0)
-Disabled
-
-; fm_rtpholdtimeout-opt
-%s seconds
-
 ; fm_rtpkeepalive
-RTP Keepalive:
+RTP keepalive:
 
 ; cmt_fm_rtpkeepalive
 Asterisk config: rtpkeepalive
 
 ; hlp_fm_rtpkeepalive
 Asterisk config: rtpkeepalive
-
-; fm_rtpkeepalive-opt(0)
-Disabled
-
-; fm_rtpkeepalive-opt
-%s seconds
 
 ; fm_directrtpsetup
 Enable RTP Direct:
@@ -1226,7 +1208,7 @@ Maximum session refresh interval:
 Asterisk config: session-expires
 
 ; fm_session-minse
-Minimul session refresh interval:
+Minimum session refresh interval:
 
 ; hlp_fm_session-minse
 Asterisk config: session-minse

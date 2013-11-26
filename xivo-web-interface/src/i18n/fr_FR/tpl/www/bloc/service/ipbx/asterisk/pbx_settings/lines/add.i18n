@@ -163,29 +163,11 @@ Fréquence de vérification quand il y a un problème :
 ; fm_protocol_rtptimeout
 Délai d'attente pour le RTP :
 
-; fm_protocol_rtptimeout-opt(0)
-Désactivé
-
-; fm_protocol_rtptimeout-opt
-%s secondes
-
 ; fm_protocol_rtpholdtimeout
 Délai du RTP sur attente :
 
-; fm_protocol_rtpholdtimeout-opt(0)
-Désactivé
-
-; fm_protocol_rtpholdtimeout-opt
-%s secondes
-
 ; fm_protocol_rtpkeepalive
 Présence du RTP :
-
-; fm_protocol_rtpkeepalive-opt(0)
-Désactivée
-
-; fm_protocol_rtpkeepalive-opt
-%s secondes
 
 ; fm_protocol_allowtransfer
 Autoriser les transferts :
