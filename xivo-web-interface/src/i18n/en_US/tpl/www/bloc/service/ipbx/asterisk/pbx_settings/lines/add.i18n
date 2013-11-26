@@ -205,29 +205,11 @@ Qualify frequency when fail :
 ; fm_protocol_rtptimeout
 RTP timeout:
 
-; fm_protocol_rtptimeout-opt(0)
-Disabled
-
-; fm_protocol_rtptimeout-opt
-%s seconds
-
 ; fm_protocol_rtpholdtimeout
 RTP hold timeout:
 
-; fm_protocol_rtpholdtimeout-opt(0)
-Disabled
-
-; fm_protocol_rtpholdtimeout-opt
-%s seconds
-
 ; fm_protocol_rtpkeepalive
-RTP presence:
-
-; fm_protocol_rtpkeepalive-opt(0)
-Disabled
-
-; fm_protocol_rtpkeepalive-opt
-%s seconds
+RTP keepalive:
 
 ; fm_linefeatures_number
 Phone number:

@@ -197,31 +197,13 @@ Yes
 %s milliseconds
 
 ; fm_protocol_rtptimeout
-RTP wait timeout :
-
-; fm_protocol_rtptimeout-opt(0)
-Disabled
-
-; fm_protocol_rtptimeout-opt
-%s seconds
+RTP timeout :
 
 ; fm_protocol_rtpholdtimeout
 RTP hold timeout :
 
-; fm_protocol_rtpholdtimeout-opt(0)
-Disabled
-
-; fm_protocol_rtpholdtimeout-opt
-%s seconds
-
 ; fm_protocol_rtpkeepalive
 RTP keepalive :
-
-; fm_protocol_rtpkeepalive-opt(0)
-Disabled
-
-; fm_protocol_rtpkeepalive-opt
-%s seconds
 
 ; fm_protocol_allowtransfer
 Allow transfers :

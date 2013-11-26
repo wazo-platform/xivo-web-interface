@@ -209,17 +209,17 @@ $array['element']['t38pt_usertpsource']['default'] = '';
 $array['element']['t38pt_usertpsource']['null'] = true;
 
 $array['element']['rtptimeout'] = array();
-$array['element']['rtptimeout']['value'] = array(0,5,10,15,20,25,30,35,40,45,50,55,60);
+$array['element']['rtptimeout']['value'] = array(0,15,30,45,60,120,180,240,300,600,1200);
 $array['element']['rtptimeout']['default'] = '';
 $array['element']['rtptimeout']['null'] = true;
 
 $array['element']['rtpholdtimeout'] = array();
-$array['element']['rtpholdtimeout']['value'] = array(0,5,10,15,20,25,30,35,40,45,50,55,60);
+$array['element']['rtpholdtimeout']['value'] = array(0,15,30,45,60,120,180,240,300,600,1200);
 $array['element']['rtpholdtimeout']['default'] = '';
 $array['element']['rtpholdtimeout']['null'] = true;
 
 $array['element']['rtpkeepalive'] = array();
-$array['element']['rtpkeepalive']['value'] = array(0,5,10,15,20,25,30,35,40,45,50,55,60);
+$array['element']['rtpkeepalive']['value'] = array(0,15,30,45,60,120,180,240,300,600,1200);
 $array['element']['rtpkeepalive']['default'] = '';
 $array['element']['rtpkeepalive']['null'] = true;
 
@@ -471,9 +471,9 @@ $array['filter']['useclientcode'] = array('set' => false,'chk' => 2,'bool' => tr
 $array['filter']['progressinband'] = array('set' => false,'chk' => 2,'key' => array('no','yes','never'));
 $array['filter']['t38pt_udptl'] = array('set' => false,'chk' => 2,'bool' => true);
 $array['filter']['t38pt_usertpsource'] = array('set' => false,'chk' => 2,'bool' => true);
-$array['filter']['rtptimeout'] = array('set' => false,'chk' => 2,'cast' => 'uint','between' => array(0,60,5));
-$array['filter']['rtpholdtimeout'] = array('set' => false,'chk' => 2,'cast' => 'uint','between' => array(0,60,5));
-$array['filter']['rtpkeepalive'] = array('set' => false,'chk' => 2,'cast' => 'uint','between' => array(0,60,5));
+$array['filter']['rtptimeout'] = array('set' => false,'chk' => 2,'cast' => 'uint');
+$array['filter']['rtpholdtimeout'] = array('set' => false,'chk' => 2,'cast' => 'uint');
+$array['filter']['rtpkeepalive'] = array('set' => false,'chk' => 2,'cast' => 'uint');
 $array['filter']['deny'] = array('set'			=> false,
 				 'chk'			=> 2,
 				 'callback'	=> 'dwho_network::valid_host_subnet_ipv4');
