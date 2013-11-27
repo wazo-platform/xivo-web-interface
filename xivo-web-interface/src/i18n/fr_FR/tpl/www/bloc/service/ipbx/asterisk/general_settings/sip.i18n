@@ -466,29 +466,8 @@ Personnaliser les codecs:
 ; fm_codec-disallow
 Codecs désactivés :
 
-; hlp_fm_codec-disallow
-Config asterisk: odec-disallow
-
 ; fm_codec-disallow-opt(all)
 Tous
-
-; fm_codec-allow
-Codecs activés :
-
-; hlp_fm_codec-allow
-Config asterisk: codec-allow
-
-; bt_upcodec
-Monter un ou plusieurs codecs
-
-; bt_downcodec
-Descendre un ou plusieurs codecs
-
-; bt_incodec
-Ajouter un ou plusieurs codecs ->
-
-; bt_outcodec
-<- Enlever un ou plusieurs codecs
 
 ; fm_t38pt-udptl
 Activer le T38 (UDPTL) :
