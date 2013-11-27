@@ -18,3 +18,12 @@ Default language:
 
 ; hlp_fm_sccpgeneralsettings_language
 Asterisk config: language
+
+; fm_codec-custom
+Customize codecs:
+
+; fm_codec-disallow
+Disabled codecs:
+
+; fm_codec-disallow-opt(all)
+All

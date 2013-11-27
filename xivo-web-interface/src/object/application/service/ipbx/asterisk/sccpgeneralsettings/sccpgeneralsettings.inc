@@ -52,6 +52,12 @@ class xivo_application_service_asterisk_sccpgeneralsettings extends xivo_applica
 
 		$r['sccpgeneralsettings'] = $this->get_element();
 
+		$allow_value = $r['sccpgeneralsettings']['allow']['value'];
+		$tmp = array();
+		foreach($allow_value as $key => $value)
+			$tmp[$value] = $value;
+		$r['sccpgeneralsettings']['allow']['value'] = $tmp;
+
 		return($r);
 	}
 
@@ -64,11 +70,20 @@ class xivo_application_service_asterisk_sccpgeneralsettings extends xivo_applica
 
 	function save_sccp_general_settings($options)
 	{
-		if(($rs = $this->chk_values($options)) === false
-		|| $this->_sccpgeneralsettings->save_sccp_general_settings($rs) === false)
+		if(($rs = $this->chk_values($options)) === false)
 		{
 			$this->_set_result('sccpgeneralsettings', $this->get_filter_result());
 			$this->_set_error('sccpgeneralsettings', $this->get_filter_error());
+			return(false);
+		}
+
+		if(dwho_issa('allow', $rs) === true)
+		{
+			$rs['allow'] = implode(',', $rs['allow']);
+		}
+
+		if($this->_sccpgeneralsettings->save_sccp_general_settings($rs) === false)
+		{
 			return(false);
 		}
 

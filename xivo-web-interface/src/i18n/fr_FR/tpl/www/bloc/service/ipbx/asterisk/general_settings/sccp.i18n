@@ -18,3 +18,12 @@ Langue par défaut :
 
 ; hlp_fm_sccpgeneralsettings_language
 Config asterisk: language
+
+; fm_codec-custom
+Personnaliser les codecs:
+
+; fm_codec-disallow
+Codecs désactivés :
+
+; fm_codec-disallow-opt(all)
+Tous

@@ -36,6 +36,16 @@ $array['element']['language'] = array();
 $array['element']['language']['value'] = dwho_i18n::get_supported_language_list();
 $array['element']['language']['default'] = 'en_US';
 
+$array['element']['disallow'] = array();
+$array['element']['disallow']['value'] = array('all');
+$array['element']['disallow']['default'] = 'all';
+$array['element']['disallow']['unset'] = true;
+
+$array['element']['allow'] = array();
+$array['element']['allow']['value'] = xivo_service_asterisk::get_sccp_codecs_list();
+$array['element']['allow']['default'] = '';
+$array['element']['allow']['null'] = true;
+
 $array['filter'] = array();
 
 $array['filter']['directmedia'] = array('bool' => true);
@@ -49,5 +59,8 @@ $array['filter']['language'] = array(
 	'set' => false,
 	'chk' => 2,
 	'key' => dwho_i18n::get_supported_language_list());
+
+$array['filter']['disallow'] = array('set' => false, 'chk' => 2, 'key' => array('all'));
+$array['filter']['allow'] = array('set' => false, 'chk' => 2, 'uvalue' => xivo_service_asterisk::get_sccp_codecs_list());
 
 ?>
