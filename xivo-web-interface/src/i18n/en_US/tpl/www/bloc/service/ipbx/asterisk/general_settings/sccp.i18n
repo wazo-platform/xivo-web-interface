@@ -13,6 +13,12 @@ Dial timeout:
 ; hlp_fm_sccpgeneralsettings_dialtimeout
 Asterisk config: dialtimeout
 
+; fm_sccpgeneralsettings_keepalive
+Keepalive:
+
+; hlp_fm_sccpgeneralsettings_keepalive
+Asterisk config: keepalive
+
 ; fm_sccpgeneralsettings_language
 Default language:
 

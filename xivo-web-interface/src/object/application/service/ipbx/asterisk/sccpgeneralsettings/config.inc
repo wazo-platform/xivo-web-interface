@@ -28,9 +28,12 @@ $array['element']['directmedia']['default'] = 'no';
 $array['element']['directmedia']['set'] = true;
 
 $array['element']['dialtimeout'] = array();
-$array['element']['dialtimeout'] = range(1,10);
 $array['element']['dialtimeout']['default'] = 5;
 $array['element']['dialtimeout']['setdef'] = true;
+
+$array['element']['keepalive'] = array();
+$array['element']['keepalive']['default'] = 10;
+$array['element']['keepalive']['setdef'] = true;
 
 $array['element']['language'] = array();
 $array['element']['language']['value'] = dwho_i18n::get_supported_language_list();
@@ -54,6 +57,11 @@ $array['filter']['dialtimeout'] = array(
 	'cast' => 'uint',
 	'chk' => 1,
 	'between' => array(1,10));
+
+$array['filter']['keepalive'] = array(
+		'cast' => 'uint',
+		'chk' => 1,
+		'between' => array(1,120));
 
 $array['filter']['language'] = array(
 	'set' => false,

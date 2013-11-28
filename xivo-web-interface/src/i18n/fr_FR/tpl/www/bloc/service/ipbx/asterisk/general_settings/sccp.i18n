@@ -13,6 +13,12 @@ Délai d'attente de la numérotation :
 ; hlp_fm_sccpgeneralsettings_dialtimeout
 Config asterisk: dialtimeout
 
+; fm_sccpgeneralsettings_keepalive
+Keepalive:
+
+; hlp_fm_sccpgeneralsettings_keepalive
+Asterisk config: keepalive
+
 ; fm_sccpgeneralsettings_language
 Langue par défaut :
 

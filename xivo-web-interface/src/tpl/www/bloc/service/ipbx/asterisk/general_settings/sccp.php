@@ -64,6 +64,17 @@ $codec_active = empty($allow) === false;
 				'error'		=> $this->bbf_args('error',
 							$this->get_var('error', 'sccpgeneralsettings', 'dialtimeout')))),
 
+			$form->text(array(
+				'desc'      => $this->bbf('fm_sccpgeneralsettings_keepalive'),
+				'name'      => 'sccpgeneralsettings[keepalive]',
+				'help'      => $this->bbf('hlp_fm_sccpgeneralsettings_keepalive'),
+				'labelid'   => 'sccpgeneralsettings-keepalive',
+				'size'      => 4,
+				'default'   => $element['sccpgeneralsettings']['keepalive']['default'],
+				'value'     => $info['sccpgeneralsettings']['keepalive'],
+				'error'		=> $this->bbf_args('error',
+						$this->get_var('error', 'sccpgeneralsettings', 'keepalive')))),
+
 			$form->select(array(
 				'desc'      => $this->bbf('fm_sccpgeneralsettings_language'),
 				'name'      => 'sccpgeneralsettings[language]',
