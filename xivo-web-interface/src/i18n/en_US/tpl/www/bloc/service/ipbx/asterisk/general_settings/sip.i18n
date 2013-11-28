@@ -574,35 +574,8 @@ Customize codecs:
 ; fm_codec-disallow
 Disabled codecs:
 
-; cmt_fm_codec-disallow
-Asterisk config: odec-disallow
-
-; hlp_fm_codec-disallow
-Asterisk config: odec-disallow
-
 ; fm_codec-disallow-opt(all)
 All
-
-; fm_codec-allow
-Enabled codecs:
-
-; cmt_fm_codec-allow
-Asterisk config: codec-allow
-
-; hlp_fm_codec-allow
-Asterisk config: codec-allow
-
-; bt_upcodec
-Up one or more codecs
-
-; bt_downcodec
-Down one or more codecs
-
-; bt_incodec
-Add one or more codecs ->
-
-; bt_outcodec
-<- Remove one or more codecs
 
 ; fm_t38pt-udptl
 Activate T38 (UDPTL) :

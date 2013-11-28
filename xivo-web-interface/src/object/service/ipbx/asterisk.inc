@@ -897,6 +897,13 @@ class xivo_service_asterisk extends xivo_service_abstract
 			     XIVO_SRE_IPBX_AST_CODEC_VIDEO_H264));
 	}
 
+	public function get_sccp_codecs_list()
+	{
+		return(array(XIVO_SRE_IPBX_AST_CODEC_AUDIO_ULAW,
+				XIVO_SRE_IPBX_AST_CODEC_AUDIO_ALAW,
+				XIVO_SRE_IPBX_AST_CODEC_AUDIO_G729));
+	}
+
 	public function get_amaflags_list($onlymeta=true)
 	{
 		if((bool) $onlymeta === true)

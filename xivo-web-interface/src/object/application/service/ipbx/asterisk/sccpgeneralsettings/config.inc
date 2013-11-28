@@ -28,13 +28,26 @@ $array['element']['directmedia']['default'] = 'no';
 $array['element']['directmedia']['set'] = true;
 
 $array['element']['dialtimeout'] = array();
-$array['element']['dialtimeout'] = range(1,10);
 $array['element']['dialtimeout']['default'] = 5;
 $array['element']['dialtimeout']['setdef'] = true;
+
+$array['element']['keepalive'] = array();
+$array['element']['keepalive']['default'] = 10;
+$array['element']['keepalive']['setdef'] = true;
 
 $array['element']['language'] = array();
 $array['element']['language']['value'] = dwho_i18n::get_supported_language_list();
 $array['element']['language']['default'] = 'en_US';
+
+$array['element']['disallow'] = array();
+$array['element']['disallow']['value'] = array('all');
+$array['element']['disallow']['default'] = 'all';
+$array['element']['disallow']['unset'] = true;
+
+$array['element']['allow'] = array();
+$array['element']['allow']['value'] = xivo_service_asterisk::get_sccp_codecs_list();
+$array['element']['allow']['default'] = '';
+$array['element']['allow']['null'] = true;
 
 $array['filter'] = array();
 
@@ -45,9 +58,17 @@ $array['filter']['dialtimeout'] = array(
 	'chk' => 1,
 	'between' => array(1,10));
 
+$array['filter']['keepalive'] = array(
+		'cast' => 'uint',
+		'chk' => 1,
+		'between' => array(1,120));
+
 $array['filter']['language'] = array(
 	'set' => false,
 	'chk' => 2,
 	'key' => dwho_i18n::get_supported_language_list());
+
+$array['filter']['disallow'] = array('set' => false, 'chk' => 2, 'key' => array('all'));
+$array['filter']['allow'] = array('set' => false, 'chk' => 2, 'uvalue' => xivo_service_asterisk::get_sccp_codecs_list());
 
 ?>

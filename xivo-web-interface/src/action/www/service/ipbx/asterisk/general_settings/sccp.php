@@ -26,6 +26,12 @@ $element = $appsccpgeneralsettings->get_elements();
 $fm_save = null;
 if(isset($_QR['fm_send']) === true)
 {
+	if(isset($_QR['codec-active']) === false)
+		$_QR['allow'] = array();
+
+	if(isset($_QR['allow']))
+		$_QR['sccpgeneralsettings']['allow'] = $_QR['allow'];
+
 	$saved = $appsccpgeneralsettings->save_sccp_general_settings($_QR['sccpgeneralsettings']);
 	$info = $appsccpgeneralsettings->get_result();
 
@@ -37,6 +43,20 @@ if(isset($_QR['fm_send']) === true)
 		$fm_save = false;
 	}
 }
+
+if(isset($info['sccpgeneralsettings']['allow']) === true
+&& dwho_has_len($info['sccpgeneralsettings']['allow']) === true)
+{
+	$info['sccpgeneralsettings']['allow'] = explode(',',$info['sccpgeneralsettings']['allow']);
+}
+else
+{
+	$info['sccpgeneralsettings']['allow'] = array();
+}
+
+$dhtml = &$_TPL->get_module('dhtml');
+$dhtml->set_js('js/utils/codeclist.js');
+$dhtml->load_js_multiselect_files();
 
 $_TPL->set_var('info', $info);
 $_TPL->set_var('element', $element);

@@ -25,6 +25,9 @@ $info = $this->get_var('info');
 $element = $this->get_var('element');
 $error = $this->get_var('error');
 
+$allow = $info['sccpgeneralsettings']['allow'];
+$codec_active = empty($allow) === false;
+
 ?>
 
 <div class="b-infos b-form">
@@ -61,6 +64,17 @@ $error = $this->get_var('error');
 				'error'		=> $this->bbf_args('error',
 							$this->get_var('error', 'sccpgeneralsettings', 'dialtimeout')))),
 
+			$form->text(array(
+				'desc'      => $this->bbf('fm_sccpgeneralsettings_keepalive'),
+				'name'      => 'sccpgeneralsettings[keepalive]',
+				'help'      => $this->bbf('hlp_fm_sccpgeneralsettings_keepalive'),
+				'labelid'   => 'sccpgeneralsettings-keepalive',
+				'size'      => 4,
+				'default'   => $element['sccpgeneralsettings']['keepalive']['default'],
+				'value'     => $info['sccpgeneralsettings']['keepalive'],
+				'error'		=> $this->bbf_args('error',
+						$this->get_var('error', 'sccpgeneralsettings', 'keepalive')))),
+
 			$form->select(array(
 				'desc'      => $this->bbf('fm_sccpgeneralsettings_language'),
 				'name'      => 'sccpgeneralsettings[language]',
@@ -72,6 +86,42 @@ $error = $this->get_var('error');
 				$this->get_var('language_list'));
 
 		?>
+
+		<fieldset id="fld-codeclist">
+			<legend><?=$this->bbf('fld-codeclist');?></legend>
+		<?php
+			echo $form->checkbox(array(
+				'desc'		=> $this->bbf('fm_codec-custom'),
+				'name'		=> 'codec-active',
+				'labelid'	=> 'codec-active',
+				'checked'	=> $codec_active));
+		?>
+		<div id="codeclist">
+		<?php
+			echo $form->select(array(
+				'desc'		=> $this->bbf('fm_codec-disallow'),
+				'name'		=> 'disallow',
+				'labelid'	=> 'disallow',
+				'key'		=> false,
+				'bbf'		=> 'fm_codec-disallow-opt',
+				'bbfopt'	=> array('argmode' => 'paramvalue')),
+					$element['sccpgeneralsettings']['disallow']['value']);
+		?>
+			<div class="fm-paragraph fm-description">
+				<?=$form->jq_select(array(
+						'paragraph'	=> false,
+						'label'		=> false,
+						'name'		=> 'allow[]',
+						'id' 		=> 'it-allow',
+						'key'		=> false,
+						'bbf'		=> 'ast_codec_name_type',
+						'bbfopt'	=> array('argmode' => 'paramvalue'),
+						'selected'  => $allow),
+							$element['sccpgeneralsettings']['allow']['value']);?>
+			<div class="clearboth"></div>
+			</div>
+		</div>
+		</fieldset>
 
 		<?php
 				echo $form->hidden(array(

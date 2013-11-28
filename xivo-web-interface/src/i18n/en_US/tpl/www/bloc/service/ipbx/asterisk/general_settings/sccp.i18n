@@ -13,8 +13,23 @@ Dial timeout:
 ; hlp_fm_sccpgeneralsettings_dialtimeout
 Asterisk config: dialtimeout
 
+; fm_sccpgeneralsettings_keepalive
+Keepalive:
+
+; hlp_fm_sccpgeneralsettings_keepalive
+Asterisk config: keepalive
+
 ; fm_sccpgeneralsettings_language
 Default language:
 
 ; hlp_fm_sccpgeneralsettings_language
 Asterisk config: language
+
+; fm_codec-custom
+Customize codecs:
+
+; fm_codec-disallow
+Disabled codecs:
+
+; fm_codec-disallow-opt(all)
+All
