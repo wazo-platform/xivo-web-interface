@@ -136,6 +136,11 @@ switch($act)
 		if(isset($_QR['fm_send']) === true
 		&& dwho_issa('protocol',$_QR) === true)
 		{
+			if ($_QR['proto'] == XIVO_SRE_IPBX_AST_PROTO_SCCP) {
+				$_QR['protocol']['cid_num'] = $info['protocol']['cid_num'];
+				$_QR['protocol']['cid_name'] = $info['protocol']['cid_name'];
+				$_QR['protocol']['name'] = $info['protocol']['name'];
+			}
 			$_QR['linefeatures'] = $return['linefeatures'];
 
 			if($appline->set_edit($_QR,$_QR['proto']) === false
