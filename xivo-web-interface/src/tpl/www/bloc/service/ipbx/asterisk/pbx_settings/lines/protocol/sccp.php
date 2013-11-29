@@ -29,34 +29,68 @@ $element = $this->get_var('element');
 
 <div id="sb-part-first">
 <?php
-	echo	$form->text(array('desc'	=> $this->bbf('fm_protocol_name'),
-				  'name'	=> 'protocol[name]',
-				  'labelid'	=> 'protocol-name',
-				  'size'	=> 18,
-				  'disabled'	=> true,
-				  'readonly' => true,
-				  'class'    => 'it-disabled',
-				  'default'	=> $element['protocol']['sccp']['name']['default'],
-				  'value'	=> $this->get_var('info','protocol','name'),
-				  'error'	=> $this->bbf_args('error',
-						   $this->get_var('error', 'sccp', 'name')) ));
+		echo	$form->text(array('desc'	=> $this->bbf('fm_protocol_name'),
+					  'name'	=> 'protocol[name]',
+					  'labelid'	=> 'protocol-name',
+					  'size'	=> 18,
+					  'disabled'	=> true,
+					  'readonly' => true,
+					  'class'    => 'it-disabled',
+					  'default'	=> $element['protocol']['sccp']['name']['default'],
+					  'value'	=> $this->get_var('info','protocol','name'),
+					  'error'	=> $this->bbf_args('error',
+							   $this->get_var('error', 'sccp', 'name')) ));
 
-	if($context_list !== false):
-		echo	$form->select(array('desc'	=> $this->bbf('fm_protocol_context'),
-					    'name'		=> 'protocol[context]',
-					    'labelid'	=> 'protocol-context',
-						'class'    	=> $this->get_var('act') == 'add' ? '' : 'it-disabled',
-						'disabled'	=> $this->get_var('act') == 'add' ? false : true,
-					    'key'		=> 'identity',
-					    'altkey'	=> 'name',
-					    'selected'	=> $context),
-				      $context_list);
-	else:
-		echo	'<div id="fd-protocol-context" class="txt-center">',
-			$url->href_htmln($this->bbf('create_context'),
-					'service/ipbx/system_management/context',
-					'act=add'),
-			'</div>';
-	endif;
+		if($context_list !== false):
+			echo	$form->select(array('desc'	=> $this->bbf('fm_protocol_context'),
+						    'name'		=> 'protocol[context]',
+						    'labelid'	=> 'protocol-context',
+							'class'    	=> $this->get_var('act') == 'add' ? '' : 'it-disabled',
+							'disabled'	=> $this->get_var('act') == 'add' ? false : true,
+						    'key'		=> 'identity',
+						    'altkey'	=> 'name',
+						    'selected'	=> $context),
+					      $context_list);
+		else:
+			echo	'<div id="fd-protocol-context" class="txt-center">',
+				$url->href_htmln($this->bbf('create_context'),
+						'service/ipbx/system_management/context',
+						'act=add'),
+				'</div>';
+		endif;
 ?>
+	<fieldset id="fld-codeclist">
+		<legend><?=$this->bbf('fld-codeclist');?></legend>
+		<?php
+			echo	$form->checkbox(array('desc'		=> $this->bbf('fm_codec-custom'),
+										  'name'		=> 'codec-active',
+										  'labelid'	=> 'codec-active',
+										  'checked'	=> $codec_active));
+		?>
+		<div id="codeclist">
+			<?php
+				echo	$form->select(array('desc'		=> $this->bbf('fm_protocol_codec-disallow'),
+										    'name'		=> 'protocol[disallow]',
+										    'labelid'	=> 'protocol-disallow',
+										    'key'		=> false,
+										    'bbf'		=> 'fm_protocol_codec-disallow-opt',
+											'bbfopt'	=> array('argmode' => 'paramvalue')),
+				$element['protocol']['sccp']['disallow']['value']);
+			?>
+			<div class="fm-paragraph fm-description">
+				<?=
+        $form->jq_select(array('paragraph'	=> false,
+										  'label'		=> false,
+										  'name'		=> 'protocol[allow][]',
+										  'id'			=> 'it-protocol-allow',
+										  'key'		=> false,
+										  'bbf'		=> 'ast_codec_name_type',
+										  'bbfopt'	=> array('argmode' => 'paramvalue'),
+										  'selected'  => $allow),
+					$element['protocol']['sccp']['allow']['value']);
+				?>
+				<div class="clearboth"></div>
+			</div>
+		</div>
+	</fieldset>
 </div>

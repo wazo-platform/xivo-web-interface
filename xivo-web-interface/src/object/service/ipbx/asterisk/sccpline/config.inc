@@ -38,6 +38,16 @@ $array['element']['protocol'] = array();
 $array['element']['protocol']['default'] = XIVO_SRE_IPBX_AST_PROTO_SCCP;
 $array['element']['protocol']['forcedef'] = true;
 
+$array['element']['disallow'] = array();
+$array['element']['disallow']['value'] = array('all');
+$array['element']['disallow']['default'] = 'all';
+$array['element']['disallow']['null'] = true;
+
+$array['element']['allow'] = array();
+$array['element']['allow']['value'] = xivo_service_asterisk::get_sccp_codecs_list();
+$array['element']['allow']['default'] = '';
+$array['element']['allow']['null'] = true;
+
 $array['element']['commented'] = array();
 $array['element']['commented']['value'] = array(0,1);
 $array['element']['commented']['default'] = 0;
@@ -54,6 +64,8 @@ $array['filter']['context'] = array('callback' => 'xivo_service_asterisk::chk_co
 $array['filter']['cid_name'] = array('minlen' => 1,'maxlen' => 80,'cast' => 'sgraph');
 $array['filter']['cid_num'] = array('minlen' => 1,'maxlen' => 80,'regexp' => '/^[a-z0-9_-]+$/i');
 $array['filter']['protocol'] = array('set' => false);
+$array['filter']['disallow'] = array('set' => false,'chk' => 2,'key' => array('all'));
+$array['filter']['allow'] = array('set' => false,'chk' => 2,'uvalue' => xivo_service_asterisk::get_sccp_codecs_list());
 $array['filter']['commented'] = array('bool' => true);
 
 ?>
