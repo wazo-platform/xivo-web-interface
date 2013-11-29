@@ -54,14 +54,16 @@ $array['filter'] = array();
 $array['filter']['directmedia'] = array('bool' => true);
 
 $array['filter']['dialtimeout'] = array(
+	'set' => false,
 	'cast' => 'uint',
 	'chk' => 1,
 	'between' => array(1,10));
 
 $array['filter']['keepalive'] = array(
-		'cast' => 'uint',
-		'chk' => 1,
-		'between' => array(1,120));
+	'set' => false,
+	'cast' => 'uint',
+	'chk' => 1,
+	'between' => array(1,120));
 
 $array['filter']['language'] = array(
 	'set' => false,
