@@ -192,11 +192,29 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 		return $ipbx_infos;
 	}
 
+	public function prepare_codec(&$element)
+	{
+		if(empty($this->_info) === true)
+			return(false);
+
+		$protocols = array('sip', 'sccp');
+
+		foreach ($protocols as $protocol)
+		{
+			$allow_value = $element['protocol'][$protocol]['allow']['value'];
+			$tmp = array();
+			foreach($allow_value as $key => $value)
+				$tmp[$value] = $value;
+			$element['protocol'][$protocol]['allow']['value'] = $tmp;
+		}
+	}
+
 	public function get_elements()
 	{
 		$r = array();
 
 		$r['protocol'] = $this->_service->get_protocol_element();
+		$this->prepare_codec($r);
 
 		return($r);
 	}

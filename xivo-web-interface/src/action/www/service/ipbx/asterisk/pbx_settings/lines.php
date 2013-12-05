@@ -94,32 +94,6 @@ switch($act)
 			);
 		}
 
-		if(dwho_issa('allow',$element['protocol']['sip']) === true
-		&& dwho_issa('value',$element['protocol']['sip']['allow']) === true
-		&& isset($info['protocol']['allow']) === true
-		&& dwho_has_len($info['protocol'],'allow') === true)
-		{
-			$info['protocol']['allow'] = explode(',',$info['protocol']['allow']);
-			$allow_value = $element['protocol']['sip']['allow']['value'];
-			$tmp = array();
-			foreach($allow_value as $key => $value)
-				$tmp[$value] = $value;
-			$element['protocol']['sip']['allow']['value'] = $tmp;
-		}
-
-		if(dwho_issa('allow',$element['protocol']['sccp']) === true
-		&& dwho_issa('value',$element['protocol']['sccp']['allow']) === true
-		&& isset($info['protocol']['allow']) === true
-		&& dwho_has_len($info['protocol'],'allow') === true)
-		{
-			$info['protocol']['allow'] = explode(',',$info['protocol']['allow']);
-			$allow_value = $element['protocol']['sccp']['allow']['value'];
-			$tmp = array();
-			foreach($allow_value as $key => $value)
-				$tmp[$value] = $value;
-			$element['protocol']['sccp']['allow']['value'] = $tmp;
-		}
-
 		$_TPL->set_var('info',$result);
 		$_TPL->set_var('error',$error);
 		$_TPL->set_var('fm_save',$fm_save);
@@ -185,31 +159,7 @@ switch($act)
 			);
 		}
 
-		if(dwho_issa('allow',$element['protocol']['sip']) === true
-		&& dwho_issa('value',$element['protocol']['sip']['allow']) === true
-		&& isset($info['protocol']['allow']) === true
-		&& dwho_has_len($info['protocol'],'allow') === true)
-		{
-			$info['protocol']['allow'] = explode(',',$info['protocol']['allow']);
-			$allow_value = $element['protocol']['sip']['allow']['value'];
-			$tmp = array();
-			foreach($allow_value as $key => $value)
-				$tmp[$value] = $value;
-			$element['protocol']['sip']['allow']['value'] = $tmp;
-		}
-
-		if(dwho_issa('allow',$element['protocol']['sccp']) === true
-		&& dwho_issa('value',$element['protocol']['sccp']['allow']) === true
-		&& isset($info['protocol']['allow']) === true
-		&& dwho_has_len($info['protocol'],'allow') === true)
-		{
-			$info['protocol']['allow'] = explode(',',$info['protocol']['allow']);
-			$allow_value = $element['protocol']['sccp']['allow']['value'];
-			$tmp = array();
-			foreach($allow_value as $key => $value)
-				$tmp[$value] = $value;
-			$element['protocol']['sccp']['allow']['value'] = $tmp;
-		}
+		$info['protocol']['allow'] = explode(',',$info['protocol']['allow']);
 
 		$_TPL->set_var('id',$info['linefeatures']['id']);
 		$_TPL->set_var('info',$return);
