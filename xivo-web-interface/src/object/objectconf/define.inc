@@ -29,7 +29,7 @@ define('DWHO_LABEL_CUSTOM','XIVO-WEBI');
 define('XIVO_SOFT_NAME','xivo');
 define('XIVO_SOFT_LABEL','XIVO');
 define('XIVO_SOFT_VERSION',trim($xivo_version));
-define('XIVO_SOFT_CODENAME','Skaro');
+define('XIVO_SOFT_CODENAME','Five');
 define('XIVO_SOFT_URL','xivo.fr');
 define('XIVO_DOC_URL','documentation.xivo.fr');
 define('XIVO_BLOG_URL','blog.xivo.fr');
