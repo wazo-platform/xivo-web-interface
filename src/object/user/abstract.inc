@@ -70,7 +70,13 @@ abstract class xivo_user_abstract extends xivo_libdatastorage_abstract
 
 	function _prepare(&$data)
 	{
+		$_XOBJ = &dwho_gct::get('xivo_object');
+		$modentity = &$_XOBJ->get_module('entity');
+
 		$data['valid'] = (bool) $data['valid'];
+		$data['entity_id'] = (int) $data['entity_id'];
+		$entity = $modentity->get($data['entity_id']);
+		$data['entity_name'] = $entity['name'];
 
 		if(is_array($data['obj']) === false)
 			$data['obj'] = dwho_unserialize($data['obj']);
@@ -220,6 +226,9 @@ abstract class xivo_user_abstract extends xivo_libdatastorage_abstract
 			}
 			else
 				$this->_info['_valid'] = $valid = false;
+
+			if(isset($arr['entity_id']))
+				$this->_info['_entity_id'] = (int) $arr['entity_id'];
 		}
 
 		$this->_info['_valid'] = (bool) $valid;

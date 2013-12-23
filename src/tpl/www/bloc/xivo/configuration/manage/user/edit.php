@@ -56,6 +56,19 @@ $info = $this->get_var('info');
 					      'labelid'	=> 'valid',
 					      'default'	=> true,
 					      'checked'	=> $info['valid']));
+
+		echo	$form->select(array('desc'	=> $this->bbf('fm_user_entity'),
+				    'name'		=> 'entity_id',
+				    'labelid'	=> 'entity_id',
+				    'key'		=> 'displayname',
+				    'empty'		=> true,
+				    'altkey'	=> 'id',
+				    'selected'	=> $info['entity_id'],
+				    'error'	=> $this->bbf_args('error',
+						   $this->get_var('error', 'user', 'entity_id'))),
+			      $this->get_var('entities'));
+	else:
+		$form->hidden(array('name' => 'entity_id', 'value' => null));
 	endif;
 
 	echo	$form->submit(array('name'	=> 'submit',

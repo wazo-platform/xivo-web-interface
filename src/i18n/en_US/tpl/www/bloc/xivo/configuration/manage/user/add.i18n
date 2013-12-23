@@ -7,6 +7,9 @@ login:
 ; fm_password
 password:
 
+; fm_user_entity
+Entity:
+
 ; error_fm_login(empty)
 login field must be filled
 

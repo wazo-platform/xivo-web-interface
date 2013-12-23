@@ -27,17 +27,21 @@ $param['act'] = 'list';
 switch($act)
 {
 	case 'add':
+		$modentity = &$_XOBJ->get_module('entity');
+		$entities = $modentity->get_all();
 		if(isset($_QR['fm_send']) === true)
 		{
 			$_QR['user']['meta'] = 'admin';
 			$_QR['user']['valid'] = 1;
 			$_QR['user']['obj'] = '';
+			$_QR['user']['entity_id'] = (int) $_QR['user']['entity_id'];
 
 			if($_USR->add($_QR['user']))
 				$_QRY->go($_TPL->url('xivo/configuration/manage/user'), $param);
 		} else
 			$_QR['user'] = array('login' => null, 'passwd' => null);
 
+		$_TPL->set_var('entities',$entities);
 		$_TPL->set_var('error', $_USR->get_error());
 		$_TPL->set_var('info', $_QR['user']);
 		break;
@@ -47,6 +51,9 @@ switch($act)
 		|| (xivo_user::get_info('meta') === 'admin'
 			&& xivo_user::chk_authorize('admin', $info['meta']) === false))
 			$_QRY->go($_TPL->url('xivo/configuration/manage/user'),$param);
+
+		$modentity = &$_XOBJ->get_module('entity');
+		$entities = $modentity->get_all();
 
 		if(isset($_QR['fm_send']) === true)
 		{
@@ -63,6 +70,7 @@ switch($act)
 			}
 		}
 
+		$_TPL->set_var('entities',$entities);
 		$_TPL->set_var('error', $_USR->get_error());
 		$_TPL->set_var('info', $info);
 		break;

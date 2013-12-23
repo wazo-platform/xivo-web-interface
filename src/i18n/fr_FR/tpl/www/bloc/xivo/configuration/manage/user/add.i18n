@@ -7,6 +7,9 @@ identifiant:
 ; fm_password
 mot de passe:
 
+; fm_user_entity
+Entité:
+
 ; error_fm_login(empty)
 Le login doit être renseigné
 

@@ -30,6 +30,10 @@ $array['element']['passwd']['default'] = '';
 $array['element']['meta'] = array();
 $array['element']['meta']['default'] = 'user';
 
+$array['element']['entity_id'] = array();
+$array['element']['entity_id']['default'] = '';
+$array['element']['entity_id']['null'] = true;
+
 $array['element']['valid'] = array();
 $array['element']['valid']['value'] = array(0,1);
 $array['element']['valid']['default'] = 0;
