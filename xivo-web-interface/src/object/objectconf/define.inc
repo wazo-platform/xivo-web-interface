@@ -19,7 +19,7 @@
 #
 
 
-$file_version = '/usr/share/pf-xivo/XIVO-VERSION';
+$file_version = '/usr/share/xivo/XIVO-VERSION';
 $xivo_version = 'Unknown';
 if (file_exists($file_version))
 	$xivo_version = file_get_contents($file_version);
