@@ -21,7 +21,7 @@
 define('DWHO_PATH_I18N','/usr/share/xivo-web-interface/i18n');
 define('DWHO_PATH_ROOT','/usr/share/xivo-web-interface/lib');
 
-define('XIVO_PATH_CONF','/etc/xivo/xivo-web-interface');
+define('XIVO_PATH_CONF','/etc/xivo/web-interface');
 define('XIVO_CONF','/etc/xivo');
 define('XIVO_LIB','/var/lib/xivo');
 define('XIVO_EXTRA','/usr/share/xivo-web-interface/extra');
