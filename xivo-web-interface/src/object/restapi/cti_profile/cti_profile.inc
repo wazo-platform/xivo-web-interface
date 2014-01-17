@@ -1,7 +1,7 @@
 <?php
 #
 # XiVO Web-Interface
-# Copyright (C) 2012-2014  Avencall
+# Copyright (C) 2013-2014  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,12 +17,27 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-xivo_service_asterisk::required(array('abstract','datastorage','abstract','sql.inc'),true);
+require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'restapi', 'abstract.inc'));
 
-class xivo_service_asterisk_cti_profile_sql extends xivo_service_asterisk_abstract_sql
+class restapi_ressource_cti_profile extends xivo_restapi_helpers_abstract
 {
-	var $_unique = array('name');
 
+	protected $_name      = 'cti_profile';
+	protected $_base_url  = 'cti_profiles';
+
+	public function __construct($_RAPI, $param=null)
+	{
+		parent::__construct($_RAPI, $param);
+	}
+	
+	public function get_cti_profile_id_with_name($profile_name) {
+		$all_profiles = parent::find_all();
+		foreach($all_profiles as $profile) {
+			if($profile['name'] == $profile_name)
+				return $profile['id'];
+		}
+		return false;
+	}
 }
 
 ?>
