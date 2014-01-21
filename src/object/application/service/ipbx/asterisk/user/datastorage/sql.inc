@@ -65,7 +65,7 @@ class xivo_application_service_asterisk_user_sql extends xivo_application_abstra
 
 		$this->_dso->new_select($this->_table['userfeatures']);
 
-		if (isset($_SESSION["_USR"]->entity_id))
+		if (isset($_SESSION["_USR"]->entity_id) && $_SESSION["_USR"]->entity_id !== 0)
 			$arr['entityid'] = $_SESSION["_USR"]->entity_id;
 
 		if($disable !== null)
