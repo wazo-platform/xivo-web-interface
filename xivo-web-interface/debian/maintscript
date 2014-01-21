@@ -1,0 +1,8 @@
+# see: dh_installdeb(1)
+
+mv_conffile /etc/pf-xivo/xivo-web-interface/cti.ini /etc/xivo/web-interface/cti.ini 14.02
+mv_conffile /etc/pf-xivo/xivo-web-interface/ipbx.ini /etc/xivo/web-interface/ipbx.ini 14.02
+mv_conffile /etc/pf-xivo/xivo-web-interface/monitoring.ini /etc/xivo/web-interface/monitoring.ini 14.02
+mv_conffile /etc/pf-xivo/xivo-web-interface/php.ini /etc/xivo/web-interface/php.ini 14.02
+mv_conffile /etc/pf-xivo/xivo-web-interface/user.ini /etc/xivo/web-interface/user.ini 14.02
+mv_conffile /etc/pf-xivo/xivo-web-interface/xivo.ini /etc/xivo/web-interface/xivo.ini 14.02

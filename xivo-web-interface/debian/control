@@ -1,0 +1,43 @@
+Source: xivo-web-interface
+Section: web
+Priority: extra
+Maintainer: XiVO Dev Team <dev@avencall.com>
+Uploaders: XiVO Builder Team <release@xivo.fr>
+Build-Depends: cdbs (>= 0.4.23-1.1), debhelper (>= 5), php5-cli
+Standards-Version: 3.7.2.2
+
+Package: xivo-web-interface
+Pre-depends: xivo-config
+Architecture: all
+Depends: 
+    curl,
+    libjs-jquery-ui-lightness,
+    libjs-jquery-ui-multiselect,
+    libjs-jquery-ui-timepicker,
+    libjs-jquery.timepicker,
+    libjs-select2,
+    munin,
+    nginx,
+    php5-cgi,
+    php5-cli,
+    php5-curl,
+    php5-gd,
+    php5-json,
+    php5-ldap,
+    php5-pgsql,
+    spawn-fcgi,
+    xivo-lib-js-jqplot,
+    xivo-lib-js-jquery.mousewheel,
+    xivo-lib-js-schedule,
+    xivo-sysconfd
+Provides: pf-xivo-web-interface
+Conflicts: pf-xivo-web-interface
+Replaces: pf-xivo-web-interface
+Description: XIVO web interface
+ XIVO is a system based on a powerful IPBX, to bring an easy to
+ install solution for telephony and related services.
+ .
+ This package contains a comprehensive web interface to
+ configure the XIVO solution.
+ .
+  Homepage: http://xivo.fr/

@@ -1,0 +1,576 @@
+xivo-web-interface (14.01~20140114.162330.1e19d0f-wheezy-2) xivo-dev; urgency=low
+
+  * fix paths in preinst
+
+ -- Sebastien Duthil <sduthil@avencall.com>  Thu, 16 Jan 2014 08:39:15 -0500
+
+xivo-web-interface (14.01~20140110.152608.58ab4e9-wheezy-6) xivo-dev; urgency=low
+
+  * move symlink destination
+
+ -- Sebastien Duthil <sduthil@avencall.com>  Tue, 14 Jan 2014 10:39:42 -0500
+
+xivo-web-interface (14.01~20140110.152608.58ab4e9-wheezy-5) xivo-dev; urgency=low
+
+  * add missing DEBHELPER tag in preinst
+
+ -- Sebastien Duthil <sduthil@avencall.com>  Mon, 13 Jan 2014 16:29:29 -0500
+
+xivo-web-interface (14.01~20140110.152608.58ab4e9-wheezy-4) xivo-dev; urgency=low
+
+  * fix typo in conffile name
+
+ -- Sebastien Duthil <sduthil@avencall.com>  Mon, 13 Jan 2014 15:27:07 -0500
+
+xivo-web-interface (14.01~20140110.152608.58ab4e9-wheezy-3) xivo-dev; urgency=low
+
+  * use maintscript instead of renaming conffile manually
+
+ -- Sebastien Duthil <sduthil@avencall.com>  Mon, 13 Jan 2014 14:54:44 -0500
+
+xivo-web-interface (14.01~20140110.152608.58ab4e9-wheezy-2) xivo-dev; urgency=low
+
+  * rename configuration paths from pf-xivo to xivo when copying conffiles
+
+ -- Sebastien Duthil <sduthil@avencall.com>  Mon, 13 Jan 2014 11:03:22 -0500
+
+xivo-web-interface (13.07~20130326.160224.8a0e505-3) squeeze-xivo-skaro-dev; urgency=low
+
+  * fix changelog 
+
+ -- Nicolas HICHER <nhicher@avencall.com>  Wed, 03 Apr 2013 15:13:49 -0400
+
+xivo-web-interface (13.07~20130326.160224.8a0e505-2) squeeze-xivo-skaro-dev; urgency=low
+
+  * add depends on xivo-sysconfd 
+
+ -- Nicolas HICHER <nhicher@avencall.com>  Wed, 03 Apr 2013 14:38:38 -0400
+
+xivo-web-interface (13.06~20130326.160224.8a0e505-2) squeeze-xivo-skaro-dev; urgency=low
+
+  * force rebuild of xivo-web-interface
+
+ -- Gregory Eric Sanderson <gsanderson@avencall.com>  Tue, 26 Mar 2013 13:00:13 -0500
+
+xivo-web-interface (13.04~20130220.151210.222dd5e-2) squeeze-xivo-skaro-dev; urgency=low
+
+  * fix version 
+
+ -- Nicolas HICHER <nhicher@avencall.com>  Fri, 15 Mar 2013 11:55:30 -0400
+
+xivo-web-interface (13.04~20130219.201506.397482d-2) squeeze-xivo-skaro-dev; urgency=low
+
+  * fix link
+
+ -- Nicolas HICHER (atarakt) <nhicher@proformatique.com>  Tue, 19 Feb 2013 13:41:03 -0500
+
+pf-xivo-web-interface (8:13.03~20130208.204606.dd7f090-3) squeeze-xivo-skaro-dev; urgency=low
+
+  * remove duplicate code
+
+ -- Cedric Abunar <cabunar@avencall.com>  Tue, 12 Feb 2013 08:04:40 -0500
+
+pf-xivo-web-interface (8:13.03~20130208.204606.dd7f090-2) squeeze-xivo-skaro-dev; urgency=low
+
+  * move old ini file
+
+ -- Cedric Abunar <cabunar@avencall.com>  Mon, 11 Feb 2013 08:43:55 -0500
+
+pf-xivo-web-interface (8:13.03~20130206.191849.5c8fb04-2) squeeze-xivo-skaro-dev; urgency=low
+
+  * Add dependency on libjs-select2
+
+ -- Gregory Eric Sanderson <gsanderson@proformatique.com>  Thu, 02 Feb 2013 11:08:01 -0400
+
+pf-xivo-web-interface (8:12.21~20121024.134631.6cf6e1f-2) squeeze-xivo-skaro-dev; urgency=low
+
+  * fix version 
+
+ -- Nicolas HICHER (atarakt) <nhicher@proformatique.com>  Wed, 24 Oct 2012 14:14:01 -0400
+
+pf-xivo-web-interface (8:12.19~20120925.151323.8c7c1af-2) squeeze-xivo-skaro-dev; urgency=low
+
+  * add xivo-config depends
+
+ -- Nicolas HICHER (atarakt) <nhicher@proformatique.com>  Tue, 25 Sep 2012 14:55:09 -0400
+
+pf-xivo-web-interface (8:12.18~20120913.192849.bef6e35-2) squeeze-xivo-skaro-dev; urgency=low
+
+  * fix debian/control
+
+ -- Nicolas HICHER (atarakt) <nhicher@proformatique.com>  Fri, 14 Sep 2012 10:13:17 -0400
+
+pf-xivo-web-interface (8:12.17~20120828.083156.7fa610a-3) squeeze-xivo-skaro-dev; urgency=low
+
+  * fix remove /etc/cron.d/pf-xivo-web-interface
+
+ -- Cedric Abunar (cabunar) <cabunar@avencall.com>  Wed, 05 Sep 2012 13:03:45 -0400
+
+pf-xivo-web-interface (8:12.17~20120828.083156.7fa610a-2) squeeze-xivo-skaro-dev; urgency=low
+
+  * bump version for packaging farm
+
+ -- Sébastien Duthil <sduthil@avencall.com>  Tue, 28 Aug 2012 15:30:17 -0400
+
+pf-xivo-web-interface (8:12.17~20120827.191936.f677b61-2) squeeze-xivo-skaro-dev; urgency=low
+
+  * remove /etc/cron.d/pf-xivo-web-interface
+
+ -- Sébastien Duthil <sduthil@avencall.com>  Tue, 28 Aug 2012 14:52:10 -0400
+
+pf-xivo-web-interface (8:1.2~alpha-1.4-4) squeeze-xivo-skaro-dev; urgency=low
+
+  * remove useless package pf-xivo-web-interface-config
+
+ -- Cedric Abunar (cabunar) <cabunar@avencall.com>  Wed, 08 Aug 2012 12:59:09 -0400
+
+pf-xivo-web-interface (8:1.2~alpha-1.4-3) squeeze-xivo-skaro-dev; urgency=low
+
+  * Remove unused webi lib path
+
+ -- Cedric Abunar (cabunar) <cabunar@avencall.com>  Wed, 08 Aug 2012 12:10:05 -0400
+
+pf-xivo-web-interface (8:1.2~alpha-1.4-2) squeeze-xivo-skaro-dev; urgency=low
+
+  * remove statistics cron
+
+ -- Cedric Abunar (cabunar) <cabunar@avencall.com>  Tue, 07 Aug 2012 13:35:44 -0400
+
+pf-xivo-web-interface (8:1.2~alpha-1.4-1) squeeze-xivo-skaro-dev; urgency=low
+
+  * Fix for packaging-farm
+
+ -- Nicolas HICHER (atarakt) <nhicher@proformatique.com>  Wed, 28 Sep 2011 15:21:20 -0400
+
+pf-xivo-web-interface (8:1.2~20110819.134415.57c6e08-1) squeeze-xivo-skaro-dev; urgency=low
+
+  * Update packge version (svn to git).
+
+ -- Etienne Lessard <edesrocherslessard@avencall.com>  Mon, 22 Aug 2011 08:21:50 -0400
+
+pf-xivo-web-interface (7:1.2~svn10978-0) squeeze-xivo-skaro-dev; urgency=low
+
+  * Add libjs-jquery-ui-timepicker depend
+
+ -- Guillaume Bour <gbour@proformatique.com>  Tue, 14 Jun 2011 12:02:36 +0200
+
+pf-xivo-web-interface (7:1.2~svn10737-3) squeeze-xivo-skaro-dev; urgency=low
+
+  * delete depends on lighttpd, add depends on nginx 
+
+ -- Nicolas HICHER (atarakt) <nhicher@proformatique.com>  Fri, 20 May 2011 09:50:24 +0200
+
+pf-xivo-web-interface (7:1.2~svn10737-2) squeeze-xivo-skaro-dev; urgency=low
+
+  * Added php5-pgsql depends
+
+ -- Sylvain Boily <sboily@proformatique.com>  Thu, 05 May 2011 16:21:28 -0400
+
+pf-xivo-web-interface (7:1.2~svn10406-2) squeeze-xivo-skaro-dev; urgency=low
+
+  * Add lighttpd aliases for jquery libraries
+
+ -- Guillaume Bour <gbour@proformatique.com>  Mon, 21 Mar 2011 16:38:09 +0100
+
+pf-xivo-web-interface (7:1.2~svn10177-0) squeeze-xivo-skaro-dev; urgency=low
+
+  * Added pf-xivo-web-interface-update-stats-cache
+
+ -- Sylvain Boily <sboily@proformatique.com>  Fri, 11 Feb 2011 17:01:06 -0500
+
+pf-xivo-web-interface (7:1.2~svn10173-1) squeeze-xivo-skaro-dev; urgency=low
+
+  * fix changelog 
+
+ -- Nicolas HICHER (atarakt) <nhicher@proformatique.com>  Fri, 11 Feb 2011 18:21:45 +0100
+
+pf-xivo-web-interface (5:1.1~svn7606-2.1) lenny-xivo-skaro-dev; urgency=low
+
+  * add depend on lighttpd.
+
+ -- Nicolas HICHER (atarakt) <nhicher@proformatique.com>  Wed, 12 Jan 2011 11:35:42 +0100
+
+pf-xivo-web-interface (5:1.1~svn7606-2) etch-xivo-gallifrey-dev; urgency=low
+
+  * Add ability to migrate both sqlite and mysql databases.
+
+ -- Guillaume Bour <gbour@proformatique.com>  Thu, 17 Jun 2010 10:35:52 +0200
+
+pf-xivo-web-interface (5:1.1~svn7606-0) etch-xivo-gallifrey-dev; urgency=low
+
+  * Fix path application to action
+
+ -- Sylvain Boily <sboily@proformatique.com>  Thu, 18 Feb 2010 11:07:06 +0100
+
+pf-xivo-web-interface (5:1.1~svn7566-2) lenny-xivo-gallifrey-dev; urgency=low
+
+  * Fixed cron.d.
+
+ -- Adrien DELLE CAVE (Decryptus) <decryptus@proformatique.com>  Sun,  7 Feb 2010 13:08:11 +0100
+
+pf-xivo-web-interface (5:1.1~svn7558-3) lenny-xivo-gallifrey-dev; urgency=low
+
+  * Missing config.inc path in dh_install file.
+
+ -- Adrien DELLE CAVE (Decryptus) <decryptus@proformatique.com>  Fri,  5 Feb 2010 20:05:37 +0100
+
+pf-xivo-web-interface (5:1.1~svn7558-2) lenny-xivo-gallifrey-dev; urgency=low
+
+  * Added script to purge PHP files session.
+
+ -- Adrien DELLE CAVE (Decryptus) <decryptus@proformatique.com>  Fri,  5 Feb 2010 19:37:39 +0100
+
+pf-xivo-web-interface (5:1.1~svn7531-2) etch-xivo-gallifrey-dev; urgency=low
+
+  * Switched to PHP5.
+
+ -- Marc Dequènes (Duck) <mdequenes@proformatique.com>  Fri, 05 Feb 2010 18:02:33 +0100
+
+pf-xivo-web-interface (5:1.1~svn7440-0) etch-xivo-gallifrey-dev; urgency=low
+
+  * Added depends on pf-xivo-sysconfd.
+
+ -- Adrien DELLE CAVE (Decryptus) <decryptus@proformatique.com>  Wed, 13 Jan 2010 11:13:20 +0100
+
+pf-xivo-web-interface (5:1.0.3~svn6909-0) etch-xivo-gallifrey-dev; urgency=low
+
+   Reviewed file config.inc.
+
+ -- Adrien DELLE CAVE (Decryptus) <decryptus@proformatique.com>  Fri, 25 Sep 2009 11:02:29 +0200
+
+pf-xivo-web-interface (3:1.1~svn6623-0) etch-xivo-gallifrey-dev; urgency=low
+
+  * Added Makefile to detect php syntax error. 
+
+ -- Adrien DELLE CAVE (Decryptus) <decryptus@proformatique.com>  Tue, 16 Jun 2009 15:23:24 +0200
+
+pf-xivo-web-interface (2:0.4.4~svn5268-2) etch-xivo-k-9-dev; urgency=low
+
+  * This software is no more non-free, then switched Debian section.
+
+ -- Marc Dequènes (Duck) <mdequenes@proformatique.com>  Thu, 19 Feb 2009 11:10:51 +0100
+
+pf-xivo-web-interface (2:0.4.3~svn5111-0) etch-xivo-k-9-dev; urgency=low
+
+  * Switching to live eAccelerator cache:
+    + created cache directory with secured rights
+    + added symlink to admin interface (Depends on
+      'php-eaccelerator-common')
+
+ -- Marc Dequènes (Duck) <mdequenes@proformatique.com>  Thu, 15 Jan 2009 17:27:47 +0100
+
+pf-xivo-web-interface (1:0.4.2~svn5081-0) etch-xivo-k-9-dev; urgency=low
+
+  * Add License GPLv3. 
+
+ -- Adrien DELLE CAVE (Decryptus) <decryptus@proformatique.com>  Mon, 12 Jan 2009 12:20:00 +0100
+
+pf-xivo-web-interface (1:0.4~svn4270-0) etch-xivo-k-9-dev; urgency=low
+
+  * Added php4-json in depends.
+
+ -- Adrien DELLE CAVE (Decryptus) <decryptus@proformatique.com>  Sun, 12 Oct 2008 04:12:14 +0200
+
+pf-xivo-web-interface (1:0.4~svn4041-2) etch-xivo-k-9-dev; urgency=low
+
+  * Updated directories and symlinks in fix_paths_rights script.
+
+ -- Adrien DELLE CAVE (Decryptus) <decryptus@proformatique.com>  Fri, 12 Sep 2008 15:20:21 +0200
+
+pf-xivo-web-interface (1:0.4~svn3893-0) etch-xivo-k-9-dev; urgency=low
+
+  * Added DocumentRoot, Options -Indexes, ErrorLog, CustomLog in apache.conf.
+
+ -- Adrien DELLE CAVE (Decryptus) <decryptus@proformatique.com>  Wed, 20 Aug 2008 10:15:37 +0200
+
+pf-xivo-web-interface (1:0.4~svn3681-4) etch-xivo-k-9-dev; urgency=low
+
+  * Fixed symlinks in fix_paths_rights script.
+
+ -- Adrien DELLE CAVE (Decryptus) <decryptus@proformatique.com>  Tue, 12 Aug 2008 16:12:32 +0200
+
+pf-xivo-web-interface (1:0.4~svn3681-3) etch-xivo-k-9-dev; urgency=low
+
+  * Removed pf-xivo-web-interface.preinst.
+  * Added script fix_paths_rights.
+  * Removed asterisk-config | asterisk-config-custom from pre-depends.
+
+ -- Adrien DELLE CAVE (Decryptus) <decryptus@proformatique.com>  Mon, 11 Aug 2008 22:09:11 +0200
+
+pf-xivo-web-interface (1:0.4~svn3681-2) etch-xivo-k-9-dev; urgency=low
+
+  * Added asterisk-config | asterisk-config-custom in pre-depends.
+
+ -- Adrien DELLE CAVE (Decryptus) <decryptus@proformatique.com>  Mon, 11 Aug 2008 17:17:12 +0200
+
+pf-xivo-web-interface (1:0.4~svn3626-2) etch-xivo-k-9-dev; urgency=low
+
+  * Replaced all occurrences to Xivo by XIVO in copyright file.
+
+ -- Adrien DELLE CAVE (Decryptus) <decryptus@proformatique.com>  Wed, 23 Jul 2008 00:44:14 +0200
+
+pf-xivo-web-interface (1:0.4~svn3463-3) etch-xivo-k-9-dev; urgency=low
+
+  * Fixed moh directory location.
+
+ -- Adrien DELLE CAVE (Decryptus) <decryptus@proformatique.com>  Tue,  1 Jul 2008 11:17:54 +0200
+
+pf-xivo-web-interface (1:0.4~svn3463-2) etch-xivo-k-9-dev; urgency=low
+
+  * Fixed recordings directory location.
+
+ -- Adrien DELLE CAVE (Decryptus) <decryptus@proformatique.com>  Tue,  1 Jul 2008 02:42:55 +0200
+
+pf-xivo-web-interface (1:0.4~svn3431-4) etch-xivo-k-9-dev; urgency=low
+
+  * Add asterisk-sounds-main in replaces 
+
+ -- Adrien DELLE CAVE (Decryptus) <decryptus@proformatique.com>  Fri, 27 Jun 2008 13:31:28 +0200
+
+pf-xivo-web-interface (1:0.4~svn3431-2) etch-xivo-k-9-dev; urgency=low
+
+  * Fixed expected arguments in preinst.
+
+ -- Adrien DELLE CAVE (Decryptus) <decryptus@proformatique.com>  Fri, 27 Jun 2008 13:12:23 +0200
+
+pf-xivo-web-interface (1:0.4~svn3431-0) etch-xivo-k-9-dev; urgency=low
+
+  * Changed installation path of uploaded files.
+
+ -- Adrien DELLE CAVE (Decryptus) <decryptus@proformatique.com>  Fri, 27 Jun 2008 12:46:52 +0200
+
+pf-xivo-web-interface (1:0.4~svn2690-2) etch-xivo-k-9-dev; urgency=low
+
+  * Add php4-ldap in depends
+
+ -- Adrien DELLE CAVE (Decryptus) <decryptus@proformatique.com>  Tue, 25 Mar 2008 16:34:40 +0100
+
+pf-xivo-web-interface (1:0.4~svn2301-0) etch-xivo-k-9-dev; urgency=low
+
+  * Add php4-cli and php4-curl in depends
+
+ -- Adrien DELLE CAVE (Decryptus) <decryptus@proformatique.com>  Thu, 10 Jan 2008 13:28:17 +0100
+
+pf-xivo-web-interface (1:0.3~svn2263-2) etch-xivo-tardis; urgency=low
+
+  * Remove useless I18N path in config.inc
+
+ -- Adrien DELLE CAVE (Decryptus) <decryptus@proformatique.com>  Mon,  7 Jan 2008 15:37:33 +0100
+
+pf-xivo-web-interface (1:0.3~svn2130-1) etch-xivo-tardis; urgency=low
+
+  * Fix how to know the new version
+
+ -- Adrien DELLE CAVE (Decryptus) <decryptus@proformatique.com>  Mon, 10 Dec 2007 17:14:52 +0100
+
+pf-xivo-web-interface (1:0.3~svn2130-0) etch-xivo-tardis; urgency=low
+
+  * Port modification from etch-xivo-torchwood
+    - Update XIVO-VERSION path and check if exists
+    - Add /etc/pf-xivo/web-interface in postrm
+    - Add config.inc file and change config directory
+
+ -- Adrien DELLE CAVE (Decryptus) <decryptus@proformatique.com>  Mon,  3 Dec 2007 13:38:59 +0100
+
+pf-xivo-web-interface (1:0.2~svn2100-7) etch; urgency=low
+
+  * Added migration support in postinst.
+
+ -- Marc Dequènes (Duck) <Duck@DuckCorp.org>  Wed, 28 Nov 2007 17:15:48 +0100
+
+pf-xivo-web-interface (1:0.2~svn1981-2) etch; urgency=low
+
+  * Rename folder dialstatus to playback in Asterisk sound folder
+
+ -- Adrien DELLE CAVE (Decryptus) <decryptus@proformatique.com>  Fri, 16 Nov 2007 22:31:12 +0100
+
+pf-xivo-web-interface (1:0.2~svn1839-2) etch; urgency=low
+
+  * xivo -> XIVO in control file
+
+ -- Corentin Le Gall <clegall@proformatique.com>  Wed,  7 Nov 2007 18:32:57 +0100
+
+pf-xivo-web-interface (1:0.2~svn1614-2) etch; urgency=low
+
+  * Add folders in Asterisk sound folder
+
+ -- Adrien DELLE CAVE (Decryptus) <decryptus@proformatique.com>  Thu, 18 Oct 2007 15:19:16 +0200
+
+pf-xivo-web-interface (1:0.1.1~svn1496-2) etch; urgency=low
+
+  * Add SET_GID on ASTERISK_DIRS
+
+ -- Adrien DELLE CAVE (Decryptus) <decryptus@proformatique.com>  Fri, 14 Sep 2007 18:23:56 +0200
+
+pf-xivo-web-interface (1:0.1.1~svn790-1)  etch; urgency=low
+
+  * New development snapshot.
+
+ -- Marc Dequènes (Duck) <mdequenes@proformatique.com>  Fri, 01 Jun 2007 12:23:42 +0200
+
+pf-xivo-web-interface (1:0.1.1~svn766-1) etch; urgency=low
+
+  * New development snapshot.
+
+ -- Marc Dequènes (Duck) <mdequenes@proformatique.com>  Tue, 29 May 2007 18:05:37 +0200
+
+pf-xivo-web-interface (1:0.1.1~svn731 -1) etch; urgency=low
+
+  * New development snapshot.
+
+ -- Marc Dequènes (Duck) <mdequenes@proformatique.com>  Fri, 25 May 2007 16:54:38 +0200
+
+pf-xivo-web-interface (1:0.1.1~svn698-1) etch; urgency=low
+
+  * New development snapshot.
+
+ -- Marc Dequènes (Duck) <mdequenes@proformatique.com>  Wed, 23 May 2007 16:59:16 +0200
+
+pf-xivo-web-interface (1:0.1.1~svn677-1) etch; urgency=low
+
+  * New development snapshot.
+
+ -- Marc Dequènes (Duck) <mdequenes@proformatique.com>  Tue, 22 May 2007 15:40:08 +0200
+
+pf-xivo-web-interface (1:0.1.1~svn604-1) etch; urgency=low
+
+  * New development snapshot.
+
+ -- Marc Dequènes (Duck) <mdequenes@proformatique.com>  Tue, 15 May 2007 19:36:41 +0200
+
+pf-xivo-web-interface (1:0.1.1~svn534-2) etch; urgency=low
+
+  * Added missing dependency on apache2.
+
+ -- Marc Dequènes (Duck) <mdequenes@proformatique.com>  Fri, 11 May 2007 12:32:45 +0200
+
+pf-xivo-web-interface (1:0.1.1~svn534-1) etch; urgency=low
+
+  * New development snapshot.
+
+ -- Marc Dequènes (Duck) <mdequenes@proformatique.com>  Thu, 10 May 2007 21:18:09 +0200
+
+pf-xivo-web-interface (1:0.1-7) etch; urgency=low
+
+  * Fixed rights.
+
+ -- Marc Dequènes (Duck) <mdequenes@proformatique.com>  Thu, 10 May 2007 16:45:48 +0200
+
+pf-xivo-web-interface (1:0.1-6) etch; urgency=low
+
+  * Moved apache.conf in '/usr/share/pf-xivo-web-interface/'.
+
+ -- Marc Dequènes (Duck) <mdequenes@proformatique.com>  Thu, 10 May 2007 16:00:07 +0200
+
+pf-xivo-web-interface (1:0.1-5) etch; urgency=low
+
+  * Moved XIVO PHP config symlink in the -config package.
+
+ -- Marc Dequènes (Duck) <mdequenes@proformatique.com>  Thu, 10 May 2007 15:28:09 +0200
+
+pf-xivo-web-interface (1:0.1-4) etch; urgency=low
+
+  * Really split (SVN mistake, sorry).
+
+ -- Marc Dequènes (Duck) <mdequenes@proformatique.com>  Thu, 10 May 2007 14:52:51 +0200
+
+pf-xivo-web-interface (1:0.1-3) etch; urgency=low
+
+  * Split configuration in a separate package and allow custom config.
+
+ -- Marc Dequènes (Duck) <mdequenes@proformatique.com>  Thu, 10 May 2007 14:32:53 +0200
+
+pf-xivo-web-interface (1:0.1-2) etch; urgency=low
+
+  * Allow pre-dependency on asterisk-config to be satisfied by
+    asterisk-config-custom.
+
+ -- Marc Dequènes (Duck) <mdequenes@proformatique.com>  Thu, 10 May 2007 12:20:58 +0200
+
+pf-xivo-web-interface (1:0.1-1) etch; urgency=low
+
+  * Initial upstream release.
+  * Improved description.
+
+ -- Marc Dequènes (Duck) <mdequenes@proformatique.com>  Mon, 07 May 2007 19:00:32 +0200
+
+pf-xivo-web-interface (1:0.1~svn482-1) etch; urgency=low
+
+  * New development snapshot.
+  * Removed useless debconf load in postinst which is responsible for
+    the hangup.
+
+ -- Marc Dequènes (Duck) <mdequenes@proformatique.com>  Mon, 07 May 2007 16:32:01 +0200
+
+pf-xivo-web-interface (1:0.1~svn469-1) etch; urgency=low
+
+  * New development snapshot.
+  * Added Pre-Depends on asterisk-config to ensure asterisk user and
+    files exists (but not the complete asterisk, as it -could- be
+    installed on a remote host).
+
+ -- Marc Dequènes (Duck) <mdequenes@proformatique.com>  Fri, 04 May 2007 16:41:51 +0200
+
+pf-xivo-web-interface (1:0.1~svn450-3) etch; urgency=low
+
+  * Regenerated 'debian/control' (forgot in latest upload).
+
+ -- Marc Dequènes (Duck) <mdequenes@proformatique.com>  Wed, 02 May 2007 22:40:03 +0200
+
+pf-xivo-web-interface (1:0.1~svn450-2) etch; urgency=low
+
+  * Fixed rights.
+  * Added missing configuration files.
+
+ -- Marc Dequènes (Duck) <mdequenes@proformatique.com>  Wed, 02 May 2007 21:40:34 +0200
+
+pf-xivo-web-interface (1:0.1~svn450-1) etch; urgency=low
+
+  * New development snapshot.
+
+ -- Marc Dequènes (Duck) <mdequenes@proformatique.com>  Fri, 27 Apr 2007 19:06:47 +0200
+
+pf-xivo-web-interface (1:0.1~svn448-1) etch; urgency=low
+
+  * New development snapshot.
+
+ -- Marc Dequènes (Duck) <mdequenes@proformatique.com>  Fri, 27 Apr 2007 18:56:09 +0200
+
+pf-xivo-web-interface (1:0.1~svn444-1) etch; urgency=low
+
+  * New development snapshot.
+  * Removed patches, not needed anymore.
+  * Moved Proformatique-specific apache configuration in
+    'pf-xivo-base-config' package.
+
+ -- Marc Dequènes (Duck) <mdequenes@proformatique.com>  Fri, 27 Apr 2007 16:17:02 +0200
+
+pf-xivo-web-interface (1:0.1~svn413-1) etch; urgency=low
+
+  * New development snapshot.
+  * Fixed uncomplete renaming.
+  * Fixed rights.
+  * Adapted to new sources layout.
+  * Sources are now pre-encoded ; removed extra rules.
+
+ -- Marc Dequènes (Duck) <mdequenes@proformatique.com>  Wed, 25 Apr 2007 17:40:31 +0200
+
+pf-xivo-web-interface (1:0.1~svn348-1) etch; urgency=low
+
+  * New development snapshot.
+
+ -- Marc Dequènes (Duck) <mdequenes@proformatique.com>  Tue, 17 Apr 2007 11:02:32 +0200
+
+pf-xivo-web-interface (1:0.1~svn324-1) etch; urgency=low
+
+  * New development snapshot.
+  * Renamed package to match the current PF policy.
+
+ -- Marc Dequènes (Duck) <mdequenes@proformatique.com>  Thu, 12 Apr 2007 12:09:48 +0200
+
+xivo-web-interface (20070202-1) unstable; urgency=low
+
+  * Initial release.
+
+ -- Marc Dequènes (Duck) <mdequenes@proformatique.com>  Mon,  5 Feb 2007 00:23:18 +0100
+

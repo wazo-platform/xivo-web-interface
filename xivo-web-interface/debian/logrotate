@@ -1,0 +1,6 @@
+/var/log/xivo-web-interface/*.log {
+    daily
+    rotate 21
+    compress
+    missingok
+}
