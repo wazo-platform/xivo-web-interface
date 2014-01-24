@@ -48,10 +48,6 @@ class xivo_service_asterisk_cti_profile extends xivo_service_asterisk_abstract
 		return($data);
 	}
 
-	public function get_cti_profile_id_with_name($profile_name)
-	{
-		return($this->_dso->cti_profile_id_with_name($profile_name));
-	}
 }
 
 ?>

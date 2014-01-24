@@ -35,7 +35,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 	protected $_agentfeatures	= null;
 	protected $_linefeatures	= false;
 	protected $_line			= false;
-	protected $_cti_profile		= false;
+	protected $_cti_profile     = false;
 	protected $_appentity		= false;
 	protected $_entity			= false;
 	protected $_user_line		= false;
@@ -101,7 +101,6 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		|| ($this->_dialaction = $this->get_abstract('dialaction',array('category' => 'user'))) === false
 		|| ($this->_line = $this->_service->get_application('line')) === false
 		|| ($this->_schedule_path = &$this->_service->get_module('schedule_path')) === false
-		|| ($this->_cti_profile = $this->_service->get_module('cti_profile')) === false
 		|| ($this->_linefeatures = $this->_service->get_module('linefeatures')) === false
 		|| ($this->_attachment = $this->_service->get_module('attachment')) === false
 		|| ($this->_user_line = $this->_service->get_module('user_line')) === false
@@ -109,6 +108,8 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		|| ($this->_appentity = &$_XOBJ->get_application('entity')) === false
 		|| ($this->_entity = &$_XOBJ->get_module('entity')) === false
 		|| ($this->_provdconfig = &$_XOBJ->get_module('provdconfig')) === false
+		|| ($_RAPI = &dwho_gct::get('xivo_restapi')) === false
+		|| ($this->_cti_profile = $_RAPI->get_ressource('cti_profile')) === false
 		|| ($this->_provddevice = &$_XOBJ->get_module('provddevice')) === false)
 			return(false);
 
@@ -451,7 +452,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		if(empty($this->_profileclientlist) === false)
 			return($this->_profileclientlist);
 		elseif($this->_cti_profile === false
-		|| ($list = $this->_cti_profile->get_all()) === false
+		|| ($list = $this->_cti_profile->find_all()) === false
 		|| ($nb = count($list)) === 0)
 			return(false);
 
