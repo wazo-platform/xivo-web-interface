@@ -36,10 +36,9 @@ $element = $this->get_var('element');
 <?=$form->hidden(array('name' => 'fm_send','value' => 1))?>
 <?php
 	echo $form->checkbox(array('desc'	=> $this->bbf('fm_live_reload_conf'),
-							'name'		=> 'cti[live_reload_conf]',
-							'labelid'	=> 'live_reload_conf',
-							'checked'	=> $this->get_var('info', 'ctimain', 'live_reload_conf'),
-							'default'	=> $element['ctimain']['live_reload_conf']['default']));
+							'name'		=> 'live_reload',
+							'labelid'	=> 'live_reload',
+							'checked'	=> $this->get_var('info', 'live_reload', 'enabled')));
 ?>
 
 <?=$form->submit(array('name' => 'submit', 'id' => 'it-submit', 'value' => $this->bbf('fm_bt-save')));?>

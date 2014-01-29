@@ -18,8 +18,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-$ipbx = &$_SRE->get('ipbx');
-$ctimain = &$ipbx->get_module('ctimain');
+$RAPI = &dwho_gct::get('xivo_restapi');
+$config_api = $RAPI->get_ressource('configuration');
 
 $fm_save = null;
 if(isset($_QR['fm_send']) === true)
@@ -27,27 +27,18 @@ if(isset($_QR['fm_send']) === true)
 	$fm_save = false;
 	$ret = 0;
 
-	$live_reload_conf = 1;
-	if (!isset($_QR['cti']['live_reload_conf']))
-		$live_reload_conf = 0;
+	$live_reload_conf = true;
+	if (!isset($_QR['live_reload']))
+		$live_reload_conf = false;
 
-	$_QR['cti'] = $ctimain->get(1);
-	$_QR['cti']['live_reload_conf'] = $live_reload_conf;
-
-	if(($rs = $ctimain->chk_values($_QR['cti'])) === false)
-		dwho_report::push('error', $ctimain->get_filter_error());
-	else
-		$ret = $ctimain->edit(1, $rs);
+	$ret = $config_api->edit('live_reload', array('enabled' => $live_reload_conf));
 
 	if($ret == 1)
 		$fm_save = true;
 }
 $info = array();
-$info['ctimain'] = $ctimain->get(1);
-$element = array();
-$element['ctimain'] = $ctimain->get_element();
+$info['live_reload'] = $config_api->get('live_reload');
 
-$_TPL->set_var('element',$element);
 $_TPL->set_var('fm_save', $fm_save);
 $_TPL->set_var('info', $info);
 
