@@ -118,9 +118,12 @@ class xivo_application_xivo_object_ha extends xivo_application_xivo_object_abstr
 		{
 			case 'slave':
 			case 'master':
-				$list[0]['var_val'] = 20;
-				$list[1]['var_val'] = 120;
-				$list[2]['var_val'] = 40;
+				/* min registration time */
+				$list[0]['var_val'] = 180;
+				/* max registration time */
+				$list[1]['var_val'] = 300;
+				/* default registration time */
+				$list[2]['var_val'] = 240;
 				break;
 			case 'disabled':
 			default:
