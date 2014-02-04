@@ -80,8 +80,7 @@ class xivo_service_asterisk_extensions extends xivo_service_asterisk_abstract
 	{
 		if(is_array($arr) === false)
 			return(false);
-		else if(dwho_has_len($arr,'exten') === false
-		|| ($exten = $this->_sre->chk_extension($arr['exten'])) === false)
+		else if(dwho_has_len($arr,'exten') === false)
 			return(false);
 
 		$r = array();
