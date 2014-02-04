@@ -42,7 +42,8 @@ class xivo_application_service_asterisk_outcall extends xivo_application_asteris
 
 		if(($this->_outcall = &$this->_service->get_module('outcall')) === false
 		|| ($this->_schedule_path = &$this->_service->get_module('schedule_path')) === false
-		|| ($this->_dialpattern = &$this->get_abstract('dialpattern',array('type' => 'outcall'))) === false)
+		|| ($this->_dialpattern = &$this->get_abstract('dialpattern',array('type' => 'outcall'))) === false
+		|| ($this->_extensions = &$this->_service->get_module('extensions')) === false)
 			return(false);
 		else if((bool) $components === true)
 			$this->load_components();
@@ -883,7 +884,8 @@ class xivo_application_service_asterisk_outcall extends xivo_application_asteris
 		$where = array();
 		$where['context'] = $this->_info['outcall']['context'];
 
-		$dial_pattern = $this->_info['outcall']['dialpattern'];
+		$dial_pattern = $this->_info['dialpattern'];
+
 		$nb = count($dial_pattern);
 		for ($i=0; $i < $nb; $i++)
 		{
