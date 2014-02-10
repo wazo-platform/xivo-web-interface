@@ -178,7 +178,31 @@ $array['extensions']['primary'] = array('id' => '');
 
 $array['features'] = array();
 $array['features']['table'] = 'features';
-$array['features']['primary'] = array('id' => '');
+$array['func_key']['primary'] = array('id' => '');
+
+$array['func_key'] = array();
+$array['func_key']['table'] = 'func_key';
+$array['func_key']['primary'] = array('id' => '', 'destination_type_id' => '');
+
+$array['func_key_type'] = array();
+$array['func_key_type']['table'] = 'func_key_type';
+$array['func_key_type']['primary'] = array('id' => '');
+
+$array['func_key_destination_type'] = array();
+$array['func_key_destination_type']['table'] = 'func_key_destination_type';
+$array['func_key_destination_type']['primary'] = array('id' => '');
+
+$array['func_key_mapping'] = array();
+$array['func_key_mapping']['table'] = 'func_key_mapping';
+$array['func_key_mapping']['primary'] = array('template_id' => '', 'func_key_id' => '');
+
+$array['func_key_template'] = array();
+$array['func_key_template']['table'] = 'func_key_template';
+$array['func_key_template']['primary'] = array('id' => '');
+
+$array['func_key_dest_user'] = array();
+$array['func_key_dest_user']['table'] = 'func_key_dest_user';
+$array['func_key_dest_user']['primary'] = array('func_key_id' => '', 'user_id' => '', 'destination_type_id' => '');
 
 $array['general'] = array();
 $array['general']['table'] = 'general';
