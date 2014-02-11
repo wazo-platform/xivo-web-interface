@@ -214,9 +214,9 @@ class xivo_application_service_asterisk_user_sql extends xivo_application_abstra
 		$this->_dso->innerjoin($this->_table['func_key_mapping'],
 					$this->_table['func_key_template'].'.id = '.$this->_table['func_key_mapping'].'.template_id',
 					null,
-					array('fknum'	=> 'position',
-							'supervision'	=> 'blf',
-							'label'	=> 'label'));
+					array('phonefunckey.fknum'	=> 'position',
+							'phonefunckey.supervision'	=> 'blf',
+							'phonefunckey.label'	=> 'label'));
 
 		$this->_dso->innerjoin($this->_table['func_key'],
 					$this->_table['func_key'].'.id = '.$this->_table['func_key_mapping'].'.func_key_id');
@@ -224,12 +224,12 @@ class xivo_application_service_asterisk_user_sql extends xivo_application_abstra
 		$this->_dso->innerjoin($this->_table['func_key_destination_type'],
 					$this->_table['func_key_destination_type'].'.id = '.$this->_table['func_key'].'.type_id',
 					null,
-					array('typeextenumbersright' => 'name'));
+					array('phonefunckey.typeextenumbersright' => 'name'));
 
 		$this->_dso->leftjoin($this->_table['func_key_dest_user'],
 					$this->_table['func_key_dest_user'].'.func_key_id = '.$this->_table['func_key'].'.id',
 					null,
-					array('typevalextenumbersright' => 'user_id'));
+					array('phonefunckey.typevalextenumbersright' => 'user_id'));
 
 		$this->_join_extra_func_key_dest($this->_table['func_key_destination_type'].'.name',
 										$this->_table['func_key_dest_user'].'.user_id');

@@ -617,7 +617,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		for($i = 0;$i < $nb;$i++)
 		{
 			$ref = &$rs[$i];
-			$phonefunckey = $this->_phonefunckey->_prepare(dwho_array_startswith_key($ref,'phonefunckey.',true));
+			$phonefunckey = $this->_process_func_key($ref);
 			$res = $this->_process_func_key_dest($phonefunckey, $ref);
 			if ($result)
 				$r[] = array('phonefunckey' => $phonefunckey, 'result' => $res);
@@ -643,11 +643,12 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		{
 			$ref = &$rs[$i];
 
-			$ref['iduserfeatures'] = $user_id;
-			$ref['progfunckey'] = '';
-			$ref['typeextenumbers'] = '';
+			$ref['phonefunckey.iduserfeatures'] = $user_id;
+			$ref['phonefunckey.progfunckey'] = false;
+			$ref['phonefunckey.typeextenumbers'] = null;
+			$ref['phonefunckey.typevalextenumbers'] = null;
 
-			$phonefunckey = $this->_phonefunckey->_prepare($ref);
+			$phonefunckey = $this->_process_func_key($ref);
 			$res = $this->_process_func_key_dest($phonefunckey, $ref);
 			if ($result)
 				$r[] = array('phonefunckey' => $phonefunckey, 'result' => $res);
@@ -659,6 +660,11 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			return(false);
 
 		return($r);
+	}
+
+	private function _process_func_key($ref)
+	{
+		return $this->_phonefunckey->_prepare(dwho_array_startswith_key($ref,'phonefunckey.',true));
 	}
 
 	private function _process_func_key_dest($phonefunckey, $ref)
