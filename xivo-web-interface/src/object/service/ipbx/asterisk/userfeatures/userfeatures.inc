@@ -62,6 +62,8 @@ class xivo_service_asterisk_userfeatures extends xivo_service_asterisk_abstract
 		$data['enablebusy'] = (bool) $data['enablebusy'];
 		$data['enableunc'] = (bool) $data['enableunc'];
 		$data['commented'] = (bool) $data['commented'];
+		$data['func_key_template_id'] = (int) $data['func_key_template_id'];
+		$data['func_key_private_template_id'] = (int) $data['func_key_private_template_id'];
 
 		return($data);
 	}

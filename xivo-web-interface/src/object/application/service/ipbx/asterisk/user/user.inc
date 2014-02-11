@@ -354,13 +354,9 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		if(is_object($this->_phonefunckey) === false)
 			return(false);
 
-		$where = array();
-		$where['iduserfeatures'] = $this->_info['userfeatures']['id'];
+		$func_key = $this->get_phonefunckey_identity(false);
 
-		$this->_info['phonefunckey'] = $this->_phonefunckey->get_all_where($where,
-										   null,
-										   true,
-										   array('fknum' => SORT_ASC));
+		$this->_info['phonefunckey'] = $func_key;
 		$this->_origin['phonefunckey'] = $this->_phonefunckey->get_origin_list();
 
 		return($this->_info['phonefunckey']);
@@ -598,10 +594,46 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		return($r);
 	}
 
-	function get_phonefunckey_identity()
+	function get_phonefunckey_identity($result=true)
 	{
-		if(dwho_issa('userfeatures',$this->_info) === false
-		|| ($rs = $this->_dso->get_phonefunckey($this->_info['userfeatures']['id'])) === false
+		if (dwho_issa('userfeatures',$this->_info) === false)
+			return(false);
+		$res = array();
+		if (($fks_v1 = $this->_get_phonefunckey_identity_v1($this->_info['userfeatures']['id'], $result)))
+			$res = array_merge($res, $fks_v1);
+		if (($fks_v2 = $this->_get_phonefunckey_identity_v2($this->_info['userfeatures']['id'], $result)))
+			$res = array_merge($res, $fks_v2);
+		return($res);
+	}
+
+	private function _get_phonefunckey_identity_v1($user_id, $result=true)
+	{
+		if(($rs = $this->_dso->get_phonefunckey($user_id)) === false
+		|| ($nb = count($rs)) === 0)
+			return(false);
+
+		$r = array();
+
+		for($i = 0;$i < $nb;$i++)
+		{
+			$ref = &$rs[$i];
+			$phonefunckey = $this->_phonefunckey->_prepare(dwho_array_startswith_key($ref,'phonefunckey.',true));
+			$res = $this->_process_func_key_dest($phonefunckey, $ref);
+			if ($result)
+				$r[] = array('phonefunckey' => $phonefunckey, 'result' => $res);
+			else
+				$r[] = $phonefunckey;
+		}
+
+		if(empty($r) === true)
+			return(false);
+
+		return($r);
+	}
+
+	private function _get_phonefunckey_identity_v2($user_id, $result=true)
+	{
+		if(($rs = $this->_dso->get_phonefunckey_v2($user_id)) === false
 		|| ($nb = count($rs)) === 0)
 			return(false);
 
@@ -611,44 +643,53 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		{
 			$ref = &$rs[$i];
 
-			$phonefunckey = $this->_phonefunckey->_prepare(
-						dwho_array_startswith_key($ref,'phonefunckey.',true));
+			$ref['iduserfeatures'] = $user_id;
+			$ref['progfunckey'] = '';
+			$ref['typeextenumbers'] = '';
 
-			$res = null;
-
-			switch($phonefunckey['type'])
-			{
-				case 'user':
-					$res = dwho_array_startswith_key($ref,'userfeatures.',true);
-					$res['identity'] = $this->_service->identity('userfeatures',$res,false);
-					break;
-				case 'group':
-					$res = dwho_array_startswith_key($ref,'groupfeatures.',true);
-					$res['identity'] = $this->_service->identity('groupfeatures',$res,false);
-					break;
-				case 'queue':
-					$res = dwho_array_startswith_key($ref,'queuefeatures.',true);
-					$res['identity'] = $this->_service->identity('queuefeatures',$res,false);
-					break;
-				case 'meetme':
-					$res = dwho_array_startswith_key($ref,'meetmefeatures.',true);
-					$res['identity'] = $this->_service->identity('meetmefeatures',$res,false);
-					break;
-				case 'extenfeatures-agentstaticlogin':
-				case 'extenfeatures-agentstaticlogoff':
-				case 'extenfeatures-agentstaticlogtoggle':
-					$res = dwho_array_startswith_key($ref,'agentfeatures.',true);
-					$res['identity'] = $this->_service->identity('agentfeatures',$res,false);
-					break;
-			}
-
-			$r[] = array('phonefunckey'	=> $phonefunckey, 'result' => $res);
+			$phonefunckey = $this->_phonefunckey->_prepare($ref);
+			$res = $this->_process_func_key_dest($phonefunckey, $ref);
+			if ($result)
+				$r[] = array('phonefunckey' => $phonefunckey, 'result' => $res);
+			else
+				$r[] = $phonefunckey;
 		}
 
 		if(empty($r) === true)
 			return(false);
 
 		return($r);
+	}
+
+	private function _process_func_key_dest($phonefunckey, $ref)
+	{
+		$res = null;
+		switch($phonefunckey['type'])
+		{
+			case 'user':
+				$res = dwho_array_startswith_key($ref,'userfeatures.',true);
+				$res['identity'] = $this->_service->identity('userfeatures',$res,false);
+				break;
+			case 'group':
+				$res = dwho_array_startswith_key($ref,'groupfeatures.',true);
+				$res['identity'] = $this->_service->identity('groupfeatures',$res,false);
+				break;
+			case 'queue':
+				$res = dwho_array_startswith_key($ref,'queuefeatures.',true);
+				$res['identity'] = $this->_service->identity('queuefeatures',$res,false);
+				break;
+			case 'meetme':
+				$res = dwho_array_startswith_key($ref,'meetmefeatures.',true);
+				$res['identity'] = $this->_service->identity('meetmefeatures',$res,false);
+				break;
+			case 'extenfeatures-agentstaticlogin':
+			case 'extenfeatures-agentstaticlogoff':
+			case 'extenfeatures-agentstaticlogtoggle':
+				$res = dwho_array_startswith_key($ref,'agentfeatures.',true);
+				$res['identity'] = $this->_service->identity('agentfeatures',$res,false);
+				break;
+		}
+		return($res);
 	}
 
 	function _get_destination()
