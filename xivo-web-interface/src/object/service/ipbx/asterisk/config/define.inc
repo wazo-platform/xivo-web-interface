@@ -97,7 +97,7 @@ define('XIVO_SRE_IPBX_AST_REGEXP_CONTEXT','(?!(?i:voicemenu|xivo)-)[a-zA-Z0-9_-]
 define('XIVO_SRE_IPBX_AST_REGEXP_CALLERID','(?:"(?:[^\x00-\x08\x0A-\x1F\x22\x5C]'.
 					   '|\\\[\x00-\x09\x0B-\x0C\x0E-\x7F])+"'.
 					   '|[a-zA-Z0-9\-\.\!%\*_\+`\'\~]+)'.
-					   '(?: ?\<[0-9\*#]{1,40}\>)?');
+					   '(?: ?\<\+?[0-9\*#]{1,40}\>)?');
 define('XIVO_SRE_IPBX_AST_REGEXP_DIALPLAN','(?:\$\{[\(\)a-zA-Z0-9_\-\$\{\}\:]+\})');
 define('XIVO_SRE_IPBX_AST_REGEXP_DIALPLAN_EXTEN','(?:[0-9\*#]{1,40}'.
 						 '|(?:[0-9\*#]*'.
