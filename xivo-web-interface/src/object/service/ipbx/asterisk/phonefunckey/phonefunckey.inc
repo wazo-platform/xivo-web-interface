@@ -463,10 +463,6 @@ class xivo_service_asterisk_phonefunckey extends xivo_service_asterisk_abstract
 						$conf[$ref['fknum']]['type'] = 'park';
 					$exten = $ref['exten'];
 					break;
-				case 'user':
-					if(($extension = $modextensions->get_by_user_id($type['val'])) !== false)
-						$exten = $extension['exten'];
-					break;
 				case 'queue':
 					$queue_id = $type['val'];
 					$queue = $modqueuefeatures->get($queue_id);

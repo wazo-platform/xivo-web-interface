@@ -55,6 +55,11 @@ class xivo_service_asterisk_func_key_sql extends xivo_service_asterisk_abstract_
 					null,
 					array('dst_user_id' => 'user_id'));
 
+		$this->_dso->leftjoin('func_key_type',
+					'func_key_type'.'.id = '.'func_key'.'.type_id',
+					null,
+					array('type' => 'name'));
+
 		$this->_dso->new_order(array('position' => SORT_ASC), null, 'func_key_mapping');
 
 		$r = $this->_dso->select_all(null, true, true);

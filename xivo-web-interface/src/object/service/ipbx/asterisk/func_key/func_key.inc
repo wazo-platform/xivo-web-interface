@@ -49,6 +49,41 @@ class xivo_service_asterisk_func_key extends xivo_service_asterisk_abstract
 		return($data);
 	}
 
+	public function get_provd_conf($user_id)
+	{
+		$conf = array();
+
+		if (($ipbx = &$this->_sre) === false
+		|| ($modextensions = &$ipbx->get_module('extensions')) === false
+		|| ($rs = $this->get_func_key_v2($user_id)) === false
+		|| ($nb = count($rs)) === 0)
+			return(false);
+
+		for($i = 0;$i < $nb;$i++)
+		{
+			$ref = &$rs[$i];
+
+			$idx = (string) $ref['position'];
+			$conf[$idx] = array();
+			$conf[$idx]['type'] = $ref['type'];
+			$conf[$idx]['line'] = 1;
+			$conf[$idx]['label'] = $ref['label'];
+
+			$exten= '';
+			switch($ref['destination_type_name'])
+			{
+				case 'user':
+					if(($extension = $modextensions->get_by_user_id($ref['dst_user_id'])) !== false)
+						$exten = $extension['exten'];
+					break;
+			}
+
+			$conf[$idx]['value'] = $exten;
+		}
+
+		return((empty($conf) ? false : $conf));
+	}
+
 	public function get_func_key_v2($user_id)
 	{
 		return($this->_dso->get_func_key_v2($user_id));
