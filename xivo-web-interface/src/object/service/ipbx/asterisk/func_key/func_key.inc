@@ -48,6 +48,11 @@ class xivo_service_asterisk_func_key extends xivo_service_asterisk_abstract
 		$data['destination_type_id'] = (int) $data['destination_type_id'];
 		return($data);
 	}
+
+	public function get_func_key_v2($user_id)
+	{
+		return($this->_dso->get_func_key_v2($user_id));
+	}
 }
 
 ?>

@@ -2312,7 +2312,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 
 		$where_template_id = array('template_id' => $func_key_private_template_id);
 
-		if (($fk_list = $this->_dso->get_func_key_v2($user_id)) !== false
+		if (($fk_list = $this->_func_key->get_func_key_v2($user_id)) !== false
 		&& ($nb_fk = count($fk_list)) !== 0)
 		{
 			if ($this->_func_key_mapping->delete_where($where_template_id) === false)
