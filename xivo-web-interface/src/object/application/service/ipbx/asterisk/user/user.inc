@@ -2328,11 +2328,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 				if ($this->_func_key_dest_user->delete_where($where_func_key_dest_user) === false)
 					return(false);
 
-				$where_func_key = array();
-				$where_func_key['id'] = (int) $fk['func_key_id'];
-				$where_func_key['destination_type_id'] = $fk['destination_type_id'];
-
-				if ($this->_func_key->delete_where($where_func_key) === false)
+				if ($this->_func_key->delete($fk['func_key_id']) === false)
 					return(false);
 			}
 		}
