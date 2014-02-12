@@ -143,7 +143,7 @@ class xivo_application_service_asterisk_user_sql extends xivo_application_abstra
 		// NOTE: userfeatures.id is an integer, callfiltermember.typeval a string
 		// we must cast the second to allow comparison (required by PostgreSQL)
 		$this->_dso->innerjoin($this->_table['callfiltermember'],
-				       $this->_table['userfeatures'].'.id = '. $this->_dso->cast($this->_table['callfiltermember'].'.typeval', 'int'),
+					$this->_table['userfeatures'].'.id = '. $this->_dso->cast($this->_table['callfiltermember'].'.typeval', 'int'),
 				       null,
 				       'callfilterid');
 
@@ -191,8 +191,46 @@ class xivo_application_service_asterisk_user_sql extends xivo_application_abstra
 	function get_phonefunckey($user_id)
 	{
 		$this->_dso->new_select($this->_table['phonefunckey']);
+
 		$this->_dso->where(array('iduserfeatures' => $user_id), $this->_table['phonefunckey']);
-		$this->_join_extra_func_key_dest($this->_table['phonefunckey'].'.typeextenumbersright', $this->_dso->cast($this->_table['phonefunckey'].'.typevalextenumbersright', 'int'));
+
+		$type = $this->_table['phonefunckey'].'.typeextenumbersright';
+		$type_id = $this->_dso->cast($this->_table['phonefunckey'].'.typevalextenumbersright', 'int');
+
+		$this->_dso->leftjoin($this->_table['agentfeatures'],
+					$type_id.' = '.$this->_table['agentfeatures'].'.id',
+					null,
+					array('id','*'));
+		$this->_dso->joinwhere($this->_table['agentfeatures'],
+					$type.' = %s',
+					'agent');
+
+		$this->_dso->leftjoin($this->_table['groupfeatures'],
+					$type_id.' = '.$this->_table['groupfeatures'].'.id',
+					null,
+					array('id','*'));
+		$this->_dso->joinwhere($this->_table['groupfeatures'],
+					 $type.' = %s',
+					'group');
+		$this->_dso->andjoinwhere($this->_table['groupfeatures'],
+					array('deleted' => 0));
+
+		$this->_dso->leftjoin($this->_table['queuefeatures'],
+					$type_id.' = '.$this->_table['queuefeatures'].'.id',
+					null,
+					array('id','*'));
+		$this->_dso->joinwhere($this->_table['queuefeatures'],
+					$type.' = %s',
+					'queue');
+
+		$this->_dso->leftjoin($this->_table['meetmefeatures'],
+					$type_id.' = '.$this->_table['meetmefeatures'].'.id',
+					null,
+					array('id','*'));
+		$this->_dso->joinwhere($this->_table['meetmefeatures'],
+					$type.' = %s',
+					'meetme');
+
 		$this->_dso->new_order(array('fknum' => SORT_ASC), null, $this->_table['phonefunckey']);
 
 		$r = $this->_dso->select_all(null, true, true);
@@ -231,8 +269,13 @@ class xivo_application_service_asterisk_user_sql extends xivo_application_abstra
 					null,
 					array('phonefunckey.typevalextenumbersright' => 'user_id'));
 
-		$this->_join_extra_func_key_dest($this->_table['func_key_destination_type'].'.name',
-										$this->_table['func_key_dest_user'].'.user_id');
+		$this->_dso->leftjoin($this->_table['userfeatures'],
+					$this->_table['func_key_dest_user'].'.user_id'.' = '.$this->_table['userfeatures'].'.id',
+					null,
+					array('id','*'));
+		$this->_dso->joinwhere($this->_table['userfeatures'],
+					$this->_table['func_key_destination_type'].'.name'.' = %s',
+					'user');
 
 		$this->_dso->new_order(array('position' => SORT_ASC), null, $this->_table['func_key_mapping']);
 
@@ -244,49 +287,47 @@ class xivo_application_service_asterisk_user_sql extends xivo_application_abstra
 		return($r);
 	}
 
-	private function _join_extra_func_key_dest($type, $type_id)
+	function get_func_key_v2($user_id)
 	{
-		$this->_dso->leftjoin($this->_table['userfeatures'],
-				      $type_id.' = '.$this->_table['userfeatures'].'.id',
-				      null,
-				      array('id','*'));
-		$this->_dso->joinwhere($this->_table['userfeatures'],
-				       $type.' = %s',
-				       'user');
+		$this->_dso->new_select(array('user' => $this->_table['userfeatures']), null);
+		$this->_dso->where(array('id' => $user_id), 'user');
 
-		$this->_dso->leftjoin($this->_table['agentfeatures'],
-				      $type_id.' = '.$this->_table['agentfeatures'].'.id',
-				      null,
-				      array('id','*'));
-		$this->_dso->joinwhere($this->_table['agentfeatures'],
-				       $type.' = %s',
-				       'agent');
+		$this->_dso->innerjoin($this->_table['func_key_template'],
+					$this->_table['func_key_template'].'."id" = "user"."func_key_private_template_id"',
+					null,
+					array('template_id' => 'id'));
 
-		$this->_dso->leftjoin($this->_table['groupfeatures'],
-				      $type_id.' = '.$this->_table['groupfeatures'].'.id',
-				      null,
-				      array('id','*'));
-		$this->_dso->joinwhere($this->_table['groupfeatures'],
-				       $type.' = %s',
-				       'group');
-		$this->_dso->andjoinwhere($this->_table['groupfeatures'],
-					  array('deleted' => 0));
+		$this->_dso->innerjoin($this->_table['func_key_mapping'],
+					$this->_table['func_key_template'].'.id = '.$this->_table['func_key_mapping'].'.template_id',
+					null,
+					array('position'	=> 'position',
+							'blf'	=> 'blf',
+							'label'	=> 'label'));
 
-		$this->_dso->leftjoin($this->_table['queuefeatures'],
-				      $type_id.' = '.$this->_table['queuefeatures'].'.id',
-				      null,
-				      array('id','*'));
-		$this->_dso->joinwhere($this->_table['queuefeatures'],
-				       $type.' = %s',
-				       'queue');
+		$this->_dso->innerjoin($this->_table['func_key'],
+					$this->_table['func_key'].'.id = '.$this->_table['func_key_mapping'].'.func_key_id',
+					null,
+					array('func_key_id'	=> 'id'));
 
-		$this->_dso->leftjoin($this->_table['meetmefeatures'],
-				      $type_id.' = '.$this->_table['meetmefeatures'].'.id',
-				      null,
-				      array('id','*'));
-		$this->_dso->joinwhere($this->_table['meetmefeatures'],
-				       $type.' = %s',
-				       'meetme');
+		$this->_dso->innerjoin($this->_table['func_key_destination_type'],
+					$this->_table['func_key_destination_type'].'.id = '.$this->_table['func_key'].'.type_id',
+					null,
+					array('destination_type_id' => 'id',
+							'destination_type_name' => 'name'));
+
+		$this->_dso->leftjoin($this->_table['func_key_dest_user'],
+					$this->_table['func_key_dest_user'].'.func_key_id = '.$this->_table['func_key'].'.id',
+					null,
+					array('dst_user_id' => 'user_id'));
+
+		$this->_dso->new_order(array('position' => SORT_ASC), null, $this->_table['func_key_mapping']);
+
+		$r = $this->_dso->select_all(null, true, true);
+
+		if(isset($r[0]) === false)
+			$r = false;
+
+		return($r);
 	}
 }
 
