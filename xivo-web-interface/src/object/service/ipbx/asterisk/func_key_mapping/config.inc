@@ -22,22 +22,18 @@ $array['element'] = array();
 
 $array['element']['template_id'] = array();
 $array['element']['template_id']['default'] = 0;
-$array['element']['template_id']['forcedef'] = true;
 
 $array['element']['func_key_id'] = array();
 $array['element']['func_key_id']['default'] = 0;
-$array['element']['func_key_id']['forcedef'] = true;
 
 $array['element']['destination_type_id'] = array();
 $array['element']['destination_type_id']['default'] = 0;
-$array['element']['destination_type_id']['forcedef'] = true;
 
 $array['element']['label'] = array();
 $array['element']['label']['default'] = '';
 
 $array['element']['position'] = array();
 $array['element']['position']['default'] = 0;
-$array['element']['position']['forcedef'] = true;
 
 $array['element']['blf'] = array();
 $array['element']['blf']['default'] = false;

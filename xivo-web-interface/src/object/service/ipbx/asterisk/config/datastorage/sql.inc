@@ -182,7 +182,7 @@ $array['func_key']['primary'] = array('id' => '');
 
 $array['func_key'] = array();
 $array['func_key']['table'] = 'func_key';
-$array['func_key']['primary'] = array('id' => '', 'destination_type_id' => '');
+$array['func_key']['primary'] = array('id' => '');
 
 $array['func_key_type'] = array();
 $array['func_key_type']['table'] = 'func_key_type';
