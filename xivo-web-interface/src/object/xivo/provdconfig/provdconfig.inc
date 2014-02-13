@@ -35,6 +35,7 @@ class xivo_object_provdconfig extends xivo_object_provd_abstract
 	protected $_appsip			= false;
 	protected $_user_line 		= false;
 	protected $_service			= false;
+	protected $_func_key		= false;
 
 	public function __construct(&$xobj,$param=array())
 	{
@@ -45,6 +46,7 @@ class xivo_object_provdconfig extends xivo_object_provd_abstract
 		|| ($this->_linefeatures = &$this->_service->get_module('linefeatures')) === false
 		|| ($this->_phonefunckey = &$this->_service->get_module('phonefunckey')) === false
 		|| ($this->_user_line = &$this->_service->get_module('user_line')) === false
+		|| ($this->_func_key = &$this->_service->get_module('func_key')) === false
 		|| ($this->_appsip = &$this->_service->get_apprealstatic('sip')) === false)
 			return(false);
 
@@ -647,7 +649,11 @@ class xivo_object_provdconfig extends xivo_object_provd_abstract
 		$this->_build_exten_config($raw_config);
 
 		$user_id = $this->_user_line->get_master_user_id_by_line_id($line_id);
-		$funckeys = $this->_phonefunckey->build_provd_conf_funckey($user_id);
+		$funckeys = array();
+		if (($funckeys_v1 = $this->_phonefunckey->build_provd_conf_funckey($user_id)) !== false)
+			$funckeys = $funckeys + $funckeys_v1;
+		if (($funckeys_v2 = $this->_func_key->get_provd_conf($user_id)) !== false)
+			$funckeys = $funckeys + $funckeys_v2;
 
 		if (empty($funckeys))
 			unset($raw_config['funckeys']);

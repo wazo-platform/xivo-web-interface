@@ -175,6 +175,24 @@ $array['module']['dialpattern']['datastorage'] = true;
 $array['module']['extensions'] = array();
 $array['module']['extensions']['datastorage'] = true;
 
+$array['module']['func_key'] = array();
+$array['module']['func_key']['datastorage'] = true;
+
+$array['module']['func_key_destination_type'] = array();
+$array['module']['func_key_destination_type']['datastorage'] = true;
+
+$array['module']['func_key_dest_user'] = array();
+$array['module']['func_key_dest_user']['datastorage'] = true;
+
+$array['module']['func_key_mapping'] = array();
+$array['module']['func_key_mapping']['datastorage'] = true;
+
+$array['module']['func_key_template'] = array();
+$array['module']['func_key_template']['datastorage'] = true;
+
+$array['module']['func_key_type'] = array();
+$array['module']['func_key_type']['datastorage'] = true;
+
 $array['module']['general'] = array();
 $array['module']['general']['datastorage'] = true;
 

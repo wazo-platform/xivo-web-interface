@@ -51,6 +51,10 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 	protected $_destination		= null;
 	protected $_schedule_path 	= false;
 	protected $_attachment 		= false;
+	protected $_func_key		= false;
+	protected $_func_key_dest_user	= false;
+	protected $_func_key_mapping	= false;
+	protected $_func_key_template	= false;
 
 	public function __construct(&$service,&$dso,$param=null,$components=true)
 	{
@@ -104,6 +108,10 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		|| ($this->_linefeatures = $this->_service->get_module('linefeatures')) === false
 		|| ($this->_attachment = $this->_service->get_module('attachment')) === false
 		|| ($this->_user_line = $this->_service->get_module('user_line')) === false
+		|| ($this->_func_key = $this->_service->get_module('func_key')) === false
+		|| ($this->_func_key_dest_user = $this->_service->get_module('func_key_dest_user')) === false
+		|| ($this->_func_key_mapping = $this->_service->get_module('func_key_mapping')) === false
+		|| ($this->_func_key_template = $this->_service->get_module('func_key_template')) === false
 		|| ($_XOBJ = &dwho_gct::get('xivo_object')) === false
 		|| ($this->_appentity = &$_XOBJ->get_application('entity')) === false
 		|| ($this->_entity = &$_XOBJ->get_module('entity')) === false
@@ -354,13 +362,9 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		if(is_object($this->_phonefunckey) === false)
 			return(false);
 
-		$where = array();
-		$where['iduserfeatures'] = $this->_info['userfeatures']['id'];
+		$func_key = $this->get_phonefunckey_identity(false);
 
-		$this->_info['phonefunckey'] = $this->_phonefunckey->get_all_where($where,
-										   null,
-										   true,
-										   array('fknum' => SORT_ASC));
+		$this->_info['phonefunckey'] = $func_key;
 		$this->_origin['phonefunckey'] = $this->_phonefunckey->get_origin_list();
 
 		return($this->_info['phonefunckey']);
@@ -598,10 +602,48 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		return($r);
 	}
 
-	function get_phonefunckey_identity()
+	function get_phonefunckey_identity($result=true)
 	{
-		if(dwho_issa('userfeatures',$this->_info) === false
-		|| ($rs = $this->_dso->get_phonefunckey($this->_info['userfeatures']['id'])) === false
+		if (dwho_issa('userfeatures',$this->_info) === false)
+			return(false);
+		$res = array();
+		if (($fks_v1 = $this->_get_phonefunckey_identity_v1($this->_info['userfeatures']['id'], $result)))
+			$res = $res + $fks_v1;
+		if (($fks_v2 = $this->_get_phonefunckey_identity_v2($this->_info['userfeatures']['id'], $result)))
+			$res = $res + $fks_v2;
+		ksort($res);
+		return(array_values($res));
+	}
+
+	private function _get_phonefunckey_identity_v1($user_id, $result=true)
+	{
+		if(($rs = $this->_dso->get_phonefunckey($user_id)) === false
+		|| ($nb = count($rs)) === 0)
+			return(false);
+
+		$r = array();
+
+		for($i = 0;$i < $nb;$i++)
+		{
+			$ref = &$rs[$i];
+			$phonefunckey = $this->_process_func_key($ref);
+			$idx = $phonefunckey['fknum'];
+			$res = $this->_process_func_key_dest($phonefunckey, $ref);
+			if ($result)
+				$r[$idx] = array('phonefunckey' => $phonefunckey, 'result' => $res);
+			else
+				$r[$idx] = $phonefunckey;
+		}
+
+		if(empty($r) === true)
+			return(false);
+
+		return($r);
+	}
+
+	private function _get_phonefunckey_identity_v2($user_id, $result=true)
+	{
+		if(($rs = $this->_dso->get_phonefunckey_v2($user_id)) === false
 		|| ($nb = count($rs)) === 0)
 			return(false);
 
@@ -611,44 +653,61 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		{
 			$ref = &$rs[$i];
 
-			$phonefunckey = $this->_phonefunckey->_prepare(
-						dwho_array_startswith_key($ref,'phonefunckey.',true));
+			$ref['phonefunckey.iduserfeatures'] = $user_id;
+			$ref['phonefunckey.progfunckey'] = false;
+			$ref['phonefunckey.typeextenumbers'] = null;
+			$ref['phonefunckey.typevalextenumbers'] = null;
+			$ref['phonefunckey.supervision'] = dwho_bool($ref['phonefunckey.supervision']);
 
-			$res = null;
-
-			switch($phonefunckey['type'])
-			{
-				case 'user':
-					$res = dwho_array_startswith_key($ref,'userfeatures.',true);
-					$res['identity'] = $this->_service->identity('userfeatures',$res,false);
-					break;
-				case 'group':
-					$res = dwho_array_startswith_key($ref,'groupfeatures.',true);
-					$res['identity'] = $this->_service->identity('groupfeatures',$res,false);
-					break;
-				case 'queue':
-					$res = dwho_array_startswith_key($ref,'queuefeatures.',true);
-					$res['identity'] = $this->_service->identity('queuefeatures',$res,false);
-					break;
-				case 'meetme':
-					$res = dwho_array_startswith_key($ref,'meetmefeatures.',true);
-					$res['identity'] = $this->_service->identity('meetmefeatures',$res,false);
-					break;
-				case 'extenfeatures-agentstaticlogin':
-				case 'extenfeatures-agentstaticlogoff':
-				case 'extenfeatures-agentstaticlogtoggle':
-					$res = dwho_array_startswith_key($ref,'agentfeatures.',true);
-					$res['identity'] = $this->_service->identity('agentfeatures',$res,false);
-					break;
-			}
-
-			$r[] = array('phonefunckey'	=> $phonefunckey, 'result' => $res);
+			$phonefunckey = $this->_process_func_key($ref);
+			$idx = $phonefunckey['fknum'];
+			$res = $this->_process_func_key_dest($phonefunckey, $ref);
+			if ($result)
+				$r[$idx] = array('phonefunckey' => $phonefunckey, 'result' => $res);
+			else
+				$r[$idx] = $phonefunckey;
 		}
 
 		if(empty($r) === true)
 			return(false);
 
 		return($r);
+	}
+
+	private function _process_func_key($ref)
+	{
+		return $this->_phonefunckey->_prepare(dwho_array_startswith_key($ref,'phonefunckey.',true));
+	}
+
+	private function _process_func_key_dest($phonefunckey, $ref)
+	{
+		$res = null;
+		switch($phonefunckey['type'])
+		{
+			case 'user':
+				$res = dwho_array_startswith_key($ref,'userfeatures.',true);
+				$res['identity'] = $this->_service->identity('userfeatures',$res,false);
+				break;
+			case 'group':
+				$res = dwho_array_startswith_key($ref,'groupfeatures.',true);
+				$res['identity'] = $this->_service->identity('groupfeatures',$res,false);
+				break;
+			case 'queue':
+				$res = dwho_array_startswith_key($ref,'queuefeatures.',true);
+				$res['identity'] = $this->_service->identity('queuefeatures',$res,false);
+				break;
+			case 'meetme':
+				$res = dwho_array_startswith_key($ref,'meetmefeatures.',true);
+				$res['identity'] = $this->_service->identity('meetmefeatures',$res,false);
+				break;
+			case 'extenfeatures-agentstaticlogin':
+			case 'extenfeatures-agentstaticlogoff':
+			case 'extenfeatures-agentstaticlogtoggle':
+				$res = dwho_array_startswith_key($ref,'agentfeatures.',true);
+				$res['identity'] = $this->_service->identity('agentfeatures',$res,false);
+				break;
+		}
+		return($res);
 	}
 
 	function _get_destination()
@@ -863,6 +922,18 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		if(isset($arr['outcallerid-custom']) === true
 		&& $arr['outcallerid'] === 'custom')
 			$arr['outcallerid'] = $arr['outcallerid-custom'];
+
+		if($action === 'add')
+		{
+			$arr['func_key_template_id'] = null;
+			$arr['func_key_private_template_id'] = 0;
+		}
+		else
+		{
+			$arr['func_key_private_template_id'] = $this->_info['userfeatures']['func_key_private_template_id'];
+			$func_key_template_id = $this->_info['userfeatures']['func_key_template_id'];
+			$arr['func_key_template_id'] = ($func_key_template_id == 0)?null:(int)$func_key_template_id;
+		}
 
 		if(($rs = $this->_userfeatures->chk_values($arr)) === false)
 		{
@@ -1210,6 +1281,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		$user_id = null;
 
 		if($this->get_errnb() > 0
+		|| $this->add_func_key_private_tpl() === false
 		|| ($user_id = $this->add_userfeatures()) === false
 		|| ($line = $this->edit_linefeatures($user_id)) === false
 		|| $this->add_picture($user_id) === false
@@ -1241,6 +1313,26 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		$this->_status = '';
 
 		return($r);
+	}
+
+	function add_func_key_private_tpl()
+	{
+		if(($rs = $this->get_result('userfeatures')) === null
+		|| $rs === false)
+			return(false);
+
+		$func_key_template = array();
+		$func_key_template['name'] = $rs['firstname'].' '.$rs['lastname'];
+		$func_key_template['private'] = true;
+
+		if(($rs = $this->_func_key_template->chk_values($func_key_template)) === false)
+			return(false);
+
+		if (($func_key_template_id = $this->_func_key_template->add($rs)) === false)
+			return(false);
+
+		$this->_set_result_var('userfeatures','func_key_private_template_id', (int) $func_key_template_id);
+		return(true);
 	}
 
 	function add_userfeatures()
@@ -1364,8 +1456,16 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			$ref = &$rs[$i];
 			$ref['iduserfeatures'] = $user_id;
 
-			if($this->_phonefunckey->add($ref) === false)
-				return(false);
+			switch($ref['typeextenumbersright'])
+			{
+				case 'user':
+					if ($this->_add_func_key_v2($ref) === false)
+						return(false);
+					break;
+				default:
+					if($this->_phonefunckey->add($ref) === false)
+						return(false);
+			}
 
 			$id['fknum'] = $ref['fknum'];
 			$this->_return['phonefunckey'][] = $id;
@@ -1373,6 +1473,40 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 
 		if(isset($this->_return['phonefunckey'][0]) === false)
 			$this->_return['phonefunckey'] = false;
+
+		return(true);
+	}
+
+	private function _add_func_key_v2($data)
+	{
+		$func_key = array();
+		$func_key['type_id'] = 1; #speeddial
+		$func_key['destination_type_id'] = 1; #user
+
+		if (($func_key_id = $this->_func_key->add($func_key)) === false)
+			return(false);
+
+		$func_key_dest_user = array();
+		$func_key_dest_user['user_id'] = (int) $data['typevalextenumbersright'];
+		$func_key_dest_user['func_key_id'] = (int) $func_key_id;
+		$func_key_dest_user['destination_type_id'] = $func_key['destination_type_id'];
+
+		if ($this->_func_key_dest_user->add($func_key_dest_user) === false)
+			return(false);
+
+		$func_key_mapping = array();
+		$func_key_mapping['template_id'] = (int) $this->get_result_var('userfeatures', 'func_key_private_template_id');
+		$func_key_mapping['func_key_id'] = (int) $func_key_id;
+		$func_key_mapping['destination_type_id'] = $func_key['destination_type_id'];
+		$func_key_mapping['position'] = (int) $data['fknum'];
+		$func_key_mapping['blf'] = (bool) $data['supervision'];
+		$func_key_mapping['label'] = $data['label'];
+
+		if(($rs = $this->_func_key_mapping->chk_values($func_key_mapping)) === false)
+			return(false);
+
+		if ($this->_func_key_mapping->add($rs) === false)
+			return(false);
 
 		return(true);
 	}
@@ -1807,6 +1941,8 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			return($this->add_phonefunckey($this->_info['userfeatures']['id']));
 
 		$this->_return['phonefunckey'] = $this->delete_phonefunckey();
+		if ($this->_delete_func_key_v2() === false)
+			return(false);
 
 		return($this->add_phonefunckey($this->_info['userfeatures']['id']));
 	}
@@ -2078,6 +2214,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		|| $this->delete_rightcall() === false
 		|| $this->delete_dialaction() === false
 		|| $this->delete_phonefunckey() === false
+		|| $this->_delete_func_key_v2() === false
 		|| $this->delete_callfiltermember() === false
 		|| $this->delete_groupmember() === false
 		|| $this->delete_queuemember() === false
@@ -2166,6 +2303,39 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			$this->_return['phonefunckey'] = $r;
 
 		return($r);
+	}
+
+	private function _delete_func_key_v2()
+	{
+		if(dwho_issa('userfeatures',$this->_info) === false)
+			return(false);
+
+		$user_id = (int) $this->_info['userfeatures']['id'];
+		$func_key_private_template_id = (int) $this->_info['userfeatures']['func_key_private_template_id'];
+
+		$where_template_id = array('template_id' => $func_key_private_template_id);
+
+		if (($fk_list = $this->_func_key->get_func_key_v2($user_id)) !== false
+		&& ($nb_fk = count($fk_list)) !== 0)
+		{
+			if ($this->_func_key_mapping->delete_where($where_template_id) === false)
+				return(false);
+			for($i = 0;$i < $nb_fk;$i++)
+			{
+				$fk = &$fk_list[$i];
+
+				$where_func_key_dest_user = array();
+				$where_func_key_dest_user['func_key_id'] = (int) $fk['func_key_id'];
+				$where_func_key_dest_user['destination_type_id'] = $fk['destination_type_id'];
+
+				if ($this->_func_key_dest_user->delete_where($where_func_key_dest_user) === false)
+					return(false);
+
+				if ($this->_func_key->delete($fk['func_key_id']) === false)
+					return(false);
+			}
+		}
+		return(true);
 	}
 
 	function delete_callfiltermember()
