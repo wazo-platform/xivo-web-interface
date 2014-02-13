@@ -608,10 +608,11 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			return(false);
 		$res = array();
 		if (($fks_v1 = $this->_get_phonefunckey_identity_v1($this->_info['userfeatures']['id'], $result)))
-			$res = array_merge($res, $fks_v1);
+			$res = $res + $fks_v1;
 		if (($fks_v2 = $this->_get_phonefunckey_identity_v2($this->_info['userfeatures']['id'], $result)))
-			$res = array_merge($res, $fks_v2);
-		return($res);
+			$res = $res + $fks_v2;
+		ksort($res);
+		return(array_values($res));
 	}
 
 	private function _get_phonefunckey_identity_v1($user_id, $result=true)
@@ -626,11 +627,12 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		{
 			$ref = &$rs[$i];
 			$phonefunckey = $this->_process_func_key($ref);
+			$idx = $phonefunckey['fknum'];
 			$res = $this->_process_func_key_dest($phonefunckey, $ref);
 			if ($result)
-				$r[] = array('phonefunckey' => $phonefunckey, 'result' => $res);
+				$r[$idx] = array('phonefunckey' => $phonefunckey, 'result' => $res);
 			else
-				$r[] = $phonefunckey;
+				$r[$idx] = $phonefunckey;
 		}
 
 		if(empty($r) === true)
@@ -658,11 +660,12 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			$ref['phonefunckey.supervision'] = dwho_bool($ref['phonefunckey.supervision']);
 
 			$phonefunckey = $this->_process_func_key($ref);
+			$idx = $phonefunckey['fknum'];
 			$res = $this->_process_func_key_dest($phonefunckey, $ref);
 			if ($result)
-				$r[] = array('phonefunckey' => $phonefunckey, 'result' => $res);
+				$r[$idx] = array('phonefunckey' => $phonefunckey, 'result' => $res);
 			else
-				$r[] = $phonefunckey;
+				$r[$idx] = $phonefunckey;
 		}
 
 		if(empty($r) === true)
