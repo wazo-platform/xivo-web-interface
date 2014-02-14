@@ -1456,15 +1456,12 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			$ref = &$rs[$i];
 			$ref['iduserfeatures'] = $user_id;
 
-			switch($ref['typeextenumbersright'])
-			{
-				case 'user':
-					if ($this->_add_func_key_v2($ref) === false)
-						return(false);
-					break;
-				default:
-					if($this->_phonefunckey->add($ref) === false)
-						return(false);
+			if($ref['typeextenumbersright'] === 'user' && $ref['typevalextenumbers'] !== 'bsfilter') {
+				if ($this->_add_func_key_v2($ref) === false)
+					return(false);
+			} else {
+				if($this->_phonefunckey->add($ref) === false)
+					return(false);
 			}
 
 			$id['fknum'] = $ref['fknum'];
