@@ -30,6 +30,7 @@ $infocal = $this->get_var('infocal');
 $element = $this->get_var('element');
 $objectkey = $this->get_var('objectkey');
 $listobject = $this->get_var('listobject');
+$mem_info = dwho_size_iec($this->get_var('mem_info'));
 
 ?>
 <script type="text/javascript">
@@ -302,7 +303,7 @@ if($this->get_var('showdashboard_call_center') === true):
 ?>
 		<fieldset style="padding: 1px;">
 			<legend><?=$this->bbf('bench_dashboard')?></legend>
-			<?=dwho_second_to($this->get_var('bench'),2).' - '.dwho_byte_to($this->get_var('mem_info'))?>
+			<?=dwho_second_to($this->get_var('bench'),2).' - '.$this->bbf('size_iec_'.$mem_info[1],$mem_info[0])?>
 		</fieldset>
 </div>
 	<div class="sb-foot xspan">
