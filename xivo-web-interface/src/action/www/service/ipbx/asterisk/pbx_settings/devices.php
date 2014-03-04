@@ -64,7 +64,7 @@ switch($act)
 			if(($info = $appdevice->get($values[$i])) !== false)
 			{
 				if ($appdevice->is_sccp())
-					$status = $ipbx->discuss_ipbx('sccp resync ' . $info['sep'],true);
+					$status = $ipbx->discuss_ipbx('sccp reset ' . $info['sep'],true);
 				else
 					$appdevice->synchronize();
 			}

@@ -39,7 +39,7 @@ switch($act)
 
 			if ($appdevice->is_sccp())
 			{
-				if($ipbx->discuss_ipbx('sccp resync ' . $info['sep'],true))
+				if($ipbx->discuss_ipbx('sccp reset ' . $info['sep'],true))
 					dwho_report::push('info',dwho_i18n::babelfish('successfully_synchronize',array($_QR['id'])));
 				else
 					dwho_report::push('error',dwho_i18n::babelfish('error_during_synchronize',array($_QR['id'])));
