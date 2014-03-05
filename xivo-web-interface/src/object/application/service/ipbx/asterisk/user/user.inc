@@ -1283,7 +1283,6 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		if($this->get_errnb() > 0
 		|| $this->add_func_key_private_tpl() === false
 		|| ($user_id = $this->add_userfeatures()) === false
-		|| $this->add_func_key_dest_user($user_id) === false
 		|| ($line = $this->edit_linefeatures($user_id)) === false
 		|| $this->add_picture($user_id) === false
 		|| $this->add_phonefunckey($user_id) === false
@@ -1345,28 +1344,6 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		$this->_return['userfeatures'] = $this->_userfeatures->add($rs);
 
 		return($this->_return['userfeatures']);
-	}
-
-	function add_func_key_dest_user($user_id)
-	{
-		$func_key = array();
-		$func_key['type_id'] = 1;
-		$func_key['destination_type_id'] = 1;
-
-		if(($rs = $this->_func_key->chk_values($func_key)) === false
-		|| ($func_key_id = $this->_func_key->add($rs)) === false)
-			return(false);
-
-		$func_key_dest_user = array();
-		$func_key_dest_user['func_key_id'] = $func_key_id;
-		$func_key_dest_user['user_id'] = $user_id;
-		$func_key_dest_user['destination_type_id'] = 1;
-
-		if(($rs = $this->_func_key_dest_user->chk_values($func_key_dest_user)) === false
-		|| $this->_func_key_dest_user->add($rs) === false)
-			return(false);
-
-		return(true);
 	}
 
 	function add_user_line($user_id, $line_id)
