@@ -88,6 +88,11 @@ class xivo_service_asterisk_func_key extends xivo_service_asterisk_abstract
 	{
 		return($this->_dso->get_func_key_v2($user_id));
 	}
+
+	public function get_func_key_id_with_dest_user_id($user_id)
+	{
+		return($this->_dso->get_func_key_id_with_dest_user_id($user_id));
+	}
 }
 
 ?>
