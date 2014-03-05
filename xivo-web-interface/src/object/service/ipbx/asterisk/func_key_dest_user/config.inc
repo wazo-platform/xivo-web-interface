@@ -22,15 +22,12 @@ $array['element'] = array();
 
 $array['element']['user_id'] = array();
 $array['element']['user_id']['default'] = 0;
-$array['element']['user_id']['forcedef'] = true;
 
 $array['element']['func_key_id'] = array();
 $array['element']['func_key_id']['default'] = 0;
-$array['element']['func_key_id']['forcedef'] = true;
 
 $array['element']['destination_type_id'] = array();
 $array['element']['destination_type_id']['default'] = 0;
-$array['element']['destination_type_id']['forcedef'] = true;
 
 $array['filter'] = array();
 $array['filter']['user_id'] = array('cast' => 'ulongint');

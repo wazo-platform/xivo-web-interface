@@ -22,11 +22,9 @@ $array['element'] = array();
 
 $array['element']['type_id'] = array();
 $array['element']['type_id']['default'] = 0;
-$array['element']['type_id']['forcedef'] = true;
 
 $array['element']['destination_type_id'] = array();
 $array['element']['destination_type_id']['default'] = 0;
-$array['element']['destination_type_id']['forcedef'] = true;
 
 $array['filter'] = array();
 $array['filter']['type_id'] = array('cast' => 'ulongint');
