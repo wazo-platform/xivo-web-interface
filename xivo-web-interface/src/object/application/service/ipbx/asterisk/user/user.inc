@@ -2256,13 +2256,21 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		if(dwho_issa('userfeatures',$this->_info) === false)
 			return(false);
 
-		$where = array('user_id' => (int) $this->_info['userfeatures']['id']);
-		$this->_user_line->delete_where($where);
+		$user_id = (int) $this->_info['userfeatures']['id'];
+		$func_key_private_template_id = (int) $this->_info['userfeatures']['func_key_private_template_id'];
 
-		$r = $this->_userfeatures->delete($this->_info['userfeatures']['id']);
+		if ($this->_func_key_dest_user->delete_where(array('user_id' => $user_id)) === false)
+			return(false);
+
+		$this->_user_line->delete_where(array('user_id' => $user_id));
+
+		$r = $this->_userfeatures->delete($user_id);
 
 		if($this->_status === 'delete')
 			$this->_return['userfeatures'] = $r;
+
+		if ($this->_func_key_template->delete($func_key_private_template_id) === false)
+			return(false);
 
 		return($r);
 	}
@@ -2355,6 +2363,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 					return(false);
 			}
 		}
+
 		return(true);
 	}
 
