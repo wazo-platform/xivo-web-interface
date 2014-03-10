@@ -137,7 +137,7 @@ Recharger %s
 Etes-vous certain de vouloir recharger ?
 
 ; controlsystem_ipbxreload_confirm
-Toutes les terminaisons utilisant le protocole SCCP seront resynchronisées.\nEtes-vous certain de vouloir recharger %s ?
+Etes-vous certain de vouloir recharger %s ?
 
 ; mn_left_controlsystem-ipbxrestart(unknown)
 Redémarrer

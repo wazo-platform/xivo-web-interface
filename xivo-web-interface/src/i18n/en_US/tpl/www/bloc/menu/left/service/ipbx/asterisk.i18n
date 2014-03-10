@@ -152,7 +152,7 @@ Reload %s
 Are you sure you want to reload?
 
 ; controlsystem_ipbxreload_confirm
-All devices using SCCP protocol will be resynchronized.\nAre you sure you want to reload %s?
+Are you sure you want to reload %s?
 
 ; mn_left_controlsystem-ipbxrestart(unknown)
 Restart
