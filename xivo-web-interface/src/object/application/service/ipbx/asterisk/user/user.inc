@@ -51,10 +51,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 	protected $_destination		= null;
 	protected $_schedule_path 	= false;
 	protected $_attachment 		= false;
-	protected $_func_key		= false;
-	protected $_func_key_dest_user	= false;
-	protected $_func_key_mapping	= false;
-	protected $_func_key_template	= false;
+	protected $_func_key_manager	= false;
 
 	public function __construct(&$service,&$dso,$param=null,$components=true)
 	{
@@ -108,17 +105,15 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		|| ($this->_linefeatures = $this->_service->get_module('linefeatures')) === false
 		|| ($this->_attachment = $this->_service->get_module('attachment')) === false
 		|| ($this->_user_line = $this->_service->get_module('user_line')) === false
-		|| ($this->_func_key = $this->_service->get_module('func_key')) === false
-		|| ($this->_func_key_dest_user = $this->_service->get_module('func_key_dest_user')) === false
-		|| ($this->_func_key_mapping = $this->_service->get_module('func_key_mapping')) === false
-		|| ($this->_func_key_template = $this->_service->get_module('func_key_template')) === false
 		|| ($_XOBJ = &dwho_gct::get('xivo_object')) === false
 		|| ($this->_appentity = &$_XOBJ->get_application('entity')) === false
 		|| ($this->_entity = &$_XOBJ->get_module('entity')) === false
 		|| ($this->_provdconfig = &$_XOBJ->get_module('provdconfig')) === false
 		|| ($_RAPI = &dwho_gct::get('xivo_restapi')) === false
 		|| ($this->_cti_profile = $_RAPI->get_ressource('cti_profile')) === false
-		|| ($this->_provddevice = &$_XOBJ->get_module('provddevice')) === false)
+		|| ($this->_provddevice = &$_XOBJ->get_module('provddevice')) === false
+		|| ($_MGR = &dwho_gct::get('xivo_manager')) === false
+		|| ($this->_func_key_manager = &$_MGR->get_ressource('func_key')) === false)
 			return(false);
 
 		$this->_queuemember = &$this->_service->get_module('queuemember');
@@ -1322,17 +1317,10 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		|| $rs === false)
 			return(false);
 
-		$func_key_template = array();
-		$func_key_template['name'] = $rs['firstname'].' '.$rs['lastname'];
-		$func_key_template['private'] = true;
-
-		if(($rs = $this->_func_key_template->chk_values($func_key_template)) === false)
+		if(($func_key_template_id = $this->_func_key_manager->add_private_tpl($rs['firstname'].' '.$rs['lastname'])) === false)
 			return(false);
 
-		if (($func_key_template_id = $this->_func_key_template->add($rs)) === false)
-			return(false);
-
-		$this->_set_result_var('userfeatures','func_key_private_template_id', (int) $func_key_template_id);
+		$this->_set_result_var('userfeatures','func_key_private_template_id', $func_key_template_id);
 		return(true);
 	}
 
@@ -1349,21 +1337,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 
 	function add_func_key_dest_user($user_id)
 	{
-		$func_key = array();
-		$func_key['type_id'] = 1;
-		$func_key['destination_type_id'] = 1;
-
-		if(($rs = $this->_func_key->chk_values($func_key)) === false
-		|| ($func_key_id = $this->_func_key->add($rs)) === false)
-			return(false);
-
-		$func_key_dest_user = array();
-		$func_key_dest_user['func_key_id'] = $func_key_id;
-		$func_key_dest_user['user_id'] = $user_id;
-		$func_key_dest_user['destination_type_id'] = 1;
-
-		if(($rs = $this->_func_key_dest_user->chk_values($func_key_dest_user)) === false
-		|| $this->_func_key_dest_user->add($rs) === false)
+		if (! $this->_func_key_manager->add_dst_for_user($user_id))
 			return(false);
 
 		return(true);
@@ -1479,7 +1453,8 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			$ref = &$rs[$i];
 			$ref['iduserfeatures'] = $user_id;
 
-			if($ref['typeextenumbersright'] === 'user' && $ref['typevalextenumbers'] !== 'bsfilter') {
+			if($ref['typeextenumbersright'] === 'user' && $ref['typevalextenumbers'] !== 'bsfilter')
+			{
 				if ($this->_add_func_key_v2($ref) === false)
 					return(false);
 			} else {
@@ -1499,41 +1474,16 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 
 	private function _add_func_key_v2($data)
 	{
-		$func_key_id = $this->_func_key->get_func_key_id_with_dest_user_id((int) $data['typevalextenumbersright']);
+		$fk = array();
+		$fk['type'] = 'speeddial';
+		$fk['dst_type'] = 'user';
+		$fk['dst_id'] = (int) $data['typevalextenumbersright'];
+		$fk['position'] = (int) $data['fknum'];
+		$fk['blf'] = (bool) $data['supervision'];
+		$fk['label'] = (int) $data['label'];
+		$fk['template_id'] = (int) $this->get_result_var('userfeatures', 'func_key_private_template_id');
 
-		$func_key = array();
-		$func_key['type_id'] = 1; #speeddial
-		$func_key['destination_type_id'] = 1; #user
-
-		if (!$func_key_id)
-		{
-			if (($func_key_id = $this->_func_key->add($func_key)) === false)
-				return(false);
-
-			$func_key_dest_user = array();
-			$func_key_dest_user['user_id'] = (int) $data['typevalextenumbersright'];
-			$func_key_dest_user['func_key_id'] = (int) $func_key_id;
-			$func_key_dest_user['destination_type_id'] = $func_key['destination_type_id'];
-
-			if ($this->_func_key_dest_user->add($func_key_dest_user) === false)
-				return(false);
-		}
-
-		$func_key_mapping = array();
-		$func_key_mapping['template_id'] = (int) $this->get_result_var('userfeatures', 'func_key_private_template_id');
-		$func_key_mapping['func_key_id'] = (int) $func_key_id;
-		$func_key_mapping['destination_type_id'] = $func_key['destination_type_id'];
-		$func_key_mapping['position'] = (int) $data['fknum'];
-		$func_key_mapping['blf'] = (bool) $data['supervision'];
-		$func_key_mapping['label'] = $data['label'];
-
-		if(($rs = $this->_func_key_mapping->chk_values($func_key_mapping)) === false)
-			return(false);
-
-		if ($this->_func_key_mapping->add($rs) === false)
-			return(false);
-
-		return(true);
+		return($this->_func_key_manager->add($fk));
 	}
 
 	function add_schedule_path($user_id)
@@ -1966,8 +1916,6 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			return($this->add_phonefunckey($this->_info['userfeatures']['id']));
 
 		$this->_return['phonefunckey'] = $this->delete_phonefunckey();
-		if ($this->_delete_func_key_v2() === false)
-			return(false);
 
 		return($this->add_phonefunckey($this->_info['userfeatures']['id']));
 	}
@@ -2256,45 +2204,12 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		return($r);
 	}
 
-	private function _delete_func_key($func_key_id)
-	{
-		$where_fk_id = array('func_key_id' => $func_key_id);
-		if ($this->_func_key_mapping->delete_where($where_fk_id) === false)
-			return(false);
-
-		$where_func_key_dest_user = $where_fk_id;
-		$where_func_key_dest_user['destination_type_id'] = 1;
-
-		if ($this->_func_key_dest_user->delete_where($where_func_key_dest_user) === false)
-			return(false);
-
-		if ($this->_func_key->delete($func_key_id) === false)
-			return(false);
-	}
-
 	private function _delete_func_key_v2()
 	{
 		if(dwho_issa('userfeatures',$this->_info) === false)
 			return(false);
 
-		$user_id = (int) $this->_info['userfeatures']['id'];
-
-		$fk_id = $this->_func_key->get_func_key_id_with_dest_user_id($user_id);
-
-		if ($this->_delete_func_key($fk_id) === false)
-			return(false);
-
-		$user_id = (int) $this->_info['userfeatures']['id'];
-
-		if (($fk_list = $this->_func_key->get_func_key_v2($user_id)) !== false
-		&& ($nb_fk = count($fk_list)) !== 0)
-		{
-			for($i = 0;$i < $nb_fk;$i++)
-			{
-				$fk = &$fk_list[$i];
-				$this->_delete_func_key((int) $fk['func_key_id']);
-			}
-		}
+		$this->_func_key_manager->delete_dst_for_user($this->_info['userfeatures']['id']);
 
 		return(true);
 	}
@@ -2314,7 +2229,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		if($this->_status === 'delete')
 			$this->_return['userfeatures'] = $r;
 
-		if ($this->_func_key_template->delete($func_key_private_template_id) === false)
+		if ($this->_func_key_manager->delete_template($func_key_private_template_id) === false)
 			return(false);
 
 		return($r);

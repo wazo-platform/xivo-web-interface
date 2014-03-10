@@ -53,6 +53,7 @@ class xivo extends dwho
 		$this->_set_service();
 		$this->_set_stats();
 		$this->_set_restapi();
+		$this->_set_manager();
 
 		if(dwho_constant('XIVO_WEBI_CONFIGURED',false) === true)
 			$this->_set_user();
@@ -181,6 +182,12 @@ class xivo extends dwho
 	{
 		xivo::load_class('xivo_restapi',XIVO_PATH_OBJECT,'restapi',false);
 		dwho_gct::set(new xivo_restapi());
+	}
+
+	function _set_manager()
+	{
+		xivo::load_class('xivo_manager',XIVO_PATH_OBJECT,'manager',false);
+		dwho_gct::set(new xivo_manager());
 	}
 
 	protected function _set_user()

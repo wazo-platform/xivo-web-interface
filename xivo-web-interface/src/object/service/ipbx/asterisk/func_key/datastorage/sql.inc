@@ -22,7 +22,7 @@ class xivo_service_asterisk_func_key_sql extends xivo_service_asterisk_abstract_
 {
 	var $_disable		= null;
 
-	public function get_func_key_v2($user_id)
+	public function get_func_key_by_user_id($user_id)
 	{
 		$this->_dso->new_select(array('user' => 'userfeatures'), null);
 		$this->_dso->where(array('id' => $user_id), 'user');
@@ -74,12 +74,11 @@ class xivo_service_asterisk_func_key_sql extends xivo_service_asterisk_abstract_
 	{
 		$this->_dso->new_select('func_key_dest_user', array('func_key_id'));
 		$this->_dso->where(array('user_id' => $user_id));
-		$this->_dso->andwhere(array('destination_type_id' => 1));
 
 		$r = $this->_dso->select_singlecolumn();
 
 		if(isset($r[0]) === false)
-			$r = false;
+			return(false);
 
 		return((int) array_pop($r));
 	}
