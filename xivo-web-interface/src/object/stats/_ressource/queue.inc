@@ -50,7 +50,7 @@ class stats_ressource_queue extends xivo_stats_ressource_abstract
 		$qos = $answered > 0 ? 100 * $answered_in_qos / $answered : null;
 
 		$hr_total = $answered + $abandon + $closed + $full + $leaveempty + $joinempty + $timeout;
-		$hr = $hr_total > 0 ? 100 * $answered / $hr_total : null;
+		$hr = $hr_total > 0 ? 100 * $answered / ($hr_total - $closed) : null;
 
 		$waited_call = $answered + $abandon + $leaveempty + $timeout;
 		$awt = $waited_call > 0 ? $total_wait_time / $waited_call : null;
