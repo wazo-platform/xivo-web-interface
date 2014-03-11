@@ -33,6 +33,7 @@ class xivo_application_service_asterisk_group extends xivo_application_asterisk_
 	var $_schedule_path = false;
 	var $_musiconhold	= array();
 	var $_contextlist	= array();
+	protected $_func_key_manager	= false;
 
 	public function __construct(&$service,&$dso,$param=null,$components=true)
 	{
@@ -60,7 +61,9 @@ class xivo_application_service_asterisk_group extends xivo_application_asterisk_
 		|| ($this->_rightcall = $this->get_abstract('rightcall',array('type' => 'group'))) === false
 		|| ($this->_dialaction = $this->get_abstract('dialaction',array('category' => 'group'))) === false
 		|| ($this->_schedule_path = &$this->_service->get_module('schedule_path')) === false
-		|| ($this->_callerid = $this->get_abstract('callerid',array('type' => 'group'))) === false)
+		|| ($this->_callerid = $this->get_abstract('callerid',array('type' => 'group'))) === false
+		|| ($_MGR = &dwho_gct::get('xivo_manager')) === false
+		|| ($this->_func_key_manager = &$_MGR->get_ressource('func_key')) === false)
 			return(false);
 
 		$this->_queuemember = &$this->_service->get_module('queuemember');
@@ -481,7 +484,8 @@ class xivo_application_service_asterisk_group extends xivo_application_asterisk_
 		|| $this->add_rightcall($groupfeaturesid) === false
 		|| $this->add_dialaction($groupfeaturesid) === false
 		|| $this->add_callerid($groupfeaturesid) === false
-		|| $this->add_schedule_path($groupfeaturesid) === false)
+		|| $this->add_schedule_path($groupfeaturesid) === false
+		|| $this->_add_func_key_dest($groupfeaturesid) === false)
 		{
 			if($groupfeaturesid !== null)
 				$this->_reverse_add();
@@ -558,6 +562,14 @@ class xivo_application_service_asterisk_group extends xivo_application_asterisk_
 			$this->get_result('schedule_id'),
 			'group',
 			$groupfeaturesid);
+	}
+
+	private function _add_func_key_dest($group_id)
+	{
+		if (! $this->_func_key_manager->add_dst_for_group($group_id))
+			return(false);
+
+		return(true);
 	}
 
 	function _reverse_add()
@@ -831,7 +843,8 @@ class xivo_application_service_asterisk_group extends xivo_application_asterisk_
 		$this->_status = 'delete';
 		$this->_return = array();
 
-		if($this->delete_groupfeatures() === false
+		if($this->_delete_func_key_dst() === false
+		|| $this->delete_groupfeatures() === false
 		|| $this->delete_queue() === false
 		|| $this->delete_exten('exten') === false
 		|| $this->delete_user($this->_info['groupfeatures']['name']) === false
@@ -849,6 +862,16 @@ class xivo_application_service_asterisk_group extends xivo_application_asterisk_
 		$this->_status = '';
 
 		return($r);
+	}
+
+	private function _delete_func_key_dst()
+	{
+		if(dwho_issa('groupfeatures',$this->_info) === false)
+			return(false);
+
+		$this->_func_key_manager->delete_dst_for_group($this->_info['groupfeatures']['id']);
+
+		return(true);
 	}
 
 	function delete_groupfeatures()

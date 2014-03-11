@@ -70,10 +70,10 @@ class xivo_service_asterisk_func_key_sql extends xivo_service_asterisk_abstract_
 		return($r);
 	}
 
-	public function get_func_key_id_with_dest_user_id($user_id)
+	public function get_func_key_id_with_dest_type_id($dst_type, $dst_id)
 	{
-		$this->_dso->new_select('func_key_dest_user', array('func_key_id'));
-		$this->_dso->where(array('user_id' => $user_id));
+		$this->_dso->new_select('func_key_dest_'.$dst_type, array('func_key_id'));
+		$this->_dso->where(array($dst_type.'_id' => $dst_id));
 
 		$r = $this->_dso->select_singlecolumn();
 

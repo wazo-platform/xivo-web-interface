@@ -35,6 +35,7 @@ class xivo_application_service_asterisk_user_sql extends xivo_application_abstra
 				'user_line'			=> '',
 				'func_key'			=> '',
 				'func_key_dest_user'	=> '',
+				'func_key_dest_group'	=> '',
 				'func_key_destination_type'	=> '',
 				'func_key_mapping'	=> '',
 				'func_key_template'	=> '',
@@ -241,41 +242,47 @@ class xivo_application_service_asterisk_user_sql extends xivo_application_abstra
 		return($r);
 	}
 
-	function get_phonefunckey_v2($user_id)
+	function get_phonefunckey_v2($template_id)
 	{
-		$this->_dso->new_select(array('user' => $this->_table['userfeatures']), null);
-		$this->_dso->where(array('id' => $user_id), 'user');
-
-		$this->_dso->innerjoin($this->_table['func_key_template'],
-					$this->_table['func_key_template'].'."id" = "user"."func_key_private_template_id"');
-
-		$this->_dso->innerjoin($this->_table['func_key_mapping'],
-					$this->_table['func_key_template'].'.id = '.$this->_table['func_key_mapping'].'.template_id',
-					null,
-					array('phonefunckey.fknum'	=> 'position',
-							'phonefunckey.supervision'	=> 'blf',
-							'phonefunckey.label'	=> 'label'));
+		$this->_dso->new_select(
+			 $this->_table['func_key_mapping'],
+			array(
+				'phonefunckey.fknum'		=> 'position',
+				'phonefunckey.supervision'	=> 'blf',
+				'phonefunckey.label'		=> 'label'
+			)
+		);
+		$this->_dso->where(array('template_id' => $template_id), $this->_table['func_key_mapping']);
 
 		$this->_dso->innerjoin($this->_table['func_key'],
-					$this->_table['func_key'].'.id = '.$this->_table['func_key_mapping'].'.func_key_id');
+					$this->_table['func_key'].'.id = '.$this->_table['func_key_mapping'].'.func_key_id',
+					null,
+					array('*'));
 
 		$this->_dso->innerjoin($this->_table['func_key_destination_type'],
-					$this->_table['func_key_destination_type'].'.id = '.$this->_table['func_key'].'.type_id',
+					$this->_table['func_key_destination_type'].'.id = '.$this->_table['func_key'].'.destination_type_id',
 					null,
 					array('phonefunckey.typeextenumbersright' => 'name'));
 
+		# USER FUNC_KEY
 		$this->_dso->leftjoin($this->_table['func_key_dest_user'],
 					$this->_table['func_key_dest_user'].'.func_key_id = '.$this->_table['func_key'].'.id',
 					null,
 					array('phonefunckey.typevalextenumbersright' => 'user_id'));
-
 		$this->_dso->leftjoin($this->_table['userfeatures'],
 					$this->_table['func_key_dest_user'].'.user_id'.' = '.$this->_table['userfeatures'].'.id',
 					null,
-					array('id','*'));
-		$this->_dso->joinwhere($this->_table['userfeatures'],
-					$this->_table['func_key_destination_type'].'.name'.' = %s',
-					'user');
+					array('*'));
+
+		# GROUP FUNC_KEY
+		$this->_dso->leftjoin($this->_table['func_key_dest_group'],
+					$this->_table['func_key_dest_group'].'.func_key_id = '.$this->_table['func_key'].'.id',
+					null,
+					array('phonefunckey.typevalextenumbersright' => 'group_id'));
+		$this->_dso->leftjoin($this->_table['groupfeatures'],
+					$this->_table['func_key_dest_group'].'.group_id'.' = '.$this->_table['groupfeatures'].'.id',
+					null,
+					array('*'));
 
 		$this->_dso->new_order(array('position' => SORT_ASC), null, $this->_table['func_key_mapping']);
 

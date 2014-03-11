@@ -638,7 +638,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 
 	private function _get_phonefunckey_identity_v2($user_id, $result=true)
 	{
-		if(($rs = $this->_dso->get_phonefunckey_v2($user_id)) === false
+		if(($rs = $this->_dso->get_phonefunckey_v2($this->_info['userfeatures']['func_key_private_template_id'])) === false
 		|| ($nb = count($rs)) === 0)
 			return(false);
 
@@ -1455,9 +1455,16 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 
 			if($ref['typeextenumbersright'] === 'user' && $ref['typevalextenumbers'] !== 'bsfilter')
 			{
-				if ($this->_add_func_key_v2($ref) === false)
+				if ($this->_add_func_key_v2($ref, 'user') === false)
 					return(false);
-			} else {
+			}
+			elseif($ref['typeextenumbersright'] === 'group')
+			{
+				if ($this->_add_func_key_v2($ref, 'group') === false)
+					return(false);
+			}
+			else
+			{
 				if($this->_phonefunckey->add($ref) === false)
 					return(false);
 			}
@@ -1472,18 +1479,18 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		return(true);
 	}
 
-	private function _add_func_key_v2($data)
+	private function _add_func_key_v2($data, $dst_type)
 	{
 		$fk = array();
 		$fk['type'] = 'speeddial';
-		$fk['dst_type'] = 'user';
+		$fk['dst_type'] = $dst_type;
 		$fk['dst_id'] = (int) $data['typevalextenumbersright'];
 		$fk['position'] = (int) $data['fknum'];
 		$fk['blf'] = (bool) $data['supervision'];
 		$fk['label'] = (int) $data['label'];
 		$fk['template_id'] = (int) $this->get_result_var('userfeatures', 'func_key_private_template_id');
 
-		return($this->_func_key_manager->add($fk));
+		return($this->_func_key_manager->add_fk_mapping($fk));
 	}
 
 	function add_schedule_path($user_id)
@@ -1916,6 +1923,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			return($this->add_phonefunckey($this->_info['userfeatures']['id']));
 
 		$this->_return['phonefunckey'] = $this->delete_phonefunckey();
+		$this->_func_key_manager->delete_fk_mapping_with_template_id($this->_info['userfeatures']['func_key_private_template_id']);
 
 		return($this->add_phonefunckey($this->_info['userfeatures']['id']));
 	}
