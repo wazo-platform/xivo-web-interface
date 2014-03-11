@@ -1487,7 +1487,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		$fk['dst_id'] = (int) $data['typevalextenumbersright'];
 		$fk['position'] = (int) $data['fknum'];
 		$fk['blf'] = (bool) $data['supervision'];
-		$fk['label'] = (int) $data['label'];
+		$fk['label'] = (string) $data['label'];
 		$fk['template_id'] = (int) $this->get_result_var('userfeatures', 'func_key_private_template_id');
 
 		return($this->_func_key_manager->add_fk_mapping($fk));
