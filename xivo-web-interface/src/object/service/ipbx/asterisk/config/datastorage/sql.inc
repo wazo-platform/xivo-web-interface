@@ -204,6 +204,10 @@ $array['func_key_dest_user'] = array();
 $array['func_key_dest_user']['table'] = 'func_key_dest_user';
 $array['func_key_dest_user']['primary'] = array('func_key_id' => '', 'user_id' => '', 'destination_type_id' => '');
 
+$array['func_key_dest_group'] = array();
+$array['func_key_dest_group']['table'] = 'func_key_dest_group';
+$array['func_key_dest_group']['primary'] = array('func_key_id' => '', 'group_id' => '', 'destination_type_id' => '');
+
 $array['general'] = array();
 $array['general']['table'] = 'general';
 $array['general']['primary'] = array('id' => '');
