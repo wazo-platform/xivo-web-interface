@@ -73,7 +73,11 @@ class xivo_service_asterisk_func_key extends xivo_service_asterisk_abstract
 			switch($ref['destination_type_name'])
 			{
 				case 'user':
-					if(($extension = $modextensions->get_by_user_id($ref['dst_user_id'])) !== false)
+					if(($extension = $modextensions->get_by_user_id($ref['user_id'])) !== false)
+						$exten = $extension['exten'];
+					break;
+				case 'group':
+					if(($extension = $modextensions->get_by_group_id($ref['group_id'])) !== false)
 						$exten = $extension['exten'];
 					break;
 			}

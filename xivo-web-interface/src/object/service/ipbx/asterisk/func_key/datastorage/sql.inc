@@ -24,45 +24,39 @@ class xivo_service_asterisk_func_key_sql extends xivo_service_asterisk_abstract_
 
 	public function get_func_key_by_user_id($user_id)
 	{
-		$this->_dso->new_select(array('user' => 'userfeatures'), null);
-		$this->_dso->where(array('id' => $user_id), 'user');
-
-		$this->_dso->innerjoin('func_key_template',
-					'func_key_template'.'."id" = "user"."func_key_private_template_id"',
-					null,
-					array('template_id' => 'id'));
+		$this->_dso->new_select('userfeatures', null);
+		$this->_dso->where(array('id' => $user_id), 'userfeatures');
 
 		$this->_dso->innerjoin('func_key_mapping',
-					'func_key_template'.'.id = '.'func_key_mapping'.'.template_id',
+					'userfeatures.func_key_private_template_id = func_key_mapping.template_id',
 					null,
-					array('position'	=> 'position',
-							'blf'	=> 'blf',
-							'label'	=> 'label'));
+					array('*'));
 
 		$this->_dso->innerjoin('func_key',
-					'func_key'.'.id = '.'func_key_mapping'.'.func_key_id',
+					'func_key.id = func_key_mapping.func_key_id',
 					null,
-					array('func_key_id'	=> 'id'));
+					array('*'));
 
 		$this->_dso->innerjoin('func_key_destination_type',
-					'func_key_destination_type'.'.id = '.'func_key'.'.type_id',
+					'func_key_destination_type.id = func_key.destination_type_id',
 					null,
-					array('destination_type_id' => 'id',
-							'destination_type_name' => 'name'));
+					array('destination_type_name' => 'name'));
 
+		# USER FUNC_KEY
 		$this->_dso->leftjoin('func_key_dest_user',
-					'func_key_dest_user'.'.func_key_id = '.'func_key'.'.id',
+					'func_key_dest_user.func_key_id = func_key.id',
 					null,
-					array('dst_user_id' => 'user_id'));
+					array('user_id'));
 
-		$this->_dso->leftjoin('func_key_type',
-					'func_key_type'.'.id = '.'func_key'.'.type_id',
+		# GROUP FUNC_KEY
+		$this->_dso->leftjoin('func_key_dest_group',
+					'func_key_dest_group.func_key_id = func_key.id',
 					null,
-					array('type' => 'name'));
+					array('group_id'));
 
 		$this->_dso->new_order(array('position' => SORT_ASC), null, 'func_key_mapping');
 
-		$r = $this->_dso->select_all(null, true, true);
+		$r = $this->_dso->select_all();
 
 		if(isset($r[0]) === false)
 			$r = false;

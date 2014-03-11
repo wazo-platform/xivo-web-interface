@@ -448,6 +448,19 @@ class xivo_service_asterisk_extensions extends xivo_service_asterisk_abstract
 
 		return($rs);
 	}
+
+	function get_by_group_id($group_id)
+	{
+		$where = array();
+		$where['typeval'] = (string) $group_id;
+		$where['type'] = 'group';
+
+		if(($rs = $this->get_where($where)) ===false
+		|| count($rs) === 0)
+			return(false);
+
+		return($rs);
+	}
 }
 
 ?>
