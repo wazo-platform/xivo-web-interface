@@ -187,6 +187,9 @@ $array['module']['func_key_dest_user']['datastorage'] = true;
 $array['module']['func_key_dest_group'] = array();
 $array['module']['func_key_dest_group']['datastorage'] = true;
 
+$array['module']['func_key_dest_queue'] = array();
+$array['module']['func_key_dest_queue']['datastorage'] = true;
+
 $array['module']['func_key_mapping'] = array();
 $array['module']['func_key_mapping']['datastorage'] = true;
 
