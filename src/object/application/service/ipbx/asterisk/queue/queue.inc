@@ -39,6 +39,7 @@ class xivo_application_service_asterisk_queue extends xivo_application_asterisk_
 	var $_skillrule 	= false;
 	var $_agentskill 	= false;
 	var $_errors		= array();
+	protected $_func_key_manager	= false;
 
 	public function __construct(&$service,&$dso,$param=null,$components=true)
 	{
@@ -70,7 +71,9 @@ class xivo_application_service_asterisk_queue extends xivo_application_asterisk_
 		|| ($this->_dialaction = $this->get_abstract('dialaction',array('category' => 'queue'))) === false
 		|| ($this->_contextmember = $this->get_abstract('contextmember',array('type' => 'queue'))) === false
 		|| ($this->_schedule_path = &$this->_service->get_module('schedule_path')) === false
-		|| ($this->_callerid = $this->get_abstract('callerid',array('type' => 'queue'))) === false)
+		|| ($this->_callerid = $this->get_abstract('callerid',array('type' => 'queue'))) === false
+		|| ($_MGR = &dwho_gct::get('xivo_manager')) === false
+		|| ($this->_func_key_manager = &$_MGR->get_ressource('func_key')) === false)
 			return(false);
 
 		$this->_queuemember = &$this->_service->get_module('queuemember');
@@ -634,7 +637,8 @@ class xivo_application_service_asterisk_queue extends xivo_application_asterisk_
 		|| $this->add_dialaction($queuefeaturesid) === false
 		|| $this->add_contextmember($queuename) === false
 		|| $this->add_callerid($queuefeaturesid) === false
-		|| $this->add_schedule_path($queuefeaturesid) === false)
+		|| $this->add_schedule_path($queuefeaturesid) === false
+		|| $this->_add_func_key_dest($queuefeaturesid) === false)
 		{
 			$r = false;
 			if($queuefeaturesid !== null)
@@ -723,6 +727,14 @@ class xivo_application_service_asterisk_queue extends xivo_application_asterisk_
 			$this->get_result('schedule_id'),
 			'queue',
 			$queuefeaturesid);
+	}
+
+	private function _add_func_key_dest($queue_id)
+	{
+		if (! $this->_func_key_manager->add_dst_for_queue($queue_id))
+			return(false);
+
+		return(true);
 	}
 
 	function _reverse_add()
@@ -1014,7 +1026,8 @@ class xivo_application_service_asterisk_queue extends xivo_application_asterisk_
 		$this->_status = 'delete';
 		$this->_return = array();
 
-		if($this->delete_queuefeatures() === false
+		if($this->_delete_func_key_dst() === false
+		|| $this->delete_queuefeatures() === false
 		|| $this->delete_queue() === false
 		|| $this->delete_exten('exten') === false
 		|| $this->delete_user($this->_info['queuefeatures']['name']) === false
@@ -1033,6 +1046,16 @@ class xivo_application_service_asterisk_queue extends xivo_application_asterisk_
 		$this->_status = '';
 
 		return($r);
+	}
+
+	private function _delete_func_key_dst()
+	{
+		if(dwho_issa('queuefeatures',$this->_info) === false)
+			return(false);
+
+		$this->_func_key_manager->delete_dst_for_queue($this->_info['queuefeatures']['id']);
+
+		return(true);
 	}
 
 	function delete_queuefeatures()
