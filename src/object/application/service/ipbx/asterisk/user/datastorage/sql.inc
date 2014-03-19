@@ -36,6 +36,7 @@ class xivo_application_service_asterisk_user_sql extends xivo_application_abstra
 				'func_key'			=> '',
 				'func_key_dest_user'	=> '',
 				'func_key_dest_group'	=> '',
+				'func_key_dest_queue'	=> '',
 				'func_key_destination_type'	=> '',
 				'func_key_mapping'	=> '',
 				'func_key_template'	=> '',
@@ -281,6 +282,16 @@ class xivo_application_service_asterisk_user_sql extends xivo_application_abstra
 					array('phonefunckey.typevalextenumbersright' => 'group_id'));
 		$this->_dso->leftjoin($this->_table['groupfeatures'],
 					$this->_table['func_key_dest_group'].'.group_id'.' = '.$this->_table['groupfeatures'].'.id',
+					null,
+					array('*'));
+
+		# QUEUE FUNC_KEY
+		$this->_dso->leftjoin($this->_table['func_key_dest_queue'],
+					$this->_table['func_key_dest_queue'].'.func_key_id = '.$this->_table['func_key'].'.id',
+					null,
+					array('phonefunckey.typevalextenumbersright' => 'queue_id'));
+		$this->_dso->leftjoin($this->_table['queuefeatures'],
+					$this->_table['func_key_dest_queue'].'.queue_id'.' = '.$this->_table['queuefeatures'].'.id',
 					null,
 					array('*'));
 
