@@ -54,6 +54,12 @@ class xivo_service_asterisk_func_key_sql extends xivo_service_asterisk_abstract_
 					null,
 					array('group_id'));
 
+		# QUEUE FUNC_KEY
+		$this->_dso->leftjoin('func_key_dest_queue',
+					'func_key_dest_queue.func_key_id = func_key.id',
+					null,
+					array('queue_id'));
+
 		$this->_dso->new_order(array('position' => SORT_ASC), null, 'func_key_mapping');
 
 		$r = $this->_dso->select_all();

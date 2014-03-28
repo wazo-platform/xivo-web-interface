@@ -438,22 +438,24 @@ class xivo_service_asterisk_extensions extends xivo_service_asterisk_abstract
 
 	function get_by_user_id($user_id)
 	{
-		$where = array();
-		$where['typeval'] = (string) $user_id;
-		$where['type'] = 'user';
-
-		if(($rs = $this->get_where($where)) ===false
-		|| count($rs) === 0)
-			return(false);
-
-		return($rs);
+		return($this->_get_by_type_type_id('user', $user_id));
 	}
 
 	function get_by_group_id($group_id)
 	{
+		return($this->_get_by_type_type_id('group', $group_id));
+	}
+
+	function get_by_queue_id($queue_id)
+	{
+		return($this->_get_by_type_type_id('queue', $queue_id));
+	}
+
+	private function _get_by_type_type_id($type, $type_id)
+	{
 		$where = array();
-		$where['typeval'] = (string) $group_id;
-		$where['type'] = 'group';
+		$where['typeval'] = (string) $type_id;
+		$where['type'] = (string) $type;
 
 		if(($rs = $this->get_where($where)) ===false
 		|| count($rs) === 0)
