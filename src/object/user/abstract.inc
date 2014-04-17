@@ -75,8 +75,11 @@ abstract class xivo_user_abstract extends xivo_libdatastorage_abstract
 
 		$data['valid'] = (bool) $data['valid'];
 		$data['entity_id'] = (int) $data['entity_id'];
-		$entity = $modentity->get($data['entity_id']);
-		$data['entity_name'] = $entity['name'];
+		if ($data['entity_id'] >> 0)
+		{
+			$entity = $modentity->get($data['entity_id']);
+			$data['entity_name'] = $entity['name'];
+		}
 
 		if(is_array($data['obj']) === false)
 			$data['obj'] = dwho_unserialize($data['obj']);

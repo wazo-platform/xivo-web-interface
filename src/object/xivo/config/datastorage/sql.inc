@@ -28,6 +28,10 @@ $array['entity'] = array();
 $array['entity']['table'] = 'entity';
 $array['entity']['primary'] = array('id' => '');
 
+$array['entity_filter'] = array();
+$array['entity_filter']['table'] = 'entity_filter';
+$array['entity_filter']['primary'] = array('id' => '');
+
 $array['iproute'] = array();
 $array['iproute']['table'] = 'iproute';
 $array['iproute']['primary'] = array('id' => '');
