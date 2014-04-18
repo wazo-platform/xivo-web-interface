@@ -15,8 +15,11 @@ IP:
 ; fm_device_mac
 MAC: 
 
-; fm_device_configdevice 
-Device config template: 
+; fm_device_configdevice
+Device config template:
+
+; fm_device_switchboard
+Switchboard:
 
 ; fm_device_plugin
 Plugin: 

@@ -251,6 +251,19 @@ class xivo_application_service_asterisk_device extends xivo_application_asterisk
 		if (empty($arr['plugin']))
 			unset($arr['plugin']);
 
+		if (!isset($arr['options']))
+			$arr['options'] = array();
+
+		if (isset($arr['options']['switchboard']))
+			$arr['options']['switchboard'] = dwho_bool($arr['options']['switchboard']);
+		else
+			$arr['options']['switchboard'] = false;
+
+		if (!empty($this->_info['device']['options']))
+		{
+			$arr['options'] = array_merge($this->_info['device']['options'], $arr['options']);
+		}
+
 		$this->_set_result('device',$arr);
 
 		return(true);

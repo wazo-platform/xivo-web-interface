@@ -28,7 +28,40 @@ $plugininstalled = $this->get_var('plugininstalled');
 $listconfigdevice = $this->get_var('listconfigdevice');
 $listline = $this->get_var('info','config','sip_lines');
 
+$switchboard_plugins = array();
+$basestr = $info['device']['vendor'].', '.$info['device']['model'].',';
+$basestr_len = strlen($basestr);
+foreach ($plugininstalled as $plugin)
+{
+	foreach ($plugin['capabilities'] as $k => $v)
+	{
+		if (substr($k, 0, $basestr_len) === $basestr
+		&& isset($v['switchboard'])
+		&& $v['switchboard'] === true)
+		{
+			array_push($switchboard_plugins, $plugin['name']);
+		}
+	}
+}
+
 ?>
+
+<script>
+var switchboard_plugins = <?php echo json_encode($switchboard_plugins); ?>;
+var checkbox_state = <?php echo json_encode(dwho_bool($this->get_var('info','device','options','switchboard'))); ?>;
+
+$(document).ready(function() {
+	update_switchboard_checkbox(switchboard_plugins, checkbox_state);
+
+	$('#it-device-switchboard-id').change(function() {
+		checkbox_state = $('#it-device-switchboard-id').attr('checked');
+	});
+
+	$('#it-device-plugin').change(function() {
+		update_switchboard_checkbox(switchboard_plugins, checkbox_state);
+	});
+});
+</script>
 
 <div id="sb-part-first" class="b-nodisplay">
 <?php
@@ -67,7 +100,11 @@ $listline = $this->get_var('info','config','sip_lines');
 				  'key'		=> 'label',
 				  'altkey'	=> 'id',
 				  'selected'	=> $this->get_var('info','device','template_id')),
-			      $listconfigdevice);
+			      $listconfigdevice),
+
+		$form->checkbox(array('desc'	=> $this->bbf('fm_device_switchboard'),
+				'name'		=> 'device[options][switchboard]',
+				'labelid'	=> 'device-switchboard-id'));
 ?>
 	<div class="fm-paragraph fm-description">
 		<p>
