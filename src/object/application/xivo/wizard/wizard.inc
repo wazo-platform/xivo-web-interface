@@ -514,7 +514,7 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 			return(false);
 		}
 
-		$appentity = &$this->_xobj->get_application('entity');
+		$appentity = &$this->_ipbx->get_application('entity');
 
 		if(($r = (bool) $appentity->set_add($data['entity'])) === false)
 			$this->_set_error('entity',$appentity->get_error('entity'));
@@ -742,7 +742,7 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 
 		$name = $this->_wizsess['entity']['name'];
 
-		$appentity = &$this->_xobj->get_application('entity');
+		$appentity = &$this->_ipbx->get_application('entity');
 
 		// allow to reexecute the process several times
 		$appentity->delete_all();

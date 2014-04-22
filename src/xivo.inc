@@ -55,8 +55,13 @@ class xivo extends dwho
 		$this->_set_restapi();
 		$this->_set_manager();
 
+
 		if(dwho_constant('XIVO_WEBI_CONFIGURED',false) === true)
+		{
+			$dso = dwho_datastorage::get_param_from_uri($this->_conf['datastorage']['general']['asterisk']);
+			dwho_gct::set(dwho_datastorage::factory($dso['type'],$dso),'SRE_DSO');
 			$this->_set_user();
+		}
 
 		dwho_gat::set('_CF',$this->_conf);
 	}

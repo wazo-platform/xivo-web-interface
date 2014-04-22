@@ -26,12 +26,10 @@ $param['act'] = 'list';
 
 $result = $fm_save = $error = null;
 
-$ipbx = &$_SRE->get('ipbx');
-
 switch($act)
 {
 	case 'add':
-		$appentity = &$_XOBJ->get_application('entity',null,false);
+		$appentity = &$_IPBX->get_application('entity',null,false);
 
 		if(isset($_QR['fm_send']) === true)
 		{
@@ -51,7 +49,7 @@ switch($act)
 		$_TPL->set_var('territory',dwho_i18n::get_territory_translated_list());
 		break;
 	case 'edit':
-		$appentity = &$_XOBJ->get_application('entity');
+		$appentity = &$_IPBX->get_application('entity');
 
 		if(isset($_QR['id']) === false || ($info = $appentity->get($_QR['id'])) === false)
 			$_QRY->go($_TPL->url('xivo/configuration/manage/entity'),$param);
@@ -81,7 +79,7 @@ switch($act)
 	case 'delete':
 		$param['page'] = $page;
 
-		$appentity = &$_XOBJ->get_application('entity');
+		$appentity = &$_IPBX->get_application('entity');
 
 		if(isset($_QR['id']) === false || $appentity->get($_QR['id']) === false)
 			$_QRY->go($_TPL->url('xivo/configuration/manage/entity'),$param);
@@ -96,7 +94,7 @@ switch($act)
 		if(($values = dwho_issa_val('entity',$_QR)) === false)
 			$_QRY->go($_TPL->url('xivo/configuration/manage/entity'),$param);
 
-		$appentity = &$_XOBJ->get_application('entity');
+		$appentity = &$_IPBX->get_application('entity');
 
 		$nb = count($values);
 
@@ -115,7 +113,7 @@ switch($act)
 		if(($values = dwho_issa_val('entity',$_QR)) === false)
 			$_QRY->go($_TPL->url('xivo/configuration/manage/entity'),$param);
 
-		$appentity = &$_XOBJ->get_application('entity',null,false);
+		$appentity = &$_IPBX->get_application('entity',null,false);
 
 		$nb = count($values);
 
@@ -136,7 +134,7 @@ switch($act)
 		$prevpage = $page - 1;
 		$nbbypage = 20;
 
-		$appentity = &$_XOBJ->get_application('entity');
+		$appentity = &$_IPBX->get_application('entity');
 
 		$order = array();
 		$order['name'] = SORT_ASC;

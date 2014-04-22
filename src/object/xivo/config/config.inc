@@ -34,12 +34,6 @@ $array['module']['dahdi']['datastorage'] = false;
 $array['module']['dhcp'] = array();
 $array['module']['dhcp']['datastorage'] = true;
 
-$array['module']['entity'] = array();
-$array['module']['entity']['datastorage'] = true;
-
-$array['module']['entity_filter'] = array();
-$array['module']['entity_filter']['datastorage'] = true;
-
 $array['module']['ha'] = array();
 $array['module']['ha']['datastorage'] = false;
 

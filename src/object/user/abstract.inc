@@ -70,13 +70,12 @@ abstract class xivo_user_abstract extends xivo_libdatastorage_abstract
 
 	function _prepare(&$data)
 	{
-		$_XOBJ = &dwho_gct::get('xivo_object');
-		$modentity = &$_XOBJ->get_module('entity');
-
 		$data['valid'] = (bool) $data['valid'];
 		$data['entity_id'] = (int) $data['entity_id'];
 		if ($data['entity_id'] >> 0)
 		{
+			$_SRE = &dwho_gct::get('xivo_service');
+			$modentity = &$_SRE->get_module('ipbx', 'entity');
 			$entity = $modentity->get($data['entity_id']);
 			$data['entity_name'] = $entity['name'];
 		}
@@ -324,7 +323,7 @@ abstract class xivo_user_abstract extends xivo_libdatastorage_abstract
 		if(isset($ini['datastorage']) === true)
 			$datastorage = &$ini['datastorage'];
 
-		$dso = &dwho_gct::get('DWHO_DSO');
+		$dso = &dwho_gct::get('SRE_DSO');
 		$type = $dso->get_type();
 		$name = 'xivo_user_'.$type;
 		$dir = dwho_file::joinpath(XIVO_PATH_OBJECT,'user','datastorage');
@@ -404,7 +403,7 @@ abstract class xivo_user_abstract extends xivo_libdatastorage_abstract
 		if($type !== 'internal')
 			return(false);
 
-		$dso = &dwho_gct::get('DWHO_DSO');
+		$dso = &dwho_gct::get('SRE_DSO');
 		$type = $dso->get_type();
 		$name = 'xivo_authent_'.$type;
 		$dir = dwho_file::joinpath(XIVO_PATH_OBJECT,'user','authent');

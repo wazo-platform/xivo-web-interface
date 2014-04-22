@@ -17,9 +17,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-xivo_object::required(array('abstract','datastorage','sql.inc'),true);
+xivo_service_asterisk::required(array('abstract','datastorage','abstract','sql.inc'),true);
 
-class xivo_object_entity_filter_sql extends xivo_object_abstract_sql
+class xivo_service_asterisk_entity_filter_sql extends xivo_service_asterisk_abstract_sql
 {
 }
 

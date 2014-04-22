@@ -46,6 +46,7 @@ $_RAPI = &dwho_gct::get('xivo_restapi');
 $_MGR = &dwho_gct::get('xivo_manager');
 $_SRE = dwho_gct::get('xivo_service');
 $_USR = dwho_gct::get('_USR');
+$_IPBX = &$_SRE->get('ipbx');
 
 if(defined('XIVO_TPL_AREA') === false)
 	define('XIVO_TPL_AREA','www');

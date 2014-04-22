@@ -18,23 +18,25 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-dwho_file::required(array(XIVO_PATH_OBJECT,'application','xivo.inc'),true);
+dwho_file::required(array(XIVO_PATH_OBJECT,'application','service','ipbx','asterisk.inc'),true);
 
-class xivo_application_xivo_object_entity extends xivo_application_xivo_object_abstract
+class xivo_application_service_asterisk_entity extends xivo_application_asterisk_abstract
 {
-	var $_entity	= false;
-	var $_context	= false;
+	protected $_dso		= null;
+	protected $_conf	= array();
+	protected $_entity	= false;
+	protected $_context	= false;
 
-	function __construct(&$xobj,&$dso,$param=null,$components=true)
+	public function __construct(&$service,&$dso,$param=null,$components=true)
 	{
-		parent::__construct($xobj);
+		parent::__construct($service);
 
 		if(is_object($dso) === false)
 			trigger_error('Invalid Datastorage object',E_USER_ERROR);
 
 		$this->_dso = &$dso;
 
-		if(($this->_entity = &$this->_xobj->get_module('entity')) === false)
+		if(($this->_entity = &$this->_service->get_module('entity')) === false)
 			return(false);
 		else if((bool) $components === true)
 			$this->load_components();
@@ -46,8 +48,7 @@ class xivo_application_xivo_object_entity extends xivo_application_xivo_object_a
 	{
 		$this->_components = true;
 
-		if(($_SRE = &dwho_gct::get('xivo_service')) === false
-		|| ($this->_context = &$_SRE->get_module('ipbx','context')) === false)
+		if(($this->_context = &$this->_service->get_module('context')) === false)
 			return(false);
 
 		return(true);
@@ -144,7 +145,7 @@ class xivo_application_xivo_object_entity extends xivo_application_xivo_object_a
 
 			$ref = &$r[$rs[$i]['id']];
 			$ref['entity']['disable'] = (bool) $ref['entity']['disable'];
-			$ref['entity']['identity'] = $this->_xobj->identity('entity',$ref['entity']);
+			$ref['entity']['identity'] = $this->_service->identity('entity',$ref['entity']);
 			$ref['nb_context'] = dwho_ulongint($this->_context->get_nb(array('entity' => $rs[$i]['name'])));
 
 			if (is_null($type) === false)
