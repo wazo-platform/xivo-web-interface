@@ -28,6 +28,10 @@ $plugininstalled = $this->get_var('plugininstalled');
 $listconfigdevice = $this->get_var('listconfigdevice');
 $listline = $this->get_var('info','config','sip_lines');
 
+dwho::load_class('dwho_sort');
+$pluginsort = new dwho_sort(array('key' => 'name'));
+usort($plugininstalled,array($pluginsort,'str_usort'));
+
 $switchboard_plugins = array();
 $basestr = $info['device']['vendor'].', '.$info['device']['model'].',';
 $basestr_len = strlen($basestr);
