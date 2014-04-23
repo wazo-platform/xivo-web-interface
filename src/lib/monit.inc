@@ -391,9 +391,14 @@ class dwho_monit
 				continue;
 
 			$type = $infos['service'][$i]['@attributes']['type'];
-			$groups = $infos['service'][$i]['groups'];
 
-			unset($infos['service'][$i]['groups']);
+			$groups = array();
+			if (isset($infos['service'][$i]['groups']))
+			{
+				$groups = $infos['service'][$i]['groups'];
+				unset($infos['service'][$i]['groups']);
+			}
+
 			unset($infos['service'][$i]['@attributes']);
 
 			$name = $infos['service'][$i]['name'];
