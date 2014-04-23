@@ -18,8 +18,11 @@ IP:
 ; fm_device_mac
 MAC: 
 
-; fm_device_configdevice 
-Modele de configuration de la terminaison :  
+; fm_device_configdevice
+Modele de configuration de la terminaison:
+
+; fm_device_switchboard
+POPC:
 
 ; fm_device_plugin
 Greffon: 

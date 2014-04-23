@@ -16,7 +16,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 function init_synchronize(id) {
 	var url = '/xivo/configuration/ui.php/provisioning/devices?act=synchronize&id=' + id;
 	$.get(url, function(data) {
@@ -52,6 +51,19 @@ function update_sip_srtp_mode() {
 		it_sipsrtpmode.removeAttr('disabled');
 		it_sipsrtpmode.removeClass('it-disabled');
 		it_sipsrtpmode.val('required');
+	}
+}
+
+function update_switchboard_checkbox(switchboard_plugins, state) {
+	var selected_plugin = $('#it-device-plugin').val();
+	var checkbox = $('#it-device-switchboard-id');
+
+	if ($.inArray(selected_plugin, switchboard_plugins) > -1) {
+		checkbox.removeAttr('disabled');
+		checkbox.attr('checked', state);
+	} else {
+		checkbox.attr('disabled', true);
+		checkbox.attr('checked', false);
 	}
 }
 
