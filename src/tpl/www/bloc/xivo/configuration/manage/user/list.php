@@ -55,7 +55,6 @@ $page = $url->pager($pager['pages'],
 		<th class="th-left xspan"><span class="span-left">&nbsp;</span></th>
 		<th class="th-center"><?=$this->bbf('col_login');?></th>
 		<th class="th-center"><?=$this->bbf('col_type');?></th>
-		<th class="th-center"><?=$this->bbf('col_entity');?></th>
 		<th class="th-center"><?=$this->bbf('col_dcreate');?></th>
 		<th class="th-center"><?=$this->bbf('col_valid');?></th>
 		<th class="th-center col-action"><?=$this->bbf('col_action');?></th>
@@ -99,7 +98,6 @@ $page = $url->pager($pager['pages'],
 			</label>
 		</td>
 		<td><?=$ref['meta']?></td>
-		<td><?=isset($ref['entity_id'])?$ref['entity_id']:'-'?></td>
 		<td><?=dwho_i18n::strftime_l($this->bbf('date_format_yymmdd'),
 					     null,
 					     $ref['dcreate']);?></td>
@@ -146,7 +144,7 @@ $page = $url->pager($pager['pages'],
 ?>
 	<tr class="sb-foot">
 		<td class="td-left xspan b-nosize"><span class="span-left b-nosize">&nbsp;</span></td>
-		<td class="td-center" colspan="6"><span class="b-nosize">&nbsp;</span></td>
+		<td class="td-center" colspan="5"><span class="b-nosize">&nbsp;</span></td>
 		<td class="td-right xspan b-nosize"><span class="span-right b-nosize">&nbsp;</span></td>
 	</tr>
 </table>
