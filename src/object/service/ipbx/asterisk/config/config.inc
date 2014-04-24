@@ -172,6 +172,12 @@ $array['module']['dialaction']['datastorage'] = true;
 $array['module']['dialpattern'] = array();
 $array['module']['dialpattern']['datastorage'] = true;
 
+$array['module']['entity'] = array();
+$array['module']['entity']['datastorage'] = true;
+
+$array['module']['entity_filter'] = array();
+$array['module']['entity_filter']['datastorage'] = true;
+
 $array['module']['extensions'] = array();
 $array['module']['extensions']['datastorage'] = true;
 

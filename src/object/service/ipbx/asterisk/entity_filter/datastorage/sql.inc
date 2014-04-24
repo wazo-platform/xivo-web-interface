@@ -1,8 +1,7 @@
 <?php
-
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2014  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,6 +17,10 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-require('sql.inc');
+xivo_service_asterisk::required(array('abstract','datastorage','abstract','sql.inc'),true);
+
+class xivo_service_asterisk_entity_filter_sql extends xivo_service_asterisk_abstract_sql
+{
+}
 
 ?>

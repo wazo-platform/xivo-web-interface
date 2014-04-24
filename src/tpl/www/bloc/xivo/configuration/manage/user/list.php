@@ -64,7 +64,7 @@ $page = $url->pager($pager['pages'],
 	if(($list = $this->get_var('list')) === false || ($nb = count($list)) === 0):
 ?>
 	<tr class="sb-content">
-		<td colspan="8" class="td-single"><?=$this->bbf('no_user');?></td>
+		<td colspan="9" class="td-single"><?=$this->bbf('no_user');?></td>
 	</tr>
 <?php
 	else:
@@ -97,7 +97,6 @@ $page = $url->pager($pager['pages'],
 ?>
 			</label>
 		</td>
-
 		<td><?=$ref['meta']?></td>
 		<td><?=dwho_i18n::strftime_l($this->bbf('date_format_yymmdd'),
 					     null,

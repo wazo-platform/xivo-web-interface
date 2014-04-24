@@ -18,6 +18,12 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-require('sql.inc');
+xivo_service_asterisk::required(array('abstract','datastorage','abstract','sql.inc'),true);
+
+class xivo_service_asterisk_entity_sql extends xivo_service_asterisk_abstract_sql
+{
+	var $_unique	= 'name';
+	var $_disable	= 'disable';
+}
 
 ?>

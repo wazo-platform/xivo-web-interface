@@ -172,6 +172,14 @@ $array['dialpattern'] = array();
 $array['dialpattern']['table'] = 'dialpattern';
 $array['dialpattern']['primary'] = array('id' => '');
 
+$array['entity'] = array();
+$array['entity']['table'] = 'entity';
+$array['entity']['primary'] = array('id' => '');
+
+$array['entity_filter'] = array();
+$array['entity_filter']['table'] = 'entity_filter';
+$array['entity_filter']['primary'] = array('id' => '');
+
 $array['extensions'] = array();
 $array['extensions']['table'] = 'extensions';
 $array['extensions']['primary'] = array('id' => '');

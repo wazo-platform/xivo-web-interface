@@ -1,8 +1,7 @@
 <?php
-
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2014  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,33 +17,44 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-xivo_object::required(array('abstract','abstract.inc'),true);
+xivo_service_asterisk::required(array('abstract','abstract.inc'),true);
 
-class xivo_object_entity extends xivo_object_abstract
+class xivo_service_asterisk_entity_filter extends xivo_service_asterisk_abstract
 {
 	var $_dso			= null;
-	var $_name			= 'entity';
+	var $_name			= 'entity_filter';
 	var $_filter		= false;
 	var $_origin		= false;
 	var $_origin_list	= false;
 	var $_identity		= false;
 
-	public function __construct(&$xobj,&$dso)
+	public function __construct(&$sre,&$dso)
 	{
-		parent::__construct($xobj);
+		if(is_object($sre) === false)
+			trigger_error('Invalid service in '.__CLASS__,E_USER_ERROR);
 
 		if(is_object($dso) === false)
 			trigger_error('Invalid datastorage in '.__CLASS__,E_USER_ERROR);
 
+		$this->_sre = &$sre;
 		$this->_dso = &$dso;
-		$this->_identity = &$this->_xobj->get_identity($this->_name);
+
+		$this->_load_config();
 	}
 
 	function _prepare($data)
 	{
-		$this->_identity->_prepare_identity($data);
-
-		$data['disable'] = (bool) $data['disable'];
+		$data['entity_id'] = (int) $data['entity_id'];
+		$data['line_id'] = (int) $data['line_id'];
+		$data['queue_id'] = (int) $data['queue_id'];
+		$data['group_id'] = (int) $data['group_id'];
+		$data['voicemail_id'] = (int) $data['voicemail_id'];
+		$data['agent_id'] = (int) $data['agent_id'];
+		$data['meetme_id'] = (int) $data['meetme_id'];
+		$data['incall_id'] = (int) $data['incall_id'];
+		$data['callfilter_id'] = (int) $data['callfilter_id'];
+		$data['pickup_id'] = (int) $data['pickup_id'];
+		$data['schedule_id'] = (int) $data['schedule_id'];
 
 		return($data);
 	}
@@ -53,11 +63,6 @@ class xivo_object_entity extends xivo_object_abstract
 	{
 		if(is_array($arr) === false)
 			return(false);
-		else if(empty($id) === true || isset($arr['dcreate']) === false)
-			$arr['dcreate'] = gmstrftime('%s');
-
-		if(isset($arr['name']) === true)
-			$arr['name'] = strtolower($arr['name']);
 
 		return(parent::add($arr,$id));
 	}
@@ -66,8 +71,6 @@ class xivo_object_entity extends xivo_object_abstract
 	{
 		if(is_array($arr) === false)
 			return(false);
-		else if(isset($arr['name']) === true)
-			$arr['name'] = strtolower($arr['name']);
 
 		return(parent::edit($id,$arr,$disable));
 	}

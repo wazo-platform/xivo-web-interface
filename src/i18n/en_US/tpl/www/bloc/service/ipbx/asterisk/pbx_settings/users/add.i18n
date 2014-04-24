@@ -799,3 +799,6 @@ simul
 
 ; no_linefeatures
 No line
+
+; no_entity_with_intern_context_detected
+No entity with internal context

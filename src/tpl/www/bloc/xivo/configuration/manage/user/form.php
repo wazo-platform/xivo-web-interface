@@ -32,12 +32,22 @@ echo	$form->text(array('desc'	=> $this->bbf('fm_login'),
 			  'error'	=> $this->bbf_args('error_fm_login',
 				$this->get_var('error', 'login')))),
 
-	$form->password(array('desc'	=> $this->bbf('fm_password'),
+		$form->password(array('desc'	=> $this->bbf('fm_password'),
 			  'name'	=> 'user[passwd]',
 			  'labelid'	=> 'passwd',
 			  'size'	=> 15,
 			  'default'	=> $element['passwd']['default'],
 			  'value'	=> $info['passwd'],
 			  'error'	=> $this->bbf_args('error_fm_password',
-				$this->get_var('error', 'passwd'))));
+				$this->get_var('error', 'passwd')))),
+
+		$form->select(array('desc'	=> $this->bbf('fm_user_entity'),
+			    'name'		=> 'user[entity_id]',
+			    'labelid'	=> 'user-entity_id',
+			    'key'		=> 'displayname',
+			    'empty'		=> true,
+			    'altkey'	=> 'id',
+			    'error'	=> $this->bbf_args('error',
+						   $this->get_var('error', 'user', 'entity_id'))),
+			      $this->get_var('entities'));
 ?>

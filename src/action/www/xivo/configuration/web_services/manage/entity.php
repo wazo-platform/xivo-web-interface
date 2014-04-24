@@ -28,7 +28,7 @@ $act = $_QRY->get('act');
 switch($act)
 {
 	case 'view':
-		$appentity = &$_XOBJ->get_application('entity',null,false);
+		$appentity = &$_IPBX->get_application('entity',null,false);
 
 		if(($info = $appentity->get($_QRY->get('id'))) === false)
 		{
@@ -39,7 +39,7 @@ switch($act)
 		$_TPL->set_var('info',$info['entity']);
 		break;
 	case 'add':
-		$appentity = &$_XOBJ->get_application('entity',null,false);
+		$appentity = &$_IPBX->get_application('entity',null,false);
 
 		$status = $appentity->add_from_json() === true ? 200 : 400;
 
@@ -47,7 +47,7 @@ switch($act)
 		$http_response->send(true);
 		break;
 	case 'edit':
-		$appentity = &$_XOBJ->get_application('entity');
+		$appentity = &$_IPBX->get_application('entity');
 
 		if(($entity = $appentity->get($_QRY->get('id'))) === false)
 			$status = 404;
@@ -60,7 +60,7 @@ switch($act)
 		$http_response->send(true);
 		break;
 	case 'delete':
-		$appentity = &$_XOBJ->get_application('entity');
+		$appentity = &$_IPBX->get_application('entity');
 
 		if(($info = $appentity->get($_QRY->get('id'))) === false)
 			$status = 404;
@@ -75,7 +75,7 @@ switch($act)
 		$http_response->send(true);
 		break;
 	case 'deleteall':
-		$appentity = &$_XOBJ->get_application('entity');
+		$appentity = &$_IPBX->get_application('entity');
 
 		if(($list = $appentity->get_entities_list()) === false
 		|| ($nb = count($list)) === 0)
@@ -96,7 +96,7 @@ switch($act)
 		$http_response->send(true);
 		break;
 	case 'search':
-		$appentity = &$_XOBJ->get_application('entity');
+		$appentity = &$_IPBX->get_application('entity');
 
 		if(($list = $appentity->get_entities_search($_QRY->get('search'))) === false)
 		{
@@ -110,7 +110,7 @@ switch($act)
 	default:
 		$act = 'list';
 
-		$appentity = &$_XOBJ->get_application('entity');
+		$appentity = &$_IPBX->get_application('entity');
 
 		if(($list = $appentity->get_entities_list()) === false)
 		{

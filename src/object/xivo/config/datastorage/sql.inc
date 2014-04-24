@@ -24,10 +24,6 @@ $array['accesswebservice'] = array();
 $array['accesswebservice']['table'] = 'accesswebservice';
 $array['accesswebservice']['primary'] = array('id' => '');
 
-$array['entity'] = array();
-$array['entity']['table'] = 'entity';
-$array['entity']['primary'] = array('id' => '');
-
 $array['iproute'] = array();
 $array['iproute']['table'] = 'iproute';
 $array['iproute']['primary'] = array('id' => '');

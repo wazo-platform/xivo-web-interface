@@ -106,8 +106,8 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		|| ($this->_attachment = $this->_service->get_module('attachment')) === false
 		|| ($this->_user_line = $this->_service->get_module('user_line')) === false
 		|| ($_XOBJ = &dwho_gct::get('xivo_object')) === false
-		|| ($this->_appentity = &$_XOBJ->get_application('entity')) === false
-		|| ($this->_entity = &$_XOBJ->get_module('entity')) === false
+		|| ($this->_appentity = $this->_service->get_application('entity')) === false
+		|| ($this->_entity = $this->_service->get_module('entity')) === false
 		|| ($this->_provdconfig = &$_XOBJ->get_module('provdconfig')) === false
 		|| ($_RAPI = &dwho_gct::get('xivo_restapi')) === false
 		|| ($this->_cti_profile = $_RAPI->get_ressource('cti_profile')) === false
