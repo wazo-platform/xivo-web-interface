@@ -17,7 +17,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-$appentity = &$_IPBX->get_application('entity',null,false);
+
+$appentity = &$_XOBJ->get_application('entity',null,false);
 
 xivo::load_class('xivo_server',XIVO_PATH_OBJECT,null,false);
 $_SVR = new xivo_server();

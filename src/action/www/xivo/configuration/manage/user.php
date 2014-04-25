@@ -27,7 +27,7 @@ $param['act'] = 'list';
 switch($act)
 {
 	case 'add':
-		$modentity = &$_IPBX->get_module('entity');
+		$modentity = &$_XOBJ->get_module('entity');
 		$entities = $modentity->get_all();
 		if(isset($_QR['fm_send']) === true)
 		{
@@ -52,7 +52,7 @@ switch($act)
 			&& xivo_user::chk_authorize('admin', $info['meta']) === false))
 			$_QRY->go($_TPL->url('xivo/configuration/manage/user'),$param);
 
-		$modentity = &$_IPBX->get_module('entity');
+		$modentity = &$_XOBJ->get_module('entity');
 		$entities = $modentity->get_all();
 
 		if(isset($_QR['fm_send']) === true)

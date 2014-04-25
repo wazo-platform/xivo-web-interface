@@ -28,7 +28,7 @@ else
 switch($act)
 {
 	case 'get':
-		$appentity = &$_IPBX->get_application('entity');
+		$appentity = &$_XOBJ->get_application('entity');
 
 		if(isset($_QR['id']) === false)
 		{
@@ -48,7 +48,7 @@ switch($act)
 	case 'list':
 	default:
 		$act = 'list';
-		$appentity = &$_IPBX->get_application('entity',null,false);
+		$appentity = &$_XOBJ->get_application('entity',null,false);
 
 		if(($list = $appentity->get_entities_list()) === false)
 		{

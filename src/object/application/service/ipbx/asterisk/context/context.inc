@@ -247,8 +247,8 @@ class xivo_application_service_asterisk_context extends xivo_application_asteris
 	function _load_entity()
 	{
 		if(is_object($this->_entity) === false
-		&& (($_SRE = dwho_gct::get('xivo_service')) === false
-		   || ($this->_entity = &$_SRE->get_module('ipbx', 'entity')) === false) === true)
+		&& (($_XOBJ = &dwho_gct::get('xivo_object')) === false
+		   || ($this->_entity = &$_XOBJ->get_module('entity')) === false) === true)
 		   return(false);
 
 		return(true);

@@ -20,7 +20,7 @@
 
 require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'application','abstract','datastorage','sql.inc'));
 
-class xivo_application_service_asterisk_entity_sql extends xivo_application_abstract_datastorage_sql
+class xivo_application_xivo_object_entity_sql extends xivo_application_abstract_datastorage_sql
 {
 	var $_table	= array('entity'	=> '');
 

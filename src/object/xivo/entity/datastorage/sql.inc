@@ -18,25 +18,11 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-class xivo_service_asterisk_entity_identity
+xivo_object::required(array('abstract','datastorage','sql.inc'),true);
+
+class xivo_object_entity_sql extends xivo_object_abstract_sql
 {
-	function _prepare_identity(&$data)
-	{
-		$data['identity'] = $data['displayname'].' ('.$data['name'].')';
-
-		return($data);
-	}
-
-	function mk_identity($arr)
-	{
-		if(is_array($arr) === false
-		|| isset($arr['name'],$arr['displayname']) === false)
-			return(false);
-
-		$this->_prepare_identity($arr);
-
-		return($arr['identity']);
-	}
+	var $_unique	= 'name';
 }
 
 ?>
