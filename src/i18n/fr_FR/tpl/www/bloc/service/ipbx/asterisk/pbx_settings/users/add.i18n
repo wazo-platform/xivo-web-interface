@@ -782,6 +782,3 @@ Asterisk: parkinglot
 
 ; no_linefeatures
 Aucune ligne
-
-; no_entity_with_intern_context_detected
-Aucune entité avec un contexte interne
