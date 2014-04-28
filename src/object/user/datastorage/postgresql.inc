@@ -23,6 +23,28 @@ dwho_file::required(array(XIVO_PATH_OBJECT,'user','datastorage','abstract','sql.
 class xivo_user_postgresql extends xivo_user_abstract_sql
 {
 
+	function add($arr,$id=0)
+	{
+		if(is_array($arr) === false)
+			return(false);
+
+		if(isset($arr['entity_id']) === true && $arr['entity_id'] == 0)
+			$arr['entity_id'] = null;
+
+		return(parent::add($arr,$id));
+	}
+
+	function edit($id,$arr,$disable=null)
+	{
+		if(is_array($arr) === false)
+			return(false);
+
+		if(isset($arr['entity_id']) === true && $arr['entity_id'] == 0)
+			$arr['entity_id'] = null;
+
+		return(parent::edit($id,$arr,$disable));
+	}
+
 }
 
 ?>
