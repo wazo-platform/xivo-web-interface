@@ -212,6 +212,10 @@ $array['func_key_dest_queue'] = array();
 $array['func_key_dest_queue']['table'] = 'func_key_dest_queue';
 $array['func_key_dest_queue']['primary'] = array('func_key_id' => '', 'queue_id' => '', 'destination_type_id' => '');
 
+$array['func_key_dest_conf'] = array();
+$array['func_key_dest_conf']['table'] = 'func_key_dest_conf';
+$array['func_key_dest_conf']['primary'] = array('func_key_id' => '', 'conf_id' => '', 'destination_type_id' => '');
+
 $array['general'] = array();
 $array['general']['table'] = 'general';
 $array['general']['primary'] = array('id' => '');

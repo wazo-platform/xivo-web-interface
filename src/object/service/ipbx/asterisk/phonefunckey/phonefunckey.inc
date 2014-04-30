@@ -419,7 +419,6 @@ class xivo_service_asterisk_phonefunckey extends xivo_service_asterisk_abstract
 
 		if (($ipbx = &$this->_sre) === false
 		|| ($modcallfiltermember = &$ipbx->get_module('callfiltermember')) === false
-		|| ($modmeetmefeatures = &$ipbx->get_module('meetmefeatures')) === false
 		|| ($moduserfeatures = &$ipbx->get_module('userfeatures')) === false
 		|| ($appfeatures = &$ipbx->get_apprealstatic('features')) === false
 		|| ($appfeaturemap = &$appfeatures->get_module('featuremap')) === false
@@ -460,11 +459,6 @@ class xivo_service_asterisk_phonefunckey extends xivo_service_asterisk_abstract
 					if ($type['val'] === 'parkext')
 						$conf[$ref['fknum']]['type'] = 'park';
 					$exten = $ref['exten'];
-					break;
-				case 'meetme':
-					$meetme_id = $type['val'];
-					$meetme = $modmeetmefeatures->get($meetme_id);
-					$exten = $meetme['confno'];
 					break;
 				case 'agent':
 					if ($ref['progfunckey'] === true) {

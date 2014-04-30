@@ -1468,6 +1468,11 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 				if ($this->_add_func_key_v2($ref, 'queue') === false)
 					return(false);
 			}
+			elseif($ref['typeextenumbersright'] === 'conf')
+			{
+				if ($this->_add_func_key_v2($ref, 'conf') === false)
+					return(false);
+			}
 			else
 			{
 				if($this->_phonefunckey->add($ref) === false)
