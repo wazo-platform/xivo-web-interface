@@ -3,6 +3,9 @@ Propriétés des messageries vocales
 
 ; smenu_general
 Général
+ 
+; smenu_voicemenu
+Menu vocal
 
 ; smenu_email
 E-mail
