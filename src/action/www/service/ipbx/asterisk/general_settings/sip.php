@@ -23,7 +23,6 @@ $config = dwho::load_init(XIVO_PATH_CONF.DWHO_SEP_DIR.'ipbx.ini');
 $appsip = &$ipbx->get_apprealstatic('sip');
 $appgeneralsip = &$appsip->get_module('general');
 $modauth = &$ipbx->get_module('sipauthentication');
-//$modpark = &$ipbx->get_module('parkinglot');
 
 $fm_save = $error = null;
 

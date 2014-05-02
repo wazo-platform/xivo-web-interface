@@ -516,10 +516,6 @@ $array['element']['qualifypeers']['value' ] = array(1,2,3,4,5,6,7,8,9,10,11,12,1
 $array['element']['qualifypeers']['default'] = 1;
 //$array['element']['qualifypeers']['null'] = true;
 
-$array['element']['parkinglot'] = array();
-$array['element']['parkinglot']['default'] = '';
-$array['element']['parkinglot']['null'] = true;
-
 $array['element']['prematuremedia'] = array();
 $array['element']['prematuremedia']['value' ] = array('no', 'yes');
 $array['element']['prematuremedia']['default'] = 'no';

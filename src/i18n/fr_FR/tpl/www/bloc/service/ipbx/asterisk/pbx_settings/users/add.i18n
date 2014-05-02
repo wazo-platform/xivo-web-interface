@@ -774,11 +774,5 @@ Horaires
 ; fm_user_schedule
 Horaires :
 
-; fm_protocol_parkinglot
-Parking : 
-
-; hlp_fm_parkinglot
-Asterisk: parkinglot
-
 ; no_linefeatures
 Aucune ligne

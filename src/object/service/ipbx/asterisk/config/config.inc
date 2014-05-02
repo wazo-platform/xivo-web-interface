@@ -241,9 +241,6 @@ $array['module']['paging']['datastorage'] = true;
 $array['module']['paginguser'] = array();
 $array['module']['paginguser']['datastorage'] = true;
 
-$array['module']['parkinglot'] = array();
-$array['module']['parkinglot']['datastorage'] = true;
-
 $array['module']['phonebook'] = array();
 $array['module']['phonebook']['datastorage'] = true;
 

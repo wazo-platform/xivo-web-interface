@@ -91,12 +91,6 @@ Comedia
 ; fm_protocol_nat-opt(force_rport,comedia)
 Yes (force rport + comedia)
 
-; fm_protocol_parkinglot
-Parking:
-
-; hlp_fm_parkinglot
-Asterisk config: parkinglot
-
 ; fm_protocol_context
 Context:
 

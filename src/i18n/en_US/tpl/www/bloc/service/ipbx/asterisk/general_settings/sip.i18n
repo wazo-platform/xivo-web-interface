@@ -1247,12 +1247,6 @@ Using UPDATE
 ; fm_directmedia-opt(update,nonat)
 Using UPDATE not behind NAT
 
-; fm_parkinglot
-Parking lot:
-
-; hlp_fm_parkinglot
-Asterisk config: parkinglot
-
 ;;; internals
 ; smenu_internals
 Internals

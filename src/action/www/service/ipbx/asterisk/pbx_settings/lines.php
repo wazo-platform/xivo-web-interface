@@ -48,7 +48,6 @@ switch($act)
 			$_QRY->go($_TPL->url('service/ipbx/pbx_settings/lines'), array('act' => 'list'));
 		}
 		$appline = &$ipbx->get_application('line');
-		//$modpark = &$ipbx->get_module('parkinglot');
 
 		$contexts = $appline->get_all_context();
 
@@ -99,7 +98,6 @@ switch($act)
 		$_TPL->set_var('fm_save',$fm_save);
 		$_TPL->set_var('element',$element);
 		$_TPL->set_var('context_list',$appline->get_context_list(null,null,null,false,'internal'));
-		//$_TPL->set_var('parking_list', $modpark->get_all());
 		$_TPL->set_var('proto',$_QR['proto']);
 
 		$dhtml = &$_TPL->get_module('dhtml');
@@ -110,7 +108,6 @@ switch($act)
 		break;
 	case 'edit':
 		$appline = &$ipbx->get_application('line');
-		//$modpark = &$ipbx->get_module('parkinglot');
 
 		if(isset($_QR['id']) === false || ($info = $appline->get($_QR['id'],null,null,true)) === false)
 			$_QRY->go($_TPL->url('service/ipbx/pbx_settings/lines'),$param);
@@ -167,7 +164,6 @@ switch($act)
 		$_TPL->set_var('fm_save',$fm_save);
 		$_TPL->set_var('element',$element);
 		$_TPL->set_var('context_list',$appline->get_context_list(null,null,null,false,'internal'));
-		//$_TPL->set_var('parking_list', $modpark->get_all());
 
 		$dhtml = &$_TPL->get_module('dhtml');
 		$dhtml->set_js('js/dwho/submenu.js');

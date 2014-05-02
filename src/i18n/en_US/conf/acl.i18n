@@ -157,9 +157,6 @@ Extensions
 ; acl(service-ipbx-pbx_services-musiconhold)
 On Hold Music
 
-; acl(service-ipbx-pbx_services-parkinglot)
-Parking
-
 ; acl(service-ipbx-pbx_services-phonebook)
 Phonebook
 

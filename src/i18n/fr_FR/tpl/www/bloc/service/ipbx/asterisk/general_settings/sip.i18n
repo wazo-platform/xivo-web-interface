@@ -1043,12 +1043,6 @@ Via UPDATE
 ; fm_directmedia-opt(update,nonat)
 Via UPDATE et pas lorsque NAT
 
-; fm_parkinglot
-Parquage par défaut : 
-
-; hlp_fm_parkinglot
-Config Asterisk: parkinglot
-
 ;;; internals
 ; smenu_internals
 Interne

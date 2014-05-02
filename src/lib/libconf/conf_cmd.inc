@@ -93,9 +93,6 @@ $array['extensions']['ipbx'] = array('dialplan reload', 'features reload');
 $array['musiconhold'] = array();
 $array['musiconhold']['ipbx'] = array('moh reload');
 
-$array['parkinglot'] = array();
-$array['parkinglot']['ipbx'] = array('features reload');
-
 $array['phonebook'] = array();
 $array['phonebook']['dird'] = array('update-phonebook');
 $array['phonebook']['ctibus'] = array('xivo[phonebook,%s,%s]');

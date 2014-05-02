@@ -21,7 +21,6 @@
 $appqueue = &$ipbx->get_application('queue');
 $apprightcall = &$ipbx->get_application('rightcall',null,false);
 $appgroup = &$ipbx->get_application('group',null,false);
-$modpark = &$ipbx->get_module('parkinglot');
 $general_module   = &$ipbx->get_module('general');
 
 $general = $general_module->get(1);
@@ -182,6 +181,5 @@ $_TPL->set_var('fktype_list',$appuser->get_phonefunckey_type());
 $_TPL->set_var('profileclient_list',$appuser->get_profileclient_list());
 $_TPL->set_var('order_list', $order_list);
 $_TPL->set_var('softkeys_list', $softkeys_list);
-$_TPL->set_var('parking_list', $modpark->get_all());
 
 ?>

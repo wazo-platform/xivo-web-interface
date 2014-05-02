@@ -157,9 +157,6 @@ Extensions
 ; acl(service-ipbx-pbx_services-musiconhold)
 Musiques d'attente
 
-; acl(service-ipbx-pbx_services-parkinglot)
-Parkings
-
 ; acl(service-ipbx-pbx_services-phonebook)
 Carnet d'adresses
 

@@ -264,10 +264,6 @@ $array['paginguser'] = array();
 $array['paginguser']['table'] = 'paginguser';
 $array['paginguser']['primary'] = array('pagingid' => '','userfeaturesid' => '');
 
-$array['parkinglot'] = array();
-$array['parkinglot']['table'] = 'parkinglot';
-$array['parkinglot']['primary'] = array('id' => '');
-
 $array['phonebook'] = array();
 $array['phonebook']['table'] = 'phonebook';
 $array['phonebook']['primary'] = array('id' => '');

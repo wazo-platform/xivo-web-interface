@@ -620,12 +620,6 @@ Allow firmware download:
 ; hlp_fm_allowfwdownload
 Asterisk config: allowfwdownload
 
-; fm_parkinglot
-Default parkinglot:
-
-; hlp_fm_parkinglot
-Asterisk config: parkinglot
-
 ; fm_maxcallnumbers
 Max call numbers (per remote IP):
 

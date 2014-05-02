@@ -21,7 +21,6 @@
 $appiax = &$ipbx->get_apprealstatic('iax');
 $appgeneraliax = &$appiax->get_module('general');
 $modcalllimits = &$ipbx->get_module('iaxcallnumberlimits');
-//$modpark = &$ipbx->get_module('parkinglot');
 
 $fm_save = $error = null;
 

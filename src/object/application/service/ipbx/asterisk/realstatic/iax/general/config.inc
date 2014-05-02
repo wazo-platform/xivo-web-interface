@@ -227,10 +227,6 @@ $array['element']['allowfwdownload'] = array();
 $array['element']['allowfwdownload']['value'] = array('no','yes');
 $array['element']['allowfwdownload']['default'] = 'no';
 
-$array['element']['parkinglot'] = array();
-$array['element']['parkinglot']['default'] = '';
-$array['element']['parkinglot']['null'] = true;
-
 $array['element']['maxcallnumbers'] = array();
 $array['element']['maxcallnumbers']['default'] = '';
 $array['element']['maxcallnumbers']['null'] = true;

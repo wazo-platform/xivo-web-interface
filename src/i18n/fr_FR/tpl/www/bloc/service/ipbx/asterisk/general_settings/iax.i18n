@@ -608,12 +608,6 @@ Servir les firmware aux clients:
 ; hlp_fm_allowfwdownload
 Config asterisk: allowfwdownload
 
-; fm_parkinglot
-Parquage par défaut: 
-
-; hlp_fm_parkinglot
-Config asterisk: parkinglot
-
 ; fm_maxcallnumbers
 Nombre maximal d'appels par IP distante: 
 
