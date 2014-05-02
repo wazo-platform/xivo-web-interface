@@ -58,9 +58,6 @@ $array['module']['netiface']['datastorage'] = true;
 $array['module']['resolvconf'] = array();
 $array['module']['resolvconf']['datastorage'] = true;
 
-$array['module']['server'] = array();
-$array['module']['server']['datastorage'] = true;
-
 $array['module']['provdconfig'] = array();
 $array['module']['provdconfig']['datastorage'] = false;
 
