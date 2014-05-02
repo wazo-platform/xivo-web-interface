@@ -43,7 +43,6 @@ class stats_ressource_cel
    private     $_result    = false;
    private     $_cel       = false;
    private     $_trunk     = false;
-   private     $_operatorlist  = false;
    private     $_ipbx      = false;
    private     $_total     = 0;
 
@@ -54,11 +53,8 @@ class stats_ressource_cel
        if(($_SRE = &dwho_gct::get('xivo_service')) === false
        || ($this->_ipbx = &$_SRE->get('ipbx')) === false
        || ($this->_cel = &$this->_ipbx->get_module('cel')) === false
-       || ($this->_trunk = &$this->_ipbx->get_application('trunk')) === false
-       || ($this->_operator = &$this->_ipbx->get_application('operator')) === false)
+       || ($this->_trunk = &$this->_ipbx->get_application('trunk')) === false)
            die('Can\'t load object for xivo_statistics_cel');
-
-       $this->get_operator_list();
    }
 
    private function _build_trunkname_from_identity($identity)
@@ -70,48 +66,6 @@ class stats_ressource_cel
            return(false);
 
        return(($out[2].'/'.$out[1]));
-   }
-
-   public function get_operator_list()
-   {
-       if (($appoperator = $this->_operator) === false
-       || ($list = $appoperator->get_operator_list(false)) === false)
-           return(false);
-
-       $rs = array();
-
-       $nb = count($list);
-       for($i=0;$i<$nb;$i++)
-       {
-           $ref = &$list[$i];
-           $listdestination = $ref['destination'];
-           $listtrunk = $ref['trunk'];
-
-           $nbt = count($listdestination);
-           for($d=0;$d<$nbt;$d++)
-           {
-               $refd = &$listdestination[$d];
-               $refd['operator'] = $ref;
-           }
-
-           $nbt = count($listtrunk);
-           for($u=0;$u<$nbt;$u++)
-           {
-               $reft = &$listtrunk[$u];
-               if (isset($reft['protocol']) === false)
-                   continue;
-               $protocol = $reft['protocol'];
-               if (($trunkname = $this->_build_trunkname_from_identity($protocol['identity'])) === false)
-                   continue;
-
-               if (isset($rs[$trunkname]) === false)
-                   $rs[$trunkname] = array();
-
-               $rs[$trunkname] = array_merge($rs[$trunkname], $listdestination);
-           }
-       }
-
-       return(($this->_operatorlist = $rs));
    }
 
    public function get_cnt()

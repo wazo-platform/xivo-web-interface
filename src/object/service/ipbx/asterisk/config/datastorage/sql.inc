@@ -248,18 +248,6 @@ $array['musiconhold'] = array();
 $array['musiconhold']['table'] = 'musiconhold';
 $array['musiconhold']['primary'] = array('id' => '');
 
-$array['operator'] = array();
-$array['operator']['table'] = 'operator';
-$array['operator']['primary'] = array('id' => '');
-
-$array['operator_destination'] = array();
-$array['operator_destination']['table'] = 'operator_destination';
-$array['operator_destination']['primary'] = array('id' => '');
-
-$array['operator_trunk'] = array();
-$array['operator_trunk']['table'] = 'operator_trunk';
-$array['operator_trunk']['primary'] = array('operator_id' => '','trunk_id' => '');
-
 $array['outcall'] = array();
 $array['outcall']['table'] = 'outcall';
 $array['outcall']['primary'] = array('id' => '');

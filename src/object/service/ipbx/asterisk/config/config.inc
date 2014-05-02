@@ -229,15 +229,6 @@ $array['module']['meetmeguest']['datastorage'] = true;
 $array['module']['musiconhold'] = array();
 $array['module']['musiconhold']['datastorage'] = true;
 
-$array['module']['operator'] = array();
-$array['module']['operator']['datastorage'] = true;
-
-$array['module']['operator_destination'] = array();
-$array['module']['operator_destination']['datastorage'] = true;
-
-$array['module']['operator_trunk'] = array();
-$array['module']['operator_trunk']['datastorage'] = true;
-
 $array['module']['outcall'] = array();
 $array['module']['outcall']['datastorage'] = true;
 
