@@ -35,19 +35,6 @@ echo	'<div id="fd-dialaction-',$event,'-extension-actiontype" class="b-nodisplay
 			  'labelid'	=> 'dialaction-'.$event.'-extension-actionarg2',
 			  'size'	=> 15,
 			  'value'	=> $this->get_var('dialaction',$event,'extension','actionarg2')));
-
-	if($event === 'voicemenuflow'):
-		echo	$form->button(array('name'	=> 'add-defapplication-extension',
-					    'id'	=> 'it-add-defapplication-extension',
-					    'value'	=> $this->bbf('fm_bt-add')),
-				      'onclick="xivo_ast_defapplication_extension(\''.$dhtml->escape($event).'\',\'it-voicemenu-flow\');"');
-	elseif($event === 'voicemenuevent'):
-		echo	$form->button(array('name'	=> 'select-defapplication-extension',
-					    'id'	=> 'it-select-defapplication-extension',
-					    'value'	=> $this->bbf('fm_bt-select')),
-				      'onclick="xivo_ast_voicemenuevent_defapplication(\'extension\');"');
-	endif;
-
 echo	'</div>';
 
 ?>

@@ -222,12 +222,6 @@ class xivo_application_service_asterisk_incall extends xivo_application_asterisk
 					$arr['context'] = $ref['schedulecontext'];
 					$ref['destidentity'] = $this->_service->identity('schedule',$arr);
 					break;
-				case 'voicemenu':
-					$arr['name'] = $ref['voicemenuname'];
-					$arr['number'] = $ref['voicemenunumber'];
-					$arr['context'] = $ref['voicemenucontext'];
-					$ref['destidentity'] = $this->_service->identity('voicemenu',$arr);
-					break;
 				case 'sound':
 					$ref['destidentity'] = basename($ref['actionarg1']);
 					break;

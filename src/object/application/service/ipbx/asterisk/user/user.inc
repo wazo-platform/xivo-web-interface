@@ -590,7 +590,6 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		$r['voicemail'] = $this->get_destination_voicemail();
 		$r['schedule'] = $this->get_destination_schedule();
 		$r['sounds'] = $this->_dialaction->get_sound();
-		$r['voicemenu'] = $this->get_destination_voicemenu();
 		$r['outcalls']  = $this->get_destination_outcall();
 		//$r['trunk'] = $this->get_destination_trunk();
 

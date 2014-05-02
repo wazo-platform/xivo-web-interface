@@ -199,7 +199,6 @@ $array['service/ipbx/call_management/rightcall'] = 'service/ipbx/index.php/call_
 $array['service/ipbx/call_management/callfilter'] = 'service/ipbx/index.php/call_management/callfilter/';
 $array['service/ipbx/call_management/pickup'] = 'service/ipbx/index.php/call_management/pickup/';
 $array['service/ipbx/call_management/schedule'] = 'service/ipbx/index.php/call_management/schedule/';
-$array['service/ipbx/call_management/voicemenu'] = 'service/ipbx/index.php/call_management/voicemenu/';
 $array['service/ipbx/call_management/cel'] = 'service/ipbx/index.php/call_management/cel/';
 
 $array['service/ipbx/json/restricted/call_management/incall'] = 'service/ipbx/json.php/restricted/call_management/incall/';

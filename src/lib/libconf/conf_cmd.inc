@@ -69,9 +69,6 @@ $array['incall']['ipbx'] = array('dialplan reload');
 $array['outcall'] = array();
 $array['outcall']['ipbx'] = array('dialplan reload');
 
-$array['voicemenu'] = array();
-$array['voicemenu']['ipbx'] = array('dialplan reload');
-
 $array['context'] = array();
 $array['context']['ipbx'] = array('dialplan reload');
 

@@ -37,8 +37,7 @@ $array['element']['type']['value'] = array('extenfeatures',
 					   'meetme',
 					   'outcall',
 					   'queue',
-					   'user',
-					   'voicemenu');
+					   'user');
 $array['element']['type']['default'] = '';
 
 $array['element']['typeval'] = array();

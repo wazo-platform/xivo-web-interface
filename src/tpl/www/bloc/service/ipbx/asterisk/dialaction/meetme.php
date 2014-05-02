@@ -40,18 +40,6 @@ if(empty($list) === false):
 				    'default'	=> $element['dialaction']['actionarg1']['default'],
 				    'selected'	=> $this->get_var('dialaction',$event,'meetme','actionarg1')),
 			      $list);
-
-	if($event === 'voicemenuflow'):
-		echo	$form->button(array('name'	=> 'add-defapplication-meetme',
-					    'id'	=> 'it-add-defapplication-meetme',
-					    'value'	=> $this->bbf('fm_bt-add')),
-				      'onclick="xivo_ast_defapplication_meetme(\''.$dhtml->escape($event).'\',\'it-voicemenu-flow\');"');
-	elseif($event === 'voicemenuevent'):
-		echo	$form->button(array('name'	=> 'select-defapplication-meetme',
-					    'id'	=> 'it-select-defapplication-meetme',
-					    'value'	=> $this->bbf('fm_bt-select')),
-				      'onclick="xivo_ast_voicemenuevent_defapplication(\'meetme\');"');
-	endif;
 	echo	'</div>';
 else:
 	echo	'<div id="fd-dialaction-'.$event.'-meetme-actiontype" class="txt-center b-nodisplay">',

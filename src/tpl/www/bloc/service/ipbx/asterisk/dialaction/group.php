@@ -45,18 +45,6 @@ if(empty($list) === false):
 				  'labelid'	=> 'dialaction-'.$event.'-group-actionarg2',
 				  'size'	=> 10,
 				  'value'	=> $this->get_var('dialaction',$event,'group','actionarg2')));
-
-	if($event === 'voicemenuflow'):
-		echo	$form->button(array('name'	=> 'add-defapplication-group',
-					    'id'	=> 'it-add-defapplication-group',
-					    'value'	=> $this->bbf('fm_bt-add')),
-				      'onclick="xivo_ast_defapplication_group(\''.$dhtml->escape($event).'\',\'it-voicemenu-flow\');"');
-	elseif($event === 'voicemenuevent'):
-		echo	$form->button(array('name'	=> 'select-defapplication-group',
-					    'id'	=> 'it-select-defapplication-group',
-					    'value'	=> $this->bbf('fm_bt-select')),
-				      'onclick="xivo_ast_voicemenuevent_defapplication(\'group\');"');
-	endif;
 	echo	'</div>';
 else:
 	echo	'<div id="fd-dialaction-'.$event.'-group-actiontype" class="txt-center b-nodisplay">';

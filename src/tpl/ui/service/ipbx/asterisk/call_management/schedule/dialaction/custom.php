@@ -28,12 +28,6 @@ echo	'<div id="fd-dialaction-',$event,'-custom-actiontype" class="b-nodisplay">'
 			  'size'	=> 20,
 			  'value'	=> $this->get_var('dialaction',$event,'custom','actionarg1')));
 
-	if($event === 'voicemenuflow'):
-		echo	$form->button(array('name'	=> 'add-defapplication-custom',
-					    'id'	=> 'it-add-defapplication-custom',
-					    'value'	=> $this->bbf('fm_bt-add')),
-				      'onclick="xivo_ast_defapplication_custom();"');
-	endif;
 	echo	'</div>';
 
 ?>

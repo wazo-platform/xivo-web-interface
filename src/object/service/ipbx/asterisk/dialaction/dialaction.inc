@@ -57,7 +57,6 @@ class xivo_service_asterisk_dialaction extends xivo_service_asterisk_abstract
 		$data['meetme'] = $arr;
 		$data['voicemail'] = $arr;
 		$data['schedule'] = $arr;
-		$data['voicemenu'] = $arr;
 		$data['outcall'] = $arr;
 		$data['extension'] = $arr;
 		$data['application'] = $arr;
@@ -226,8 +225,6 @@ class xivo_service_asterisk_dialaction extends xivo_service_asterisk_abstract
 				return($this->chk_dest_voicemail($actionarg1,$actionarg2,null,$disable));
 			case 'schedule':
 				return($this->chk_dest_schedule($actionarg1,$id,$disable));
-			case 'voicemenu':
-				return($this->chk_dest_voicemenu($actionarg1,null,$disable));
 			case 'outcall':
 				if(dwho_has_len($actionarg2) === true
 				&& is_numeric($actionarg2) === false)

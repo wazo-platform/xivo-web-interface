@@ -188,15 +188,6 @@ $dhtml = &$this->get_module('dhtml');
 						'act=list'),
 				'</dd>';
 		endif;
-/*
-		if(xivo_user::chk_acl('call_management','voicemenu') === true):
-			echo	'<dd id="mn-call-management--voicemenu">',
-				$url->href_html($this->bbf('mn_left_callmanagement-voicemenu'),
-						'service/ipbx/call_management/voicemenu',
-						'act=list'),
-				'</dd>';
-		endif;
-*/
 		if(xivo_user::chk_acl('call_management','cel') === true):
 			echo	'<dd id="mn-call_management--cel">',
 				$url->href_html($this->bbf('mn_left_callmanagement-cel'),

@@ -45,18 +45,6 @@ if(empty($list) === false):
 				  'labelid'	=> 'dialaction-'.$event.'-outcall-actionarg2',
 				  'size'	=> 15,
 				  'value'	=> $this->get_var('dialaction',$event,'outcall','actionarg2')));
-
-	if($event === 'voicemenuflow'):
-		echo	$form->button(array('name'	=> 'add-defapplication-outcall',
-					    'id'	=> 'it-add-defapplication-outcall',
-					    'value'	=> $this->bbf('fm_bt-add')),
-				      'onclick="xivo_ast_defapplication_outcall(\''.$dhtml->escape($event).'\',\'it-voicemenu-flow\');"');
-	elseif($event === 'voicemenuevent'):
-		echo	$form->button(array('name'	=> 'select-defapplication-outcall',
-					    'id'	=> 'it-select-defapplication-outcall',
-					    'value'	=> $this->bbf('fm_bt-select')),
-				      'onclick="xivo_ast_voicemenuevent_defapplication(\'outcall\');"');
-	endif;
 	echo	'</div>';
 else:
 	echo	'<div id="fd-dialaction-'.$event.'-outcall-actiontype" class="txt-center b-nodisplay">';

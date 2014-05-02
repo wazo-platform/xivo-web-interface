@@ -122,44 +122,6 @@ function xivo_ast_defapplication_get_queue_identity(dialevent,id)
     return(dwho.form.get_text_opt_select('it-dialaction-'+dialevent+'-queue-actionarg1',id,true));
 }
 
-function xivo_ast_defapplication_queueskill(dialevent,targetid)
-{
-    if((value = dwho_eid('it-dialaction-'+dialevent+'-queueskill-skill')) === false
-    || (name = dwho_eid('it-dialaction-'+dialevent+'-queueskill-varname')) === false)
-        return(false);
-
-    var namevalue  = xivo_ast_application_sanitize_arg(name.value).replace(/=/g,'');
-    var valuevalue = xivo_ast_application_sanitize_arg(value.value).replace(/=/g,'');
-
-    if(namevalue.length < 1 || valuevalue.length < 1 )
-        return(false);
-
-    var args = [namevalue+'='+valuevalue];
-    return(xivo_fm_select_add_ast_application('set',args));
-}
-
-function xivo_ast_defapplication_queueskill_onskillchange(dialevent,targetid)
-{
-    if((skill = dwho_eid('it-dialaction-'+dialevent+'-queueskill-skill')) === false
-    || (varname = dwho_eid('it-dialaction-'+dialevent+'-queueskill-varname')) === false)
-        return(false);
-
-    if(varname.value.length > 0 && varname.getAttribute('autoset') != 1)
-        return true;
-
-    varname.value = skill.options[skill.selectedIndex].parentNode.label;
-    varname.setAttribute('autoset', 1);
-}
-
-function xivo_ast_defapplication_queueskillrule(dialevent,targetid)
-{
-    if((rule  = dwho_eid('it-dialaction-'+dialevent+'-queueskillrule-name')) === false)
-        return(false);
-
-    var args = ['XIVO_QUEUESKILLRULESET'+'='+rule.value];
-    return(xivo_fm_select_add_ast_application('set',args));
-}
-
 function xivo_ast_defapplication_meetme(dialevent,targetid)
 {
     if((meetme = dwho_eid('it-dialaction-'+dialevent+'-meetme-actionarg1')) === false
@@ -237,24 +199,6 @@ function xivo_ast_defapplication_schedule(dialevent,targetid)
 function xivo_ast_defapplication_get_schedule_identity(dialevent,id)
 {
     return(dwho.form.get_text_opt_select('it-dialaction-'+dialevent+'-schedule-actionarg1',id,true));
-}
-
-function xivo_ast_defapplication_voicemenu(dialevent,targetid)
-{
-    if((voicemenu = dwho_eid('it-dialaction-'+dialevent+'-voicemenu-actionarg1')) === false
-    || voicemenu.type !== 'select-one'
-    || dwho_is_undef(voicemenu.options[voicemenu.selectedIndex]) === true)
-        return(false);
-
-    var optargs = ['\''+voicemenu.options[voicemenu.selectedIndex].text+'\''];
-    var valargs = [voicemenu.value];
-
-    return(xivo_ast_set_defapplication('macro|voicemenu',targetid,optargs,valargs));
-}
-
-function xivo_ast_defapplication_get_voicemenu_identity(dialevent,id)
-{
-    return(dwho.form.get_text_opt_select('it-dialaction-'+dialevent+'-voicemenu-actionarg1',id,true));
 }
 
 function xivo_ast_defapplication_extension(dialevent,targetid)
@@ -439,8 +383,6 @@ var xivo_ast_defapplication = {
                      identityfunc: xivo_ast_defapplication_get_voicemail_identity},
     'macro|schedule':        {displayname: 'GotoSchedule',
                      identityfunc: xivo_ast_defapplication_get_schedule_identity},
-    'macro|voicemenu':        {displayname: 'GotoVoiceMenu',
-                     identityfunc: xivo_ast_defapplication_get_voicemenu_identity},
     'macro|extension':        {displayname: 'CallExten'},
     'macro|callbackdisa':        {displayname: 'CallBackDISA'},
     'macro|disa':            {displayname: 'DISA'},

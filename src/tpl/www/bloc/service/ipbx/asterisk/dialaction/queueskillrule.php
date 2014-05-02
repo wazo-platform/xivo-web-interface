@@ -37,8 +37,7 @@ echo '<div id="fd-dialaction-',$event,'-queueskillrule-actiontype" class="b-nodi
 
      $form->button(array('name'		=> 'add-defapplication-queueskillrule',
 			 'id'		=> 'it-add-defapplication-queueskillrule',
-			 'value'	=> $this->bbf('fm_bt-add')),
- 		         'onclick="xivo_ast_defapplication_queueskillrule(\''.$dhtml->escape($event).'\',\'it-voicemenu-flow\');"'),
+			 'value'	=> $this->bbf('fm_bt-add'))),
 
      '</div>';
 

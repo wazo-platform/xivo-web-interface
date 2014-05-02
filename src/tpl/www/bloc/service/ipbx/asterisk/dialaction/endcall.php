@@ -45,19 +45,6 @@ echo	'<div id="fd-dialaction-',$event,'-endcall-actiontype" class="b-nodisplay">
 			  'labelid'	=> 'dialaction-'.$event.'-endcall-congestion-actionarg1',
 			  'size'	=> 10,
 			  'value'	=> $this->get_var('dialaction',$event,'congestion','actionarg1')));
-
-	if($event === 'voicemenuflow'):
-		echo	$form->button(array('name'	=> 'add-defapplication-endcall',
-					    'id'	=> 'it-add-defapplication-endcall',
-					    'value'	=> $this->bbf('fm_bt-add')),
-				      'onclick="xivo_ast_defapplication_endcall(\''.$dhtml->escape($event).'\',\'it-voicemenu-flow\');"');
-	elseif($event === 'voicemenuevent'):
-		echo	$form->button(array('name'	=> 'select-defapplication-endcall',
-					    'id'	=> 'it-select-defapplication-endcall',
-					    'value'	=> $this->bbf('fm_bt-select')),
-				      'onclick="xivo_ast_voicemenuevent_defapplication(\'endcall\');"');
-	endif;
-
 echo	'</div>';
 
 ?>

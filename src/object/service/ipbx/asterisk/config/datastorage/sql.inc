@@ -444,8 +444,4 @@ $array['voicemail'] = array();
 $array['voicemail']['table'] = 'voicemail';
 $array['voicemail']['primary'] = array('uniqueid' => '');
 
-$array['voicemenu'] = array();
-$array['voicemenu']['table'] = 'voicemenu';
-$array['voicemenu']['primary'] = array('id' => '');
-
 ?>

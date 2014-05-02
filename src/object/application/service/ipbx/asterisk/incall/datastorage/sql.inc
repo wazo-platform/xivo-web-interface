@@ -31,8 +31,7 @@ class xivo_application_service_asterisk_incall_sql extends xivo_application_abst
 				'queuefeatures'		=> '',
 				'meetmefeatures'	=> '',
 				'voicemail'			=> '',
-				'schedule'			=> '',
-				'voicemenu'			=> '');
+				'schedule'			=> '');
 
 	function get_all($disable=null,$order=null,$limit=null,$value=null)
 	{
@@ -100,17 +99,6 @@ class xivo_application_service_asterisk_incall_sql extends xivo_application_abst
 				       $this->_table['dialaction'].'.action = %s',
 				       'voicemail');
 
-		$this->_dso->leftjoin($this->_table['voicemenu'],
-				      $this->_table['dialaction'].'.actionarg1 = '.$this->_dso->cast($this->_table['voicemenu'].'.id','varchar'),
-				      null,
-				      array('voicemenuname'	=> 'name',
-					    'voicemenunumber'	=> 'number',
-					    'voicemenucontext'	=> 'context'));
-
-		$this->_dso->joinwhere($this->_table['voicemenu'],
-				       $this->_table['dialaction'].'.action = %s',
-				       'voicemenu');
-
 		$where = array();
 		$where['event'] = 'answer';
 		$where['category'] = 'incall';
@@ -137,8 +125,6 @@ class xivo_application_service_asterisk_incall_sql extends xivo_application_abst
 			$this->_dso->orwherecontain('fullname',$value,true,$this->_table['voicemail']);
 			$this->_dso->orwherecontain('mailbox',$value,true,$this->_table['voicemail']);
 			$this->_dso->orwherecontain('email',$value,true,$this->_table['voicemail']);
-			$this->_dso->orwherecontain('name',$value,true,$this->_table['voicemenu']);
-			$this->_dso->orwherecontain('number',$value,true,$this->_table['voicemenu']);
 			$this->_dso->aggregate_where();
 		}
 

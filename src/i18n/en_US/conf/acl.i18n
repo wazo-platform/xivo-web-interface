@@ -109,9 +109,6 @@ Call permissions
 ; acl(service-ipbx-call_management-schedule)
 Schedules
 
-; acl(service-ipbx-call_management-voicemenu)
-Voice menus
-
 ; acl(service-ipbx-control_system)
 Control system
 

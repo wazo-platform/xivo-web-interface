@@ -257,12 +257,6 @@ class xivo_application_service_asterisk_schedule extends xivo_application_asteri
 					$arr['context'] = $ref['schedulecontext'];
 					$ref['destidentity'] = $this->_schedule->mk_identity($arr);
 					break;
-				case 'voicemenu':
-					$arr['name'] = $ref['voicemenuname'];
-					$arr['number'] = $ref['voicemenunumber'];
-					$arr['context'] = $ref['voicemenucontext'];
-					$ref['destidentity'] = $this->_service->identity('voicemenu',$arr);
-					break;
 				case 'sound':
 					$ref['destidentity'] = basename($ref['actionarg1']);
 					break;

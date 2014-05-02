@@ -797,8 +797,6 @@ class xivo_application_service_asterisk_context extends xivo_application_asteris
 		   && $this->_update_trunkiax_contextmember($context,$newcontext) === false) === true
 		|| (isset($refinfo['trunkcustom']) === true
 		   && $this->_update_trunkcustom_contextmember($context,$newcontext) === false) === true
-		|| (isset($refinfo['voicemenu']) === true
-		   && $this->_update_voicemenu_contextmember($context,$newcontext) === false) === true
 		|| (isset($refinfo['voicemail']) === true
 		   && $this->_update_voicemail_contextmember($context,$newcontext,$refinfo['voicemail']) === false) === true)
 			return(false);
@@ -1061,11 +1059,6 @@ class xivo_application_service_asterisk_context extends xivo_application_asteris
 		return($this->_update_context_contextmember('trunkcustom',$context,$newcontext));
 	}
 
-	function _update_voicemenu_contextmember($context,$newcontext)
-	{
-		return($this->_update_context_contextmember('voicemenu',$context,$newcontext));
-	}
-
 	function _update_voicemail_contextmember($context,$newcontext,$data)
 	{
 		if(dwho_issa('contextmember',$this->_return) === false
@@ -1203,9 +1196,6 @@ class xivo_application_service_asterisk_context extends xivo_application_asteris
 
 					if(isset($val['trunkcustom']) === true)
 						$this->_update_trunkcustom_contextmember($context,$newcontext);
-
-					if(isset($val['voicemenu']) === true)
-						$this->_update_voicemenu_contextmember($context,$newcontext);
 
 					if(isset($val['voicemail']) === true)
 						$this->_update_voicemail_contextmember($context,$newcontext,$val['voicemail']);

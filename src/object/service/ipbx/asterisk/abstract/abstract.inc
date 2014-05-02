@@ -340,19 +340,6 @@ abstract class xivo_service_asterisk_abstract extends xivo_libdatastorage_abstra
 					null));
 	}
 
-	public function chk_dest_voicemenu($actionarg1,$actionarg2=1,$id=null,$disable=null)
-	{
-		return($this->_chk_dest('voicemenu',
-					'voicemenu',
-					$actionarg1,
-					dwho_uint($actionarg2,1),
-					$id,
-					$disable,
-					false,
-					false,
-					null));
-	}
-
 	public function chk_dest_outcall($actionarg1,$actionarg2='',$id=null,$disable=null,$chknumber=false,$chkcontext=false,$context=null)
 	{
 		$actionarg2 = dwho_has_len($actionarg2) === true ? dwho_ufloat($actionarg2) : '';

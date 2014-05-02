@@ -187,7 +187,6 @@ class xivo_application_service_asterisk_dialaction_abstract extends xivo_applica
 		$r['meetme'] = $arr;
 		$r['voicemail'] = $arr;
 		$r['schedule'] = $arr;
-		$r['voicemenu'] = $arr;
 		$r['outcall'] = $arr;
 		$r['extension'] = $arr;
 		$r['application'] = $arr;

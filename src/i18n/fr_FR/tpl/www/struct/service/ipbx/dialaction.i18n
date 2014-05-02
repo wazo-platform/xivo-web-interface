@@ -85,12 +85,6 @@ Horaire
 ; fm_dialaction_schedule-actionarg1
 Renvoyez vers :
 
-; fm_dialaction_actiontype-opt(voicemenu)
-Menu vocal
-
-; fm_dialaction_voicemenu-actionarg1
-Renvoyez vers :
-
 ; fm_dialaction_actiontype-opt(extension)
 Extension
 
@@ -234,9 +228,6 @@ Créer une messagerie vocale
 
 ; create_schedule
 Créer un horaire
-
-; create_voicemenu
-Créer un menu vocal
 
 ; add_playback-sound
 Ajouter un fichier son

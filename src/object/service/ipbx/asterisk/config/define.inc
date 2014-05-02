@@ -93,7 +93,6 @@ define('XIVO_SRE_IPBX_AST_REGEXP_AUDIO_FILE_PATTERN','a-zA-Z0-9_\-\.');
 define('XIVO_SRE_IPBX_AST_REGEXP_AUDIO_FILE_LENGTH','{1,194}');
 define('XIVO_SRE_IPBX_AST_REGEXP_AIDIO_FILE_EXTENSION','wav|WAV|wav49|ogg|ul|ulaw|um|pcm|al|alaw|au|vox|sln|raw');
 
-define('XIVO_SRE_IPBX_AST_REGEXP_CONTEXT','(?!(?i:voicemenu|xivo)-)[a-zA-Z0-9_-]{1,39}');
 define('XIVO_SRE_IPBX_AST_REGEXP_CALLERID','(?:"(?:[^\x00-\x08\x0A-\x1F\x22\x5C]'.
 					   '|\\\[\x00-\x09\x0B-\x0C\x0E-\x7F])+"'.
 					   '|[a-zA-Z0-9\-\.\!%\*_\+`\'\~]+)'.
@@ -138,8 +137,6 @@ define('XIVO_SRE_IPBX_AST_AGENT_GROUP_DEFAULT',1);
 define('XIVO_SRE_IPBX_AST_AGENT_VAR_METRIC_RANGE',1000000);
 
 define('XIVO_SRE_IPBX_AST_MOH_DEFAULT','default');
-
-define('XIVO_SRE_IPBX_AST_PRECONTEXT_VOICEMENU','voicemenu-');
 
 define('XIVO_SRE_IPBX_AST_NBBYPAGE',20);
 define('XIVO_SRE_IPBX_AST_CDR_NBBYPAGE',30);

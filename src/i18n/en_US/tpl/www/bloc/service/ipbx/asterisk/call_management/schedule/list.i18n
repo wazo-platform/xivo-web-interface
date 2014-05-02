@@ -64,9 +64,6 @@ Voicemail
 ; schedule_destination-schedule
 Schedule
 
-; schedule_destination-voicemenu
-Voicemenu
-
 ; schedule_destination-extension
 Extension
 

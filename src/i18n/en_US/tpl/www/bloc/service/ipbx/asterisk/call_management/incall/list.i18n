@@ -103,9 +103,6 @@ Voicemail
 ; incall_destination-schedule
 Schedule
 
-; incall_destination-voicemenu
-Voicemenu
-
 ; incall_destination-extension
 Extension
 

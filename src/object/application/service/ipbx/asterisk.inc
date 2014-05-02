@@ -448,7 +448,6 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		$r['voicemail'] = $this->get_destination_voicemail();
 		//NEW SCHEDULE MODE
 		//$r['schedule'] = $this->get_destination_schedule($scheduleid);
-		$r['voicemenu'] = $this->get_destination_voicemenu();
 		$r['outcalls']  = $this->get_destination_outcall();
 		$r['trunk']  = $this->get_destination_trunk();
 
@@ -535,20 +534,6 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		&& ($r = $schedule->get_all_except($id,$order)) !== false)
 			return($r);
  */
-		return(false);
-	}
-
-	public function get_destination_voicemenu()
-	{
-		$order = array();
-		$order['name'] = SORT_ASC;
-		$order['number'] = SORT_ASC;
-		$order['context'] = SORT_ASC;
-
-		if(($voicemenu = &$this->_service->get_module('voicemenu')) !== false
-		&& ($r = $voicemenu->get_all(null,true,$order)) !== false)
-			return($r);
-
 		return(false);
 	}
 

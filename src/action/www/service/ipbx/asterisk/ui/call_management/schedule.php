@@ -37,7 +37,6 @@ switch($act)
 
 		// load translations
 		$_TPL->load_i18n_file('tpl/www/struct/service/ipbx/dialaction.i18n', 'global');
-		$_TPL->load_i18n_file('tpl/www/bloc/service/ipbx/asterisk/call_management/voicemenu/add.i18n', 'global');
 
 		break;
 }

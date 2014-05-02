@@ -64,18 +64,6 @@ if(empty($list) === false):
 				      'labelid'	=> 'dialaction-'.$event.'-voicemail-actionarg2-j',
 				      'checked'	=> $this->get_var('dialaction',$event,'voicemail','actionarg2','j'),
 				      'value'	=> 'j'));
-
-	if($event === 'voicemenuflow'):
-		echo	$form->button(array('name'	=> 'add-defapplication-voicemail',
-					    'id'	=> 'it-add-defapplication-voicemail',
-					    'value'	=> $this->bbf('fm_bt-add')),
-				      'onclick="xivo_ast_defapplication_voicemail(\''.$dhtml->escape($event).'\',\'it-voicemenu-flow\');"');
-	elseif($event === 'voicemenuevent'):
-		echo	$form->button(array('name'	=> 'select-defapplication-voicemail',
-					    'id'	=> 'it-select-defapplication-voicemail',
-					    'value'	=> $this->bbf('fm_bt-select')),
-				      'onclick="xivo_ast_voicemenuevent_defapplication(\'voicemail\');"');
-	endif;
 	echo	'</div>';
 else:
 	echo	'<div id="fd-dialaction-'.$event.'-voicemail-actiontype" class="txt-center b-nodisplay">',

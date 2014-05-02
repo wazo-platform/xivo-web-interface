@@ -364,9 +364,6 @@ $array['module']['usersip']['datastorage'] = true;
 $array['module']['voicemail'] = array();
 $array['module']['voicemail']['datastorage'] = true;
 
-$array['module']['voicemenu'] = array();
-$array['module']['voicemenu']['datastorage'] = true;
-
 
 $array['protocol'] = array();
 $array['protocol'][XIVO_SRE_IPBX_AST_PROTO_SIP]    = array('module' => 'usersip');

@@ -37,8 +37,7 @@ echo '<div id="fd-dialaction-',$event,'-queueskill-actiontype" class="b-nodispla
 				'key'		=> 'category',
 				'unique' 	=> true,
 			    )),
-		      $skills_tree,
-		     'onchange="xivo_ast_defapplication_queueskill_onskillchange(\''.$dhtml->escape($event).'\',\'it-voicemenu-flow\');"'),
+		      $skills_tree),
 
      $form->text(array('desc'	=> $this->bbf('fm_dialaction_queueskill-varname'),
 			  'name'	=> 'dialaction['.$event.'][varname]',
@@ -48,8 +47,7 @@ echo '<div id="fd-dialaction-',$event,'-queueskill-actiontype" class="b-nodispla
 
      $form->button(array('name'		=> 'add-defapplication-queueskill',
 			 'id'		=> 'it-add-defapplication-queueskill',
-			 'value'	=> $this->bbf('fm_bt-add')),
-		         'onclick="xivo_ast_defapplication_queueskill(\''.$dhtml->escape($event).'\',\'it-voicemenu-flow\');"'),
+			 'value'	=> $this->bbf('fm_bt-add'))),
 
      '</div>';
 

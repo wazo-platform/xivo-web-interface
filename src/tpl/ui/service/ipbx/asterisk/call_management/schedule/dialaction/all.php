@@ -29,7 +29,6 @@ $this->file_include('service/ipbx/asterisk/call_management/schedule/dialaction/q
 $this->file_include('service/ipbx/asterisk/call_management/schedule/dialaction/meetme');
 $this->file_include('service/ipbx/asterisk/call_management/schedule/dialaction/voicemail');
 //$this->file_include('service/ipbx/asterisk/call_management/schedule/dialaction/schedule');
-$this->file_include('service/ipbx/asterisk/call_management/schedule/dialaction/voicemenu');
 $this->file_include('service/ipbx/asterisk/call_management/schedule/dialaction/extension');
 $this->file_include('service/ipbx/asterisk/call_management/schedule/dialaction/application');
 $this->file_include('service/ipbx/asterisk/call_management/schedule/dialaction/sound');

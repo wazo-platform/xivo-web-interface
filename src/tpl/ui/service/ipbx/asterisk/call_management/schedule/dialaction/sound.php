@@ -56,13 +56,6 @@ if(empty($list) === false):
 				      'labelid'	=> 'dialaction-'.$event.'-sound-actionarg2-j',
 				      'checked'	=> $this->get_var('dialaction',$event,'sound','actionarg2','j'),
 				      'value'	=> 'j'));
-
-	if($event === 'voicemenuevent'):
-		echo	$form->button(array('name'	=> 'select-defapplication-sound',
-					    'id'	=> 'it-select-defapplication-sound',
-					    'value'	=> $this->bbf('fm_bt-select')),
-				      'onclick="xivo_ast_voicemenuevent_defapplication(\'sound\');"');
-	endif;
 	echo	'</div>';
 else:
 	echo	'<div id="fd-dialaction-'.$event.'-sound-actiontype" class="txt-center b-nodisplay">',

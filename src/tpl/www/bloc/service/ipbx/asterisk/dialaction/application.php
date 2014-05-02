@@ -81,18 +81,5 @@ echo	'<div id="fd-dialaction-',$event,'-application-actiontype" class="b-nodispl
 			  'labelid'	=> 'dialaction-'.$event.'-application-password-actionarg1',
 			  'size'	=> 15,
 			  'value'	=> $this->get_var('dialaction',$event,'password','actionarg1')));
-
-	if($event === 'voicemenuflow'):
-		echo	$form->button(array('name'	=> 'add-defapplication-application',
-					    'id'	=> 'it-add-defapplication-application',
-					    'value'	=> $this->bbf('fm_bt-add')),
-				      'onclick="xivo_ast_defapplication_application(\''.$dhtml->escape($event).'\',\'it-voicemenu-flow\');"');
-	elseif($event === 'voicemenuevent'):
-		echo	$form->button(array('name'	=> 'select-defapplication-application',
-					    'id'	=> 'it-select-defapplication-application',
-					    'value'	=> $this->bbf('fm_bt-select')),
-				      'onclick="xivo_ast_voicemenuevent_defapplication(\'application\');"');
-	endif;
-
 echo	'</div>';
 ?>

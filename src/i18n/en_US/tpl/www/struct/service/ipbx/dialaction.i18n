@@ -94,12 +94,6 @@ Schedule
 ; fm_dialaction_schedule-actionarg1
 Redirect to :
 
-; fm_dialaction_actiontype-opt(voicemenu)
-Voicemenu
-
-; fm_dialaction_voicemenu-actionarg1
-Redirect to :
-
 ; fm_dialaction_actiontype-opt(extension)
 Extension
 
@@ -243,9 +237,6 @@ Create voicemail
 
 ; create_schedule
 Create schedule
-
-; create_voicemenu
-Create voicemenu
 
 ; add_playback-sound
 Add sound file
