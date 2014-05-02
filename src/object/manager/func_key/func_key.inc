@@ -29,7 +29,7 @@ class func_key_manager extends manager_abstract
 	protected $_func_key_dest_user	= false;
 	protected $_func_key_dest_group	= false;
 	protected $_func_key_dest_queue	= false;
-	protected $_func_key_dest_conf	= false;
+	protected $_func_key_dest_conference	= false;
 	protected $_func_key_mapping	= false;
 	protected $_func_key_template	= false;
 
@@ -47,7 +47,7 @@ class func_key_manager extends manager_abstract
 		$this->_func_key_dest_user = $this->_service->get_module('ipbx','func_key_dest_user');
 		$this->_func_key_dest_group = $this->_service->get_module('ipbx','func_key_dest_group');
 		$this->_func_key_dest_queue = $this->_service->get_module('ipbx','func_key_dest_queue');
-		$this->_func_key_dest_conf = $this->_service->get_module('ipbx','func_key_dest_conf');
+		$this->_func_key_dest_conference = $this->_service->get_module('ipbx','func_key_dest_conference');
 		$this->_func_key_mapping = $this->_service->get_module('ipbx','func_key_mapping');
 		$this->_func_key_template = $this->_service->get_module('ipbx','func_key_template');
 	}
@@ -129,7 +129,7 @@ class func_key_manager extends manager_abstract
 			case 'user':
 			case 'group':
 			case 'queue':
-			case 'conf':
+			case 'conference':
 				$fk_dst_type_id = (int) $this->get_destination_type_id_by_name($dst_type);
 				break;
 			default:
@@ -161,8 +161,8 @@ class func_key_manager extends manager_abstract
 				case 'queue':
 					$func_key_id = $this->add_dst_for_queue($dst_id);
 					break;
-				case 'conf':
-					$func_key_id = $this->add_dst_for_conf($dst_id);
+				case 'conference':
+					$func_key_id = $this->add_dst_for_conference($dst_id);
 					break;
 				default:
 					dwho_report::push('error', 'Error: unknown fk_dst_type "'.$dst_type);
@@ -315,10 +315,10 @@ class func_key_manager extends manager_abstract
 		return(true);
 	}
 
-	public function add_dst_for_conf($conf_id)
+	public function add_dst_for_conference($conference_id)
 	{
 		$fk_type_id = $this->get_type_id_by_name('speeddial');
-		$fk_dst_type_id = $this->get_destination_type_id_by_name('conf');
+		$fk_dst_type_id = $this->get_destination_type_id_by_name('conference');
 
 		$func_key = array(
 			'type_id' => (int) $fk_type_id,
@@ -330,22 +330,22 @@ class func_key_manager extends manager_abstract
 			return(false);
 
 		$func_key_dest = array(
-			'conf_id' => (int) $conf_id,
+			'conference_id' => (int) $conference_id,
 			'func_key_id' => (int) $func_key_id,
 			'destination_type_id' => (int) $fk_dst_type_id
 		);
 
-		if (($rs = $this->_func_key_dest_conf->chk_values($func_key_dest)) === false
-		|| $this->_func_key_dest_conf->add($rs) === false)
+		if (($rs = $this->_func_key_dest_conference->chk_values($func_key_dest)) === false
+		|| $this->_func_key_dest_conference->add($rs) === false)
 			return(false);
 
 		return((int) $func_key_id);
 	}
 
-	public function delete_dst_for_conf($conf_id)
+	public function delete_dst_for_conference($conference_id)
 	{
-		if (($func_key_id = $this->_func_key->get_func_key_id_with_dest_type_id('conf', $conf_id)))
-			$this->_delete_func_key((int) $func_key_id, 'conf');
+		if (($func_key_id = $this->_func_key->get_func_key_id_with_dest_type_id('conference', $conference_id)))
+			$this->_delete_func_key((int) $func_key_id, 'conference');
 
 		return(true);
 	}
@@ -375,8 +375,8 @@ class func_key_manager extends manager_abstract
 				if ($this->_func_key_dest_queue->delete_where($where_func_key_dest) === false)
 					return(false);
 				break;
-			case 'conf':
-				if ($this->_func_key_dest_conf->delete_where($where_func_key_dest) === false)
+			case 'conference':
+				if ($this->_func_key_dest_conference->delete_where($where_func_key_dest) === false)
 					return(false);
 				break;
 		}

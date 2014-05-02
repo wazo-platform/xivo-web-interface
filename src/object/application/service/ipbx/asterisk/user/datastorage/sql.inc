@@ -37,7 +37,7 @@ class xivo_application_service_asterisk_user_sql extends xivo_application_abstra
 				'func_key_dest_user'	=> '',
 				'func_key_dest_group'	=> '',
 				'func_key_dest_queue'	=> '',
-				'func_key_dest_conf'	=> '',
+				'func_key_dest_conference'	=> '',
 				'func_key_destination_type'	=> '',
 				'func_key_mapping'	=> '',
 				'func_key_template'	=> '',
@@ -300,13 +300,13 @@ class xivo_application_service_asterisk_user_sql extends xivo_application_abstra
 					null,
 					array('*'));
 
-		# CONF FUNC_KEY
-		$this->_dso->leftjoin($this->_table['func_key_dest_conf'],
-					$this->_table['func_key_dest_conf'].'.func_key_id = '.$this->_table['func_key'].'.id',
+		# CONFERENCE FUNC_KEY
+		$this->_dso->leftjoin($this->_table['func_key_dest_conference'],
+					$this->_table['func_key_dest_conference'].'.func_key_id = '.$this->_table['func_key'].'.id',
 					null,
-					array('phonefunckey.typevalextenumbersright' => 'conf_id'));
+					array('phonefunckey.typevalextenumbersright' => 'conference_id'));
 		$this->_dso->leftjoin($this->_table['meetmefeatures'],
-					$this->_table['func_key_dest_conf'].'.conf_id'.' = '.$this->_table['meetmefeatures'].'.id',
+					$this->_table['func_key_dest_conference'].'.conference_id'.' = '.$this->_table['meetmefeatures'].'.id',
 					null,
 					array('*'));
 

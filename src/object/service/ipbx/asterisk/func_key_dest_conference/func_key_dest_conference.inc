@@ -18,10 +18,10 @@
 
 xivo_service_asterisk::required(array('abstract','abstract.inc'),true);
 
-class xivo_service_asterisk_func_key_dest_conf extends xivo_service_asterisk_abstract
+class xivo_service_asterisk_func_key_dest_conference extends xivo_service_asterisk_abstract
 {
 	var $_dso			= null;
-	var $_name			= 'func_key_dest_conf';
+	var $_name			= 'func_key_dest_conference';
 	var $_filter		= false;
 	var $_origin		= false;
 	var $_origin_list	= false;
@@ -30,10 +30,10 @@ class xivo_service_asterisk_func_key_dest_conf extends xivo_service_asterisk_abs
 	public function __construct(&$sre,&$dso)
 	{
 		if(is_object($sre) === false)
-			trigger_error('Invalid service in '.__CLASS__,E_conf_ERROR);
+			trigger_error('Invalid service in '.__CLASS__,E_conference_ERROR);
 
 		if(is_object($dso) === false)
-			trigger_error('Invalid datastorage in '.__CLASS__,E_conf_ERROR);
+			trigger_error('Invalid datastorage in '.__CLASS__,E_conference_ERROR);
 
 		$this->_sre = &$sre;
 		$this->_dso = &$dso;
@@ -43,7 +43,7 @@ class xivo_service_asterisk_func_key_dest_conf extends xivo_service_asterisk_abs
 
 	function _prepare($data)
 	{
-		$data['conf_id'] = (int) $data['conf_id'];
+		$data['conference_id'] = (int) $data['conference_id'];
 		$data['func_key_id'] = (int) $data['func_key_id'];
 		$data['destination_type_id'] = (int) $data['destination_type_id'];
 		return($data);

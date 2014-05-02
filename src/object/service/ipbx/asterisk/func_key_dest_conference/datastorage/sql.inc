@@ -18,7 +18,7 @@
 
 xivo_service_asterisk::required(array('abstract','datastorage','abstract','sql.inc'),true);
 
-class xivo_service_asterisk_func_key_dest_conf_sql extends xivo_service_asterisk_abstract_sql
+class xivo_service_asterisk_func_key_dest_conference_sql extends xivo_service_asterisk_abstract_sql
 {
 	var $_disable		= null;
 }

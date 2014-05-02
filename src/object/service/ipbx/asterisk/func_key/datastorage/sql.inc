@@ -60,11 +60,11 @@ class xivo_service_asterisk_func_key_sql extends xivo_service_asterisk_abstract_
 					null,
 					array('queue_id'));
 
-		# CONF FUNC_KEY
-		$this->_dso->leftjoin('func_key_dest_conf',
-					'func_key_dest_conf.func_key_id = func_key.id',
+		# CONFERENCE FUNC_KEY
+		$this->_dso->leftjoin('func_key_dest_conference',
+					'func_key_dest_conference.func_key_id = func_key.id',
 					null,
-					array('conf_id'));
+					array('conference_id'));
 
 		$this->_dso->new_order(array('position' => SORT_ASC), null, 'func_key_mapping');
 

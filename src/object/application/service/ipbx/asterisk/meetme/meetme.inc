@@ -527,9 +527,9 @@ class xivo_application_service_asterisk_meetme extends xivo_application_asterisk
 		return(parent::add_exten('exten'));
 	}
 
-	private function _add_func_key_dest($conf_id)
+	private function _add_func_key_dest($conference_id)
 	{
-		if (! $this->_func_key_manager->add_dst_for_conf($conf_id))
+		if (! $this->_func_key_manager->add_dst_for_conference($conference_id))
 			return(false);
 
 		return(true);
@@ -840,7 +840,7 @@ class xivo_application_service_asterisk_meetme extends xivo_application_asterisk
 		if(dwho_issa('meetmefeatures',$this->_info) === false)
 			return(false);
 
-		$this->_func_key_manager->delete_dst_for_conf($this->_info['meetmefeatures']['id']);
+		$this->_func_key_manager->delete_dst_for_conference($this->_info['meetmefeatures']['id']);
 
 		return(true);
 	}

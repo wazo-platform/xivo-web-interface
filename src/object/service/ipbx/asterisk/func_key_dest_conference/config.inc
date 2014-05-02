@@ -20,8 +20,8 @@ $array = array();
 
 $array['element'] = array();
 
-$array['element']['conf_id'] = array();
-$array['element']['conf_id']['default'] = 0;
+$array['element']['conference_id'] = array();
+$array['element']['conference_id']['default'] = 0;
 
 $array['element']['func_key_id'] = array();
 $array['element']['func_key_id']['default'] = 0;
@@ -30,7 +30,7 @@ $array['element']['destination_type_id'] = array();
 $array['element']['destination_type_id']['default'] = 0;
 
 $array['filter'] = array();
-$array['filter']['conf_id'] = array('cast' => 'ulongint');
+$array['filter']['conference_id'] = array('cast' => 'ulongint');
 $array['filter']['func_key_id'] = array('cast' => 'ulongint');
 $array['filter']['destination_type_id'] = array('cast' => 'ulongint');
 
