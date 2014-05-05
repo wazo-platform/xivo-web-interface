@@ -1468,7 +1468,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 				if ($this->_add_func_key_v2($ref, 'queue') === false)
 					return(false);
 			}
-			elseif($ref['typeextenumbersright'] === 'conference')
+			elseif($ref['typeextenumbersright'] === 'meetme')
 			{
 				if ($this->_add_func_key_v2($ref, 'conference') === false)
 					return(false);
