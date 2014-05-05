@@ -322,9 +322,6 @@ HA
 ; acl(xivo-configuration-network-interface)
 Interfaces
 
-; acl(xivo-configuration-network-iproute)
-IP routes
-
 ; acl(xivo-configuration-network-mail)
 Mail
 

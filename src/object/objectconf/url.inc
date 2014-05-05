@@ -66,19 +66,16 @@ $array['xivo/configuration/json/private/manage/entity'] = 'xivo/configuration/js
 
 // network
 $array['xivo/configuration/network/interface'] = 'xivo/configuration/index.php/network/interface/';
-$array['xivo/configuration/network/iproute'] = 'xivo/configuration/index.php/network/iproute/';
 $array['xivo/configuration/network/resolvconf'] = 'xivo/configuration/index.php/network/resolvconf/';
 $array['xivo/configuration/network/mail'] = 'xivo/configuration/index.php/network/mail/';
 $array['xivo/configuration/network/dhcp'] = 'xivo/configuration/index.php/network/dhcp/';
 
 $array['xivo/configuration/json/restricted/network/interface'] = 'xivo/configuration/json.php/restricted/network/interface/';
-$array['xivo/configuration/json/restricted/network/iproute'] = 'xivo/configuration/json.php/restricted/network/iproute/';
 $array['xivo/configuration/json/restricted/network/resolvconf'] = 'xivo/configuration/json.php/restricted/network/resolvconf/';
 $array['xivo/configuration/json/restricted/network/mail'] = 'xivo/configuration/json.php/restricted/network/mail/';
 $array['xivo/configuration/json/restricted/network/dhcp'] = 'xivo/configuration/json.php/restricted/network/dhcp/';
 
 $array['xivo/configuration/json/private/network/interface'] = 'xivo/configuration/json.php/private/network/interface/';
-$array['xivo/configuration/json/private/network/iproute'] = 'xivo/configuration/json.php/private/network/iproute/';
 $array['xivo/configuration/json/private/network/resolvconf'] = 'xivo/configuration/json.php/private/network/resolvconf/';
 $array['xivo/configuration/json/private/network/mail'] = 'xivo/configuration/json.php/private/network/mail/';
 $array['xivo/configuration/json/private/network/dhcp'] = 'xivo/configuration/json.php/private/network/dhcp/';

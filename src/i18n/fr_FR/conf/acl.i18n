@@ -322,9 +322,6 @@ Haute-Disponibilité
 ; acl(xivo-configuration-network-interface)
 Interfaces
 
-; acl(xivo-configuration-network-iproute)
-Routes IP statiques
-
 ; acl(xivo-configuration-network-mail)
 Messagerie
 

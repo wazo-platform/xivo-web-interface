@@ -28,10 +28,6 @@ $array['entity'] = array();
 $array['entity']['table'] = 'entity';
 $array['entity']['primary'] = array('id' => '');
 
-$array['iproute'] = array();
-$array['iproute']['table'] = 'iproute';
-$array['iproute']['primary'] = array('id' => '');
-
 $array['ldapserver'] = array();
 $array['ldapserver']['table'] = 'ldapserver';
 $array['ldapserver']['primary'] = array('id' => '');

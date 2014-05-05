@@ -37,9 +37,6 @@ Network
 ; mn_left_network-interface 
 Interfaces
 
-; mn_left_network-iproute
-Routes
-
 ; mn_left_network-resolvconf
 Resolver
 

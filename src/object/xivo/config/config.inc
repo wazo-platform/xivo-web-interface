@@ -40,9 +40,6 @@ $array['module']['entity']['datastorage'] = true;
 $array['module']['ha'] = array();
 $array['module']['ha']['datastorage'] = false;
 
-$array['module']['iproute'] = array();
-$array['module']['iproute']['datastorage'] = true;
-
 $array['module']['ldapserver'] = array();
 $array['module']['ldapserver']['datastorage'] = true;
 

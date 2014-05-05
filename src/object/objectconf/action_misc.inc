@@ -104,9 +104,6 @@ $array['xivo/configuration/web_services/restricted/manage/entity'] = array(
 $array['xivo/configuration/web_services/restricted/network/interface'] = array(
 	'path'		=> 'xivo/configuration/web_services/network/interface',
 	'define'	=> array('XIVO_LOC_WEBSERVICES_MODE'	=> 'restricted'));
-$array['xivo/configuration/web_services/restricted/network/iproute'] = array(
-	'path'		=> 'xivo/configuration/web_services/network/iproute',
-	'define'	=> array('XIVO_LOC_WEBSERVICES_MODE'	=> 'restricted'));
 $array['xivo/configuration/web_services/restricted/network/resolvconf'] = array(
 	'path'		=> 'xivo/configuration/web_services/network/resolvconf',
 	'define'	=> array('XIVO_LOC_WEBSERVICES_MODE'	=> 'restricted'));
@@ -132,9 +129,6 @@ $array['xivo/configuration/web_services/private/manage/entity'] = array(
 	'define'	=> array('XIVO_LOC_WEBSERVICES_MODE'	=> 'private'));
 $array['xivo/configuration/web_services/private/network/interface'] = array(
 	'path'		=> 'xivo/configuration/web_services/network/interface',
-	'define'	=> array('XIVO_LOC_WEBSERVICES_MODE'	=> 'private'));
-$array['xivo/configuration/web_services/private/network/iproute'] = array(
-	'path'		=> 'xivo/configuration/web_services/network/iproute',
 	'define'	=> array('XIVO_LOC_WEBSERVICES_MODE'	=> 'private'));
 $array['xivo/configuration/web_services/private/network/resolvconf'] = array(
 	'path'		=> 'xivo/configuration/web_services/network/resolvconf',
