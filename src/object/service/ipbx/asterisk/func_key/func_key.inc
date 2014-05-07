@@ -84,6 +84,10 @@ class xivo_service_asterisk_func_key extends xivo_service_asterisk_abstract
 					if(($extension = $modextensions->get_by_queue_id($ref['queue_id'])) !== false)
 						$exten = $extension['exten'];
 					break;
+				case 'conference':
+					if(($extension = $modextensions->get_by_conference_id($ref['conference_id'])) !== false)
+						$exten = $extension['exten'];
+					break;
 			}
 
 			$conf[$idx]['value'] = $exten;

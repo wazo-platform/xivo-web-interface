@@ -451,6 +451,11 @@ class xivo_service_asterisk_extensions extends xivo_service_asterisk_abstract
 		return($this->_get_by_type_type_id('queue', $queue_id));
 	}
 
+	function get_by_conference_id($conference_id)
+	{
+		return($this->_get_by_type_type_id('meetme', $conference_id));
+	}
+
 	private function _get_by_type_type_id($type, $type_id)
 	{
 		$where = array();

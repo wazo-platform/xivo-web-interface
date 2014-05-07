@@ -37,6 +37,7 @@ class xivo_application_service_asterisk_user_sql extends xivo_application_abstra
 				'func_key_dest_user'	=> '',
 				'func_key_dest_group'	=> '',
 				'func_key_dest_queue'	=> '',
+				'func_key_dest_conference'	=> '',
 				'func_key_destination_type'	=> '',
 				'func_key_mapping'	=> '',
 				'func_key_template'	=> '',
@@ -299,9 +300,25 @@ class xivo_application_service_asterisk_user_sql extends xivo_application_abstra
 					null,
 					array('*'));
 
+		# CONFERENCE FUNC_KEY
+		$this->_dso->leftjoin($this->_table['func_key_dest_conference'],
+					$this->_table['func_key_dest_conference'].'.func_key_id = '.$this->_table['func_key'].'.id',
+					null,
+					array('phonefunckey.typevalextenumbersright' => 'conference_id'));
+		$this->_dso->leftjoin($this->_table['meetmefeatures'],
+					$this->_table['func_key_dest_conference'].'.conference_id'.' = '.$this->_table['meetmefeatures'].'.id',
+					null,
+					array('*'));
+
 		$this->_dso->new_order(array('position' => SORT_ASC), null, $this->_table['func_key_mapping']);
 
 		$r = $this->_dso->select_all(null, true, true);
+
+		foreach($r as &$row) {
+			if($row['phonefunckey.typeextenumbersright'] == 'conference') {
+				$row['phonefunckey.typeextenumbersright'] = 'meetme';
+			}
+		}
 
 		if(isset($r[0]) === false)
 			$r = false;

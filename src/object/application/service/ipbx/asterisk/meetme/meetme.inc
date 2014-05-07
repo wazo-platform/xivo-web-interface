@@ -59,7 +59,9 @@ class xivo_application_service_asterisk_meetme extends xivo_application_asterisk
 		if(($this->_meetmeguest = &$this->_service->get_module('meetmeguest')) === false
 		|| ($this->_userfeatures = &$this->_service->get_module('userfeatures')) === false
 		|| ($this->_extensions = &$this->_service->get_module('extensions')) === false
-		|| ($this->_contextmember = $this->get_abstract('contextmember',array('type' => 'meetme'))) === false)
+		|| ($this->_contextmember = $this->get_abstract('contextmember',array('type' => 'meetme'))) === false
+		|| ($_MGR = &dwho_gct::get('xivo_manager')) === false
+		|| ($this->_func_key_manager = &$_MGR->get_ressource('func_key')) === false)
 			return(false);
 
 		return(true);
@@ -453,7 +455,8 @@ class xivo_application_service_asterisk_meetme extends xivo_application_asterisk
 		|| ($meetmefeaturesid = $this->add_meetmefeatures($meetmeroomid)) === false
 		|| $this->add_meetmeguest($meetmefeaturesid) === false
 		|| $this->add_exten($meetmefeaturesid) === false
-		|| $this->add_contextmember($meetmefeaturesid) === false)
+		|| $this->add_contextmember($meetmefeaturesid) === false
+		|| $this->_add_func_key_dest($meetmefeaturesid) === false)
 		{
 			$r = false;
 			if($meetmeroomid !== null)
@@ -522,6 +525,14 @@ class xivo_application_service_asterisk_meetme extends xivo_application_asterisk
 			return($rs);
 
 		return(parent::add_exten('exten'));
+	}
+
+	private function _add_func_key_dest($conference_id)
+	{
+		if (! $this->_func_key_manager->add_dst_for_conference($conference_id))
+			return(false);
+
+		return(true);
 	}
 
 	function _reverse_add()
@@ -806,7 +817,8 @@ class xivo_application_service_asterisk_meetme extends xivo_application_asterisk
 		$this->_status = 'delete';
 		$this->_return = array();
 
-		if($this->delete_meetmeroom() === false
+		if($this->_delete_func_key_dst() === false
+		|| $this->delete_meetmeroom() === false
 		|| $this->delete_meetmefeatures() === false
 		|| $this->delete_meetmeguest() === false
 		|| $this->delete_exten('exten') === false
@@ -821,6 +833,16 @@ class xivo_application_service_asterisk_meetme extends xivo_application_asterisk
 		$this->_status = '';
 
 		return($r);
+	}
+
+	private function _delete_func_key_dst()
+	{
+		if(dwho_issa('meetmefeatures',$this->_info) === false)
+			return(false);
+
+		$this->_func_key_manager->delete_dst_for_conference($this->_info['meetmefeatures']['id']);
+
+		return(true);
 	}
 
 	function delete_meetmeroom()
