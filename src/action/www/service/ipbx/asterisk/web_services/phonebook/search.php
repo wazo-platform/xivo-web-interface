@@ -79,9 +79,6 @@ $uri['path'] = $_TPL->url('service/ipbx/json/phonebook/local');
 $uri['query'] = array(array('name', $_QR['name']),
 		      array('vendor', $vendor));
 
-if(($rsx = $phonebook->get_phonebook_search_from_xivoserver($uri,false)) !== false)
-	$rs = array_merge($rs,$rsx);
-
 if(($rsl = $phonebook->get_phonebook_search_from_ldapfilter($_QR['name'],false)) !== false)
 	$rs = array_merge($rs,$rsl);
 

@@ -85,9 +85,6 @@ Certificat:
 ; cti-intervals
 Echéances
 
-; cti-xivo_servers
-Serveurs XiVO
-
 ; fm_cti_updates_period
 Intervalle de mise à jour:
 
