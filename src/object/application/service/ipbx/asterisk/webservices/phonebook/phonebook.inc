@@ -27,7 +27,6 @@ class xivo_application_service_asterisk_webservices_phonebook extends xivo_appli
 {
 	var $_dso		= null;
 	var $_accessfeatures	= false;
-	var $_appxivoserver	= null;
 	var $_appldapfilter	= null;
 	var $_curl		= null;
 	var $_uri		= null;
@@ -52,33 +51,6 @@ class xivo_application_service_asterisk_webservices_phonebook extends xivo_appli
 	function _load_config()
 	{
 		return(parent::_load_config(dirname(__FILE__)));
-	}
-
-	function _load_xivoserver()
-	{
-		if(is_object($this->_curl) === false)
-		{
-			if(dwho::load_class('dwho_curl') === false)
-				return(false);
-
-			$this->_curl = new dwho_curl();
-		}
-
-		if(is_object($this->_uri) === false)
-		{
-			if(dwho::load_class('dwho_uri') === false)
-				return(false);
-
-			$this->_uri = new dwho_uri();
-		}
-
-		if(is_object($this->_appxivoserver) === false
-		&& ($this->_appxivoserver = $this->_service->get_application('serverfeatures',
-									     array('feature'	=> 'phonebook',
-										   'type'	=> 'xivo'))) === false)
-			return(false);
-
-		return(true);
 	}
 
 	function _load_ldapfilter()
@@ -178,73 +150,6 @@ class xivo_application_service_asterisk_webservices_phonebook extends xivo_appli
 				$r[] = $info;
 			}
 
-		}
-
-		if(isset($r[0]) === false)
-			$r = false;
-
-		return($r);
-	}
-
-	function get_phonebook_search_from_xivoserver($uri,$disable=null)
-	{
-		if($this->_load_xivoserver() === false
-		|| ($rs = $this->_appxivoserver->get_servers_list($disable)) === false
-		|| ($nb = count($rs)) === 0)
-			return(false);
-
-		$option = &$this->_conf['xivoserver']['option'];
-
-		$r = array();
-
-		for($i = 0;$i < $nb;$i++)
-		{
-			$url = $this->_uri->build_uri(array_merge($uri,$rs[$i]['server']['url']));
-
-			if(($recv = $this->_parse_xivoserver_recv($this->_curl->load($url,$option))) !== false)
-				$r = array_merge($r,$recv);
-
-			$this->_curl->close();
-		}
-
-		if(isset($r[0]) === false)
-			$r = false;
-
-		return($r);
-	}
-
-	function _parse_xivoserver_recv($recv)
-	{
-		$http_code = $this->_curl->get_info('http_code');
-
-		if(is_scalar($http_code) === false
-		|| substr($http_code,0,1) !== '2'
-		|| ($data = dwho_json::decode($recv,true)) === false
-		|| is_array($data) === false
-		|| ($nb = count($data)) === 0)
-			return(false);
-
-		$tmpinfo = array('name'		=> '',
-				 'phone'	=> '',
-				 'type'		=> '');
-
-		$r = $info = array();
-
-		for($i = 0;$i < $nb;$i++)
-		{
-			if(isset($data[$i]) === false
-			|| is_array($data[$i]) === false)
-				continue;
-
-			$info = array_merge($tmpinfo,
-					    array_filter($data[$i],'is_scalar'));
-
-			$info['identity'] = $info['name'];
-
-			if($info['type'] !== 'local')
-				$info['identity'] .= ' ('.$ref['type'].')';
-
-			$r[] = $info;
 		}
 
 		if(isset($r[0]) === false)

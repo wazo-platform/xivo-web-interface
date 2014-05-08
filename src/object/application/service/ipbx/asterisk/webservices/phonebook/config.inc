@@ -18,11 +18,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-$array = array();
-$array['xivoserver'] = array();
-$array['xivoserver']['option'] = array();
-$array['xivoserver']['option']['ssl_verifypeer'] = false;
-
 $array['ldapfilter'] = array();
 
 $array['supported_vendors'] = array('aastra', 'polycom', 'snom', 'thomson', 'yealink', 'cisco');

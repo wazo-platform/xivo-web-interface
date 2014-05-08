@@ -21,9 +21,8 @@
 $appaccessfeatures = &$ipbx->get_application('accessfeatures',array('feature' => 'phonebook'));
 
 $info = array();
-$info['xivoserver'] = array();
 $info['ldapfilter'] = array();
-$info['xivoserver']['slt'] = $info['ldapfilter']['slt'] = false;
+$info['ldapfilter']['slt'] = false;
 
 dwho::load_class('dwho_sort');
 
@@ -34,11 +33,6 @@ if(($info['accessfeatures'] = $appaccessfeatures->get()) !== false)
 
 $serversort = new dwho_sort(array('key' => 'identity'));
 
-$appxivoserver = $ipbx->get_application('serverfeatures',array('feature' => 'phonebook','type' => 'xivo'));
-$info['xivoserver']['info'] = $appxivoserver->get();
-if(($info['xivoserver']['list'] = $appxivoserver->get_server_list()) !== false)
-	uasort($info['xivoserver']['list'],array($serversort,'str_usort'));
-
 $appldapfilter = $ipbx->get_application('serverfeatures',array('feature' => 'phonebook','type' => 'ldap'));
 $info['ldapfilter']['info'] = $appldapfilter->get();
 if(($info['ldapfilter']['list'] = $appldapfilter->get_server_list()) !== false)
@@ -46,7 +40,6 @@ if(($info['ldapfilter']['list'] = $appldapfilter->get_server_list()) !== false)
 
 $error = array();
 $error['accessfeatures'] = array();
-$error['xivoserver']     = array();
 $error['ldapfilter']     = array();
 
 $fm_save = null;
@@ -71,24 +64,6 @@ if(isset($_QR['fm_send']) === true)
 	else if($fm_save !== false)
 		$fm_save = true;
 
-	if(isset($_QR['xivoserver']) === false)
-		$_QR['xivoserver'] = array();
-
-	$appxivoserver = $ipbx->get_application('serverfeatures',array('feature' => 'phonebook','type' => 'xivo'));
-	if($appxivoserver->set($_QR['xivoserver']) !== false)
-	{
-		$appxivoserver->delete_all();
-		$appxivoserver->save();
-	}
-
-	$info['xivoserver']['info'] = $appxivoserver->get_result();
-	$error['xivoserver']        = $appxivoserver->get_error();
-
-	if(isset($error['xivoserver'][0]) === true)
-		$fm_save = false;
-	else if($fm_save !== false)
-		$fm_save = true;
-
 	if(isset($_QR['ldapfilter']) === false)
 		$_QR['ldapfilter'] = array();
 
@@ -103,21 +78,6 @@ if(isset($_QR['fm_send']) === true)
 		$fm_save = false;
 	else if($fm_save !== false)
 		$fm_save = true;
-}
-
-if($info['xivoserver']['list'] !== false
-&& $info['xivoserver']['info'] !== false)
-{
-	$info['xivoserver']['slt'] = dwho_array_intersect_key($info['xivoserver']['info'],
-							      $info['xivoserver']['list'],
-							      'serverid');
-
-	if($info['xivoserver']['slt'] !== false)
-	{
-		$info['xivoserver']['list'] = dwho_array_diff_key($info['xivoserver']['list'],
-								  $info['xivoserver']['slt']);
-		uasort($info['xivoserver']['slt'],array($serversort,'str_usort'));
-	}
 }
 
 if($info['ldapfilter']['list'] !== false

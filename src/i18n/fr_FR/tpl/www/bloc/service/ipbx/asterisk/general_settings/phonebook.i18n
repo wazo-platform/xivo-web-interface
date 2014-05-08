@@ -4,9 +4,6 @@ Propriétés du carnet d'adresses
 ; smenu_access
 Hôtes
 
-; smenu_xivoservers
-Serveurs XiVO
-
 ; smenu_ldapfilters
 Filtres LDAP
 
@@ -21,15 +18,6 @@ Ajouter un hôte
 
 ; bt_deleteaccess
 Supprimer un ou plusieurs hôtes
-
-; bt_inxivoserver
-Ajouter un ou plusieurs serveurs XiVO ->
-
-; bt_outxivoserver
-<- Enlever un ou plusieurs serveurs XiVO
-
-; create_xivoserver
-Créer un serveur XiVO
 
 ; bt_inldapfilter
 Ajouter un ou plusieurs filtres LDAP ->

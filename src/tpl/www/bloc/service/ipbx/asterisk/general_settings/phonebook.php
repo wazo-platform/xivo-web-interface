@@ -45,20 +45,6 @@ $element = $this->get_var('element');
 			</div>
 			<span class="span-right">&nbsp;</span>
 		</li>
-<?php
-/* Hide XiVO server until it's readded
-		<li id="dwsm-tab-2"
-		    class="dwsm-blur-last"
-		    onclick="dwho_submenu.select(this,'sb-part-xivoserver',1);"
-		    onmouseout="dwho_submenu.blur(this,1);"
-		    onmouseover="dwho_submenu.focus(this,1);">
-			<div class="tab">
-				<span class="span-center"><a href="#xivoserver"><?=$this->bbf('smenu_xivoservers');?></a></span>
-			</div>
-			<span class="span-right">&nbsp;</span>
-		</li>
-*/
-?>
 		<li id="dwsm-tab-2"
 			class="dwsm-blur-last"
 			onclick="dwho_submenu.select(this,'sb-part-last',1);"
@@ -74,7 +60,6 @@ $element = $this->get_var('element');
 
 <div class="sb-content">
 	<form action="#" method="post" accept-charset="utf-8" onsubmit="dwho.form.select('it-access');
-									dwho.form.select('it-xivoserver');
 									dwho.form.select('it-ldapfilter');">
 
 <?php
@@ -121,70 +106,6 @@ $element = $this->get_var('element');
 </div>
 <div class="clearboth"></div>
 
-</div>
-
-<div id="sb-part-xivoserver" class="b-nodisplay">
-<?php
-	if($info['xivoserver']['list'] !== false):
-?>
-		<div id="xivoserverlist" class="fm-paragraph fm-multilist">
-				<?=$form->input_for_ms('xivoserverlist',$this->bbf('ms_seek'))?>
-			<div class="slt-outlist">
-<?php
-		echo	$form->select(array('name'	=> 'xivoserverlist',
-					    'label'	=> false,
-					    'id'	=> 'it-xivoserverlist',
-					    'key'	=> 'identity',
-					    'altkey'	=> 'id',
-#					    'help'	=> $this->bbf('hlp_xivoserverlist'),
-					    'multiple'	=> true,
-					    'size'	=> 5,
-					    'paragraph'	=> false),
-				      $info['xivoserver']['list']);
-?>
-			</div>
-			<div class="inout-list">
-				<a href="#"
-				   onclick="dwho.form.move_selected('it-xivoserverlist','it-xivoserver');
-					    return(dwho.dom.free_focus());"
-				   title="<?=$this->bbf('bt_inxivoserver');?>">
-					<?=$url->img_html('img/site/button/arrow-left.gif',
-							  $this->bbf('bt_inxivoserver'),
-							  'class="bt-inlist" id="bt-inxivoserver" border="0"');?></a><br />
-
-				<a href="#"
-				   onclick="dwho.form.move_selected('it-xivoserver','it-xivoserverlist');
-					    return(dwho.dom.free_focus());"
-				   title="<?=$this->bbf('bt_outxivoserver');?>">
-					<?=$url->img_html('img/site/button/arrow-right.gif',
-							  $this->bbf('bt_outxivoserver'),
-							  'class="bt-outlist" id="bt-outxivoserver" border="0"');?></a>
-			</div>
-			<div class="slt-inlist">
-<?php
-		echo	$form->select(array('name'	=> 'xivoserver[]',
-					    'label'	=> false,
-					    'id'	=> 'it-xivoserver',
-					    'key'	=> 'identity',
-					    'altkey'	=> 'id',
-#					    'help'	=> $this->bbf('hlp_xivoserver'),
-					    'multiple'	=> true,
-					    'size'	=> 5,
-					    'paragraph'	=> false),
-				      $info['xivoserver']['slt']);
-?>
-			</div>
-		</div>
-		<div class="clearboth"></div>
-<?php
-	else:
-		echo	'<div class="txt-center">',
-			$url->href_htmln($this->bbf('create_xivoserver'),
-					'xivo/configuration/manage/server',
-					'act=add'),
-			'</div>';
-	endif;
-?>
 </div>
 
 <div id="sb-part-last" class="b-nodisplay">

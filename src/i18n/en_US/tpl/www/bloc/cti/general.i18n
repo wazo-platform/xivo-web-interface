@@ -85,9 +85,6 @@ Certificate:
 ; cti-intervals
 Timeouts
 
-; cti-xivo_servers
-XiVO server
-
 ; fm_cti_updates_period
 Update period:
 

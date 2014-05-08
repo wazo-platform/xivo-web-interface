@@ -4,9 +4,6 @@ Phonebook properties
 ; smenu_access
 Hosts
 
-; smenu_xivoservers
-XiVO servers
-
 ; smenu_ldapfilters
 LDAP filters
 
@@ -21,15 +18,6 @@ Add an host
 
 ; bt_deleteaccess
 Delete one or more hosts
-
-; bt_inxivoserver
-Add one or more XiVO servers ->
-
-; bt_outxivoserver
-<- Remove one or more XiVO servers
-
-; create_xivoserver
-Create a XiVO server
 
 ; bt_inldapfilter
 Add one or more LDAP filters ->

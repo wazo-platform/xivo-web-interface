@@ -20,9 +20,6 @@
 
 $appentity = &$_XOBJ->get_application('entity',null,false);
 
-xivo::load_class('xivo_server',XIVO_PATH_OBJECT,null,false);
-$_SVR = new xivo_server();
-
 xivo::load_class('xivo_ldapserver',XIVO_PATH_OBJECT,null,false);
 $_LDAPSVR = new xivo_ldapserver();
 
@@ -45,12 +42,6 @@ if(($disableentity = $appentity->get_nb(null,true)) !== false)
 $entitystat['total'] = $entitystat['enable'] + $entitystat['disable'];
 
 $userstat['total'] = $userstat['enable'] + $userstat['disable'];
-
-if(($enableserver = $_SVR->get_nb(null,false)) !== false)
-	$serverstat['enable'] = $enableserver;
-
-if(($disableserver = $_SVR->get_nb(null,true)) !== false)
-	$serverstat['disable'] = $disableserver;
 
 $serverstat['total'] = $serverstat['enable'] + $serverstat['disable'];
 

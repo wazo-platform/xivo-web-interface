@@ -44,9 +44,7 @@ class xivo_application_service_asterisk_serverfeatures extends xivo_application_
 		&& $this->_serverfeatures->chk_element_value('feature',$param['feature']) !== false
 		&& $this->_serverfeatures->chk_element_value('type',$param['type']) !== false)
 		{
-			if($this->_param['type'] === 'xivo'
-			&& xivo::load_class('xivo_server',XIVO_PATH_OBJECT,null,false) !== false
-			&& ($this->_server = new xivo_server()) !== false)
+			if($this->_param['type'] === 'xivo')
 				return(true);
 			else if($this->_param['type'] === 'ldap'
 			&& ($this->_server = $this->_service->get_application('ldapfilter')) !== false)

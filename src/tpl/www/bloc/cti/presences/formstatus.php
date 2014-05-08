@@ -70,7 +70,7 @@ $count = count($actionslist);
 	<div class="fm-paragraph fm-description">
 		<fieldset id="cti-access_status">
 			<legend><?=$this->bbf('cti-access_status');?></legend>
-			<div id="xivoserverlist" class="fm-paragraph fm-multilist">
+			<div id="fd-cti-access_status" class="fm-paragraph fm-multilist">
 				<?=$form->input_for_ms('access_statuslist',$this->bbf('ms_seek'))?>
 				<div class="slt-outlist">
 <?php
