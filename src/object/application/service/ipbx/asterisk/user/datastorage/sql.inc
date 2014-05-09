@@ -314,14 +314,15 @@ class xivo_application_service_asterisk_user_sql extends xivo_application_abstra
 
 		$r = $this->_dso->select_all(null, true, true);
 
-		foreach($r as &$row) {
-			if($row['phonefunckey.typeextenumbersright'] == 'conference') {
-				$row['phonefunckey.typeextenumbersright'] = 'meetme';
-			}
-		}
-
 		if(isset($r[0]) === false)
 			$r = false;
+		else {
+			foreach($r as &$row) {
+				if($row['phonefunckey.typeextenumbersright'] == 'conference') {
+					$row['phonefunckey.typeextenumbersright'] = 'meetme';
+				}
+			}
+		}
 
 		return($r);
 	}
