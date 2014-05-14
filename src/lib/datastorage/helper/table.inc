@@ -246,6 +246,8 @@ class dwho_datastorage_helper_table extends dwho_datastorage_helper_abstract
 		if($disable !== null && isset($this->_disable) === true)
 			$arr[$this->_disable] = intval((bool) $disable);
 
+		$this->_add_entity_filter($arr);
+
 		$this->_dso->where($arr);
 
 		if($primary === true && $this->is_single_primary() === true)
@@ -263,6 +265,7 @@ class dwho_datastorage_helper_table extends dwho_datastorage_helper_abstract
 
 	function exists($arr,$disable=null)
 	{
+		$this->_add_entity_filter($arr);
 		return($this->get($arr,$disable,false,true));
 	}
 
@@ -283,6 +286,8 @@ class dwho_datastorage_helper_table extends dwho_datastorage_helper_abstract
 			$arr[$this->_disable] = intval((bool) $disable);
 
 		$this->_dso->new_select($this->_table);
+
+		$this->_add_entity_filter($arr);
 
 		if(is_array($arr) === true)
 			$this->_dso->where($arr);
@@ -431,6 +436,8 @@ class dwho_datastorage_helper_table extends dwho_datastorage_helper_abstract
 		if($disable !== null && isset($this->_disable) === true)
 			$arr[$this->_disable] = intval((bool) $disable);
 
+		$this->_add_entity_filter($arr);
+
 		if(empty($arr) === false)
 			$this->_dso->where($arr);
 
@@ -474,6 +481,8 @@ class dwho_datastorage_helper_table extends dwho_datastorage_helper_abstract
 		if($disable !== null && isset($this->_disable) === true)
 			$arr[$this->_disable] = intval((bool) $disable);
 
+		$this->_add_entity_filter($arr);
+
 		$this->_dso->where($arr);
 
 		$this->_dso->new_order($order);
@@ -502,6 +511,25 @@ class dwho_datastorage_helper_table extends dwho_datastorage_helper_abstract
 	function get_all_where($arr,$disable=null,$order=null,$limit=null)
 	{
 		return($this->get_list_where($arr,$disable,$order,$limit,true));
+	}
+
+	private function _add_entity_filter(&$arr)
+	{
+		switch($this->_table)
+		{
+			case 'entity':
+				if (isset($_SESSION["_USR"]->entity_id) && $_SESSION["_USR"]->entity_id !== 0)
+					$arr['id'] = $_SESSION["_USR"]->entity_id;
+				break;
+			case 'userfeatures':
+				if (isset($_SESSION["_USR"]->entity_name) && $_SESSION["_USR"]->entity_id !== 0)
+					$arr['entityid'] = $_SESSION["_USR"]->entity_id;
+				break;
+			case 'context':
+				if (isset($_SESSION["_USR"]->entity_name) && $_SESSION["_USR"]->entity_id !== 0)
+					$arr['entity'] = $_SESSION["_USR"]->entity_name;
+				break;
+		}
 	}
 }
 

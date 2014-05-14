@@ -82,10 +82,6 @@ class xivo_service_asterisk_context extends xivo_service_asterisk_abstract
 		if (is_null($type) === false)
 			$arr['contexttype'] = $type;
 
-		#TODO: entity_filter
-		#if (isset($_SESSION["_USR"]->entity_name) && $_SESSION["_USR"]->entity_id !== 0)
-		#	$arr['entity'] = $_SESSION["_USR"]->entity_name;
-
 		if (empty($arr))
 			$list = $this->_dso->get_all($disable,$order,$limit);
 		else
@@ -109,8 +105,6 @@ class xivo_service_asterisk_context extends xivo_service_asterisk_abstract
 		$r = array();
 
 		for($i = 0;$i < $nb;$i++)
-			if (isset($_SESSION["_USR"]->entity_name) && $_SESSION["_USR"]->entity_name !== $list['entity'])
-				continue;
 			$r[] = $this->_prepare($list[$i]);
 
 		if(isset($r[0]) === false)
