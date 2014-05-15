@@ -185,11 +185,6 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		return($this->get($arr,$disable));
 	}
 
-	function get_nb($arr=null,$disable=null,$initialized=null)
-	{
-		return($this->_dso->get_nb($arr,$disable,$initialized));
-	}
-
 	function _get_user_line()
 	{
 		$this->_info['user_line'] = false;

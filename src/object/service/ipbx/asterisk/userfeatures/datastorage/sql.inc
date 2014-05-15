@@ -39,14 +39,6 @@ class xivo_service_asterisk_userfeatures_sql extends xivo_service_asterisk_abstr
 		return($this->get($arr,$disable,true));
 	}
 
-	function get_nb($arr=null,$disable=null)
-	{
-		if(is_array($arr) === false)
-			$arr = array();
-
-		return(parent::get_nb($arr,$disable));
-	}
-
 	function get_all_wherein($id,$where)
 	{
 		$this->_dso->new_select($this->_table,'*');
