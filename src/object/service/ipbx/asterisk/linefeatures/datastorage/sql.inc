@@ -104,6 +104,8 @@ class xivo_service_asterisk_linefeatures_sql extends xivo_service_asterisk_abstr
 		if($number === true)
 			$this->_dso->orwherecontain('number', $number);
 
+		$this->_add_entity_filter();
+
 		$this->_dso->new_order($order);
 		$this->_dso->limit($limit);
 
@@ -135,6 +137,8 @@ class xivo_service_asterisk_linefeatures_sql extends xivo_service_asterisk_abstr
 
 		$this->_dso->andwherecontain('number', $number);
 
+		$this->_add_entity_filter();
+
 		$this->_dso->new_order($order);
 		$this->_dso->limit($limit);
 
@@ -165,6 +169,8 @@ class xivo_service_asterisk_linefeatures_sql extends xivo_service_asterisk_abstr
 		if((bool) $number === true)
 			$this->_dso->andwherenot('IFNULL(number,\'\') = \'\'');
 
+		$this->_add_entity_filter();
+
 		$this->_dso->new_order($order);
 		$this->_dso->limit($limit);
 
@@ -192,6 +198,8 @@ class xivo_service_asterisk_linefeatures_sql extends xivo_service_asterisk_abstr
 
 		if(empty($arr) === false)
 			$this->_dso->where($arr);
+
+		$this->_add_entity_filter();
 
 		$this->_dso->new_group('context');
 		$this->_dso->new_order($order);
@@ -271,6 +279,8 @@ class xivo_service_asterisk_linefeatures_sql extends xivo_service_asterisk_abstr
 
 		if(empty($arr) === false)
 			$this->_dso->andwhere($arr,$this->_table);
+
+		$this->_add_entity_filter();
 
 		$this->_dso->leftjoin('usersip',
 				       $this->_table.'.protocolid = usersip.id',

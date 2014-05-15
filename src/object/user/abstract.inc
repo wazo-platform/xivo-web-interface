@@ -71,12 +71,20 @@ abstract class xivo_user_abstract extends xivo_libdatastorage_abstract
 	function _prepare(&$data)
 	{
 		$_XOBJ = &dwho_gct::get('xivo_object');
+		$_SRE = dwho_gct::get('xivo_service');
+		$modcontext = &$_SRE->get_module('ipbx', 'context');
 		$modentity = &$_XOBJ->get_module('entity');
 
 		$data['valid'] = (bool) $data['valid'];
 		$data['entity_id'] = (int) $data['entity_id'];
-		$entity = $modentity->get($data['entity_id']);
-		$data['entity_name'] = $entity['name'];
+
+		if (($entity = $modentity->get($data['entity_id'])))
+		{
+			$data['entity_name'] = $entity['name'];
+
+			if (($contexts_filter = $modcontext->get_contexts_name_by_entity_name($data['entity_name'],null,null,null,true)))
+				$data['contexts'] = array_keys($contexts_filter);
+		}
 
 		if(is_array($data['obj']) === false)
 			$data['obj'] = dwho_unserialize($data['obj']);

@@ -246,7 +246,7 @@ class dwho_datastorage_helper_table extends dwho_datastorage_helper_abstract
 		if($disable !== null && isset($this->_disable) === true)
 			$arr[$this->_disable] = intval((bool) $disable);
 
-		$this->_add_entity_filter($arr);
+		$this->_add_entity_filter();
 
 		$this->_dso->where($arr);
 
@@ -265,7 +265,7 @@ class dwho_datastorage_helper_table extends dwho_datastorage_helper_abstract
 
 	function exists($arr,$disable=null)
 	{
-		$this->_add_entity_filter($arr);
+		$this->_add_entity_filter();
 		return($this->get($arr,$disable,false,true));
 	}
 
@@ -287,7 +287,7 @@ class dwho_datastorage_helper_table extends dwho_datastorage_helper_abstract
 
 		$this->_dso->new_select($this->_table);
 
-		$this->_add_entity_filter($arr);
+		$this->_add_entity_filter();
 
 		if(is_array($arr) === true)
 			$this->_dso->where($arr);
@@ -436,7 +436,7 @@ class dwho_datastorage_helper_table extends dwho_datastorage_helper_abstract
 		if($disable !== null && isset($this->_disable) === true)
 			$arr[$this->_disable] = intval((bool) $disable);
 
-		$this->_add_entity_filter($arr);
+		$this->_add_entity_filter();
 
 		if(empty($arr) === false)
 			$this->_dso->where($arr);
@@ -481,7 +481,7 @@ class dwho_datastorage_helper_table extends dwho_datastorage_helper_abstract
 		if($disable !== null && isset($this->_disable) === true)
 			$arr[$this->_disable] = intval((bool) $disable);
 
-		$this->_add_entity_filter($arr);
+		$this->_add_entity_filter();
 
 		$this->_dso->where($arr);
 
@@ -513,23 +513,27 @@ class dwho_datastorage_helper_table extends dwho_datastorage_helper_abstract
 		return($this->get_list_where($arr,$disable,$order,$limit,true));
 	}
 
-	protected function _add_entity_filter(&$arr)
+	protected function _add_entity_filter()
 	{
 		if (!isset($_SESSION["_USR"]->entity_id)
 		|| !isset($_SESSION["_USR"]->entity_name)
+		|| !isset($_SESSION["_USR"]->contexts)
 		|| $_SESSION["_USR"]->entity_id === 0)
 			return null;
 
 		switch($this->_table)
 		{
 			case 'entity':
-					$arr['id'] = $_SESSION["_USR"]->entity_id;
+					$this->_dso->andwhere(array('id' => $_SESSION["_USR"]->entity_id), 'entity');
 				break;
 			case 'userfeatures':
-					$arr['entityid'] = $_SESSION["_USR"]->entity_id;
+					$this->_dso->andwhere(array('entityid' => $_SESSION["_USR"]->entity_id), 'userfeatures');
 				break;
 			case 'context':
-					$arr['entity'] = $_SESSION["_USR"]->entity_name;
+					$this->_dso->andwhere(array('entity' => $_SESSION["_USR"]->entity_name), 'context');
+				break;
+			case 'linefeatures':
+					$this->_dso->wherein('context', $_SESSION["_USR"]->contexts, 'linefeatures');
 				break;
 		}
 	}

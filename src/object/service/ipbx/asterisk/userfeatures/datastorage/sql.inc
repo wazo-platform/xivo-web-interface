@@ -80,7 +80,7 @@ class xivo_service_asterisk_userfeatures_sql extends xivo_service_asterisk_abstr
 		if(isset($this->_forcecolumn) === true)
 			$arr = $this->_forcecolumn;
 
-		$this->_add_entity_filter($arr);
+		$this->_add_entity_filter();
 
 		if(empty($arr) === false)
 			$this->_dso->where($arr);
