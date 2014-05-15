@@ -704,10 +704,13 @@ abstract class xivo_libdatastorage_abstract extends xivo_libconfig_abstract
 			&& $this->_chk_primary_key('id'))
 				return((int) $where['id']);
 
-			$primary_key = array_keys($this->_dso->get_primary_key());
-			$rs = $this->_dso->get_id($where, $primary_key);
+			if (($primary_keys = $this->_dso->get_primary_key()))
+			{
+				$primary_key = array_keys($primary_keys);
+				$rs = $this->_dso->get_id($where, $primary_key);
 
-			return($rs[array_pop($primary_key)]);
+				return($rs[array_pop($primary_key)]);
+			}
 		}
 	}
 
