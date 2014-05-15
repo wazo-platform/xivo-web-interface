@@ -535,6 +535,9 @@ class dwho_datastorage_helper_table extends dwho_datastorage_helper_abstract
 			case 'linefeatures':
 					$this->_dso->wherein('context', $_SESSION["_USR"]->contexts, 'linefeatures');
 				break;
+			case 'groupfeatures':
+					$this->_dso->wherein('context', $_SESSION["_USR"]->contexts, 'linefeatures');
+				break;
 		}
 	}
 }

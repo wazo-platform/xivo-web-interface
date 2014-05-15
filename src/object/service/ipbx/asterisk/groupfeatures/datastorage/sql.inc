@@ -32,6 +32,8 @@ class xivo_service_asterisk_groupfeatures_sql extends xivo_service_asterisk_abst
 
 		$this->_dso->wherein($id,$where);
 
+		$this->_add_entity_filter();
+
 		$this->_dso->new_order($order);
 		$this->_dso->limit($limit);
 
@@ -66,6 +68,8 @@ class xivo_service_asterisk_groupfeatures_sql extends xivo_service_asterisk_abst
 
 		if((bool) $number === true)
 			$this->_dso->andwherenot('IFNULL(number,\'\') = \'\'');
+
+		$this->_add_entity_filter();
 
 		$this->_dso->new_order($order);
 		$this->_dso->limit($limit);
