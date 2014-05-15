@@ -37,6 +37,9 @@ class xivo_application_service_asterisk_voicemail_sql extends xivo_application_a
 		$this->_dso->orwherecontain('mailbox',$value,true,$this->_table['voicemail']);
 		$this->_dso->orwherecontain('email',$value,true,$this->_table['voicemail']);
 
+		if (isset($_SESSION["_USR"]->contexts) && $_SESSION["_USR"]->entity_id !== 0)
+			$this->_dso->wherein('context', $_SESSION["_USR"]->contexts, $this->_table['voicemail']);
+
 		$this->_dso->new_order($order,null,$this->_table['voicemail']);
 		$this->_dso->limit($limit);
 
