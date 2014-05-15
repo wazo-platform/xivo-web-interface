@@ -49,6 +49,9 @@ class xivo_application_service_asterisk_meetme_sql extends xivo_application_abst
 			$this->_dso->aggregate_where();
 		}
 
+		if (isset($_SESSION["_USR"]->contexts) && $_SESSION["_USR"]->entity_id !== 0)
+			$this->_dso->wherein('context', $_SESSION["_USR"]->contexts, $this->_table['meetmefeatures']);
+
 		$this->_dso->new_order($order,null,$this->_table['meetmefeatures']);
 		$this->_dso->limit($limit);
 

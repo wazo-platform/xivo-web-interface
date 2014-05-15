@@ -37,6 +37,8 @@ class xivo_service_asterisk_meetmefeatures_sql extends xivo_service_asterisk_abs
 		if((bool) $number === true)
 			$this->_dso->andwherenot('IFNULL(number,\'\') = \'\'');
 
+		$this->_add_entity_filter();
+
 		$this->_dso->new_order($order);
 		$this->_dso->limit($limit);
 
