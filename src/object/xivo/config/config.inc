@@ -82,17 +82,8 @@ $array['module']['stats_conf']['datastorage'] = true;
 $array['module']['stats_conf_queue'] = array();
 $array['module']['stats_conf_queue']['datastorage'] = true;
 
-$array['module']['stats_conf_group'] = array();
-$array['module']['stats_conf_group']['datastorage'] = true;
-
 $array['module']['stats_conf_agent'] = array();
 $array['module']['stats_conf_agent']['datastorage'] = true;
-
-$array['module']['stats_conf_user'] = array();
-$array['module']['stats_conf_user']['datastorage'] = true;
-
-$array['module']['stats_conf_incall'] = array();
-$array['module']['stats_conf_incall']['datastorage'] = true;
 
 $array['module']['stats_conf_xivouser'] = array();
 $array['module']['stats_conf_xivouser']['datastorage'] = true;

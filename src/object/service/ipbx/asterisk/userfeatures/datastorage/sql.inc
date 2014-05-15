@@ -31,6 +31,8 @@ class xivo_service_asterisk_userfeatures_sql extends xivo_service_asterisk_abstr
 		&& ($arr = $this->mk_primary_key_value($arr)) === false)
 			return(false);
 
+		$this->_add_entity_filter($arr);
+
 		return(parent::get($arr,$disable,$primary));
 	}
 
@@ -42,6 +44,13 @@ class xivo_service_asterisk_userfeatures_sql extends xivo_service_asterisk_abstr
 	function get_all_wherein($id,$where)
 	{
 		$this->_dso->new_select($this->_table,'*');
+
+		$arr = array();
+
+		$this->_add_entity_filter($arr);
+
+		if(empty($arr) === false)
+			$this->_dso->where($arr);
 
 		$this->_dso->wherein('id',$where);
 

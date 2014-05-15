@@ -64,21 +64,9 @@ $array['stats_conf_queue'] = array();
 $array['stats_conf_queue']['table'] = 'stats_conf_queue';
 $array['stats_conf_queue']['primary'] = array('stats_conf_id' => '');
 
-$array['stats_conf_group'] = array();
-$array['stats_conf_group']['table'] = 'stats_conf_group';
-$array['stats_conf_group']['primary'] = array('stats_conf_id' => '');
-
 $array['stats_conf_agent'] = array();
 $array['stats_conf_agent']['table'] = 'stats_conf_agent';
 $array['stats_conf_agent']['primary'] = array('stats_conf_id' => '');
-
-$array['stats_conf_user'] = array();
-$array['stats_conf_user']['table'] = 'stats_conf_user';
-$array['stats_conf_user']['primary'] = array('stats_conf_id' => '');
-
-$array['stats_conf_incall'] = array();
-$array['stats_conf_incall']['table'] = 'stats_conf_incall';
-$array['stats_conf_incall']['primary'] = array('stats_conf_id' => '');
 
 $array['stats_conf_xivouser'] = array();
 $array['stats_conf_xivouser']['table'] = 'stats_conf_xivouser';
