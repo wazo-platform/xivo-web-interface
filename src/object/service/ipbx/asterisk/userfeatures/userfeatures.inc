@@ -153,23 +153,6 @@ class xivo_service_asterisk_userfeatures extends xivo_service_asterisk_abstract
 		return(parent::edit($id,$arr,$disable));
 	}
 
-	function get_all_wherein($id,$where)
-	{
-		if(($list = $this->_dso->get_all_wherein($id,$where)) === false)
-			return(false);
-
-		$nb = count($list);
-		$list = array_values($list);
-
-		for($i = 0;$i < $nb;$i++)
-		{
-			$data = &$list[$i];
-			$data = $this->_identity->_prepare_identity($data);
-		}
-
-		return($list);
-	}
-
 	function get_all_except($id=0,$number=false,$order=null,$limit=null)
 	{
 		if(($id = dwho_ulongint($id)) === 0 && (bool) $number === false)

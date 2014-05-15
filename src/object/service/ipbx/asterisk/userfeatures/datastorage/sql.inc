@@ -41,27 +41,6 @@ class xivo_service_asterisk_userfeatures_sql extends xivo_service_asterisk_abstr
 		return($this->get($arr,$disable,true));
 	}
 
-	function get_all_wherein($id,$where)
-	{
-		$this->_dso->new_select($this->_table,'*');
-
-		$arr = array();
-
-		$this->_add_entity_filter($arr);
-
-		if(empty($arr) === false)
-			$this->_dso->where($arr);
-
-		$this->_dso->wherein('id',$where);
-
-		$r = $this->_dso->select_all('',true,false,'id');
-
-		if(empty($r) === true)
-			$r = false;
-
-		return($r);
-	}
-
 	function edit($arr,$value,$disable=null)
 	{
 		if(is_array($arr) === false

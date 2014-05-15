@@ -91,20 +91,6 @@ class xivo_service_asterisk_agentfeatures extends xivo_service_asterisk_abstract
 		return($list);
 	}
 
-	function get_all_wherein($id,$where,$order=null,$limit=null)
-	{
-		if(($list = $this->_dso->get_all_wherein($id,$where,$order,$limit)) === false)
-			return(false);
-
-		foreach($list as $key => &$r)
-			$list[$key] = $this->_prepare($r);
-
-		if(empty($list) === true)
-			$list = false;
-
-		return($list);
-	}
-
 	function edit($id,$arr)
 	{
 		if(is_array($arr) === false)

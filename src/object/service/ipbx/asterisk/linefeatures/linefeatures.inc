@@ -193,23 +193,6 @@ class xivo_service_asterisk_linefeatures extends xivo_service_asterisk_abstract
 		return($r);
 	}
 
-	function get_all_wherein($id,$where)
-	{
-		if(($list = $this->_dso->get_all_wherein($id,$where)) === false)
-			return(false);
-
-		$nb = count($list);
-		$list = array_values($list);
-
-		for($i = 0;$i < $nb;$i++)
-		{
-			$data = &$list[$i];
-			$data = $this->_prepare($data);
-		}
-
-		return($list);
-	}
-
 	function search_number($value,$disable=null,$order=null,$limit=null)
 	{
 		return($this->_dso->search_number($value,$disable,$order,$limit));

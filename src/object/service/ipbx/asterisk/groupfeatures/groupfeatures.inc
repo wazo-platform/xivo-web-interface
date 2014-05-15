@@ -64,29 +64,6 @@ class xivo_service_asterisk_groupfeatures extends xivo_service_asterisk_abstract
 		return(parent::add($arr,$id));
 	}
 
-	function get($id,$delete=false)
-	{
-		return(parent::get($id,$delete));
-	}
-
-	function get_primary($arr,$delete=false)
-	{
-		return(parent::get_primary($arr,$delete));
-	}
-
-	function get_where($arr,$delete=false)
-	{
-		return(parent::get_where($arr,$delete));
-	}
-
-	function get_all_wherein($id,$where,$order=null,$limit=null)
-	{
-		if(($list = $this->_dso->get_all_wherein($id,$where,$order,$limit)) === false)
-			return(false);
-
-		return($list);
-	}
-
 	function edit($id,$arr,$disable=null)
 	{
 		if(is_array($arr) === false)
@@ -95,36 +72,6 @@ class xivo_service_asterisk_groupfeatures extends xivo_service_asterisk_abstract
 			$arr['name'] = strtolower($arr['name']);
 
 		return(parent::edit($id,$arr,$disable));
-	}
-
-	function edit_where($where,$arr,$delete=false,$id=null,$chkunique=true)
-	{
-		return(parent::edit_where($where,$arr,$delete,$id,$chkunique));
-	}
-
-	function get_nb($arr=null,$delete=false)
-	{
-		return(parent::get_nb($arr,$delete));
-	}
-
-	function get_list($delete=false,$order=null,$limit=null)
-	{
-		return(parent::get_list($delete,$order,$limit));
-	}
-
-	function get_list_where($arr,$delete=false,$order=null,$limit=null)
-	{
-		return(parent::get_list_where($arr,$delete,$order,$limit));
-	}
-
-	function get_all($delete=false,$prepare=true,$order=null,$limit=null,$assoc=false)
-	{
-		return(parent::get_all($delete,$prepare,$order,$limit,$assoc));
-	}
-
-	function get_all_where($arr,$delete=false,$prepare=true,$order=null,$limit=null,$assoc=false)
-	{
-		return(parent::get_all_where($arr,$delete,$prepare,$order,$limit,$assoc));
 	}
 
 	function get_all_except($id=0,$number=false,$order=null,$limit=null)

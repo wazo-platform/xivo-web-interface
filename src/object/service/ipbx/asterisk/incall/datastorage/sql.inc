@@ -24,20 +24,6 @@ class xivo_service_asterisk_incall_sql extends xivo_service_asterisk_abstract_sq
 {
 	var $_unique	= array(array('exten','context'));
 
-	function get_all_wherein($id,$where)
-	{
-		$this->_dso->new_select($this->_table,'*');
-
-		$this->_dso->wherein('id',$where);
-
-		$r = $this->_dso->select_all('',true,false,'id');
-
-		if(empty($r) === true)
-			$r = false;
-
-		return($r);
-	}
-
 	function search($arr,$order=null,$limit=null)
 	{
 		$this->_cnt = 0;

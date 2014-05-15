@@ -72,17 +72,6 @@ class xivo_service_asterisk_incall extends xivo_service_asterisk_abstract
 
 		return(parent::edit($id,$arr,$disable));
 	}
-
-	function get_all_wherein($id,$where)
-	{
-		if(($list = $this->_dso->get_all_wherein($id,$where)) === false)
-			return(false);
-
-		foreach($list as &$v)
-			$v = $this->_prepare($v);
-
-		return($list);
-	}
 }
 
 ?>
