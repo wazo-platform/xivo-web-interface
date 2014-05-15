@@ -68,44 +68,6 @@ class xivo_service_asterisk_userfeatures extends xivo_service_asterisk_abstract
 		return($data);
 	}
 
-	function get($id,$orig=true,$disable=null)
-	{
-		$orig = (bool) $orig;
-		$origin = $this->_origin;
-
-		if($orig === false)
-			$this->_origin = null;
-
-		if(($r = parent::get($id,$disable)) === false)
-		{
-			$this->_origin = $origin;
-			return(false);
-		}
-		else if($orig === false)
-			$this->_origin = $origin;
-
-		return($this->_prepare($r));
-	}
-
-	function get_where($arr,$orig=true,$disable=null,$id=null)
-	{
-		$orig = (bool) $orig;
-		$origin = $this->_origin;
-
-		if($orig === false)
-			$this->_origin = null;
-
-		if(($r = parent::get_where($arr,$disable,$id)) === false)
-		{
-			$this->_origin = $origin;
-			return(false);
-		}
-		else if($orig === false)
-			$this->_origin = $origin;
-
-		return($r);
-	}
-
 	public function users_has_profile_id($cti_profile_id)
 	{
 		$arr = array();
@@ -189,24 +151,6 @@ class xivo_service_asterisk_userfeatures extends xivo_service_asterisk_abstract
 		}
 
 		return(parent::edit($id,$arr,$disable));
-	}
-
-	function search($value,$disable=null,$order=null,$limit=null)
-	{
-		if(($list = $this->_dso->search($value,$disable,$order,$limit)) === false)
-			return(false);
-
-		$nb = count($list);
-
-		$r = array();
-
-		for($i = 0;$i < $nb;$i++)
-			$r[] = $this->_prepare($list[$i]);
-
-		if(isset($r[0]) === false)
-			$r = false;
-
-		return($r);
 	}
 
 	function get_all_wherein($id,$where)

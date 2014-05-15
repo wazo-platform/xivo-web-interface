@@ -513,7 +513,7 @@ class dwho_datastorage_helper_table extends dwho_datastorage_helper_abstract
 		return($this->get_list_where($arr,$disable,$order,$limit,true));
 	}
 
-	private function _add_entity_filter(&$arr)
+	protected function _add_entity_filter(&$arr)
 	{
 		if (!isset($_SESSION["_USR"]->entity_id)
 		|| !isset($_SESSION["_USR"]->entity_name)

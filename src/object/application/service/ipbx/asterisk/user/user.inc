@@ -180,11 +180,6 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		return($this->_info);
 	}
 
-	function get_where($arr,$disable=null)
-	{
-		return($this->get($arr,$disable));
-	}
-
 	function _get_user_line()
 	{
 		$this->_info['user_line'] = false;
