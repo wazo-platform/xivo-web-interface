@@ -38,8 +38,6 @@ else if($context !== '')
 else if($free !== '')
 	$param['free'] = $free;
 
-$contexts = false;
-
 switch($act)
 {
 	case 'add':
@@ -48,8 +46,6 @@ switch($act)
 			$_QRY->go($_TPL->url('service/ipbx/pbx_settings/lines'), array('act' => 'list'));
 		}
 		$appline = &$ipbx->get_application('line');
-
-		$contexts = $appline->get_all_context();
 
 		$result = $fm_save = $error = null;
 
@@ -111,8 +107,6 @@ switch($act)
 
 		if(isset($_QR['id']) === false || ($info = $appline->get($_QR['id'],null,null,true)) === false)
 			$_QRY->go($_TPL->url('service/ipbx/pbx_settings/lines'),$param);
-
-		$contexts = $appline->get_all_context();
 
 		$fm_save = $error = null;
 		$return = &$info;
@@ -232,8 +226,6 @@ switch($act)
 
 		$appline = &$ipbx->get_application('line');
 
-		$contexts = $appline->get_all_context();
-
 		$order = array();
 		if($sort[1] == 'name')
 			$order['name'] = $sort[0];
@@ -272,7 +264,6 @@ switch($act)
 }
 
 $_TPL->set_var('act',$act);
-$_TPL->set_var('contexts',$contexts);
 $_TPL->set_var('frees',array(1 => 'yes',0 => 'no'));
 
 $menu = &$_TPL->get_module('menu');

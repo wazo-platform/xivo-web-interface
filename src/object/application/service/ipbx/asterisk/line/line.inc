@@ -219,14 +219,6 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 		return($r);
 	}
 
-	public function get_all_context()
-	{
-		if(($r = $this->_linefeatures->get_all_context()) !== false)
-			ksort($r);
-
-		return($r);
-	}
-
 	public function get_lines_search($search,$where=array(),$disable=null,$order=null,$limit=null,$assoc=false)
 	{
 		return($this->_get_lines('search',$disable,$search,$where,$order,$limit,$assoc));

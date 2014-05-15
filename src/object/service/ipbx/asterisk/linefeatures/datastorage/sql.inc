@@ -174,39 +174,6 @@ class xivo_service_asterisk_linefeatures_sql extends xivo_service_asterisk_abstr
 		return($r);
 	}
 
-	function get_all_context($disable=null,$order=null,$limit=null)
-	{
-		$this->_cnt = 0;
-
-		$this->_dso->new_select($this->_table,'context');
-
-		$arr = array();
-
-		if($disable !== null && isset($this->_disable) === true)
-			$arr[$this->_disable] = intval((bool) $disable);
-
-		if(empty($arr) === false)
-			$this->_dso->where($arr);
-
-		$this->_add_entity_filter();
-
-		$this->_dso->new_group('context');
-		$this->_dso->new_order($order);
-		$this->_dso->limit($limit);
-
-		$r = $this->_dso->select_all();
-
-		$this->_dso->reset_group();
-		$this->_dso->reset_order();
-		$this->_dso->reset_limit();
-
-		if(($this->_cnt = $this->_dso->select_count()) === false
-		|| isset($r[0]) === false)
-			$r = false;
-
-		return($r);
-	}
-
 	function edit($arr,$value,$disable=null)
 	{
 		if(is_array($arr) === false && ($arr = $this->mk_primary_key_value($arr)) === false)

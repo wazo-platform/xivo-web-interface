@@ -215,28 +215,6 @@ class xivo_service_asterisk_linefeatures extends xivo_service_asterisk_abstract
 		return($this->_mk_list_assoc_prepare($list,false,true));
 	}
 
-	function get_all_context($disable=null)
-	{
-		if(($list = $this->_dso->get_all_context($disable)) === false)
-			return(false);
-
-		$nb = count($list);
-
-		$r = array();
-
-		for($i = 0;$i < $nb;$i++)
-		{
-			$info = $list[$i];
-
-			$r[$info['context']] = $info['context'];
-		}
-
-		if(empty($r) === true)
-			$r = false;
-
-		return($r);
-	}
-
 	public function reset_device($iddevice)
 	{
 		$arr = array();
