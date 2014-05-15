@@ -515,18 +515,20 @@ class dwho_datastorage_helper_table extends dwho_datastorage_helper_abstract
 
 	private function _add_entity_filter(&$arr)
 	{
+		if (!isset($_SESSION["_USR"]->entity_id)
+		|| !isset($_SESSION["_USR"]->entity_name)
+		|| $_SESSION["_USR"]->entity_id === 0)
+			return null;
+
 		switch($this->_table)
 		{
 			case 'entity':
-				if (isset($_SESSION["_USR"]->entity_id) && $_SESSION["_USR"]->entity_id !== 0)
 					$arr['id'] = $_SESSION["_USR"]->entity_id;
 				break;
 			case 'userfeatures':
-				if (isset($_SESSION["_USR"]->entity_name) && $_SESSION["_USR"]->entity_id !== 0)
 					$arr['entityid'] = $_SESSION["_USR"]->entity_id;
 				break;
 			case 'context':
-				if (isset($_SESSION["_USR"]->entity_name) && $_SESSION["_USR"]->entity_id !== 0)
 					$arr['entity'] = $_SESSION["_USR"]->entity_name;
 				break;
 		}
