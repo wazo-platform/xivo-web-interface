@@ -536,7 +536,7 @@ class dwho_datastorage_helper_table extends dwho_datastorage_helper_abstract
 					$this->_dso->wherein('context', $_SESSION["_USR"]->contexts, 'linefeatures');
 				break;
 			case 'groupfeatures':
-					$this->_dso->wherein('context', $_SESSION["_USR"]->contexts, 'linefeatures');
+					$this->_dso->wherein('context', $_SESSION["_USR"]->contexts, 'groupfeatures');
 				break;
 			case 'voicemail':
 					$this->_dso->wherein('context', $_SESSION["_USR"]->contexts, 'voicemail');
