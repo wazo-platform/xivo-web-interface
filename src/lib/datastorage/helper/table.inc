@@ -515,22 +515,22 @@ class dwho_datastorage_helper_table extends dwho_datastorage_helper_abstract
 
 	protected function _add_entity_filter()
 	{
-		if (!isset($_SESSION["_USR"]->entity_id)
-		|| !isset($_SESSION["_USR"]->entity_name)
-		|| !isset($_SESSION["_USR"]->contexts)
-		|| $_SESSION["_USR"]->entity_id === 0)
+		if (!defined('ENTITY_FILTER_ID')
+		|| !defined('ENTITY_FILTER_NAME')
+		|| !defined('ENTITY_FILTER_CONTEXTS')
+		|| defined('ENTITY_FILTER_ID') === 0)
 			return null;
 
 		switch($this->_table)
 		{
 			case 'entity':
-					$this->_dso->andwhere(array('id' => $_SESSION["_USR"]->entity_id), $this->_table);
+					$this->_dso->andwhere(array('id' => ENTITY_FILTER_ID), $this->_table);
 				break;
 			case 'userfeatures':
-					$this->_dso->andwhere(array('entityid' => $_SESSION["_USR"]->entity_id), $this->_table);
+					$this->_dso->andwhere(array('entityid' => ENTITY_FILTER_ID), $this->_table);
 				break;
 			case 'context':
-					$this->_dso->andwhere(array('entity' => $_SESSION["_USR"]->entity_name), $this->_table);
+					$this->_dso->andwhere(array('entity' => ENTITY_FILTER_NAME), $this->_table);
 				break;
 			case 'linefeatures':
 			case 'groupfeatures':
@@ -541,7 +541,7 @@ class dwho_datastorage_helper_table extends dwho_datastorage_helper_abstract
 			case 'agentfeatures':
 			case 'queuefeatures':
 			case 'queue':
-					$this->_dso->wherein('context', $_SESSION["_USR"]->contexts, $this->_table);
+					$this->_dso->wherein('context', explode(',', ENTITY_FILTER_CONTEXTS), $this->_table);
 				break;
 		}
 	}

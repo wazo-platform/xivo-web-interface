@@ -63,9 +63,6 @@ class xivo_service_asterisk_context_sql extends xivo_service_asterisk_abstract_s
 	{
 		$this->_dso->new_select($this->_table,'*');
 
-		if (isset($_SESSION["_USR"]->entity_name) && $_SESSION["_USR"]->entity_id !== 0)
-			$this->_dso->where(array('entity' => $_SESSION["_USR"]->entity_name));
-
 		if(isset($this->_forcecolumn) === true)
 			$this->_dso->where($this->_forcecolumn);
 

@@ -50,8 +50,8 @@ class xivo_application_service_asterisk_group_sql extends xivo_application_abstr
 			$this->_dso->andwhere($commented,$this->_table['queuemember']);
 		}
 
-		if (isset($_SESSION["_USR"]->contexts) && $_SESSION["_USR"]->entity_id !== 0)
-			$this->_dso->wherein('context', $_SESSION["_USR"]->contexts, $this->_table['groupfeatures']);
+		if (defined('ENTITY_FILTER_CONTEXT'))
+			$this->_dso->wherein('context', explode(',', ENTITY_FILTER_CONTEXT), $this->_table['groupfeatures']);
 
 		$this->_dso->new_group('name',$this->_table['groupfeatures']);
 		// PG compat:: must add all columns in SELECT
