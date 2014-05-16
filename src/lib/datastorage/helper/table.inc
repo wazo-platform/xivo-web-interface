@@ -533,20 +533,10 @@ class dwho_datastorage_helper_table extends dwho_datastorage_helper_abstract
 					$this->_dso->andwhere(array('entity' => $_SESSION["_USR"]->entity_name), $this->_table);
 				break;
 			case 'linefeatures':
-					$this->_dso->wherein('context', $_SESSION["_USR"]->contexts, $this->_table);
-				break;
 			case 'groupfeatures':
-					$this->_dso->wherein('context', $_SESSION["_USR"]->contexts, $this->_table);
-				break;
 			case 'voicemail':
-					$this->_dso->wherein('context', $_SESSION["_USR"]->contexts, $this->_table);
-				break;
 			case 'meetmefeatures':
-					$this->_dso->wherein('context', $_SESSION["_USR"]->contexts, $this->_table);
-				break;
 			case 'incall':
-					$this->_dso->wherein('context', $_SESSION["_USR"]->contexts, $this->_table);
-				break;
 			case 'agentfeatures':
 					$this->_dso->wherein('context', $_SESSION["_USR"]->contexts, $this->_table);
 				break;
