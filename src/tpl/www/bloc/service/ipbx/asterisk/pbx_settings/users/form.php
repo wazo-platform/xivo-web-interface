@@ -278,7 +278,7 @@ endif;
 		#echo $form->hidden(array('name' => 'userfeatures[entityid]','value' => $info['userfeatures']['entityid']));
 	endif;
 	if ($this->get_var('entity_list') === false):
-	    echo $this->bbf('no_entity_with_intern_context_detected');
+	    echo $this->bbf('no_internal_context_for_this_entity');
 	else:
 	    echo	$form->select(array('desc'	=> $this->bbf('fm_userfeatures_entity'),
 				    'name'		=> 'userfeatures[entityid]',

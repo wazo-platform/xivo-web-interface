@@ -774,5 +774,8 @@ Horaires
 ; fm_user_schedule
 Horaires :
 
+; no_internal_context_for_this_entity
+Aucun contexte interne pour cette entité
+
 ; no_linefeatures
 Aucune ligne

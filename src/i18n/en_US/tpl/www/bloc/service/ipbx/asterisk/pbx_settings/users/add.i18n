@@ -747,8 +747,8 @@ Schedules:
 ; create_schedules
 Create a schedule
 
-; no_context_for_this_entity
-No context for this entity
+; no_internal_context_for_this_entity
+No internal context for this entity
 
 ; no_linefeatures
 No line
