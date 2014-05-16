@@ -77,6 +77,7 @@ abstract class xivo_user_abstract extends xivo_libdatastorage_abstract
 
 		$data['valid'] = (bool) $data['valid'];
 		$data['entity_id'] = (int) $data['entity_id'];
+		$data['contexts'] = array('5ihrWK6nf5QWoxIcDlSloOMar31zu6M0Po0AXIr');
 
 		if (($entity = $modentity->get($data['entity_id'])))
 		{
