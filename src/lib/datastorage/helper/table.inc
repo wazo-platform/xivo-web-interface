@@ -524,28 +524,31 @@ class dwho_datastorage_helper_table extends dwho_datastorage_helper_abstract
 		switch($this->_table)
 		{
 			case 'entity':
-					$this->_dso->andwhere(array('id' => $_SESSION["_USR"]->entity_id), 'entity');
+					$this->_dso->andwhere(array('id' => $_SESSION["_USR"]->entity_id), $this->_table);
 				break;
 			case 'userfeatures':
-					$this->_dso->andwhere(array('entityid' => $_SESSION["_USR"]->entity_id), 'userfeatures');
+					$this->_dso->andwhere(array('entityid' => $_SESSION["_USR"]->entity_id), $this->_table);
 				break;
 			case 'context':
-					$this->_dso->andwhere(array('entity' => $_SESSION["_USR"]->entity_name), 'context');
+					$this->_dso->andwhere(array('entity' => $_SESSION["_USR"]->entity_name), $this->_table);
 				break;
 			case 'linefeatures':
-					$this->_dso->wherein('context', $_SESSION["_USR"]->contexts, 'linefeatures');
+					$this->_dso->wherein('context', $_SESSION["_USR"]->contexts, $this->_table);
 				break;
 			case 'groupfeatures':
-					$this->_dso->wherein('context', $_SESSION["_USR"]->contexts, 'groupfeatures');
+					$this->_dso->wherein('context', $_SESSION["_USR"]->contexts, $this->_table);
 				break;
 			case 'voicemail':
-					$this->_dso->wherein('context', $_SESSION["_USR"]->contexts, 'voicemail');
+					$this->_dso->wherein('context', $_SESSION["_USR"]->contexts, $this->_table);
 				break;
 			case 'meetmefeatures':
-					$this->_dso->wherein('context', $_SESSION["_USR"]->contexts, 'meetmefeatures');
+					$this->_dso->wherein('context', $_SESSION["_USR"]->contexts, $this->_table);
 				break;
 			case 'incall':
-					$this->_dso->wherein('context', $_SESSION["_USR"]->contexts, 'incall');
+					$this->_dso->wherein('context', $_SESSION["_USR"]->contexts, $this->_table);
+				break;
+			case 'agentfeatures':
+					$this->_dso->wherein('context', $_SESSION["_USR"]->contexts, $this->_table);
 				break;
 		}
 	}
