@@ -544,6 +544,9 @@ class dwho_datastorage_helper_table extends dwho_datastorage_helper_abstract
 			case 'meetmefeatures':
 					$this->_dso->wherein('context', $_SESSION["_USR"]->contexts, 'meetmefeatures');
 				break;
+			case 'incall':
+					$this->_dso->wherein('context', $_SESSION["_USR"]->contexts, 'incall');
+				break;
 		}
 	}
 }
