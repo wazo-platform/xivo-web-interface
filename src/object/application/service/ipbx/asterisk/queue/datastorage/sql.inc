@@ -81,6 +81,9 @@ class xivo_application_service_asterisk_queue_sql extends xivo_application_abstr
 			$this->_dso->aggregate_where();
 		}
 
+		if (isset($_SESSION["_USR"]->contexts) && $_SESSION["_USR"]->entity_id !== 0)
+			$this->_dso->wherein('context', $_SESSION["_USR"]->contexts, $this->_table['linefeatures']);
+
 		$this->_dso->new_order($order,null,$this->_table['queuefeatures']);
 		$this->_dso->limit($limit);
 
