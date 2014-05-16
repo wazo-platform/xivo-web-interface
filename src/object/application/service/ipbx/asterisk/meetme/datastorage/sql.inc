@@ -49,8 +49,8 @@ class xivo_application_service_asterisk_meetme_sql extends xivo_application_abst
 			$this->_dso->aggregate_where();
 		}
 
-		if (defined('ENTITY_FILTER_CONTEXT'))
-			$this->_dso->wherein('context', explode(',', ENTITY_FILTER_CONTEXT), $this->_table['meetmefeatures']);
+		if (defined('ENTITY_FILTER_CONTEXTS'))
+			$this->_dso->wherein('context', explode(',', ENTITY_FILTER_CONTEXTS), $this->_table['meetmefeatures']);
 
 		$this->_dso->new_order($order,null,$this->_table['meetmefeatures']);
 		$this->_dso->limit($limit);

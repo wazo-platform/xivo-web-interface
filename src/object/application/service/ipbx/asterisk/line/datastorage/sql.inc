@@ -61,8 +61,8 @@ class xivo_application_service_asterisk_line_sql extends xivo_application_abstra
 			$custom['commented'] = $disable;
 		}
 
-		if (defined('ENTITY_FILTER_CONTEXT'))
-			$this->_dso->wherein('context', explode(',', ENTITY_FILTER_CONTEXT), $this->_table['linefeatures']);
+		if (defined('ENTITY_FILTER_CONTEXTS'))
+			$this->_dso->wherein('context', explode(',', ENTITY_FILTER_CONTEXTS), $this->_table['linefeatures']);
 
 		$this->_dso->andwhere($arr,$this->_table['linefeatures']);
 		$this->_dso->joinwhere($this->_table['usersip'] ,$sip);
@@ -137,8 +137,8 @@ class xivo_application_service_asterisk_line_sql extends xivo_application_abstra
 			$custom['commented'] = $disable;
 		}
 
-		if (defined('ENTITY_FILTER_CONTEXT'))
-			$this->_dso->wherein('context', explode(',', ENTITY_FILTER_CONTEXT), $this->_table['linefeatures']);
+		if (defined('ENTITY_FILTER_CONTEXTS'))
+			$this->_dso->wherein('context', explode(',', ENTITY_FILTER_CONTEXTS), $this->_table['linefeatures']);
 
 		$this->_dso->andwhere($arr,$this->_table['linefeatures']);
 

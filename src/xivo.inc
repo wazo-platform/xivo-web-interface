@@ -72,9 +72,9 @@ class xivo extends dwho
 				define('ENTITY_FILTER_NAME', $entity['name']);
 
 				if (($contexts_filter = $modcontext->get_contexts_name_by_entity_name($entity['name'],null,null,null,true)))
-					define('ENTITY_FILTER_CONTEXT', implode(',', array_keys($contexts_filter)));
+					define('ENTITY_FILTER_CONTEXTS', implode(',', array_keys($contexts_filter)));
 				else
-					define('ENTITY_FILTER_CONTEXT', '5ihrWK6nf5QWoxIcDlSloOMar31zu6M0Po0AXIr');
+					define('ENTITY_FILTER_CONTEXTS', '5ihrWK6nf5QWoxIcDlSloOMar31zu6M0Po0AXIr');
 			}
 
 			define('ENTITY_FILTER_ID', $entity_id);
