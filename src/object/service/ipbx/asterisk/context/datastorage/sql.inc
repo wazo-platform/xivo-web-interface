@@ -42,8 +42,7 @@ class xivo_service_asterisk_context_sql extends xivo_service_asterisk_abstract_s
 		if($disable !== null && isset($this->_disable) === true)
 			$this->_dso->andwhere(array($this->_disable => intval((bool) $disable)));
 
-		if (isset($_SESSION["_USR"]->entity_name) && $_SESSION["_USR"]->entity_id !== 0)
-			$this->_dso->where(array('entity' => $_SESSION["_USR"]->entity_name));
+		$this->_add_entity_filter();
 
 		$this->_dso->new_order($order);
 		$this->_dso->limit($limit);
@@ -72,6 +71,8 @@ class xivo_service_asterisk_context_sql extends xivo_service_asterisk_abstract_s
 
 		if(dwho_has_len($name) === true)
 			$this->_dso->andwherenot(array('name' => $name));
+
+		$this->_add_entity_filter();
 
 		$this->_dso->new_order($order);
 		$this->_dso->limit($limit);

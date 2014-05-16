@@ -47,6 +47,8 @@ class xivo_service_asterisk_agentfeatures_sql extends xivo_service_asterisk_abst
 		if($disable !== null && isset($this->_disable) === true)
 			$this->_dso->andwhere(array($this->_disable => intval((bool) $disable)));
 
+		$this->_add_entity_filter();
+
 		$this->_dso->new_order($order);
 		$this->_dso->limit($limit);
 
@@ -68,6 +70,8 @@ class xivo_service_asterisk_agentfeatures_sql extends xivo_service_asterisk_abst
 
 		$this->_dso->where(array('number' => (string) $num));
 
+		$this->_add_entity_filter();
+
 		$r = $this->_dso->select_single();
 
 		if(empty($r) === true)
@@ -79,6 +83,8 @@ class xivo_service_asterisk_agentfeatures_sql extends xivo_service_asterisk_abst
 	function get_all_assoc()
 	{
 		$this->_dso->new_select($this->_table,'*');
+
+		$this->_add_entity_filter();
 
 		$r = $this->_dso->select_all('',true,false,'id');
 
@@ -93,6 +99,8 @@ class xivo_service_asterisk_agentfeatures_sql extends xivo_service_asterisk_abst
 		$this->_dso->new_select($this->_table,'*');
 
 		$this->_dso->wherein('id',$where);
+
+		$this->_add_entity_filter();
 
 		$this->_dso->new_order($order);
 		$this->_dso->limit($limit);
