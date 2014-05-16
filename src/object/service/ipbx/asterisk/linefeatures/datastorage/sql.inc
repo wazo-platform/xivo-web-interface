@@ -75,6 +75,9 @@ class xivo_service_asterisk_linefeatures_sql extends xivo_service_asterisk_abstr
 			$this->_dso->where(array('device' => $deviceid));
 			$this->_dso->where(array('num' => 1));
 		}
+
+		$this->_add_entity_filter();
+
 		return($this->_dso->select_single());
 	}
 
@@ -255,6 +258,8 @@ class xivo_service_asterisk_linefeatures_sql extends xivo_service_asterisk_abstr
 		$this->_dso->andwherenot(array('device' => ''), $this->_table);
 		$this->_dso->andwherenotnull('device', $this->_table);
 		$this->_dso->andwhere($arr, $this->_table);
+
+		$this->_add_entity_filter();
 
 		$r = $this->_dso->select_all();
 
