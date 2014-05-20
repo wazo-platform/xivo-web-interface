@@ -274,9 +274,6 @@ endif;
 
 <div id="sb-part-lines" class="b-nodisplay">
 <?php
-	if($line_list !== false):
-		#echo $form->hidden(array('name' => 'userfeatures[entityid]','value' => $info['userfeatures']['entityid']));
-	endif;
 	if ($this->get_var('entity_list') === false):
 	    echo $this->bbf('no_internal_context_for_this_entity');
 	else:
