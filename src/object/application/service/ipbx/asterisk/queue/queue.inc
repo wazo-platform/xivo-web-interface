@@ -400,6 +400,7 @@ class xivo_application_service_asterisk_queue extends xivo_application_asterisk_
 		}
 
 		$arr['category'] = 'queue';
+		$arr['context'] = $this->get_result_var('queuefeatures', 'context');
 
 		if(($rs = $this->_queue->chk_values($arr)) === false)
 		{
