@@ -81,6 +81,9 @@ function xivo_http_search_numpool(context,helper)
 //get list context available for a entity
 function xivo_http_search_context_from_entity(entityid)
 {
+	if (entityid == false)
+		return;
+	
     $.ajax({
         url: '/xivo/configuration/ui.php/manage/entity?act=get&id='+entityid+'&contexttype=internal',
         async: false,
