@@ -517,8 +517,7 @@ class dwho_datastorage_helper_table extends dwho_datastorage_helper_abstract
 	{
 		if (!defined('ENTITY_FILTER_ID')
 		|| !defined('ENTITY_FILTER_NAME')
-		|| !defined('ENTITY_FILTER_CONTEXTS')
-		|| defined('ENTITY_FILTER_ID') === 0)
+		|| !defined('ENTITY_FILTER_CONTEXTS'))
 			return null;
 
 		switch($this->_table)
