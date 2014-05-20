@@ -36,6 +36,7 @@ class xivo_application_service_asterisk_voicemail_sql extends xivo_application_a
 		$this->_dso->wherecontain('fullname',$value,true,$this->_table['voicemail']);
 		$this->_dso->orwherecontain('mailbox',$value,true,$this->_table['voicemail']);
 		$this->_dso->orwherecontain('email',$value,true,$this->_table['voicemail']);
+		$this->_dso->aggregate_where();
 
 		if (defined('ENTITY_FILTER_CONTEXTS'))
 			$this->_dso->wherein('context', explode(',', ENTITY_FILTER_CONTEXTS), $this->_table['voicemail']);
