@@ -459,7 +459,6 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		$order = array();
 		$order['firstname'] = SORT_ASC;
 		$order['lastname'] = SORT_ASC;
-		//$order['number'] = SORT_ASC;
 
 		if(($userfeatures = &$this->_service->get_module('userfeatures')) !== false
 		&& ($r = $userfeatures->get_all_except($id,$number,$order)) !== false)

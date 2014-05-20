@@ -246,6 +246,8 @@ class dwho_datastorage_helper_table extends dwho_datastorage_helper_abstract
 		if($disable !== null && isset($this->_disable) === true)
 			$arr[$this->_disable] = intval((bool) $disable);
 
+		$this->_add_entity_filter();
+
 		$this->_dso->where($arr);
 
 		if($primary === true && $this->is_single_primary() === true)
@@ -263,6 +265,7 @@ class dwho_datastorage_helper_table extends dwho_datastorage_helper_abstract
 
 	function exists($arr,$disable=null)
 	{
+		$this->_add_entity_filter();
 		return($this->get($arr,$disable,false,true));
 	}
 
@@ -283,6 +286,8 @@ class dwho_datastorage_helper_table extends dwho_datastorage_helper_abstract
 			$arr[$this->_disable] = intval((bool) $disable);
 
 		$this->_dso->new_select($this->_table);
+
+		$this->_add_entity_filter();
 
 		if(is_array($arr) === true)
 			$this->_dso->where($arr);
@@ -431,6 +436,8 @@ class dwho_datastorage_helper_table extends dwho_datastorage_helper_abstract
 		if($disable !== null && isset($this->_disable) === true)
 			$arr[$this->_disable] = intval((bool) $disable);
 
+		$this->_add_entity_filter();
+
 		if(empty($arr) === false)
 			$this->_dso->where($arr);
 
@@ -474,6 +481,8 @@ class dwho_datastorage_helper_table extends dwho_datastorage_helper_abstract
 		if($disable !== null && isset($this->_disable) === true)
 			$arr[$this->_disable] = intval((bool) $disable);
 
+		$this->_add_entity_filter();
+
 		$this->_dso->where($arr);
 
 		$this->_dso->new_order($order);
@@ -502,6 +511,38 @@ class dwho_datastorage_helper_table extends dwho_datastorage_helper_abstract
 	function get_all_where($arr,$disable=null,$order=null,$limit=null)
 	{
 		return($this->get_list_where($arr,$disable,$order,$limit,true));
+	}
+
+	protected function _add_entity_filter()
+	{
+		if (!defined('ENTITY_FILTER_ID')
+		|| !defined('ENTITY_FILTER_NAME')
+		|| !defined('ENTITY_FILTER_CONTEXTS'))
+			return null;
+
+		switch($this->_table)
+		{
+			case 'entity':
+					$this->_dso->andwhere(array('id' => ENTITY_FILTER_ID), $this->_table);
+				break;
+			case 'userfeatures':
+					$this->_dso->andwhere(array('entityid' => ENTITY_FILTER_ID), $this->_table);
+				break;
+			case 'context':
+					$this->_dso->andwhere(array('entity' => ENTITY_FILTER_NAME), $this->_table);
+				break;
+			case 'linefeatures':
+			case 'groupfeatures':
+			case 'group':
+			case 'voicemail':
+			case 'meetmefeatures':
+			case 'incall':
+			case 'queuefeatures':
+			case 'queue':
+			case 'voicemail':
+					$this->_dso->wherein('context', explode(',', ENTITY_FILTER_CONTEXTS), $this->_table);
+				break;
+		}
 	}
 }
 

@@ -31,6 +31,8 @@ class xivo_service_asterisk_queuefeatures_sql extends xivo_service_asterisk_abst
 
 		$this->_dso->where(array('name' => (string) $name));
 
+		$this->_add_entity_filter();
+
 		$r = $this->_dso->select_single();
 
 		if(empty($r) === true)
@@ -45,6 +47,8 @@ class xivo_service_asterisk_queuefeatures_sql extends xivo_service_asterisk_abst
 
 		$this->_dso->where(array('id' => $queue_id));
 
+		$this->_add_entity_filter();
+
 		$r = $this->_dso->select_singlecolumn();
 
 		if(isset($r[0]) === false)
@@ -58,6 +62,8 @@ class xivo_service_asterisk_queuefeatures_sql extends xivo_service_asterisk_abst
 		$this->_dso->new_select($this->_table,'*');
 
 		$this->_dso->wherein('id',$where);
+
+		$this->_add_entity_filter();
 
 		$this->_dso->new_order($order);
 		$this->_dso->limit($limit);
@@ -82,6 +88,8 @@ class xivo_service_asterisk_queuefeatures_sql extends xivo_service_asterisk_abst
 
 		if((bool) $number === true)
 			$this->_dso->andwherenot('IFNULL(number,\'\') = \'\'');
+
+		$this->_add_entity_filter();
 
 		$this->_dso->new_order($order);
 		$this->_dso->limit($limit);

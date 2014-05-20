@@ -91,7 +91,7 @@ if(($disableagent = $appagent->get_nb(null,true)) !== false)
 
 $agentstat['total'] = $agentstat['enable'] + $agentstat['disable'];
 
-$appuser = &$ipbx->get_application('user',null,false);
+$appuser = &$ipbx->get_module('userfeatures',null,false);
 
 if(($enableuser = $appuser->get_nb(null,false)) !== false)
 	$userstat['enable'] = $enableuser;

@@ -30,7 +30,7 @@ switch($act)
 	case 'get':
 		$appentity = &$_XOBJ->get_application('entity');
 
-		if(isset($_QR['id']) === false)
+		if(isset($_QR['id']) === false || is_numeric($_QR['id']) === false)
 		{
 			$http_response->set_status_line(400);
 			$http_response->send(true);

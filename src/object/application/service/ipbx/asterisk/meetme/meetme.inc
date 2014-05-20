@@ -102,7 +102,7 @@ class xivo_application_service_asterisk_meetme extends xivo_application_asterisk
 
 	function get_nb($arr=null,$disable=null)
 	{
-		return($this->_meetmeroom->get_nb($arr,$disable));
+		return($this->_meetmefeatures->get_nb($arr,$disable));
 	}
 
 	function _get_meetmeguest()

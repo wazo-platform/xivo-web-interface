@@ -43,21 +43,6 @@ class xivo_application_service_asterisk_user_sql extends xivo_application_abstra
 				'func_key_template'	=> '',
 				'func_key_type'		=> '');
 
-	function get_nb($arr=null,$disable=null,$initialized=null)
-	{
-		if(is_array($arr) === false)
-			$arr = array();
-
-		$this->_dso->new_select($this->_table['userfeatures']);
-
-		if($disable !== null)
-			$arr['commented'] = intval((bool) $disable);
-
-		$this->_dso->where($arr,$this->_table['userfeatures']);
-
-		return(dwho_ulongint($this->_dso->select_count(null,'id',$this->_table['userfeatures'])));
-	}
-
 	function get_all($disable=null,$initialized=null,$order=null,$limit=null,$value=null)
 	{
 		$this->_cnt = 0;
@@ -66,9 +51,8 @@ class xivo_application_service_asterisk_user_sql extends xivo_application_abstra
 
 		$this->_dso->new_select($this->_table['userfeatures']);
 
-		#TODO: entity_filter
-		#if (isset($_SESSION["_USR"]->entity_id) && $_SESSION["_USR"]->entity_id !== 0)
-		#	$arr['entityid'] = $_SESSION["_USR"]->entity_id;
+		if (defined('ENTITY_FILTER_ID'))
+			$arr['entityid'] = ENTITY_FILTER_ID;
 
 		if($disable !== null)
 			$arr['commented'] = intval((bool) $disable);

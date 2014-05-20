@@ -27,6 +27,7 @@ $search  = strval($prefs->get('search', ''));
 $sort    = $prefs->flipflop('sort', 'fullname');
 
 $appschedule = &$ipbx->get_application('schedule');
+$modentity = &$_XOBJ->get_module('entity');
 
 $param = array();
 $param['act'] = 'list';
@@ -39,40 +40,6 @@ switch($act)
 	case 'add':
 	case 'edit':
 		$appuser = &$ipbx->get_application('user');
-
-		$entity_list = false;
-
-		$appcontext= &$ipbx->get_application('context');
-		if(($context_list = $appcontext->get_contexts_list(null,array('name' => SORT_ASC),null,false,'internal')) !== false)
-		{
-			$idx = array();
-			$entity_list = array();
-			$nb = count($context_list);
-			for($i = 0;$i < $nb;$i++)
-			{
-				$ref = &$context_list[$i];
-
-				if (($contextnumbers = $ref['contextnumbers']) === false)
-					continue;
-
-				if (is_array($contextnumbers) === true
-				&& ($nbct = count($contextnumbers)) === 0)
-					continue;
-
-				for($k = 0;$k < $nbct;$k++)
-				{
-					$refct = &$contextnumbers[$k];
-
-					if ($refct['type'] !== 'user'
-					|| isset($idx[$ref['entity']['id']]) === true)
-						continue;
-
-					$idx[$ref['entity']['id']] = true;
-					array_push($entity_list, $ref['entity']);
-				}
-			}
-		}
-
 		$appprovdconfig = &$_XOBJ->get_application('provdconfig');
 		$order = array('displayname' => SORT_ASC);
 		$list_configregistrar = $appprovdconfig->get_config_list('',$order,false,false,false,'registrar');
@@ -80,7 +47,6 @@ switch($act)
 		$device_api = &$_RAPI->get_ressource('device');
 		$list_device_line = $device_api->find_all();
 
-		$_TPL->set_var('entity_list',$entity_list);
 		$_TPL->set_var('list_configregistrar',$list_configregistrar);
 		$_TPL->set_var('list_device_line',$list_device_line);
 		$_TPL->set_var('import_file',$appuser->get_config_import_file());
@@ -218,6 +184,7 @@ switch($act)
 
 $_TPL->set_var('act',$act);
 $_TPL->set_var('schedules',$appschedule->get_schedules_list());
+$_TPL->set_var('entity_list',$modentity->get_all());
 
 $menu = &$_TPL->get_module('menu');
 $menu->set_top('top/user/'.$_USR->get_info('meta'));

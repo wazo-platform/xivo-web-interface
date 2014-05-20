@@ -58,6 +58,28 @@ class xivo extends dwho
 		if(dwho_constant('XIVO_WEBI_CONFIGURED',false) === true)
 			$this->_set_user();
 
+		if (isset($_SESSION["_USR"]->entity_id)
+		&& ($entity_id = $_SESSION["_USR"]->entity_id) > 0
+		&& $_SESSION["_USR"]->meta != 'root')
+		{
+			$_XOBJ = &dwho_gct::get('xivo_object');
+			$_SRE = dwho_gct::get('xivo_service');
+			$modcontext = &$_SRE->get_module('ipbx', 'context');
+			$modentity = &$_XOBJ->get_module('entity');
+
+			if (($entity = $modentity->get($entity_id)))
+			{
+				define('ENTITY_FILTER_NAME', $entity['name']);
+
+				if (($contexts_filter = $modcontext->get_contexts_name_by_entity_name($entity['name'],null,null,null,true)))
+					define('ENTITY_FILTER_CONTEXTS', implode(',', array_keys($contexts_filter)));
+				else
+					define('ENTITY_FILTER_CONTEXTS', '5ihrWK6nf5QWoxIcDlSloOMar31zu6M0Po0AXIr');
+			}
+
+			define('ENTITY_FILTER_ID', $entity_id);
+		}
+
 		dwho_gat::set('_CF',$this->_conf);
 	}
 

@@ -81,6 +81,9 @@ class xivo_application_service_asterisk_queue_sql extends xivo_application_abstr
 			$this->_dso->aggregate_where();
 		}
 
+		if (defined('ENTITY_FILTER_CONTEXTS'))
+			$this->_dso->wherein('context', explode(',', ENTITY_FILTER_CONTEXTS), $this->_table['queuefeatures']);
+
 		$this->_dso->new_order($order,null,$this->_table['queuefeatures']);
 		$this->_dso->limit($limit);
 
