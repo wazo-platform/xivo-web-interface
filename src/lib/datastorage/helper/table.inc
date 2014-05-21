@@ -513,6 +513,25 @@ class dwho_datastorage_helper_table extends dwho_datastorage_helper_abstract
 		return($this->get_list_where($arr,$disable,$order,$limit,true));
 	}
 
+	function get_all_wherein($column,$where,$order=null,$limit=null)
+	{
+		$this->_dso->new_select($this->_table,'*');
+
+		$this->_add_entity_filter();
+
+		$this->_dso->wherein($column,$where);
+
+		$this->_dso->new_order($order);
+		$this->_dso->limit($limit);
+
+		$r = $this->_dso->select_all('',true,false,$column);
+
+		if(empty($r) === true)
+			$r = false;
+
+		return($r);
+	}
+
 	protected function _add_entity_filter()
 	{
 		if (!defined('ENTITY_FILTER_ID')

@@ -424,9 +424,9 @@ abstract class xivo_libdatastorage_abstract extends xivo_libconfig_abstract
 		return($this->_mk_list_assoc_prepare($list,$assoc,$prepare));
 	}
 
-	function get_all_wherein($id,$where,$order=null,$limit=null)
+	function get_all_wherein($column,$where,$order=null,$limit=null)
 	{
-		if(($list = $this->_dso->get_all_wherein($id,$where,$order,$limit)) === false)
+		if(($list = $this->_dso->get_all_wherein($column,$where,$order,$limit)) === false)
 			return(false);
 
 		foreach($list as $key => &$r)
