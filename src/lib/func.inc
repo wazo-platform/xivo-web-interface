@@ -953,6 +953,21 @@ function dwho_array_change_value_case($arr,$case=CASE_LOWER)
 	return(array_flip(array_change_key_case(array_flip($arr),intval((bool) $case))));
 }
 
+function dwho_array_same_key_val($arr,$key)
+{
+	$r = array();
+
+	foreach($arr as $k => $v)
+	{
+		$r[$k] = $v[$key];
+	}
+
+	if(empty($r) === true)
+		$r = false;
+
+	return($r);
+}
+
 function dwho_build_array_ref(&$a)
 {
 	if(is_array($a) === false)

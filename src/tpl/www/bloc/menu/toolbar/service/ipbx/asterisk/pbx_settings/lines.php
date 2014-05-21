@@ -38,6 +38,8 @@ $dhtml->write_js($toolbar_js);
 
 $context_js = $dhtml->escape($context);
 
+$contexts = $this->get_var('contexts');
+
 ?>
 <script type="text/javascript" src="<?=$this->file_time($this->url('js/xivo_toolbar.js'));?>"></script>
 
@@ -69,7 +71,7 @@ $context_js = $dhtml->escape($context);
 					    'paragraph'	=> false,
 					    'empty'	=> $this->bbf('toolbar_fm_context'),
 					    'selected'	=> $context),
-				      $this->get_var('contexts'),
+				      dwho_array_same_key_val($contexts, 'name'),
 				      'style="margin-left: 20px;"'),
 
 			$form->select(array('name'	=> 'free',

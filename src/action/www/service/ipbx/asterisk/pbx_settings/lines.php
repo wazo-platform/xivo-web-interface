@@ -265,7 +265,7 @@ switch($act)
 
 $_TPL->set_var('act',$act);
 $_TPL->set_var('frees',array(1 => 'yes',0 => 'no'));
-$_TPL->set_var('contexts',array_keys($appline->get_context_list(null,null,null,true,'internal')));
+$_TPL->set_var('contexts',$appline->get_context_list(null,null,null,true,'internal'));
 
 $menu = &$_TPL->get_module('menu');
 $menu->set_top('top/user/'.$_USR->get_info('meta'));
