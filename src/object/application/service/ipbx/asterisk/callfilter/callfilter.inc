@@ -417,9 +417,10 @@ class xivo_application_service_asterisk_callfilter extends xivo_application_aste
 		$info['active'] = false;
 
 		$where = array();
+		$where['id'] = (int) $list['boss']['id'];
 		$where['bsfilter'] = 'boss';
 
-		if(($boss = $this->_userfeatures->get_where($where,true,null,$list['boss']['id'])) === false)
+		if(($boss = $this->_userfeatures->get_where($where)) === false)
 		{
 			$this->_set_result('callfiltermember',null);
 			$this->_set_error('callfiltermember','wrong boss');
@@ -450,7 +451,9 @@ class xivo_application_service_asterisk_callfilter extends xivo_application_aste
 
 		for($i = 0;$i < $nb;$i++)
 		{
-			if(($secretary = $this->_userfeatures->get_where($where,true,null,$secretarylist[$i])) === false
+			$where['id'] = (int) $secretarylist[$i];
+
+			if(($secretary = $this->_userfeatures->get_where($where)) === false
 			|| isset($tmp[$secretary['id']]) === true)
 			{
 				$this->_set_result('callfiltermember',$reslist);
