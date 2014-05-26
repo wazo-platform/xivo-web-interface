@@ -556,6 +556,7 @@ class dwho_datastorage_helper_table extends dwho_datastorage_helper_abstract
 			case 'voicemail':
 			case 'meetmefeatures':
 			case 'incall':
+			case 'agentfeatures':
 			case 'queuefeatures':
 			case 'queue':
 			case 'voicemail':
