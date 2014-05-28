@@ -57,6 +57,7 @@ $page = $url->pager($pager['pages'],
 		<th class="th-center"><?=$this->bbf('col_type');?></th>
 		<th class="th-center"><?=$this->bbf('col_dcreate');?></th>
 		<th class="th-center"><?=$this->bbf('col_valid');?></th>
+		<th class="th-center"><?=$this->bbf('col_entity');?></th>
 		<th class="th-center col-action"><?=$this->bbf('col_action');?></th>
 		<th class="th-right xspan"><span class="span-right">&nbsp;</span></th>
 	</tr>
@@ -64,7 +65,7 @@ $page = $url->pager($pager['pages'],
 	if(($list = $this->get_var('list')) === false || ($nb = count($list)) === 0):
 ?>
 	<tr class="sb-content">
-		<td colspan="9" class="td-single"><?=$this->bbf('no_user');?></td>
+		<td colspan="10" class="td-single"><?=$this->bbf('no_user');?></td>
 	</tr>
 <?php
 	else:
@@ -102,6 +103,7 @@ $page = $url->pager($pager['pages'],
 					     null,
 					     $ref['dcreate']);?></td>
 		<td><?=$this->bbf('valid_'.intval((bool) $ref['valid']));?></td>
+		<td><?=$ref['entity']?$ref['entity']['displayname']:''?></td>
 		<td class="td-right" colspan="2">
 <?php
 			echo	$url->href_html($url->img_html('img/site/button/edit.gif',
@@ -144,7 +146,7 @@ $page = $url->pager($pager['pages'],
 ?>
 	<tr class="sb-foot">
 		<td class="td-left xspan b-nosize"><span class="span-left b-nosize">&nbsp;</span></td>
-		<td class="td-center" colspan="5"><span class="b-nosize">&nbsp;</span></td>
+		<td class="td-center" colspan="6"><span class="b-nosize">&nbsp;</span></td>
 		<td class="td-right xspan b-nosize"><span class="span-right b-nosize">&nbsp;</span></td>
 	</tr>
 </table>

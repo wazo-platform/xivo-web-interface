@@ -79,6 +79,20 @@ abstract class xivo_user_abstract extends xivo_libdatastorage_abstract
 		return($data);
 	}
 
+	function get_all($disable=null,$prepare=true,$order=null,$limit=null,$assoc=false)
+	{
+		if (($users = parent::get_all($disable,$prepare,$order,$limit,$assoc)) === false)
+			return(false);
+
+		$_XOBJ = &dwho_gct::get('xivo_object');
+		$modentity = &$_XOBJ->get_module('entity');
+
+		foreach ($users as &$user)
+			$user['entity'] = $modentity->get((int) $user['entity_id']);
+
+		return($users);
+	}
+
 	function add($arr)
 	{
 		if(is_array($arr) === false)
