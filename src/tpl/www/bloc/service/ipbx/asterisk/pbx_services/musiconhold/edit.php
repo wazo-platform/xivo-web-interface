@@ -57,6 +57,8 @@ $info = $this->get_var('info');
 				    'name'	=> 'mode',
 				    'labelid'	=> 'mode',
 				    'key'	=> false,
+				    'class' => 'it-disabled',
+				    'readonly' => true,
 				    'default'	=> $element['mode']['default'],
 				    'selected'	=> $info['mode']),
 			      $element['mode']['value'],

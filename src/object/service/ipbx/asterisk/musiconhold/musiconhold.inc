@@ -242,7 +242,9 @@ class xivo_service_asterisk_musiconhold extends xivo_service_asterisk_staticconf
 		if($this->add_dir($category) === false)
 			return(false);
 
-		$arr['directory'] = $this->_mohpath.DWHO_SEP_DIR.$category;
+		if ($arr['mode'] !== 'custom') {
+			$arr['directory'] = $this->_mohpath.DWHO_SEP_DIR.$category;
+		}
 
 		if(($r = parent::get_category($category)) !== false)
 		{
@@ -265,12 +267,20 @@ class xivo_service_asterisk_musiconhold extends xivo_service_asterisk_staticconf
 		if(is_array($arr) === false)
 			return(false);
 
+		$old_category = parent::get_category($id);
+		if($old_category === false) {
+			return(false);
+		}
+		$arr['mode'] = $old_category['mode'];
+
 		$category = $arr['category'];
 
 		if($this->edit_dir($id,$category) === false)
 			return(false);
 
-		$arr['directory'] = $this->_mohpath.DWHO_SEP_DIR.$category;
+		if ($arr['mode'] !== 'custom') {
+			$arr['directory'] = $this->_mohpath.DWHO_SEP_DIR.$category;
+		}
 
 		if(strtolower($id) !== strtolower($category) && parent::get_category($category) !== false)
 			parent::delete_by_category($category);
