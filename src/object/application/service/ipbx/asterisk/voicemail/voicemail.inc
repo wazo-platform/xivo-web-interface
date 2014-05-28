@@ -171,20 +171,19 @@ class xivo_application_service_asterisk_voicemail extends xivo_application_aster
 					$ref['commented'] = (bool) $ref['commented'];
 				}
 
-				if(empty($r) === true)
-					return(false);
-				else if((bool) $assoc === false)
-					return(array_values($r));
-
-				return($r);
 			case 'list':
 			default:
-				if(($rs = $this->_voicemail->get_all($disable,true,$order,$limit,$assoc)) !== false
+				if(($rs = $this->_dso->get_all($disable,$order,$limit)) !== false
 				&& empty($rs) === true)
 					$rs = false;
 
 				$this->_cnt = $this->_voicemail->get_cnt();
 		}
+
+		if(empty($rs) === true)
+			return(false);
+		else if((bool) $assoc === false)
+			return(array_values($rs));
 
 		return($rs);
 	}

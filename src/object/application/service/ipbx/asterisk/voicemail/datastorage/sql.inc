@@ -22,7 +22,42 @@ require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'application','abstract','data
 
 class xivo_application_service_asterisk_voicemail_sql extends xivo_application_abstract_datastorage_sql
 {
-	var $_table	= array('voicemail'	=> '');
+	var $_table	= array('voicemail'	=> '',
+	'context'	=> '');
+
+	function get_all($disable=null,$order=null,$limit=null)
+	{
+		$this->_dso->new_select($this->_table['voicemail']);
+
+		if (defined('ENTITY_FILTER_CONTEXTS'))
+			$this->_dso->wherein('context', explode(',', ENTITY_FILTER_CONTEXTS), $this->_table['voicemail']);
+
+		$this->_dso->innerjoin($this->_table['context'],
+				      $this->_table['voicemail'].'.context = '.$this->_table['context'].'.name');
+
+		$this->_dso->innerjoin('entity',
+				      'entity.name = '.$this->_table['context'].'.entity',
+						null,
+						array('entity_displayname' => 'displayname'));
+
+		$this->_dso->new_order($order,null,$this->_table['voicemail']);
+		$this->_dso->limit($limit);
+
+		$r = $this->_dso->select_all();
+
+		$this->_dso->reset_group();
+		$this->_dso->reset_order();
+		$this->_dso->reset_limit();
+
+		if(($this->_cnt = $this->_dso->select_distinct_count_singlecolumn(
+							null,
+							'uniqueid',
+							$this->_table['voicemail'])) === false
+		|| isset($r[0]) === false)
+			$r = false;
+
+		return($r);
+	}
 
 	function search($value,$disable=null,$order=null,$limit=null)
 	{
@@ -40,6 +75,14 @@ class xivo_application_service_asterisk_voicemail_sql extends xivo_application_a
 
 		if (defined('ENTITY_FILTER_CONTEXTS'))
 			$this->_dso->wherein('context', explode(',', ENTITY_FILTER_CONTEXTS), $this->_table['voicemail']);
+
+		$this->_dso->innerjoin($this->_table['context'],
+				      $this->_table['voicemail'].'.context = '.$this->_table['context'].'.name');
+
+		$this->_dso->innerjoin('entity',
+				      'entity.name = '.$this->_table['context'].'.entity',
+						null,
+						array('entity_displayname' => 'displayname'));
 
 		$this->_dso->new_order($order,null,$this->_table['voicemail']);
 		$this->_dso->limit($limit);
