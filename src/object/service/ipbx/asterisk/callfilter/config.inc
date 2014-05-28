@@ -21,6 +21,9 @@
 $array = array();
 $array['element'] = array();
 
+$array['element']['entity_id'] = array();
+$array['element']['entity_id']['default'] = '';
+
 $array['element']['name'] = array();
 $array['element']['name']['default'] = '';
 
@@ -56,6 +59,7 @@ $array['element']['description'] = array();
 $array['element']['description']['default'] = '';
 
 $array['filter'] = array();
+$array['filter']['entity_id'] = array('cast' => 'ulongint');
 $array['filter']['name'] = array('maxlen' => 128,'regexp' => '/^[a-z0-9_-]+$/i');
 $array['filter']['type'] = array('set' => false);
 $array['filter']['bosssecretary'] = array('set' => false,'key' => array('bossfirst-serial',

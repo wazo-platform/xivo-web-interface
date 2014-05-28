@@ -24,6 +24,7 @@ class xivo_application_service_asterisk_callfilter_sql extends xivo_application_
 {
 	var $_table	= array(
 				'callfilter'		=> '',
+				'context'			=> '',
 				'callfiltermember'	=> '',
 				'userfeatures'		=> '');
 
@@ -52,6 +53,9 @@ class xivo_application_service_asterisk_callfilter_sql extends xivo_application_
 
 		$arr['type'] = $type;
 
+		if (defined('ENTITY_FILTER_ID'))
+			$arr['entity_id'] = ENTITY_FILTER_ID;
+
 		if($disable !== null)
 			$arr['commented'] = intval((bool) $disable);
 
@@ -77,6 +81,12 @@ class xivo_application_service_asterisk_callfilter_sql extends xivo_application_
 		$this->_dso->add_group('id','user1');
 		$this->_dso->add_group('firstname','user1');
 		$this->_dso->add_group('lastname','user1');
+
+		$this->_dso->innerjoin('entity',
+				      'entity.id = '.$this->_table['callfilter'].'.entity_id',
+						null,
+						array('entity_displayname' => 'displayname'));
+		$this->_dso->add_group('displayname','entity');
 
 		$this->_dso->new_order($order,null,$this->_table['callfilter']);
 		$this->_dso->limit($limit);
@@ -105,6 +115,9 @@ class xivo_application_service_asterisk_callfilter_sql extends xivo_application_
 					    	 'member_lastname' => 'lastname'));
 
 		$this->_dso->where(array('callfilterid' => $id,'type' => 'user'),$this->_table['callfiltermember']);
+
+		if (defined('ENTITY_FILTER_ID'))
+			$this->_dso->andwhere(array('entity_id' => ENTITY_FILTER_ID));
 
 		if($type === 'bosssecretary')
 			$this->_dso->andjoinwherein($this->_table['userfeatures'],array('boss','secretary'));
@@ -156,6 +169,9 @@ class xivo_application_service_asterisk_callfilter_sql extends xivo_application_
 
 		$this->_dso->where($where);
 
+		if (defined('ENTITY_FILTER_ID'))
+			$this->_dso->andwhere(array('entityid' => ENTITY_FILTER_ID));
+
 		if($callfilterid === null)
 		    $this->_dso->new_order($order,$this->_table['userfeatures']);
 		$this->_dso->limit($limit);
@@ -175,6 +191,9 @@ class xivo_application_service_asterisk_callfilter_sql extends xivo_application_
 		$this->_dso->where(array('bsfilter' => 'boss'));
 		$this->_dso->joinwhere($this->_table['callfiltermember'],array('bstype' => 'boss','type' => 'user'));
 		$this->_dso->andwhere($this->_table['callfiltermember'].'.id IS NULL');
+
+		if (defined('ENTITY_FILTER_ID'))
+			$this->_dso->andwhere(array('entityid' => ENTITY_FILTER_ID));
 
 		if(($r = $this->_dso->select_all()) !== false && isset($r[0]) === false)
 			$r = false;

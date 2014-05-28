@@ -26,6 +26,8 @@ $info = array();
 $param = array();
 $param['act'] = 'list';
 
+$modentity = &$_XOBJ->get_module('entity');
+
 switch($act)
 {
 	case 'add':
@@ -243,6 +245,8 @@ switch($act)
 		$_TPL->set_var('pager',dwho_calc_page($page,$nbbypage,$total));
 		$_TPL->set_var('list',$list);
 }
+
+$_TPL->set_var('entities',$modentity->get_all());
 
 $_TPL->set_var('act',$act);
 
