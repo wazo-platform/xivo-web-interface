@@ -72,7 +72,7 @@ $page = $url->pager($pager['pages'],
 		<th class="th-center xspan"><?=$this->bbf('col_provisioning');?></th>
 		<th class="th-center xspan"><?=$this->bbf('col_protocol');?></th>
 		<th class="th-center xspan"><?=$this->bbf('col_phone');?></th>
-		<th class="th-center xspan"><?=$this->bbf('col_context');?></th>
+		<th class="th-center xspan"><?=$this->bbf('col_entity');?></th>
 		<th class="th-center col-action"><?=$this->bbf('col_action');?></th>
 		<th class="th-right xspan"><span class="span-right">&nbsp;</span></th>
 	</tr>
@@ -88,6 +88,7 @@ $page = $url->pager($pager['pages'],
 			$ref = &$list[$i];
 
 			$line = $ref['masterline'];
+			$entity = $ref['entity'];
 
 			if($ref['commented'] === true):
 				$icon = 'disable';
@@ -115,7 +116,7 @@ $page = $url->pager($pager['pages'],
 		<td class="txt-center col_provisioning_code"><?=(!isset($line['provisioningid'])) ? '-' : $line['provisioningid']?></td>
 		<td class="txt-center col_protocol"><?=($line['protocol']);?></td>
 		<td class="txt-center col_number"><?=(!isset($line['number'])) ? '-' : $line['number']?></td>
-		<td class="txt-center col_context"><?=($line['context']);?></td>
+		<td class="txt-center col_entity"><?=($entity['displayname']);?></td>
 		<td class="td-right col_actions" colspan="2">
 <?php
 		echo	$url->href_html($url->img_html('img/site/button/edit.gif',
