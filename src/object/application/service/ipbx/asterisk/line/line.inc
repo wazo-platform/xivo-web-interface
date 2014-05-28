@@ -35,6 +35,7 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 	protected $_extensions		= false;
 	protected $_provdconfig		= false;
 	protected $_provddevice		= false;
+	protected $_entity			= false;
 	protected $_conf			= array();
 
 	public function __construct(&$service,&$dso,$param=null,$components=true)
@@ -71,6 +72,7 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 		if(($this->_user_line = &$this->_service->get_module('user_line')) === false
 		|| ($this->_extensions = &$this->_service->get_module('extensions')) === false
 		|| ($_XOBJ = &dwho_gct::get('xivo_object')) === false
+		|| ($this->_entity = &$_XOBJ->get_module('entity')) === false
 		|| ($this->_provddevice = &$_XOBJ->get_module('provddevice')) === false
 		|| ($this->_provdconfig = &$_XOBJ->get_module('provdconfig')) === false)
 			return(false);
@@ -300,6 +302,9 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 				default:
 					continue;
 			}
+
+			$entity = dwho_array_startswith_key($ref,'entity.',true);
+			$r[$linefeatures['id']]['entity'] = $this->_entity->_prepare($entity);
 		}
 
 		if(empty($r) === true)

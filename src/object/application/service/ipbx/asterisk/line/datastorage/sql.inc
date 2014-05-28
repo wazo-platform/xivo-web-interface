@@ -25,6 +25,7 @@ class xivo_application_service_asterisk_line_sql extends xivo_application_abstra
 	public $_table	= array(
 				'linefeatures' 	=> '',
 				'userfeatures' 	=> '',
+				'context'		=> '',
 				'usersip'		=> '',
 				'sccpline'		=> '',
 				'usercustom'	=> '',
@@ -220,6 +221,14 @@ class xivo_application_service_asterisk_line_sql extends xivo_application_abstra
 			$this->_dso->orwhere($this->_table['usercustom'].'.id IS NOT NULL');
 
 		$this->_dso->aggregate_where(false,'AND');
+
+		$this->_dso->innerjoin($this->_table['context'],
+				      $this->_table['linefeatures'].'.context = '.$this->_table['context'].'.name');
+
+		$this->_dso->innerjoin('entity',
+				      'entity.name = '.$this->_table['context'].'.entity',
+						null,
+						'*');
 
 		$this->_dso->new_order($order,null,$this->_table['linefeatures']);
 		$this->_dso->limit($limit);

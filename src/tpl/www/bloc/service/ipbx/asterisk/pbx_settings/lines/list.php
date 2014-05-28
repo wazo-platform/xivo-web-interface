@@ -87,6 +87,7 @@ $page = $url->pager($pager['pages'],
 					$this->bbf('col_sort_protocol'));
 ?>
 		</th>
+		<th class="th-center"><?=$this->bbf('col_entity');?></th>
 		<th class="th-center"><?=$this->bbf('col_provisioning');?></th>
 		<th class="th-center"><?=$this->bbf('col_user');?></th>
 		<th class="th-center"><?=$this->bbf('col_phone');?></th>
@@ -97,7 +98,7 @@ $page = $url->pager($pager['pages'],
 	if(($list = $this->get_var('list')) === false || ($nb = count($list)) === 0):
 ?>
 	<tr class="sb-content">
-		<td colspan="9" class="td-single"><?=$this->bbf('no_line');?></td>
+		<td colspan="10" class="td-single"><?=$this->bbf('no_line');?></td>
 	</tr>
 <?php
 	else:
@@ -137,6 +138,7 @@ $page = $url->pager($pager['pages'],
 			</label>
 		</td>
 		<td class="col_protocol"><?=$this->bbf('line_protocol-'.$ref['protocol']);?></td>
+		<td class="col_entity"><?=$ref['entity']['displayname']?></td>
 		<td class="txt-center col_provisioningid">
 			<?=(empty($ref['provisioningid']) || ($ref['useridentity'] === '-')) ? '-' : $ref['provisioningid']?>
 		</td>
@@ -176,7 +178,7 @@ $page = $url->pager($pager['pages'],
 ?>
 	<tr class="sb-foot">
 		<td class="td-left xspan b-nosize"><span class="span-left b-nosize">&nbsp;</span></td>
-		<td class="td-center" colspan="6"><span class="b-nosize">&nbsp;</span></td>
+		<td class="td-center" colspan="7"><span class="b-nosize">&nbsp;</span></td>
 		<td class="td-right xspan b-nosize"><span class="span-right b-nosize">&nbsp;</span></td>
 	</tr>
 </table>
