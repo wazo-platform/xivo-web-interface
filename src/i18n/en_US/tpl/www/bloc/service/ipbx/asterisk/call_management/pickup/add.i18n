@@ -10,6 +10,9 @@ Interceptors
 ; smenu_interceptors
 Intercepted
 
+; fm_pickup_entity
+Entity : 
+
 ; fm_pickup_name
 Name:
 

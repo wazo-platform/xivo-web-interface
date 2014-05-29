@@ -550,6 +550,10 @@ class dwho_datastorage_helper_table extends dwho_datastorage_helper_abstract
 			case 'context':
 					$this->_dso->andwhere(array('entity' => ENTITY_FILTER_NAME), $this->_table);
 				break;
+			case 'pickup':
+			case 'callfilter':
+					$this->_dso->andwhere(array('entity_id' => ENTITY_FILTER_ID), $this->_table);
+				break;
 			case 'linefeatures':
 			case 'agentfeatures':
 			case 'groupfeatures':

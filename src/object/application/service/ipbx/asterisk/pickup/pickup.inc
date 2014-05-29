@@ -108,19 +108,19 @@ class xivo_application_service_asterisk_pickup extends xivo_application_asterisk
 
 		$r = array();
 
+		$_XOBJ = &dwho_gct::get('xivo_object');
+		$modentity = &$_XOBJ->get_module('entity');
+
 		for($i = 0;$i < $nb;$i++)
 		{
 			$r[$rs[$i]['id']] = $rs[$i];
 
 			$ref = &$r[$rs[$i]['id']];
-
-			$pickup = array();
-			$pickup['name'] = $ref['name'];
-
 			$ref['description'] = $ref['description'];
 			$ref['commented']   = (bool) $ref['commented'];
 
-			$arr = array();
+			if (($entity = $modentity->get($ref['entity_id'])))
+				$ref['entity'] = $entity;
 		}
 
 		if(empty($r) === true)
