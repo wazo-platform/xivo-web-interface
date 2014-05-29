@@ -95,7 +95,7 @@ $page = $url->pager($pager['pages'],
 ?>
 			</label>
 		</td>
-		<td class="col_entity"><?=$ref['entity']['displayname']?></td>
+		<td class="col_entity"><?=isset($ref['entity'])?$ref['entity']['displayname']:''?></td>
 		<td class="td-right" colspan="2">
 <?php
 			echo	$url->href_html($url->img_html('img/site/button/edit.gif',
