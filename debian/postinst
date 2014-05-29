@@ -15,7 +15,8 @@ LIST_FILE_TOCLEAN="/etc/pf-xivo/web-interface/location.ini
 					/etc/cron.d/pf-xivo-web-interface
 					/etc/cron.d/xivo-web-interface
 					/etc/default/xivo-agent
-					/etc/default/xivo-ctid"
+					/etc/default/xivo-ctid
+					/etc/xivo/web-interface/cti.ini"
 
 case "$1" in
 	configure)

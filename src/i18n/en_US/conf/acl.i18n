@@ -190,12 +190,6 @@ Users
 ; acl(service-ipbx-pbx_settings-voicemail)
 Voicemails
 
-; acl(service-ipbx-queuelogger)
-Queuelogger
-
-; acl(service-ipbx-queuelogger-configuration)
-Configuration
-
 ; acl(service-ipbx-system_management)
 IPBX configuration
 

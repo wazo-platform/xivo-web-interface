@@ -40,7 +40,6 @@ $array['tree']['xivo']['configuration']['provisioning']['autoprov'] = true;
 
 $array['tree']['service'] = array();
 $array['tree']['service']['ipbx'] = array();
-$array['tree']['service']['ipbx']['queuelogger']['configuration'] = true;
 
 $array['tree']['service']['ipbx']['general_settings'] = array();
 $array['tree']['service']['ipbx']['general_settings']['sccp'] = true;
