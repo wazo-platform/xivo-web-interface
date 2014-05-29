@@ -269,6 +269,9 @@ case 'add':
 		$_TPL->set_var('list',$list);
 }
 
+$modentity = &$_XOBJ->get_module('entity');
+$_TPL->set_var('entities',$modentity->get_all());
+
 $menu = &$_TPL->get_module('menu');
 $menu->set_top('top/user/'.$_USR->get_info('meta'));
 $menu->set_left('left/service/ipbx/'.$ipbx->get_name());

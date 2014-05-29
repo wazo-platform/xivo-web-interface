@@ -18,6 +18,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+$array = array();
+
 $array['element'] = array();
 
 $array['element']['entity_id'] = array();

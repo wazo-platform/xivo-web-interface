@@ -187,7 +187,6 @@ class xivo_application_service_asterisk_schedule extends xivo_application_asteri
 				break;
 			case 'list':
 			default:
-				#$rs = $this->_dso->get_all($disable,$order,$limit);
 				$rs = $this->_schedule->get_all();
 		}
 
@@ -198,6 +197,9 @@ class xivo_application_service_asterisk_schedule extends xivo_application_asteri
 
 		$r = array();
 
+		$_XOBJ = &dwho_gct::get('xivo_object');
+		$modentity = &$_XOBJ->get_module('entity');
+
 		for($i = 0;$i < $nb;$i++)
 		{
 			$r[$rs[$i]['id']] = $rs[$i];
@@ -205,64 +207,8 @@ class xivo_application_service_asterisk_schedule extends xivo_application_asteri
 			$ref = &$r[$rs[$i]['id']];
 			$ref = $this->_schedule->_prepare($ref);
 
-			$arr = array();
-
-			/*
-			switch($ref['action'])
-			{
-				case 'endcall:hangup':
-				case 'endcall:busy':
-				case 'endcall:congestion':
-				case 'application:callbackdisa':
-				case 'application:disa':
-				case 'application:directory':
-				case 'application:faxtomail':
-				case 'application:voicemailmain':
-					list($ref['destination'],$ref['destidentity']) = explode(':',$ref['action']);
-					break;
-				case 'user':
-					$arr['firstname'] = $ref['userfirstname'];
-					$arr['lastname'] = $ref['userlastname'];
-					$arr['number'] = $ref['usernumber'];
-					$arr['context'] = $ref['usercontext'];
-					$arr['name'] = $ref['username'];
-					$ref['destidentity'] = $this->_service->identity('userfeatures',$arr);
-					break;
-				case 'group':
-					$arr['name'] = $ref['groupname'];
-					$arr['number'] = $ref['groupnumber'];
-					$arr['context'] = $ref['groupcontext'];
-					$ref['destidentity'] = $this->_service->identity('groupfeatures',$arr);
-					break;
-				case 'queue':
-					$arr['name'] = $ref['queuename'];
-					$arr['number'] = $ref['queuenumber'];
-					$arr['context'] = $ref['queuecontext'];
-					$ref['destidentity'] = $this->_service->identity('queuefeatures',$arr);
-					break;
-				case 'meetme':
-					$arr['name'] = $ref['meetmename'];
-					$arr['number'] = $ref['meetmenumber'];
-					$arr['context'] = $ref['meetmecontext'];
-					$ref['destidentity'] = $this->_service->identity('meetmefeatures',$arr);
-					break;
-				case 'voicemail':
-					$arr['fullname'] = $ref['voicemailfullname'];
-					$arr['mailbox'] = $ref['voicemailmailbox'];
-					$arr['context'] = $ref['voicemailcontext'];
-					$ref['destidentity'] = $this->_service->identity('voicemail',$arr);
-					break;
-				case 'schedule':
-					$arr['name'] = $ref['schedulename'];
-					$arr['context'] = $ref['schedulecontext'];
-					$ref['destidentity'] = $this->_schedule->mk_identity($arr);
-					break;
-				case 'sound':
-					$ref['destidentity'] = basename($ref['actionarg1']);
-					break;
-				default:
-					$ref['destidentity'] = '-';
-			}*/
+			if (($entity = $modentity->get($ref['entity_id'])))
+				$ref['entity'] = $entity;
 		}
 
 		if(empty($r) === true)
