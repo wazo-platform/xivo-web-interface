@@ -28,6 +28,8 @@ class xivo_application_service_asterisk_agent extends xivo_application_asterisk_
 	var $_userfeatures	= null;
 	var $_queuemember	= null;
 	var $_queueskills   = null;
+	var $_entity        = null;
+	var $_context       = null;
 	var $_contextlist	= array();
 
 	public function __construct(&$service,$param=null,$components=true)
@@ -36,7 +38,10 @@ class xivo_application_service_asterisk_agent extends xivo_application_asterisk_
 
 		if(($this->_agentfeatures = &$this->_service->get_module('agentfeatures')) === false
 		|| ($this->_agentgroup = &$this->_service->get_module('agentgroup')) === false
-		|| ($this->_queueskills = &$this->_service->get_module('agentqueueskill')) === false)
+		|| ($this->_queueskills = &$this->_service->get_module('agentqueueskill')) === false
+		|| ($_XOBJ = &dwho_gct::get('xivo_object')) === false
+		|| ($this->_entity = &$_XOBJ->get_module('entity')) === false
+		|| ($this->_context = &$this->_service->get_module('context')) === false)
 			return(false);
 		else if((bool) $components === true)
 			$this->load_components();
@@ -217,6 +222,11 @@ class xivo_application_service_asterisk_agent extends xivo_application_asterisk_
 				$skills = array();
 
 			$r[$info['agentfeatures']['id']]['queueskills'] = $skills;
+			$r[$info['agentfeatures']['id']]['entity_displayname'] = '';
+
+			if (($context = $this->_context->get_where(array('name' => $info['agentfeatures']['context'])))
+			&& ($entity = $this->_entity->get_where(array('name' => $context['entity']))))
+				$r[$info['agentfeatures']['id']]['entity_displayname'] = $entity['displayname'];
 		}
 
 		if(empty($r) === true)
