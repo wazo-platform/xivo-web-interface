@@ -25,11 +25,11 @@ class func_key_manager extends manager_abstract
 	protected $_name			= 'func_key';
 	protected $_func_key		= false;
 	protected $_func_key_type	= false;
-	protected $_func_key_destination_type	= false;
+	protected $_func_key_destination_type = false;
 	protected $_func_key_dest_user	= false;
 	protected $_func_key_dest_group	= false;
 	protected $_func_key_dest_queue	= false;
-	protected $_func_key_dest_conference	= false;
+	protected $_func_key_dest_conference = false;
 	protected $_func_key_mapping	= false;
 	protected $_func_key_template	= false;
 
