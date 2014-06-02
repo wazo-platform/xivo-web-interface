@@ -24,6 +24,7 @@ class xivo_application_service_asterisk_group_sql extends xivo_application_abstr
 {
 	var $_table	= array(
 				'groupfeatures'	=> '',
+				'context'	=> '',
 				'queue'		=> '',
 				'queuemember'	=> '');
 
@@ -76,6 +77,15 @@ class xivo_application_service_asterisk_group_sql extends xivo_application_abstr
 			$this->_dso->orwherecontain('number',$value,true,$this->_table['groupfeatures']);
 			$this->_dso->aggregate_where();
 		}
+
+		$this->_dso->innerjoin($this->_table['context'],
+				      $this->_table['groupfeatures'].'.context = '.$this->_table['context'].'.name');
+
+		$this->_dso->innerjoin('entity',
+				      'entity.name = '.$this->_table['context'].'.entity',
+						null,
+						array('entity_displayname' => 'displayname'));
+		$this->_dso->add_group('id','entity');
 
 		$this->_dso->new_order($order,null,$this->_table['groupfeatures']);
 		$this->_dso->limit($limit);

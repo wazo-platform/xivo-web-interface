@@ -39,6 +39,19 @@ endif;
 
 <div id="sb-part-first" class="b-nodisplay">
 <?php
+	if ($this->get_var('entity_list') === false)
+	    echo $this->bbf('no_internal_context_for_this_entity');
+	else
+	    echo	$form->select(array('desc'	=> $this->bbf('fm_callfilter_entity'),
+				    'name'		=> 'callfilter[entity_id]',
+				    'labelid'	=> 'callfilter-entity_id',
+				    'key'		=> 'displayname',
+				    'altkey'	=> 'id',
+				    'selected'  => $info['callfilter']['entity_id'],
+				    'error'	=> $this->bbf_args('error',
+						   $this->get_var('error', 'callfilter', 'entity_id'))),
+			      $this->get_var('entities'));
+
 	echo	$form->text(array('desc'	=> $this->bbf('fm_callfilter_name'),
 				  'name'	=> 'callfilter[name]',
 				  'labelid'	=> 'callfilter-name',

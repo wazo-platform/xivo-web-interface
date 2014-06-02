@@ -24,6 +24,7 @@ class xivo_application_service_asterisk_queue_sql extends xivo_application_abstr
 {
 	var $_table	= array(
 				'queuefeatures'	=> '',
+				'context'		=> '',
 				'queue'			=> '',
 				'queuemember'	=> '');
 
@@ -83,6 +84,15 @@ class xivo_application_service_asterisk_queue_sql extends xivo_application_abstr
 
 		if (defined('ENTITY_FILTER_CONTEXTS'))
 			$this->_dso->wherein('context', explode(',', ENTITY_FILTER_CONTEXTS), $this->_table['queuefeatures']);
+
+		$this->_dso->innerjoin($this->_table['context'],
+				      $this->_table['queuefeatures'].'.context = '.$this->_table['context'].'.name');
+
+		$this->_dso->innerjoin('entity',
+				      'entity.name = '.$this->_table['context'].'.entity',
+						null,
+						array('entity_displayname' => 'displayname'));
+		$this->_dso->add_group('displayname', 'entity');
 
 		$this->_dso->new_order($order,null,$this->_table['queuefeatures']);
 		$this->_dso->limit($limit);

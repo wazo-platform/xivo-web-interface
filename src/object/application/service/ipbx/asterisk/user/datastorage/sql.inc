@@ -79,6 +79,11 @@ class xivo_application_service_asterisk_user_sql extends xivo_application_abstra
 						null,
 						'number');
 
+		$this->_dso->innerjoin('entity',
+				 		'entity.id = '. $this->_table['userfeatures'].'.entityid',
+						null,
+						'*');
+
 		$this->_dso->aggregate_where();
 
 		if(dwho_has_len($value) === true)

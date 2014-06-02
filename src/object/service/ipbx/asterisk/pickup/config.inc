@@ -18,7 +18,12 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+$array = array();
+
 $array['element'] = array();
+
+$array['element']['entity_id'] = array();
+$array['element']['entity_id']['default'] = '';
 
 $array['element']['name'] = array();
 $array['element']['name']['default'] = '';
@@ -32,6 +37,7 @@ $array['element']['commented']['default'] = 0;
 $array['element']['commented']['set'] = true;
 
 $array['filter'] = array();
+$array['filter']['entity_id'] = array('cast' => 'ulongint');
 $array['filter']['name'] = array('set' => true,'chk' => 1, 'maxlen'=>128);
 $array['filter']['description'] = array('set' => false,'chk' => 2);
 $array['filter']['commented'] = array('bool' => true);

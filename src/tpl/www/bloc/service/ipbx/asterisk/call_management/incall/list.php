@@ -93,6 +93,7 @@ $page = $url->pager($pager['pages'],
 				<?=$this->bbf('col_destination');?>
 			</span>
 		</th>
+		<th class="th-center"><?=$this->bbf('col_entity');?></th>
 		<th class="th-center">
 			<span class="title">
 				<?=$this->bbf('col_identity');?>
@@ -105,7 +106,7 @@ $page = $url->pager($pager['pages'],
 	if(($list = $this->get_var('list')) === false || ($nb = count($list)) === 0):
 ?>
 	<tr class="sb-content">
-		<td colspan="7" class="td-single"><?=$this->bbf('no_incall');?></td>
+		<td colspan="9" class="td-single"><?=$this->bbf('no_incall');?></td>
 	</tr>
 <?php
 	else:
@@ -159,6 +160,7 @@ $page = $url->pager($pager['pages'],
 		</td>
 		<td><?=$ref['context']?></td>
 		<td><?=$destination?></td>
+		<td class="col_entity"><?=$ref['entity_displayname']?></td>
 		<td title="<?=dwho_alttitle($destidentity);?>">
 			<?=dwho_htmlen(dwho_trunc($destidentity,30,'...',false));?>
 		</td>
@@ -191,7 +193,7 @@ $page = $url->pager($pager['pages'],
 ?>
 	<tr class="sb-foot">
 		<td class="td-left xspan b-nosize"><span class="span-left b-nosize">&nbsp;</span></td>
-		<td class="td-center" colspan="5"><span class="b-nosize">&nbsp;</span></td>
+		<td class="td-center" colspan="6"><span class="b-nosize">&nbsp;</span></td>
 		<td class="td-right xspan b-nosize"><span class="span-right b-nosize">&nbsp;</span></td>
 	</tr>
 </table>

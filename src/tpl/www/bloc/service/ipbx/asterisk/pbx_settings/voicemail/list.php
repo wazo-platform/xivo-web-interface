@@ -75,6 +75,7 @@ $page = $url->pager($pager['pages'],
 					$this->bbf('col_sort_fullname'));
 ?>
 		</th>
+		<th class="th-center"><?=$this->bbf('col_entity');?></th>
 		<th class="th-center">
 			<span class="title <?= $sort[1]=='mailbox'?'underline':''?>">
 				<?=$this->bbf('col_mailbox');?>
@@ -108,7 +109,7 @@ $page = $url->pager($pager['pages'],
 	if(($list = $this->get_var('list')) === false || ($nb = count($list)) === 0):
 ?>
 	<tr class="sb-content">
-		<td colspan="6" class="td-single"><?=$this->bbf('no_voicemail');?></td>
+		<td colspan="7" class="td-single"><?=$this->bbf('no_voicemail');?></td>
 	</tr>
 <?php
 	else:
@@ -141,6 +142,7 @@ $page = $url->pager($pager['pages'],
 ?>
 			</label>
 		</td>
+		<td class="col_entity"><?=$ref['entity_displayname']?></td>
 		<td><?=$ref['mailbox']?></td>
 		<td><?=(dwho_has_len($ref['email']) === true ? $ref['email'] : '-')?></td>
 		<td class="td-right" colspan="2">
@@ -172,7 +174,7 @@ $page = $url->pager($pager['pages'],
 ?>
 	<tr class="sb-foot">
 		<td class="td-left xspan b-nosize"><span class="span-left b-nosize">&nbsp;</span></td>
-		<td class="td-center" colspan="4"><span class="b-nosize">&nbsp;</span></td>
+		<td class="td-center" colspan="5"><span class="b-nosize">&nbsp;</span></td>
 		<td class="td-right xspan b-nosize"><span class="span-right b-nosize">&nbsp;</span></td>
 	</tr>
 </table>

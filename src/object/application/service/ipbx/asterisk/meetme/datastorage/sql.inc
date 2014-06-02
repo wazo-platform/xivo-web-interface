@@ -24,6 +24,7 @@ class xivo_application_service_asterisk_meetme_sql extends xivo_application_abst
 {
 	var $_table	= array(
 				'meetmefeatures'	=> '',
+				'context'		=> '',
 				'staticmeetme'		=> '');
 
 	function get_all($disable=null,$order=null,$limit=null,$value=null)
@@ -51,6 +52,14 @@ class xivo_application_service_asterisk_meetme_sql extends xivo_application_abst
 
 		if (defined('ENTITY_FILTER_CONTEXTS'))
 			$this->_dso->wherein('context', explode(',', ENTITY_FILTER_CONTEXTS), $this->_table['meetmefeatures']);
+
+		$this->_dso->innerjoin($this->_table['context'],
+				      $this->_table['meetmefeatures'].'.context = '.$this->_table['context'].'.name');
+
+		$this->_dso->innerjoin('entity',
+				      'entity.name = '.$this->_table['context'].'.entity',
+						null,
+						array('entity_displayname' => 'displayname'));
 
 		$this->_dso->new_order($order,null,$this->_table['meetmefeatures']);
 		$this->_dso->limit($limit);

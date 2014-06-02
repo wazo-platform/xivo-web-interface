@@ -225,3 +225,9 @@ Désactivé
 
 ; col_context
 Contexte
+
+; col_entity
+Entité
+
+; fm_callfilter_entity
+Entité:

@@ -24,5 +24,4 @@ class xivo_service_asterisk_voicemail_sql extends xivo_service_asterisk_abstract
 {
 	var $_unique	= array(array('context','mailbox'));
 }
-
 ?>

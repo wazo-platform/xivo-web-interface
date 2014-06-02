@@ -531,6 +531,8 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			if($this->_components === false)
 				continue;
 
+			$entity = dwho_array_startswith_key($ref,'entity.',true);
+			$r[$userfeatures['id']]['entity'] = $this->_entity->_prepare($entity);
 			$r[$userfeatures['id']]['masterline'] = $this->_linefeatures->get_user_masterline($userfeatures['id']);
 		}
 

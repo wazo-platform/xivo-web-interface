@@ -81,6 +81,7 @@ $page = $url->pager($pager['pages'],
 		<th class="th-center">
 				<?= $this->bbf('col_number-users');?>
 		</th>
+		<th class="th-center"><?=$this->bbf('col_entity');?></th>
 		<th class="th-center col-action"><?=$this->bbf('col_action');?></th>
 		<th class="th-right xspan"><span class="span-right">&nbsp;</span></th>
 	</tr>
@@ -88,7 +89,7 @@ $page = $url->pager($pager['pages'],
 	if(($list = $this->get_var('list')) === false || ($nb = count($list)) === 0):
 ?>
 	<tr class="sb-content">
-		<td colspan="6" class="td-single"><?=$this->bbf('no_group');?></td>
+		<td colspan="7" class="td-single"><?=$this->bbf('no_group');?></td>
 	</tr>
 <?php
 	else:
@@ -122,6 +123,7 @@ $page = $url->pager($pager['pages'],
 		</td>
 		<td><?=(dwho_has_len($ref['number']) === true ? $ref['number'] : '-')?></td>
 		<td class="nbqmember"><?=$ref['nb_qmember']?></td>
+		<td class="col_entity"><?=$ref['entity_displayname']?></td>
 		<td class="td-right" colspan="2">
 <?php
 		echo	$url->href_html($url->img_html('img/site/button/edit.gif',
@@ -151,7 +153,7 @@ $page = $url->pager($pager['pages'],
 ?>
 	<tr class="sb-foot">
 		<td class="td-left xspan b-nosize"><span class="span-left b-nosize">&nbsp;</span></td>
-		<td class="td-center" colspan="4"><span class="b-nosize">&nbsp;</span></td>
+		<td class="td-center" colspan="5"><span class="b-nosize">&nbsp;</span></td>
 		<td class="td-right xspan b-nosize"><span class="span-right b-nosize">&nbsp;</span></td>
 	</tr>
 </table>

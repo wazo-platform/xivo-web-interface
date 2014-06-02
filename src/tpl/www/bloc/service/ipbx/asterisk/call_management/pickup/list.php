@@ -54,6 +54,7 @@ $page = $url->pager($pager['pages'],
 	<tr class="sb-top">
 		<th class="th-left xspan"><span class="span-left">&nbsp;</span></th>
 		<th class="th-center"><?=$this->bbf('col_name');?></th>
+		<th class="th-center"><?=$this->bbf('col_entity');?></th>
 		<th class="th-center col-action"><?=$this->bbf('col_action');?></th>
 		<th class="th-right xspan"><span class="span-right">&nbsp;</span></th>
 	</tr>
@@ -61,7 +62,7 @@ $page = $url->pager($pager['pages'],
 	if(($list = $this->get_var('list')) === false || ($nb = count($list)) === 0):
 ?>
 	<tr class="sb-content">
-		<td colspan="4" class="td-single"><?=$this->bbf('no_pickup');?></td>
+		<td colspan="5" class="td-single"><?=$this->bbf('no_pickup');?></td>
 	</tr>
 <?php
 	else:
@@ -94,6 +95,7 @@ $page = $url->pager($pager['pages'],
 ?>
 			</label>
 		</td>
+		<td class="col_entity"><?=isset($ref['entity'])?$ref['entity']['displayname']:''?></td>
 		<td class="td-right" colspan="2">
 <?php
 			echo	$url->href_html($url->img_html('img/site/button/edit.gif',
@@ -122,7 +124,7 @@ $page = $url->pager($pager['pages'],
 ?>
 	<tr class="sb-foot">
 		<td class="td-left xspan b-nosize"><span class="span-left b-nosize">&nbsp;</span></td>
-		<td class="td-center" colspan="2"><span class="b-nosize">&nbsp;</span></td>
+		<td class="td-center" colspan="3"><span class="b-nosize">&nbsp;</span></td>
 		<td class="td-right xspan b-nosize"><span class="span-right b-nosize">&nbsp;</span></td>
 	</tr>
 </table>
