@@ -48,6 +48,8 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 		$this->_dso = &$dso;
 
 		if(($this->_linefeatures = &$this->_service->get_module('linefeatures')) === false
+		|| ($_XOBJ = &dwho_gct::get('xivo_object')) === false
+		|| ($this->_entity = &$_XOBJ->get_module('entity')) === false
 		|| $this->load_init($param) === false)
 			return(false);
 		else if((bool) $components === true)
@@ -299,8 +301,6 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 					$custom['identity'] = $custom['interface'];
 					$r[$linefeatures['id']] = array_merge($custom,$linefeatures);
 					break;
-				default:
-					continue;
 			}
 
 			$entity = dwho_array_startswith_key($ref,'entity.',true);
