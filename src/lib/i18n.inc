@@ -425,10 +425,7 @@ class dwho_i18n
 			return(false);
 		}
 		else if(isset($this->_loop[$this->_file['filei18n']]) === true)
-		{
-			trigger_error('I18N file already loaded: '.$this->_file['filei18n'],E_USER_WARNING);
 			return(false);
-		}
 
 		$this->_loop[$this->_file['filei18n']] = 1;
 
