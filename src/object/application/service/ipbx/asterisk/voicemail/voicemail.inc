@@ -177,7 +177,7 @@ class xivo_application_service_asterisk_voicemail extends xivo_application_aster
 				&& empty($rs) === true)
 					$rs = false;
 
-				$this->_cnt = $this->_voicemail->get_cnt();
+				$this->_cnt = $this->_dso->get_cnt();
 		}
 
 		if(empty($rs) === true)
