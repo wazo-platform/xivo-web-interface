@@ -232,16 +232,6 @@ class func_key_manager extends manager_abstract
 		if (($func_key_id = $this->_func_key->get_func_key_id_with_dest_type_id('user', $user_id)))
 			$this->_delete_func_key((int) $func_key_id, 'user');
 
-		if (($fk_list = $this->_func_key->get_func_key_by_user_id($user_id)) !== false
-		&& ($nb_fk = count($fk_list)) !== 0)
-		{
-			for($i = 0;$i < $nb_fk;$i++)
-			{
-				$fk = &$fk_list[$i];
-				$this->_delete_func_key((int) $fk['func_key_id'], 'user');
-			}
-		}
-
 		return(true);
 	}
 
