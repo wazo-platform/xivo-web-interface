@@ -171,6 +171,9 @@ class xivo_application_service_asterisk_voicemail extends xivo_application_aster
 					$ref['commented'] = (bool) $ref['commented'];
 				}
 
+                $rs = $r;
+                break;
+
 			case 'list':
 			default:
 				if(($rs = $this->_dso->get_all($disable,$order,$limit)) !== false
