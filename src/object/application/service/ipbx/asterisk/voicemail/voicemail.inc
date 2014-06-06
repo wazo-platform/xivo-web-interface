@@ -171,8 +171,8 @@ class xivo_application_service_asterisk_voicemail extends xivo_application_aster
 					$ref['commented'] = (bool) $ref['commented'];
 				}
 
-                $rs = $r;
-                break;
+				$rs = $r;
+				break;
 
 			case 'list':
 			default:
