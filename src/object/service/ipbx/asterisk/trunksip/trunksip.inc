@@ -63,7 +63,6 @@ class xivo_service_asterisk_trunksip extends xivo_service_asterisk_abstract
 		$arr['fullname'] = null;
 		$arr['cid_number'] = null;
 		$arr['mohinterpret'] = null;
-		$arr['mohsuggest'] = null;
 		$arr['defaultip'] = null;
 		$arr['setvar'] = '';
 		$arr['regexten'] = null;
@@ -91,7 +90,6 @@ class xivo_service_asterisk_trunksip extends xivo_service_asterisk_abstract
 		      $arr['fullname'],
 		      $arr['cid_number'],
 		      $arr['mohinterpret'],
-		      $arr['mohsuggest'],
 		      $arr['defaultip'],
 		      $arr['setvar'],
 		      $arr['regexten'],
