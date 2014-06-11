@@ -224,42 +224,6 @@ abstract class dwho_network
 		return($r);
 	}
 
-	public static function ipv4_in_subnet($ip,$sub,$broadcast=false)
-	{
-		if(is_string($sub) === false || ($pos = strrpos($sub,'/')) === false)
-			return(false);
-
-		$ipsub = substr($sub,0,$pos);
-		$mask = substr($sub,$pos + 1);
-
-		if(dwho_network::valid_ipv4($ip) === false
-				|| ($bit = dwho_network::valid_subnet_ipv4($ipsub,
-						$mask,
-						DWHO_NETWORK_MASK_IPV4_ALL,
-						DWHO_NETWORK_HOST_IPV4,
-						true)) === false)
-			return(false);
-
-		$decip        = ip2long($ip);
-		$decmask    = (0xFFFFFFFF >> (32 - $bit)) << (32 - $bit);
-		$wildcard    =~ $decmask;
-		$network    = ip2long($ipsub) & $decmask;
-		$broadcast    = $network | $wildcard;
-
-		return(($decip > $network && $decip < $broadcast));
-	}
-
-	public static function valid_ipv4_broadcast($broadcast,$address,$netmask)
-	{
-		if(dwho_network::valid_ipv4($broadcast) === false
-				|| ($ipcalc = dwho_network::ipv4_calc($address,
-						$netmask)) === false
-				|| ip2long($ipcalc['broadcast']) !== ip2long($broadcast))
-			return(false);
-
-		return(true);
-	}
-
 	public static function ipv4_in_lhost($ip,$host)
 	{
 		if(is_scalar($ip) === false || is_scalar($host) === false)
@@ -288,8 +252,7 @@ abstract class dwho_network
 
 		for($i = 0;$i < $nb;$i++)
 		{
-			if(strcasecmp($ip,$lhost[$i]) === 0
-					|| dwho_network::ipv4_in_subnet($ip,$lhost[$i]) === true)
+			if(strcasecmp($ip,$lhost[$i]) === 0)
 				return(true);
 		}
 
