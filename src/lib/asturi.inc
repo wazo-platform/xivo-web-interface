@@ -325,9 +325,6 @@ class dwho_asterisk_uri extends dwho_uri
 			return($r);
 		else if($hostport{0} === '[')
 		{
-			if(preg_match($this->_reipvfutureport,$hostport,$match) !== 1)
-				return(false);
-
 			$r['host'] = '['.$match[1].']';
 
 			if(isset($match[2],$match[2]{

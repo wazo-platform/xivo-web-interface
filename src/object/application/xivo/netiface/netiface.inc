@@ -65,9 +65,7 @@ class xivo_application_xivo_object_netiface extends xivo_application_xivo_object
 			if(dwho_ak('family',$iface,true) !== 'inet'
 			|| dwho_ak('type',$iface,true) !== 'eth'
 			|| dwho_has_len($iface,'address') === false
-			|| dwho_has_len($iface,'netmask') === false
-			|| dwho_network::ipv4_in_subnet($_SERVER['SERVER_ADDR'],
-							$iface['address'].'/'.$iface['netmask']) === false)
+			|| dwho_has_len($iface,'netmask') === false)
 				continue;
 			else if($iface['physicalif'] === true)
 				$phyname = $iface['name'];
@@ -109,9 +107,7 @@ class xivo_application_xivo_object_netiface extends xivo_application_xivo_object
 			if(dwho_ak('family',$iface,true) !== 'inet'
 			|| dwho_ak('type',$iface,true) !== 'eth'
 			|| dwho_has_len($iface,'address') === false
-			|| dwho_has_len($iface,'netmask') === false
-			|| dwho_network::ipv4_in_subnet($_SERVER['SERVER_ADDR'],
-							$iface['address'].'/'.$iface['netmask']) === false)
+			|| dwho_has_len($iface,'netmask') === false)
 				continue;
 			else if($_SERVER['SERVER_ADDR'] !== $iface['address'])
 				array_push($r,$iface);
@@ -215,13 +211,6 @@ class xivo_application_xivo_object_netiface extends xivo_application_xivo_object
 
 				if(dwho_has_len($arr,'netmask') === false) {
 					$this->_set_error('netiface','netmask','empty');
-					$ret = false;
-				}
-
-				if(dwho_has_len($arr,'gateway') === true
-				&& dwho_network::ipv4_in_subnet($arr['gateway'],
-								$arr['address'].'/'.$arr['netmask']) === false) {
-					$this->_set_error('netiface','gateway','invalid');
 					$ret = false;
 				}
 				break;

@@ -19,25 +19,21 @@
 #
 
 define('DWHO_NETWORK_RE_HOSTNAME','[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?');
-define('DWHO_NETWORK_RE_IPVFUTURE','v[\da-fA-F]+\.[a-zA-Z0-9-\._~\!\$&\'\(\)\*\+,;=:]+');
 
 define('DWHO_NETWORK_HOST_IPV4_DOTDEC',1);
 define('DWHO_NETWORK_HOST_IPV4',2);
 define('DWHO_NETWORK_HOST_HOSTNAME',4);
 define('DWHO_NETWORK_HOST_HOSTNAME_TLD',8);
 define('DWHO_NETWORK_HOST_IPV6',16);
-define('DWHO_NETWORK_HOST_IPVFUTURE',65536);
 define('DWHO_NETWORK_HOST_IP_ALL',(DWHO_NETWORK_HOST_IPV4 |
-		DWHO_NETWORK_HOST_IPV6 |
-		DWHO_NETWORK_HOST_IPVFUTURE));
+		DWHO_NETWORK_HOST_IPV6));
 define('DWHO_NETWORK_HOST_HOSTNAME_ALL',(DWHO_NETWORK_HOST_HOSTNAME |
 		DWHO_NETWORK_HOST_HOSTNAME_TLD));
 define('DWHO_NETWORK_HOST_ALL',(DWHO_NETWORK_HOST_IPV4_DOTDEC |
 		DWHO_NETWORK_HOST_IPV4 |
 		DWHO_NETWORK_HOST_HOSTNAME |
 		DWHO_NETWORK_HOST_HOSTNAME_TLD |
-		DWHO_NETWORK_HOST_IPV6 |
-		DWHO_NETWORK_HOST_IPVFUTURE));
+		DWHO_NETWORK_HOST_IPV6));
 
 define('DWHO_NETWORK_EMAIL_HOST_ALL',(DWHO_NETWORK_HOST_IPV4_DOTDEC |
 		DWHO_NETWORK_HOST_IPV6 |
@@ -198,68 +194,6 @@ abstract class dwho_network
 		return($bitmask);
 	}
 
-	public static function ipv4_calc($ip,$mask)
-	{
-		if(dwho_network::valid_ipv4($ip) === false
-				|| ($bit = dwho_network::valid_subnet_ipv4($ip,
-						$mask,
-						DWHO_NETWORK_MASK_IPV4_ALL,
-						DWHO_NETWORK_HOST_IPV4,
-						true)) === false)
-			return(false);
-
-		$decmask    = (0xFFFFFFFF >> (32 - $bit)) << (32 - $bit);
-		$wildcard    =~ $decmask;
-		$network    = ip2long($ip) & $decmask;
-		$broadcast    = $network | $wildcard;
-
-		$r = array();
-		$r['ip']    = $ip;
-		$r['mask']    = $bit;
-		$r['netmask']    = long2ip($decmask);
-		$r['wildcard']    = long2ip($wildcard);
-		$r['network']    = long2ip($network);
-		$r['broadcast']    = long2ip($broadcast);
-
-		return($r);
-	}
-
-	public static function ipv4_in_subnet($ip,$sub,$broadcast=false)
-	{
-		if(is_string($sub) === false || ($pos = strrpos($sub,'/')) === false)
-			return(false);
-
-		$ipsub = substr($sub,0,$pos);
-		$mask = substr($sub,$pos + 1);
-
-		if(dwho_network::valid_ipv4($ip) === false
-				|| ($bit = dwho_network::valid_subnet_ipv4($ipsub,
-						$mask,
-						DWHO_NETWORK_MASK_IPV4_ALL,
-						DWHO_NETWORK_HOST_IPV4,
-						true)) === false)
-			return(false);
-
-		$decip        = ip2long($ip);
-		$decmask    = (0xFFFFFFFF >> (32 - $bit)) << (32 - $bit);
-		$wildcard    =~ $decmask;
-		$network    = ip2long($ipsub) & $decmask;
-		$broadcast    = $network | $wildcard;
-
-		return(($decip > $network && $decip < $broadcast));
-	}
-
-	public static function valid_ipv4_broadcast($broadcast,$address,$netmask)
-	{
-		if(dwho_network::valid_ipv4($broadcast) === false
-				|| ($ipcalc = dwho_network::ipv4_calc($address,
-						$netmask)) === false
-				|| ip2long($ipcalc['broadcast']) !== ip2long($broadcast))
-			return(false);
-
-		return(true);
-	}
-
 	public static function ipv4_in_lhost($ip,$host)
 	{
 		if(is_scalar($ip) === false || is_scalar($host) === false)
@@ -288,8 +222,7 @@ abstract class dwho_network
 
 		for($i = 0;$i < $nb;$i++)
 		{
-			if(strcasecmp($ip,$lhost[$i]) === 0
-					|| dwho_network::ipv4_in_subnet($ip,$lhost[$i]) === true)
+			if(strcasecmp($ip,$lhost[$i]) === 0)
 				return(true);
 		}
 
@@ -387,15 +320,6 @@ abstract class dwho_network
 		return($h16_cnt + $nb);
 	}
 
-	public static function valid_ipvfuture($ip)
-	{
-		if(is_scalar($ip) === true
-				&& preg_match('/^'.DWHO_NETWORK_RE_IPVFUTURE.'$/',$ip) === 1)
-			return(true);
-
-		return(false);
-	}
-
 	public static function valid_hostname_part($hostpart)
 	{
 		if(is_string($hostpart) === true
@@ -481,10 +405,6 @@ abstract class dwho_network
 
 		if(($mode & DWHO_NETWORK_HOST_IPV6) !== 0
 				&& dwho_network::valid_ipv6($host) === true)
-			return(true);
-
-		if(($mode & DWHO_NETWORK_HOST_IPVFUTURE) !== 0
-				&& dwho_network::valid_ipvfuture($host) === true)
 			return(true);
 
 		return(false);

@@ -31,7 +31,6 @@ dwho.uri = function()
     var sub_delims    = '\\!\\$&\\\'\\(\\)\\*\\+,;=';
     var reserved    = gen_delims + sub_delims;
     var unreserved    = 'a-zA-Z0-9-\\._~';
-    var ipvfuture    = 'v[\\da-fA-F]+\\.[' + unreserved + sub_delims + ':]+';
     var port    = '[0-9]{0,5}';
     var fnescaped    = function(chr) { return('%' + chr.charCodeAt(0).toString(16).toUpperCase()); };
 
@@ -53,10 +52,7 @@ dwho.uri = function()
     this._regexp.port    = new RegExp('^' + port + '$');
     this._regexp.path    = new RegExp('^[' + unreserved + sub_delims + '%:@\\/]+$');
     this._regexp.query    = new RegExp('^[' + unreserved + sub_delims + '%:@\\/\\?]+$');
-    this._regexp.ipvfuture    = new RegExp('^' + ipvfuture + '$');
 
-    this._reipvfutureport    = new RegExp('^\\[([\\da-fA-F:\\.]+|' + ipvfuture + ')\\]' +
-                         '(\\:' + port + ')?$');
 
     this._fnencodeuri    = function(str)  {
                     return(encodeURIComponent(dwho_string(str)).
@@ -370,9 +366,6 @@ dwho.uri.prototype.split_authority = function(authority)
         return(r);
     else if(hostport[0] === '[')
     {
-        if((rs = hostport.match(this._reipvfutureport)) === null)
-            return(false);
-
         r.host = '[' + rs[1] + ']';
 
         if(dwho_is_undef(rs[2]) === false && dwho_is_undef(rs[2][1]) === false)
@@ -635,15 +628,6 @@ dwho.uri.prototype._valid_leftipv6 = function(ip)
     return(nb);
 };
 
-dwho.uri.prototype.valid_ipvfuture = function(ip)
-{
-    if(dwho_is_scalar(ip) === true
-    && ip.match(this._regexp.ipvfuture) !== null)
-        return(true);
-
-    return(false);
-};
-
 dwho.uri.prototype.valid_ipliteral = function(ip)
 {
     if(dwho_is_scalar(ip) === false)
@@ -658,7 +642,7 @@ dwho.uri.prototype.valid_ipliteral = function(ip)
 
     ip = dwho_substr(ip,1,-1);
 
-    if(this.valid_ipv6(ip) === true || this.valid_ipvfuture(ip) === true)
+    if(this.valid_ipv6(ip) === true)
         return(true);
 
     return(false);
