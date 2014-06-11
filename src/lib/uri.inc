@@ -27,7 +27,6 @@ class dwho_uri
 			'ipv4'        => 2,
 			'reg_name'    => 3);
 	var $_regexp        = array();
-	var $_reipvfutureport    = '';
 
 	public function __construct()
 	{
@@ -35,7 +34,6 @@ class dwho_uri
 		$sub_delims    = '\!\$&\'\(\)\*\+,;=';
 		$reserved    = $gen_delims.$sub_delims;
 		$unreserved    = 'a-zA-Z0-9-\._~';
-		$ipvfuture    = DWHO_NETWORK_RE_IPVFUTURE;
 		$port        = '[0-9]{0,5}';
 
 		$this->_encode = array();
@@ -56,8 +54,6 @@ class dwho_uri
 		$this->_regexp['port']        = '/^'.$port.'$/';
 		$this->_regexp['path']        = '/^['.$unreserved.$sub_delims.'%:@\/]+$/';
 		$this->_regexp['query']        = '/^['.$unreserved.$sub_delims.'%:@\/\?]+$/';
-
-		$this->_reipvfutureport        = '/^\[([\da-fA-F:\.]+|'.$ipvfuture.')\](\:'.$port.')?$/';
 	}
 
 	function build_uri($arr,$encode=true,$type_host=null,$query_sep=null)
@@ -365,9 +361,6 @@ class dwho_uri
 			return($r);
 		else if($hostport{0} === '[')
 		{
-			if(preg_match($this->_reipvfutureport,$hostport,$match) !== 1)
-				return(false);
-
 			$r['host'] = '['.$match[1].']';
 
 			if(isset($match[2],$match[2]{
@@ -540,7 +533,7 @@ class dwho_uri
 
 		$ip = substr($ip,1,-1);
 
-		if(dwho_network::valid_ipv6($ip) === true || dwho_network::valid_ipvfuture($ip) === true)
+		if(dwho_network::valid_ipv6($ip) === true)
 			return(true);
 
 		return(false);

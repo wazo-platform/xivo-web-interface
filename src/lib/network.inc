@@ -19,25 +19,21 @@
 #
 
 define('DWHO_NETWORK_RE_HOSTNAME','[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?');
-define('DWHO_NETWORK_RE_IPVFUTURE','v[\da-fA-F]+\.[a-zA-Z0-9-\._~\!\$&\'\(\)\*\+,;=:]+');
 
 define('DWHO_NETWORK_HOST_IPV4_DOTDEC',1);
 define('DWHO_NETWORK_HOST_IPV4',2);
 define('DWHO_NETWORK_HOST_HOSTNAME',4);
 define('DWHO_NETWORK_HOST_HOSTNAME_TLD',8);
 define('DWHO_NETWORK_HOST_IPV6',16);
-define('DWHO_NETWORK_HOST_IPVFUTURE',65536);
 define('DWHO_NETWORK_HOST_IP_ALL',(DWHO_NETWORK_HOST_IPV4 |
-		DWHO_NETWORK_HOST_IPV6 |
-		DWHO_NETWORK_HOST_IPVFUTURE));
+		DWHO_NETWORK_HOST_IPV6));
 define('DWHO_NETWORK_HOST_HOSTNAME_ALL',(DWHO_NETWORK_HOST_HOSTNAME |
 		DWHO_NETWORK_HOST_HOSTNAME_TLD));
 define('DWHO_NETWORK_HOST_ALL',(DWHO_NETWORK_HOST_IPV4_DOTDEC |
 		DWHO_NETWORK_HOST_IPV4 |
 		DWHO_NETWORK_HOST_HOSTNAME |
 		DWHO_NETWORK_HOST_HOSTNAME_TLD |
-		DWHO_NETWORK_HOST_IPV6 |
-		DWHO_NETWORK_HOST_IPVFUTURE));
+		DWHO_NETWORK_HOST_IPV6));
 
 define('DWHO_NETWORK_EMAIL_HOST_ALL',(DWHO_NETWORK_HOST_IPV4_DOTDEC |
 		DWHO_NETWORK_HOST_IPV6 |
@@ -350,15 +346,6 @@ abstract class dwho_network
 		return($h16_cnt + $nb);
 	}
 
-	public static function valid_ipvfuture($ip)
-	{
-		if(is_scalar($ip) === true
-				&& preg_match('/^'.DWHO_NETWORK_RE_IPVFUTURE.'$/',$ip) === 1)
-			return(true);
-
-		return(false);
-	}
-
 	public static function valid_hostname_part($hostpart)
 	{
 		if(is_string($hostpart) === true
@@ -444,10 +431,6 @@ abstract class dwho_network
 
 		if(($mode & DWHO_NETWORK_HOST_IPV6) !== 0
 				&& dwho_network::valid_ipv6($host) === true)
-			return(true);
-
-		if(($mode & DWHO_NETWORK_HOST_IPVFUTURE) !== 0
-				&& dwho_network::valid_ipvfuture($host) === true)
 			return(true);
 
 		return(false);
