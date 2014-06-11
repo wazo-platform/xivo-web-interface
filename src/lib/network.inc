@@ -194,32 +194,6 @@ abstract class dwho_network
 		return($bitmask);
 	}
 
-	public static function ipv4_calc($ip,$mask)
-	{
-		if(dwho_network::valid_ipv4($ip) === false
-				|| ($bit = dwho_network::valid_subnet_ipv4($ip,
-						$mask,
-						DWHO_NETWORK_MASK_IPV4_ALL,
-						DWHO_NETWORK_HOST_IPV4,
-						true)) === false)
-			return(false);
-
-		$decmask    = (0xFFFFFFFF >> (32 - $bit)) << (32 - $bit);
-		$wildcard    =~ $decmask;
-		$network    = ip2long($ip) & $decmask;
-		$broadcast    = $network | $wildcard;
-
-		$r = array();
-		$r['ip']    = $ip;
-		$r['mask']    = $bit;
-		$r['netmask']    = long2ip($decmask);
-		$r['wildcard']    = long2ip($wildcard);
-		$r['network']    = long2ip($network);
-		$r['broadcast']    = long2ip($broadcast);
-
-		return($r);
-	}
-
 	public static function ipv4_in_lhost($ip,$host)
 	{
 		if(is_scalar($ip) === false || is_scalar($host) === false)
