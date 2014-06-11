@@ -447,15 +447,6 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 		$resnetiface['name'] = $iface['name'];
 		$this->_set_result('netiface',$resnetiface);
 
-		if($r === true
-		&& dwho_has_len($resnetiface,'gateway') === true
-		&& dwho_network::ipv4_in_subnet($resnetiface['gateway'],
-			$resnetiface['address'].'/'.$resnetiface['netmask']) === false)
-		{
-			$r = false;
-			$this->_set_error('netiface','gateway','invalid');
-		}
-
 		return($r);
 	}
 
