@@ -116,35 +116,6 @@ abstract class dwho_network
 		return(32 - intval(log($inv + 1,2)));
 	}
 
-	public static function bitmask_to_netmask_ipv4($bit)
-	{
-		if(dwho_network::valid_bitmask_ipv4($bit) === false)
-			return(false);
-
-		return(long2ip((0xFFFFFFFF >> (32 - $bit)) << (32 - $bit)));
-	}
-
-	public static function bitmask_to_netmask_ipv6($bit)
-	{
-		if(dwho_network::valid_bitmask_ipv6($bit) === false)
-			return(false);
-
-		$r = array();
-
-		$nb = (int) floor(floatval($bit) / 16);
-
-		if($nb > 0)
-		{
-			$r = array_fill(0,$nb,'ffff');
-			$bit -= (16 * $nb);
-		}
-
-		if($bit > 0)
-			$r[] = bin2hex(pack('n',(0xFFFF >> (16 - $bit)) << (16 - $bit)));
-
-		return(implode(':',array_pad($r,8,'0000')));
-	}
-
 	public static function valid_mask_ipv4($nm,$mode=null,$ret=false)
 	{
 		$mode = intval($mode);
