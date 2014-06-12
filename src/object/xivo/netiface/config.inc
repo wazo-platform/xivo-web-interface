@@ -81,7 +81,7 @@ $array['element']['description']['default'] = '';
 dwho::load_class('dwho_network');
 
 $array['filter'] = array();
-$array['filter']['ifname'] = array('regexp'	=> '/^(?:eth[a-z0-9_]+(?:\.[0-9]+)?(?:\:[0-9]+)?|vlan[0-9]+(?:\:[0-9]+)?|dummy[0-9])$/',
+$array['filter']['ifname'] = array('regexp'	=> '/^[-A-Za-z0-9_:.]+$/',
 				   'minlen'	=> 1,
 				   'maxlen'	=> 64);
 $array['filter']['hwtypeid'] = array('cast' => 'uint','between' => array(0,65535));
