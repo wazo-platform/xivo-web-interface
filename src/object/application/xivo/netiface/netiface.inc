@@ -217,13 +217,6 @@ class xivo_application_xivo_object_netiface extends xivo_application_xivo_object
 					$this->_set_error('netiface','netmask','empty');
 					$ret = false;
 				}
-
-				if(dwho_has_len($arr,'gateway') === true
-				&& dwho_network::ipv4_in_subnet($arr['gateway'],
-								$arr['address'].'/'.$arr['netmask']) === false) {
-					$this->_set_error('netiface','gateway','invalid');
-					$ret = false;
-				}
 				break;
 			default:
 				return(false);
