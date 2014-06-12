@@ -211,7 +211,7 @@ abstract class dwho_network
 			return(false);
 
 		$decip        = ip2long($ip);
-		$decmask    = (~0 >> (32 - $bit)) << (32 - $bit);
+		$decmask    = ~0 << (32 - $bit);
 		$wildcard    =~ $decmask;
 		$network    = ip2long($ipsub) & $decmask;
 		$broadcast    = $network | $wildcard;
