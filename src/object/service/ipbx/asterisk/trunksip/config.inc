@@ -184,9 +184,6 @@ $array['element']['autoframing']['null'] = true;
 $array['element']['mohinterpret'] = array();
 $array['element']['mohinterpret']['unset'] = true;
 
-$array['element']['mohsuggest'] = array();
-$array['element']['mohsuggest']['unset'] = true;
-
 $array['element']['useclientcode'] = array();
 $array['element']['useclientcode']['value'] = array(1,0);
 $array['element']['useclientcode']['default'] = '';
@@ -438,7 +435,6 @@ $array['filter']['disallow'] = array('set' => false,'chk' => 2,'key' => array('a
 $array['filter']['allow'] = array('set' => false,'chk' => 2,'uvalue' => xivo_service_asterisk::get_codecs_list());
 $array['filter']['autoframing'] = array('set' => false,'chk' => 2,'bool' => true);
 $array['filter']['mohinterpret'] = array('set' => false,'chk' => 0);
-$array['filter']['mohsuggest'] = array('set' => false,'chk' => 0);
 $array['filter']['useclientcode'] = array('set' => false,'chk' => 2,'bool' => true);
 $array['filter']['progressinband'] = array('set' => false,'chk' => 2,'key' => array('no','yes','never'));
 $array['filter']['t38pt_udptl'] = array('set' => false,'chk' => 2,'bool' => true);
