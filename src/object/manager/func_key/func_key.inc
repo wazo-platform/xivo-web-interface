@@ -167,6 +167,7 @@ class func_key_manager extends manager_abstract
 				default:
 					dwho_report::push('error', 'Error: unknown fk_dst_type "'.$dst_type);
 					return(false);
+					break;
 			}
 		}
 
