@@ -436,6 +436,11 @@ class xivo_service_asterisk_extensions extends xivo_service_asterisk_abstract
 		return($r);
 	}
 
+	function get_extenfeature_id_by_typeval($typeval)
+	{
+		return($this->_get_by_type_type_id('extenfeatures', $typeval)['id']);
+	}
+
 	function get_by_user_id($user_id)
 	{
 		return($this->_get_by_type_type_id('user', $user_id));

@@ -84,13 +84,22 @@ class xivo_service_asterisk_func_key_sql extends xivo_service_asterisk_abstract_
 
 	public function get_func_key_id_with_dest_type_id($dst_type, $dst_id)
 	{
+		$pkey = $dst_type.'_id';
+
+		return((int) $this->get_func_key_id($dst_type, $dst_id, $pkey));
+	}
+
+	public function get_func_key_id($dst_type, $dst_id, $pkey)
+	{
 		$this->_dso->new_select('func_key_dest_'.$dst_type, array('func_key_id'));
-		$this->_dso->where(array($dst_type.'_id' => $dst_id));
+		$this->_dso->where(array($pkey => $dst_id));
 
 		$r = $this->_dso->select_singlecolumn();
 
 		if(isset($r[0]) === false)
+		{
 			return(false);
+		}
 
 		return((int) array_pop($r));
 	}

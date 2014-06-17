@@ -105,6 +105,11 @@ class xivo_service_asterisk_func_key extends xivo_service_asterisk_abstract
 	{
 		return($this->_dso->get_func_key_id_with_dest_type_id($dst_type, $dst_id));
 	}
+
+	public function get_func_key_id($dst_type, $dst_id, $pkey)
+	{
+		return($this->_dso->get_func_key_id($dst_type, $dst_id, $pkey));
+	}
 }
 
 ?>

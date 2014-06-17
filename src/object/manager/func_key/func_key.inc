@@ -76,7 +76,7 @@ class func_key_manager extends manager_abstract
 
 	public function add_fk_mapping($data)
 	{
-		if (($func_key_id = $this->_get_fk_id_with_dst($data['dst_type'], $data['dst_id'])) === false
+		if (($func_key_id = $this->_get_fk_id_with_dst($data)) === false
 		|| ($fk_dst_type_id = $this->_get_dst_type_id_with_dst($data['dst_type'])) === false)
 			return(false);
 
@@ -132,6 +132,7 @@ class func_key_manager extends manager_abstract
 			case 'group':
 			case 'queue':
 			case 'conference':
+			case 'service':
 				$fk_dst_type_id = (int) $this->get_destination_type_id_by_name($dst_type);
 				break;
 			default:
@@ -148,9 +149,21 @@ class func_key_manager extends manager_abstract
 		return((int) $fk_dst_type_id);
 	}
 
-	private function _get_fk_id_with_dst($dst_type, $dst_id)
+	private function _get_fk_id_with_dst($data)
 	{
-		if (($func_key_id = $this->_func_key->get_func_key_id_with_dest_type_id($dst_type, $dst_id)) === false)
+		$dst_type = $data['dst_type'];
+		switch($dst_type)
+		{
+			case 'service':
+				$dst_id = $this->_extensions->get_extenfeature_id_by_typeval($data['dst_val']);
+				$func_key_id = $this->_func_key->get_func_key_id($dst_type, $dst_id, 'extension_id');
+				break;
+			default:
+				$dst_id = $data['dst_id'];
+				$func_key_id = $this->_func_key->get_func_key_id_with_dest_type_id($dst_type, $dst_id);
+				break;
+		}
+		if ($func_key_id === false)
 		{
 			switch($dst_type)
 			{
