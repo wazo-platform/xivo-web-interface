@@ -149,11 +149,6 @@ $array['type']['extenfeatures-enablevm']['extension'] = true;
 $array['type']['extenfeatures-enablevm']['supervisable'] = true;
 $array['type']['extenfeatures-enablevm']['progfunckey'] = true;
 
-$array['type']['extenfeatures-enablevmbox'] = array();
-$array['type']['extenfeatures-enablevmbox']['category'] = 'extension-voicemail';
-$array['type']['extenfeatures-enablevmbox']['name'] = 'extenfeatures-enablevmbox';
-$array['type']['extenfeatures-enablevmbox']['extension'] = true;
-
 $array['type']['extenfeatures-vmusermsg'] = array();
 $array['type']['extenfeatures-vmusermsg']['category'] = 'extension-voicemail';
 $array['type']['extenfeatures-vmusermsg']['name'] = 'extenfeatures-vmusermsg';
