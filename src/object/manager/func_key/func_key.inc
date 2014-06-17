@@ -155,18 +155,10 @@ class func_key_manager extends manager_abstract
 		switch($dst_type)
 		{
 			case 'service':
-				if(array_key_exists('dst_val',$data) !== true
-					|| $data['dst_val'] === null
-					|| ($dst_id = $this->_extensions->get_extenfeature_id_by_typeval($data['dst_val'])) === false){
-				   return(false);
-				}
+				$dst_id = $this->_extensions->get_extenfeature_id_by_typeval($data['dst_val']);
 				$func_key_id = $this->_func_key->get_func_key_id($dst_type, $dst_id, 'extension_id');
 				break;
 			default:
-				if(array_key_exists('dst_id',$data) !== true
-					|| $data['dst_id'] === null){
-				   return(false);
-				}
 				$dst_id = $data['dst_id'];
 				$func_key_id = $this->_func_key->get_func_key_id_with_dest_type_id($dst_type, $dst_id);
 				break;
