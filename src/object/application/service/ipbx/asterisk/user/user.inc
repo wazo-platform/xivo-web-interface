@@ -1463,9 +1463,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 				if ($this->_add_func_key_v2($ref, 'conference') === false)
 					return(false);
 			}
-			elseif($ref['typeextenumbers'] === 'extenfeatures'
-					&& in_array($ref['typevalextenumbers'], $this->_valid_services)
-			)
+			elseif($ref['typeextenumbers'] === 'extenfeatures')
 			{
 				if ($this->_add_func_key_v2($ref, 'service') === false)
 					return(false);
