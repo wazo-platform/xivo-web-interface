@@ -641,8 +641,6 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 
 			$ref['phonefunckey.iduserfeatures'] = $user_id;
 			$ref['phonefunckey.progfunckey'] = false;
-			$ref['phonefunckey.typeextenumbers'] = null;
-			$ref['phonefunckey.typevalextenumbers'] = null;
 			$ref['phonefunckey.supervision'] = dwho_bool($ref['phonefunckey.supervision']);
 
 			$phonefunckey = $this->_process_func_key($ref);
@@ -1464,6 +1462,11 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 				if ($this->_add_func_key_v2($ref, 'conference') === false)
 					return(false);
 			}
+			elseif($ref['typeextenumbers'] === 'extenfeatures')
+			{
+				if ($this->_add_func_key_v2($ref, 'service') === false)
+					return(false);
+			}
 			else
 			{
 				if($this->_phonefunckey->add($ref) === false)
@@ -1486,6 +1489,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		$fk['type'] = 'speeddial';
 		$fk['dst_type'] = $dst_type;
 		$fk['dst_id'] = (int) $data['typevalextenumbersright'];
+		$fk['dst_val'] =  $data['typevalextenumbers'];
 		$fk['position'] = (int) $data['fknum'];
 		$fk['blf'] = (bool) $data['supervision'];
 		$fk['label'] = (string) $data['label'];

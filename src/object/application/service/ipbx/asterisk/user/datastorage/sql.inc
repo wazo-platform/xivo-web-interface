@@ -23,6 +23,7 @@ require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'application','abstract','data
 class xivo_application_service_asterisk_user_sql extends xivo_application_abstract_datastorage_sql
 {
 	var $_table	= array(
+				'extensions'		=> '',
 				'userfeatures'		=> '',
 				'callfilter'		=> '',
 				'callfiltermember'	=> '',
@@ -38,6 +39,7 @@ class xivo_application_service_asterisk_user_sql extends xivo_application_abstra
 				'func_key_dest_group'	=> '',
 				'func_key_dest_queue'	=> '',
 				'func_key_dest_conference'	=> '',
+				'func_key_dest_service'	=> '',
 				'func_key_destination_type'	=> '',
 				'func_key_mapping'	=> '',
 				'func_key_template'	=> '',
@@ -272,6 +274,17 @@ class xivo_application_service_asterisk_user_sql extends xivo_application_abstra
 					$this->_table['func_key_dest_conference'].'.conference_id'.' = '.$this->_table['meetmefeatures'].'.id',
 					null,
 					array('*'));
+
+		# SERVICE FUNC_KEY
+		$this->_dso->leftjoin($this->_table['func_key_dest_service'],
+					$this->_table['func_key_dest_service'].'.func_key_id = '.$this->_table['func_key'].'.id',
+					null,
+					array('*'));
+		$this->_dso->leftjoin($this->_table['extensions'],
+					$this->_table['func_key_dest_service'].'.extension_id'.' = '.$this->_table['extensions'].'.id',
+					null,
+					array('phonefunckey.typevalextenumbers' => 'typeval',
+                          'phonefunckey.typeextenumbers' => 'type'));
 
 		$this->_dso->new_order(array('position' => SORT_ASC), null, $this->_table['func_key_mapping']);
 

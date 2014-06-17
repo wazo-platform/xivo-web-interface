@@ -60,6 +60,12 @@ class xivo_service_asterisk_func_key_sql extends xivo_service_asterisk_abstract_
 					null,
 					array('queue_id'));
 
+		# SERVICE FUNC_KEY
+		$this->_dso->leftjoin('func_key_dest_service',
+					'func_key_dest_service.func_key_id = func_key.id',
+					null,
+					array('extension_id'));
+
 		# CONFERENCE FUNC_KEY
 		$this->_dso->leftjoin('func_key_dest_conference',
 					'func_key_dest_conference.func_key_id = func_key.id',
