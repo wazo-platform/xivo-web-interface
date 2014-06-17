@@ -201,32 +201,6 @@ class xivo_application_service_asterisk_user_sql extends xivo_application_abstra
 					$type.' = %s',
 					'agent');
 
-		$this->_dso->leftjoin($this->_table['groupfeatures'],
-					$type_id.' = '.$this->_table['groupfeatures'].'.id',
-					null,
-					array('id','*'));
-		$this->_dso->joinwhere($this->_table['groupfeatures'],
-					 $type.' = %s',
-					'group');
-		$this->_dso->andjoinwhere($this->_table['groupfeatures'],
-					array('deleted' => 0));
-
-		$this->_dso->leftjoin($this->_table['queuefeatures'],
-					$type_id.' = '.$this->_table['queuefeatures'].'.id',
-					null,
-					array('id','*'));
-		$this->_dso->joinwhere($this->_table['queuefeatures'],
-					$type.' = %s',
-					'queue');
-
-		$this->_dso->leftjoin($this->_table['meetmefeatures'],
-					$type_id.' = '.$this->_table['meetmefeatures'].'.id',
-					null,
-					array('id','*'));
-		$this->_dso->joinwhere($this->_table['meetmefeatures'],
-					$type.' = %s',
-					'meetme');
-
 		$this->_dso->new_order(array('fknum' => SORT_ASC), null, $this->_table['phonefunckey']);
 
 		$r = $this->_dso->select_all(null, true, true);
