@@ -23,6 +23,7 @@ class func_key_manager extends manager_abstract
 {
 
 	protected $_name			= 'func_key';
+	protected $_extensions		= false;
 	protected $_func_key		= false;
 	protected $_func_key_type	= false;
 	protected $_func_key_destination_type = false;
@@ -41,6 +42,7 @@ class func_key_manager extends manager_abstract
 
 	private function _load_components()
 	{
+		$this->_extensions = $this->_service->get_module('ipbx','extensions');
 		$this->_func_key = $this->_service->get_module('ipbx','func_key');
 		$this->_func_key_type = $this->_service->get_module('ipbx','func_key_type');
 		$this->_func_key_destination_type = $this->_service->get_module('ipbx','func_key_destination_type');
