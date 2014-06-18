@@ -282,18 +282,17 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 
 	function get_eth_iface()
 	{
-		$interface = 'eth0';
-		exec('ifconfig "'.$interface.'" | sed -rn \'2s/ .*:(.*)/\1/p\'', $netmask);
-		exec('ifconfig "'.$interface.'" | sed -rn \'2s/.*addr:(.*) Bcast.*/\1/p\'', $addr);
-		exec('ip route | awk \'/default/ { print $3 }\'', $gateway);
+		if(($res = $this->_sysconfd->request_get('/discover_netifaces')) === false
+		|| is_array($res) === false)
+			return(false);
 
-		$r = array();
-		$r['name'] = $interface;
-		$r['address'] = $addr[0];
-		$r['netmask'] = $netmask[0];
-		$r['gateway'] = $gateway[0];
+		foreach($res as $ifname => $iface)
+		{
+			if($ifname == 'lo' || !isset($iface['gateway']))
+				continue;
 
-		return($r);
+			return $iface;
+		}
 	}
 
 	function step_mainconfig()
