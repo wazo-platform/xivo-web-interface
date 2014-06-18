@@ -106,7 +106,7 @@ class func_key_manager extends manager_abstract
 
 	public function delete_fk_mapping($data)
 	{
-		if (($func_key_id = $this->_get_fk_id_with_dst($data['dst_type'], $data['dst_id'])) === false)
+		if (($func_key_id = $this->_get_fk_id_with_dst($data)) === false)
 			return(false);
 
 		$where = array(
