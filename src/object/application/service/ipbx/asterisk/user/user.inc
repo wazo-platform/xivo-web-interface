@@ -52,6 +52,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 	protected $_schedule_path 	= false;
 	protected $_attachment 		= false;
 	protected $_func_key_manager	= false;
+	protected $_valid_services	= array('vmuserpurge', 'vmusermsg', 'enablevm');
 
 	public function __construct(&$service,&$dso,$param=null,$components=true)
 	{
@@ -1462,7 +1463,9 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 				if ($this->_add_func_key_v2($ref, 'conference') === false)
 					return(false);
 			}
-			elseif($ref['typeextenumbers'] === 'extenfeatures')
+			elseif($ref['typeextenumbers'] === 'extenfeatures'
+					&& in_array($ref['typevalextenumbers'], $this->_valid_services)
+			)
 			{
 				if ($this->_add_func_key_v2($ref, 'service') === false)
 					return(false);
