@@ -20,7 +20,7 @@
 
 $url = &$this->get_module('url');
 
-$client_url = $this->bbf('download_soft_url_xivo-client',XIVO_SOFT_URL);
+$client_url = $this->bbf('download_soft_url_xivo-client',XIVO_DOWNLOAD_URL);
 $doc_url = $this->bbf('url_xivo-documentation',XIVO_DOC_URL);
 $blog_url = $this->bbf('url_xivo-blog',XIVO_BLOG_URL);
 
