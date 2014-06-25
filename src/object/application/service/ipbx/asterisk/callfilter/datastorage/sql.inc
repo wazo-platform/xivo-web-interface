@@ -82,7 +82,7 @@ class xivo_application_service_asterisk_callfilter_sql extends xivo_application_
 		$this->_dso->add_group('firstname','user1');
 		$this->_dso->add_group('lastname','user1');
 
-		$this->_dso->innerjoin('entity',
+		$this->_dso->leftjoin('entity',
 				      'entity.id = '.$this->_table['callfilter'].'.entity_id',
 						null,
 						array('entity_displayname' => 'displayname'));
