@@ -26,6 +26,7 @@ class xivo_service_asterisk_func_key extends xivo_service_asterisk_abstract
 	var $_origin		= false;
 	var $_origin_list	= false;
 	var $_type_list		= false;
+	var $_progfunckeys = array('fwdbusy', 'agentstaticlogoff', 'agentstaticlogtoggle', 'callrecord', 'enablednd', 'enablevm', 'agentstaticlogin', 'fwdrna', 'fwdunc', 'incallfilter');
 
 	public function __construct(&$sre,&$dso)
 	{
@@ -55,6 +56,7 @@ class xivo_service_asterisk_func_key extends xivo_service_asterisk_abstract
 
 		if (($ipbx = &$this->_sre) === false
 		|| ($modextensions = &$ipbx->get_module('extensions')) === false
+		|| ($modphonefunckey = &$ipbx->get_module('phonefunckey')) === false
 		|| ($rs = $this->get_func_key_by_user_id($user_id)) === false
 		|| ($nb = count($rs)) === 0)
 			return(false);
@@ -87,6 +89,17 @@ class xivo_service_asterisk_func_key extends xivo_service_asterisk_abstract
 				case 'conference':
 					if(($extension = $modextensions->get_by_conference_id($ref['conference_id'])) !== false)
 						$exten = $extension['exten'];
+					break;
+				case 'service':
+					if(($extension = $modextensions->get($ref['extension_id'])) !== false)
+					{
+						if (in_array($extension['typeval'], $this->_progfunckeys))
+						{
+							$exten = $modphonefunckey->build_progfunckey($user_id, $extension['exten']);
+						} else {
+							$exten = $modphonefunckey->build_extenfeatures($extension['exten']);
+						}
+					}
 					break;
 			}
 
