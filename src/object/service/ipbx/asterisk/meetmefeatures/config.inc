@@ -189,7 +189,7 @@ $array['element']['maxusers']['default'] = 0;
 $array['element']['maxusers']['set'] = true;
 
 $array['element']['emailfrom'] = array();
-$array['element']['emailfrom']['default'] = 'no-reply+meetme@xivo.fr';
+$array['element']['emailfrom']['default'] = 'no-reply+meetme@xivo.io';
 $array['element']['emailfrom']['setdef'] = true;
 
 $array['element']['emailfromname'] = array();

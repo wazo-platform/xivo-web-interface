@@ -2,7 +2,7 @@ Source: xivo-web-interface
 Section: web
 Priority: extra
 Maintainer: XiVO Dev Team <dev@avencall.com>
-Uploaders: XiVO Builder Team <release@xivo.fr>
+Uploaders: XiVO Builder Team <release@xivo.io>
 Build-Depends: cdbs (>= 0.4.23-1.1), debhelper (>= 5), php5-cli
 Standards-Version: 3.7.2.2
 
@@ -40,4 +40,4 @@ Description: XIVO web interface
  This package contains a comprehensive web interface to
  configure the XIVO solution.
  .
-  Homepage: http://xivo.fr/
+  Homepage: http://xivo.io/
