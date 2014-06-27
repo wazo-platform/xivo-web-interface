@@ -52,7 +52,18 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 	protected $_schedule_path 	= false;
 	protected $_attachment 		= false;
 	protected $_func_key_manager	= false;
-	protected $_valid_services	= array('vmuserpurge', 'vmusermsg', 'enablevm');
+	protected $_valid_services	= array('vmuserpurge',
+										'vmusermsg',
+										'enablevm',
+										'phonestatus',
+										'recsnd',
+										'calllistening',
+										'directoryaccess',
+										'fwdundoall',
+										'pickup',
+										'callrecord',
+										'incallfilter',
+										'enablednd');
 
 	public function __construct(&$service,&$dso,$param=null,$components=true)
 	{
