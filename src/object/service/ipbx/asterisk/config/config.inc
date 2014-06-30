@@ -193,6 +193,9 @@ $array['module']['func_key_dest_queue']['datastorage'] = true;
 $array['module']['func_key_dest_conference'] = array();
 $array['module']['func_key_dest_conference']['datastorage'] = true;
 
+$array['module']['func_key_dest_service'] = array();
+$array['module']['func_key_dest_service']['datastorage'] = true;
+
 $array['module']['func_key_mapping'] = array();
 $array['module']['func_key_mapping']['datastorage'] = true;
 

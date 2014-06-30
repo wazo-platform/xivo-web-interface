@@ -23,13 +23,14 @@ class func_key_manager extends manager_abstract
 {
 
 	protected $_name			= 'func_key';
+	protected $_extensions		= false;
 	protected $_func_key		= false;
 	protected $_func_key_type	= false;
-	protected $_func_key_destination_type	= false;
+	protected $_func_key_destination_type = false;
 	protected $_func_key_dest_user	= false;
 	protected $_func_key_dest_group	= false;
 	protected $_func_key_dest_queue	= false;
-	protected $_func_key_dest_conference	= false;
+	protected $_func_key_dest_conference = false;
 	protected $_func_key_mapping	= false;
 	protected $_func_key_template	= false;
 
@@ -41,6 +42,7 @@ class func_key_manager extends manager_abstract
 
 	private function _load_components()
 	{
+		$this->_extensions = $this->_service->get_module('ipbx','extensions');
 		$this->_func_key = $this->_service->get_module('ipbx','func_key');
 		$this->_func_key_type = $this->_service->get_module('ipbx','func_key_type');
 		$this->_func_key_destination_type = $this->_service->get_module('ipbx','func_key_destination_type');
@@ -74,7 +76,7 @@ class func_key_manager extends manager_abstract
 
 	public function add_fk_mapping($data)
 	{
-		if (($func_key_id = $this->_get_fk_id_with_dst($data['dst_type'], $data['dst_id'])) === false
+		if (($func_key_id = $this->_get_fk_id_with_dst($data)) === false
 		|| ($fk_dst_type_id = $this->_get_dst_type_id_with_dst($data['dst_type'])) === false)
 			return(false);
 
@@ -104,7 +106,7 @@ class func_key_manager extends manager_abstract
 
 	public function delete_fk_mapping($data)
 	{
-		if (($func_key_id = $this->_get_fk_id_with_dst($data['dst_type'], $data['dst_id'])) === false)
+		if (($func_key_id = $this->_get_fk_id_with_dst($data)) === false)
 			return(false);
 
 		$where = array(
@@ -130,6 +132,7 @@ class func_key_manager extends manager_abstract
 			case 'group':
 			case 'queue':
 			case 'conference':
+			case 'service':
 				$fk_dst_type_id = (int) $this->get_destination_type_id_by_name($dst_type);
 				break;
 			default:
@@ -146,9 +149,29 @@ class func_key_manager extends manager_abstract
 		return((int) $fk_dst_type_id);
 	}
 
-	private function _get_fk_id_with_dst($dst_type, $dst_id)
+	private function _get_fk_id_with_dst($data)
 	{
-		if (($func_key_id = $this->_func_key->get_func_key_id_with_dest_type_id($dst_type, $dst_id)) === false)
+		$dst_type = $data['dst_type'];
+		switch($dst_type)
+		{
+			case 'service':
+				if(array_key_exists('dst_val',$data) !== true
+					|| $data['dst_val'] === null
+					|| ($dst_id = $this->_extensions->get_extenfeature_id_by_typeval($data['dst_val'])) === false){
+				   return(false);
+				}
+				$func_key_id = $this->_func_key->get_func_key_id($dst_type, $dst_id, 'extension_id');
+				break;
+			default:
+				if(array_key_exists('dst_id',$data) !== true
+					|| $data['dst_id'] === null){
+				   return(false);
+				}
+				$dst_id = $data['dst_id'];
+				$func_key_id = $this->_func_key->get_func_key_id_with_dest_type_id($dst_type, $dst_id);
+				break;
+		}
+		if ($func_key_id === false)
 		{
 			switch($dst_type)
 			{
@@ -167,6 +190,7 @@ class func_key_manager extends manager_abstract
 				default:
 					dwho_report::push('error', 'Error: unknown fk_dst_type "'.$dst_type);
 					return(false);
+					break;
 			}
 		}
 

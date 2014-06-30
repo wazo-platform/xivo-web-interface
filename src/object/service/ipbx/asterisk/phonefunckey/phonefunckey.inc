@@ -29,6 +29,8 @@ class xivo_service_asterisk_phonefunckey extends xivo_service_asterisk_abstract
 	var $_origin_list	= false;
 	var $_type_list		= false;
 
+	var $_modextensions	= false;
+
 	public function __construct(&$sre,&$dso)
 	{
 		if(is_object($sre) === false)
@@ -39,6 +41,9 @@ class xivo_service_asterisk_phonefunckey extends xivo_service_asterisk_abstract
 
 		$this->_sre = &$sre;
 		$this->_dso = &$dso;
+
+		if(($this->_modextensions = $this->_sre->get_module('extensions')) === false)
+			trigger_error('Could not load module extensions in '.__CLASS__,E_USER_ERROR);
 
 		$this->_load_config();
 	}
@@ -421,8 +426,7 @@ class xivo_service_asterisk_phonefunckey extends xivo_service_asterisk_abstract
 		|| ($modcallfiltermember = &$ipbx->get_module('callfiltermember')) === false
 		|| ($moduserfeatures = &$ipbx->get_module('userfeatures')) === false
 		|| ($appfeatures = &$ipbx->get_apprealstatic('features')) === false
-		|| ($appfeaturemap = &$appfeatures->get_module('featuremap')) === false
-		|| ($modextensions = &$ipbx->get_module('extensions')) === false)
+		|| ($appfeaturemap = &$appfeatures->get_module('featuremap')) === false)
 			return(false);
 
 		$where = array();
@@ -467,12 +471,12 @@ class xivo_service_asterisk_phonefunckey extends xivo_service_asterisk_abstract
 							$typevalright = '*'.$ref['typevalextenumbersright'];
 
 						$where = array('typeval' => 'phoneprogfunckey');
-						if (($rsextenmbers = $modextensions->get_where($where)) === false)
+						if (($rsextenmbers = $this->_modextensions->get_where($where)) === false)
 							break;
 						$where = array();
 						$where['type'] = $ref['typeextenumbers'];
 						$where['typeval'] = $ref['typevalextenumbers'];
-						if (($extenumleftexten = $modextensions->get_where($where)) === false)
+						if (($extenumleftexten = $this->_modextensions->get_where($where)) === false)
 							break;
 
 						$exten = $this->fkey_extension($rsextenmbers['extenbrut'],
@@ -496,7 +500,7 @@ class xivo_service_asterisk_phonefunckey extends xivo_service_asterisk_abstract
 					$where['type'] = $type['type'];
 					$where['typeval'] = $type['val'];
 
-					if (($rsextenmbers = $modextensions->get_where($where)) !== false)
+					if (($rsextenmbers = $this->_modextensions->get_where($where)) !== false)
 						$rsexten = $rsextenmbers['exten'];
 
 					switch($type['val'])
@@ -526,19 +530,12 @@ class xivo_service_asterisk_phonefunckey extends xivo_service_asterisk_abstract
 							$exten = str_replace('.', $callfiltermember['id'], $rsexten);
 							break;
 						default:
-							if($ref['progfunckey'] === true)
+							if ($ref['progfunckey'] === true)
 							{
-								$where = array('typeval' => 'phoneprogfunckey');
-								if (($progfunckey = $modextensions->get_where($where)) === false)
-									break;
-								$exten = $this->fkey_extension($progfunckey['extenbrut'],
-										array($ref['iduserfeatures'],
-												$rsexten,
-												$ref['exten'])
-								);
+								$exten = $this->build_progfunckey($iduserfeatures, $rsexten, $ref['exten']);
+							} else {
+								$exten = $this->build_extenfeatures($rsexten, $ref['typevalextenumbersright']);
 							}
-							else
-								$exten = str_replace('.', $ref['typevalextenumbersright'], $rsexten);
 					}
 			}
 
@@ -547,6 +544,20 @@ class xivo_service_asterisk_phonefunckey extends xivo_service_asterisk_abstract
 
 		return((empty($conf) ? false : $conf));
 	}
+
+	public function build_progfunckey($user_id, $prefix_exten, $funckey_exten='') {
+		$where = array('typeval' => 'phoneprogfunckey');
+		if (($progfunckey = $this->_modextensions->get_where($where)) === false)
+			return '';
+		$exten = $this->fkey_extension($progfunckey['extenbrut'], array($user_id, $prefix_exten, $funckey_exten));
+		return $exten;
+	}
+
+	public function build_extenfeatures($prefix_exten, $value='') {
+		$exten = str_replace('.', $value, $prefix_exten);
+		return $exten;
+	}
+
 }
 
 ?>
