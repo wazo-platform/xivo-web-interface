@@ -20,6 +20,9 @@ Proxy HTTP :
 ; fm_configure_https_proxy
 Proxy HTTPS :
 
+; fm_configure_NAT
+NAT:
+
 ; fm_hlp_plugin_server
 L'addresse (URL) du dépôt de plugins
 
@@ -34,6 +37,9 @@ Le proxy pour les requêtes HTTPS. Le format est "host:port"
 
 ; fm_hlp_locale
 La locale courante. Exemple: en_CA
+
+; fm_hlp_NAT
+Mettre à 1 si toutes les terminaisons sont derrière un NAT.
 
 ; fld_provd_general_configuration
 Configuration locale de provd

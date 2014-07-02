@@ -20,6 +20,9 @@ HTTP Proxy:
 ; fm_configure_https_proxy
 HTTPS Proxy:
 
+; fm_configure_NAT
+NAT:
+
 ; fm_hlp_plugin_server
 The plugins repository URL
 
@@ -34,6 +37,9 @@ The proxy for HTTPS requests. Format is "host:port"
 
 ; fm_hlp_locale
 The current locale. Example: fr_FR
+
+; fm_hlp_NAT
+Set to 1 if all devices are behind a NAT.
 
 ; fld_provd_general_configuration
 Local provd configuration
