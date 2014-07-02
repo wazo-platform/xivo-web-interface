@@ -47,9 +47,7 @@ if (($params = $this->get_var('info','configure')) !== false
 
 		if (isset($ref['links'][0]) === false
 		|| isset($ref['links'][0]['href']) === false
-		|| ($href = $ref['links'][0]['href']) === ''
-		/* hide NAT option */
-		|| $ref['id'] === 'NAT')
+		|| ($href = $ref['links'][0]['href']) === '')
 			continue;
 ?>
 <div id="res-<?=$ref['id']?>"></div>
