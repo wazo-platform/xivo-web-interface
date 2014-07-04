@@ -41,16 +41,16 @@ First name:
 Last name:
 
 ; fm_userfeatures_picture
-User picture:
+User picture: 
 
 ; fm_userfeatures_callerid
-Caller ID:
+Caller ID: 
 
 ; fm_userfeatures_language
-Language:
+Language:  
 
 ; fm_userfeatures_entity
-Entity:
+Entity: 
 
 ; hlp_fm_userfeatures_entity
 You can't modify entity if it has a line.
@@ -80,7 +80,7 @@ Customized
 Services
 
 ; fm_userfeatures_ringintern
-Ring intern:
+Ring intern: 
 
 ; fm_userfeatures_ringextern
 Ring extern:
@@ -98,7 +98,7 @@ Rightcall
 XiVO Client
 
 ; fm_userfeatures_rightcallcode
-Rightcall Code:
+Rightcall Code: 
 
 ; fld-callforwards
 Call Forward
@@ -722,21 +722,21 @@ Conference room
 ; softkey_backjoin
 
 ; fm_userfeatures_timezone
-Timezone:
+Timezone: 
 
 ; fm_register-transport
-Transport:
+Transport: 
 
 ; hlp_fm_register-transport
 
 ; fm_register-expiry
-Expiry:
+Expiry: 
 
 ; hlp_fm_register-expiry
 Asterisk config: expiry
 
 ; fm_register-callbackextension
-Use callback extension:
+Use callback extension: 
 
 ; smenu_schedule
 Schedules

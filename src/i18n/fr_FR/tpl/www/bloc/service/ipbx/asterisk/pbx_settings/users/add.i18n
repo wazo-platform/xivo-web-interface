@@ -44,7 +44,7 @@ Entité :
 Vous ne pouvez pas changer lorsque des lignes sont associées à l'utilisateur.
 
 ; fm_userfeatures_picture
-Image utilisateur :
+Image utilisateur : 
 
 ; fm_userfeatures_language
 Langue :
@@ -59,7 +59,7 @@ Illimité
 %s secondes
 
 ; fm_userfeatures_timezone
-Fuseau horaire :
+Fuseau horaire : 
 
 ; fm_userfeatures_callerid
 Nom d'appel :
@@ -623,7 +623,7 @@ Rappel du dernier numéro
 Nouvel appel
 
 ; softkey_cfwdall
-Activer/Désactiver le renvoi d'appel inconditionnel
+Activer/Désactiver le renvoi d'appel inconditionnel 
 
 ; softkey_cfwdbusy
 Activer/Désactiver le renvoi d'appel sur occupation
@@ -755,18 +755,18 @@ Personnalisé
 Simultané
 
 ; fm_register-transport
-Transport :
+Transport : 
 
 ; hlp_fm_register-transport
 
 ; fm_register-expiry
-Délai d'expiration :
+Délai d'expiration : 
 
 ; hlp_fm_register-expiry
 Config asterisk: expiry
 
 ; fm_register-callbackextension
-Utiliser l'extension de l'interconnexion :
+Utiliser l'extension de l'interconnexion : 
 
 ; smenu_schedule
 Horaires
