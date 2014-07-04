@@ -361,9 +361,6 @@ Messagerie vocale
 ; fm_phonefunckey_type-opt(extenfeatures-enablevm)
 Active la messagerie vocale de l'utilisateur
 
-; fm_phonefunckey_type-opt(extenfeatures-enablevmbox)
-Active la messagerie vocale
-
 ; fm_phonefunckey_type-opt(extenfeatures-vmusermsg)
 Consultation de la messagerie vocale de l'utilisateur
 

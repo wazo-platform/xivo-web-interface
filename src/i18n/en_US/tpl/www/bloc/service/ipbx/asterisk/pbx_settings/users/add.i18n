@@ -388,9 +388,6 @@ Voicemail
 ; fm_phonefunckey_type-opt(extenfeatures-enablevm)
 Enable voicemail
 
-; fm_phonefunckey_type-opt(extenfeatures-enablevmbox)
-Activate voicemail
-
 ; fm_phonefunckey_type-opt(extenfeatures-vmusermsg)
 Reach the voicemail
 
