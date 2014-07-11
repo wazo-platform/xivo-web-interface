@@ -1356,11 +1356,11 @@ function dwho_calc_duration($beg,$end,$diff=false,$unset=false)
 
 function dwho_date_parse_from_format($stFormat, $stData)
 {
-	$aDataRet             = array();
-	$aDataRet['day']     = 0;
-	$aDataRet['month']     = 0;
-	$aDataRet['year']     = 0;
-	$aDataRet['hour']     = 0;
+	$aDataRet			 = array();
+	$aDataRet['day']	 = 0;
+	$aDataRet['month']	 = 0;
+	$aDataRet['year']	 = 0;
+	$aDataRet['hour']	 = 0;
 	$aDataRet['minute'] = 0;
 	$aDataRet['second'] = 0;
 	$aPieces = split('[:/.\ \-]', $stFormat);
@@ -1417,14 +1417,14 @@ function dwho_change_date_format($stDate,$stFormatFrom,$stFormatTo)
 function dwho_calc_page($page,$nb,$total)
 {
 	$r = array(
-			'page'    => 1,
-			'nb'    => 0,
-			'pages'    => 0,
+			'page'	=> 1,
+			'nb'	=> 0,
+			'pages'	=> 0,
 			'total' => 0,
-			'next'    => 0,
-			'prev'    => 0,
-			'beg'    => 0,
-			'end'    => 0);
+			'next'	=> 0,
+			'prev'	=> 0,
+			'beg'	=> 0,
+			'end'	=> 0);
 
 	$r['page'] = dwho_uint($page,1);
 	$r['nb'] = dwho_uint($nb,10);
@@ -1449,6 +1449,8 @@ function dwho_calc_page($page,$nb,$total)
 
 	return($r);
 }
+
+
 
 function dwho_gm2localtime($format,$time)
 {

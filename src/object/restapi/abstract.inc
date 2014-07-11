@@ -22,7 +22,7 @@ require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'restapi','abstract','abstract
 
 abstract class xivo_restapi_helpers_abstract extends xivo_restapi_ressource_abstract
 {
-	private $_cnt = 0;
+	protected $_cnt = 0;
 
 	public function __construct($_RAPI, $param=null)
 	{
