@@ -19,6 +19,10 @@
 #
 
 
+function dwho_pagination_from_array($display_array, $start, $offset) {
+	return array_slice($display_array, $start, $offset);
+}
+
 function dwho_load_extra_i18n($_I18N)
 {
 	$i18n_directory = XIVO_EXTRA.'/i18n.d'.'/'.DWHO_I18N_BABELFISH_LOCALE;

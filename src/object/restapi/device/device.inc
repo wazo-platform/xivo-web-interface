@@ -46,29 +46,53 @@ class restapi_ressource_device extends xivo_restapi_helpers_abstract
 					if (dwho_has_len($line['device']))
 					{
 						$device = $this->get($line['device']);
-						$device['number'] = $line['number'];
-						array_push($result, $device);
+						$this->_device_entity_filtering($device, $result);
 					}
 				}
 				break;
 			default:
-				if (($devices = parent::find_all($search,$order,$limit)) === false)
+				if (($devices = parent::find_all($search,$order)) === false)
 					return(false);
-				$lines = $line_module->get_all();
-				$nb_line = count($lines);
-				foreach ($devices as &$device)
+				foreach ($devices as $device)
 				{
-					$device['number'] = '';
-					for ($n=0; $n<$nb_line; $n++)
-					{
-						if ($lines[$n]['device'] === $device['id'])
-							$device['number'] = $lines[$n]['number'];
-					}
+					$this->_device_entity_filtering($device, $result);
 				}
-				$result = $devices;
+		}
+
+		if (is_array($limit) && count($limit) === 2)
+		{
+			$this->_cnt = count($result);
+			$result = dwho_pagination_from_array($result, $limit[0], $limit[1]);
 		}
 
 		return($result);
+	}
+
+	private function _device_entity_filtering(&$device, &$result)
+	{
+		$_SRE = dwho_gct::get('xivo_service');
+		$line_module = $_SRE->get_module('ipbx', 'linefeatures');
+
+		$device['number'] = '';
+		switch ($device['status'])
+		{
+			case 'configured':
+				if (($line = $line_module->get_where(array('device' => $device['id']))) !== false)
+				{
+					$device['number'] = $line['number'];
+					if (defined('ENTITY_FILTER_CONTEXTS'))
+					{
+						$contexts = explode(',', ENTITY_FILTER_CONTEXTS);
+						if (!in_array($line['context'], $contexts))
+							return(false);
+					}
+					array_push($result, $device);
+				}
+				break;
+			default:
+				array_push($result, $device);
+		}
+		return(true);
 	}
 
 	public function get_device_by_ip($ip)
