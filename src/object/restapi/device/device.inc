@@ -86,8 +86,8 @@ class restapi_ressource_device extends xivo_restapi_helpers_abstract
 						if (!in_array($line['context'], $contexts))
 							return(false);
 					}
+					array_push($result, $device);
 				}
-				array_push($result, $device);
 				break;
 			default:
 				array_push($result, $device);
