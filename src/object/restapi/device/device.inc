@@ -77,7 +77,7 @@ class restapi_ressource_device extends xivo_restapi_helpers_abstract
 		$ipbx = &$_SRE->get('ipbx');
 		$line_module = $ipbx->get_module('linefeatures');
 
-		$device['number'] = '';
+		$device['number'] = $device['context'] ='';
 		switch ($device['status'])
 		{
 			case 'configured':
