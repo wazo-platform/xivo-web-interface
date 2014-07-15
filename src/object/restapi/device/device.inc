@@ -65,13 +65,17 @@ class restapi_ressource_device extends xivo_restapi_helpers_abstract
 			$result = dwho_pagination_from_array($result, $limit[0], $limit[1]);
 		}
 
+		foreach ($result as &$device)
+			$this->_add_entity_displayname_to_device($device);
+
 		return($result);
 	}
 
 	private function _device_entity_filtering(&$device, &$result)
 	{
 		$_SRE = dwho_gct::get('xivo_service');
-		$line_module = $_SRE->get_module('ipbx', 'linefeatures');
+		$ipbx = &$_SRE->get('ipbx');
+		$line_module = $ipbx->get_module('linefeatures');
 
 		$device['number'] = '';
 		switch ($device['status'])
@@ -80,6 +84,7 @@ class restapi_ressource_device extends xivo_restapi_helpers_abstract
 				if (($line = $line_module->get_where(array('device' => $device['id']))) !== false)
 				{
 					$device['number'] = $line['number'];
+					$device['context'] = $line['context'];
 					if (defined('ENTITY_FILTER_CONTEXTS'))
 					{
 						$contexts = explode(',', ENTITY_FILTER_CONTEXTS);
@@ -93,6 +98,24 @@ class restapi_ressource_device extends xivo_restapi_helpers_abstract
 				array_push($result, $device);
 		}
 		return(true);
+	}
+
+	private function _add_entity_displayname_to_device(&$device)
+	{
+		$_SRE = dwho_gct::get('xivo_service');
+		$_XOBJ = dwho_gct::get('xivo_object');
+		$ipbx = &$_SRE->get('ipbx');
+
+		$context_module = $ipbx->get_module('context');
+		$entity_module = $_XOBJ->get_module('entity');
+
+		$device['entity_displayname'] = '';
+
+		if (($context = $context_module->get($device['context'])) === false
+		|| ($entity = $entity_module->get_where(array('name' => $context['entity']))) === false)
+			return(false);
+
+		$device['entity_displayname'] = $entity['displayname'];
 	}
 
 	public function get_device_by_ip($ip)
