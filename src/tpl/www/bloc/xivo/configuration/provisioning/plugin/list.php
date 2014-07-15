@@ -70,17 +70,23 @@ $page = $url->pager($pager['pages'],
 		for($i = 0;$i < $nb;$i++):
 			$ref = &$list[$i];
 
-		$upgrade = false;
-		if (isset($ref['version-installable']) === true):
-			if($ref['version'] !== $ref['version-installable']):
-				$upgrade = true;
-			 	$version = '<b>'.$ref['version'].' / '.$ref['version-installable'].'</b>';
+			$upgrade = false;
+			if (isset($ref['version-installable']) === true):
+				if($ref['version'] !== $ref['version-installable']):
+					$upgrade = true;
+					$version = '<b>'.$ref['version'].' / '.$ref['version-installable'].'</b>';
+				else:
+					$version = $ref['version'];
+				endif;
 			else:
 				$version = $ref['version'];
 			endif;
-		else:
-			$version = $ref['version'];
-		endif;
+
+			$plugin_size = '-';
+			if (isset($ref['dsize']) === true):
+				$iec_size = dwho_size_iec($ref['dsize']);
+				$plugin_size = $this->bbf('size_iec_'.$iec_size[1],$iec_size[0]);
+			endif;
 ?>
 	<tr onmouseover="this.tmp = this.className; this.className = 'sb-content l-infos-over';"
 	    onmouseout="this.className = this.tmp;"
@@ -109,7 +115,7 @@ $page = $url->pager($pager['pages'],
 		endif;
 ?>
 		</td>
-		<td><?=(isset($ref['dsize']) === true ? dwho_byte_to($ref['dsize']) : '-')?></td>
+		<td><?=$plugin_size?></td>
 		<td class="td-right" colspan="2">
 <?php
 		if ($ref['type'] === 'installable'):

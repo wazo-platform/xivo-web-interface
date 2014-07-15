@@ -76,6 +76,12 @@ else:
 		else:
 			for($i = 0;$i < $nb;$i++):
 				$ref = &$pkgs[$i];
+
+				$component_size = '-';
+				if (isset($ref['dsize']) === true):
+					$iec_size = dwho_size_iec($ref['dsize']);
+					$component_size = $this->bbf('size_iec_'.$iec_size[1],$iec_size[0]);
+				endif;
 	?>
 		<tr class="fm-paragraph" id="">
 			<td class="td-left txt-left" title="<?=dwho_alttitle($ref['name']);?>">
@@ -84,7 +90,7 @@ else:
 			<td class="txt-left" title="<?=dwho_alttitle($ref['description']);?>">
 				<?=dwho_htmlen(dwho_trunc($ref['description'],50,'...',false));?>
 			</td>
-			<td><?=(isset($ref['dsize']) === true ? dwho_byte_to($ref['dsize']) : '-')?></td>
+			<td><?=$component_size?></td>
 			<td><?=(isset($ref['version']) === true ? $ref['version'] : '-')?></td>
 			<td class="td-right">
 	<?php
