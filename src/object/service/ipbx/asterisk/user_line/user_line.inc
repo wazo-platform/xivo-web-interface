@@ -83,7 +83,7 @@ class xivo_service_asterisk_user_line extends xivo_service_asterisk_abstract
 
 	function get_master_user_id_by_line_id($line_id)
 	{
-		if (($user_id = $this->_dso->find_main_user_id($line_id)) === false);
+		if (($user_id = $this->_dso->find_main_user_id($line_id)) === false)
 			return false;
 
 		return (int) $user_id;
