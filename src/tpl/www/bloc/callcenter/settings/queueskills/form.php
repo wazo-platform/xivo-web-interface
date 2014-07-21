@@ -56,7 +56,6 @@ $data = $this->get_var('data');
 
 				<th class="th-left"><?=$this->bbf('col_1');?></th>
 				<th class="th-center"><?=$this->bbf('col_2');?></th>
-				<th class="th-center"><?=$this->bbf('col_3');?></th>
 				<th class="th-right th-rule">
 					<?=$url->href_html($url->img_html('img/site/button/mini/orange/bo-add.gif',
 									  $this->bbf('col_add'),
@@ -104,19 +103,6 @@ $data = $this->get_var('data');
 						               'error'		=> $this->bbf_args('queueskill-value-descr', $this->get_var('error', 'values', $i, 'description'))));
 	 ?>
 				</td>
-				<td>
-	<?php
-					echo $form->text(array('paragraph'	=> false,
-							       'name'		=> 'queueskill[values][printscr][]',
-							       'id'		=> false,
-							       'label'		=> false,
-							       'size'		=> 15,
-							       'key'		=> false,
-							       'value'		=> $data[$i]['printscreen'],
-							       'default'	=> '',
-						               'error'		=> $this->bbf_args('queueskill-value-printscr', $this->get_var('error', 'values', $i, 'printscreen'))));
-	 ?>
-				</td>
 				<td class="td-right">
 					<?=$url->href_html($url->img_html('img/site/button/mini/blue/delete.gif',
 									  $this->bbf('opt_'.$type.'-delete'),
@@ -160,17 +146,6 @@ $data = $this->get_var('data');
 	<?php
 					echo $form->text(array('paragraph'	=> false,
 							       'name'		=> 'queueskill[values][desc][]',
-							       'id'		=> false,
-							       'label'		=> false,
-							       'size'		=> 15,
-							       'key'		=> false,
-							       'default'	=> ''));
-	 ?>
-				</td>
-				<td>
-	<?php
-					echo $form->text(array('paragraph'	=> false,
-							       'name'		=> 'queueskill[values][printscr][]',
 							       'id'		=> false,
 							       'label'		=> false,
 							       'size'		=> 15,

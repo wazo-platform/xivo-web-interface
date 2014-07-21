@@ -114,7 +114,6 @@ class xivo_application_service_asterisk_skill extends xivo_application_asterisk_
 					'catid' 			=> $catid,
 					'name'				=> $v[0],
 					'description'	=> $v[1],
-					'printscreen'	=> $v[2]
 				);
 
 				$skid = $this->_skill->add($value);

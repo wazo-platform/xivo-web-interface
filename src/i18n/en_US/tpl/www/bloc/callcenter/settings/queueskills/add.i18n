@@ -13,9 +13,6 @@ Name
 ; col_2
 Description
 
-; col_3
-Display Screen
-
 ; no_disp
 No information
 
@@ -31,8 +28,8 @@ You must enter a name for the skill
 ; queueskill-value-name(regexp)
 the name of the jurisdiction contains invalid characters
 
-; queueskill-value-printscr(maximumlength)
-the display screen should be at most 5 characters
+; col_add
+Add
 
-; queueskill-value-printscr(regexp)
-the display screen contains invalid characters
+; opt_disp-delete
+Delete

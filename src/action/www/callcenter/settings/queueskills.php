@@ -58,7 +58,6 @@ switch($act)
 					'id'		=> $_QR['queueskill']['values']['id'][$i],
 					'name'		=> $_QR['queueskill']['values']['name'][$i],
 					'description'	=> $_QR['queueskill']['values']['desc'][$i],
-					'printscreen'	=> $_QR['queueskill']['values']['printscr'][$i]
 				);
 			}
 
@@ -102,7 +101,6 @@ switch($act)
 					'id'		=> $_QR['queueskill']['values']['id'][$i],
 					'name'		=> $_QR['queueskill']['values']['name'][$i],
 					'description'	=> $_QR['queueskill']['values']['desc'][$i],
-					'printscreen'	=> $_QR['queueskill']['values']['printscr'][$i]
 				);
 			}
 
