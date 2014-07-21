@@ -31,12 +31,8 @@ $array['element']['name']['default'] = '';
 $array['element']['description'] = array();
 $array['element']['description']['default'] = '';
 
-$array['element']['printscreen'] = array();
-$array['element']['printscreen']['default'] = '';
-
 
 $array['filter'] = array();
 $array['filter']['name'] 	= array('minlen' => 1, 'maxlen' => 64, 'regexp' => '/^[a-z0-9_-]+$/');
-$array['filter']['printscreen'] = array('chk' => 2   , 'maxlen' => 5 , 'regexp' => '/^[a-zA-Z0-9_-]+$/');
 
 ?>

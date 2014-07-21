@@ -41,7 +41,7 @@ switch($act)
 		// add a new item (either display add form (fm_send not set)
 		// 	OR save new entered item
 		$appqueue = &$ipbx->get_application('queue');
-		$fm_save = true;
+		$fm_save = null;
 
 		// we must save new item ?
 		if(isset($_QR['fm_send']) 	 === true
@@ -58,7 +58,6 @@ switch($act)
 					'id'		=> $_QR['queueskill']['values']['id'][$i],
 					'name'		=> $_QR['queueskill']['values']['name'][$i],
 					'description'	=> $_QR['queueskill']['values']['desc'][$i],
-					'printscreen'	=> $_QR['queueskill']['values']['printscr'][$i]
 				);
 			}
 
@@ -82,7 +81,7 @@ switch($act)
 
 	case 'edit':
 		$appqueue = &$ipbx->get_application('queue');
-		$fm_save  = true;
+		$fm_save  = null;
 
 		// id not set or skillcat[id] not found => redirect to list view
 		if(isset($_QR['id']) === false || ($info = $appqueue->skills_get($_QR['id'])) === false)
@@ -102,7 +101,6 @@ switch($act)
 					'id'		=> $_QR['queueskill']['values']['id'][$i],
 					'name'		=> $_QR['queueskill']['values']['name'][$i],
 					'description'	=> $_QR['queueskill']['values']['desc'][$i],
-					'printscreen'	=> $_QR['queueskill']['values']['printscr'][$i]
 				);
 			}
 

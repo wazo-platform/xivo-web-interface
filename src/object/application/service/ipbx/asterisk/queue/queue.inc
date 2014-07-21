@@ -1307,7 +1307,6 @@ class xivo_application_service_asterisk_queue extends xivo_application_asterisk_
 				  'id'		=> string '4' (length=1)
 			          'name' 	=> string 'linux' (length=5)
 			          'description' => string 'best' (length=4)
-			          'printscreen' => string 'LNX' (length=3)
 		@endverbatim
 
 		skill values are referenced by users (with weight) and rules,

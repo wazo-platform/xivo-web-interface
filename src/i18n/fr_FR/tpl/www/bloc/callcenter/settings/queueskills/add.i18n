@@ -13,9 +13,6 @@ Nom
 ; col_2
 Description
 
-; col_3
-Affichage écran
-
 ; no_disp
 Aucune information
 
@@ -31,8 +28,8 @@ Vous devez saisir un nom pour la compétence
 ; queueskill-value-name(regexp)
 le nom de la compétence contient des caractères invalides
 
-; queueskill-value-printscr(maximumlength)
-l'affichage écran doit faire AU PLUS 5 caractères
+; col_add
+Ajouter
 
-; queueskill-value-printscr(regexp)
-l'affichage écran contient des caractères invalides
+; opt_disp-delete
+Supprimer

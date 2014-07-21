@@ -163,7 +163,7 @@ class xivo_application_service_asterisk_queue_sql extends xivo_application_abstr
 
     function skills_json_get($id=null,$filter=null,$limit=null)
 	{
-		$this->_dso->new_select('queueskill', array('id', 'name', 'description', 'printscreen'));
+		$this->_dso->new_select('queueskill', array('id', 'name', 'description'));
 		$this->_dso->leftjoin('queueskillcat',
     		'queueskillcat.id = queueskill.catid',
     		null,
@@ -179,7 +179,6 @@ class xivo_application_service_asterisk_queue_sql extends xivo_application_abstr
         {
             $this->_dso->wherecontain('name'	, $filter, true, 'queueskill');
             $this->_dso->orwherecontain('description' , $filter, true, 'queueskill');
-            $this->_dso->orwherecontain('printscreen' , $filter, true, 'queueskill');
             $this->_dso->orwherecontain('name'        , $filter, true, 'queueskillcat');
         }
 
