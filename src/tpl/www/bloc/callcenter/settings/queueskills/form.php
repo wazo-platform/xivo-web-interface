@@ -121,7 +121,7 @@ $data = $this->get_var('data');
 			</tbody>
 			<tfoot>
 			<tr id="no-<?=$type?>"<?=($count > 0 ? ' class="b-nodisplay"' : '')?>>
-				<td colspan="5" class="td-single"><?=$this->bbf('no_'.$type);?></td>
+				<td colspan="3" class="td-single"><?=$this->bbf('no_'.$type);?></td>
 			</tr>
 			</tfoot>
 		</table>
