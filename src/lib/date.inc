@@ -315,6 +315,7 @@ abstract class dwho_date
 		$dend = self::all_to_unixtime($dend);
 
 		$day_process = strtotime('-1 day',$dbeg);
+
 		$listday = array();
 		while ($day_process < ((int) $dend))
 		{
