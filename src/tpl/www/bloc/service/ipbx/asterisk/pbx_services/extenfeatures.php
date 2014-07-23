@@ -314,6 +314,33 @@ if(isset($error_js[0]) === true)
 			      array('*',range(3,11)));
 ?>
 		</div>
+<?php
+	echo	$form->checkbox(array('desc'	=> $this->bbf('fm_extenfeatures_enable-ccrequest'),
+				'name'	=> 'extenfeatures[ccrequest][enable]',
+				'labelid'	=> 'extenfeatures-enable-ccrequest',
+				'checked'	=> ((bool) $this->get_var('extenfeatures','ccrequest','commented') === false))),
+
+		$form->text(array('desc'	=> $this->bbf('fm_extenfeatures-extension'),
+				'name'	=> 'extenfeatures[ccrequest][exten]',
+				'labelid'	=> 'extenfeatures-ccrequest',
+				'size'	=> 15,
+				'value'	=> $this->get_var('extenfeatures','ccrequest','exten'),
+				'default'	=> $element['extenfeatures']['ccrequest']['default'],
+				'invalid'	=> isset($invalid['extenfeatures']['ccrequest']))),
+
+		$form->checkbox(array('desc'	=> $this->bbf('fm_extenfeatures_enable-cccancel'),
+				'name'	=> 'extenfeatures[cccancel][enable]',
+				'labelid'	=> 'extenfeatures-enable-cccancel',
+				'checked'	=> ((bool) $this->get_var('extenfeatures','cccancel','commented') === false))),
+
+		$form->text(array('desc'	=> $this->bbf('fm_extenfeatures-extension'),
+				'name'	=> 'extenfeatures[cccancel][exten]',
+				'labelid'	=> 'extenfeatures-cccancel',
+				'size'	=> 15,
+				'value'	=> $this->get_var('extenfeatures','cccancel','exten'),
+				'default'	=> $element['extenfeatures']['cccancel']['default'],
+				'invalid'	=> isset($invalid['extenfeatures']['cccancel'])));
+?>
 	</div>
 
 	<div id="sb-part-call" class="b-nodisplay">

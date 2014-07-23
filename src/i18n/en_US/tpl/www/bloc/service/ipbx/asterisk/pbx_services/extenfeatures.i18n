@@ -70,6 +70,12 @@ Directory access:
 ; fm_extenfeatures_enable-bsfilter
 Filter Boss - Secretary:
 
+; fm_extenfeatures_enable-ccrequest
+Request call completion:
+
+; fm_extenfeatures_enable-cccancel
+Cancel call completion:
+
 ; fm_extenfeatures_enable-callgroup
 Call a group from its id :
 

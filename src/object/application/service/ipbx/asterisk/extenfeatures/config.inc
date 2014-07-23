@@ -52,6 +52,12 @@ $array['element']['callrecord']['default'] = '*26';
 $array['element']['calluser'] = array();
 $array['element']['calluser']['default'] = '*666.';
 
+$array['element']['cccancel'] = array();
+$array['element']['cccancel']['default'] = '*41';
+
+$array['element']['ccrequest'] = array();
+$array['element']['ccrequest']['default'] = '*40';
+
 $array['element']['directoryaccess'] = array();
 $array['element']['directoryaccess']['default'] = '*36';
 
@@ -135,6 +141,8 @@ $array['filter']['callmeetme'] = array('minlen' => 1,'maxlen' => 40);
 $array['filter']['callqueue'] = array('minlen' => 1,'maxlen' => 40);
 $array['filter']['callrecord'] = array('minlen' => 1,'maxlen' => 40,'regexp' => '/^[0-9\*#]+$/');
 $array['filter']['calluser'] = array('minlen' => 1,'maxlen' => 40);
+$array['filter']['cccancel'] = array('minlen' => 1,'maxlen' => 40,'regexp' => '/^[0-9\*#]+$/');
+$array['filter']['ccrequest'] = array('minlen' => 1,'maxlen' => 40,'regexp' => '/^[0-9\*#]+$/');
 $array['filter']['directoryaccess'] = array('minlen' => 1,'maxlen' => 40,'regexp' => '/^[0-9\*#]+$/');
 $array['filter']['enablednd'] = array('minlen' => 1,'maxlen' => 40,'regexp' => '/^[0-9\*#]+$/');
 $array['filter']['enablevm'] = array('minlen' => 1,'maxlen' => 40,'regexp' => '/^[0-9\*#]+$/');
