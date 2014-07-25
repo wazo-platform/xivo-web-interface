@@ -70,11 +70,8 @@ Accès à l'annuaire :
 ; fm_extenfeatures_enable-bsfilter
 Filtrage Patron - Secrétaire :
 
-; fm_extenfeatures_enable-ccrequest
-Demande rappel automatique :
-
-; fm_extenfeatures_enable-cccancel
-Annule rappel automatique :
+; fm_extenfeatures_enable-cctoggle
+Active/désactive le rappel automatique :
 
 ; fm_extenfeatures_enable-callgroup
 Appeler un groupe à l'aide de son identifiant :
