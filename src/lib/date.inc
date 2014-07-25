@@ -218,14 +218,54 @@ abstract class dwho_date
 		return($rs);
 	}
 
+	public static function get_week_days($date)
+	{
+		if (preg_match(self::$_regex['unixtime'],$date) === 1)
+			$date = date('Y-m-d', $date);
+
+		$date_obj = new DateTime($date);
+		$day = $date_obj->format("d");
+		$week = $date_obj->format("W");
+		$month = $date_obj->format("m");
+		$year = $date_obj->format("Y");
+
+		// Get the weekday of the given date
+		$wkday = date('l',mktime('0','0','0', $month, $day, $year));
+
+		switch($wkday) {
+			case 'Monday': $numDaysToMon = 0; break;
+			case 'Tuesday': $numDaysToMon = 1; break;
+			case 'Wednesday': $numDaysToMon = 2; break;
+			case 'Thursday': $numDaysToMon = 3; break;
+			case 'Friday': $numDaysToMon = 4; break;
+			case 'Saturday': $numDaysToMon = 5; break;
+			case 'Sunday': $numDaysToMon = 6; break;
+		}
+
+		// Timestamp of the monday for that week
+		$monday = mktime('0','0','0', $month, $day-$numDaysToMon, $year);
+
+		$seconds_in_a_day = 86400;
+
+		// Get date for 7 days from Monday (inclusive)
+		$dates = array();
+		for($i=0; $i<7; $i++)
+			$dates[$i] = strtotime(date('Y-m-d',$monday+($seconds_in_a_day*$i)));
+
+		return($dates);
+	}
+
 	public static function get_week_range($date)
 	{
-		$date = self::all_to_unixtime($date);
-		$week = date('W',$date);
-		$year = date('Y',$date);
+		if (preg_match(self::$_regex['unixtime'],$date) === 1)
+			$date = date('Y-m-d', $date);
+
+		$dates = self::get_week_days($date);
+
 		$rs = array();
-		$rs['beg'] = strtotime("{$year}-W{$week}-1");
-		$rs['end'] = strtotime("{$year}-W{$week}-7");
+		$rs['beg'] = $dates[0];
+		$rs['end'] = $dates[6];
+
 		return($rs);
 	}
 
@@ -315,6 +355,7 @@ abstract class dwho_date
 		$dend = self::all_to_unixtime($dend);
 
 		$day_process = strtotime('-1 day',$dbeg);
+
 		$listday = array();
 		while ($day_process < ((int) $dend))
 		{
@@ -375,18 +416,38 @@ abstract class dwho_date
 		return($rs);
 	}
 
-	public static function get_day_from_week_by_name_day($year,$week,$nameday)
+	public static function get_day_from_week_by_name_day($date,$nameday)
 	{
-		$from = strtotime("{$year}-W{$week}-1");
-		$to = strtotime("{$year}-W{$week}-7");
+		$date_infos = dwho_date::week_start_end_by_date($date);
 
 		$rs = array();
-		for ($i=$from;$i<=$to;$i=strtotime('+1day',$i))
+		for ($i=$date_infos['first_day_of_week_timestamp'];$i<=$date_infos['last_day_of_week_timestamp'];$i=strtotime('+1day',$i))
 		{
 			if (date('l',$i) === ucfirst($nameday))
 				return(date('Y-m-d',$i));
 		}
 		return(null);
+	}
+
+	public static function week_start_end_by_date($date, $format = 'Ymd')
+	{
+		//Is $date timestamp or date?
+		if (is_numeric($date) AND strlen($date) == 10)
+			$time = $date;
+		else
+			$time = strtotime($date);
+
+		$week['week'] = date('W', $time);
+		$week['year'] = date('o', $time);
+		$week['year_week']		   = date('oW', $time);
+		$first_day_of_week_timestamp = strtotime($week['year']."W".str_pad($week['week'],2,"0",STR_PAD_LEFT));
+		$week['first_day_of_week']   = date($format, $first_day_of_week_timestamp);
+		$week['first_day_of_week_timestamp'] = $first_day_of_week_timestamp;
+		$last_day_of_week_timestamp = strtotime($week['first_day_of_week']. " +6 days");
+		$week['last_day_of_week']   = date($format, $last_day_of_week_timestamp);
+		$week['last_day_of_week_timestamp']  = $last_day_of_week_timestamp;
+
+		return($week);
 	}
 }
 

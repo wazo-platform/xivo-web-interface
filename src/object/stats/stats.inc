@@ -403,9 +403,9 @@ class xivo_stats_lib
 
 		$infocal = $this->_statsconfsess['_date_process'];
 
-		$axtetype = $this->get_axetype();
+		$axetype = $this->get_axetype();
 
-		$infocal = dwho_date::set_infocal($this->get_axetype(),$arr);
+		$infocal = dwho_date::set_infocal($axetype,$arr);
 
 		$this->_date_process = $infocal;
 		$this->_statsconfsess['_date_process'] = $infocal;
