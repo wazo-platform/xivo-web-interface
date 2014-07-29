@@ -97,9 +97,7 @@ class xivo_service_asterisk_func_key_sql extends xivo_service_asterisk_abstract_
 		$r = $this->_dso->select_singlecolumn();
 
 		if(isset($r[0]) === false)
-		{
 			return(false);
-		}
 
 		return((int) array_pop($r));
 	}

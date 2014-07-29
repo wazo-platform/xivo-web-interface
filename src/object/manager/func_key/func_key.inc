@@ -156,17 +156,15 @@ class func_key_manager extends manager_abstract
 		{
 			case 'service':
 				if(array_key_exists('dst_val',$data) !== true
-					|| $data['dst_val'] === null
-					|| ($dst_id = $this->_extensions->get_extenfeature_id_by_typeval($data['dst_val'])) === false){
-				   return(false);
-				}
+				|| $data['dst_val'] === null
+				|| ($dst_id = $this->_extensions->get_extenfeature_id_by_typeval($data['dst_val'])) === false)
+					return(false);
+
 				$func_key_id = $this->_func_key->get_func_key_id($dst_type, $dst_id, 'extension_id');
 				break;
 			default:
-				if(array_key_exists('dst_id',$data) !== true
-					|| $data['dst_id'] === null){
-				   return(false);
-				}
+				if(array_key_exists('dst_id',$data) !== true || $data['dst_id'] === null)
+					return(false);
 				$dst_id = $data['dst_id'];
 				$func_key_id = $this->_func_key->get_func_key_id_with_dest_type_id($dst_type, $dst_id);
 				break;
@@ -194,7 +192,7 @@ class func_key_manager extends manager_abstract
 			}
 		}
 
-		if (!is_int($func_key_id) || $func_key_id <= 0)
+		if ((int) $func_key_id <= 0)
 		{
 			dwho_report::push('error', 'Error: func_key_id "'.$func_key_id.'" is not valid');
 			return(false);

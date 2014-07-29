@@ -57,7 +57,7 @@ class xivo_service_asterisk_func_key extends xivo_service_asterisk_abstract
 		if (($ipbx = &$this->_sre) === false
 		|| ($modextensions = &$ipbx->get_module('extensions')) === false
 		|| ($modphonefunckey = &$ipbx->get_module('phonefunckey')) === false
-		|| ($rs = $this->get_func_key_by_user_id($user_id)) === false
+		|| ($rs = $this->_dso->get_func_key_by_user_id($user_id)) === false
 		|| ($nb = count($rs)) === 0)
 			return(false);
 
