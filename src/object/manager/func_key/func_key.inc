@@ -140,7 +140,7 @@ class func_key_manager extends manager_abstract
 				return(false);
 		}
 
-		if (!is_int($fk_dst_type_id) || $fk_dst_type_id <= 0)
+		if ((int) $fk_dst_type_id <= 0)
 		{
 			dwho_report::push('error', 'Error: fk_dst_type_id "'.$fk_dst_type_id.'" is not valid');
 			return(false);
@@ -159,7 +159,6 @@ class func_key_manager extends manager_abstract
 				|| $data['dst_val'] === null
 				|| ($dst_id = $this->_extensions->get_extenfeature_id_by_typeval($data['dst_val'])) === false)
 					return(false);
-
 				$func_key_id = $this->_func_key->get_func_key_id($dst_type, $dst_id, 'extension_id');
 				break;
 			default:
