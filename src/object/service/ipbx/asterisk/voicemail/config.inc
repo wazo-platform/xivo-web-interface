@@ -127,7 +127,7 @@ $array['element']['hidefromdir']['default'] = 'no';
 $array['element']['hidefromdir']['set'] = true;
 
 $array['element']['maxmsg'] = array();
-$array['element']['maxmsg']['value'] = array(1,10,15,20,25,50,75,100,
+$array['element']['maxmsg']['value'] = array(0,1,10,15,20,25,50,75,100,
 					     125,150,175,200,300,400,500,600,700,800,900,
 					     1000,2000,3000,4000,5000,6000,7000,8000,9000,9999);
 $array['element']['maxmsg']['default'] = '';
@@ -280,9 +280,7 @@ $array['filter']['forcename'] = array('set' => false,'chk' => 2,'bool' => true);
 $array['filter']['forcegreetings'] = array('set' => false,'chk' => 2,'bool' => true);
 $array['filter']['hidefromdir'] = array('bool' => true);
 $array['filter']['maxmsg'] = array('set' => false,'chk' => 2,
-				   'key' => array(1,10,15,20,25,50,75,100,
-						  125,150,175,200,300,400,500,600,700,800,900,
-						  1000,2000,3000,4000,5000,6000,7000,8000,9000,9999));
+				   'key' => $array['element']['maxmsg']['value']);
 $array['filter']['commented'] = array('bool' => true);
 $array['filter']['emailsubject'] = array('set' => false,'chk' => 2,'maxlen' => 4096);
 $array['filter']['emailbody'] = array('set' => false,'chk' => 2);

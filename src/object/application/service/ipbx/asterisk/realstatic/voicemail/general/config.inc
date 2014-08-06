@@ -22,7 +22,7 @@ $array = array();
 $array['element'] = array();
 
 $array['element']['maxmsg'] = array();
-$array['element']['maxmsg']['value'] = array(1,10,15,20,25,50,75,100,
+$array['element']['maxmsg']['value'] = array(0,1,10,15,20,25,50,75,100,
 					     125,150,175,200,300,400,500,600,700,800,900,
 					     1000,2000,3000,4000,5000,6000,7000,8000,9000,9999);
 $array['element']['maxmsg']['default'] = 100;
@@ -375,9 +375,7 @@ $array['element']['backupdeleted']['null']    = true;
 // FILTERS
 
 $array['filter'] = array();
-$array['filter']['maxmsg'] = array('key' => array(1,10,15,20,25,50,75,100,
-						  125,150,175,200,300,400,500,600,700,800,900,
-						  1000,2000,3000,4000,5000,6000,7000,8000,9000,9999));
+$array['filter']['maxmsg'] = array('key' => $array['element']['maxmsg']['value']);
 $array['filter']['silencethreshold'] = array('key' => array(0,2,4,8,16,32,64,128,256,512));
 $array['filter']['minsecs'] = array('key' => array(0,1,2,3,4,5,6,7,8,9,10,20,30,40,50,60,70,80,90,
 						      100,110,120,130,140,150,160,170,180,190,
