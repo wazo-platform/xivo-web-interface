@@ -196,8 +196,8 @@ $array['element']['autofill']['default'] = 1;
 $array['element']['autofill']['set'] = true;
 
 $array['element']['autopause'] = array();
-$array['element']['autopause']['value'] = array('yes','no','all');
-$array['element']['autopause']['default'] = 'yes';
+$array['element']['autopause']['value'] = array('no','yes','all');
+$array['element']['autopause']['default'] = 'no';
 $array['element']['autopause']['set'] = true;
 
 $array['element']['setinterfacevar'] = array();
