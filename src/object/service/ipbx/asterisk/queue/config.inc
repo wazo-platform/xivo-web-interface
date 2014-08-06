@@ -196,8 +196,8 @@ $array['element']['autofill']['default'] = 1;
 $array['element']['autofill']['set'] = true;
 
 $array['element']['autopause'] = array();
-$array['element']['autopause']['value'] = array(0,1);
-$array['element']['autopause']['default'] = 0;
+$array['element']['autopause']['value'] = array('no','yes','all');
+$array['element']['autopause']['default'] = 'no';
 $array['element']['autopause']['set'] = true;
 
 $array['element']['setinterfacevar'] = array();
@@ -297,7 +297,7 @@ $array['filter']['periodic-announce'] = array('set'	=> false,
 $array['filter']['category'] = array('key' => array('queue','group'));
 $array['filter']['timeoutpriority'] = array('key' => array('app','conf'));
 $array['filter']['autofill'] = array('bool' => true);
-$array['filter']['autopause'] = array('bool' => true);
+$array['filter']['autopause'] = array('key' => $array['element']['autopause']['value']);
 $array['filter']['setinterfacevar'] = array('bool' => true);
 $array['filter']['setqueueentryvar'] = array('bool' => true);
 $array['filter']['setqueuevar'] = array('bool' => true);
