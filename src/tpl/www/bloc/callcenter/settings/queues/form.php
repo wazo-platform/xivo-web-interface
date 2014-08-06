@@ -788,6 +788,8 @@ endif;
             'name'    => 'queue[autopause]',
             'labelid' => 'queue-autopause',
             'help' => $this->bbf('hlp_fm_queue-autopause'),
+		    'bbf'	=> 'fm_queue_autopause-opt',
+		    'bbfopt'	=> array('argmode' => 'paramvalue'),
             'key'   => false,
             'help'    => $this->bbf('hlp_fm_queue_autopause'),
             'selected'  => $this->get_var('info','queue','autopause'),

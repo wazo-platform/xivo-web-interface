@@ -385,7 +385,16 @@ Priorité du temps de sonnerie:
 Activer le nouveau système de distribution des appels: 
 
 ; fm_queue_autopause
-Mettre en pause un membre s'il ne peut répondre à un appel: 
+Mettre en pause le membre s'il n'a pas répondu au dernier appel: 
+
+; fm_queue_autopause-opt(yes)
+Oui
+
+; fm_queue_autopause-opt(no)
+Non
+
+; fm_queue_autopause-opt(all)
+Sur toutes les files
 
 ; fm_queue_setinterfacevar
 Définir les variables de plan d'appel MEMBER*: 
