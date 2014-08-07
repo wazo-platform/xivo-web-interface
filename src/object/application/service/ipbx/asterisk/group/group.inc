@@ -344,6 +344,7 @@ class xivo_application_service_asterisk_group extends xivo_application_asterisk_
 		$arr['context'] = $this->get_result_var('groupfeatures', 'context');
 		$arr['category'] = 'group';
 		$arr['timeoutpriority'] = 'app';
+		$arr['autopause'] = 'no';
 		$arr['min-announce-frequency'] = 60;
 		$arr['announce-position'] = 'no';
 		$arr['announce-position-limit'] = 5;
