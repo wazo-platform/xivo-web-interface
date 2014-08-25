@@ -32,6 +32,19 @@ class xivo_service_asterisk_func_key_sql extends xivo_service_asterisk_abstract_
 					null,
 					array('*'));
 
+		return($this->_get_all_func_keys());
+	}
+
+	public function get_func_key_by_template_id($template_id)
+	{
+		$this->_dso->new_select('func_key_mapping', null);
+		$this->_dso->where(array('template_id' => $template_id), 'func_key_mapping');
+
+		return($this->_get_all_func_keys());
+	}
+
+	private function _get_all_func_keys()
+	{
 		$this->_dso->innerjoin('func_key',
 					'func_key.id = func_key_mapping.func_key_id',
 					null,
