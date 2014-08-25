@@ -64,6 +64,9 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 										'callrecord',
 										'incallfilter',
 										'enablednd');
+	protected $_forward_services	= array('fwdrna',
+											'fwdbusy',
+											'fwdunc');
 
 	public function __construct(&$service,&$dso,$param=null,$components=true)
 	{
@@ -1448,41 +1451,18 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		$id = $this->_return['phonefunckey'] = array();
 		$id['iduserfeatures'] = $user_id;
 
+
 		$nb = count($rs);
 		for($i = 0;$i < $nb;$i++)
 		{
 			$ref = &$rs[$i];
 			$ref['iduserfeatures'] = $user_id;
 
-			if($ref['typeextenumbersright'] === 'user' && $ref['typevalextenumbers'] !== 'bsfilter')
-			{
-				if ($this->_add_func_key_v2($ref, 'user') === false)
+			$destination = $this->_determine_destination($ref);
+			if($destination !== false) {
+				if($this->_add_func_key_v2($destination, $ref) === false)
 					return(false);
-			}
-			elseif($ref['typeextenumbersright'] === 'group')
-			{
-				if ($this->_add_func_key_v2($ref, 'group') === false)
-					return(false);
-			}
-			elseif($ref['typeextenumbersright'] === 'queue')
-			{
-				if ($this->_add_func_key_v2($ref, 'queue') === false)
-					return(false);
-			}
-			elseif($ref['typeextenumbersright'] === 'meetme')
-			{
-				if ($this->_add_func_key_v2($ref, 'conference') === false)
-					return(false);
-			}
-			elseif($ref['typeextenumbers'] === 'extenfeatures'
-					&& in_array($ref['typevalextenumbers'], $this->_valid_services)
-			)
-			{
-				if ($this->_add_func_key_v2($ref, 'service') === false)
-					return(false);
-			}
-			else
-			{
+			} else {
 				if($this->_phonefunckey->add($ref) === false)
 					return(false);
 			}
@@ -1497,13 +1477,73 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		return(true);
 	}
 
-	private function _add_func_key_v2($data, $dst_type)
+	private function _determine_destination($ref)
 	{
+		if($ref['typeextenumbersright'] === 'user' && $ref['typevalextenumbers'] !== 'bsfilter')
+		{
+			return('user');
+		}
+		elseif($ref['typeextenumbersright'] === 'group')
+		{
+			return('group');
+		}
+		elseif($ref['typeextenumbersright'] === 'queue')
+		{
+			return('queue');
+		}
+		elseif($ref['typeextenumbersright'] === 'meetme')
+		{
+			return('conference');
+		}
+		elseif($ref['typeextenumbers'] === 'extenfeatures'
+			  && in_array($ref['typevalextenumbers'], $this->_forward_services)
+		)
+		{
+			return('forward');
+		}
+		elseif($ref['typeextenumbers'] === 'extenfeatures'
+				&& in_array($ref['typevalextenumbers'], $this->_valid_services)
+		)
+		{
+			return('service');
+		}
+		return(false);
+	}
+
+	private function _add_func_key_v2($destination, $data)
+	{
+		switch($destination) {
+		case 'user':
+		case 'group':
+		case 'queue':
+		case 'conference':
+			$value = $data['typevalextenumbersright'];
+			$func_key_id = $this->_func_key_manager->get_fk_id_with_dst($destination, $value);
+			break;
+		case 'service':
+			$service_type = $data['typevalextenumbers'];
+			$extension_id = $this->_func_key_manager->get_dst_id_for_extension($service_type);
+			$func_key_id = $this->_func_key_manager->get_fk_id_with_dst($destination, $extension_id);
+			break;
+		case 'forward':
+			$forward_type = $data['typevalextenumbers'];
+			$extension_id = $this->_func_key_manager->get_dst_id_for_extension($forward_type);
+			$number = $data['exten'];
+			$func_key_id = $this->_func_key_manager->add_dst_for_forward($extension_id, $number);
+			break;
+		default:
+			dwho_report::push('error', "func key of type '".$destination."' is unknown");
+			return(false);
+		}
+
+		if($func_key_id === false) {
+			dwho_report::push('error', 'could not find func key for destination '.$destination);
+			return(false);
+		}
+
 		$fk = array();
+		$fk['func_key_id'] = $func_key_id;
 		$fk['type'] = 'speeddial';
-		$fk['dst_type'] = $dst_type;
-		$fk['dst_id'] = (int) $data['typevalextenumbersright'];
-		$fk['dst_val'] =  $data['typevalextenumbers'];
 		$fk['position'] = (int) $data['fknum'];
 		$fk['blf'] = (bool) $data['supervision'];
 		$fk['label'] = (string) $data['label'];
@@ -1942,7 +1982,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			return($this->add_phonefunckey($this->_info['userfeatures']['id']));
 
 		$this->_return['phonefunckey'] = $this->delete_phonefunckey();
-		$this->_func_key_manager->delete_fk_mapping_with_template_id($this->_info['userfeatures']['func_key_private_template_id']);
+		$this->_func_key_manager->delete_fk_in_template($this->_info['userfeatures']['func_key_private_template_id']);
 
 		return($this->add_phonefunckey($this->_info['userfeatures']['id']));
 	}

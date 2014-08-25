@@ -101,6 +101,12 @@ class xivo_service_asterisk_func_key extends xivo_service_asterisk_abstract
 						}
 					}
 					break;
+				case 'forward':
+					if(($extension = $modextensions->get($ref['extension_id'])) !== false)
+					{
+						$exten = $modphonefunckey->build_extenfeatures($extension['exten'], $ref['number']);
+					}
+					break;
 			}
 
 			$conf[$idx]['value'] = $exten;
@@ -112,6 +118,11 @@ class xivo_service_asterisk_func_key extends xivo_service_asterisk_abstract
 	public function get_func_key_by_user_id($user_id)
 	{
 		return($this->_dso->get_func_key_by_user_id($user_id));
+	}
+
+	public function get_func_key_by_template_id($template_id)
+	{
+		return($this->_dso->get_func_key_by_template_id($template_id));
 	}
 
 	public function get_func_key_id_with_dest_type_id($dst_type, $dst_id)

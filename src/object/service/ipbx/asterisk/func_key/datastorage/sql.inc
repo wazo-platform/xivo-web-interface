@@ -99,6 +99,7 @@ class xivo_service_asterisk_func_key_sql extends xivo_service_asterisk_abstract_
 			$r = false;
 
 		return($r);
+
 	}
 
 	public function get_func_key_id_with_dest_type_id($dst_type, $dst_id)
