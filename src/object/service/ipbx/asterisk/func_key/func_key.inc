@@ -102,9 +102,9 @@ class xivo_service_asterisk_func_key extends xivo_service_asterisk_abstract
 					}
 					break;
 				case 'forward':
-					if(($extension = $modextensions->get($ref['extension_id'])) !== false)
+					if(($extension = $modextensions->get($ref['forward_id'])) !== false)
 					{
-						$exten = $modphonefunckey->build_extenfeatures($extension['exten'], $ref['number']);
+						$exten = $modphonefunckey->build_progfunckey($user_id, $extension['exten'], $ref['number']);
 					}
 					break;
 			}
