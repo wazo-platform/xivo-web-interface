@@ -40,6 +40,7 @@ class xivo_application_service_asterisk_user_sql extends xivo_application_abstra
 				'func_key_dest_queue'	=> '',
 				'func_key_dest_conference'	=> '',
 				'func_key_dest_service'	=> '',
+				'func_key_dest_forward'	=> '',
 				'func_key_destination_type'	=> '',
 				'func_key_mapping'	=> '',
 				'func_key_template'	=> '',
@@ -214,81 +215,61 @@ class xivo_application_service_asterisk_user_sql extends xivo_application_abstra
 	}
 
 	function get_phonefunckey_v2($template_id)
-	{
-		$this->_dso->new_select(
-			 $this->_table['func_key_mapping'],
-			array(
-				'phonefunckey.fknum'		=> 'position',
-				'phonefunckey.supervision'	=> 'blf',
-				'phonefunckey.label'		=> 'label'
-			)
-		);
-		$this->_dso->where(array('template_id' => $template_id), $this->_table['func_key_mapping']);
-
-		$this->_dso->innerjoin($this->_table['func_key'],
-					$this->_table['func_key'].'.id = '.$this->_table['func_key_mapping'].'.func_key_id',
-					null,
-					array('*'));
-
-		$this->_dso->innerjoin($this->_table['func_key_destination_type'],
-					$this->_table['func_key_destination_type'].'.id = '.$this->_table['func_key'].'.destination_type_id',
-					null,
-					array('phonefunckey.typeextenumbersright' => 'name'));
-
-		# USER FUNC_KEY
-		$this->_dso->leftjoin($this->_table['func_key_dest_user'],
-					$this->_table['func_key_dest_user'].'.func_key_id = '.$this->_table['func_key'].'.id',
-					null,
-					array('phonefunckey.typevalextenumbersright' => 'user_id'));
-		$this->_dso->leftjoin($this->_table['userfeatures'],
-					$this->_table['func_key_dest_user'].'.user_id'.' = '.$this->_table['userfeatures'].'.id',
-					null,
-					array('*'));
-
-		# GROUP FUNC_KEY
-		$this->_dso->leftjoin($this->_table['func_key_dest_group'],
-					$this->_table['func_key_dest_group'].'.func_key_id = '.$this->_table['func_key'].'.id',
-					null,
-					array('phonefunckey.typevalextenumbersright' => 'group_id'));
-		$this->_dso->leftjoin($this->_table['groupfeatures'],
-					$this->_table['func_key_dest_group'].'.group_id'.' = '.$this->_table['groupfeatures'].'.id',
-					null,
-					array('*'));
-
-		# QUEUE FUNC_KEY
-		$this->_dso->leftjoin($this->_table['func_key_dest_queue'],
-					$this->_table['func_key_dest_queue'].'.func_key_id = '.$this->_table['func_key'].'.id',
-					null,
-					array('phonefunckey.typevalextenumbersright' => 'queue_id'));
-		$this->_dso->leftjoin($this->_table['queuefeatures'],
-					$this->_table['func_key_dest_queue'].'.queue_id'.' = '.$this->_table['queuefeatures'].'.id',
-					null,
-					array('*'));
-
-		# CONFERENCE FUNC_KEY
-		$this->_dso->leftjoin($this->_table['func_key_dest_conference'],
-					$this->_table['func_key_dest_conference'].'.func_key_id = '.$this->_table['func_key'].'.id',
-					null,
-					array('phonefunckey.typevalextenumbersright' => 'conference_id'));
-		$this->_dso->leftjoin($this->_table['meetmefeatures'],
-					$this->_table['func_key_dest_conference'].'.conference_id'.' = '.$this->_table['meetmefeatures'].'.id',
-					null,
-					array('*'));
-
-		# SERVICE FUNC_KEY
-		$this->_dso->leftjoin($this->_table['func_key_dest_service'],
-					$this->_table['func_key_dest_service'].'.func_key_id = '.$this->_table['func_key'].'.id',
-					null,
-					array('*'));
-		$this->_dso->leftjoin($this->_table['extensions'],
-					$this->_table['func_key_dest_service'].'.extension_id'.' = '.$this->_table['extensions'].'.id',
-					null,
-					array('phonefunckey.typevalextenumbers' => 'typeval',
-                          'phonefunckey.typeextenumbers' => 'type'));
-
-		$this->_dso->new_order(array('position' => SORT_ASC), null, $this->_table['func_key_mapping']);
-
-		$r = $this->_dso->select_all(null, true, true);
+    {
+		$query = <<<EOQ
+		SELECT
+			"func_key_mapping"."position" AS "phonefunckey.fknum",
+			"func_key_mapping"."blf" AS "phonefunckey.supervision",
+			"func_key_mapping"."label" AS "phonefunckey.label",
+			"userfeatures"."id" AS "userfeatures.id",
+			"userfeatures"."firstname" AS "userfeatures.firstname",
+			"userfeatures"."lastname" AS "userfeatures.lastname",
+			"groupfeatures"."id" AS "groupfeatures.id",
+			"groupfeatures"."name" AS "groupfeatures.name",
+			"queuefeatures"."id" AS "queuefeatures.id",
+			"queuefeatures"."name" AS "queuefeatures.name",
+			"meetmefeatures"."id" AS "meetmefeatures.id",
+			"meetmefeatures"."name" AS "meetmefeatures.name",
+			CASE "func_key_destination_type"."name"
+				WHEN 'user' THEN 'user'
+				WHEN 'group' THEN 'group'
+				WHEN 'queue' THEN 'queue'
+				WHEN 'conference' THEN 'meetme'
+				END AS "phonefunckey.typeextenumbersright",
+			COALESCE(
+				"func_key_dest_user"."user_id",
+				"func_key_dest_group"."group_id",
+				"func_key_dest_queue"."queue_id",
+				"func_key_dest_conference"."conference_id"
+			) AS "phonefunckey.typevalextenumbersright",
+			COALESCE(
+				"service_extensions"."type",
+				"fwd_extensions"."type"
+			) AS "phonefunckey.typeextenumbers",
+			COALESCE(
+				"service_extensions"."typeval",
+				"fwd_extensions"."typeval"
+			) AS "phonefunckey.typevalextenumbers",
+			"func_key_dest_forward"."number" AS "phonefunckey.exten"
+		FROM "func_key_mapping"
+		INNER JOIN "func_key" ON func_key.id = func_key_mapping.func_key_id
+			INNER JOIN "func_key_destination_type" ON func_key_destination_type.id = func_key.destination_type_id
+			LEFT JOIN "func_key_dest_user" ON func_key_dest_user.func_key_id = func_key.id
+				LEFT JOIN "userfeatures" ON func_key_dest_user.user_id = userfeatures.id
+			LEFT JOIN "func_key_dest_group" ON func_key_dest_group.func_key_id = func_key.id
+				LEFT JOIN "groupfeatures" ON func_key_dest_group.group_id = groupfeatures.id
+			LEFT JOIN "func_key_dest_queue" ON func_key_dest_queue.func_key_id = func_key.id
+				LEFT JOIN "queuefeatures" ON func_key_dest_queue.queue_id = queuefeatures.id
+			LEFT JOIN "func_key_dest_conference" ON func_key_dest_conference.func_key_id = func_key.id
+				LEFT JOIN "meetmefeatures" ON func_key_dest_conference.conference_id = meetmefeatures.id
+			LEFT JOIN "func_key_dest_service" ON func_key_dest_service.func_key_id = func_key.id
+				LEFT JOIN "extensions" AS "service_extensions" ON func_key_dest_service.extension_id = service_extensions.id
+				LEFT JOIN "func_key_dest_forward" ON func_key_dest_forward.func_key_id = func_key.id
+				LEFT JOIN "extensions" AS "fwd_extensions" ON func_key_dest_forward.extension_id = fwd_extensions.id
+		WHERE "func_key_mapping"."template_id" = ${template_id}
+		ORDER BY "func_key_mapping"."position" ASC
+EOQ;
+		$r = $this->_dso->select_all($query);
 
 		if(isset($r[0]) === false)
 			$r = false;
