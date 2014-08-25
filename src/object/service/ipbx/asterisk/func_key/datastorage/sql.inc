@@ -72,6 +72,12 @@ class xivo_service_asterisk_func_key_sql extends xivo_service_asterisk_abstract_
 					null,
 					array('conference_id'));
 
+		# FORWARD FUNC_KEY
+		$this->_dso->leftjoin('func_key_dest_forward',
+					'func_key_dest_forward.func_key_id = func_key.id',
+					null,
+					array('extension_id', 'number'));
+
 		$this->_dso->new_order(array('position' => SORT_ASC), null, 'func_key_mapping');
 
 		$r = $this->_dso->select_all();
