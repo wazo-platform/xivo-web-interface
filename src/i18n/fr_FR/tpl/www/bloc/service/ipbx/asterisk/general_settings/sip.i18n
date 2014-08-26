@@ -1043,6 +1043,9 @@ Via UPDATE
 ; fm_directmedia-opt(update,nonat)
 Via UPDATE et pas lorsque NAT
 
+; fm_directmedia-opt(outgoing)
+Sortant
+
 ;;; internals
 ; smenu_internals
 Interne

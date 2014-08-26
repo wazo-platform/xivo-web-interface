@@ -1247,6 +1247,9 @@ Using UPDATE
 ; fm_directmedia-opt(update,nonat)
 Using UPDATE not behind NAT
 
+; fm_directmedia-opt(outgoing)
+Outgoing
+
 ;;; internals
 ; smenu_internals
 Internals

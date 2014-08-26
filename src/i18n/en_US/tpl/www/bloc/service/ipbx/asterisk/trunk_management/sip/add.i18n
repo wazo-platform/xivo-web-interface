@@ -362,6 +362,9 @@ Using UPDATE
 ; fm_protocol-directmedia-opt(update,nonat)
 Using UPDATE not behind NAT
 
+; fm_protocol-directmedia-opt(outgoing)
+Outgoing
+
 ; fm_protocol-callcounter
 Enable calls counter:
 

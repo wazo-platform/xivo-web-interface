@@ -308,6 +308,9 @@ Via UPDATE
 ; fm_protocol-directmedia-opt(update,nonat)
 Via UPDATE et pas lorsque NAT
 
+; fm_protocol-directmedia-opt(outgoing)
+Sortant
+
 ; fm_protocol-callcounter
 Compter les appels :
 

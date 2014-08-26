@@ -622,7 +622,8 @@ $array['element']['directmedia']['value'] = array(
 		'yes'			=> 'yes',
 		'nonat'			=> 'nonat',
 		'update'		=> 'update',
-		'update,nonat'	=> 'update,nonat');
+		'update,nonat'	=> 'update,nonat',
+		'outgoing'		=> 'outgoing');
 $array['element']['directmedia']['default'] = 'no';
 $array['element']['directmedia']['null'] = true;
 
@@ -839,7 +840,7 @@ $array['filter']['mohsuggest'] = array('set' => false,'chk' => 2,'maxlen' => 20)
 $array['filter']['vmexten'] = array('regexp' => '/^[0-9\*]+$/','maxlen' => 40);
 $array['filter']['trustrpid'] = array('bool' => true);
 $array['filter']['sendrpid'] = array('key' => array('yes','no','rpid','pai'));
-$array['filter']['directmedia'] = array('key' => array('no','yes','update','nonat','update,nonat'));
+$array['filter']['directmedia'] = array('key' => array('no','yes','update','nonat','update,nonat','outgoing'));
 $array['filter']['insecure'] = array('key' => array('no','port','invite','port,invite'));
 $array['filter']['rtcachefriends'] = array('bool' => true);
 $array['filter']['rtupdate'] = array('bool' => true);
