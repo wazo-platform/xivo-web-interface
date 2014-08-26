@@ -773,67 +773,67 @@ Propriétés du protocole SIP sauvegardées avec succès
 ;;; general
 
 ; fm_udpbindaddr
-Adresse UDP en écoute : 
+Adresse UDP en écoute :
 
 ; hlp_fm_udpbindaddr
 Config asterisk: udpbindaddr
 
 ; fm_tcpenable
-Accepter les connexion TCP : 
+Accepter les connexion TCP :
 
 ; hlp_fm_tcpenable
 Config asterisk: tcpenable
 
 ; fm_tcpbindaddr
-Addresse TCP en écoute : 
+Addresse TCP en écoute :
 
 ; hlp_fm_tcpbindaddr
 Config asterisk: tcpbindaddr
 
 ; fm_match_auth_username
-Match les utilisateurs via le champ 'username' : 
+Match les utilisateurs via le champ 'username' :
 
 ; hlp_fm_match_auth_username
 Config asterisk: match_auth_username
 
 ; fm_regextenonqualify
-Force la désactivation de l'extension regexten : 
+Force la désactivation de l'extension regexten :
 
 ; hlp_fm_regextenonqualify
 Config asterisk: regextenonqualify
 
 ; fm_authfailureevents
-Génère des évènement "peerstatus" en cas d'échec d'authentification : 
+Génère des évènement "peerstatus" en cas d'échec d'authentification :
 
 ; hlp_fm_authfailureevents
 Config asterisk: authfailureevents
 
 ; fm_tos-text
-TOS text : 
+TOS text :
 
 ; hlp_fm_tos-text
 Asterisk config: tos text
 
 ; fm_cos-sip
-COS sip : 
+COS sip :
 
 ; hlp_fm_cos-sip
 Asterisk config: cos-sip
 
 ; fm_cos-audio
-COS audio : 
+COS audio :
 
 ; hlp_fm_cos-audio
 Asterisk config: cos-audio
 
 ; fm_cos-video
-COS video : 
+COS video :
 
 ; hlp_fm_cos-video
 Asterisk config: cos-video
 
 ; fm_cos-text
-COS text : 
+COS text :
 
 ; hlp_fm_cos-text
 Asterisk config: cos-text
@@ -842,7 +842,7 @@ Asterisk config: cos-text
 ;;; network
 
 ; fm_stunaddr
-Addresse du serveur STUN : 
+Addresse du serveur STUN :
 
 ; hlp_fm_stunaddr
 Config asterisk: stunaddr
@@ -860,7 +860,7 @@ Adresse IP/sous-réseau refusé :
 Config asterisk: contactdeny
 
 ; fm_contactpermit
-Adresse IP/sous-réseau autorisé : 
+Adresse IP/sous-réseau autorisé :
 
 ; hlp_fm_contactpermit
 Config asterisk: contactpermit
@@ -870,13 +870,13 @@ Config asterisk: contactpermit
 Sécurité
 
 ; fm_tlsenable
-Accepter les connexions TLS : 
+Accepter les connexions TLS :
 
 ; hlp_fm_tlsenable
 Config asterisk: tlsenable
 
 ; fm_tlsbindaddr
-Adresse en écoute : 
+Adresse en écoute :
 
 ; hlp_fm_tlsbindaddr
 Config asterisk: tlsbindaddr
@@ -888,7 +888,7 @@ Ne pas vérifier le certificat serveur :
 Config asterisk: tlsdontverifyserver
 
 ; fm_tlscipher
-Algorithmes cryptographiques pris en charge : 
+Algorithmes cryptographiques pris en charge :
 
 ; hlp_fm_tlscipher
 Config asterisk: tlscipher
@@ -896,13 +896,13 @@ Config asterisk: tlscipher
 ;;; signaling
 
 ; fm_timert1
-Délai T1 : 
+Délai T1 :
 
 ; hlp_fm_timert1
 Config asterisk: timert1
 
 ; fm_timerb
-Délai de configuration : 
+Délai de configuration :
 
 ; hlp_fm_timerb
 Config asterisk: timerb
@@ -914,7 +914,7 @@ Délai d'expiration des souscriptions MWI :
 Config asterisk: mwiexpiry
 
 ; fm_notifycid
-Envoyer le caller-id dans les notifications dialog-info+xml : 
+Envoyer le caller-id dans les notifications dialog-info+xml :
 
 ; hlp_fm_notifycid
 Config asterisk: notifycid
@@ -965,7 +965,7 @@ Config asterisk: session-timers
 Toujours
 
 ; session-timers-opt(accept)
-Sur demande uniquement 
+Sur demande uniquement
 
 ; session-timers-opt(refuse)
 Non
@@ -977,13 +977,13 @@ Interval maximal de rafraîchissement de la session :
 Config asterisk: session-expires
 
 ; fm_session-minse
-Interval minimal de rafraîchissement de la session : 
+Interval minimal de rafraîchissement de la session :
 
 ; hlp_fm_session-minse
 Config asterisk: session-minse
 
 ; fm_session-refresher
-Session mise à jour par : 
+Session mise à jour par :
 
 ; hlp_fm_session-refresher
 Config asterisk: session-refresher
@@ -997,7 +997,7 @@ Client
 ;;; jitter buffer
 
 ; fm_jbtargetextra
-Valeur d'alignement du jitter : 
+Valeur d'alignement du jitter :
 
 ; hlp_fm_jbtargetextra
 Asterisk config: jbtargetextra
@@ -1005,19 +1005,19 @@ Asterisk config: jbtargetextra
 ;;; default
 
 ; fm_qualifyfreq
-Fréquence de supervision : 
+Fréquence de supervision :
 
 ; hlp_fm_qualifyfreq
 Config Asterisk: qualifyfreq
 
 ; fm_qualifygap
-Durée entre chaque test : 
+Durée entre chaque test :
 
 ; hlp_fm_qualifygap
 Config Asterisk: qualifygap
 
 ; fm_qualifypeers
-Nombre de postes par group (testés simultanéments) : 
+Nombre de postes par group (testés simultanéments) :
 
 ; hlp_fm_qualifypeers
 Config Asterisk: qualifypeers
@@ -1048,25 +1048,25 @@ Via UPDATE et pas lorsque NAT
 Interne
 
 ; fm_hash_users
-Taille de la table des utilisateurs : 
+Taille de la table des utilisateurs :
 
 ; hlp_fm_hash_users
 Config Asterisk: hash_users
 
 ; fm_hash_peers
-Taille de la table des postes : 
+Taille de la table des postes :
 
 ; hlp_fm_hash_peers
 Config Asterisk: hash_peers
 
 ; fm_hash_dialogs
-Taille de la table dialogs : 
+Taille de la table dialogs :
 
 ; hlp_fm_hash_dialogs
 Config Asterisk: hash_dialogs
 
 ; fm_tlscertfile
-Certificat serveur : 
+Certificat serveur :
 
 ; hlp_fm_tlscertfile
 Config Asterisk: tlscertfile
@@ -1084,67 +1084,67 @@ Chiffrement :
 Config asterisk: encryption
 
 ; fm_media_address
-Addresse pour les flux media : 
+Addresse pour les flux media :
 
 ; hlp_fm_media_address
 Config asterisk: media_address
 
 ; fm_externtcpport
-Port TCP externe : 
+Port TCP externe :
 
 ; hlp_fm_externtcpport
 Config asterisk: externtcpport
 
 ; fm_externtlsport
-Port TLS externe : 
+Port TLS externe :
 
 ; hlp_fm_externtlsport
 Config asterisk: externtlsport
 
 ; fm_use_q850_reason
-Utiliser l'en-tête «Reason» : 
+Utiliser l'en-tête «Reason» :
 
 ; hlp_fm_use_q850_reason
 Config asterisk: use_q850_reason
 
 ; fm_snom_aoc_enabled
-Envoyer AOC-D/AOC-E aux terminaux Snom : 
+Envoyer AOC-D/AOC-E aux terminaux Snom :
 
 ; hlp_fm_snom_aoc_enabled
 Config asterisk: snom_aoc_enabled
 
 ; fm_subscribe_network_change_event
-Réenregistrer les interconnexions sortantes sur un changement de l'IP externe : 
+Réenregistrer les interconnexions sortantes sur un changement de l'IP externe :
 
 ; hlp_fm_subscribe_network_change_event
 Config asterisk: subscribe_network_change_event
 
 ; fm_maxforwards
-Nombre de relais maximum : 
+Nombre de relais maximum :
 
 ; hlp_fm_maxforwards
 Config asterisk: maxforwards
 
 ; fm_disallowed_methods
-Interdire les méthodes SIP suivantes : 
+Interdire les méthodes SIP suivantes :
 
 ; hlp_fm_disallowed_methods
 Config asterisk: disallowed_methods
 
 ; fm_domainsasrealm
-Utiliser le domaine comme «realm» : 
+Utiliser le domaine comme «realm» :
 
 ; hlp_fm_domainsasrealm
 Config asterisk: domainsasrealm
 
 ; fm_textsupport
-Support Texte : 
+Support Texte :
 
 ; hlp_fm_textsupport
 Config asterisk: textsupport
 
 ; fm_videosupport
-Support Vidéo : 
+Support Vidéo :
 
 ; hlp_fm_videosupport
 Config asterisk: videosupport
@@ -1159,7 +1159,7 @@ Oui
 Toujours
 
 ; fm_auth_options_requests
-Authentifie les requêtes OPTIONS : 
+Authentifie les requêtes OPTIONS :
 
 ; hlp_fm_auth_options_requests
 Config asterisk: auth_options_requests
@@ -1189,7 +1189,7 @@ Nom de domaine
 Aucunes autorisations
 
 ; fm_transport
-Protocoles réseau : 
+Protocoles réseau :
 
 ; hlp_fm_transport
 Config asterisk: transport

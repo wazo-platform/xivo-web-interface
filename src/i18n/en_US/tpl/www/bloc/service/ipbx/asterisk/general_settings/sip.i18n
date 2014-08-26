@@ -958,7 +958,7 @@ SIP Protocol properties successfully saved
 
 
 ; fm_tlscertfile
-Server certificate: 
+Server certificate:
 
 ; hlp_fm_tlscertfile
 Asterisk config: tlscertfile
@@ -975,19 +975,19 @@ Asterisk config: tlscafile
 ;;; general
 
 ; fm_udpbindaddr
-UDP address: 
+UDP address:
 
 ; hlp_fm_udpbindaddr
 Asterisk config: udpbindaddr
 
 ; fm_tcpenable
-Allow TCP connections: 
+Allow TCP connections:
 
 ; hlp_fm_tcpenable
 Asterisk config: tcpenable
 
 ; fm_tcpbindaddr
-TCP address : 
+TCP address :
 
 ; hlp_fm_tcpbindaddr
 Asterisk config: tcpbindaddr
@@ -1011,31 +1011,31 @@ Trigger 'peerstatus' event on auth failure:
 Asterisk config: authfailureevents
 
 ; fm_tos-text
-TOS text : 
+TOS text :
 
 ; hlp_fm_tos-text
 Asterisk config: tos text
 
 ; fm_cos-sip
-COS sip : 
+COS sip :
 
 ; hlp_fm_cos-sip
 Asterisk config: cos-sip
 
 ; fm_cos-audio
-COS audio : 
+COS audio :
 
 ; hlp_fm_cos-audio
 Asterisk config: cos-audio
 
 ; fm_cos-video
-COS video : 
+COS video :
 
 ; hlp_fm_cos-video
 Asterisk config: cos-video
 
 ; fm_cos-text
-COS text : 
+COS text :
 
 ; hlp_fm_cos-text
 Asterisk config: cos-text
@@ -1044,7 +1044,7 @@ Asterisk config: cos-text
 ;;; network
 
 ; fm_stunaddr
-STUN address: 
+STUN address:
 
 ; hlp_fm_stunaddr
 Asterisk config: stunaddr
@@ -1159,7 +1159,7 @@ Shrink caller-id:
 Asterisk config: shrinkcallerid
 
 ; fm_session-timers
-Enable session-timers : 
+Enable session-timers :
 
 ; hlp_fm_session-timers
 Asterisk config: session-timers
@@ -1282,19 +1282,19 @@ Media streams address:
 Asterisk config: media_address
 
 ; fm_externtcpport
-External TCP port: 
+External TCP port:
 
 ; hlp_fm_externtcpport
 Asterisk config: externtcpport
 
 ; fm_externtlsport
-External TLS port: 
+External TLS port:
 
 ; hlp_fm_externtlsport
 Asterisk config: externtlsport
 
 ; fm_auth_options_requests
-Authentify OPTIONS requests: 
+Authentify OPTIONS requests:
 
 ; hlp_fm_auth_options_requests
 Asterisk config: auth_options_requests
@@ -1326,7 +1326,7 @@ Realm
 No credentials
 
 ; fm_transport
-Network transport protocols: 
+Network transport protocols:
 
 ; hlp_fm_transport
 Asterisk config: transport
