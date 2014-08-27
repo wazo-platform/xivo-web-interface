@@ -9,7 +9,7 @@ $array['userfeatures']['ipbx'] = array('dialplan reload', 'module reload app_que
 
 $array['groupfeatures'] = array();
 $array['groupfeatures']['ctibus'] = array('xivo[group,%s,%s]');
-$array['groupfeatures']['ipbx'] = array('dialplan reload', 'module reload app_queue.so', 'sip reload');
+$array['groupfeatures']['ipbx'] = array('dialplan reload', 'module reload app_queue.so', 'sip reload', 'module reload chan_sccp.so');
 
 $array['linefeatures'] = array();
 $array['linefeatures']['ctibus'] = array('xivo[phone,%s,%s]');
@@ -40,7 +40,7 @@ $array['queue']['ipbx'] = array('dialplan reload', 'module reload app_queue.so',
 $array['queuefeatures'] = array();
 $array['queuefeatures']['ctibus'] = array('xivo[queue,%s,%s]', 'xivo[queuemember,update]');
 $array['queuefeatures']['agentbus'] = array('queue.%s.%s');
-$array['queuefeatures']['ipbx'] = array('module reload app_queue.so', 'dialplan reload', 'sip reload');
+$array['queuefeatures']['ipbx'] = array('module reload app_queue.so', 'dialplan reload', 'sip reload', 'module reload chan_sccp.so');
 
 $array['queueskill'] = array();
 $array['queueskill']['ipbx'] = array('module reload app_queue.so');
@@ -73,7 +73,7 @@ $array['context'] = array();
 $array['context']['ipbx'] = array('dialplan reload');
 
 $array['pickup'] = array();
-$array['pickup']['ipbx'] = array('sip reload');
+$array['pickup']['ipbx'] = array('sip reload', 'module reload chan_sccp.so');
 
 $array['staticsip'] = array();
 $array['staticsip']['ipbx'] = array('sip reload');
