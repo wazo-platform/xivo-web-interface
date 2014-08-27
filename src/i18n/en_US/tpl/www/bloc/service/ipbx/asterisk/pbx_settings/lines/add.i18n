@@ -167,13 +167,13 @@ Yes
 %s milliseconds
 
 ; fm_protocol_qualifysmoothing
-Quality smoothing : 
+Quality smoothing :
 
 ; fm_protocol_qualifyfreqok
-Qualify frequency when ok : 
+Qualify frequency when ok :
 
 ; fm_protocol_qualifyfreqnotok
-Qualify frequency when fail : 
+Qualify frequency when fail :
 
 ; fm_protocol_qualifyfreq-opt-milliseconds
 %s milliseconds
@@ -428,7 +428,7 @@ Create a call permission
 Caller ID:
 
 ; fm_protocol_sendani
-Send call name/number presentation : 
+Send call name/number presentation :
 
 ; fm_linefeatures_outcallerid
 Outgoing Caller ID:
@@ -611,61 +611,61 @@ Expansion modules
 Add here expansion modules connected to the phone, from left to right.
 
 ; fm_protocol_secondary_dialtone_digits
-Secondary dialtone digits: 
+Secondary dialtone digits:
 
 ; fm_protocol_trustphoneip
-Trust phone IP: 
+Trust phone IP:
 
 ; fm_protocol_tzoffset
-Timezone offset: 
+Timezone offset:
 
 ; fm_protocol_incominglimit
-Incoming calls limit: 
+Incoming calls limit:
 
 ; fm_protocol_silencesuppression
-Silence suppression: 
+Silence suppression:
 
 ; fm_protocol_echocancel
-Echo canceller: 
+Echo canceller:
 
 ; fm_protocol_mwioncall
-MWI on call: 
+MWI on call:
 
 ; fm_protocol_mwilamp
-MWI lamp style: 
+MWI lamp style:
 
 ; fm_protocol_privacy
-Privacy: 
+Privacy:
 
 ; fm_protocol_private
-Private softkey: 
+Private softkey:
 
 ; fm_protocol_earlyrtp
-Early RTP: 
+Early RTP:
 
 ; fm_protocol_directrtp
-Direct RTP: 
+Direct RTP:
 
 ; fm_protocol_dnd
-DND softkey: 
+DND softkey:
 
 ; fm_protocol_pickupmodeanswer
-Call answered when pickup: 
+Call answered when pickup:
 
 ; fm_protocol_pickupexten
-Direct pickup: 
+Direct pickup:
 
 ; fm_protocol_cfwdnoanswer
-Call forwarding on non-answer: 
+Call forwarding on non-answer:
 
 ; fm_protocol_cfwdbusy
-Call forwarding on busy: 
+Call forwarding on busy:
 
 ; fm_protocol_cfwdall
-Unconditional call forwarding: 
+Unconditional call forwarding:
 
 ; fm_protocol_park
-Park calls: 
+Park calls:
 
 ; fm_earlyrtp(none)
 None
@@ -867,7 +867,7 @@ Conference room
 ; softkey_backjoin
 
 ; fm_protocol_requirecalltoken
-Calltoken validation: 
+Calltoken validation:
 
 ; fm_protocol_requirecalltoken-opt(no)
 no
@@ -876,18 +876,18 @@ no
 yes
 
 ; fm_linefeatures_timezone
-Timezone: 
+Timezone:
 
 
 ;;; 1.8 fields
 ; fm_protocol-transport
-Transport: 
+Transport:
 
 ; hlp_fm_protocol-transport
 Asterisk config: transport
 
 ; fm_protocol-remotesecret
-Remote password: 
+Remote password:
 
 ; hlp_fm_protocol-remotesecret
 Asterisk config: remotesecret
@@ -913,6 +913,9 @@ Using UPDATE
 ; fm_protocol-directmedia-opt(update,nonat)
 Using UPDATE not behind NAT
 
+; fm_protocol-directmedia-opt(outgoing)
+Outgoing
+
 ; fm_protocol-callcounter
 Enable calls counter:
 
@@ -932,7 +935,7 @@ Ignore SDP packets version:
 Asterisk config: ignoresdpversion
 
 ; fm_protocol-session-timers
-Session-timers mode: 
+Session-timers mode:
 
 ; hlp_fm_protocol-session-timers
 Asterisk config: session-timers
@@ -947,7 +950,7 @@ Accept
 Refuse
 
 ; fm_protocol-session-expires
-Maximum session refresh interval: 
+Maximum session refresh interval:
 
 ; hlp_fm_protocol-session-expires
 Asterisk config: session-expires
@@ -977,7 +980,7 @@ Callback extension:
 Asterisk config: callbackextension
 
 ; fm_protocol-registertrying
-Send «100 Trying» when register: 
+Send «100 Trying» when register:
 
 ; hlp_fm_protocol-registertrying
 Asterisk config: registertrying
@@ -989,60 +992,60 @@ Minimum time of the round trip (RTT) messages:
 Asterisk config: timert1
 
 ; fm_protocol-timerb
-Call setup timer: 
+Call setup timer:
 
 ; hlp_fm_protocol-timerb
 Asterisk config: timerb
 
 ; fm_protocol-qualifyfreq
-Qualify frequency: 
+Qualify frequency:
 
 ; hlp_fm_protocol-qualifyfreq
 Asterisk config: qualifyfreq
 
 ; fm_protocol-contactpermit
-Authorised contact addresses: 
+Authorised contact addresses:
 
 ; hlp_fm_protocol-contactpermit
 Asterisk config: contactpermit
 
 ; fm_protocol-contactdeny
-Rejected contact addresses: 
+Rejected contact addresses:
 
 ; hlp_fm_protocol-contactdeny
 Asterisk config: contactdeny
 
 
 ; fm_register-transport
-Transport: 
+Transport:
 
 ; hlp_fm_register-transport
 
 ; fm_register-expiry
-Expiry: 
+Expiry:
 
 ; hlp_fm_register-expiry
 Asterisk config: expiry
 
 ; fm_register-callbackextension
-Use callback extension: 
+Use callback extension:
 
 
 ; fm_protocol-immediate
-Immediate off-hook: 
+Immediate off-hook:
 
 ; hlp_fm_protocol-immediate
 Asterisk config: immediate
 
 
 ; fm_protocol-unsolicited_mailbox
-Unsolicited mailbox : 
+Unsolicited mailbox :
 
 ; hlp_fm_protocol-unsolicited_mailbox
 Asterisk config: unsolicited_mailbox
 
 ; fm_protocol-use_q850_reason
-Use «Reason» header: 
+Use «Reason» header:
 
 ; hlp_fm_protocol-use_q850_reason
 Asterisk config: use_q850_reason
@@ -1060,7 +1063,7 @@ Force encryption:
 Asterisk config: forceencryption
 
 ; fm_protocol-snom_aoc_enabled
-Send AOC-D/AOC-E to Snom devices: 
+Send AOC-D/AOC-E to Snom devices:
 
 ; hlp_fm_protocol-snom_aoc_enabled
 Asterisk config: snom_aoc_enabled

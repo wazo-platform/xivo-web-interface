@@ -224,7 +224,7 @@ Yes
 Always
 
 ; fm_protocol_outboundproxy
-Outbound proxy : 
+Outbound proxy :
 
 ; fm_protocol_maxcallbitrate
 Max call bitrate :
@@ -330,13 +330,13 @@ Description :
 
 ;;; 1.8 fields
 ; fm_protocol-transport
-Transport : 
+Transport :
 
 ; hlp_fm_protocol-transport
 Asterisk config: transport
 
 ; fm_protocol-remotesecret
-Remote password : 
+Remote password :
 
 ; hlp_fm_protocol-remotesecret
 Asterisk config: remotesecret
@@ -362,6 +362,9 @@ Using UPDATE
 ; fm_protocol-directmedia-opt(update,nonat)
 Using UPDATE not behind NAT
 
+; fm_protocol-directmedia-opt(outgoing)
+Outgoing
+
 ; fm_protocol-callcounter
 Enable calls counter:
 
@@ -381,7 +384,7 @@ Ignore SDP packets version:
 Asterisk config: ignoresdpversion
 
 ; fm_protocol-session-timers
-Session-timers mode: 
+Session-timers mode:
 
 ; hlp_fm_protocol-session-timers
 Asterisk config: session-timers
@@ -396,7 +399,7 @@ Accept
 Refuse
 
 ; fm_protocol-session-expires
-Maximum session refresh interval: 
+Maximum session refresh interval:
 
 ; hlp_fm_protocol-session-expires
 Asterisk config: session-expires
@@ -426,7 +429,7 @@ Callback extension:
 Asterisk config: callbackextension
 
 ; fm_protocol-registertrying
-Send «100 Trying» when register: 
+Send «100 Trying» when register:
 
 ; hlp_fm_protocol-registertrying
 Asterisk config: registertrying
@@ -438,43 +441,43 @@ Minimum time of the round trip (RTT) messages:
 Asterisk config: timert1
 
 ; fm_protocol-timerb
-Call setup timer: 
+Call setup timer:
 
 ; hlp_fm_protocol-timerb
 Asterisk config: timerb
 
 ; fm_protocol-qualifyfreq
-Qualify frequency : 
+Qualify frequency :
 
 ; hlp_fm_protocol-qualifyfreq
 Asterisk config: qualifyfreq
 
 ; fm_protocol-contactpermit
-Authorised contact addresses: 
+Authorised contact addresses:
 
 ; hlp_fm_protocol-contactpermit
 Asterisk config: contactpermit
 
 ; fm_protocol-contactdeny
-Rejected contact addresses: 
+Rejected contact addresses:
 
 ; hlp_fm_protocol-contactdeny
 Asterisk config: contactdeny
 
 
 ; fm_register-transport
-Transport : 
+Transport :
 
 ; hlp_fm_register-transport
 
 ; fm_register-expiry
-Expiry : 
+Expiry :
 
 ; hlp_fm_register-expiry
 Asterisk config: expiry
 
 ; fm_register-callbackextension
-Use callback extension : 
+Use callback extension :
 
 
 

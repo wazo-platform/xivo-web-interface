@@ -300,7 +300,7 @@ $array['element']['remotesecret']['default'] = '';
 $array['element']['remotesecret']['null'] = true;
 
 $array['element']['directmedia'] = array();
-$array['element']['directmedia']['value'] = array('no','yes','nonat','update','update,nonat');
+$array['element']['directmedia']['value'] = array('no','yes','nonat','update','update,nonat','outgoing');
 $array['element']['directmedia']['default'] = '';
 $array['element']['directmedia']['null'] = true;
 
@@ -472,7 +472,7 @@ $array['filter']['category'] = array('set' => false);
 $array['filter']['outboundproxy'] = array('set' => false, 'chk' => 2);
 $array['filter']['transport'] = array('key' => array('udp','tcp','tls', 'udp,tcp', 'tcp,tls', 'udp,tcp,tls'));
 $array['filter']['remotesecret'] = array('set' => false,'chk' => 2,'maxlen' => 255);
-$array['filter']['directmedia'] = array('set' => false, 'chk' => 2, 'key' => array('no','yes','nonat','update','update,nonat'));
+$array['filter']['directmedia'] = array('set' => false, 'chk' => 2, 'key' => array('no','yes','nonat','update','update,nonat','outgoing'));
 $array['filter']['callcounter'] = array('set' => false, 'chk' => 2, 'bool' => true);
 $array['filter']['busylevel'] = array('set' => false, 'chk' => 2, 'cast' => 'uint','between' => array(1,100,1));
 $array['filter']['ignoresdpversion'] = array('set' => false, 'chk' => 2, 'bool' => true);
