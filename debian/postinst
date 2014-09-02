@@ -59,6 +59,7 @@ case "$1" in
 			fi
 		done
 
+		invoke-rc.d nginx reload
 		if [ -x /etc/init.d/spawn-fcgi ]; then
 			invoke-rc.d spawn-fcgi restart
 		fi
