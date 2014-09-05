@@ -32,6 +32,19 @@ class xivo_service_asterisk_func_key_sql extends xivo_service_asterisk_abstract_
 					null,
 					array('*'));
 
+		return($this->_get_all_func_keys());
+	}
+
+	public function get_func_key_by_template_id($template_id)
+	{
+		$this->_dso->new_select('func_key_mapping', null);
+		$this->_dso->where(array('template_id' => $template_id), 'func_key_mapping');
+
+		return($this->_get_all_func_keys());
+	}
+
+	private function _get_all_func_keys()
+	{
 		$this->_dso->innerjoin('func_key',
 					'func_key.id = func_key_mapping.func_key_id',
 					null,
@@ -72,6 +85,12 @@ class xivo_service_asterisk_func_key_sql extends xivo_service_asterisk_abstract_
 					null,
 					array('conference_id'));
 
+		# FORWARD FUNC_KEY
+		$this->_dso->leftjoin('func_key_dest_forward',
+					'func_key_dest_forward.func_key_id = func_key.id',
+					null,
+					array('forward_id' => 'extension_id', 'number' => 'number'));
+
 		$this->_dso->new_order(array('position' => SORT_ASC), null, 'func_key_mapping');
 
 		$r = $this->_dso->select_all();
@@ -80,6 +99,7 @@ class xivo_service_asterisk_func_key_sql extends xivo_service_asterisk_abstract_
 			$r = false;
 
 		return($r);
+
 	}
 
 	public function get_func_key_id_with_dest_type_id($dst_type, $dst_id)

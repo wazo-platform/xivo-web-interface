@@ -31,6 +31,7 @@ class func_key_manager extends manager_abstract
 	protected $_func_key_dest_group	= false;
 	protected $_func_key_dest_queue	= false;
 	protected $_func_key_dest_conference = false;
+	protected $_func_key_dest_forward = false;
 	protected $_func_key_mapping	= false;
 	protected $_func_key_template	= false;
 
@@ -50,6 +51,7 @@ class func_key_manager extends manager_abstract
 		$this->_func_key_dest_group = $this->_service->get_module('ipbx','func_key_dest_group');
 		$this->_func_key_dest_queue = $this->_service->get_module('ipbx','func_key_dest_queue');
 		$this->_func_key_dest_conference = $this->_service->get_module('ipbx','func_key_dest_conference');
+		$this->_func_key_dest_forward = $this->_service->get_module('ipbx','func_key_dest_forward');
 		$this->_func_key_mapping = $this->_service->get_module('ipbx','func_key_mapping');
 		$this->_func_key_template = $this->_service->get_module('ipbx','func_key_template');
 	}
@@ -74,15 +76,53 @@ class func_key_manager extends manager_abstract
 		return((int) $fk_dst_type['id']);
 	}
 
+	public function get_destination_type_id_by_fk($func_key_id)
+	{
+		$fk = $this->_func_key->get($func_key_id);
+		if ($fk === false)
+		{
+			dwho_report::push('error', 'Error func_key with id "'.$func_key_id.'" not exist');
+			return(false);
+		}
+		return((int) $fk['destination_type_id']);
+	}
+
+	public function get_fk_id_with_dst($dst_type, $dst_val)
+	{
+		if($dst_type === 'service') {
+			$func_key_id = $this->_func_key->get_func_key_id('service', $dst_val, 'extension_id');
+		} else {
+			$func_key_id = $this->_func_key->get_func_key_id_with_dest_type_id($dst_type, $dst_val);
+		}
+
+		if ((int) $func_key_id <= 0)
+		{
+			dwho_report::push('error', 'Error: func_key_id "'.$func_key_id.'" is not valid');
+			return(false);
+		}
+
+		return((int) $func_key_id);
+	}
+
+	public function get_dst_id_for_extension($extension_type)
+	{
+		$dst_id = $this->_extensions->get_extenfeature_id_by_typeval($extension_type);
+		if($dst_id === false) {
+			dwho_report::push('error', 'did not find extension for service of type '.$service_type);
+			return(false);
+		}
+		return($dst_id);
+	}
+
 	public function add_fk_mapping($data)
 	{
-		if (($func_key_id = $this->_get_fk_id_with_dst($data)) === false
-		|| ($fk_dst_type_id = $this->_get_dst_type_id_with_dst($data['dst_type'])) === false)
+		$fk_dst_type_id = $this->get_destination_type_id_by_fk($data['func_key_id']);
+		if($fk_dst_type_id === false)
 			return(false);
 
 		$func_key_mapping = array(
 			'template_id' => (int) $data['template_id'],
-			'func_key_id' => (int) $func_key_id,
+			'func_key_id' => (int) $data['func_key_id'],
 			'destination_type_id' => (int) $fk_dst_type_id,
 			'position' => (int) $data['position'],
 			'blf' => (bool) $data['blf'],
@@ -104,78 +144,23 @@ class func_key_manager extends manager_abstract
 		return(true);
 	}
 
-	public function delete_fk_mapping($data)
+	public function delete_fk_in_template($template_id)
 	{
-		if (($func_key_id = $this->_get_fk_id_with_dst($data)) === false)
+		$func_keys = $this->_func_key->get_func_key_by_template_id($template_id);
+		if($func_keys === false)
 			return(false);
 
-		$where = array(
-			'template_id' => (int) $data['template_id'],
-			'func_key_id' => (int)$func_key_id
-		);
-		$this->_func_key_mapping->delete($where);
-	}
+		foreach($func_keys as $func_key) {
+			if($func_key['destination_type_name'] === 'forward') {
+				if($this->delete_dst_for_forward($func_key['func_key_id']) === false)
+					return(false);
+			}
+		}
 
-	public function delete_fk_mapping_with_template_id($template_id)
-	{
 		$where = array(
 			'template_id' => (int) $template_id
 		);
 		$this->_func_key_mapping->delete_where($where);
-	}
-
-	private function _get_dst_type_id_with_dst($dst_type)
-	{
-		switch($dst_type)
-		{
-			case 'user':
-			case 'group':
-			case 'queue':
-			case 'conference':
-			case 'service':
-				$fk_dst_type_id = (int) $this->get_destination_type_id_by_name($dst_type);
-				break;
-			default:
-				dwho_report::push('error', 'Error: unknown fk_dst_type "'.$dst_type);
-				return(false);
-		}
-
-		if ((int) $fk_dst_type_id <= 0)
-		{
-			dwho_report::push('error', 'Error: fk_dst_type_id "'.$fk_dst_type_id.'" is not valid');
-			return(false);
-		}
-
-		return((int) $fk_dst_type_id);
-	}
-
-	private function _get_fk_id_with_dst($data)
-	{
-		$dst_type = $data['dst_type'];
-		switch($dst_type)
-		{
-			case 'service':
-				if(array_key_exists('dst_val',$data) !== true
-				|| $data['dst_val'] === null
-				|| ($dst_id = $this->_extensions->get_extenfeature_id_by_typeval($data['dst_val'])) === false)
-					return(false);
-				$func_key_id = $this->_func_key->get_func_key_id($dst_type, $dst_id, 'extension_id');
-				break;
-			default:
-				if(array_key_exists('dst_id',$data) !== true || $data['dst_id'] === null)
-					return(false);
-				$dst_id = $data['dst_id'];
-				$func_key_id = $this->_func_key->get_func_key_id_with_dest_type_id($dst_type, $dst_id);
-				break;
-		}
-
-		if ((int) $func_key_id <= 0)
-		{
-			dwho_report::push('error', 'Error: func_key_id "'.$func_key_id.'" is not valid');
-			return(false);
-		}
-
-		return((int) $func_key_id);
 	}
 
 	public function add_private_tpl($name)
@@ -194,8 +179,8 @@ class func_key_manager extends manager_abstract
 
 	public function delete_template($template_id)
 	{
-		if ($this->_func_key_mapping->delete_where(array('template_id' => $template_id)) === false
-		|| $this->_func_key_template->delete($template_id) === false)
+		if($this->delete_fk_in_template($template_id) === false
+		   || $this->_func_key_template->delete($template_id) === false)
 			return(false);
 	}
 
@@ -339,6 +324,45 @@ class func_key_manager extends manager_abstract
 		return(true);
 	}
 
+	public function add_dst_for_forward($extension_id, $number=null)
+	{
+		$fk_type_id = $this->get_type_id_by_name('speeddial');
+		$fk_dst_type_id = $this->get_destination_type_id_by_name('forward');
+
+		if($fk_type_id === false || $fk_dst_type_id === false)
+			return(false);
+
+		$func_key = array(
+			'type_id' => (int) $fk_type_id,
+			'destination_type_id' => (int) $fk_dst_type_id
+		);
+
+		if(($rs = $this->_func_key->chk_values($func_key)) === false
+		|| ($func_key_id = $this->_func_key->add($rs)) === false)
+			return(false);
+
+		$func_key_dest = array(
+			'extension_id' => (int) $extension_id,
+			'func_key_id' => (int) $func_key_id,
+			'destination_type_id' => (int) $fk_dst_type_id,
+			'number' => $number,
+		);
+
+		$rs = $this->_func_key_dest_forward->chk_values($func_key_dest);
+		if($rs === false)
+			return(false);
+
+		if ($this->_func_key_dest_forward->add($rs) === false)
+			return(false);
+
+		return((int) $func_key_id);
+	}
+
+	public function delete_dst_for_forward($func_key_id)
+	{
+		return($this->_delete_func_key((int) $func_key_id, 'forward'));
+	}
+
 	private function _delete_func_key($func_key_id, $dst_type)
 	{
 		$where_fk_id = array('func_key_id' => $func_key_id);
@@ -368,10 +392,16 @@ class func_key_manager extends manager_abstract
 				if ($this->_func_key_dest_conference->delete_where($where_func_key_dest) === false)
 					return(false);
 				break;
+			case 'forward':
+				if ($this->_func_key_dest_forward->delete_where($where_func_key_dest) === false)
+					return(false);
+				break;
 		}
 
 		if ($this->_func_key->delete($func_key_id) === false)
 			return(false);
+
+		return(true);
 	}
 }
 
