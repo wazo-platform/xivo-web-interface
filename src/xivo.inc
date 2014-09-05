@@ -52,7 +52,7 @@ class xivo extends dwho
 		$this->_set_xivo_object();
 		$this->_set_service();
 		$this->_set_stats();
-		$this->_set_restapi();
+		$this->_set_confd();
 		$this->_set_manager();
 
 		if(dwho_constant('XIVO_WEBI_CONFIGURED',false) === true)
@@ -200,10 +200,10 @@ class xivo extends dwho
 		dwho_gct::set(new xivo_stats());
 	}
 
-	function _set_restapi()
+	function _set_confd()
 	{
-		xivo::load_class('xivo_restapi',XIVO_PATH_OBJECT,'restapi',false);
-		dwho_gct::set(new xivo_restapi());
+		xivo::load_class('xivo_confd',XIVO_PATH_OBJECT,'confd',false);
+		dwho_gct::set(new xivo_confd());
 	}
 
 	function _set_manager()

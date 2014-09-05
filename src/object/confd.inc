@@ -17,7 +17,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-class xivo_restapi
+class xivo_confd
 {
 
 	private $_ressource = array();
@@ -57,9 +57,9 @@ class xivo_restapi
 
 		$file = $name.'.inc';
 
-		$dir = dwho_file::joinpath(XIVO_PATH_OBJECT, 'restapi', $name);
+		$dir = dwho_file::joinpath(XIVO_PATH_OBJECT, 'confd', $name);
 
-		$class = 'restapi_ressource_'.$name;
+		$class = 'confd_ressource_'.$name;
 
 		if(dwho_file::load_file($file,$dir,true) !== false && class_exists($class) === true)
 			return($class);
@@ -69,9 +69,9 @@ class xivo_restapi
 
 	function _load_ressource_abstract()
 	{
-		$dir = dwho_file::joinpath(XIVO_PATH_OBJECT, 'restapi', 'abstract');
+		$dir = dwho_file::joinpath(XIVO_PATH_OBJECT, 'confd', 'abstract');
 
-		$class = 'xivo_restapi_ressource_abstract';
+		$class = 'xivo_confd_ressource_abstract';
 
 		if(dwho_file::load_file('abstract.inc',$dir,true) !== false && class_exists($class) === true)
 			return($class);

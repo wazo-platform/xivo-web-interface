@@ -19,11 +19,11 @@
 
 $array = array();
 
-$array['restapi'] = array();
-$array['restapi']['host'] = '127.0.0.1';
-$array['restapi']['port'] = 50050;
-$array['restapi']['protocol'] = '1.1';
-$array['restapi']['connect_timeout'] = 180;
-$array['restapi']['timeout'] = 90;
+$array['confd'] = array();
+$array['confd']['host'] = '127.0.0.1';
+$array['confd']['port'] = 50050;
+$array['confd']['protocol'] = '1.1';
+$array['confd']['connect_timeout'] = 180;
+$array['confd']['timeout'] = 90;
 
 ?>

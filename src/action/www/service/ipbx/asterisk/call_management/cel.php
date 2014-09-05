@@ -35,8 +35,8 @@ if(isset($_QR['fm_send']) === true || isset($_QR['search']) === true)
 		}
 		$query= array(array('start_date', $start), array('end_date', $end));
 	}
-	$restapi = &$_XOBJ->get_module('restapi');
-	$csv_uri = $restapi->get_uri('call_logs', $query);
+	$confd = &$_XOBJ->get_module('confd');
+	$csv_uri = $confd->get_uri('call_logs', $query);
 	$result = file_get_contents($csv_uri);
 	$_TPL->set_var('result', $result);
 	$_TPL->display('/bloc/service/ipbx/'.$ipbx->get_name().'/call_management/cel/exportcsv');

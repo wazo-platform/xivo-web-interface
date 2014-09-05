@@ -18,9 +18,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'restapi','abstract','abstract.inc'));
+require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd','abstract','abstract.inc'));
 
-abstract class xivo_restapi_helpers_abstract extends xivo_restapi_ressource_abstract
+abstract class xivo_confd_helpers_abstract extends xivo_confd_ressource_abstract
 {
 	protected $_cnt = 0;
 

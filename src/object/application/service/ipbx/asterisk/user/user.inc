@@ -121,7 +121,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		|| ($this->_appentity = &$_XOBJ->get_application('entity')) === false
 		|| ($this->_entity = &$_XOBJ->get_module('entity')) === false
 		|| ($this->_provdconfig = &$_XOBJ->get_module('provdconfig')) === false
-		|| ($_RAPI = &dwho_gct::get('xivo_restapi')) === false
+		|| ($_RAPI = &dwho_gct::get('xivo_confd')) === false
 		|| ($this->_cti_profile = $_RAPI->get_ressource('cti_profile')) === false
 		|| ($this->_provddevice = &$_XOBJ->get_module('provddevice')) === false
 		|| ($_MGR = &dwho_gct::get('xivo_manager')) === false

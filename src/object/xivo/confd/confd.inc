@@ -24,9 +24,9 @@ dwho::load_class('dwho_json');
 
 xivo_object::required(array('abstract','abstract.inc'),true);
 
-class xivo_object_restapi extends xivo_object_abstract
+class xivo_object_confd extends xivo_object_abstract
 {
-	var $_name			= 'restapi';
+	var $_name			= 'confd';
 	var $_curl			= null;
 	var $_uri			= null;
 	var $_url			= array();
@@ -39,8 +39,8 @@ class xivo_object_restapi extends xivo_object_abstract
 		$this->_load_config();
 		$this->_set_configuration();
 		$this->_url = array('scheme'	=> 'http',
-				    'host'	=> $this->_conf['restapi']['host'],
-				    'port'	=> $this->_conf['restapi']['port']);
+				    'host'	=> $this->_conf['confd']['host'],
+				    'port'	=> $this->_conf['confd']['port']);
 
 		$this->_uri = new dwho_uri();
 		$this->_curl = new dwho_curl();
@@ -59,25 +59,25 @@ class xivo_object_restapi extends xivo_object_abstract
 		{
 			if(dwho_network::valid_host($ref['host'],
 						    (DWHO_NETWORK_HOST_IPV4_DOTDEC | DWHO_NETWORK_HOST_HOSTNAME)) === true)
-				$this->_conf['restapi']['host'] = $ref['host'];
+				$this->_conf['confd']['host'] = $ref['host'];
 			else
-				trigger_error('Invalid option host for section restapi in XIVO init file',E_USER_WARNING);
+				trigger_error('Invalid option host for section confd in XIVO init file',E_USER_WARNING);
 		}
 
 		if(isset($ref['port']) === true)
 		{
 			if(dwho_network::valid_port_number($ref['port']) === true)
-				$this->_conf['restapi']['port'] = $ref['port'];
+				$this->_conf['confd']['port'] = $ref['port'];
 			else
-				trigger_error('Invalid option port for section restapi in XIVO init file',E_USER_WARNING);
+				trigger_error('Invalid option port for section confd in XIVO init file',E_USER_WARNING);
 		}
 
 		if(isset($ref['protocol']) === true)
 		{
 			if(dwho_network::valid_port_number($ref['protocol']) === true)
-				$this->_conf['restapi']['protocol'] = $ref['protocol'];
+				$this->_conf['confd']['protocol'] = $ref['protocol'];
 			else
-				trigger_error('Invalid option protocol for section restapi in XIVO init file',E_USER_WARNING);
+				trigger_error('Invalid option protocol for section confd in XIVO init file',E_USER_WARNING);
 		}
 
 		if(isset($ref['connect_timeout']) === true)
@@ -85,7 +85,7 @@ class xivo_object_restapi extends xivo_object_abstract
 			if(dwho_is_uint($ref['connect_timeout']) === true)
 				$this->_conf['connect_timeout'] = $ref['connect_timeout'];
 			else
-				trigger_error('Invalid option connect_timeout for restapi in XIVO init file',E_USER_WARNING);
+				trigger_error('Invalid option connect_timeout for confd in XIVO init file',E_USER_WARNING);
 		}
 
 		if(isset($ref['timeout']) === true)
@@ -93,7 +93,7 @@ class xivo_object_restapi extends xivo_object_abstract
 			if(dwho_is_uint($ref['timeout']) === true)
 				$this->_conf['timeout'] = $ref['timeout'];
 			else
-				trigger_error('Invalid option timeout for restapi in XIVO init file',E_USER_WARNING);
+				trigger_error('Invalid option timeout for confd in XIVO init file',E_USER_WARNING);
 		}
 
 		return(true);
@@ -102,8 +102,8 @@ class xivo_object_restapi extends xivo_object_abstract
 	function _create()
 	{
 		return($this->_curl->load(null,
-						array('connect_timeout'	=> $this->_conf['restapi']['connect_timeout'],
-								'timeout'		=> $this->_conf['restapi']['timeout'],
+						array('connect_timeout'	=> $this->_conf['confd']['connect_timeout'],
+								'timeout'		=> $this->_conf['confd']['timeout'],
 								'httpheader'	=> array(dwho_json::get_header())),
 								false));
 	}
@@ -212,7 +212,7 @@ class xivo_object_restapi extends xivo_object_abstract
 			return(false);
 
 		$url = $this->_url;
-		$path = '/'.$this->_conf['restapi']['protocol'].'/'.$path;
+		$path = '/'.$this->_conf['confd']['protocol'].'/'.$path;
 		$url['path'] = $path;
 
 		if(is_array($query) === true)

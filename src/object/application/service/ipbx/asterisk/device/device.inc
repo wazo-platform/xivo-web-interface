@@ -40,7 +40,7 @@ class xivo_application_service_asterisk_device extends xivo_application_asterisk
 		|| ($_XOBJ = &dwho_gct::get('xivo_object')) === false
 		|| ($this->_provdplugin = &$_XOBJ->get_module('provdplugin')) === false
 		|| ($this->_provdconfig = &$_XOBJ->get_module('provdconfig')) === false
-		|| ($_RAPI = &dwho_gct::get('xivo_restapi')) === false
+		|| ($_RAPI = &dwho_gct::get('xivo_confd')) === false
 		|| ($this->_device_api = $_RAPI->get_ressource('device')) === false)
 			return(false);
 

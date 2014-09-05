@@ -18,7 +18,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-$RAPI = &dwho_gct::get('xivo_restapi');
+$RAPI = &dwho_gct::get('xivo_confd');
 $config_api = $RAPI->get_ressource('configuration');
 
 $fm_save = null;

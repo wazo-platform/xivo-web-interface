@@ -17,9 +17,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'restapi', 'abstract.inc'));
+require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'abstract.inc'));
 
-class restapi_ressource_cti_profile extends xivo_restapi_helpers_abstract
+class confd_ressource_cti_profile extends xivo_confd_helpers_abstract
 {
 
 	protected $_name      = 'cti_profile';
