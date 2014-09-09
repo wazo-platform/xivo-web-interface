@@ -314,6 +314,20 @@ if(isset($error_js[0]) === true)
 			      array('*',range(3,11)));
 ?>
 		</div>
+<?php
+	echo	$form->checkbox(array('desc'	=> $this->bbf('fm_extenfeatures_enable-cctoggle'),
+				'name'	=> 'extenfeatures[cctoggle][enable]',
+				'labelid'	=> 'extenfeatures-enable-cctoggle',
+				'checked'	=> ((bool) $this->get_var('extenfeatures','cctoggle','commented') === false))),
+
+		$form->text(array('desc'	=> $this->bbf('fm_extenfeatures-extension'),
+				'name'	=> 'extenfeatures[cctoggle][exten]',
+				'labelid'	=> 'extenfeatures-cctoggle',
+				'size'	=> 15,
+				'value'	=> $this->get_var('extenfeatures','cctoggle','exten'),
+				'default'	=> $element['extenfeatures']['cctoggle']['default'],
+				'invalid'	=> isset($invalid['extenfeatures']['cctoggle'])));
+?>
 	</div>
 
 	<div id="sb-part-call" class="b-nodisplay">

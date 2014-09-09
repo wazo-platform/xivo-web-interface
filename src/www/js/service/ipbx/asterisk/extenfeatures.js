@@ -25,6 +25,7 @@ var xivo_list_elt_extenfeatures = {
     'it-extenfeatures-enable-pickup':        ['it-extenfeatures-pickup',
                              'it-extenfeatures-list-pickup'],
     'it-extenfeatures-enable-calllistening':    ['it-extenfeatures-calllistening'],
+    'it-extenfeatures-enable-cctoggle':    ['it-extenfeatures-cctoggle'],
     'it-extenfeatures-enable-directoryaccess':    ['it-extenfeatures-directoryaccess'],
     'it-extenfeatures-enable-bsfilter':        ['it-extenfeatures-bsfilter',
                              'it-extenfeatures-list-bsfilter'],

@@ -70,6 +70,9 @@ Directory access:
 ; fm_extenfeatures_enable-bsfilter
 Filter Boss - Secretary:
 
+; fm_extenfeatures_enable-cctoggle
+Enable/disable call completion:
+
 ; fm_extenfeatures_enable-callgroup
 Call a group from its id :
 
