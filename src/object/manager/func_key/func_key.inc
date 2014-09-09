@@ -148,7 +148,7 @@ class func_key_manager extends manager_abstract
 	{
 		$func_keys = $this->_func_key->get_func_key_by_template_id($template_id);
 		if($func_keys === false)
-			return(false);
+			return(true);
 
 		foreach($func_keys as $func_key) {
 			if($func_key['destination_type_name'] === 'forward') {
