@@ -61,13 +61,15 @@ $page = $url->pager($pager['pages'],
 	<tr onmouseover="this.tmp = this.className; this.className = 'sb-content l-infos-over';"
 	    onmouseout="this.className = this.tmp;"
 	    class="sb-content l-infos-<?=(($j % 2) + 1)?>on2">
-		<td class="td-left txt-left" colspan="2">
+		<td>&nbsp;</td>
+		<td class="td-left txt-left">
 		<?=$url->href_html($ref['name'], '/backup/'.$ref['name']);?>
 		</td>
 		<td class="td-center"><?=$this->bbf('size_iec_'.$size[1],$size[0]);?></td>
-		<td class="td-right" colspan="2"><?=dwho_i18n::strftime_l($this->bbf('date_format_yymmddhhii'),
+		<td class="td-right"><?=dwho_i18n::strftime_l($this->bbf('date_format_yymmddhhii'),
 									  null,
 									  $ref['stat']['mtime']);?></td>
+		<td>&nbsp;</td>
 	</tr>
 <?php
 		endfor;
