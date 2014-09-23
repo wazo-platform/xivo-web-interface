@@ -57,6 +57,7 @@ class xivo_service_asterisk_func_key extends xivo_service_asterisk_abstract
 		if (($ipbx = &$this->_sre) === false
 		|| ($modextensions = &$ipbx->get_module('extensions')) === false
 		|| ($modphonefunckey = &$ipbx->get_module('phonefunckey')) === false
+		|| ($moddestfeatures = &$ipbx->get_module('func_key_dest_features')) === false
 		|| ($rs = $this->_dso->get_func_key_by_user_id($user_id)) === false
 		|| ($nb = count($rs)) === 0)
 			return(false);
@@ -110,6 +111,15 @@ class xivo_service_asterisk_func_key extends xivo_service_asterisk_abstract
 				case 'park_position':
 					if ($ref['park_position'] !== false)
 						$exten = $ref['park_position'];
+					break;
+				case 'features':
+					$key_type = $moddestfeatures->get_key_type_by_features_id($ref['features_id']);
+					$feature_exten = $moddestfeatures->get_exten_by_features_id($ref['features_id']);
+
+					if($key_type !== false && $feature_exten !== false) {
+						$exten = $feature_exten;
+						$conf[$idx]['type'] = $key_type;
+					}
 					break;
 			}
 

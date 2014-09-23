@@ -42,6 +42,7 @@ class xivo_application_service_asterisk_user_sql extends xivo_application_abstra
 				'func_key_dest_service'	=> '',
 				'func_key_dest_forward'	=> '',
 				'func_key_dest_park_position'	=> '',
+				'func_key_dest_features'	=> '',
 				'func_key_destination_type'	=> '',
 				'func_key_mapping'	=> '',
 				'func_key_template'	=> '',
@@ -239,11 +240,13 @@ class xivo_application_service_asterisk_user_sql extends xivo_application_abstra
 				WHEN 'service' THEN "service_extensions"."type"
 				WHEN 'forward' THEN "fwd_extensions"."type"
 				WHEN 'park_position' THEN 'generalfeatures'
+				WHEN 'features' THEN 'generalfeatures'
 			END AS "phonefunckey.typeextenumbers",
 			CASE "func_key_destination_type"."name"
 				WHEN 'service' THEN "service_extensions"."typeval"
 				WHEN 'forward' THEN "fwd_extensions"."typeval"
 				WHEN 'park_position' THEN 'parkpos'
+				WHEN 'features' THEN 'parkext'
 			END AS "phonefunckey.typevalextenumbers",
 			CASE "func_key_destination_type"."name"
 				WHEN 'user' THEN 'user'
@@ -273,6 +276,7 @@ class xivo_application_service_asterisk_user_sql extends xivo_application_abstra
 			LEFT JOIN "func_key_dest_forward" ON func_key_dest_forward.func_key_id = func_key.id
 				LEFT JOIN "extensions" AS "fwd_extensions" ON func_key_dest_forward.extension_id = fwd_extensions.id
 			LEFT JOIN "func_key_dest_park_position" ON func_key_dest_park_position.func_key_id = func_key.id
+			LEFT JOIN "func_key_dest_features" ON func_key_dest_features.func_key_id = func_key.id
 		WHERE "func_key_mapping"."template_id" = ${template_id}
 		ORDER BY "func_key_mapping"."position" ASC
 EOQ;

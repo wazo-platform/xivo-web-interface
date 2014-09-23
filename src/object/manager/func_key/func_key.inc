@@ -33,6 +33,7 @@ class func_key_manager extends manager_abstract
 	protected $_func_key_dest_conference = false;
 	protected $_func_key_dest_forward = false;
 	protected $_func_key_dest_park_position = false;
+	protected $_func_key_dest_features = false;
 	protected $_func_key_mapping	= false;
 	protected $_func_key_template	= false;
 
@@ -54,6 +55,7 @@ class func_key_manager extends manager_abstract
 		$this->_func_key_dest_conference = $this->_service->get_module('ipbx','func_key_dest_conference');
 		$this->_func_key_dest_forward = $this->_service->get_module('ipbx','func_key_dest_forward');
 		$this->_func_key_dest_park_position = $this->_service->get_module('ipbx', 'func_key_dest_park_position');
+		$this->_func_key_dest_features = $this->_service->get_module('ipbx', 'func_key_dest_features');
 		$this->_func_key_mapping = $this->_service->get_module('ipbx','func_key_mapping');
 		$this->_func_key_template = $this->_service->get_module('ipbx','func_key_template');
 	}
@@ -113,6 +115,17 @@ class func_key_manager extends manager_abstract
 			dwho_report::push('error', 'did not find extension for service of type '.$service_type);
 			return(false);
 		}
+		return($dst_id);
+	}
+
+	public function get_dst_id_for_features($feature_type)
+	{
+		$dst_id = $this->_func_key_dest_features->get_func_key_id_by_feature_type($feature_type);
+		if ($dst_id === false) {
+			dwho_report::push('error', 'did not find feature func key of type '.$feature_type);
+			return(false);
+		}
+
 		return($dst_id);
 	}
 
