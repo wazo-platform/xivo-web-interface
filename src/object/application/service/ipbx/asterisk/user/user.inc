@@ -1507,6 +1507,10 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		{
 			return('service');
 		}
+		elseif($ref['typevalextenumbers'] == 'parkpos')
+		{
+			return('park_position');
+		}
 		return(false);
 	}
 
@@ -1530,6 +1534,10 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			$extension_id = $this->_func_key_manager->get_dst_id_for_extension($forward_type);
 			$number = $data['exten'];
 			$func_key_id = $this->_func_key_manager->add_dst_for_forward($extension_id, $number);
+			break;
+		case 'park_position':
+			$park_position = $data['exten'];
+			$func_key_id = $this->_func_key_manager->add_dst_for_park_position($park_position);
 			break;
 		default:
 			dwho_report::push('error', "func key of type '".$destination."' is unknown");

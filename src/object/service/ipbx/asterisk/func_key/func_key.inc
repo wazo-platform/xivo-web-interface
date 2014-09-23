@@ -107,6 +107,10 @@ class xivo_service_asterisk_func_key extends xivo_service_asterisk_abstract
 						$exten = $modphonefunckey->build_progfunckey($user_id, $extension['exten'], $ref['number']);
 					}
 					break;
+				case 'park_position':
+					if ($ref['park_position'] !== false)
+						$exten = $ref['park_position'];
+					break;
 			}
 
 			$conf[$idx]['value'] = $exten;
