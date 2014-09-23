@@ -224,6 +224,10 @@ $array['func_key_dest_forward'] = array();
 $array['func_key_dest_forward']['table'] = 'func_key_dest_forward';
 $array['func_key_dest_forward']['primary'] = array('func_key_id' => '', 'extension_id' => '', 'destination_type_id' => '');
 
+$array['func_key_dest_park_position'] = array();
+$array['func_key_dest_park_position']['table'] = 'func_key_dest_park_position';
+$array['func_key_dest_park_position']['primary'] = array('func_key_id' => '', 'destination_type_id' => '');
+
 $array['general'] = array();
 $array['general']['table'] = 'general';
 $array['general']['primary'] = array('id' => '');
