@@ -202,6 +202,9 @@ $array['module']['func_key_dest_forward']['datastorage'] = true;
 $array['module']['func_key_dest_park_position'] = array();
 $array['module']['func_key_dest_park_position']['datastorage'] = true;
 
+$array['module']['func_key_dest_features'] = array();
+$array['module']['func_key_dest_features']['datastorage'] = true;
+
 $array['module']['func_key_mapping'] = array();
 $array['module']['func_key_mapping']['datastorage'] = true;
 
