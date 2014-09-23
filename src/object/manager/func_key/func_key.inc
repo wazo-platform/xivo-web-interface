@@ -149,7 +149,7 @@ class func_key_manager extends manager_abstract
 
 		$where = array(
 			'template_id' => (int) $data['template_id'],
-			'func_key_id' => (int)$func_key_id
+			'func_key_id' => (int) $data['func_key_id']
 		);
 		if (($this->_func_key_mapping->get_where($where)))
 			$this->_func_key_mapping->edit($where, $rs);
@@ -168,12 +168,12 @@ class func_key_manager extends manager_abstract
 		foreach($func_keys as $func_key) {
 			if($func_key['destination_type_name'] === 'forward')
 			{
-				if($this->delete_dst_for_forward($func_key['func_key_id']) === false)
+				if($this->delete_dst_for_forward($func_key['id']) === false)
 					return(false);
 			}
 			elseif ($func_key['destination_type_name'] === 'park_position')
 			{
-				if($this->delete_dst_for_park_position($func_key['func_key_id']) === false)
+				if($this->delete_dst_for_park_position($func_key['id']) === false)
 					return(false);
 			}
 		}
