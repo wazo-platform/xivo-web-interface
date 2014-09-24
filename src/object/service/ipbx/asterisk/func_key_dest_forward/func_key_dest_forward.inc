@@ -30,10 +30,10 @@ class xivo_service_asterisk_func_key_dest_forward extends xivo_service_asterisk_
 	public function __construct(&$sre,&$dso)
 	{
 		if(is_object($sre) === false)
-			trigger_error('Invalid service in '.__CLASS__,E_service_ERROR);
+			trigger_error('Invalid service in '.__CLASS__,E_USER_ERROR);
 
 		if(is_object($dso) === false)
-			trigger_error('Invalid datastorage in '.__CLASS__,E_service_ERROR);
+			trigger_error('Invalid datastorage in '.__CLASS__,E_USER_ERROR);
 
 		$this->_sre = &$sre;
 		$this->_dso = &$dso;
