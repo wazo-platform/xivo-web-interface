@@ -18,10 +18,10 @@
 
 xivo_service_asterisk::required(array('abstract','abstract.inc'),true);
 
-class xivo_service_asterisk_func_key_dest_forward extends xivo_service_asterisk_abstract
+class xivo_service_asterisk_func_key_dest_features extends xivo_service_asterisk_abstract
 {
 	var $_dso			= null;
-	var $_name			= 'func_key_dest_forward';
+	var $_name			= 'func_key_dest_features';
 	var $_filter		= false;
 	var $_origin		= false;
 	var $_origin_list	= false;
@@ -43,11 +43,27 @@ class xivo_service_asterisk_func_key_dest_forward extends xivo_service_asterisk_
 
 	function _prepare($data)
 	{
-		$data['extension_id'] = (int) $data['extension_id'];
+		$data['features_id'] = (int) $data['features_id'];
 		$data['func_key_id'] = (int) $data['func_key_id'];
 		$data['destination_type_id'] = (int) $data['destination_type_id'];
 		return($data);
 	}
+
+	public function get_func_key_id_by_feature_type($feature_type)
+	{
+		return($this->_dso->get_func_key_id_by_feature_type($feature_type));
+	}
+
+	public function get_exten_by_features_id($feature_id)
+	{
+		return($this->_dso->get_exten_by_features_id($feature_id));
+	}
+
+	public function get_key_type_by_features_id($feature_id)
+	{
+		return($this->_dso->get_key_type_by_features_id($feature_id));
+	}
+
 }
 
 ?>

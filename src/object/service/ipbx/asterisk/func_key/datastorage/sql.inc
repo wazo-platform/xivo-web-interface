@@ -91,6 +91,18 @@ class xivo_service_asterisk_func_key_sql extends xivo_service_asterisk_abstract_
 					null,
 					array('forward_id' => 'extension_id', 'number' => 'number'));
 
+		# PARK POSITION FUNC_KEY
+		$this->_dso->leftjoin('func_key_dest_park_position',
+					'func_key_dest_park_position.func_key_id = func_key.id',
+					null,
+                    array('park_position'));
+
+		# FEATURES FUNC_KEY
+		$this->_dso->leftjoin('func_key_dest_features',
+					'func_key_dest_features.func_key_id = func_key.id',
+					null,
+					array('features_id'));
+
 		$this->_dso->new_order(array('position' => SORT_ASC), null, 'func_key_mapping');
 
 		$r = $this->_dso->select_all();

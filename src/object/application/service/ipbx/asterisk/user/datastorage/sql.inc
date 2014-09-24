@@ -41,6 +41,8 @@ class xivo_application_service_asterisk_user_sql extends xivo_application_abstra
 				'func_key_dest_conference'	=> '',
 				'func_key_dest_service'	=> '',
 				'func_key_dest_forward'	=> '',
+				'func_key_dest_park_position'	=> '',
+				'func_key_dest_features'	=> '',
 				'func_key_destination_type'	=> '',
 				'func_key_mapping'	=> '',
 				'func_key_template'	=> '',
@@ -230,27 +232,34 @@ class xivo_application_service_asterisk_user_sql extends xivo_application_abstra
 			"queuefeatures"."name" AS "queuefeatures.name",
 			"meetmefeatures"."id" AS "meetmefeatures.id",
 			"meetmefeatures"."name" AS "meetmefeatures.name",
+			COALESCE(
+				"func_key_dest_forward"."number",
+				"func_key_dest_park_position"."park_position"
+			) AS "phonefunckey.exten",
+			CASE "func_key_destination_type"."name"
+				WHEN 'service' THEN "service_extensions"."type"
+				WHEN 'forward' THEN "fwd_extensions"."type"
+				WHEN 'park_position' THEN 'generalfeatures'
+				WHEN 'features' THEN 'generalfeatures'
+			END AS "phonefunckey.typeextenumbers",
+			CASE "func_key_destination_type"."name"
+				WHEN 'service' THEN "service_extensions"."typeval"
+				WHEN 'forward' THEN "fwd_extensions"."typeval"
+				WHEN 'park_position' THEN 'parkpos'
+				WHEN 'features' THEN 'parkext'
+			END AS "phonefunckey.typevalextenumbers",
 			CASE "func_key_destination_type"."name"
 				WHEN 'user' THEN 'user'
 				WHEN 'group' THEN 'group'
 				WHEN 'queue' THEN 'queue'
 				WHEN 'conference' THEN 'meetme'
-				END AS "phonefunckey.typeextenumbersright",
+			END AS "phonefunckey.typeextenumbersright",
 			COALESCE(
 				"func_key_dest_user"."user_id",
 				"func_key_dest_group"."group_id",
 				"func_key_dest_queue"."queue_id",
 				"func_key_dest_conference"."conference_id"
-			) AS "phonefunckey.typevalextenumbersright",
-			COALESCE(
-				"service_extensions"."type",
-				"fwd_extensions"."type"
-			) AS "phonefunckey.typeextenumbers",
-			COALESCE(
-				"service_extensions"."typeval",
-				"fwd_extensions"."typeval"
-			) AS "phonefunckey.typevalextenumbers",
-			"func_key_dest_forward"."number" AS "phonefunckey.exten"
+			) AS "phonefunckey.typevalextenumbersright"
 		FROM "func_key_mapping"
 		INNER JOIN "func_key" ON func_key.id = func_key_mapping.func_key_id
 			INNER JOIN "func_key_destination_type" ON func_key_destination_type.id = func_key.destination_type_id
@@ -264,8 +273,10 @@ class xivo_application_service_asterisk_user_sql extends xivo_application_abstra
 				LEFT JOIN "meetmefeatures" ON func_key_dest_conference.conference_id = meetmefeatures.id
 			LEFT JOIN "func_key_dest_service" ON func_key_dest_service.func_key_id = func_key.id
 				LEFT JOIN "extensions" AS "service_extensions" ON func_key_dest_service.extension_id = service_extensions.id
-				LEFT JOIN "func_key_dest_forward" ON func_key_dest_forward.func_key_id = func_key.id
+			LEFT JOIN "func_key_dest_forward" ON func_key_dest_forward.func_key_id = func_key.id
 				LEFT JOIN "extensions" AS "fwd_extensions" ON func_key_dest_forward.extension_id = fwd_extensions.id
+			LEFT JOIN "func_key_dest_park_position" ON func_key_dest_park_position.func_key_id = func_key.id
+			LEFT JOIN "func_key_dest_features" ON func_key_dest_features.func_key_id = func_key.id
 		WHERE "func_key_mapping"."template_id" = ${template_id}
 		ORDER BY "func_key_mapping"."position" ASC
 EOQ;

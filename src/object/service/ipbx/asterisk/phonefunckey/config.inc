@@ -186,7 +186,6 @@ $array['type']['extenfeatures-agentstaticlogoff']['progfunckey'] = true;
 $array['type']['generalfeatures-parkext'] = array();
 $array['type']['generalfeatures-parkext']['category'] = 'extension-parking';
 $array['type']['generalfeatures-parkext']['name'] = 'generalfeatures-parkext';
-$array['type']['generalfeatures-parkext']['destination'] = true;
 $array['type']['generalfeatures-parkext']['extension'] = true;
 
 $array['type']['generalfeatures-parkpos'] = array();

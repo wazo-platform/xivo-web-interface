@@ -1507,11 +1507,21 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		{
 			return('service');
 		}
+		elseif($ref['typevalextenumbers'] == 'parkext')
+		{
+			return('features');
+		}
+		elseif($ref['typevalextenumbers'] == 'parkpos')
+		{
+			return('park_position');
+		}
 		return(false);
 	}
 
 	private function _add_func_key_v2($destination, $data)
 	{
+		$type = 'speeddial';
+
 		switch($destination) {
 		case 'user':
 		case 'group':
@@ -1531,6 +1541,15 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			$number = $data['exten'];
 			$func_key_id = $this->_func_key_manager->add_dst_for_forward($extension_id, $number);
 			break;
+		case 'park_position':
+			$park_position = $data['exten'];
+			$func_key_id = $this->_func_key_manager->add_dst_for_park_position($park_position);
+			break;
+		case 'features':
+			$type = 'forward';
+			$feature_type = $data['typevalextenumbers'];
+			$func_key_id = $this->_func_key_manager->get_dst_id_for_features($feature_type);
+			break;
 		default:
 			dwho_report::push('error', "func key of type '".$destination."' is unknown");
 			return(false);
@@ -1543,7 +1562,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 
 		$fk = array();
 		$fk['func_key_id'] = $func_key_id;
-		$fk['type'] = 'speeddial';
+		$fk['type'] = $type;
 		$fk['position'] = (int) $data['fknum'];
 		$fk['blf'] = (bool) $data['supervision'];
 		$fk['label'] = (string) $data['label'];

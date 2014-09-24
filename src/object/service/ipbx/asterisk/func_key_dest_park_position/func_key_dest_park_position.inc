@@ -18,10 +18,10 @@
 
 xivo_service_asterisk::required(array('abstract','abstract.inc'),true);
 
-class xivo_service_asterisk_func_key_dest_forward extends xivo_service_asterisk_abstract
+class xivo_service_asterisk_func_key_dest_park_position extends xivo_service_asterisk_abstract
 {
 	var $_dso			= null;
-	var $_name			= 'func_key_dest_forward';
+	var $_name			= 'func_key_dest_park_position';
 	var $_filter		= false;
 	var $_origin		= false;
 	var $_origin_list	= false;
@@ -43,7 +43,7 @@ class xivo_service_asterisk_func_key_dest_forward extends xivo_service_asterisk_
 
 	function _prepare($data)
 	{
-		$data['extension_id'] = (int) $data['extension_id'];
+		$data['park_position'] = (string) $data['park_position'];
 		$data['func_key_id'] = (int) $data['func_key_id'];
 		$data['destination_type_id'] = (int) $data['destination_type_id'];
 		return($data);
