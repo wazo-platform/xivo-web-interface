@@ -26,10 +26,10 @@ class xivo_service_asterisk_func_key_dest_paging_sql extends xivo_service_asteri
 	{
 		$this->_dso->new_select('func_key_dest_paging', array('func_key_id'));
 
-		$this->_dso->where(array('number' => $number), 'paging');
-
 		$this->_dso->innerjoin('paging',
 					'func_key_dest_paging.paging_id = paging.id');
+
+		$this->_dso->where(array('number' => $number), 'paging');
 
 		$r = $this->_dso->select_singlecolumn();
 		if(isset($r[0]) === false)
