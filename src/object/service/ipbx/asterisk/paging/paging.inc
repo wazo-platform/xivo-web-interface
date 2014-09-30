@@ -27,6 +27,7 @@ class xivo_service_asterisk_paging extends xivo_service_asterisk_abstract
 	var $_filter	= false;
 	var $_origin	= false;
 	var $_identity	= false;
+	protected $_func_key_manager = false;
 
 	public function __construct(&$sre,&$dso)
 	{
@@ -40,6 +41,10 @@ class xivo_service_asterisk_paging extends xivo_service_asterisk_abstract
 		$this->_dso = &$dso;
 
 		$this->_load_config();
+
+		if(($_MGR = &dwho_gct::get('xivo_manager')) === false
+		|| ($this->_func_key_manager = &$_MGR->get_ressource('func_key')) === false)
+			return false;
 	}
 
 	function _prepare($data)
@@ -62,7 +67,13 @@ class xivo_service_asterisk_paging extends xivo_service_asterisk_abstract
 		if(is_array($arr) === false)
 			return(false);
 
-		return(parent::add($arr,$id));
+		if(($paging_id = parent::add($arr,$id)) === false
+		|| $this->_add_func_key_dest($paging_id) === false)
+		{
+			return(false);
+		}
+
+		return($paging_id);
 	}
 
 	function edit($id,$arr,$disable=null)
@@ -71,6 +82,31 @@ class xivo_service_asterisk_paging extends xivo_service_asterisk_abstract
 			return(false);
 
 		return(parent::edit($id,$arr,$disable));
+	}
+
+	private function _add_func_key_dest($paging_id)
+	{
+		if (! $this->_func_key_manager->add_dst_for_paging($paging_id))
+			return(false);
+
+		return(true);
+	}
+
+	function delete($id,$disable=null)
+	{
+		if($id === false
+		|| $this->_delete_func_key_dest($id) === false)
+			return(false);
+
+		return(parent::delete($id,$disable));
+	}
+
+	private function _delete_func_key_dest($paging_id)
+	{
+		if($this->_func_key_manager->delete_dst_for_paging($paging_id) === false)
+			return(false);
+
+		return(true);
 	}
 }
 
