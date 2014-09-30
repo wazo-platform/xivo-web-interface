@@ -1685,6 +1685,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			}
 		}
 
+		$this->_line->_status = 'add';
 		$this->_line->_reverse_add();
 
 		return(true);
@@ -2243,6 +2244,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			}
 		}
 
+		$this->_line->_status = 'edit';
 		$this->_line->_reverse_edit();
 
 		return(true);
