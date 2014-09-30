@@ -192,7 +192,7 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		if (((empty($this->_info) === true)
 			|| (isset($this->_info[$name]) && $this->_info[$name] === false)
 			|| (isset($this->_info[$name]) && isset($this->_info[$name]['exten']) && $this->_info[$name]['exten'] !== $exten))
-		&& $this->_service->exten_is_available_for_context_type($exten, $context, $type) === false)
+		&& $this->_service->exten_is_available_for_context($exten, $context) === false)
 		{
 			dwho_report::push('error', dwho_i18n::babelfish('exten_already_exist', array($exten.'@'.$context)));
 			$this->_set_error($name,'exten_already_exist');
