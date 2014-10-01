@@ -105,6 +105,23 @@ var xivo_phonefunckey_suggest_meetme = new dwho.suggest({
 	'requestor' : xivo_http_search_meetme
 });
 
+function xivo_http_search_paging(dwsptr) {
+	new dwho.http('/service/ipbx/ui.php/pbx_settings/users/paging/search/?'
+			+ dwho_sess_str, {
+		'callbackcomplete' : function(xhr) {
+			dwsptr.set(xhr, dwsptr.get_search_value());
+		},
+		'method' : 'post',
+		'cache' : false
+	}, {
+		'search' : dwsptr.get_search_value()
+	}, true);
+}
+
+var xivo_phonefunckey_suggest_paging = new dwho.suggest({
+	'requestor' : xivo_http_search_paging
+});
+
 function xivo_phonefunckey_suggest_event_agent() {
 	if ((rs = this.id.match(/^it-phonefunckey-([a-z0-9-_]+)-suggest-(\d+)$/)) === null)
 		return (false);
@@ -150,11 +167,21 @@ function xivo_phonefunckey_suggest_event_meetme() {
 	xivo_phonefunckey_suggest_meetme.set_field(this.id);
 }
 
+function xivo_phonefunckey_suggest_event_paging() {
+	if ((rs = this.id.match(/^it-phonefunckey-([a-z0-9-_]+)-suggest-(\d+)$/)) === null)
+		return (false);
+
+	xivo_phonefunckey_suggest_paging.set_option('result_field',
+			'it-phonefunckey-' + rs[1] + '-typeval-' + rs[2]);
+	xivo_phonefunckey_suggest_paging.set_field(this.id);
+}
+
 var xivo_phonefunckey_suggest_type = {
 	'user' : xivo_phonefunckey_suggest_event_user,
 	'group' : xivo_phonefunckey_suggest_event_group,
 	'queue' : xivo_phonefunckey_suggest_event_queue,
 	'meetme' : xivo_phonefunckey_suggest_event_meetme,
+	'extenfeatures-paging' : xivo_phonefunckey_suggest_event_paging,
 	'extenfeatures-agentstaticlogtoggle' : xivo_phonefunckey_suggest_event_agent,
 	'extenfeatures-agentstaticlogin' : xivo_phonefunckey_suggest_event_agent,
 	'extenfeatures-agentstaticlogoff' : xivo_phonefunckey_suggest_event_agent

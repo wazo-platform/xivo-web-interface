@@ -142,6 +142,7 @@ class xivo_application_service_asterisk_paging extends xivo_application_asterisk
 			$ref = &$r[$rs[$i]['id']];
 
 			$ref['commented'] = (bool) $ref['commented'];
+			$ref['identity'] = (string) $ref['number'];
 		}
 
 		if(empty($r) === true)

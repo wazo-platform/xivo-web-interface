@@ -67,12 +67,6 @@ class xivo_service_asterisk_phonefunckey extends xivo_service_asterisk_abstract
 			case 'extenfeatures':
 				switch($data['typevalextenumbers'])
 				{
-					case 'paging':
-						$data['extension'] = true;
-						$data['exten'] = $data['typevalextenumbersright'];
-						$data['type'] = $data['typeextenumbers'].'-'.$data['typevalextenumbers'];
-						$data['typeval'] = $data['typevalextenumbersright'];
-						return($data);
 					case 'bsfilter':
 						$data['type'] = $data['typeextenumbers'].'-'.$data['typevalextenumbers'];
 						$data['typeval'] = $data['typevalextenumbersright'];
@@ -104,6 +98,7 @@ class xivo_service_asterisk_phonefunckey extends xivo_service_asterisk_abstract
 			case 'user':
 			case 'group':
 			case 'queue':
+			case 'paging':
 			case 'meetme':
 				$data['type'] = $data['typeextenumbersright'];
 				$data[$data['typeextenumbersright']] = $data['typeval'] = $data['typevalextenumbersright'];
