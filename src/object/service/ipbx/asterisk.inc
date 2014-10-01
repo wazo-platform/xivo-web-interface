@@ -977,12 +977,11 @@ class xivo_service_asterisk extends xivo_service_abstract
 		return($res);
 	}
 
-	public function exten_is_available_for_context_type($exten, $context, $type)
+	public function exten_is_available_for_context($exten, $context)
 	{
 		$mod = &$this->get_module('extensions');
 		$where = array('context' => $context,
-					   'exten' => $exten,
-					   'type' => $type);
+					   'exten' => $exten);
 
 		if ($mod->get_nb($where) === 0)
 			return(true);
