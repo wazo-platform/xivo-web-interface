@@ -130,5 +130,5 @@ Horaires :
 ; create_schedules
 Créer un horaire
 
-
-
+; hlp_fm_group_timeout
+Saisissez une valeur en secondes (champ vide ou valeur 0 pour désactiver)

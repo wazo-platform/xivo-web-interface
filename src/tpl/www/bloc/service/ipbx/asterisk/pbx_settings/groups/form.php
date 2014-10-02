@@ -90,15 +90,15 @@ else:
 		'</div>';
 endif;
 
-	echo	$form->select(array('desc'	=> $this->bbf('fm_groupfeatures_timeout'),
+	echo	$form->text(array('desc'	=> $this->bbf('fm_groupfeatures_timeout'),
 				    'name'	=> 'groupfeatures[timeout]',
 				    'labelid'	=> 'groupfeatures-timeout',
-				    'key'	=> false,
-				    'bbf'	=> 'fm_groupfeatures_timeout-opt',
-				    'bbfopt'	=> array('argmode' => 'paramvalue'),
+					'size'	=> 15,
+					'help'	=> $this->bbf('hlp_fm_group_timeout'),
 				    'default'	=> $element['groupfeatures']['timeout']['default'],
-				  	'selected'	=> $this->get_var('info','groupfeatures','timeout')),
-			      $element['groupfeatures']['timeout']['value']),
+					'value'	=> $this->get_var('info','groupfeatures','timeout'),
+					'error'	=> $this->bbf_args('error',
+						$this->get_var('error','groupfeatures','timeout')))),
 
 		$form->select(array('desc'	=> $this->bbf('fm_queue_timeout'),
 				    'name'	=> 'queue[timeout]',
