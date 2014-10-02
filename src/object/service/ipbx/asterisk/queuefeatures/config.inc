@@ -75,11 +75,8 @@ $array['element']['announceoverride'] = array();
 $array['element']['announceoverride']['default'] = '';
 
 $array['element']['timeout'] = array();
-$array['element']['timeout']['value'] = array(0,30,60,90,120,180,240,
-					      300,360,420,480,540,
-					      600,900,1200,1500,1800);
-$array['element']['timeout']['default'] = 0;
-$array['element']['timeout']['setdef'] = true;
+$array['element']['timeout']['default'] = '';
+$array['element']['timeout']['null'] = true;
 
 $array['element']['preprocess_subroutine'] = array();
 $array['element']['preprocess_subroutine']['default'] = '';
@@ -117,7 +114,7 @@ $array['filter']['write_caller'] = array('bool' => true);
 $array['filter']['write_calling'] = array('bool' => true);
 $array['filter']['url'] = array('set' => false,'chk' => 2,'cast' => 'sgraph','maxlen' => 255);
 $array['filter']['announceoverride'] = array('set' => false,'chk' => 2,'cast' => 'sgraph','maxlen' => 128);
-$array['filter']['timeout'] = array('key' => array(0,30,60,90,120,180,240,300,360,420,480,540,600,900,1200,1500,1800));
+$array['filter']['timeout'] = array('set' => false,'chk' => 2,'cast' => 'int');
 $array['filter']['preprocess_subroutine'] = array('set' => false,'chk' => 2,'callback' => 'xivo_service_asterisk::chk_context');
 $array['filter']['announce_holdtime'] = array('bool' => true);
 $array['filter']['waittime'] = array('set' => false,'chk' => 2,'key' => array(5,10,15,20,30,40,50,60,120,180,240,300,360,420,480,540,600,900,1200,1500,1800));

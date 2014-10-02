@@ -487,18 +487,15 @@ endif;
 
 <div id="sb-part-application" class="b-nodisplay">
 <?php
-	echo	$form->select(array('desc'	=> $this->bbf('fm_queuefeatures_timeout'),
-				    'name'	=> 'queuefeatures[timeout]',
-				    'labelid' => 'queuefeatures-timeout',
-				    'key'	=> false,
-				    'bbf'	=> 'fm_queuefeatures_timeout-opt',
-				    'bbfopt'	=> array('argmode'	=> 'paramvalue',
-							 'time'		=> array(
-									'from'		=> 'second',
-									'format'	=> '%M%s')),
-				    'default'	=> $element['queuefeatures']['timeout']['default'],
-				    'selected'	=> $this->get_var('info','queuefeatures','timeout')),
-			      $element['queuefeatures']['timeout']['value']),
+
+	echo	$form->text(array('desc'	=> $this->bbf('fm_queuefeatures_timeout'),
+					'name'	=> 'queuefeatures[timeout]',
+					'labelid' => 'queuefeatures-timeout',
+					'size'	=> 15,
+					'default'	=> $element['queuefeatures']['timeout']['default'],
+					'value'	=> $this->get_var('info','queuefeatures','timeout'),
+					'error'	=> $this->bbf_args('error',
+						$this->get_var('error','queuefeatures','timeout')))),
 
      $form->select(array('desc'  => $this->bbf('fm_queue_timeoutpriority'),
             'name'    => 'queue[timeoutpriority]',
