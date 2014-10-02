@@ -128,6 +128,9 @@ class xivo_service_asterisk_func_key extends xivo_service_asterisk_abstract
 					$extension = $modextensions->get($extension_id);
 					$exten = $modphonefunckey->build_extenfeatures($extension['exten'], $paging['number']);
 					break;
+				case 'custom':
+					$exten = $ref['exten'];
+					break;
 			}
 
 			$conf[$idx]['value'] = $exten;

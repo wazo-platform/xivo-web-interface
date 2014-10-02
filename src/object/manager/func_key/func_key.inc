@@ -35,6 +35,7 @@ class func_key_manager extends manager_abstract
 	protected $_func_key_dest_park_position = false;
 	protected $_func_key_dest_paging = false;
 	protected $_func_key_dest_features = false;
+	protected $_func_key_dest_custom = false;
 	protected $_func_key_mapping	= false;
 	protected $_func_key_template	= false;
 
@@ -58,6 +59,7 @@ class func_key_manager extends manager_abstract
 		$this->_func_key_dest_park_position = $this->_service->get_module('ipbx', 'func_key_dest_park_position');
 		$this->_func_key_dest_paging = $this->_service->get_module('ipbx', 'func_key_dest_paging');
 		$this->_func_key_dest_features = $this->_service->get_module('ipbx', 'func_key_dest_features');
+		$this->_func_key_dest_custom = $this->_service->get_module('ipbx', 'func_key_dest_custom');
 		$this->_func_key_mapping = $this->_service->get_module('ipbx','func_key_mapping');
 		$this->_func_key_template = $this->_service->get_module('ipbx','func_key_template');
 	}
@@ -186,6 +188,11 @@ class func_key_manager extends manager_abstract
 			elseif ($func_key['destination_type_name'] === 'park_position')
 			{
 				if($this->delete_dst_for_park_position($func_key['id']) === false)
+					return(false);
+			}
+			elseif ($func_key['destination_type_name'] === 'custom')
+			{
+				if($this->delete_dst_for_custom($func_key['id']) === false)
 					return(false);
 			}
 		}
@@ -469,6 +476,44 @@ class func_key_manager extends manager_abstract
 		return(true);
 	}
 
+	public function add_dst_for_custom($exten)
+	{
+		$fk_type_id = $this->get_type_id_by_name('speeddial');
+		$fk_dst_type_id = $this->get_destination_type_id_by_name('custom');
+
+		if($fk_type_id === false || $fk_dst_type_id === false)
+			return(false);
+
+		$func_key = array(
+			'type_id' => (int) $fk_type_id,
+			'destination_type_id' => (int) $fk_dst_type_id
+		);
+
+		if(($rs = $this->_func_key->chk_values($func_key)) === false
+		|| ($func_key_id = $this->_func_key->add($rs)) === false)
+			return(false);
+
+		$func_key_dest = array(
+			'func_key_id' => (int) $func_key_id,
+			'destination_type_id' => (int) $fk_dst_type_id,
+			'exten' => $exten,
+		);
+
+		$rs = $this->_func_key_dest_custom->chk_values($func_key_dest);
+		if($rs === false)
+			return(false);
+
+		if ($this->_func_key_dest_custom->add($rs) === false)
+			return(false);
+
+		return((int) $func_key_id);
+	}
+
+	public function delete_dst_for_custom($func_key_id)
+	{
+		return($this->_delete_func_key((int) $func_key_id, 'custom'));
+	}
+
 	private function _delete_func_key($func_key_id, $dst_type)
 	{
 		$where_fk_id = array('func_key_id' => $func_key_id);
@@ -508,6 +553,10 @@ class func_key_manager extends manager_abstract
 				break;
 			case 'paging':
 				if ($this->_func_key_dest_paging->delete_where($where_func_key_dest) === false)
+					return(false);
+				break;
+			case 'custom':
+				if ($this->_func_key_dest_custom->delete_where($where_func_key_dest) === false)
 					return(false);
 				break;
 		}

@@ -1522,6 +1522,11 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		{
 			return('paging');
 		}
+		elseif( ($ref['typeextenumbers'] === null || $ref['typeextenumbers'] === '')
+				&& ($ref['typevalextenumbers'] === null || $ref['typevalextenumbers'] === ''))
+		{
+			return('custom');
+		}
 		return(false);
 	}
 
@@ -1557,6 +1562,10 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			$type = 'forward';
 			$feature_type = $data['typevalextenumbers'];
 			$func_key_id = $this->_func_key_manager->get_dst_id_for_features($feature_type);
+			break;
+		case 'custom':
+			$value = $data['exten'];
+			$func_key_id = $this->_func_key_manager->add_dst_for_custom($value);
 			break;
 		default:
 			dwho_report::push('error', "func key of type '".$destination."' is unknown");
