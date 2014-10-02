@@ -232,6 +232,10 @@ $array['func_key_dest_features'] = array();
 $array['func_key_dest_features']['table'] = 'func_key_dest_features';
 $array['func_key_dest_features']['primary'] = array('func_key_id' => '', 'features_id' => '', 'destination_type_id' => '');
 
+$array['func_key_dest_paging'] = array();
+$array['func_key_dest_paging']['table'] = 'func_key_dest_paging';
+$array['func_key_dest_paging']['primary'] = array('func_key_id' => '', 'paging_id' => '', 'destination_type_id' => '');
+
 $array['general'] = array();
 $array['general']['table'] = 'general';
 $array['general']['primary'] = array('id' => '');

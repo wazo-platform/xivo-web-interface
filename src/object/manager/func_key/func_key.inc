@@ -33,6 +33,7 @@ class func_key_manager extends manager_abstract
 	protected $_func_key_dest_conference = false;
 	protected $_func_key_dest_forward = false;
 	protected $_func_key_dest_park_position = false;
+	protected $_func_key_dest_paging = false;
 	protected $_func_key_dest_features = false;
 	protected $_func_key_mapping	= false;
 	protected $_func_key_template	= false;
@@ -55,6 +56,7 @@ class func_key_manager extends manager_abstract
 		$this->_func_key_dest_conference = $this->_service->get_module('ipbx','func_key_dest_conference');
 		$this->_func_key_dest_forward = $this->_service->get_module('ipbx','func_key_dest_forward');
 		$this->_func_key_dest_park_position = $this->_service->get_module('ipbx', 'func_key_dest_park_position');
+		$this->_func_key_dest_paging = $this->_service->get_module('ipbx', 'func_key_dest_paging');
 		$this->_func_key_dest_features = $this->_service->get_module('ipbx', 'func_key_dest_features');
 		$this->_func_key_mapping = $this->_service->get_module('ipbx','func_key_mapping');
 		$this->_func_key_template = $this->_service->get_module('ipbx','func_key_template');
@@ -126,6 +128,16 @@ class func_key_manager extends manager_abstract
 			return(false);
 		}
 
+		return($dst_id);
+	}
+
+	public function get_dst_id_for_paging($number)
+	{
+		$dst_id = $this->_func_key_dest_paging->get_func_key_id_by_number($number);
+		if($dst_id == false) {
+			dwho_report::push('error', 'did not find paging func key with number '.$number);
+			return(false);
+		}
 		return($dst_id);
 	}
 
@@ -422,6 +434,41 @@ class func_key_manager extends manager_abstract
 		return($this->_delete_func_key((int) $func_key_id, 'park_position'));
 	}
 
+	public function add_dst_for_paging($paging_id)
+	{
+		$fk_type_id = $this->get_type_id_by_name('speeddial');
+		$fk_dst_type_id = $this->get_destination_type_id_by_name('paging');
+
+		$func_key = array(
+			'type_id' => (int) $fk_type_id,
+			'destination_type_id' => (int) $fk_dst_type_id
+		);
+
+		if(($rs = $this->_func_key->chk_values($func_key)) === false
+		|| ($func_key_id = $this->_func_key->add($rs)) === false)
+			return(false);
+
+		$func_key_dest = array(
+			'paging_id' => (int) $paging_id,
+			'func_key_id' => (int) $func_key_id,
+			'destination_type_id' => (int) $fk_dst_type_id
+		);
+
+		if (($rs = $this->_func_key_dest_paging->chk_values($func_key_dest)) === false
+		|| $this->_func_key_dest_paging->add($rs) === false)
+			return(false);
+
+		return((int) $func_key_id);
+	}
+
+	public function delete_dst_for_paging($paging_id)
+	{
+		if (($func_key_id = $this->_func_key->get_func_key_id_with_dest_type_id('paging', $paging_id)))
+			$this->_delete_func_key((int) $func_key_id, 'paging');
+
+		return(true);
+	}
+
 	private function _delete_func_key($func_key_id, $dst_type)
 	{
 		$where_fk_id = array('func_key_id' => $func_key_id);
@@ -457,6 +504,10 @@ class func_key_manager extends manager_abstract
 				break;
 			case 'park_position':
 				if ($this->_func_key_dest_park_position->delete_where($where_func_key_dest) === false)
+					return(false);
+				break;
+			case 'paging':
+				if ($this->_func_key_dest_paging->delete_where($where_func_key_dest) === false)
 					return(false);
 				break;
 		}
