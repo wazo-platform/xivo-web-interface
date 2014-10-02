@@ -492,6 +492,7 @@ endif;
 					'name'	=> 'queuefeatures[timeout]',
 					'labelid' => 'queuefeatures-timeout',
 					'size'	=> 15,
+					'help'	=> $this->bbf('hlp_fm_queue_timeout'),
 					'default'	=> $element['queuefeatures']['timeout']['default'],
 					'value'	=> $this->get_var('info','queuefeatures','timeout'),
 					'error'	=> $this->bbf_args('error',

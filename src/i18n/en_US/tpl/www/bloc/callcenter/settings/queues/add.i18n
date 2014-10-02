@@ -512,6 +512,9 @@ Max number of waiting calls to play position announce:
 ; fm_queue_defaultrule
 Penalties applied:
 
+; hlp_fm_queue_timeout
+In seconds (empty field or 0 to disable)
+
 ; hlp_fm_queue_timeoutpriority
 Asterisk config: timeoutpriority
 

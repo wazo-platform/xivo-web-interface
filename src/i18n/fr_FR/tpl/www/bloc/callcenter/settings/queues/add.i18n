@@ -428,6 +428,9 @@ Nombre limite d'appel en attente pour l'annonce de position:
 ; fm_queue_defaultrule
 Pénalités appliquées:
 
+; hlp_fm_queue_timeout
+Saisissez une valeur en secondes (champ vide ou valeur 0 pour désactiver)
+
 ; hlp_fm_queue_timeoutpriority
 Config asterisk: timeoutpriority
 
