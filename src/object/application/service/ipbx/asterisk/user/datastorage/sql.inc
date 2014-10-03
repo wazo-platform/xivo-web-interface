@@ -242,12 +242,16 @@ class xivo_application_service_asterisk_user_sql extends xivo_application_abstra
 				"func_key_dest_park_position"."park_position",
 				"func_key_dest_custom"."exten"
 			) AS "phonefunckey.exten",
-			CASE "func_key_destination_type"."name"
-				WHEN 'service' THEN "service_extensions"."type"
-				WHEN 'forward' THEN "fwd_extensions"."type"
-				WHEN 'park_position' THEN 'generalfeatures'
-				WHEN 'features' THEN 'generalfeatures'
-				WHEN 'paging' THEN 'extenfeatures'
+
+			CASE
+				WHEN "func_key_destination_type"."name" = 'service'			THEN "service_extensions"."type"
+				WHEN "func_key_destination_type"."name" = 'forward'			THEN "fwd_extensions"."type"
+				WHEN "func_key_destination_type"."name" = 'park_position'	THEN 'generalfeatures'
+				WHEN "func_key_destination_type"."name" = 'features'
+					AND "func_key_type"."name" = 'forward'					THEN 'generalfeatures'
+				WHEN "func_key_destination_type"."name" = 'features'
+					AND "func_key_type"."name" = 'dtmf'						THEN 'featuremap'
+				WHEN "func_key_destination_type"."name" = 'paging'			THEN 'extenfeatures'
 			END AS "phonefunckey.typeextenumbers",
 
 			CASE "func_key_destination_type"."name"

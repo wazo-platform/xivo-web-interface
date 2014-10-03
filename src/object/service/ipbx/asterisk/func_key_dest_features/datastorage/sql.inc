@@ -22,8 +22,11 @@ class xivo_service_asterisk_func_key_dest_features_sql extends xivo_service_aste
 {
 	var $_disable		= null;
 
-	var $CATEGORY = 'general';
-	var $_keytypes = array('parkext' => 'park');
+	var $_keytypes = array(
+		'parkext' => 'park',
+		'blindxfer' => 'speeddial',
+		'atxfer' => 'speeddial',
+	);
 	var $_exten_regex = '/[0-9\*#]+/';
 
 	public function get_func_key_id_by_feature_type($feature_type)
@@ -33,8 +36,7 @@ class xivo_service_asterisk_func_key_dest_features_sql extends xivo_service_aste
 		$this->_dso->innerjoin('features',
 					'func_key_dest_features.features_id = features.id');
 
-		$this->_dso->where(array('category' => $this->CATEGORY,
-								 'var_name' => $feature_type), 'features');
+		$this->_dso->where(array('var_name' => $feature_type), 'features');
 
 		$r = $this->_dso->select_singlecolumn();
 

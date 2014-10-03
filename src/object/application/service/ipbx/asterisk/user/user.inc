@@ -1510,7 +1510,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		{
 			return('service');
 		}
-		elseif($ref['typevalextenumbers'] == 'parkext')
+		elseif($ref['typeextenumbers'] == 'featuremap' || $ref['typevalextenumbers'] == 'parkext')
 		{
 			return('features');
 		}
@@ -1530,9 +1530,22 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		return(false);
 	}
 
+	private function _determine_func_key_type($ref)
+	{
+		if($ref['typeextenumbers'] === 'featuremap')
+		{
+			return('dtmf');
+		}
+		elseif($ref['typevalextenumbers'] == 'parkext')
+		{
+			return('forward');
+		}
+		return('speeddial');
+	}
+
 	private function _add_func_key_v2($destination, $data)
 	{
-		$type = 'speeddial';
+		$type = $this->_determine_func_key_type($data);
 
 		switch($destination) {
 		case 'user':
@@ -1559,7 +1572,6 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			$func_key_id = $this->_func_key_manager->add_dst_for_park_position($park_position);
 			break;
 		case 'features':
-			$type = 'forward';
 			$feature_type = $data['typevalextenumbers'];
 			$func_key_id = $this->_func_key_manager->get_dst_id_for_features($feature_type);
 			break;
