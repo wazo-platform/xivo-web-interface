@@ -265,7 +265,7 @@ class xivo_application_service_asterisk_user_sql extends xivo_application_abstra
 				CAST("func_key_dest_group"."group_id" AS VARCHAR),
 				CAST("func_key_dest_queue"."queue_id" AS VARCHAR),
 				CAST("func_key_dest_conference"."conference_id" AS VARCHAR),
-				"paging"."number"
+				CAST("func_key_dest_paging"."paging_id" AS VARCHAR)
 			) AS "phonefunckey.typevalextenumbersright"
 		FROM "func_key_mapping"
 		INNER JOIN "func_key" ON func_key.id = func_key_mapping.func_key_id

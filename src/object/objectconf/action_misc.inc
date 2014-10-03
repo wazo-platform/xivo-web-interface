@@ -252,6 +252,11 @@ $array['service/ipbx/asterisk/ui/pbx_settings/users/meetme/search'] = array(
 	'define'	=> array('XIVO_LOC_UI_ACL_CATEGORY'		=> 'pbx_settings',
                         'XIVO_LOC_UI_ACL_SUBCATEGORY'	=> 'users',
                         'XIVO_LOC_UI_ACTION'		    => 'search'));
+$array['service/ipbx/asterisk/ui/pbx_settings/users/paging/search'] = array(
+	'path'		=> 'service/ipbx/asterisk/ui/pbx_settings/paging',
+	'define'	=> array('XIVO_LOC_UI_ACL_CATEGORY'		=> 'pbx_settings',
+                        'XIVO_LOC_UI_ACL_SUBCATEGORY'	=> 'users',
+                        'XIVO_LOC_UI_ACTION'		    => 'search'));
 $array['service/ipbx/asterisk/ui/pbx_settings/users/voicemail/search'] = array(
 	'path'		=> 'service/ipbx/asterisk/ui/pbx_settings/voicemail',
 	'define'	=> array('XIVO_LOC_UI_ACTION'	=> 'search'));

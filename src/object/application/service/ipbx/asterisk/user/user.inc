@@ -705,6 +705,9 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 				$res = dwho_array_startswith_key($ref,'agentfeatures.',true);
 				$res['identity'] = $this->_service->identity('agentfeatures',$res,false);
 				break;
+			case 'extenfeatures-paging':
+				$res = dwho_array_startswith_key($ref,'paging.',true);
+				$res['identity'] = $this->_service->identity('paging',$res,false);
 		}
 		return($res);
 	}
@@ -1531,6 +1534,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		case 'group':
 		case 'queue':
 		case 'conference':
+		case 'paging':
 			$value = $data['typevalextenumbersright'];
 			$func_key_id = $this->_func_key_manager->get_fk_id_with_dst($destination, $value);
 			break;
@@ -1553,10 +1557,6 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			$type = 'forward';
 			$feature_type = $data['typevalextenumbers'];
 			$func_key_id = $this->_func_key_manager->get_dst_id_for_features($feature_type);
-			break;
-		case 'paging':
-			$value = $data['typevalextenumbersright'];
-			$func_key_id = $this->_func_key_manager->get_dst_id_for_paging($value);
 			break;
 		default:
 			dwho_report::push('error', "func key of type '".$destination."' is unknown");

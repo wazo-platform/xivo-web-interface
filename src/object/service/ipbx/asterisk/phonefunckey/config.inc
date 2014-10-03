@@ -196,11 +196,9 @@ $array['type']['generalfeatures-parkpos']['supervisable'] = true;
 $array['type']['generalfeatures-parkpos']['extension'] = true;
 
 $array['type']['extenfeatures-paging'] = array();
-$array['type']['extenfeatures-paging']['category'] = 'extension-paging';
-$array['type']['extenfeatures-paging']['name'] = 'extenfeatures-paging';
-$array['type']['extenfeatures-paging']['extension'] = true;
 $array['type']['extenfeatures-paging']['destination'] = true;
-
+$array['type']['extenfeatures-paging']['name'] = 'extenfeatures-paging';
+$array['type']['extenfeatures-paging']['category'] = 'extension-paging';
 
 $array['element'] = array();
 
