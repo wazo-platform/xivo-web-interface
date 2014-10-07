@@ -44,6 +44,7 @@ class xivo_application_service_asterisk_user_sql extends xivo_application_abstra
 				'func_key_dest_park_position'	=> '',
 				'func_key_dest_features'	=> '',
 				'func_key_dest_paging'	=> '',
+				'func_key_dest_custom'	=> '',
 				'func_key_destination_type'	=> '',
 				'func_key_mapping'	=> '',
 				'func_key_template'	=> '',
@@ -237,7 +238,8 @@ class xivo_application_service_asterisk_user_sql extends xivo_application_abstra
 			"paging"."number" as "paging.number",
 			COALESCE(
 				"func_key_dest_forward"."number",
-				"func_key_dest_park_position"."park_position"
+				"func_key_dest_park_position"."park_position",
+				"func_key_dest_custom"."exten"
 			) AS "phonefunckey.exten",
 			CASE "func_key_destination_type"."name"
 				WHEN 'service' THEN "service_extensions"."type"
@@ -286,6 +288,7 @@ class xivo_application_service_asterisk_user_sql extends xivo_application_abstra
 			LEFT JOIN "func_key_dest_features" ON func_key_dest_features.func_key_id = func_key.id
 			LEFT JOIN "func_key_dest_paging" ON func_key_dest_paging.func_key_id = func_key.id
 				LEFT JOIN "paging" ON func_key_dest_paging.paging_id = paging.id
+			LEFT JOIN "func_key_dest_custom" ON func_key_dest_custom.func_key_id = func_key.id
 		WHERE "func_key_mapping"."template_id" = ${template_id}
 		ORDER BY "func_key_mapping"."position" ASC
 EOQ;

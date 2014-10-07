@@ -208,6 +208,9 @@ $array['module']['func_key_dest_features']['datastorage'] = true;
 $array['module']['func_key_dest_paging'] = array();
 $array['module']['func_key_dest_paging']['datastorage'] = true;
 
+$array['module']['func_key_dest_custom'] = array();
+$array['module']['func_key_dest_custom']['datastorage'] = true;
+
 $array['module']['func_key_mapping'] = array();
 $array['module']['func_key_mapping']['datastorage'] = true;
 

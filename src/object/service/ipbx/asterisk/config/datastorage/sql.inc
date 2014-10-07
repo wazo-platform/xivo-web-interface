@@ -236,6 +236,10 @@ $array['func_key_dest_paging'] = array();
 $array['func_key_dest_paging']['table'] = 'func_key_dest_paging';
 $array['func_key_dest_paging']['primary'] = array('func_key_id' => '', 'paging_id' => '', 'destination_type_id' => '');
 
+$array['func_key_dest_custom'] = array();
+$array['func_key_dest_custom']['table'] = 'func_key_dest_custom';
+$array['func_key_dest_custom']['primary'] = array('func_key_id' => '', 'exten' => '', 'destination_type_id' => '');
+
 $array['general'] = array();
 $array['general']['table'] = 'general';
 $array['general']['primary'] = array('id' => '');
