@@ -221,7 +221,7 @@ Désactivée
 Annoncer le temps d'attente:
 
 ; fm_queuefeatures_announce_holdtime
-Annoncer le temps d'attente avant d'entrer dans la file : 
+Annoncer le temps d'attente avant d'entrer dans la file :
 
 ; fm_queue_announce-holdtime-opt(no)
 Non
@@ -379,13 +379,13 @@ Fréquence des annonces périodiques:
 ;;; options 1.8
 
 ; fm_queue_timeoutpriority
-Priorité du temps de sonnerie: 
+Priorité du temps de sonnerie:
 
 ; fm_queue_autofill
-Activer le nouveau système de distribution des appels: 
+Activer le nouveau système de distribution des appels:
 
 ; fm_queue_autopause
-Mettre en pause le membre s'il n'a pas répondu au dernier appel: 
+Mettre en pause le membre s'il n'a pas répondu au dernier appel:
 
 ; fm_queue_autopause-opt(yes)
 Oui
@@ -397,36 +397,39 @@ Non
 Sur toutes les files
 
 ; fm_queue_setinterfacevar
-Définir les variables de plan d'appel MEMBER*: 
+Définir les variables de plan d'appel MEMBER*:
 
 
 ; fm_queue_setqueueentryvar
-Définir les variables de plan d'appel QE*: 
+Définir les variables de plan d'appel QE*:
 
 
 ; fm_queue_setqueuevar
-Définir les variables de plan d'appel QUEUE*: 
+Définir les variables de plan d'appel QUEUE*:
 
 
 ; fm_queue_membermacro
-Macro exécutée à la connexion d'un member: 
+Macro exécutée à la connexion d'un member:
 
 
 ; fm_queue_min-announce-frequency
-Temps minimum entre les annonces de positions et d'attente estimée: 
+Temps minimum entre les annonces de positions et d'attente estimée:
 
 
 ; fm_queue_random-periodic-announce
 Jouer les annonces périodiques dans un ordre aléatoire:
 
 ; fm_queue_announce-position
-Annoncer la position dans la file d'attente: 
+Annoncer la position dans la file d'attente:
 
 ; fm_queue_announce-position-limit
 Nombre limite d'appel en attente pour l'annonce de position:
 
 ; fm_queue_defaultrule
 Pénalités appliquées:
+
+; hlp_fm_queue_timeout
+Saisissez une valeur en secondes (champ vide ou valeur 0 pour désactiver)
 
 ; hlp_fm_queue_timeoutpriority
 Config asterisk: timeoutpriority
@@ -606,13 +609,13 @@ Diversions
 Sur dépassement du temps d'attente estimé
 
 ;  fm_queuefeatures_waittime
-Seuil (temps d'attente estimé) : 
+Seuil (temps d'attente estimé) :
 
 ; fld-diversion-waitratio
 Sur dépassement d'un ratio appels en attente / agents disponibles
 
 ; fm_queuefeatures_waitratio
-Ratio appels en attente / agents disponibles : 
+Ratio appels en attente / agents disponibles :
 
 ; hlp_fm_queuefeatures_waitratio
 Saisissez un pourcentage (par ex. 100 pour 100%)
