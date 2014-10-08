@@ -47,8 +47,8 @@ $array['element']['write_calling']['value'] = array(0,1);
 $array['element']['write_calling']['default'] = 0;
 
 $array['element']['timeout'] = array();
-$array['element']['timeout']['value'] = array(0,5,10,15,20,25,30,35,40,45,50,55,60);
-$array['element']['timeout']['default'] = 0;
+$array['element']['timeout']['default'] = '';
+$array['element']['timeout']['null'] = true;
 
 $array['element']['preprocess_subroutine'] = array();
 $array['element']['preprocess_subroutine']['default'] = '';
@@ -62,7 +62,7 @@ $array['filter']['transfer_user'] = array('bool' => true);
 $array['filter']['transfer_call'] = array('bool' => true);
 $array['filter']['write_caller'] = array('bool' => true);
 $array['filter']['write_calling'] = array('bool' => true);
-$array['filter']['timeout'] = array('cast' => 'uint','between' => array(0,60,5));
+$array['filter']['timeout'] = array('set' => false,'chk' => 2,'cast' => 'int');
 $array['filter']['preprocess_subroutine'] = array('set' => false,'chk' => 2,'callback' => 'xivo_service_asterisk::chk_context');
 
 ?>

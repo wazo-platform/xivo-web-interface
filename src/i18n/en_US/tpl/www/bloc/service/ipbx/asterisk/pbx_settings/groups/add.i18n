@@ -107,7 +107,7 @@ Overwrite
 Append
 
 ; fm_groupfeatures_preprocess-subroutine
-Preprocess subroutine: 
+Preprocess subroutine:
 
 ; fm_queue_strategy
 Ring strategy :
@@ -150,3 +150,6 @@ Schedules:
 
 ; create_schedules
 Create a schedule
+
+; hlp_fm_group_timeout
+In seconds (empty field or 0 to disable)
