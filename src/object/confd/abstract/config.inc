@@ -21,7 +21,7 @@ $array = array();
 
 $array['confd'] = array();
 $array['confd']['host'] = '127.0.0.1';
-$array['confd']['port'] = 50050;
+$array['confd']['port'] = 9487;
 $array['confd']['protocol'] = '1.1';
 $array['confd']['connect_timeout'] = 180;
 $array['confd']['timeout'] = 90;
