@@ -35,6 +35,7 @@ class func_key_manager extends manager_abstract
 	protected $_func_key_dest_park_position = false;
 	protected $_func_key_dest_paging = false;
 	protected $_func_key_dest_features = false;
+	protected $_func_key_dest_agent = false;
 	protected $_func_key_dest_custom = false;
 	protected $_func_key_mapping	= false;
 	protected $_func_key_template	= false;
@@ -60,6 +61,7 @@ class func_key_manager extends manager_abstract
 		$this->_func_key_dest_paging = $this->_service->get_module('ipbx', 'func_key_dest_paging');
 		$this->_func_key_dest_features = $this->_service->get_module('ipbx', 'func_key_dest_features');
 		$this->_func_key_dest_custom = $this->_service->get_module('ipbx', 'func_key_dest_custom');
+		$this->_func_key_dest_agent = $this->_service->get_module('ipbx', 'func_key_dest_agent');
 		$this->_func_key_mapping = $this->_service->get_module('ipbx','func_key_mapping');
 		$this->_func_key_template = $this->_service->get_module('ipbx','func_key_template');
 	}
@@ -138,6 +140,16 @@ class func_key_manager extends manager_abstract
 		$dst_id = $this->_func_key_dest_paging->get_func_key_id_by_number($number);
 		if($dst_id == false) {
 			dwho_report::push('error', 'did not find paging func key with number '.$number);
+			return(false);
+		}
+		return($dst_id);
+	}
+
+	public function get_dst_id_for_agent($agent_id, $action)
+	{
+		$dst_id = $this->_func_key_dest_agent->get_func_key_id_by_agent_and_action($agent_id, $action);
+		if($dst_id == false) {
+			dwho_report::push('error', 'did not find agent func key with id '.$agent_id.' and action '.$action);
 			return(false);
 		}
 		return($dst_id);
@@ -514,6 +526,55 @@ class func_key_manager extends manager_abstract
 		return($this->_delete_func_key((int) $func_key_id, 'custom'));
 	}
 
+	public function add_dst_for_agent($agent_id)
+	{
+		$fk_type_id = $this->get_type_id_by_name('speeddial');
+		$fk_dst_type_id = $this->get_destination_type_id_by_name('agent');
+
+		$func_key = array(
+			'type_id' => (int) $fk_type_id,
+			'destination_type_id' => (int) $fk_dst_type_id
+		);
+
+		$actions = array('toggle', 'login', 'logoff');
+		foreach($actions as $action)
+		{
+			if(($rs = $this->_func_key->chk_values($func_key)) === false
+			|| ($func_key_id = $this->_func_key->add($rs)) === false)
+				return(false);
+
+			$func_key_dest = array(
+				'agent_id' => (int) $agent_id,
+				'action' => (string) $action,
+				'func_key_id' => (int) $func_key_id,
+				'destination_type_id' => (int) $fk_dst_type_id
+			);
+
+			$rs = $this->_func_key_dest_agent->chk_values($func_key_dest);
+			$add_rs = $this->_func_key_dest_agent->add($rs);
+
+			if($rs === false || $add_rs === false)
+				return(false);
+		}
+
+		return((int) $func_key_id);
+	}
+
+	public function delete_dst_for_agent($agent_id)
+	{
+		$func_key_ids = $this->_func_key_dest_agent->func_key_ids_for_agent($agent_id);
+		if($func_key_ids === false)
+			return(false);
+
+		foreach($func_key_ids as $func_key_id)
+		{
+			if($this->_delete_func_key((int) $func_key_id, 'agent') === false)
+				return(false);
+		}
+
+		return(true);
+	}
+
 	private function _delete_func_key($func_key_id, $dst_type)
 	{
 		$where_fk_id = array('func_key_id' => $func_key_id);
@@ -557,6 +618,10 @@ class func_key_manager extends manager_abstract
 				break;
 			case 'custom':
 				if ($this->_func_key_dest_custom->delete_where($where_func_key_dest) === false)
+					return(false);
+				break;
+			case 'agent':
+				if ($this->_func_key_dest_agent->delete_where($where_func_key_dest) === false)
 					return(false);
 				break;
 		}

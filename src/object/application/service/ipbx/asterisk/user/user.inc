@@ -67,6 +67,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 	protected $_forward_services	= array('fwdrna',
 											'fwdbusy',
 											'fwdunc');
+	protected $_func_key_agent = null;
 
 	public function __construct(&$service,&$dso,$param=null,$components=true)
 	{
@@ -128,7 +129,8 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		|| ($this->_cti_profile = $_RAPI->get_ressource('cti_profile')) === false
 		|| ($this->_provddevice = &$_XOBJ->get_module('provddevice')) === false
 		|| ($_MGR = &dwho_gct::get('xivo_manager')) === false
-		|| ($this->_func_key_manager = &$_MGR->get_ressource('func_key')) === false)
+		|| ($this->_func_key_manager = &$_MGR->get_ressource('func_key')) === false
+		|| ($this->_func_key_agent = $this->_service->get_module('func_key_dest_agent')) === false)
 			return(false);
 
 		$this->_queuemember = &$this->_service->get_module('queuemember');
@@ -1522,6 +1524,11 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		{
 			return('paging');
 		}
+		elseif( $ref['typeextenumbers'] === 'extenfeatures'
+				&& $this->_func_key_agent->wonky_action_exists($ref['typevalextenumbers']))
+		{
+			return('agent');
+		}
 		elseif( ($ref['typeextenumbers'] === null || $ref['typeextenumbers'] === '')
 				&& ($ref['typevalextenumbers'] === null || $ref['typevalextenumbers'] === ''))
 		{
@@ -1578,6 +1585,11 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		case 'custom':
 			$value = $data['exten'];
 			$func_key_id = $this->_func_key_manager->add_dst_for_custom($value);
+			break;
+		case 'agent':
+			$agent_id = $data['typevalextenumbersright'];
+			$action = $this->_func_key_agent->translate_wonky_action($data['typevalextenumbers']);
+			$func_key_id = $this->_func_key_manager->get_dst_id_for_agent($agent_id, $action);
 			break;
 		default:
 			dwho_report::push('error', "func key of type '".$destination."' is unknown");
