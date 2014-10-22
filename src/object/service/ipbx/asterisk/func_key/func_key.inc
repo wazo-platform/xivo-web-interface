@@ -58,7 +58,9 @@ class xivo_service_asterisk_func_key extends xivo_service_asterisk_abstract
 		|| ($modextensions = &$ipbx->get_module('extensions')) === false
 		|| ($modphonefunckey = &$ipbx->get_module('phonefunckey')) === false
 		|| ($moddestfeatures = &$ipbx->get_module('func_key_dest_features')) === false
+		|| ($moddestagent = &$ipbx->get_module('func_key_dest_agent')) === false
 		|| ($modpaging = &$ipbx->get_module('paging')) === false
+		|| ($modagent = &$ipbx->get_module('agentfeatures')) === false
 		|| ($rs = $this->_dso->get_func_key_by_user_id($user_id)) === false
 		|| ($nb = count($rs)) === 0)
 			return(false);
@@ -130,6 +132,16 @@ class xivo_service_asterisk_func_key extends xivo_service_asterisk_abstract
 					break;
 				case 'custom':
 					$exten = $ref['exten'];
+					break;
+				case 'agent':
+					$wonky_action = $moddestagent->translate_action($ref['action']);
+					$extension_id = $modextensions->get_extenfeature_id_by_typeval($wonky_action);
+					$extension = $modextensions->get($extension_id);
+					$agent_number = '*'.$ref['agent_id'];
+
+					if($extension !== false) {
+						$exten = $modphonefunckey->build_progfunckey($user_id, $extension['exten'], $agent_number);
+					}
 					break;
 			}
 

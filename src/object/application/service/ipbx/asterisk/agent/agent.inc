@@ -30,6 +30,7 @@ class xivo_application_service_asterisk_agent extends xivo_application_asterisk_
 	var $_queueskills   = null;
 	var $_entity        = null;
 	var $_context       = null;
+	var $_func_key_manager = null;
 	var $_contextlist	= array();
 
 	public function __construct(&$service,$param=null,$components=true)
@@ -41,7 +42,9 @@ class xivo_application_service_asterisk_agent extends xivo_application_asterisk_
 		|| ($this->_queueskills = &$this->_service->get_module('agentqueueskill')) === false
 		|| ($_XOBJ = &dwho_gct::get('xivo_object')) === false
 		|| ($this->_entity = &$_XOBJ->get_module('entity')) === false
-		|| ($this->_context = &$this->_service->get_module('context')) === false)
+		|| ($this->_context = &$this->_service->get_module('context')) === false
+		|| ($_MGR = &dwho_gct::get('xivo_manager')) === false
+		|| ($this->_func_key_manager = &$_MGR->get_ressource('func_key')) === false)
 			return(false);
 		else if((bool) $components === true)
 			$this->load_components();
@@ -488,7 +491,9 @@ class xivo_application_service_asterisk_agent extends xivo_application_asterisk_
 		|| $this->add_contextmember($agentfeaturesid) === false
 		|| $this->add_usermember($agentfeaturesid) === false
 		|| $this->add_queuemember($agentfeaturesid) === false
-		|| $this->add_queueskills($agentfeaturesid) === false)
+		|| $this->add_queueskills($agentfeaturesid) === false
+		|| $this->add_func_key($agentfeaturesid) === false)
+
 		{
 			$r = false;
 			if($agentres !== null)
@@ -587,6 +592,11 @@ class xivo_application_service_asterisk_agent extends xivo_application_asterisk_
 		$ret      = $appqueue->agentskills_add($rs);
 
 		return $ret;
+	}
+
+	function add_func_key($agent_id)
+	{
+		return($this->_func_key_manager->add_dst_for_agent($agent_id));
 	}
 
 	function _reverse_add()
@@ -807,7 +817,8 @@ class xivo_application_service_asterisk_agent extends xivo_application_asterisk_
 		$this->_status = 'delete';
 		$this->_return = array();
 
-		if($this->delete_agentfeatures() === false
+		if($this->delete_func_key() === false
+		|| $this->delete_agentfeatures() === false
 		|| $this->delete_contextmember() === false
 		|| $this->delete_usermember() === false
 		|| $this->delete_queuemember() === false
@@ -883,6 +894,15 @@ class xivo_application_service_asterisk_agent extends xivo_application_asterisk_
 	{
 		$appqueue = &$this->_service->get_application('queue');
 		return $appqueue->agentskills_delete($this->_info['agentfeatures']['id']);
+	}
+
+	function delete_func_key()
+	{
+		if(dwho_issa('agentfeatures',$this->_info) === false)
+			return(false);
+
+		$agent_id = $this->_info['agentfeatures']['id'];
+		return($this->_func_key_manager->delete_dst_for_agent($agent_id));
 	}
 
 	function _reverse_delete()

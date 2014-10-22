@@ -115,6 +115,12 @@ class xivo_service_asterisk_func_key_sql extends xivo_service_asterisk_abstract_
 					null,
 					array('exten' => 'exten'));
 
+		# AGENT FUNC_KEY
+		$this->_dso->leftjoin('func_key_dest_agent',
+					'func_key_dest_agent.func_key_id = func_key.id',
+					null,
+					array('agent_id' => 'agent_id', 'action' => 'action'));
+
 		$this->_dso->new_order(array('position' => SORT_ASC), null, 'func_key_mapping');
 
 		$r = $this->_dso->select_all();
