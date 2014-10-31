@@ -28,6 +28,7 @@ class xivo_application_service_asterisk_callfilter extends xivo_application_aste
 	var $_callfiltermember	= false;
 	var $_dialaction	    = false;
 	var $_callerid		    = false;
+	var $_func_key_manager  = false;
 	var $_param		        = array('type'	=> '');
 
 	public function __construct(&$service,&$dso,$param=null,$components=true)
@@ -70,7 +71,9 @@ class xivo_application_service_asterisk_callfilter extends xivo_application_aste
 
 		if(($this->_callfiltermember = &$this->_service->get_module('callfiltermember')) === false
 		|| ($this->_dialaction = $this->get_abstract('dialaction',array('category' => 'callfilter'))) === false
-		|| ($this->_callerid = $this->get_abstract('callerid',array('type' => 'callfilter'))) === false)
+		|| ($this->_callerid = $this->get_abstract('callerid',array('type' => 'callfilter'))) === false
+		|| ($_MGR = &dwho_gct::get('xivo_manager')) === false
+		|| ($this->_func_key_manager = &$_MGR->get_ressource('func_key')) === false)
 			return(false);
 
 		return(true);
@@ -495,7 +498,8 @@ class xivo_application_service_asterisk_callfilter extends xivo_application_aste
 		|| ($callfilterid = $this->add_callfilter()) === false
 		|| $this->add_callfiltermember($callfilterid) === false
 		|| $this->add_dialaction($callfilterid) === false
-		|| $this->add_callerid($callfilterid) === false)
+		|| $this->add_callerid($callfilterid) === false
+		|| $this->add_func_keys($callfilterid) === false)
 		{
 			$r = false;
 
@@ -562,6 +566,14 @@ class xivo_application_service_asterisk_callfilter extends xivo_application_aste
 			$this->_return['callfiltermember'] = false;
 
 		return(true);
+	}
+
+	function add_func_keys($callfilterid)
+	{
+		if($this->_param['type'] !== 'bosssecretary')
+			return(false);
+
+		return($this->_func_key_manager->add_dst_for_bsfilter($callfilterid));
 	}
 
 	function _reverse_add()
@@ -792,7 +804,8 @@ class xivo_application_service_asterisk_callfilter extends xivo_application_aste
 		$this->_status = 'delete';
 		$this->_return = array();
 
-		if($this->delete_callfilter() === false
+		if($this->delete_func_keys() === false
+		|| $this->delete_callfilter() === false
 		|| $this->delete_callfiltermember() === false
 		|| $this->delete_dialaction() === false
 		|| $this->delete_callerid() === false)
@@ -851,6 +864,15 @@ class xivo_application_service_asterisk_callfilter extends xivo_application_aste
 			$this->_return['callfiltermember'] = $r;
 
 		return($r);
+	}
+
+	function delete_func_keys()
+	{
+		if($this->_param['type'] !== 'bosssecretary'
+			|| dwho_issa('callfilter', $this->_info) === false)
+			return(null);
+
+		$this->_func_key_manager->delete_dst_for_bsfilter($this->_info['callfilter']['id']);
 	}
 
 	function _reverse_delete()

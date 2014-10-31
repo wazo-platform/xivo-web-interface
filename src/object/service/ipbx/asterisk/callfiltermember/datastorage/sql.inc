@@ -39,6 +39,26 @@ class xivo_service_asterisk_callfiltermember_sql extends xivo_service_asterisk_a
 
 		return($r);
 	}
+
+	public function get_secretary_member_ids_for_bsfilter($filter_id)
+	{
+		$this->_dso->new_select($this->_table, array('id'));
+
+		$this->_dso->where(array('type' => 'user',
+								 'bstype' => 'secretary',
+								 'callfilterid' => $filter_id));
+
+		$rows = $this->_dso->select_all();
+		if(isset($rows[0]) === false)
+			return(false);
+
+		$member_ids = array();
+		foreach($rows as $row) {
+			$member_ids[] = $row['id'];
+		}
+
+		return($member_ids);
+	}
 }
 
 ?>

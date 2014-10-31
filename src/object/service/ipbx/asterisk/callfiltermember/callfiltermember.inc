@@ -27,6 +27,7 @@ class xivo_service_asterisk_callfiltermember extends xivo_service_asterisk_abstr
 	var $_filter		= false;
 	var $_origin		= false;
 	var $_origin_list	= false;
+	var $_func_key_manager = false;
 
 	public function __construct(&$sre,&$dso)
 	{
@@ -92,6 +93,26 @@ class xivo_service_asterisk_callfiltermember extends xivo_service_asterisk_abstr
 	public function get_by_boss_secretary($boss_id, $secreatary_id)
 	{
 		return($this->_dso->get_by_boss_secretary($boss_id, $secreatary_id));
+	}
+
+	public function get_secretary_member_ids_for_bsfilter($filter_id)
+	{
+		return($this->_dso->get_secretary_member_ids_for_bsfilter($filter_id));
+	}
+
+	public function delete_member($user_id)
+	{
+		if(($_MGR = &dwho_gct::get('xivo_manager')) === false
+		|| ($func_key_manager = &$_MGR->get_ressource('func_key')) === false)
+			return(false);
+
+		if($func_key_manager->delete_bsfilter_for_user($user_id) === false)
+			return(false);
+
+		$where = array('type' => 'user',
+					   'typeval' => (string) $user_id);
+
+		return($this->delete_where($where));
 	}
 }
 

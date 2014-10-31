@@ -37,8 +37,10 @@ class func_key_manager extends manager_abstract
 	protected $_func_key_dest_features = false;
 	protected $_func_key_dest_agent = false;
 	protected $_func_key_dest_custom = false;
+	protected $_func_key_dest_bsfilter = false;
 	protected $_func_key_mapping	= false;
 	protected $_func_key_template	= false;
+	protected $_callfiltermember = false;
 
 	public function __construct($_MGR, $param=null)
 	{
@@ -62,8 +64,10 @@ class func_key_manager extends manager_abstract
 		$this->_func_key_dest_features = $this->_service->get_module('ipbx', 'func_key_dest_features');
 		$this->_func_key_dest_custom = $this->_service->get_module('ipbx', 'func_key_dest_custom');
 		$this->_func_key_dest_agent = $this->_service->get_module('ipbx', 'func_key_dest_agent');
+		$this->_func_key_dest_bsfilter = $this->_service->get_module('ipbx', 'func_key_dest_bsfilter');
 		$this->_func_key_mapping = $this->_service->get_module('ipbx','func_key_mapping');
 		$this->_func_key_template = $this->_service->get_module('ipbx','func_key_template');
+		$this->_callfiltermember = $this->_service->get_module('ipbx','callfiltermember');
 	}
 
 	public function get_type_id_by_name($name)
@@ -101,6 +105,8 @@ class func_key_manager extends manager_abstract
 	{
 		if($dst_type === 'service') {
 			$func_key_id = $this->_func_key->get_func_key_id('service', $dst_val, 'extension_id');
+		} else if ($dst_type === 'bsfilter') {
+			$func_key_id = $this->_func_key->get_func_key_id('bsfilter', $dst_val, 'filtermember_id');
 		} else {
 			$func_key_id = $this->_func_key->get_func_key_id_with_dest_type_id($dst_type, $dst_val);
 		}
@@ -575,6 +581,83 @@ class func_key_manager extends manager_abstract
 		return(true);
 	}
 
+	public function add_dst_for_bsfilter($bsfilter_id)
+	{
+		$filtermember_ids = $this->_callfiltermember->get_secretary_member_ids_for_bsfilter($bsfilter_id);
+		if($filtermembers_ids === false)
+			return(false);
+
+		foreach($filtermember_ids as $filtermember_id) {
+			$rs = $this->_create_bsfilter_func_key($filtermember_id);
+			if($rs === false)
+				return(false);
+
+		}
+	}
+
+	private function _create_bsfilter_func_key($filtermember_id)
+	{
+		$fk_type_id = $this->get_type_id_by_name('speeddial');
+		$fk_dst_type_id = $this->get_destination_type_id_by_name('bsfilter');
+
+		$func_key = array(
+			'type_id' => (int) $fk_type_id,
+			'destination_type_id' => (int) $fk_dst_type_id
+		);
+
+		if(($rs = $this->_func_key->chk_values($func_key)) === false
+		|| ($func_key_id = $this->_func_key->add($rs)) === false)
+			return(false);
+
+		$func_key_dest = array(
+			'filtermember_id' => (string) $filtermember_id,
+			'func_key_id' => (int) $func_key_id,
+			'destination_type_id' => (int) $fk_dst_type_id
+		);
+
+		$rs = $this->_func_key_dest_bsfilter->chk_values($func_key_dest);
+		$add_rs = $this->_func_key_dest_bsfilter->add($rs);
+
+		if($rs === false || $add_rs === false)
+			return(false);
+	}
+
+	public function delete_dst_for_bsfilter($bsfilter_id)
+	{
+		$func_key_ids = $this->_func_key_dest_bsfilter->get_func_key_ids_for_bsfilter($bsfilter_id);
+		if($func_key_ids === false)
+			return(false);
+
+		foreach($func_key_ids as $func_key_id)
+		{
+			if($this->_delete_func_key((int) $func_key_id, 'bsfilter') === false)
+				return(false);
+		}
+	}
+
+	public function delete_bsfilter_for_user($user_id)
+	{
+		$func_key_ids = $this->_func_key_dest_bsfilter->get_func_key_ids_for_user($user_id);
+		if($func_key_ids === false)
+			return(false);
+
+		foreach($func_key_ids as $func_key_id)
+		{
+			if($this->_delete_func_key((int) $func_key_id, 'bsfilter') === false)
+				return(false);
+		}
+	}
+
+	private function _delete_bsfilter_func_key($filtermember_id)
+	{
+		$func_key_id = $this->_func_key_dest_bsfilter->get_func_key_id_for_filtermember_id($filtermember_id);
+		if($func_key_id === false)
+			return(false);
+
+		if($this->_delete_func_key((int) $func_key_id, 'bsfilter') === false)
+			return(false);
+	}
+
 	private function _delete_func_key($func_key_id, $dst_type)
 	{
 		$where_fk_id = array('func_key_id' => $func_key_id);
@@ -622,6 +705,10 @@ class func_key_manager extends manager_abstract
 				break;
 			case 'agent':
 				if ($this->_func_key_dest_agent->delete_where($where_func_key_dest) === false)
+					return(false);
+				break;
+			case 'bsfilter':
+				if ($this->_func_key_dest_bsfilter->delete_where($where_func_key_dest) === false)
 					return(false);
 				break;
 		}
