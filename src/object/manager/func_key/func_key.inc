@@ -153,7 +153,8 @@ class func_key_manager extends manager_abstract
 
 	public function get_dst_id_for_agent($agent_id, $action)
 	{
-		$dst_id = $this->_func_key_dest_agent->get_func_key_id_by_agent_and_action($agent_id, $action);
+		$extension_id = $this->_extensions->get_extenfeature_id_by_typeval($action);
+		$dst_id = $this->_func_key_dest_agent->get_func_key_id_by_agent_and_extension($agent_id, $extension_id);
 		if($dst_id == false) {
 			dwho_report::push('error', 'did not find agent func key with id '.$agent_id.' and action '.$action);
 			return(false);
@@ -542,16 +543,20 @@ class func_key_manager extends manager_abstract
 			'destination_type_id' => (int) $fk_dst_type_id
 		);
 
-		$actions = array('toggle', 'login', 'logoff');
+		$actions = $this->_func_key_dest_agent->get_all_actions();
 		foreach($actions as $action)
 		{
+			$extension_id = $this->_extensions->get_extenfeature_id_by_typeval($action);
+			if($extension === false)
+				return(false);
+
 			if(($rs = $this->_func_key->chk_values($func_key)) === false
 			|| ($func_key_id = $this->_func_key->add($rs)) === false)
 				return(false);
 
 			$func_key_dest = array(
 				'agent_id' => (int) $agent_id,
-				'action' => (string) $action,
+				'extension_id' => $extension_id,
 				'func_key_id' => (int) $func_key_id,
 				'destination_type_id' => (int) $fk_dst_type_id
 			);

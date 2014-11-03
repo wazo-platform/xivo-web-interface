@@ -134,9 +134,7 @@ class xivo_service_asterisk_func_key extends xivo_service_asterisk_abstract
 					$exten = $ref['exten'];
 					break;
 				case 'agent':
-					$wonky_action = $moddestagent->translate_action($ref['action']);
-					$extension_id = $modextensions->get_extenfeature_id_by_typeval($wonky_action);
-					$extension = $modextensions->get($extension_id);
+					$extension = $modextensions->get($ref['agent_extension_id']);
 					$agent_number = '*'.$ref['agent_id'];
 
 					if($extension !== false) {
