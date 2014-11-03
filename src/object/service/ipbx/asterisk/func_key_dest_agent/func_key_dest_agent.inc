@@ -55,7 +55,7 @@ class xivo_service_asterisk_func_key_dest_agent extends xivo_service_asterisk_ab
 
 	function _prepare($data)
 	{
-		$data['action'] = (string) $data['action'];
+		$data['extension_id'] = (int) $data['extension_id'];
 		$data['agent_id'] = (int) $data['agent_id'];
 		$data['func_key_id'] = (int) $data['func_key_id'];
 		$data['destination_type_id'] = (int) $data['destination_type_id'];
