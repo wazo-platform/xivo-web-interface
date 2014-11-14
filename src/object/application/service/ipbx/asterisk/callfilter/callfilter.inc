@@ -595,14 +595,6 @@ class xivo_application_service_asterisk_callfilter extends xivo_application_aste
 					$this->_callfilter->delete($val);
 					break;
 				case 'callfiltermember':
-					if(is_array($val) === false)
-						continue;
-
-					foreach($val as $callfiltermemberval)
-					{
-						if($callfiltermemberval !== false)
-							$this->_callfiltermember->delete($callfiltermemberval);
-					}
 					break;
 				case 'dialaction':
 					$this->_dialaction->reverse_add();
@@ -666,77 +658,38 @@ class xivo_application_service_asterisk_callfilter extends xivo_application_aste
 		if(dwho_issa('callfilter',$this->_info) === false)
 			return(false);
 
-		$id = $this->_info['callfilter']['id'];
-
-		if(dwho_issa('callfiltermember',$this->_info) === false)
-			return($this->_add_callfilterbs($id));
-
-		$this->_return['callfiltermember'] = $this->delete_callfiltermember();
+		$callfilter_id = (int) $this->_info['callfilter']['id'];
 
 		if(($rs = $this->get_result('callfiltermember')) === null
 		|| $rs === false
 		|| isset($rs['boss'],$rs['secretary']) === false
-		|| ($nb = count($rs['secretary'])) === 0)
+		|| ($nb_secretary = count($rs['secretary'])) === 0)
 			return(false);
 
 		$this->_return['callfiltermember'] = array();
 
-		$where = array();
-		$where['type'] = $rs['boss']['type'];
-		$where['typeval'] = $rs['boss']['typeval'];
-		$where['bstype'] = $rs['boss']['bstype'];
-
-		$rs['boss']['callfilterid'] = $id;
-
 		if(dwho_issa('boss',$this->_info['callfiltermember']) === true)
 		{
-			$cid = $this->_info['callfiltermember']['boss']['id'];
-			$rs['boss']['active'] = $this->_info['callfiltermember']['boss']['active'];
-		}
-		else
-			$cid = 0;
-
-		if($this->_callfiltermember->get_primary($where) !== false
-		|| ($this->_return['callfiltermember'][] = $this->_callfiltermember->add($rs['boss'],$cid)) === false)
-			return(false);
-
-		if(dwho_issa('secretary',$this->_info['callfiltermember']) === true)
-		{
-			$secretary = &$this->_info['callfiltermember']['secretary'];
-			$cnt = count($secretary);
-		}
-		else
-		{
-			$secretary = null;
-			$cnt = 0;
-		}
-
-		for($i = 0,$j = 1;$i < $nb;$i++,$j++)
-		{
-			$cid = 0;
-			$ref = &$rs['secretary'][$i];
-
-			for($k = 0;$k < $cnt;$k++)
-			{
-				if($secretary[$k]['type'] === $ref['type']
-				&& (string) $secretary[$k]['typeval'] === (string) $ref['typeval'])
-				{
-					$ref['active'] = $secretary[$k]['active'];
-					$cid = $secretary[$k]['id'];
-				}
-			}
-
-			if($cid === 0 && isset($secretary[$j]) === true)
-				$cid = $secretary[$j]['id'];
-
-			$ref['callfilterid'] = $id;
-
-			if(($this->_return['callfiltermember'][] = $this->_callfiltermember->add($ref,$cid)) === false)
+			$callfiltermember_id = (int) $this->_info['callfiltermember']['boss']['id'];
+			$rs['boss']['active'] = (bool) $this->_info['callfiltermember']['boss']['active'];
+			$rs['boss']['callfilterid'] = (int) $callfilter_id;
+			if($this->_callfiltermember->edit($callfiltermember_id,$rs['boss']) === false)
 				return(false);
 		}
 
-		if(isset($this->_return['callfiltermember'][1]) === false)
-			$this->_return['callfiltermember'] = false;
+		$secretary_data = dwho_array_set_value_to_key($this->_info['callfiltermember']['secretary'], 'typeval');
+		$secretary_data_form = dwho_array_set_value_to_key($rs['secretary'], 'typeval');
+		$secretaries_added = array_diff_assoc($secretary_data_form, $secretary_data);
+		$secretaries_deleted = array_diff_assoc($secretary_data, $secretary_data_form);
+
+		foreach ($secretaries_added as $secretary_added)
+		{
+			$secretary_added['callfilterid'] = $callfilter_id;
+			$this->_callfiltermember->add($secretary_added);
+		}
+
+		foreach ($secretaries_deleted as $secretary_deleted)
+			$this->_callfiltermember->delete($secretary_deleted['id']);
 
 		return(true);
 	}
@@ -780,10 +733,6 @@ class xivo_application_service_asterisk_callfilter extends xivo_application_aste
 						$this->_callfilter->edit_origin($this->_origin['callfilter']);
 					break;
 				case 'callfiltermember':
-					$this->delete_callfiltermember();
-
-					if(isset($this->_origin['callfiltermember']) === true)
-						$this->_callfiltermember->add_origin_list($this->_origin['callfiltermember']);
 					break;
 				case 'dialaction':
 					$this->_dialaction->reverse_edit($this->_status);
