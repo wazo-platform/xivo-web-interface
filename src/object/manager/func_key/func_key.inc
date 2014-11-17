@@ -588,14 +588,13 @@ class func_key_manager extends manager_abstract
 			return(false);
 
 		foreach($filtermember_ids as $filtermember_id) {
-			$rs = $this->_create_bsfilter_func_key($filtermember_id);
+			$rs = $this->create_bsfilter_func_key_for_filtermember_id($filtermember_id);
 			if($rs === false)
 				return(false);
-
 		}
 	}
 
-	private function _create_bsfilter_func_key($filtermember_id)
+	public function create_bsfilter_func_key_for_filtermember_id($filtermember_id)
 	{
 		$fk_type_id = $this->get_type_id_by_name('speeddial');
 		$fk_dst_type_id = $this->get_destination_type_id_by_name('bsfilter');
@@ -610,7 +609,7 @@ class func_key_manager extends manager_abstract
 			return(false);
 
 		$func_key_dest = array(
-			'filtermember_id' => (string) $filtermember_id,
+			'filtermember_id' => (int) $filtermember_id,
 			'func_key_id' => (int) $func_key_id,
 			'destination_type_id' => (int) $fk_dst_type_id
 		);

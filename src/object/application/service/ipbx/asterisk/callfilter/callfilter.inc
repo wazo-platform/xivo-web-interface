@@ -685,12 +685,15 @@ class xivo_application_service_asterisk_callfilter extends xivo_application_aste
 		foreach ($secretaries_added as $secretary_added)
 		{
 			$secretary_added['callfilterid'] = $callfilter_id;
-			$this->_callfiltermember->add($secretary_added);
+			$filtermember_id = $this->_callfiltermember->add($secretary_added);
+			$this->_func_key_manager->create_bsfilter_func_key_for_filtermember_id($filtermember_id);
 		}
 
 		foreach ($secretaries_deleted as $secretary_deleted)
+		{
+			$this->_func_key_manager->delete_bsfilter_for_user($secretary_deleted['typeval']);
 			$this->_callfiltermember->delete($secretary_deleted['id']);
-
+		}
 		return(true);
 	}
 
