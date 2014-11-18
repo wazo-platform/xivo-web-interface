@@ -244,6 +244,10 @@ $array['func_key_dest_agent'] = array();
 $array['func_key_dest_agent']['table'] = 'func_key_dest_agent';
 $array['func_key_dest_agent']['primary'] = array('func_key_id' => '', 'agent_id' => '', 'action' => '', 'destination_type_id' => '');
 
+$array['func_key_dest_bsfilter'] = array();
+$array['func_key_dest_bsfilter']['table'] = 'func_key_dest_bsfilter';
+$array['func_key_dest_bsfilter']['primary'] = array('func_key_id' => '', 'filtermember_id' => '', 'destination_type_id' => '');
+
 $array['general'] = array();
 $array['general']['table'] = 'general';
 $array['general']['primary'] = array('id' => '');

@@ -143,6 +143,14 @@ class xivo_service_asterisk_func_key extends xivo_service_asterisk_abstract
 						$exten = $modphonefunckey->build_progfunckey($user_id, $extension['exten'], $agent_number);
 					}
 					break;
+				case 'bsfilter':
+					$extension_id = $modextensions->get_extenfeature_id_by_typeval('bsfilter');
+					$extension = $modextensions->get($extension_id);
+
+					if($extension !== false) {
+						$exten = $modphonefunckey->build_extenfeatures($extension['exten'], $ref['filtermember_id']);
+					}
+					break;
 			}
 
 			$conf[$idx]['value'] = $exten;

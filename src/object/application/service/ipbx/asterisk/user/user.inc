@@ -52,6 +52,8 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 	protected $_schedule_path 	= false;
 	protected $_attachment 		= false;
 	protected $_func_key_manager	= false;
+	protected $_callfilter = false;
+	protected $_callfiltermember = false;
 	protected $_valid_services	= array('vmuserpurge',
 										'vmusermsg',
 										'enablevm',
@@ -130,7 +132,9 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		|| ($this->_provddevice = &$_XOBJ->get_module('provddevice')) === false
 		|| ($_MGR = &dwho_gct::get('xivo_manager')) === false
 		|| ($this->_func_key_manager = &$_MGR->get_ressource('func_key')) === false
-		|| ($this->_func_key_agent = $this->_service->get_module('func_key_dest_agent')) === false)
+		|| ($this->_func_key_agent = $this->_service->get_module('func_key_dest_agent')) === false
+		|| ($this->_callfilter = $this->_service->get_application('callfilter')) === false
+		|| ($this->_callfiltermember = $this->_service->get_module('callfiltermember')) === false)
 			return(false);
 
 		$this->_queuemember = &$this->_service->get_module('queuemember');
@@ -1529,6 +1533,10 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		{
 			return('agent');
 		}
+		elseif($ref['typevalextenumbers'] == 'bsfilter')
+		{
+			return('bsfilter');
+		}
 		elseif( ($ref['typeextenumbers'] === null || $ref['typeextenumbers'] === '')
 				&& ($ref['typevalextenumbers'] === null || $ref['typevalextenumbers'] === ''))
 		{
@@ -1591,6 +1599,10 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			$action = $this->_func_key_agent->translate_wonky_action($data['typevalextenumbers']);
 			$func_key_id = $this->_func_key_manager->get_dst_id_for_agent($agent_id, $action);
 			break;
+		case 'bsfilter':
+			$filtermember_id = $this->_find_filtermember_id($data);
+			$func_key_id = $this->_func_key_manager->get_fk_id_with_dst($destination, $filtermember_id);
+			break;
 		default:
 			dwho_report::push('error', "func key of type '".$destination."' is unknown");
 			return(false);
@@ -1610,6 +1622,39 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		$fk['template_id'] = (int) $this->get_result_var('userfeatures', 'func_key_private_template_id');
 
 		return($this->_func_key_manager->add_fk_mapping($fk));
+	}
+
+	private function _find_filtermember_id($data)
+	{
+		if($this->_is_boss($data['iduserfeatures'])) {
+			$boss_id = $data['iduserfeatures'];
+			$secretary_id = $data['typevalextenumbersright'];
+		} else {
+			$boss_id = $data['typevalextenumbersright'];
+			$secretary_id = $data['iduserfeatures'];
+		}
+
+		$callfiltermember = $this->_callfiltermember->get_by_boss_secretary($boss_id, $secretary_id);
+		if($callfiltermember === false) {
+			dwho_report::push('error', 'could not find boss or secretary member');
+			return(false);
+		}
+
+		return $callfiltermember['id'];
+	}
+
+	private function _is_boss($user_id)
+	{
+		$bosses = $this->_callfilter->get_boss_users();
+		if ($bosses === false)
+			return(false);
+
+		foreach($bosses as $boss) {
+			if($boss['id'] == $user_id)
+				return(true);
+		}
+
+		return(false);
 	}
 
 	function add_schedule_path($user_id)
@@ -2427,13 +2472,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		if(($callfiltermember = &$this->_service->get_module('callfiltermember')) === false)
 			return(true);
 
-		$where = array();
-		$where['type'] = 'user';
-		$where['typeval'] = strval($this->_info['userfeatures']['id']);
-
-		$callfiltermember->delete_where($where);
-
-		return(true);
+		return($callfiltermember->delete_member($this->_info['userfeatures']['id']));
 	}
 
 	function delete_schedule_path()

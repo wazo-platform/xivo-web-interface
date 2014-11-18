@@ -46,6 +46,7 @@ class xivo_application_service_asterisk_user_sql extends xivo_application_abstra
 				'func_key_dest_paging'	=> '',
 				'func_key_dest_custom'	=> '',
 				'func_key_dest_agent'	=> '',
+				'func_key_dest_bsfilter'	=> '',
 				'func_key_destination_type'	=> '',
 				'func_key_mapping'	=> '',
 				'func_key_template'	=> '',
@@ -248,51 +249,107 @@ class xivo_application_service_asterisk_user_sql extends xivo_application_abstra
 			) AS "phonefunckey.exten",
 
 			CASE
-				WHEN "func_key_destination_type"."name" = 'service'			THEN "service_extensions"."type"
-				WHEN "func_key_destination_type"."name" = 'forward'			THEN "fwd_extensions"."type"
-				WHEN "func_key_destination_type"."name" = 'park_position'	THEN 'generalfeatures'
+				WHEN "func_key_destination_type"."name" = 'service'
+					THEN "service_extensions"."type"
+
+				WHEN "func_key_destination_type"."name" = 'forward'
+					THEN "fwd_extensions"."type"
+
+				WHEN "func_key_destination_type"."name" = 'park_position'
+					THEN 'generalfeatures'
+
 				WHEN "func_key_destination_type"."name" = 'features'
-					AND "func_key_type"."name" = 'forward'					THEN 'generalfeatures'
+					AND "func_key_type"."name" = 'forward'
+					THEN 'generalfeatures'
+
 				WHEN "func_key_destination_type"."name" = 'features'
-					AND "func_key_type"."name" = 'dtmf'						THEN 'featuremap'
-				WHEN "func_key_destination_type"."name" = 'paging'			THEN 'extenfeatures'
-				WHEN "func_key_destination_type"."name" = 'agent'			THEN 'extenfeatures'
+					AND "func_key_type"."name" = 'dtmf'
+					THEN 'featuremap'
+
+				WHEN "func_key_destination_type"."name" = 'paging'
+					THEN 'extenfeatures'
+
+				WHEN "func_key_destination_type"."name" = 'agent'
+					THEN 'extenfeatures'
+
+				WHEN "func_key_destination_type"."name" = 'bsfilter'
+					THEN 'extenfeatures'
 			END AS "phonefunckey.typeextenumbers",
 
-
 			CASE
-				WHEN "func_key_destination_type"."name" = 'service'			THEN "service_extensions"."typeval"
-				WHEN "func_key_destination_type"."name" = 'forward'			THEN "fwd_extensions"."typeval"
-				WHEN "func_key_destination_type"."name" = 'park_position'	THEN 'parkpos'
-				WHEN "func_key_destination_type"."name" = 'features'		THEN "features"."var_name"
-				WHEN "func_key_destination_type"."name" = 'paging'			THEN 'paging'
+				WHEN "func_key_destination_type"."name" = 'service'
+					THEN "service_extensions"."typeval"
+
+				WHEN "func_key_destination_type"."name" = 'forward'
+					THEN "fwd_extensions"."typeval"
+
+				WHEN "func_key_destination_type"."name" = 'park_position'
+					THEN 'parkpos'
+
+				WHEN "func_key_destination_type"."name" = 'features'
+					THEN "features"."var_name"
+
+				WHEN "func_key_destination_type"."name" = 'paging'
+					THEN 'paging'
+
 				WHEN "func_key_destination_type"."name" = 'agent'
-						AND "func_key_dest_agent"."action" = 'login'		THEN 'agentstaticlogin'
+					AND "func_key_dest_agent"."action" = 'login'
+					THEN 'agentstaticlogin'
+
 				WHEN "func_key_destination_type"."name" = 'agent'
-						AND "func_key_dest_agent"."action" = 'logoff'	THEN 'agentstaticlogoff'
+					AND "func_key_dest_agent"."action" = 'logoff'
+					THEN 'agentstaticlogoff'
+
 				WHEN "func_key_destination_type"."name" = 'agent'
-						AND "func_key_dest_agent"."action" = 'toggle'	THEN 'agentstaticlogtoggle'
+					AND "func_key_dest_agent"."action" = 'toggle'
+					THEN 'agentstaticlogtoggle'
+
+				WHEN "func_key_destination_type"."name" = 'bsfilter'
+					THEN 'bsfilter'
 			END AS "phonefunckey.typevalextenumbers",
 
 			CASE "func_key_destination_type"."name"
-				WHEN 'user' THEN 'user'
-				WHEN 'group' THEN 'group'
-				WHEN 'queue' THEN 'queue'
-				WHEN 'conference' THEN 'meetme'
-				WHEN 'paging' THEN 'paging'
-				WHEN 'agent' THEN 'agent'
+				WHEN 'user'			THEN 'user'
+				WHEN 'group'		THEN 'group'
+				WHEN 'queue'		THEN 'queue'
+				WHEN 'conference'	THEN 'meetme'
+				WHEN 'paging'		THEN 'paging'
+				WHEN 'agent'		THEN 'agent'
+				WHEN 'bsfilter'		THEN 'user'
 			END AS "phonefunckey.typeextenumbersright",
 
-			COALESCE(
-				CAST("func_key_dest_user"."user_id" AS VARCHAR),
-				CAST("func_key_dest_group"."group_id" AS VARCHAR),
-				CAST("func_key_dest_queue"."queue_id" AS VARCHAR),
-				CAST("func_key_dest_conference"."conference_id" AS VARCHAR),
-				CAST("func_key_dest_paging"."paging_id" AS VARCHAR),
-				CAST("func_key_dest_agent"."agent_id" AS VARCHAR)
-			) AS "phonefunckey.typevalextenumbersright"
+			CASE
+				WHEN "func_key_destination_type"."name" = 'user'
+					THEN CAST("func_key_dest_user"."user_id" AS VARCHAR)
+
+				WHEN "func_key_destination_type"."name" = 'group'
+					THEN CAST("func_key_dest_group"."group_id" AS VARCHAR)
+
+				WHEN "func_key_destination_type"."name" = 'queue'
+					THEN CAST("func_key_dest_queue"."queue_id" AS VARCHAR)
+
+				WHEN "func_key_destination_type"."name" = 'conference'
+					THEN CAST("func_key_dest_conference"."conference_id" AS VARCHAR)
+
+				WHEN "func_key_destination_type"."name" = 'paging'
+					THEN CAST("func_key_dest_paging"."paging_id" AS VARCHAR)
+
+				WHEN "func_key_destination_type"."name" = 'agent'
+					THEN CAST("func_key_dest_agent"."agent_id" AS VARCHAR)
+
+				WHEN "func_key_destination_type"."name" = 'bsfilter'
+					AND "user_func_key"."id" = CAST("bossmember"."typeval" AS INTEGER)
+					THEN "callfiltermember"."typeval"
+
+				WHEN "func_key_destination_type"."name" = 'bsfilter'
+					THEN "bossmember"."typeval"
+
+				ELSE NULL
+			END AS "phonefunckey.typevalextenumbersright"
 
 		FROM "func_key_mapping"
+
+		INNER JOIN "userfeatures" AS "user_func_key" ON "user_func_key"."func_key_private_template_id" = "func_key_mapping"."template_id"
 
 		INNER JOIN "func_key" ON func_key.id = func_key_mapping.func_key_id
 			INNER JOIN "func_key_destination_type" ON func_key_destination_type.id = func_key.destination_type_id
@@ -317,7 +374,9 @@ class xivo_application_service_asterisk_user_sql extends xivo_application_abstra
 			LEFT JOIN "func_key_dest_custom" ON func_key_dest_custom.func_key_id = func_key.id
 			LEFT JOIN "func_key_dest_agent" ON func_key_dest_agent.func_key_id = func_key.id
 				LEFT JOIN "agentfeatures" ON agentfeatures.id = func_key_dest_agent.agent_id
-
+			LEFT JOIN "func_key_dest_bsfilter" ON func_key_dest_bsfilter.func_key_id = func_key.id
+				LEFT JOIN "callfiltermember" ON callfiltermember.id = func_key_dest_bsfilter.filtermember_id
+				LEFT JOIN "callfiltermember" AS "bossmember" ON bossmember.bstype = 'boss' AND bossmember.callfilterid = callfiltermember.callfilterid
 		WHERE
 			"func_key_mapping"."template_id" = ${template_id}
 
