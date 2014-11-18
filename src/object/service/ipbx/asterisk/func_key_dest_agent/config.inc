@@ -30,16 +30,14 @@ $array['element']['agent_id'] = array();
 $array['element']['agent_id']['default'] = 0;
 $array['element']['agent_id']['null'] = false;
 
-$array['element']['action'] = array();
-$array['element']['action']['default'] = 'toggle';
-$array['element']['action']['null'] = false;
-$array['element']['action']['value'] = array('toggle', 'login', 'logoff');
-
+$array['element']['extension_id'] = array();
+$array['element']['extension_id']['default'] = 0;
+$array['element']['extension_id']['null'] = false;
 
 $array['filter'] = array();
 $array['filter']['func_key_id'] = array('cast' => 'ulongint');
 $array['filter']['destination_type_id'] = array('cast' => 'ulongint');
 $array['filter']['agent_id'] = array('cast' => 'ulongint');
-$array['filter']['action'] = array('key' => array('login', 'logoff', 'toggle'));
+$array['filter']['extension_id'] = array('cast' => 'ulongint');
 
 ?>

@@ -41,11 +41,11 @@ class xivo_service_asterisk_func_key_dest_agent_sql extends xivo_service_asteris
 		return($func_key_ids);
 	}
 
-	public function get_func_key_id_by_agent_and_action($agent_id, $action)
+	public function get_func_key_id_by_agent_and_extension($agent_id, $extension_id)
 	{
 		$this->_dso->new_select('func_key_dest_agent', array('func_key_id'));
 
-		$conditions = array('agent_id' => $agent_id, 'action' => $action);
+		$conditions = array('agent_id' => $agent_id, 'extension_id' => $extension_id);
 
 		$this->_dso->where($conditions, 'func_key_dest_agent');
 

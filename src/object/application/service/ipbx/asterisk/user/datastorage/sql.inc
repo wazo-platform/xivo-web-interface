@@ -293,16 +293,7 @@ class xivo_application_service_asterisk_user_sql extends xivo_application_abstra
 					THEN 'paging'
 
 				WHEN "func_key_destination_type"."name" = 'agent'
-					AND "func_key_dest_agent"."action" = 'login'
-					THEN 'agentstaticlogin'
-
-				WHEN "func_key_destination_type"."name" = 'agent'
-					AND "func_key_dest_agent"."action" = 'logoff'
-					THEN 'agentstaticlogoff'
-
-				WHEN "func_key_destination_type"."name" = 'agent'
-					AND "func_key_dest_agent"."action" = 'toggle'
-					THEN 'agentstaticlogtoggle'
+					THEN "agent_extensions"."typeval"
 
 				WHEN "func_key_destination_type"."name" = 'bsfilter'
 					THEN 'bsfilter'
@@ -374,6 +365,7 @@ class xivo_application_service_asterisk_user_sql extends xivo_application_abstra
 			LEFT JOIN "func_key_dest_custom" ON func_key_dest_custom.func_key_id = func_key.id
 			LEFT JOIN "func_key_dest_agent" ON func_key_dest_agent.func_key_id = func_key.id
 				LEFT JOIN "agentfeatures" ON agentfeatures.id = func_key_dest_agent.agent_id
+				LEFT JOIN "extensions" AS "agent_extensions" ON agent_extensions.id = func_key_dest_agent.extension_id
 			LEFT JOIN "func_key_dest_bsfilter" ON func_key_dest_bsfilter.func_key_id = func_key.id
 				LEFT JOIN "callfiltermember" ON callfiltermember.id = func_key_dest_bsfilter.filtermember_id
 				LEFT JOIN "callfiltermember" AS "bossmember" ON bossmember.bstype = 'boss' AND bossmember.callfilterid = callfiltermember.callfilterid

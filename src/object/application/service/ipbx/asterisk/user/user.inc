@@ -1529,7 +1529,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			return('paging');
 		}
 		elseif( $ref['typeextenumbers'] === 'extenfeatures'
-				&& $this->_func_key_agent->wonky_action_exists($ref['typevalextenumbers']))
+				&& $this->_func_key_agent->action_exists($ref['typevalextenumbers']))
 		{
 			return('agent');
 		}
@@ -1596,7 +1596,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			break;
 		case 'agent':
 			$agent_id = $data['typevalextenumbersright'];
-			$action = $this->_func_key_agent->translate_wonky_action($data['typevalextenumbers']);
+			$action = $data['typevalextenumbers'];
 			$func_key_id = $this->_func_key_manager->get_dst_id_for_agent($agent_id, $action);
 			break;
 		case 'bsfilter':

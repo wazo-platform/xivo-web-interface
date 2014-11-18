@@ -27,17 +27,7 @@ class xivo_service_asterisk_func_key_dest_agent extends xivo_service_asterisk_ab
 	var $_origin_list	= false;
 	var $_type_list		= false;
 
-	var $_wonky_actions = array(
-		'agentstaticlogtoggle' => 'toggle',
-		'agentstaticlogin' => 'login',
-		'agentstaticlogoff' => 'logoff'
-	);
-
-	var $_actions = array(
-		'toggle' => 'agentstaticlogtoggle',
-		'login' => 'agentstaticlogin',
-		'logoff' => 'agentstaticlogoff',
-	);
+	var $_actions = array('agentstaticlogin', 'agentstaticlogoff', 'agentstaticlogtoggle');
 
 	public function __construct(&$sre,&$dso)
 	{
@@ -55,7 +45,7 @@ class xivo_service_asterisk_func_key_dest_agent extends xivo_service_asterisk_ab
 
 	function _prepare($data)
 	{
-		$data['action'] = (string) $data['action'];
+		$data['extension_id'] = (int) $data['extension_id'];
 		$data['agent_id'] = (int) $data['agent_id'];
 		$data['func_key_id'] = (int) $data['func_key_id'];
 		$data['destination_type_id'] = (int) $data['destination_type_id'];
@@ -68,30 +58,19 @@ class xivo_service_asterisk_func_key_dest_agent extends xivo_service_asterisk_ab
 		return($this->_dso->func_key_ids_for_agent($agent_id));
 	}
 
-	public function get_func_key_id_by_agent_and_action($agent_id, $action)
+	public function get_func_key_id_by_agent_and_extension($agent_id, $extension_id)
 	{
-		return($this->_dso->get_func_key_id_by_agent_and_action($agent_id, $action));
+		return($this->_dso->get_func_key_id_by_agent_and_extension($agent_id, $extension_id));
 	}
 
-	public function translate_wonky_action($wonky_action)
+	public function action_exists($action)
 	{
-		if (!array_key_exists($wonky_action, $this->_wonky_actions))
-			return(false);
-
-		return($this->_wonky_actions[$wonky_action]);
+		return(in_array($action, $this->_actions));
 	}
 
-	public function translate_action($action)
+	public function get_all_actions()
 	{
-		if (!array_key_exists($action, $this->_actions))
-			return(false);
-
-		return($this->_actions[$action]);
-	}
-
-	public function wonky_action_exists($wonky_action)
-	{
-		return array_key_exists($wonky_action, $this->_wonky_actions);
+		return($this->_actions);
 	}
 
 }

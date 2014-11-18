@@ -119,7 +119,7 @@ class xivo_service_asterisk_func_key_sql extends xivo_service_asterisk_abstract_
 		$this->_dso->leftjoin('func_key_dest_agent',
 					'func_key_dest_agent.func_key_id = func_key.id',
 					null,
-					array('agent_id' => 'agent_id', 'action' => 'action'));
+					array('agent_id' => 'agent_id', 'agent_extension_id' => 'extension_id'));
 
 		# BSFILTER FUNC_KEY
 		$this->_dso->leftjoin('func_key_dest_bsfilter',
