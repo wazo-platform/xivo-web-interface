@@ -699,7 +699,7 @@ On estimated wait time overrun
 Threshold (estimated wait time):
 
 ; fld-diversion-waitratio
-On waiting calls / available agents ratio overrun
+On waiting calls / logged agents ratio overrun
 
 ; fm_queuefeatures_waitratio
 Threshold (percent ratio):

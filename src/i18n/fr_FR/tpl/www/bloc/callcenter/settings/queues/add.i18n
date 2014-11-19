@@ -612,10 +612,10 @@ Sur dépassement du temps d'attente estimé
 Seuil (temps d'attente estimé) :
 
 ; fld-diversion-waitratio
-Sur dépassement d'un ratio appels en attente / agents disponibles
+Sur dépassement d'un ratio appels en attente / agents logués
 
 ; fm_queuefeatures_waitratio
-Ratio appels en attente / agents disponibles :
+Ratio appels en attente / agents logués :
 
 ; hlp_fm_queuefeatures_waitratio
 Saisissez un pourcentage (par ex. 100 pour 100%)
