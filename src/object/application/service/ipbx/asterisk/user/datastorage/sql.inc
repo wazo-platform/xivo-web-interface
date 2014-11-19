@@ -259,7 +259,7 @@ class xivo_application_service_asterisk_user_sql extends xivo_application_abstra
 					THEN 'generalfeatures'
 
 				WHEN "func_key_destination_type"."name" = 'features'
-					AND "func_key_type"."name" = 'forward'
+					AND "func_key_type"."name" = 'transfer'
 					THEN 'generalfeatures'
 
 				WHEN "func_key_destination_type"."name" = 'features'
