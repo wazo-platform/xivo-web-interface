@@ -59,8 +59,8 @@ class xivo_service_asterisk_func_key_dest_bsfilter_sql extends xivo_service_aste
 							'callfiltermember');
 
 		$rows = $this->_dso->select_all();
-		if(isset($rows[0]) === false)
-			return(false);
+		if($rows === false)
+			return array();
 
 		$func_key_ids = array();
 		foreach($rows as $row) {
