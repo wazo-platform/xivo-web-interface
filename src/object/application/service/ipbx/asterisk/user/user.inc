@@ -1333,6 +1333,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		if(($func_key_template_id = $this->_func_key_manager->add_private_tpl($rs['firstname'].' '.$rs['lastname'])) === false)
 			return(false);
 
+		$this->_return['func_key_private_template_id'] = $func_key_template_id;
 		$this->_set_result_var('userfeatures','func_key_private_template_id', $func_key_template_id);
 		return(true);
 	}
@@ -1350,9 +1351,10 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 
 	function add_func_key_dest_user($user_id)
 	{
-		if (! $this->_func_key_manager->add_dst_for_user($user_id))
+		if (!($func_key_id = $this->_func_key_manager->add_dst_for_user($user_id)))
 			return(false);
 
+		$this->_return['func_key_dest_user'] = $user_id;
 		return(true);
 	}
 
@@ -1725,6 +1727,10 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		|| empty($this->_return) === true)
 			return(false);
 
+		if(array_key_exists('func_key_dest_user', $this->_return)) {
+			$this->_func_key_manager->delete_dst_for_user($this->_return['func_key_dest_user']);
+		}
+
 		foreach($this->_return as $key => $val)
 		{
 			if($val === false)
@@ -1769,6 +1775,10 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 					$this->_user_line->delete($val);
 					break;
 			}
+		}
+
+		if(array_key_exists('func_key_private_template_id', $this->_return)) {
+			$this->_func_key_manager->delete_template($this->_return['func_key_private_template_id']);
 		}
 
 		$this->_line->_status = 'add';
