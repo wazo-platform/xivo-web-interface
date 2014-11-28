@@ -93,7 +93,6 @@ $array['element']['waittime']['default'] = '';
 $array['element']['waittime']['null'] = true;
 
 $array['element']['waitratio'] = array();
-$array['element']['waitratio']['value'] = range(0,100,5);
 $array['element']['waitratio']['default'] = '';
 $array['element']['waitratio']['null'] = true;
 
@@ -118,5 +117,5 @@ $array['filter']['timeout'] = array('set' => false,'chk' => 2,'cast' => 'int');
 $array['filter']['preprocess_subroutine'] = array('set' => false,'chk' => 2,'callback' => 'xivo_service_asterisk::chk_context');
 $array['filter']['announce_holdtime'] = array('bool' => true);
 $array['filter']['waittime'] = array('set' => false,'chk' => 2,'key' => array(5,10,15,20,30,40,50,60,120,180,240,300,360,420,480,540,600,900,1200,1500,1800));
-$array['filter']['waitratio'] = array('set' => false,'chk' => 2,'cast' => 'uint');
+$array['filter']['waitratio'] = array('set' => false,'chk' => 2,'cast' => 'ufloat');
 ?>

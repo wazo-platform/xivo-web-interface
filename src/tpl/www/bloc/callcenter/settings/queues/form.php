@@ -887,8 +887,6 @@ endif;
   echo $form->text(array('desc'  => $this->bbf('fm_queuefeatures_waitratio'),
             'name'     => 'queuefeatures[waitratio]',
             'labelid'  => 'queuefeatures-waitratio',
-            'size'     => 15,
-            'help'     => $this->bbf('hlp_fm_queuefeatures_waitratio'),
             'required' => false,
             'value'    => $this->get_var('info','queuefeatures','waitratio'),
             'default'  => $element['queuefeatures']['waitratio']['default'],
