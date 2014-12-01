@@ -609,13 +609,10 @@ Diversions
 Sur dépassement du temps d'attente estimé
 
 ;  fm_queuefeatures_waittime
-Seuil (temps d'attente estimé) :
+Temps d'attente estimé maximum :
 
 ; fld-diversion-waitratio
-Sur dépassement d'un ratio appels en attente / agents logués
+Sur dépassement du nombre d'appels en attente par agents logués
 
 ; fm_queuefeatures_waitratio
-Ratio appels en attente / agents logués :
-
-; hlp_fm_queuefeatures_waitratio
-Saisissez un pourcentage (par ex. 100 pour 100%)
+Nombre d'appels en attente par agents logués maximum :

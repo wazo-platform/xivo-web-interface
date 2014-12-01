@@ -696,14 +696,10 @@ Diversions
 On estimated wait time overrun
 
 ;  fm_queuefeatures_waittime
-Threshold (estimated wait time):
+Maximum estimated wait time:
 
 ; fld-diversion-waitratio
-On waiting calls / logged agents ratio overrun
+On number of waiting calls per logged agents overrun
 
 ; fm_queuefeatures_waitratio
-Threshold (percent ratio):
-
-; hlp_fm_queuefeatures_waitratio
-In percent (i.e 100 for 100%)
-
+Maximum number of waiting calls per logged agents:
