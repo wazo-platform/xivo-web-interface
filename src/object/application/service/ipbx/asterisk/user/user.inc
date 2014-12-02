@@ -327,12 +327,14 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		return($this->_info[$membertype]);
 	}
 
-	function _get_voicemail()
+	function _get_voicemail($voicemailid=null)
 	{
 		$this->_info['voicemail'] = false;
 		$this->_origin['voicemail'] = false;
 
-		$voicemailid = (int) $this->_info['userfeatures']['voicemailid'];
+		if ($voicemailid === null) {
+			$voicemailid = (int) $this->_info['userfeatures']['voicemailid'];
+		}
 
 		if(is_object($this->_voicemail) === false
 		|| $voicemailid === 0
@@ -767,6 +769,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 					break;
 				case 'search':
 					$vmaction = 'edit';
+					$this->_get_voicemail((int) $arr['userfeatures']['voicemailid']);
 					break;
 			}
 		}
