@@ -1472,12 +1472,12 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			$ref = &$rs[$i];
 			$ref['iduserfeatures'] = $user_id;
 
-			$destination = $this->_determine_destination($ref);
-			if($destination !== false) {
-				if($this->_add_func_key_v2($destination, $ref) === false)
+
+			if(($destination = $this->_determine_destination($ref)) === false) {
+				if($this->_phonefunckey->add($ref) === false)
 					return(false);
 			} else {
-				if($this->_phonefunckey->add($ref) === false)
+				if($this->_add_func_key_v2($destination, $ref) === false)
 					return(false);
 			}
 
@@ -1520,6 +1520,10 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		)
 		{
 			return('service');
+		}
+		elseif($ref['typeextenumbers'] == 'featuremap' && $ref['typevalextenumbers'] == 'automon')
+		{
+			return(false);
 		}
 		elseif($ref['typeextenumbers'] == 'featuremap' || $ref['typevalextenumbers'] == 'parkext')
 		{
