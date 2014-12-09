@@ -341,7 +341,6 @@ class xivo_application_service_asterisk_group extends xivo_application_asterisk_
 		if(isset($arr['musicclass'],$this->_musiconhold[$arr['musicclass']]) === false)
 			$arr['musicclass'] = '';
 
-		$arr['context'] = $this->get_result_var('groupfeatures', 'context');
 		$arr['category'] = 'group';
 		$arr['timeoutpriority'] = 'app';
 		$arr['autopause'] = 'no';
