@@ -31,5 +31,6 @@ $array['admin']['add']['entity_id'] = array('pg_integer_null' => true);
 $array['admin']['edit'] = array();
 $array['admin']['edit']['passwd'] = array('cast' => 'alnumpunct','minlen' => 4,'maxlen' => 64);
 $array['admin']['edit']['valid'] = array('bool' => true);
+$array['admin']['edit']['entity_id'] = array('pg_integer_null' => true);
 
 ?>
