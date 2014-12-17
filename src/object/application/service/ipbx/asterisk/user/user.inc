@@ -65,7 +65,9 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 										'pickup',
 										'callrecord',
 										'incallfilter',
-										'enablednd');
+										'enablednd',
+										'automon'
+	);
 	protected $_forward_services	= array('fwdrna',
 											'fwdbusy',
 											'fwdunc');
@@ -1472,7 +1474,6 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			$ref = &$rs[$i];
 			$ref['iduserfeatures'] = $user_id;
 
-
 			if(($destination = $this->_determine_destination($ref)) === false) {
 				if($this->_phonefunckey->add($ref) === false)
 					return(false);
@@ -1521,11 +1522,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		{
 			return('service');
 		}
-		elseif($ref['typeextenumbers'] == 'featuremap' && $ref['typevalextenumbers'] == 'automon')
-		{
-			return(false);
-		}
-		elseif($ref['typeextenumbers'] == 'featuremap' || $ref['typevalextenumbers'] == 'parkext')
+		elseif($ref['typeextenumbers'] == 'featuremap')
 		{
 			return('features');
 		}
