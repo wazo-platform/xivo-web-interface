@@ -1522,13 +1522,13 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		{
 			return('service');
 		}
-		elseif($ref['typeextenumbers'] == 'featuremap')
-		{
-			return('features');
-		}
 		elseif($ref['typevalextenumbers'] == 'parkpos')
 		{
 			return('park_position');
+		}
+		elseif($ref['typeextenumbers'] == 'featuremap' || $ref['typeextenumbers'] == 'generalfeatures')
+		{
+			return('features');
 		}
 		elseif($ref['typevalextenumbers'] == 'paging')
 		{
