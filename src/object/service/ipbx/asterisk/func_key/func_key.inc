@@ -73,7 +73,7 @@ class xivo_service_asterisk_func_key extends xivo_service_asterisk_abstract
 			$conf[$idx] = array();
 			$conf[$idx]['type'] = (dwho_bool($ref['blf']) === false) ? 'speeddial' : 'blf';
 			$conf[$idx]['line'] = 1;
-			$conf[$idx]['label'] = $ref['label'];
+			$conf[$idx]['label'] = dwho_has_len($ref['label']) ? $ref['label'] : '';
 
 			$exten= '';
 			switch($ref['destination_type_name'])
