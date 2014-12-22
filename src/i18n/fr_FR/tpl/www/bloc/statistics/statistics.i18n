@@ -513,7 +513,7 @@ Performance agent
 Total des appels traités
 
 ; total_call_abandon_by_period
-Total des appels abandonés
+Total des appels abandonnés
 
 ; cel_performance
 Perfomance des appels
