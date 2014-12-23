@@ -31,10 +31,6 @@ if(($search = (string) $this->get_var('search')) !== ''):
 	$param['search'] = $search;
 endif;
 
-if(($context = $this->get_var('context')) !== ''):
-	$param['context'] = $context;
-endif;
-
 $page = $url->pager($pager['pages'],
 		    $pager['page'],
 		    $pager['prev'],
@@ -61,9 +57,6 @@ $page = $url->pager($pager['pages'],
 				    'value'	=> $pager['page'])),
 
 		$form->hidden(array('name'	=> 'search',
-				    'value'	=> '')),
-
-		$form->hidden(array('name'	=> 'context',
 				    'value'	=> ''));
 ?>
 <table id="table-main-listing">

@@ -25,7 +25,6 @@ $dhtml = &$this->get_module('dhtml');
 $act = $this->get_var('act');
 
 $search = (string) $this->get_var('search');
-$context = (string) $this->get_var('context');
 
 $toolbar_js = array();
 $toolbar_js[] = 'var xivo_toolbar_fm_search = \''.$dhtml->escape($search).'\';';
@@ -34,8 +33,6 @@ $toolbar_js[] = 'var xivo_toolbar_form_list = \'queueskillrules[]\';';
 $toolbar_js[] = 'var xivo_toolbar_adv_menu_delete_confirm = \''.$dhtml->escape($this->bbf('toolbar_adv_menu_delete_confirm')).'\';';
 
 $dhtml->write_js($toolbar_js);
-
-$context_js = $dhtml->escape($context);
 
 ?>
 <script type="text/javascript" src="<?=$this->file_time($this->url('js/xivo_toolbar.js'));?>"></script>
@@ -112,9 +109,6 @@ dwho.dom.set_onload(function()
 					if(dwho_is_undef(dwho.fm[xivo_toolbar_form_name]['search']) === false)
 						dwho.fm[xivo_toolbar_form_name]['search'].value = xivo_toolbar_fm_search;
 
-					if(dwho_is_undef(dwho.fm[xivo_toolbar_form_name]['context']) === false)
-						dwho.fm[xivo_toolbar_form_name]['context'].value = '<?=$context_js?>';
-
 					dwho.fm[xivo_toolbar_form_name]['act'].value = 'deletes';
 					dwho.fm[xivo_toolbar_form_name].submit();
 				}
@@ -126,18 +120,3 @@ dwho.dom.set_onload(function()
 endif;
 
 ?>
-<script type="text/javascript">
-dwho.dom.set_onload(function()
-{
-	dwho.dom.add_event('change',
-			   dwho_eid('it-toolbar-context'),
-			   function(e)
-			   {
-				if(xivo_toolbar_fm_search === ''
-				&& dwho_has_len(dwho.form.text_helper['it-toolbar-search']) === false)
-					this.form['search'].value = '';
-
-				this.form.submit();
-			   });
-});
-</script>

@@ -21,7 +21,6 @@
 $act		= isset($_QR['act']) === true ? $_QR['act'] : '';
 $page 		= isset($_QR['page']) === true ? dwho_uint($_QR['page'],1) : 1;
 $search 	= isset($_QR['search']) === true ? strval($_QR['search']) : '';
-$context 	= isset($_QR['context']) === true ? strval($_QR['context']) : '';
 
 $param = array();
 // default view mode == list
@@ -29,8 +28,6 @@ $param['act'] = 'list';
 
 if($search !== '')
 	$param['search'] = $search;
-else if($context !== '')
-	$param['context'] = $context;
 
 $contexts = false;
 
