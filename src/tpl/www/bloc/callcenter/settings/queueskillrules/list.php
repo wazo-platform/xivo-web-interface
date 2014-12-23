@@ -39,7 +39,7 @@ $page = $url->pager($pager['pages'],
 		    $pager['page'],
 		    $pager['prev'],
 		    $pager['next'],
-		    'callcenter/settings/queueskillsrules',
+		    'callcenter/settings/queueskillrules',
 		    array('act' => $act,$param));
 
 ?>
