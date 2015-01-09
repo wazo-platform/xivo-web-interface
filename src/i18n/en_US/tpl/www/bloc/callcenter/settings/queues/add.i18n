@@ -699,7 +699,7 @@ On estimated wait time overrun
 Maximum estimated wait time:
 
 ; fld-diversion-waitratio
-On number of waiting calls per logged agents overrun
+On number of waiting calls per logged-in agent overrun
 
 ; fm_queuefeatures_waitratio
-Maximum number of waiting calls per logged agents:
+Maximum number of waiting calls per logged-in agent:
