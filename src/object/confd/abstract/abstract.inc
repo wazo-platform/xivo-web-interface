@@ -124,13 +124,16 @@ abstract class xivo_confd_ressource_abstract
 		return(true);
 	}
 
-	private function _create()
+	private function _create($custom_headers)
 	{
 		$this->_status_code = null;
+		$default_headers = array(dwho_json::get_header());
+		$httpheader = array_merge($default_headers, $custom_headers);
+
 		return($this->_curl->load(null,
 						array('connect_timeout'	=> $this->_conf['confd']['connect_timeout'],
 								'timeout'		=> $this->_conf['confd']['timeout'],
-								'httpheader'	=> array(dwho_json::get_header())),
+								'httpheader'	=> $httpheader),
 								false));
 	}
 
@@ -162,22 +165,9 @@ abstract class xivo_confd_ressource_abstract
 		return($this->_status_code);
 	}
 
-	private function fetch_response($response)
+	protected function request_delete($path,$query=null,$custom_headers=array())
 	{
-		$decoded = dwho_json::decode(rtrim($response),true);
-
-		if(is_null($decoded) === true)
-			$this->_build_error_message($response);
-
-		$this->_status_code = $this->_curl->get_info('http_code');
-		$this->_curl->close();
-
-		return($decoded);
-	}
-
-	protected function request_delete($path,$query=null,$decode_assoc=true)
-	{
-		if($this->_create() === false)
+		if($this->_create($custom_headers) === false)
 			return(false);
 
 		 $this->_curl->set_option(CURLOPT_CUSTOMREQUEST, 'DELETE');
@@ -188,9 +178,9 @@ abstract class xivo_confd_ressource_abstract
 		return(false);
 	}
 
-	protected function request_get($path,$query=null,$decode_assoc=true)
+	protected function request_get($path,$query=null,$custom_headers=array())
 	{
-		if($this->_create() === false)
+		if($this->_create($custom_headers) === false)
 			return(false);
 
 		$this->_curl->set_option('get',true);
@@ -201,9 +191,9 @@ abstract class xivo_confd_ressource_abstract
 		return(false);
 	}
 
-	protected function request_put($path,$data,$query=null,$decode_assoc=true)
+	protected function request_put($path,$data,$query=null,$custom_headers=array())
 	{
-		if($this->_create() === false)
+		if($this->_create($custom_headers) === false)
 			return(false);
 
 		$this->_curl->set_option(CURLOPT_CUSTOMREQUEST, 'PUT');
@@ -215,9 +205,9 @@ abstract class xivo_confd_ressource_abstract
 		return(false);
 	}
 
-	protected function request_post($path,$data,$query=null,$decode_assoc=true)
+	protected function request_post($path,$data,$query=null,$custom_headers=array())
 	{
-		if($this->_create() === false)
+		if($this->_create($custom_headers) === false)
 			return(false);
 
 		$this->_curl->set_option('post',true);

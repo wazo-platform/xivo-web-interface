@@ -34,6 +34,19 @@ abstract class xivo_confd_helpers_abstract extends xivo_confd_ressource_abstract
 		return($this->_cnt);
 	}
 
+	protected function fetch_response($response)
+	{
+		$decoded = dwho_json::decode(rtrim($response),true);
+
+		if(is_null($decoded) === true)
+			$this->_build_error_message($response);
+
+		$this->_status_code = $this->_curl->get_info('http_code');
+		$this->_curl->close();
+
+		return($decoded);
+	}
+
 	public function get($id)
 	{
 		if(dwho_has_len($id) === false)
