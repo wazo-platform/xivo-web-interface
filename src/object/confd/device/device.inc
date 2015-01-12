@@ -28,6 +28,8 @@ class confd_ressource_device extends xivo_confd_helpers_abstract
 	public function __construct($_RAPI, $param=null)
 	{
 		parent::__construct($_RAPI, $param);
+		$this->_httpheaders[] = dwho_json::get_header();
+		$this->_httpheaders[] = 'Accept: application/json';
 	}
 
 	public function find_all($search='',$order=false,$limit=false,$search_column=null)

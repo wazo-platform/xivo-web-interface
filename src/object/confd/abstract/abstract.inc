@@ -29,6 +29,7 @@ abstract class xivo_confd_ressource_abstract
 	var $_uri			= null;
 	var $_url			= array();
 	var $_status_code	= null;
+	protected $_httpheaders	= array();
 
 	public function __construct($_RAPI)
 	{
@@ -127,13 +128,11 @@ abstract class xivo_confd_ressource_abstract
 	private function _create($custom_headers)
 	{
 		$this->_status_code = null;
-		$default_headers = array(dwho_json::get_header());
-		$httpheader = array_merge($default_headers, $custom_headers);
 
 		return($this->_curl->load(null,
 						array('connect_timeout'	=> $this->_conf['confd']['connect_timeout'],
 								'timeout'		=> $this->_conf['confd']['timeout'],
-								'httpheader'	=> $httpheader),
+								'httpheader'	=> $this->_httpheaders),
 								false));
 	}
 

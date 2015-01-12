@@ -17,6 +17,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+dwho::load_class('dwho_json');
+
 require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'abstract.inc'));
 
 class confd_ressource_configuration extends xivo_confd_helpers_abstract
@@ -28,6 +30,8 @@ class confd_ressource_configuration extends xivo_confd_helpers_abstract
 	public function __construct($_RAPI, $param=null)
 	{
 		parent::__construct($_RAPI, $param);
+		$this->_httpheaders[] = dwho_json::get_header();
+		$this->_httpheaders[] = 'Accept: application/json';
 	}
 
 }

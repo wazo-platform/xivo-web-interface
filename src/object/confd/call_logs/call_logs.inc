@@ -25,9 +25,11 @@ class confd_ressource_call_logs extends xivo_confd_helpers_abstract
 	protected $_name      = 'call_logs';
 	protected $_base_url  = 'call_logs';
 
+
 	public function __construct($_RAPI, $param=null)
 	{
 		parent::__construct($_RAPI, $param);
+		$this->_httpheaders[] = 'Accept: text/csv; charset=utf-8';
 	}
 
 	protected function fetch_response($response)
@@ -40,9 +42,8 @@ class confd_ressource_call_logs extends xivo_confd_helpers_abstract
 
 	public function find_all($query)
 	{
-		$httpheaders = array('Accept: text/csv; charset=utf-8');
 		$uri = $this->_build_uri();
-		$rs = $this->request_get($uri, $query, $httpheaders);
+		$rs = $this->request_get($uri, $query, $this->_httpheaders);
 
 		if($this->_status_code !== 200
 		|| empty($rs) === true)

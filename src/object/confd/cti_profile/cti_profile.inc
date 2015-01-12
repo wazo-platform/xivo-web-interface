@@ -28,8 +28,10 @@ class confd_ressource_cti_profile extends xivo_confd_helpers_abstract
 	public function __construct($_RAPI, $param=null)
 	{
 		parent::__construct($_RAPI, $param);
+		$this->_httpheaders[] = dwho_json::get_header();
+		$this->_httpheaders[] = 'Accept: application/json';
 	}
-	
+
 	public function get_cti_profile_id_with_name($profile_name) {
 		$all_profiles = parent::find_all();
 		foreach($all_profiles as $profile) {
