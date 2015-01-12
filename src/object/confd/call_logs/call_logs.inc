@@ -19,27 +19,42 @@
 
 require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'abstract.inc'));
 
-class confd_ressource_cti_profile extends xivo_confd_helpers_abstract
+class confd_ressource_call_logs extends xivo_confd_helpers_abstract
 {
 
-	protected $_name      = 'cti_profile';
-	protected $_base_url  = 'cti_profiles';
+	protected $_name      = 'call_logs';
+	protected $_base_url  = 'call_logs';
+
 
 	public function __construct($_RAPI, $param=null)
 	{
 		parent::__construct($_RAPI, $param);
-		$this->_httpheaders[] = dwho_json::get_header();
-		$this->_httpheaders[] = 'Accept: application/json';
+		$this->_httpheaders[] = 'Accept: text/csv; charset=utf-8';
 	}
 
-	public function get_cti_profile_id_with_name($profile_name) {
-		$all_profiles = parent::find_all();
-		foreach($all_profiles as $profile) {
-			if($profile['name'] == $profile_name)
-				return $profile['id'];
-		}
-		return false;
+	protected function fetch_response($response)
+	{
+		$this->_status_code = $this->_curl->get_info('http_code');
+		$this->_curl->close();
+
+		return($response);
 	}
+
+	public function find_all($query)
+	{
+		$uri = $this->_build_uri();
+		$rs = $this->request_get($uri, $query, $this->_httpheaders);
+
+		if($this->_status_code !== 200
+		|| empty($rs) === true)
+		{
+			$this->_build_error_message($rs);
+			return(false);
+		}
+
+		return($rs);
+	}
+
 }
 
 ?>

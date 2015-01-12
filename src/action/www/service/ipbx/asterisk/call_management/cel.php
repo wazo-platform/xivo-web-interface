@@ -18,6 +18,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+
+$call_logs_api = &$_RAPI->get_ressource('call_logs');
+
 $result = false;
 
 if(isset($_QR['fm_send']) === true || isset($_QR['search']) === true)
@@ -35,10 +38,7 @@ if(isset($_QR['fm_send']) === true || isset($_QR['search']) === true)
 		}
 		$query= array(array('start_date', $start), array('end_date', $end));
 	}
-	$confd = &$_XOBJ->get_module('confd');
-	$csv_uri = $confd->get_uri('call_logs', $query);
-	$result = file_get_contents($csv_uri);
-	$_TPL->set_var('result', $result);
+	$_TPL->set_var('result', $call_logs_api->find_all($query));
 	$_TPL->display('/bloc/service/ipbx/'.$ipbx->get_name().'/call_management/cel/exportcsv');
 	die();
 }
