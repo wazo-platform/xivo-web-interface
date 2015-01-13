@@ -48,7 +48,7 @@ if($xmlvendor->get_vendor() === 'thomson' && $prevpos > 0):
 		'</MenuItem>',"\n";
 endif;
 
-if(is_array($list) === false || ($nb = count($list)) === 0):
+if((is_array($list) === false || ($nb = count($list)) === 0) && $xmlvendor->get_vendor() !== 'yealink'):
 	echo	'<DirectoryEntry>',"\n",
 		'<Name>',$xmlvendor->escape($this->bbf('phone_noentries')),'</Name>',"\n",
 		'<Telephone></Telephone>',"\n",
