@@ -309,14 +309,17 @@ class xivo_application_service_asterisk_webservices_phonebook extends xivo_appli
 			|| preg_match_all('/[\+\(\)\d]+/',$info['phone'],$match) === 0)
 				continue;
 
+			// Remove all chars not in +()0-9
 			$info['phone'] = implode('',$match[0]);
 
+			// Convert numbers +33(0)123456789 to 0033123456789
 			if(preg_match('/^\+(\d+)\(\d+\)(\d+)$/',$info['phone'],$match) === 1)
 				$info['phone'] = '00'.$match[1].$match[2];
 
 			if(preg_match_all('/^[0-9\*#+]+$/',$info['phone'],$match) === 0)
 				continue;
 
+			// Remove all chars not in +*#0-9
 			$info['phone'] = implode('',$match[0]);
 
 			$info['identity'] = $info['name'];
