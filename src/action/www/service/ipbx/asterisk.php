@@ -29,9 +29,9 @@ $sipstat['enable'] = $sipstat['disable'] = $sipstat['total'] = 0;
 $iaxstat['enable'] = $iaxstat['disable'] = $iaxstat['total'] = 0;
 $live['activecalls'] = $live['activechannels'] = $live['callsprocessed'] = 0;
 
-if(($channels_info = &$ipbx->discuss_ipbx('core show channels',true)) !== false)
+if(($channels_info = &$ipbx->core_show_channels()) !== false)
 {
-	$channels_info = explode("\n",$channels_info[0]);
+	$channels_info = explode("\n",$channels_info);
 	$nb = count($channels_info);
 	for ($i=0;$i<$nb;$i++)
 	{

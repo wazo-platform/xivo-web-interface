@@ -29,6 +29,7 @@ class xivo_service_asterisk extends xivo_service_abstract
 	var $_realstatic         = array();
 	var $_apprealstatic      = array();
 	var $_request_handlers   = null;
+	var $_sysconfd           = null;
 
 	public function __construct($ini)
 	{
@@ -82,6 +83,54 @@ class xivo_service_asterisk extends xivo_service_abstract
 		$answer = $this->_request_handlers->exec_cmd($commands,true);
 
 		return($answer);
+	}
+
+	private function _load_sysconfd()
+	{
+		if (! is_object($this->_sysconfd)) {
+			$_XOBJ = &dwho_gct::get('xivo_object');
+			if ($_XOBJ) {
+				$this->_sysconfd = &$_XOBJ->get_module('sysconfd');
+				if(! $this->_sysconfd) {
+					return(($this->_sysconfd = false));
+				}
+			} else {
+				return(false);
+			}
+		}
+
+		return(true);
+	}
+
+	public function core_show_version()
+	{
+		if($this->_load_sysconfd() === false
+		|| ($info = $this->_sysconfd->request_get('/core_show_version')) === false)
+			return(false);
+
+		return($info);
+	}
+
+	public function core_show_channels()
+	{
+		if($this->_load_sysconfd() === false
+		|| ($info = $this->_sysconfd->request_get('/core_show_channels')) === false)
+			return(false);
+
+		return($info);
+	}
+
+	public function sip_show_peer($peer)
+	{
+		$query = array(
+			array('peer', $peer)
+		);
+
+		if($this->_load_sysconfd() === false
+		|| ($info = $this->_sysconfd->request_get('/sip_show_peer', $query)) === false)
+			return(false);
+
+		return($info);
 	}
 
 	private function _load_identity_class($module)
@@ -359,12 +408,10 @@ class xivo_service_asterisk extends xivo_service_abstract
 	{
 		if((defined('DWHO_SESS_ENABLE') === true
 			&& (bool) DWHO_SESS_ENABLE === false) === true
-		|| ($info = $this->discuss_ipbx('core show version',true)) === false
-		|| is_array($info) === false
-		|| isset($info[0]) === false)
+		|| ($info = $this->core_show_version()) === false)
 			return(false);
 
-		$info = explode(' ',$info[0],3);
+		$info = explode(' ',$info,3);
 
 		$r = array();
 
