@@ -145,7 +145,7 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 			return false;
 
 		$peer_name = $this->_info['protocol']['name'];
-		$ipbx_query = sprintf("%s %s load",
+		$ipbx_query = sprintf("%s %s",
 			$show_peer_command[$line_protocol],
 			$peer_name
 		);
