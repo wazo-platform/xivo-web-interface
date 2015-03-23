@@ -60,7 +60,7 @@ class xivo_service_asterisk extends xivo_service_abstract
 		return(dwho_file::required($arr,$once,$includable));
 	}
 
-	public function discuss_ipbx($cmd, $ask_answer=false)
+	public function discuss_ipbx($cmd)
 	{
 		if (! is_object($this->_request_handlers)) {
 			$_XOBJ = &dwho_gct::get('xivo_object');
@@ -79,10 +79,7 @@ class xivo_service_asterisk extends xivo_service_abstract
 		$commands['ctibus'] = array();
 		$commands['dird'] = array();
 
-		$answer = array();
-		$answer = $this->_request_handlers->exec_cmd($commands,true);
-
-		return($answer);
+		return($this->_request_handlers->exec_cmd($commands));
 	}
 
 	private function _load_sysconfd()

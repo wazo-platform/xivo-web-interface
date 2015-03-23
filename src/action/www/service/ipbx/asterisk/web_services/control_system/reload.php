@@ -23,7 +23,7 @@ $access_subcategory = 'reload';
 
 include(dwho_file::joinpath(dirname(__FILE__),'..','_common.php'));
 
-$status = $ipbx->discuss_ipbx('core reload',true) === false ? 500 : 200;
+$status = $ipbx->discuss_ipbx('core reload') === false ? 500 : 200;
 
 $http_response->set_status_line($status);
 $http_response->send(true);

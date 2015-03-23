@@ -23,7 +23,7 @@ $access_subcategory = 'restart';
 
 include(dwho_file::joinpath(dirname(__FILE__),'..','_common.php'));
 
-$status = $ipbx->discuss_ipbx('core restart now',true) === false ? 500 : 200;
+$status = $ipbx->discuss_ipbx('core restart now') === false ? 500 : 200;
 
 $http_response->set_status_line($status);
 $http_response->send(true);
