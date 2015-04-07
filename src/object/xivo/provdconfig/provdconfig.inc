@@ -485,41 +485,6 @@ class xivo_object_provdconfig extends xivo_object_provd_abstract
 			unset($config[$var]);
 	}
 
-	public function update_parents_ids($configid,$method,$id)
-	{
-		if (($config = $this->get($configid)) === false)
-		{
-			dwho_report::push('error', 'Config not exist: '.$config);
-			return(false);
-		}
-
-		$parents_ids = &$config['parent_ids'];
-		switch ($method)
-		{
-			case 'add':
-			case 'edit':
-				if (in_array($id,$parents_ids) === false)
-					array_push($parents_ids,$id);
-				$config['configdevice'] = $id;
-				break;
-			case 'del':
-				for ($i=0;$i<count($parents_ids);$i++)
-				{
-					if ($id === $parents_ids[$i])
-					unset($parents_ids[$i]);
-				}
-				unset($config['configdevice']);
-				break;
-		}
-
-		if ($this->edit($configid,$config) === false) {
-			dwho_report::push('error', 'fail to update config: '.$configid);
-			return(false);
-		}
-
-		return(true);
-	}
-
 	public function init_device_config($configid)
 	{
 		if (($globalconfig = $this->get($configid)) === false)
