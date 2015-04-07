@@ -84,50 +84,13 @@ class xivo_object_provddevice extends xivo_object_provd_abstract
 		return(array_values($rs));
 	}
 
-	private function _prepare_data_to_provd($data)
+	private function _edit($id,$arr)
 	{
-		foreach ($data as $key => $val)
-		{
-			if (dwho_has_len($val) === false)
-				unset($data[$key]);
-		}
-		return($data);
-	}
-
-	public function add($arr)
-	{
-		if (is_array($arr) === false)
-			return(false);
-
-		$uri = $this->_build_uri(array('devices'));
-		$data['device'] = $this->_prepare_data_to_provd($arr);
-		$rs = $this->request_post($uri,$data);
-
-		if($this->_status_code !== 201
-		|| isset($rs['id']) === false)
-			return(false);
-
-		$this->eval_config_device($rs['id']);
-
-		return($rs['id']);
-	}
-
-	public function edit($id,$arr)
-	{
-		if(dwho_has_len($id) === false
-		|| is_array($arr) === false)
-			return(false);
-
 		$uri = $this->_build_uri(array('devices',$id));
-		$data['device'] = $this->_prepare_data_to_provd($arr);
+		$data['device'] = $arr;
 		$rs = $this->request_put($uri,$data);
 
-		if($this->_status_code !== 204)
-			return(false);
-
-		$this->eval_config_device($id);
-
-		return(true);
+		return($this->_status_code === 204);
 	}
 
 	public function reconfigure($id)
@@ -169,79 +132,36 @@ class xivo_object_provddevice extends xivo_object_provd_abstract
 		return(urlencode($decoded['Location']));
 	}
 
-	public function delete($id)
+	public function rebuild_device_config($deviceid)
 	{
-		if(dwho_has_len($id) === false)
-			return(false);
-
-		$uri = $this->_build_uri(array('devices',$id));
-		$rs = $this->request_delete($uri);
-
-		if($this->_status_code !== 204)
-			return(false);
-
-		return(true);
-	}
-
-	public function eval_config_device($deviceid)
-	{
-		if (($conf = $this->_provdconfig->init_device_config($deviceid)) === false)
-			return(false);
-
-		if ($this->_provdconfig->get($deviceid) === false)
-			$this->_provdconfig->add($conf);
-		else
-			$this->_provdconfig->edit($deviceid,$conf);
-
-		return(true);
-	}
-
-	public function update_configid($deviceid,$configid,$synchronize=false)
-	{
-		if(dwho_has_len($deviceid) === false
-		|| dwho_has_len($configid) === false)
+		if (dwho_has_len($deviceid) === false)
 			return(false);
 
 		if (($device = $this->get($deviceid)) === false)
 		{
-			dwho_report::push('error', 'fail to get config for this device: '.$deviceid);
+			dwho_report::push('error', 'could not get device '.$deviceid);
 			return(false);
 		}
 
-		$device['config'] = $configid;
-		if($this->edit($deviceid,$device) === false)
+		$configid = isset($device['config']) === true ? $device['config'] : null;
+		if (($newconfigid = $this->_provdconfig->rebuild_config($deviceid,$configid)) === false)
 		{
-			dwho_report::push('error', 'fail to edit device: '.$deviceid);
 			return(false);
+		}
+		elseif ($newconfigid === null)
+		{
+			return(true);
 		}
 
-		if ($synchronize === true
-		&& $this->synchronize($deviceid) === false)
-			dwho_report::push('warning', 'fail to synchronize this device: '.$deviceid);
-
-		return(true);
-	}
-
-	public function update_config_from_line($deviceid,$line_id,$synchronize=false)
-	{
-		if (($conf = $this->_provdconfig->build_device_config($deviceid,$line_id)) === false)
+		if ($configid !== $newconfigid)
 		{
-			dwho_report::push('error', 'fail to build config device: '.$deviceid);
-			return(false);
+			$device['config'] = $newconfigid;
+			if($this->_edit($deviceid,$device) === false)
+			{
+				dwho_report::push('error', 'could not edit device '.$deviceid);
+				return(false);
+			}
 		}
-		elseif ($this->_provdconfig->edit($deviceid,$conf) === false)
-		{
-			dwho_report::push('error', 'fail to edit config for this device: " '.$deviceid.' "');
-			return(false);
-		}
-		elseif($this->update_configid($deviceid,$deviceid) === false)
-		{
-			dwho_report::push('error', 'fail to edit config device: '.$deviceid);
-			return(false);
-		}
-		elseif ($synchronize === true
-		&& $this->synchronize($deviceid) === false)
-			dwho_report::push('warning', 'fail to synchronize this device: '.$deviceid);
 
 		return(true);
 	}

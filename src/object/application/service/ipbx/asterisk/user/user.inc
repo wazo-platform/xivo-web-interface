@@ -1330,9 +1330,9 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 				dwho_report::push('error', 'device doesn\'t exist');
 				return(false);
 			}
-			elseif($this->_provddevice->update_config_from_line($device['device']['id'], $line_id) === false)
+			elseif($this->_provddevice->rebuild_device_config($new_device['device']) === false)
 			{
-				dwho_report::push('error', 'Can\'t edit device');
+				dwho_report::push('error', 'could not rebuild device config for device '.$new_device['device']);
 				return(false);
 			}
 			elseif ($new_device['protocol'] === XIVO_SRE_IPBX_AST_PROTO_SCCP
@@ -1770,9 +1770,9 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 				return(false);
 			}
 
-			if ($this->delete_device_config() === false
-			|| $this->delete_linefeatures() === false
-			|| $this->delete_exten('exten') === false)
+			if ($this->delete_linefeatures() === false
+			|| $this->delete_exten('exten') === false
+			|| $this->delete_device_config() === false)
 			{
 				$this->_reverse_edit();
 				$this->_status = '';
@@ -2042,9 +2042,9 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 					dwho_report::push('error', 'device doesn\'t exist: '.$existing_device['device']);
 					return(false);
 				}
-				elseif ($this->_device->remove_line($new_device['id']) === false)
+				elseif ($this->_provddevice->rebuild_device_config($existing_device['device']) === false)
 				{
-					dwho_report::push('error', 'Can\'t remove line device');
+					dwho_report::push('error', 'could not rebuild device config for device '.$existing_device['device']);
 					return(false);
 				}
 				elseif ($existing_device['protocol'] === XIVO_SRE_IPBX_AST_PROTO_SCCP
@@ -2062,9 +2062,9 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 					dwho_report::push('error', 'device doesn\'t exist: '.$new_device['device']);
 					return(false);
 				}
-				elseif($this->_provddevice->update_config_from_line($device['device']['id'],$new_device['id']) === false)
+				elseif ($this->_provddevice->rebuild_device_config($new_device['device']) === false)
 				{
-					dwho_report::push('error', 'Can\'t update config device');
+					dwho_report::push('error', 'could not rebuild device config for device '.$new_device['device']);
 					return(false);
 				}
 				elseif ($new_device['protocol'] === XIVO_SRE_IPBX_AST_PROTO_SCCP
@@ -2084,9 +2084,9 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 				dwho_report::push('error', 'device doesn\'t exist: '.$existing_device['device']);
 				return(false);
 			}
-			elseif($this->_provdconfig->rebuild_device_config($device['device']['id']) === false)
+			elseif ($this->_provddevice->rebuild_device_config($existing_device['device']) === false)
 			{
-				dwho_report::push('error', 'Can\'t rebuild config device');
+				dwho_report::push('error', 'could not rebuild device config for device '.$existing_device['device']);
 				return(false);
 			}
 			elseif ($new_device['protocol'] === XIVO_SRE_IPBX_AST_PROTO_SCCP
@@ -2264,9 +2264,9 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 
 		if($this->_delete_func_key_v2() === false
 		|| $this->delete_userfeatures() === false
-		|| $this->delete_device_config() === false
 		|| $this->delete_linefeatures() === false
 		|| $this->delete_exten('exten') === false
+		|| $this->delete_device_config() === false
 		|| $this->delete_rightcall() === false
 		|| $this->delete_dialaction() === false
 		|| $this->delete_phonefunckey() === false
@@ -2347,7 +2347,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		// remove device if associated
 		elseif(($device = $this->_device->get($this->_info['linefeatures'][0]['device'],null,true)) === false)
 			return(true);
-		elseif($this->_device->remove_line($this->_info['linefeatures'][0]['id']) === false)
+		elseif($this->_provddevice->rebuild_device_config($this->_info['linefeatures'][0]['device']) === false)
 			return(false);
 		elseif ($this->_info['linefeatures'][0]['protocol'] === XIVO_SRE_IPBX_AST_PROTO_SCCP
 		&& $this->_sccpdevice->init_device($device['device']['mac'],'') === false)

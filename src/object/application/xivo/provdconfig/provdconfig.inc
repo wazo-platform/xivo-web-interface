@@ -24,6 +24,7 @@ class xivo_application_xivo_object_provdconfig extends xivo_application_xivo_obj
 {
 	protected $_commonconf 		= false;
 	protected $_provdconfig		= false;
+	protected $_provddevice		= false;
 	protected $_conf			= array();
 	protected $_param			= array('internal'	=> false);
 
@@ -33,6 +34,7 @@ class xivo_application_xivo_object_provdconfig extends xivo_application_xivo_obj
 
 		if(($this->_commonconf = &$this->_xobj->get_module('commonconf')) === false
 		|| ($this->_provdconfig = &$this->_xobj->get_module('provdconfig')) === false
+		|| ($this->_provddevice = &$this->_xobj->get_module('provddevice')) === false
 		|| $this->load_init($param) === false)
 			return(false);
 
@@ -255,7 +257,7 @@ class xivo_application_xivo_object_provdconfig extends xivo_application_xivo_obj
 					if (empty($ref['device']) === false
 					&& array_search($ref['device'], $processed) === false)
 					{
-						$this->_provdconfig->rebuild_device_config($ref['device']);
+						$this->_provddevice->rebuild_device_config($ref['device']);
 						array_push($processed,$ref['device']);
 					}
 				}
