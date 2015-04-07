@@ -196,22 +196,6 @@ class xivo_object_provddevice extends xivo_object_provd_abstract
 		return(true);
 	}
 
-	public function update_rawconfig($deviceid,$rawconfig,$synchronize=false)
-	{
-		if(dwho_has_len($deviceid) === false
-		|| is_array($rawconfig) === false)
-			return(false);
-
-		if ($this->_provdconfig->update_raw_config($deviceid,$rawconfig) === false)
-			return(false);
-
-		if ($synchronize === true
-		&& $this->synchronize($deviceid) === false)
-			dwho_report::push('warning', 'fail to synchronize this device: '.$deviceid);
-
-		return(true);
-	}
-
 	public function update_configid($deviceid,$configid,$synchronize=false)
 	{
 		if(dwho_has_len($deviceid) === false
@@ -256,31 +240,6 @@ class xivo_object_provddevice extends xivo_object_provd_abstract
 			return(false);
 		}
 		elseif ($synchronize === true
-		&& $this->synchronize($deviceid) === false)
-			dwho_report::push('warning', 'fail to synchronize this device: '.$deviceid);
-
-		return(true);
-	}
-
-	public function remove_config($deviceid,$synchronize=false)
-	{
-		if(dwho_has_len($deviceid) === false)
-			return(false);
-
-		if (($device = $this->get($deviceid)) === false)
-		{
-			dwho_report::push('error', 'device not exist: '.$deviceid);
-			return(false);
-		}
-
-		unset($device['config']);
-		if($this->edit($deviceid,$device) === false)
-		{
-			dwho_report::push('error', 'fail to edit device: '.$deviceid);
-			return(false);
-		}
-
-		if ($synchronize === true
 		&& $this->synchronize($deviceid) === false)
 			dwho_report::push('warning', 'fail to synchronize this device: '.$deviceid);
 
