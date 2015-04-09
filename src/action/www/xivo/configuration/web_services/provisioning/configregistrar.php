@@ -36,6 +36,7 @@ switch($act)
 {
 	case 'rebuild_required_config':
 		$provdconfig = &$_XOBJ->get_module('provdconfig');
+		$provddevice = &$_XOBJ->get_module('provddevice');
 		$linefeatures = &$ipbx->get_module('linefeatures');
 
 		$status = 204;
@@ -46,7 +47,7 @@ switch($act)
 			for($i=0; $i<$nb; $i++)
 			{
 				$ref = &$list[$i];
-				$provdconfig->rebuild_device_config($ref['device']);
+				$provddevice->rebuild_device_config($ref['device']);
 			}
 		}
 		$provdconfig->rebuild_required_config();

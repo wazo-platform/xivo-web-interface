@@ -28,6 +28,7 @@ class xivo_object_provdconfig extends xivo_object_provd_abstract
 	protected $_base_url 		= '/provd/cfg_mgr';
 	protected $_internal 		= array('base','autoprov');
 	protected $_confdefault 	= false;
+	protected $_device_api		= false;
 	protected $_extensions		= false;
 	protected $_sccpdevice		= false;
 	protected $_linefeatures	= false;
@@ -47,7 +48,9 @@ class xivo_object_provdconfig extends xivo_object_provd_abstract
 		|| ($this->_phonefunckey = &$this->_service->get_module('phonefunckey')) === false
 		|| ($this->_user_line = &$this->_service->get_module('user_line')) === false
 		|| ($this->_func_key = &$this->_service->get_module('func_key')) === false
-		|| ($this->_appsip = &$this->_service->get_apprealstatic('sip')) === false)
+		|| ($this->_appsip = &$this->_service->get_apprealstatic('sip')) === false
+		|| ($_RAPI = &dwho_gct::get('xivo_confd')) === false
+		|| ($this->_device_api = $_RAPI->get_ressource('device')) === false)
 			return(false);
 
 		$this->_load_config(true);
@@ -485,41 +488,6 @@ class xivo_object_provdconfig extends xivo_object_provd_abstract
 			unset($config[$var]);
 	}
 
-	public function update_parents_ids($configid,$method,$id)
-	{
-		if (($config = $this->get($configid)) === false)
-		{
-			dwho_report::push('error', 'Config not exist: '.$config);
-			return(false);
-		}
-
-		$parents_ids = &$config['parent_ids'];
-		switch ($method)
-		{
-			case 'add':
-			case 'edit':
-				if (in_array($id,$parents_ids) === false)
-					array_push($parents_ids,$id);
-				$config['configdevice'] = $id;
-				break;
-			case 'del':
-				for ($i=0;$i<count($parents_ids);$i++)
-				{
-					if ($id === $parents_ids[$i])
-					unset($parents_ids[$i]);
-				}
-				unset($config['configdevice']);
-				break;
-		}
-
-		if ($this->edit($configid,$config) === false) {
-			dwho_report::push('error', 'fail to update config: '.$configid);
-			return(false);
-		}
-
-		return(true);
-	}
-
 	public function init_device_config($configid)
 	{
 		if (($globalconfig = $this->get($configid)) === false)
@@ -546,6 +514,39 @@ class xivo_object_provdconfig extends xivo_object_provd_abstract
 		$config['exten_pickup_group'] = $this->get_exten('pickupexten');
 		$config['exten_pickup_call'] = $this->get_exten('pickup');
 		$config['exten_voicemail'] = $this->get_exten('vmusermsg');
+	}
+
+	private function _build_funckeys(&$raw_config,$line_id)
+	{
+		$user_id = $this->_user_line->get_master_user_id_by_line_id($line_id);
+		$funckeys = array();
+		if (($funckeys_v1 = $this->_phonefunckey->build_provd_conf_funckey($user_id)) !== false)
+			$funckeys = $funckeys + $funckeys_v1;
+		if (($funckeys_v2 = $this->_func_key->get_provd_conf($user_id)) !== false)
+			$funckeys = $funckeys + $funckeys_v2;
+
+		if (empty($funckeys))
+			unset($raw_config['funckeys']);
+		else
+			$raw_config['funckeys'] = $funckeys;
+	}
+
+	private function _build_lines(&$raw_config,$listline)
+	{
+		foreach ($listline as $linefeatures)
+		{
+			$protocolname = $linefeatures['protocol'];
+			switch($protocolname)
+			{
+				case 'sip':
+					$this->_build_sip_secure_config($raw_config);
+					$this->_build_sip_config($raw_config, $linefeatures);
+					break;
+				case 'sccp':
+					$this->_build_sccp_config($raw_config, $linefeatures);
+					break;
+			}
+		}
 	}
 
 	private function _build_sipline($protoline, $confregistrar)
@@ -640,43 +641,6 @@ class xivo_object_provdconfig extends xivo_object_provd_abstract
 		}
 	}
 
-	public function build_device_config($configid, $line_id)
-	{
-		$globalconfig = $this->init_device_config($configid);
-
-		$raw_config = &$globalconfig['raw_config'];
-
-		$this->_build_exten_config($raw_config);
-
-		$user_id = $this->_user_line->get_master_user_id_by_line_id($line_id);
-		$funckeys = array();
-		if (($funckeys_v1 = $this->_phonefunckey->build_provd_conf_funckey($user_id)) !== false)
-			$funckeys = $funckeys + $funckeys_v1;
-		if (($funckeys_v2 = $this->_func_key->get_provd_conf($user_id)) !== false)
-			$funckeys = $funckeys + $funckeys_v2;
-
-		if (empty($funckeys))
-			unset($raw_config['funckeys']);
-		else
-			$raw_config['funckeys'] = $funckeys;
-
-		$linefeatures = $this->_linefeatures->get($line_id);
-		$protocolname = $linefeatures['protocol'];
-
-		switch($protocolname)
-		{
-			case 'sip':
-				$this->_build_sip_secure_config($globalconfig);
-				$this->_build_sip_config($raw_config, $linefeatures);
-				break;
-			case 'sccp':
-				$this->_build_sccp_config($raw_config, $linefeatures);
-				break;
-		}
-
-		return($globalconfig);
-	}
-
 	public function update_raw_config($configid, $new_raw_config)
 	{
 		$globalconfig = $this->init_device_config($configid);
@@ -712,22 +676,71 @@ class xivo_object_provdconfig extends xivo_object_provd_abstract
 		return(true);
 	}
 
-	public function rebuild_device_config($deviceid)
+	private function _get_config_device($configid)
 	{
-		if (($listline = $this->_linefeatures->get_all_where(array('device' => (string) $deviceid))) === false)
-			return(false);
+		if ($configid === null)
+			$config = null;
+		elseif (($config = $this->get($configid)) === false)
+			$config = null;
 
-		foreach ($listline as $line)
+		$configdevice = isset($config['configdevice']) === true ? $config['configdevice'] : 'defaultconfigdevice';
+
+		return($configdevice);
+	}
+
+	private function _create_or_edit_config($configid,$config)
+	{
+		if ($this->get($configid) === false)
 		{
-			$globalconfig = $this->build_device_config($deviceid, $line['id']);
-
-			if ($this->edit($deviceid, $globalconfig) === false)
+			if ($this->add($config) === false)
 			{
-				dwho_report::push('error', 'fail to edit config for this device: '.$deviceid);
+				dwho_report::push('error', 'could not create config '.$configid);
 				return(false);
 			}
 		}
-		return(true);
+		else
+		{
+			if ($this->edit($configid, $config) === false)
+			{
+				dwho_report::push('error', 'could not edit config'.$configid);
+				return(false);
+			}
+		}
+	}
+
+	public function rebuild_config($deviceid,$configid=null)
+	{
+		$where = array('device' => (string) $deviceid);
+		$order = array('num' => SORT_ASC);
+		$listline = $this->_linefeatures->get_all_where($where,null,true,$order);
+
+		if ($listline === false)
+		{
+			if ($this->_device_api->reset_to_autoprov($deviceid) === false)
+			{
+				dwho_report::push('error', 'coud not reset to autoprov device '.$deviceid);
+				return(false);
+			}
+
+			return(null);
+		}
+
+		$configdevice = $this->_get_config_device($configid);
+
+		$newconfigid = $deviceid;
+		$newconfig = array();
+		$newconfig['id'] = $newconfigid;
+		$newconfig['configdevice'] = $configdevice;
+		$newconfig['parent_ids'] = array('base',$configdevice);
+		$newconfig['raw_config'] = array('X_key' => '');
+		$newrawconfig = &$newconfig['raw_config'];
+		$this->_build_exten_config($newrawconfig);
+		$this->_build_funckeys($newrawconfig,$listline[0]['id']);
+		$this->_build_lines($newrawconfig,$listline);
+
+		$this->_create_or_edit_config($newconfigid, $newconfig);
+
+		return($newconfigid);
 	}
 
 	public function build_raw_config_device($raw)

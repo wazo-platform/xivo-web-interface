@@ -27,6 +27,7 @@ dwho_file::required(array(XIVO_PATH_OBJECT,'application','service','ipbx','aster
 class xivo_application_service_asterisk_device extends xivo_application_asterisk_abstract
 {
 	protected $_linefeatures 	= false;
+	protected $_provddevice		= false;
 	protected $_provdplugin 	= false;
 	protected $_sccpdevice		= false;
 	protected $_device_api		= false;
@@ -39,7 +40,7 @@ class xivo_application_service_asterisk_device extends xivo_application_asterisk
 		|| ($this->_sccpdevice = &$this->_service->get_module('sccpdevice')) === false
 		|| ($_XOBJ = &dwho_gct::get('xivo_object')) === false
 		|| ($this->_provdplugin = &$_XOBJ->get_module('provdplugin')) === false
-		|| ($this->_provdconfig = &$_XOBJ->get_module('provdconfig')) === false
+		|| ($this->_provddevice = &$_XOBJ->get_module('provddevice')) === false
 		|| ($_RAPI = &dwho_gct::get('xivo_confd')) === false
 		|| ($this->_device_api = $_RAPI->get_ressource('device')) === false)
 			return(false);
@@ -172,25 +173,20 @@ class xivo_application_service_asterisk_device extends xivo_application_asterisk
 	{
 		if(dwho_issa('device',$this->_info) === false)
 			return(false);
-		elseif (($conf = $this->_provdconfig->build_device_config($this->_info['device']['id'], $line_id)) === false)
-		{
-			dwho_report::push('error', 'fail to build config device: '.$this->_info['device']['id']);
-			return(false);
-		}
-		elseif ($this->_provdconfig->edit($this->_info['device']['id'], $conf) === false)
-		{
-			dwho_report::push('error', 'fail to edit config for this device: '.$this->_info['device']['id']);
-			return(false);
-		}
-		elseif (($rs = $this->_device_api->associate_line($this->_info['device']['id'], $line_id)) === false)
+		elseif ($this->_linefeatures->edit($line_id, array('device' => $this->_info['device']['id'], 'num' => 1)) === false)
 		{
 			dwho_report::push('error', 'fail to associate line to device: '.$this->_info['device']['id']);
+			return(false);
+		}
+		elseif ($this->_provddevice->rebuild_device_config($this->_info['device']['id']) === false)
+		{
+			dwho_report::push('error', 'fail to edit config for this device: '.$this->_info['device']['id']);
 			return(false);
 		}
 		elseif ($synchronize === true)
 			$this->synchronize();
 
-		return($rs);
+		return(true);
 	}
 
 	public function get_elements()

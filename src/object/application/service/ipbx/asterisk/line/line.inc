@@ -33,7 +33,6 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 	protected $_protocol		= false;
 	protected $_user_line		= false;
 	protected $_extensions		= false;
-	protected $_provdconfig		= false;
 	protected $_provddevice		= false;
 	protected $_entity			= false;
 	protected $_conf			= array();
@@ -75,8 +74,7 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 		|| ($this->_extensions = &$this->_service->get_module('extensions')) === false
 		|| ($_XOBJ = &dwho_gct::get('xivo_object')) === false
 		|| ($this->_entity = &$_XOBJ->get_module('entity')) === false
-		|| ($this->_provddevice = &$_XOBJ->get_module('provddevice')) === false
-		|| ($this->_provdconfig = &$_XOBJ->get_module('provdconfig')) === false)
+		|| ($this->_provddevice = &$_XOBJ->get_module('provddevice')) === false)
 			return(false);
 
 		return(true);
@@ -647,12 +645,7 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 		if($this->get_result('user_id') === null
 		&& empty($this->_info['linefeatures']['device']) === false)
 		{
-			if(($device = $this->_provddevice->get($this->_info['linefeatures']['device'])) === false)
-			{
-				dwho_report::push('error', 'device doesn\'t exist: '.$device['device']);
-				return(false);
-			}
-			elseif($this->_provdconfig->rebuild_device_config($device['id']) === false)
+			if($this->_provddevice->rebuild_device_config($this->_info['linefeatures']['device']) === false)
 			{
 				dwho_report::push('error', 'Can\'t rebuild config device');
 				return(false);
@@ -710,7 +703,8 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 
 		if($this->delete_protocol() === false
 		|| $this->delete_linefeatures() === false
-		|| $this->delete_exten('exten') === false)
+		|| $this->delete_exten('exten') === false
+		|| $this->update_device_config() === false)
 		{
 			$r = false;
 			$this->_reverse_delete();
