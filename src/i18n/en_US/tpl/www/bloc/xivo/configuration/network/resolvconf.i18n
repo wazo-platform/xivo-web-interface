@@ -20,7 +20,7 @@ NameServer 1:
 NameServer 2:
 
 ; fm_nameserver3
-NameServer 2:
+NameServer 3:
 
 ; fm_description
 Description:
