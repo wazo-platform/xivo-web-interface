@@ -87,9 +87,6 @@ Customer info
 ; xlet-(datetime)
 Datetime
 
-; xlet-(dial)
-Dialer
-
 ; xlet-(directory)
 Directory
 
