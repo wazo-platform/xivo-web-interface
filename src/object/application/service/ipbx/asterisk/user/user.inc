@@ -779,7 +779,10 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 				if($vmaction !== 'disable')
 					$this->set_voicemail($vmaction,$arr['voicemail']);
 
-				$this->_set_result('mailbox', $arr['voicemail']['mailbox'].'@'.$context);
+				if(isset($this->_info['voicemail']['context']) === true && $vmaction !== 'add')
+					$this->_set_result('mailbox', $arr['voicemail']['mailbox'].'@'.$this->_info['voicemail']['context']);
+				else
+					$this->_set_result('mailbox', $arr['voicemail']['mailbox'].'@'.$context);
 			}
 			else
 			{
