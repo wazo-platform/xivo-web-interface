@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -120,6 +120,8 @@ class xivo_service_asterisk_userfeatures extends xivo_service_asterisk_abstract
 
 			$arr['loginclient'] = strtolower($arr['loginclient']);
 		}
+
+		$arr['uuid'] = dwho_generate_uuid_v4();
 
 		return(parent::add($arr,$id));
 	}
