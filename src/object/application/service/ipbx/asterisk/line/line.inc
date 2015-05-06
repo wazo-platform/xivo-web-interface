@@ -134,24 +134,17 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 
 	function _get_ipbx_infos()
 	{
-		$show_peer_command = array(
-			'sip'  => 'sip show peer',
-		);
-
 		$this->_info['ipbx'] = false;
 
 		$line_protocol = $this->_info['linefeatures']['protocol'];
-		if (!array_key_exists($line_protocol, $show_peer_command))
-			return false;
-
 		$peer_name = $this->_info['protocol']['name'];
-		$ipbx_query = sprintf("%s %s load",
-			$show_peer_command[$line_protocol],
-			$peer_name
-		);
+		if ($line_protocol === 'sip') {
+			$ipbx_response = $this->_service->sip_show_peer($peer_name);
+		} else {
+			return false;
+		}
 
-		$ipbx_response = $this->_service->discuss_ipbx($ipbx_query, true);
-		$ipbx_infos = $this->_parse_ipbx_infos($ipbx_response[0]);
+		$ipbx_infos = $this->_parse_ipbx_infos($ipbx_response);
 
 		$this->_info['ipbx'] = $ipbx_infos;
 		return true;
