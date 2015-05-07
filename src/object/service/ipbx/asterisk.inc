@@ -102,7 +102,8 @@ class xivo_service_asterisk extends xivo_service_abstract
 	public function core_show_version()
 	{
 		if($this->_load_sysconfd() === false
-		|| ($info = $this->_sysconfd->request_get('/core_show_version')) === false)
+		|| ($info = $this->_sysconfd->request_get('/core_show_version')) === false
+		|| ($this->_sysconfd->last_status_code() !== 200))
 			return(false);
 
 		return($info);
@@ -111,7 +112,8 @@ class xivo_service_asterisk extends xivo_service_abstract
 	public function core_show_channels()
 	{
 		if($this->_load_sysconfd() === false
-		|| ($info = $this->_sysconfd->request_get('/core_show_channels')) === false)
+		|| ($info = $this->_sysconfd->request_get('/core_show_channels')) === false
+		|| ($this->_sysconfd->last_status_code() !== 200))
 			return(false);
 
 		return($info);
@@ -124,7 +126,8 @@ class xivo_service_asterisk extends xivo_service_abstract
 		);
 
 		if($this->_load_sysconfd() === false
-		|| ($info = $this->_sysconfd->request_get('/sip_show_peer', $query)) === false)
+		|| ($info = $this->_sysconfd->request_get('/sip_show_peer', $query)) === false
+		|| ($this->_sysconfd->last_status_code() !== 200))
 			return(false);
 
 		return($info);
