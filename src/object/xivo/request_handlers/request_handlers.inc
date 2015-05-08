@@ -37,7 +37,12 @@ class xivo_object_request_handlers extends xivo_object_abstract
 		if(dwho_constant('XIVO_WEBI_CONFIGURED',true) === false)
 			return(null);
 
-		return($this->_sysconfd->request_post('/exec_request_handlers', $cmds));
+		if ($this->_sysconfd->request_post('/exec_request_handlers', $cmds) === false
+		|| $this->_sysconfd->last_status_code() !== 200) {
+			return(false);
+		}
+
+		return(true);
 	}
 }
 
