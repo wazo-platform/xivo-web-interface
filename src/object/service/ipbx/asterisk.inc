@@ -76,8 +76,6 @@ class xivo_service_asterisk extends xivo_service_abstract
 
 		$commands = array();
 		$commands['ipbx'] = array($cmd);
-		$commands['ctibus'] = array();
-		$commands['dird'] = array();
 
 		return($this->_request_handlers->exec_cmd($commands));
 	}
