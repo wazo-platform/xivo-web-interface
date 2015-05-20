@@ -733,22 +733,6 @@ endif;
 				      'default'	=> $element['queue']['ringinuse']['default'],
 				      'checked'	=> $this->get_var('info','queue','ringinuse'))),
 
-		$form->checkbox(array('desc'	=> $this->bbf('fm_queue_eventwhencalled'),
-				      'name'	=> 'queue[eventwhencalled]',
-				      'labelid' => 'queue-eventwhencalled',
-					'help' => $this->bbf('hlp_fm_queue-eventwhencalled'),
-				      'default'	=> $element['queue']['eventwhencalled']['default'],
-				      'checked'	=> $this->get_var('info','queue','eventwhencalled')),
-				'disabled="disabled"'),
-
-		$form->checkbox(array('desc'	=> $this->bbf('fm_queue_eventmemberstatus'),
-				      'name'	=> 'queue[eventmemberstatus]',
-				      'labelid' => 'queue-eventmemberstatus',
-					'help' => $this->bbf('hlp_fm_queue-eventmemberstatus'),
-				      'default'	=> $element['queue']['eventmemberstatus']['default'],
-				      'checked'	=> $this->get_var('info','queue','eventmemberstatus')),
-				'disabled="disabled"'),
-
 		$form->checkbox(array('desc'	=> $this->bbf('fm_queue_reportholdtime'),
 				      'name'	=> 'queue[reportholdtime]',
 				      'labelid' => 'queue-reportholdtime',
