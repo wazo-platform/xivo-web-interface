@@ -1,3 +1,5 @@
 etc/xivo/web-interface/php.ini     etc/php5/conf.d/xivo.ini
+etc/xivo/web-interface/nginx-http etc/nginx/locations/http/xivo-web-interface
+etc/xivo/web-interface/nginx-https etc/nginx/locations/https/xivo-web-interface
 var/www/munin usr/share/xivo-web-interface/www/img/graphs/munin
 etc/nginx/sites-available/xivo  etc/nginx/sites-enabled/xivo
