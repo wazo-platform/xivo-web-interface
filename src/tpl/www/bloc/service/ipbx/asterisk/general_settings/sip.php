@@ -424,15 +424,6 @@ endif;
 				      'checked'		=> $this->get_var('info','recordhistory','var_val'),
 				      'default'		=> $element['recordhistory']['default'])),
 
-		$form->checkbox(array('desc'	=> $this->bbf('fm_callevents'),
-				      'name'		=> 'callevents',
-				      'labelid'		=> 'callevents',
-					  'help'		=> $this->bbf('hlp_fm_callevents'),
-					  'required'	=> false,
-				      'checked'		=> $this->get_var('info','callevents','var_val'),
-				      'default'		=> $element['callevents']['default']),
-				'disabled="disabled"'),
-
 		$form->checkbox(array('desc'	=> $this->bbf('fm_authfailureevents'),
 				      'name'		=> 'authfailureevents',
 				      'labelid'		=> 'authfailureevents',
