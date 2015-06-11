@@ -186,7 +186,7 @@ Lecture automatique du message suivant :
 Config asterisk: nextaftercmd
 
 ; fm_voicemail-backupdeleted
-Nombre maximum de message dans la boîte «Anciens» : 
+Nombre maximum de messages dans le répertoire <b>Deleted</b>: 
 
 ; hlp_fm_voicemail-backupdeleted
 Config asterisk: backupdeleted
