@@ -1021,13 +1021,7 @@ if(isset($error_js[0]) === true)
 				    'altkey'	=> 'category',
 				    'selected'	=> $this->get_var('generalfeatures','parkedmusicclass','var_val'),
 				    'default'	=> $element['generalfeatures']['parkedmusicclass']['default']),
-		$musicclass),
-
-		$form->checkbox(array('desc'	=> $this->bbf('fm_generalfeatures_adsipark'),
-				      'name'	=> 'generalfeatures[adsipark]',
-				      'labelid'	=> 'generalfeatures-adsipark',
-				      'checked'	=> $this->get_var('generalfeatures','adsipark','var_val'),
-				      'default'	=> $element['generalfeatures']['adsipark']['default']));
+		$musicclass);
 ?>
 	</div>
 

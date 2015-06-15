@@ -94,11 +94,6 @@ $array['element']['parkeddynamic']['value'] = array('no','yes');
 $array['element']['parkeddynamic']['default'] = 'no';
 $array['element']['parkeddynamic']['set'] = true;
 
-$array['element']['adsipark'] = array();
-$array['element']['adsipark']['value'] = array('no','yes');
-$array['element']['adsipark']['default'] = 'no';
-$array['element']['adsipark']['set'] = true;
-
 $array['element']['findslot'] = array();
 $array['element']['findslot']['value'] = array('no','next');
 $array['element']['findslot']['default'] = 'no';
@@ -166,7 +161,6 @@ $array['filter']['parkedcallreparking'] = array('set' => false,'chk' => 2, 'key'
 $array['filter']['parkedcallhangup']    = array('set' => false,'chk' => 2, 'key' => array('callee','caller','both','no'));
 $array['filter']['parkedcallrecording'] = array('set' => false,'chk' => 2, 'key' => array('callee','caller','both','no'));
 $array['filter']['parkeddynamic'] = array('bool' => true);
-$array['filter']['adsipark'] = array('bool' => true);
 $array['filter']['findslot'] = array('bool' => true);
 $array['filter']['parkedmusicclass'] = array('set' => false);
 
