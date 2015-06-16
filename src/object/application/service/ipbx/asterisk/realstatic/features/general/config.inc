@@ -95,9 +95,9 @@ $array['element']['parkeddynamic']['default'] = 'no';
 $array['element']['parkeddynamic']['set'] = true;
 
 $array['element']['findslot'] = array();
-$array['element']['findslot']['value'] = array('no','next');
-$array['element']['findslot']['default'] = 'no';
-$array['element']['findslot']['set'] = true;
+$array['element']['findslot']['value'] = array('first','next');
+$array['element']['findslot']['default'] = 'first';
+$array['element']['findslot']['null'] = true;
 
 $array['element']['parkedmusicclass'] = array();
 $array['element']['parkedmusicclass']['default'] = 'default';
@@ -161,7 +161,7 @@ $array['filter']['parkedcallreparking'] = array('set' => false,'chk' => 2, 'key'
 $array['filter']['parkedcallhangup']    = array('set' => false,'chk' => 2, 'key' => array('callee','caller','both','no'));
 $array['filter']['parkedcallrecording'] = array('set' => false,'chk' => 2, 'key' => array('callee','caller','both','no'));
 $array['filter']['parkeddynamic'] = array('bool' => true);
-$array['filter']['findslot'] = array('bool' => true);
+$array['filter']['findslot'] = array('set' => false,'chk' => 2, 'key' => array('first','next'));
 $array['filter']['parkedmusicclass'] = array('set' => false);
 
 $array['filter']['transferdigittimeout'] = array('cast' => 'uint','between' => array(1,30));

@@ -233,7 +233,13 @@ Both
 Parked call
 
 ; fm_generalfeatures_findslot
-Look for the next call:
+Method for selecting parking spaces:
+
+; fm_generalfeatures_findslot-opt(first)
+First
+
+; fm_generalfeatures_findslot-opt(next)
+Next
 
 ; fm_generalfeatures_parkinghints
 Parkings hints:

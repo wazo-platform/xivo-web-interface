@@ -922,11 +922,14 @@ if(isset($error_js[0]) === true)
 				  'default'	=> $element['generalfeatures']['parkpos']['default'],
 				  'invalid'	=> isset($invalid['generalfeatures']['parkpos']))),
 
-		$form->checkbox(array('desc'	=> $this->bbf('fm_generalfeatures_findslot'),
+		$form->select(array('desc'	=> $this->bbf('fm_generalfeatures_findslot'),
 				      'name'	=> 'generalfeatures[findslot]',
 				      'labelid'	=> 'generalfeatures-findslot',
-				      'checked'	=> $this->get_var('generalfeatures','findslot','var_val'),
-				      'default'	=> $element['generalfeatures']['findslot']['default'])),
+				      'key'	=> false,
+				      'bbf'	=> 'fm_generalfeatures_findslot-opt',
+				      'selected'	=> $this->get_var('generalfeatures','findslot','var_val'),
+				      'default'	=> $element['generalfeatures']['findslot']['default']),
+				$element['generalfeatures']['findslot']['value']),
 
 		$form->checkbox(array('desc'	=> $this->bbf('fm_generalfeatures_parkinghints'),
 				      'name'	=> 'generalfeatures[parkinghints]',
