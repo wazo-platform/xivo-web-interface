@@ -123,6 +123,6 @@ $array['sip.conf'] = array();
 $array['sip.conf']['ipbx'] = array('sip reload');
 
 $array['features.conf'] = array();
-$array['features.conf']['ipbx'] = array('dialplan reload', 'module reload features');
+$array['features.conf']['ipbx'] = array('dialplan reload', 'module reload features', 'module reload res_parking.so');
 
 ?>
