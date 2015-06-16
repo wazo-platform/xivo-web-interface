@@ -34,13 +34,13 @@ LPC10 (Audio)
 G.729A (Audio)
 
 ; ast_codec_name_type(speex)
-SpeeX (Audio)
+Speex (Audio)
 
 ; ast_codec_name_type(speex16)
-SpeeX16 (Audio)
+Speex 16 kHz (Audio)
 
 ; ast_codec_name_type(speex32)
-SpeeX32 (Audio)
+Speex 32 kHz (Audio)
 
 ; ast_codec_name_type(ilbc)
 iLBC (Audio)
