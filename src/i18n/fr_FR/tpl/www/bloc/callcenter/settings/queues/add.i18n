@@ -74,7 +74,7 @@ Répartition cyclique (mémorisée)
 Aléatoire
 
 ; fm_queue_strategy-opt(linear)
-Dans l'ordre de leur définition (ou ajout)
+Linéaire
 
 ; fm_queue_strategy-opt(wrandom)
 Aléatoire pondéré par leur pénalités
