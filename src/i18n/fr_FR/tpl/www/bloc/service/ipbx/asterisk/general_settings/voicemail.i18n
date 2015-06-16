@@ -591,7 +591,7 @@ Touche «arrêt de la lecture»:
 Config asterisk: listen-control-stop-key
 
 ; fm_backupdeleted
-Nombre maximum de message dans la boîte «Anciens»: 
+Nombre maximum de messages dans le répertoire <b>Deleted</b>: 
 
 ; hlp_fm_backupdeleted
 Config asterisk: backupdeleted

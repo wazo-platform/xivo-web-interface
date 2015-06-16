@@ -34,7 +34,13 @@ LPC10 (Audio)
 G.729A (Audio)
 
 ; ast_codec_name_type(speex)
-SpeeX (Audio)
+Speex (Audio)
+
+; ast_codec_name_type(speex16)
+Speex 16 kHz (Audio)
+
+; ast_codec_name_type(speex32)
+Speex 32 kHz (Audio)
 
 ; ast_codec_name_type(ilbc)
 iLBC (Audio)
@@ -73,7 +79,7 @@ H.264 (Video)
 G729
 
 ; ast_format_name_info(wav)
-Microsoft WAV 8khz
+Microsoft WAV 8 kHz
 
 ; ast_format_name_info(wav49)
 Microsoft WAV GSM (WAV49)
@@ -85,10 +91,10 @@ GSM Data
 OGG/Vorbis
 
 ; ast_format_name_info(ulaw)
-uLaw 8khz
+G.711 u-law 8 kHz
 
 ; ast_format_name_info(alaw)
-aLaw 8khz
+G.711 A-law 8 kHz
 
 ; ast_format_name_info(au)
 Sun Microsystems AU
