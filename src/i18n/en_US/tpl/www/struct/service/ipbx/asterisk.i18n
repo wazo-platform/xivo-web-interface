@@ -36,6 +36,12 @@ G.729A (Audio)
 ; ast_codec_name_type(speex)
 SpeeX (Audio)
 
+; ast_codec_name_type(speex16)
+SpeeX16 (Audio)
+
+; ast_codec_name_type(speex32)
+SpeeX32 (Audio)
+
 ; ast_codec_name_type(ilbc)
 iLBC (Audio)
 
