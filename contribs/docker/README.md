@@ -5,9 +5,9 @@ Dockerfile for XiVO webi
 To install docker on Linux :
 
     curl -sL https://get.docker.io/ | sh
- 
+
  or
- 
+
      wget -qO- https://get.docker.io/ | sh
 
 ## Build
@@ -19,17 +19,17 @@ To build the image, simply invoke
 Or directly in the sources
 
     docker build -t xivo-webi .
-  
+
 ## Usage
 
 To run the container, do the following:
 
-    docker run -d -p 80:80 -p 443:443 -v /conf/nginx:/etc/nginx/sites-enabled -v /conf/ssl:/etc/nginx/ssl -v /conf/etc:/etc/xivo/web-interface -t xivo-webi
-    
+    docker run -d -p 80:80 -p 443:443 -v /conf/nginx:/etc/nginx/sites-enabled -v /conf/ssl:/usr/share/xivo-certs -v /conf/etc:/etc/xivo/web-interface -t xivo-webi
+
 
 On interactive mode :
 
-    docker run -p 80:80 -p 443:443 -v /conf/nginx:/etc/nginx/sites-enabled -v /conf/ssl:/etc/nginx/ssl -v /conf/etc:/etc/xivo/web-interface -it xivo-webi bash
+    docker run -p 80:80 -p 443:443 -v /conf/nginx:/etc/nginx/sites-enabled -v /conf/ssl:/usr/share/xivo-certs -v /conf/etc:/etc/xivo/web-interface -it xivo-webi bash
 
 To launch.
 
