@@ -3,8 +3,6 @@
 #
 # see: dh_installdeb(1)
 
-set -e
-
 WEBI_LOG="/var/log/xivo-web-interface"
 LIST_DIR_TOCLEAN="/var/lib/pf-xivo-web-interface
 					/var/log/pf-xivo-web-interface
