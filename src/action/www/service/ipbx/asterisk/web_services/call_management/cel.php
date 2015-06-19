@@ -23,9 +23,6 @@ $access_subcategory = 'cel';
 
 include(dwho_file::joinpath(dirname(__FILE__),'..','_common.php'));
 
-$_STS->load_ressource('cel');
-
-$stats_cel = new stats_ressource_cel();
 $cel = &$ipbx->get_module('cel');
 
 $act = $_QRY->get('act');
@@ -33,42 +30,10 @@ $limit = (!is_null($_QRY->get('limit')) && $_QRY->get('limit') < 5000) ?  $_QRY-
 
 switch($act)
 {
+	default:
 	case 'searchid':
 		if(isset($_QR['idbeg']) !== false
 		&& ($list = $cel->search_idbeg($_QR['idbeg'],'eventtime',$limit)) !== false)
-		{
-			if($list === null)
-			{
-				$http_response->set_status_line(204);
-				$http_response->send(true);
-			}
-		}
-		else
-		{
-			$http_response->set_status_line(400);
-			$http_response->send(true);
-		}
-		break;
-	case 'search':
-		if(($info = $cel->chk_values($_QRY->request_meth_raw(),false)) !== false
-		&& ($list = $stats_cel->get_calls_records($info,'eventtime',$limit)) !== false)
-		{
-			if($list === null)
-			{
-				$http_response->set_status_line(204);
-				$http_response->send(true);
-			}
-		}
-		else
-		{
-			$http_response->set_status_line(400);
-			$http_response->send(true);
-		}
-		break;
-	default:
-	case 'searchdb':
-		if(($info = $cel->chk_values($_QRY->request_meth_raw(),false)) !== false
-		&& ($list = $cel->search($info,'eventtime',$limit)) !== false)
 		{
 			if($list === null)
 			{
