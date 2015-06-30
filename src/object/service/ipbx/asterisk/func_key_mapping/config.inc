@@ -30,7 +30,8 @@ $array['element']['destination_type_id'] = array();
 $array['element']['destination_type_id']['default'] = 0;
 
 $array['element']['label'] = array();
-$array['element']['label']['default'] = '';
+$array['element']['label']['default'] = null;
+$array['element']['label']['null'] = true;
 
 $array['element']['position'] = array();
 $array['element']['position']['default'] = 0;

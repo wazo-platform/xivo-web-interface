@@ -48,7 +48,26 @@ class xivo_service_asterisk_func_key_mapping extends xivo_service_asterisk_abstr
 		$data['destination_type_id'] = (int) $data['destination_type_id'];
 		$data['position'] = (int) $data['position'];
 		$data['blf'] = dwho_bool($data['blf']);
+		$data['label'] = (string) $data['label'];
 		return($data);
+	}
+
+	private function _clean_values($data) {
+		if( trim((string)$data['label']) == '' ) {
+			$data['label'] = null;
+		}
+	}
+
+	function add($data)
+	{
+		$this->_clean_values($data);
+		return parent::add($data);
+	}
+
+	function edit($data)
+	{
+		$this->_clean_values($data);
+		return parent::edit($data);
 	}
 }
 

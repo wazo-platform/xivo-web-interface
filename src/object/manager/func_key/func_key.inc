@@ -174,7 +174,7 @@ class func_key_manager extends manager_abstract
 			'destination_type_id' => (int) $fk_dst_type_id,
 			'position' => (int) $data['position'],
 			'blf' => (bool) $data['blf'],
-			'label' => (string) $data['label']
+			'label' => $data['label']
 		);
 
 		if(($rs = $this->_func_key_mapping->chk_values($func_key_mapping)) === false)
