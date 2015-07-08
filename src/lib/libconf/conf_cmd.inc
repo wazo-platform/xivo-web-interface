@@ -88,7 +88,7 @@ $array['trunkiax'] = array();
 $array['trunkiax']['ipbx'] = array('dialplan reload', 'iax2 reload');
 
 $array['extensions'] = array();
-$array['extensions']['ipbx'] = array('dialplan reload', 'features reload');
+$array['extensions']['ipbx'] = array('dialplan reload', 'module reload features');
 
 $array['musiconhold'] = array();
 $array['musiconhold']['ipbx'] = array('moh reload');
@@ -123,6 +123,6 @@ $array['sip.conf'] = array();
 $array['sip.conf']['ipbx'] = array('sip reload');
 
 $array['features.conf'] = array();
-$array['features.conf']['ipbx'] = array('dialplan reload', 'features reload');
+$array['features.conf']['ipbx'] = array('dialplan reload', 'module reload features', 'module reload res_parking.so');
 
 ?>

@@ -190,12 +190,6 @@ History recording:
 ; hlp_fm_recordhistory
 Asterisk config: recordhistory
 
-; fm_callevents
-Call events (AMI):
-
-; hlp_fm_callevents
-Asterisk config: callevents
-
 ; fm_tos-sip
 TOS SIP:
 

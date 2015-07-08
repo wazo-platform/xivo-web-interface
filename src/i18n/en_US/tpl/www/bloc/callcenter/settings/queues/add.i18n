@@ -358,12 +358,6 @@ Yes
 ; fm_queue_leavewhenempty-opt(strict)
 Strict
 
-; fm_queue_eventwhencalled
-Enable events (AMI):
-
-; fm_queue_eventmemberstatus
-Enable member events (AMI):
-
 ; fm_queue_reportholdtime
 Enable caller hold time reporting:
 
@@ -589,12 +583,6 @@ Asterisk config: category
 
 ; hlp_fm_queue-context
 Asterisk config: context
-
-; hlp_fm_queue-eventmemberstatus
-Asterisk config: eventmemberstatus
-
-; hlp_fm_queue-eventwhencalled
-Asterisk config: eventwhencalled
 
 ; hlp_fm_queue-joinempty
 Asterisk config: joinempty

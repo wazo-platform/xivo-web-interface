@@ -110,12 +110,6 @@ $array['element']['recordhistory']['value'] = array('no','yes');
 $array['element']['recordhistory']['default'] = 'no';
 $array['element']['recordhistory']['set'] = true;
 
-$array['element']['callevents'] = array();
-$array['element']['callevents']['value'] = array('no','yes');
-$array['element']['callevents']['default'] = 'yes';
-$array['element']['callevents']['set'] = true;
-$array['element']['callevents']['forcedef'] = true;
-
 $array['element']['tos_sip'] = array();
 $array['element']['tos_sip']['value'] = array('CS0','CS1','CS2','CS3','CS4','CS5','CS6','CS7',
 					      'AF11','AF12','AF13','AF21','AF22','AF23',
@@ -743,7 +737,6 @@ $array['filter']['fromdomain'] = array('set' => false,
 $array['filter']['sipdebug'] = array('bool' => true);
 $array['filter']['dumphistory'] = array('bool' => true);
 $array['filter']['recordhistory'] = array('bool' => true);
-$array['filter']['callevents'] = array('bool' => true);
 $array['filter']['tos_sip'] = array('set' => false,'chk' => 2,'regexp' => '/^(CS[0-7]|AF[1-4][1-3]|EF)$/');
 $array['filter']['tos_audio'] = array('set' => false,'chk' => 2,'regexp' => '/^(CS[0-7]|AF[1-4][1-3]|EF)$/');
 $array['filter']['tos_video'] = array('set' => false,'chk' => 2,'regexp' => '/^(CS[0-7]|AF[1-4][1-3]|EF)$/');

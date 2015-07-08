@@ -199,9 +199,6 @@ Extensions pour parquer les appels :
 ; fm_generalfeatures_parkfindnext
 Trouver l'appel suivant :
 
-; fm_generalfeatures_adsipark
-Utiliser les annonces ADSI :
-
 ; fm_generalfeatures_featuredigittimeout
 Délai d'attente pour la numérotation d'une fonctionnalité :
 
@@ -236,7 +233,13 @@ Les deux
 Parqué
 
 ; fm_generalfeatures_findslot
-Trouver l'appel suivant : 
+Méthode pour choisir les espaces de parking :
+
+; fm_generalfeatures_findslot-opt(first)
+Premier
+
+; fm_generalfeatures_findslot-opt(next)
+Prochain
 
 ; fm_generalfeatures_parkinghints
 Activer la supervision des parkings : 

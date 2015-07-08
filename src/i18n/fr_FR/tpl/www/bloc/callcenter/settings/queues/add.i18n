@@ -280,12 +280,6 @@ Strict
 ; fm_queue_ringinuse
 Appeler un membre déjà en communication:
 
-; fm_queue_eventwhencalled
-Activer les événements (AMI):
-
-; fm_queue_eventmemberstatus
-Activer les événements des membres (AMI):
-
 ; fm_queue_reportholdtime
 Activer le rapport d'attente d'un appelant:
 
@@ -505,12 +499,6 @@ Config asterisk: category
 
 ; hlp_fm_queue-context
 Config asterisk: context
-
-; hlp_fm_queue-eventmemberstatus
-Config asterisk: eventmemberstatus
-
-; hlp_fm_queue-eventwhencalled
-Config asterisk: eventwhencalled
 
 ; hlp_fm_queue-joinempty
 Config asterisk: joinempty

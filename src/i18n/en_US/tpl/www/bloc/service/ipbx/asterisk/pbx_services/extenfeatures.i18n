@@ -199,9 +199,6 @@ Extension to park calls:
 ; fm_generalfeatures_parkfindnext
 Look for the next call:
 
-; fm_generalfeatures_adsipark
-Use ADSI announces:
-
 ; fm_generalfeatures_featuredigittimeout
 Feature dial timeout:
 
@@ -236,7 +233,13 @@ Both
 Parked call
 
 ; fm_generalfeatures_findslot
-Look for the next call:
+Method for selecting parking spaces:
+
+; fm_generalfeatures_findslot-opt(first)
+First
+
+; fm_generalfeatures_findslot-opt(next)
+Next
 
 ; fm_generalfeatures_parkinghints
 Parkings hints:

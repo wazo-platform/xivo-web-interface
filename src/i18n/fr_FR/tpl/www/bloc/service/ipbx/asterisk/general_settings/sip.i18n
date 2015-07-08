@@ -184,12 +184,6 @@ Enregistrement de l'historique :
 ; hlp_fm_recordhistory
 Config asterisk: recordhistory
 
-; fm_callevents
-Evénements des appels (AMI) :
-
-; hlp_fm_callevents
-Config asterisk: callevents
-
 ; fm_tos-sip
 TOS SIP :
 
