@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -243,7 +243,7 @@ $array['element']['label']['null'] = true;
 
 $array['element']['supervision'] = array();
 $array['element']['supervision']['value'] = array(0,1);
-$array['element']['supervision']['default'] = 0;
+$array['element']['supervision']['default'] = 1;
 $array['element']['supervision']['set'] = true;
 
 $array['element']['progfunckey'] = array();
