@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -28,9 +28,6 @@ $array['element']['name']['default'] = '';
 $array['element']['uri'] = array();
 $array['element']['uri']['default'] = '';
 
-$array['element']['tablename'] = array();
-$array['element']['tablename']['default'] = '';
-
 $array['element']['dirtype'] = array();
 $array['element']['dirtype']['default'] = 'sgbd';
 
@@ -43,7 +40,6 @@ dwho::load_class('dwho_network');
 $array['filter'] = array();
 $array['filter']['name'] = array('set' => false, 'chk' => 2, 'regexp' => '/^[a-z0-9_\.-]+$/','maxlen' => 64);
 $array['filter']['uri'] = array('set' => false, 'chk' => 2, 'regexp' => '/^.*$/','maxlen' => 255);
-$array['filter']['tablename'] = array('set' => false, 'chk' => 2, 'regexp' => '/^[a-z0-9_\.-]+$/','maxlen' => 64);
 $array['filter']['dirtype'] = array('set' => false, 'chk' => 2, 'regexp' => '/^.*$/','maxlen' => 255);
 $array['filter']['description'] = array('set' => false,'chk' => 2,'maxlen' => 1000,'cast' => 'sgraph_crlf_tab','eol' => true);
 
