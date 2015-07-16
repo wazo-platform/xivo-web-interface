@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -78,7 +78,7 @@ switch($act)
 			$data['eid']         = $_QR['_eid'];
 			$data['name']        = $_QR['name'];
 			$data['description'] = $_QR['description'];
-			$data['dirtype']     = null;
+			$data['dirtype']     = $types[$_QR['type']]['scheme'];
 
 			$result = $_DIR->chk_values($data);
 			if(($result = $_DIR->chk_values($data)) === false
@@ -134,7 +134,7 @@ switch($act)
 			$data['eid'] = $_QR['_eid'];
 			$data['name'] = $_QR['name'];
 			$data['description'] = $_QR['description'];
-			$data['dirtype'] = null;
+			$data['dirtype'] = $types[$_QR['type']]['scheme'];
 
 			if(($result = $_DIR->chk_values($data)) === false
 			|| $_DIR->edit($info['id'], $result)    === false)
@@ -152,26 +152,12 @@ switch($act)
 		$element = $_DIR->get_element();
 		$element['type']['default'] = XIVO_PHONEBOOK_TYPE_FILE;
 
-		$return['type'] = '';
-
-		$parsed = $uriobject->parse_uri($return['uri']);
 		$return['type'] = -1;
-		if($parsed['path'] == 'internal')
-			$return['type'] = XIVO_PHONEBOOK_TYPE_INTERNAL;
-		else if($parsed['path'] == 'phonebook')
-			$return['type'] = XIVO_PHONEBOOK_TYPE_PHONEBOOK;
-		else
+		foreach($types as $k => $p)
 		{
-			foreach($types as $k => $p)
-			{
-				if(strcasecmp($parsed['scheme'], $p['scheme']) == 0)
-					$return['type'] = $k;
-			}
+			if(strcasecmp($return['dirtype'], $p['scheme']) == 0)
+				$return['type'] = $k;
 		}
-
-		# If we can't find type assume it's webservice
-		if($return['type'] == -1)
-			$return['type'] = XIVO_PHONEBOOK_TYPE_WEBSERVICES;
 
 		switch($return['type'])
 		{
