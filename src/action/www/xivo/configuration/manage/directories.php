@@ -33,7 +33,7 @@ $result = $fm_save = $error = null;
 
 define('XIVO_PHONEBOOK_TYPE_FILE', 0);
 define('XIVO_PHONEBOOK_TYPE_WEBSERVICES', 1);
-define('XIVO_PHONEBOOK_TYPE_INTERNAL', 2);
+define('XIVO_PHONEBOOK_TYPE_XIVO', 2);
 define('XIVO_PHONEBOOK_TYPE_PHONEBOOK', 3);
 
 $types = array(
@@ -43,9 +43,9 @@ $types = array(
 	XIVO_PHONEBOOK_TYPE_WEBSERVICES => array(
 		'scheme' => 'webservices',
 		'name' => 'Webservices'),
-	XIVO_PHONEBOOK_TYPE_INTERNAL => array(
-		'scheme' => 'internal',
-		'name' => 'Internal'),
+	XIVO_PHONEBOOK_TYPE_XIVO => array(
+		'scheme' => 'xivo',
+		'name' => 'XiVO'),
 	XIVO_PHONEBOOK_TYPE_PHONEBOOK => array(
 		'scheme' => 'phonebook',
 		'name' => 'Phonebook'));
@@ -63,8 +63,8 @@ switch($act)
 				case XIVO_PHONEBOOK_TYPE_WEBSERVICES:
 					$uri = $_QR['uri'];
 					break;
-				case XIVO_PHONEBOOK_TYPE_INTERNAL:
-					$uri = 'internal';
+				case XIVO_PHONEBOOK_TYPE_XIVO:
+					$uri = 'xivo';
 					break;
 				case XIVO_PHONEBOOK_TYPE_PHONEBOOK:
 					$uri = 'phonebook';
@@ -119,8 +119,8 @@ switch($act)
 				case XIVO_PHONEBOOK_TYPE_WEBSERVICES:
 					$uri = $_QR['uri'];
 					break;
-				case XIVO_PHONEBOOK_TYPE_INTERNAL:
-					$uri = 'internal';
+				case XIVO_PHONEBOOK_TYPE_XIVO:
+					$uri = 'xivo';
 					break;
 				case XIVO_PHONEBOOK_TYPE_PHONEBOOK:
 					$uri = 'phonebook';
@@ -162,7 +162,7 @@ switch($act)
 		switch($return['type'])
 		{
 			case XIVO_PHONEBOOK_TYPE_WEBSERVICES:
-			case XIVO_PHONEBOOK_TYPE_INTERNAL:
+			case XIVO_PHONEBOOK_TYPE_XIVO:
 			case XIVO_PHONEBOOK_TYPE_PHONEBOOK:
 				break;
 			default:
