@@ -64,7 +64,7 @@ switch($act)
 					$uri = $_QR['uri'];
 					break;
 				case XIVO_PHONEBOOK_TYPE_XIVO:
-					$uri = 'xivo';
+					$uri = $_QR['uri'];
 					break;
 				case XIVO_PHONEBOOK_TYPE_PHONEBOOK:
 					$uri = 'phonebook';
@@ -120,7 +120,7 @@ switch($act)
 					$uri = $_QR['uri'];
 					break;
 				case XIVO_PHONEBOOK_TYPE_XIVO:
-					$uri = 'xivo';
+					$uri = $_QR['uri'];
 					break;
 				case XIVO_PHONEBOOK_TYPE_PHONEBOOK:
 					$uri = 'phonebook';
