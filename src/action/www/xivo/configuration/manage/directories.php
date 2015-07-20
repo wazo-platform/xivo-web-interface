@@ -61,13 +61,9 @@ switch($act)
 			switch($_QR['type'])
 			{
 				case XIVO_PHONEBOOK_TYPE_WEBSERVICES:
-					$uri = $_QR['uri'];
-					break;
 				case XIVO_PHONEBOOK_TYPE_XIVO:
-					$uri = $_QR['uri'];
-					break;
 				case XIVO_PHONEBOOK_TYPE_PHONEBOOK:
-					$uri = 'phonebook';
+					$uri = $_QR['uri'];
 					break;
 				default:
 					$uri = $types[$_QR['type']]['scheme'] . '://' . $_QR['uri'];
@@ -117,13 +113,10 @@ switch($act)
 			switch($_QR['type'])
 			{
 				case XIVO_PHONEBOOK_TYPE_WEBSERVICES:
-					$uri = $_QR['uri'];
-					break;
 				case XIVO_PHONEBOOK_TYPE_XIVO:
-					$uri = $_QR['uri'];
-					break;
 				case XIVO_PHONEBOOK_TYPE_PHONEBOOK:
 					$uri = 'phonebook';
+					$uri = $_QR['uri'];
 					break;
 				default:
 					$uri = $types[$_QR['type']]['scheme'] . '://' . $_QR['uri'];
