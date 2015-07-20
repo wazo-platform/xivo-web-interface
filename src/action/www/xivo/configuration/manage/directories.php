@@ -37,9 +37,9 @@ define('XIVO_PHONEBOOK_TYPE_XIVO', 2);
 define('XIVO_PHONEBOOK_TYPE_PHONEBOOK', 3);
 
 $types = array(
-	XIVO_PHONEBOOK_TYPE_FILE => array(
-		'type' => 'file',
-		'name' => 'File'),
+	XIVO_PHONEBOOK_TYPE_CSV_FILE => array(
+		'type' => 'csv',
+		'name' => 'CSV file'),
 	XIVO_PHONEBOOK_TYPE_WEBSERVICES => array(
 		'type' => 'webservices',
 		'name' => 'Webservices'),
@@ -58,23 +58,14 @@ switch($act)
 		if(isset($_QR['fm_send']) === true)
 		{
 			$data = array();
-			switch($_QR['type'])
-			{
-				case XIVO_PHONEBOOK_TYPE_WEBSERVICES:
-				case XIVO_PHONEBOOK_TYPE_XIVO:
-				case XIVO_PHONEBOOK_TYPE_PHONEBOOK:
-					$uri = $_QR['uri'];
-					break;
-				default:
-					$uri = $types[$_QR['type']]['type'] . '://' . $_QR['uri'];
-					break;
-			}
-
-			$data['uri']         = $uri;
+			$data['uri']         = $_QR['uri'];
 			$data['eid']         = $_QR['_eid'];
 			$data['name']        = $_QR['name'];
 			$data['description'] = $_QR['description'];
 			$data['dirtype']     = $types[$_QR['type']]['type'];
+
+			if($_QR['type'] === XIVO_PHONEBOOK_TYPE_CSV_FILE)
+				$data['uri'] = 'file://' . $_QR['uri'];
 
 			$result = $_DIR->chk_values($data);
 			if(($result = $_DIR->chk_values($data)) === false
@@ -110,24 +101,15 @@ switch($act)
 		if(isset($_QR['fm_send']) === true)
 		{
 			$data = array();
-			switch($_QR['type'])
-			{
-				case XIVO_PHONEBOOK_TYPE_WEBSERVICES:
-				case XIVO_PHONEBOOK_TYPE_XIVO:
-				case XIVO_PHONEBOOK_TYPE_PHONEBOOK:
-					$uri = 'phonebook';
-					$uri = $_QR['uri'];
-					break;
-				default:
-					$uri = $types[$_QR['type']]['type'] . '://' . $_QR['uri'];
-					break;
-			}
-
-			$data['uri'] = $uri;
+			$data['uri'] = $_QR['uri'];
 			$data['eid'] = $_QR['_eid'];
 			$data['name'] = $_QR['name'];
 			$data['description'] = $_QR['description'];
 			$data['dirtype'] = $types[$_QR['type']]['type'];
+
+			if($_QR['type'] === XIVO_PHONEBOOK_TYPE_CSV_FILE)
+				$data['uri'] = 'file://' . $_QR['uri'];
+
 
 			if(($result = $_DIR->chk_values($data)) === false
 			|| $_DIR->edit($info['id'], $result)    === false)
@@ -143,7 +125,7 @@ switch($act)
 		}
 
 		$element = $_DIR->get_element();
-		$element['type']['default'] = XIVO_PHONEBOOK_TYPE_FILE;
+		$element['type']['default'] = XIVO_PHONEBOOK_TYPE_CSV_FILE;
 
 		$return['type'] = -1;
 		foreach($types as $k => $p)
@@ -152,18 +134,11 @@ switch($act)
 				$return['type'] = $k;
 		}
 
-		switch($return['type'])
+		if($return['type'] === XIVO_PHONEBOOK_TYPE_CSV_FILE)
 		{
-			case XIVO_PHONEBOOK_TYPE_WEBSERVICES:
-			case XIVO_PHONEBOOK_TYPE_XIVO:
-			case XIVO_PHONEBOOK_TYPE_PHONEBOOK:
-				break;
-			default:
-				$type = $types[$return['type']]['type'];
-				$uri = substr($return['uri'], strlen($type) + 3);
-				if ($uri !== false)
-					$return['uri'] = $uri;
-				break;
+			$uri = substr($return['uri'], strlen('file://'));
+			if ($uri !== false)
+				$return['uri'] = $uri;
 		}
 
 		$dhtml = &$_TPL->get_module('dhtml');
