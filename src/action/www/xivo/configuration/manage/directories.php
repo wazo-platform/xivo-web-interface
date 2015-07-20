@@ -38,16 +38,16 @@ define('XIVO_PHONEBOOK_TYPE_PHONEBOOK', 3);
 
 $types = array(
 	XIVO_PHONEBOOK_TYPE_FILE => array(
-		'scheme' => 'file',
+		'type' => 'file',
 		'name' => 'File'),
 	XIVO_PHONEBOOK_TYPE_WEBSERVICES => array(
-		'scheme' => 'webservices',
+		'type' => 'webservices',
 		'name' => 'Webservices'),
 	XIVO_PHONEBOOK_TYPE_XIVO => array(
-		'scheme' => 'xivo',
+		'type' => 'xivo',
 		'name' => 'XiVO'),
 	XIVO_PHONEBOOK_TYPE_PHONEBOOK => array(
-		'scheme' => 'phonebook',
+		'type' => 'phonebook',
 		'name' => 'Phonebook'));
 
 switch($act)
@@ -66,7 +66,7 @@ switch($act)
 					$uri = $_QR['uri'];
 					break;
 				default:
-					$uri = $types[$_QR['type']]['scheme'] . '://' . $_QR['uri'];
+					$uri = $types[$_QR['type']]['type'] . '://' . $_QR['uri'];
 					break;
 			}
 
@@ -74,7 +74,7 @@ switch($act)
 			$data['eid']         = $_QR['_eid'];
 			$data['name']        = $_QR['name'];
 			$data['description'] = $_QR['description'];
-			$data['dirtype']     = $types[$_QR['type']]['scheme'];
+			$data['dirtype']     = $types[$_QR['type']]['type'];
 
 			$result = $_DIR->chk_values($data);
 			if(($result = $_DIR->chk_values($data)) === false
@@ -119,7 +119,7 @@ switch($act)
 					$uri = $_QR['uri'];
 					break;
 				default:
-					$uri = $types[$_QR['type']]['scheme'] . '://' . $_QR['uri'];
+					$uri = $types[$_QR['type']]['type'] . '://' . $_QR['uri'];
 					break;
 			}
 
@@ -127,7 +127,7 @@ switch($act)
 			$data['eid'] = $_QR['_eid'];
 			$data['name'] = $_QR['name'];
 			$data['description'] = $_QR['description'];
-			$data['dirtype'] = $types[$_QR['type']]['scheme'];
+			$data['dirtype'] = $types[$_QR['type']]['type'];
 
 			if(($result = $_DIR->chk_values($data)) === false
 			|| $_DIR->edit($info['id'], $result)    === false)
@@ -148,7 +148,7 @@ switch($act)
 		$return['type'] = -1;
 		foreach($types as $k => $p)
 		{
-			if(strcasecmp($return['dirtype'], $p['scheme']) == 0)
+			if(strcasecmp($return['dirtype'], $p['type']) == 0)
 				$return['type'] = $k;
 		}
 
@@ -159,8 +159,8 @@ switch($act)
 			case XIVO_PHONEBOOK_TYPE_PHONEBOOK:
 				break;
 			default:
-				$scheme = $types[$return['type']]['scheme'];
-				$uri = substr($return['uri'], strlen($scheme) + 3);
+				$type = $types[$return['type']]['type'];
+				$uri = substr($return['uri'], strlen($type) + 3);
 				if ($uri !== false)
 					$return['uri'] = $uri;
 				break;
