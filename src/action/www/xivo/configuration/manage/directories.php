@@ -31,7 +31,7 @@ $param['act'] = 'list';
 
 $result = $fm_save = $error = null;
 
-define('XIVO_PHONEBOOK_TYPE_FILE', 0);
+define('XIVO_PHONEBOOK_TYPE_CSV_FILE', 0);
 define('XIVO_PHONEBOOK_TYPE_WEBSERVICES', 1);
 define('XIVO_PHONEBOOK_TYPE_XIVO', 2);
 define('XIVO_PHONEBOOK_TYPE_PHONEBOOK', 3);
@@ -64,7 +64,7 @@ switch($act)
 			$data['description'] = $_QR['description'];
 			$data['dirtype']     = $types[$_QR['type']]['type'];
 
-			if($_QR['type'] === XIVO_PHONEBOOK_TYPE_CSV_FILE)
+			if($_QR['type'] == XIVO_PHONEBOOK_TYPE_CSV_FILE)
 				$data['uri'] = 'file://' . $_QR['uri'];
 
 			$result = $_DIR->chk_values($data);
@@ -107,7 +107,7 @@ switch($act)
 			$data['description'] = $_QR['description'];
 			$data['dirtype'] = $types[$_QR['type']]['type'];
 
-			if($_QR['type'] === XIVO_PHONEBOOK_TYPE_CSV_FILE)
+			if($_QR['type'] == XIVO_PHONEBOOK_TYPE_CSV_FILE)
 				$data['uri'] = 'file://' . $_QR['uri'];
 
 
@@ -134,7 +134,7 @@ switch($act)
 				$return['type'] = $k;
 		}
 
-		if($return['type'] === XIVO_PHONEBOOK_TYPE_CSV_FILE)
+		if($return['type'] == XIVO_PHONEBOOK_TYPE_CSV_FILE)
 		{
 			$uri = substr($return['uri'], strlen('file://'));
 			if ($uri !== false)
