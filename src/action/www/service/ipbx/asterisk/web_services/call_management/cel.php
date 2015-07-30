@@ -33,7 +33,7 @@ switch($act)
 	default:
 	case 'searchid':
 		if(isset($_QR['idbeg']) !== false
-		&& ($list = $cel->search_idbeg($_QR['idbeg'],'eventtime',$limit)) !== false)
+		&& ($list = $cel->search_idbeg($_QR['idbeg'],$limit)) !== false)
 		{
 			if($list === null)
 			{
