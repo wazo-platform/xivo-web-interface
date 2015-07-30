@@ -26,8 +26,6 @@ class xivo_service_asterisk_cel_sql extends xivo_service_asterisk_abstract_sql
 
 	function search_idbeg($idbeg,$limit=null)
 	{
-		$this->_cnt = 0;
-
 		$this->_dso->new_select($this->_table);
 
 		$this->_dso->where('"id" > '.$idbeg);
@@ -36,11 +34,7 @@ class xivo_service_asterisk_cel_sql extends xivo_service_asterisk_abstract_sql
 
 		$r = $this->_dso->select_all();
 
-		$this->_dso->reset_order();
-		$this->_dso->reset_limit();
-
-		if(($this->_cnt = $this->_dso->select_count()) === false
-		|| isset($r[0]) === false)
+		if(isset($r[0]) === false)
 			$r = false;
 
 		return($r);
