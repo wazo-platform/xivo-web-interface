@@ -29,7 +29,7 @@ class xivo_service_asterisk_cel_sql extends xivo_service_asterisk_abstract_sql
 		$this->_dso->new_select($this->_table);
 
 		$this->_dso->where('"id" > '.$idbeg);
-		$this->_dso->new_order('eventtime');
+		$this->_dso->new_order('id');
 		$this->_dso->limit($limit);
 
 		$r = $this->_dso->select_all();
