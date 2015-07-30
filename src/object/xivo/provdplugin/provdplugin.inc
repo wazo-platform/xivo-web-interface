@@ -55,6 +55,24 @@ class xivo_object_provdplugin extends xivo_object_provd_abstract
 		$res['pkgs'] = $pkgs = array();
 		$res['params'] = false;
 
+		$uri = $this->_build_uri(array('plugins',$name,'install','installed'));
+
+		$rs = $this->request_get($uri);
+
+		if (is_array($rs) === true
+		&& $this->_status_code === 200
+		&& isset($rs['pkgs']) === true
+		&& is_array($rs['pkgs']) === true)
+		{
+			foreach($rs['pkgs'] as $k => &$v)
+			{
+				$v['type'] = 'installed';
+				$v['name'] = $k;
+			}
+
+			$pkgs = $rs['pkgs'];
+		}
+
 		$uri = $this->_build_uri(array('plugins',$name,'install','installable'));
 
 		$rs = $this->request_get($uri);
@@ -66,40 +84,20 @@ class xivo_object_provdplugin extends xivo_object_provd_abstract
 		{
 			foreach($rs['pkgs'] as $k => &$v)
 			{
-				$v['type'] = 'installable';
-				$v['name'] = $k;
-			}
-
-			$pkgs['list'] = $rs['pkgs'];
-
-			$uri = $this->_build_uri(array('plugins',$name,'install','installed'));
-
-			$rs = $this->request_get($uri);
-
-			if (is_array($rs) === true
-			&& $this->_status_code === 200
-			&& isset($rs['pkgs']) === true
-			&& is_array($rs['pkgs']) === true)
-			{
-				foreach($rs['pkgs'] as $k => &$v)
+				if (isset($pkgs[$k]) === true)
 				{
-					$v['type'] = 'installed';
+					$pkgs[$k]['version-installable'] = $v['version'];
+				}
+				else
+				{
+					$v['type'] = 'installable';
 					$v['name'] = $k;
+					array_push($pkgs, $v);
 				}
 			}
-
-			$pkgs['slt'] = dwho_array_intersect_key($rs['pkgs'],$pkgs['list'],'name');
-			$pkgs['info'] = array();
-
-			if($pkgs['slt'] !== false)
-			{
-				$pkgs['info'] = dwho_array_copy_intersect_key($rs['pkgs'],$pkgs['slt'],'name');
-				$pkgs['list'] = dwho_array_diff_key($pkgs['list'],$pkgs['slt']);
-			}
-
-			$list = array_merge($pkgs['info'],$pkgs['list']);
-			$res['pkgs'] = array_values($list);
 		}
+
+		$res['pkgs'] = array_values($pkgs);
 
 		$uri = $this->_build_uri(array('plugins',$name,'configure'));
 
@@ -187,6 +185,29 @@ class xivo_object_provdplugin extends xivo_object_provd_abstract
 			return(false);
 
 		return(true);
+	}
+
+	public function upgrade_pkgs($plugin,$name)
+	{
+		if(dwho_has_len($plugin) === false
+		|| dwho_has_len($name) === false)
+			return(false);
+
+		$uri = $this->_build_uri(array('plugins',$plugin,'install','upgrade'));
+
+		$data = array('id' => $name);
+
+		$rs = $this->request_post($uri,$data);
+
+		if ($this->_status_code !== 201)
+			return(false);
+
+		$decoded = $this->decode_header($this->_response['header']);
+
+		if (isset($decoded['Location']) === false)
+			return(false);
+
+		return(urlencode($decoded['Location']));
 	}
 
 	public function install_pkgs($plugin,$name)

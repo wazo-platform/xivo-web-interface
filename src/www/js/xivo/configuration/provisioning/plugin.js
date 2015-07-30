@@ -46,6 +46,11 @@ function init_install_pkgs(plugin, id) {
 	init_installer(url, plugin);
 }
 
+function init_upgrade_pkgs(plugin, id) {
+	var url = '/xivo/configuration/ui.php/provisioning/plugin?act=upgrade-pkgs&plugin='+ plugin + '&id=' + id;
+	init_installer(url, plugin);
+}
+
 function init_install_plugin(id) {
 	var url = '/xivo/configuration/ui.php/provisioning/plugin?act=install_plugin&id=' + id;
 	init_installer(url, id);

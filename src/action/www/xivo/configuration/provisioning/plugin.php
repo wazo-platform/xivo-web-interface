@@ -73,6 +73,8 @@ switch($act)
 		$_TPL->set_var('info',$info);
 		break;
 	case 'install-pkgs':
+		# XXX is this dead code ? I feel like only the action "install-pkgs" in the "/ui" directory is
+		#     "called"
 		if (isset($_QR['id']) === false
 		|| isset($_QR['plugin']) === false
 		|| $provdplugin->install_pkgs($_QR['plugin'],$_QR['id']) === false)

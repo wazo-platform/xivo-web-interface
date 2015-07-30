@@ -77,6 +77,13 @@ else:
 			for($i = 0;$i < $nb;$i++):
 				$ref = &$pkgs[$i];
 
+				$upgrade = false;
+				if (isset($ref['version-installable']) === true):
+					if($ref['version'] !== $ref['version-installable']):
+						$upgrade = true;
+					endif;
+				endif;
+
 				$component_size = '-';
 				if (isset($ref['dsize']) === true):
 					$iec_size = dwho_size_iec($ref['dsize']);
@@ -94,6 +101,16 @@ else:
 			<td><?=(isset($ref['version']) === true ? $ref['version'] : '-')?></td>
 			<td class="td-right">
 	<?php
+			if ($upgrade === true):
+				echo	$url->href_html($url->img_html('img/site/utils/app-upgrade.png',
+							           $this->bbf('opt_upgrade'),
+							           'border="0"'),
+						'#',
+						null,
+						'onclick="init_upgrade_pkgs(\''.$this->get_var('id').'\',\''.$ref['name'].'\');return(false);"',
+						$this->bbf('opt_upgrade'));
+			endif;
+
 			if ($ref['type'] === 'installable'):
 				echo	$url->href_html($url->img_html('img/site/utils/app-install.png',
 								       $this->bbf('opt_install'),

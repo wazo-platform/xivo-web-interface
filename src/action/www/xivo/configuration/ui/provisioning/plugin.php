@@ -67,6 +67,16 @@ switch($act)
 		}
 		die($location);
 		break;
+	case 'upgrade-pkgs':
+		if (isset($_QR['id']) === false
+		|| isset($_QR['plugin']) === false
+		|| ($location = $provdplugin->upgrade_pkgs($_QR['plugin'],$_QR['id'])) === false)
+		{
+			$http_response->set_status_line(400);
+			$http_response->send(true);
+		}
+		die($location);
+		break;
 	case 'getparams':
 		if (isset($_QR['uri']) === false
 		|| ($uri = $_QR['uri']) === ''
