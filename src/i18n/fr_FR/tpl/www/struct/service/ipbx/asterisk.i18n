@@ -33,6 +33,9 @@ LPC10 (Audio)
 ; ast_codec_name_type(g729)
 G.729A (Audio)
 
+; ast_codec_name_type(opus)
+Opus (Audio)
+
 ; ast_codec_name_type(speex)
 Speex (Audio)
 
