@@ -55,49 +55,29 @@ class xivo_object_provdplugin extends xivo_object_provd_abstract
 		$res['pkgs'] = $pkgs = array();
 		$res['params'] = false;
 
-		$uri = $this->_build_uri(array('plugins',$name,'install','installed'));
+		if (($list_installed = $this->get_plugin_pkgs_installed($name)) === false)
+			$list_installed = array();
 
-		$rs = $this->request_get($uri);
+		if (($list_installable = $this->get_plugin_pkgs_installable($name)) === false)
+			$list_installable = array();
 
-		if (is_array($rs) === true
-		&& $this->_status_code === 200
-		&& isset($rs['pkgs']) === true
-		&& is_array($rs['pkgs']) === true)
+		$list_old_pni = array_diff_key($list_installed, $list_installable);
+		$list_installable = array_merge($list_installable,$list_old_pni);
+
+		ksort($list_installable);
+
+		$list = array();
+		foreach ($list_installable as $k => &$v)
 		{
-			foreach($rs['pkgs'] as $k => &$v)
+			if (isset($list_installed[$k]) === true)
 			{
+				$v['version'] = $list_installed[$k]['version'];
 				$v['type'] = 'installed';
-				$v['name'] = $k;
 			}
-
-			$pkgs = $rs['pkgs'];
+			array_push($list, $v);
 		}
 
-		$uri = $this->_build_uri(array('plugins',$name,'install','installable'));
-
-		$rs = $this->request_get($uri);
-
-		if (is_array($rs) === true
-		&& $this->_status_code === 200
-		&& isset($rs['pkgs']) === true
-		&& is_array($rs['pkgs']) === true)
-		{
-			foreach($rs['pkgs'] as $k => &$v)
-			{
-				if (isset($pkgs[$k]) === true)
-				{
-					$pkgs[$k]['version-installable'] = $v['version'];
-				}
-				else
-				{
-					$v['type'] = 'installable';
-					$v['name'] = $k;
-					array_push($pkgs, $v);
-				}
-			}
-		}
-
-		$res['pkgs'] = array_values($pkgs);
+		$res['pkgs'] = $list;
 
 		$uri = $this->_build_uri(array('plugins',$name,'configure'));
 
@@ -150,6 +130,47 @@ class xivo_object_provdplugin extends xivo_object_provd_abstract
 			&& preg_match('/'.$search.'/', $r['name']) === 0
 			&& preg_match('/'.$search.'/', $r['description']) === 0)
 				unset($rs[$k]);
+		}
+
+		return($rs);
+	}
+
+	public function get_plugin_pkgs_installed($plugin)
+	{
+		return($this->_get_plugins_pkgs('installed',$plugin));
+	}
+
+	public function get_plugin_pkgs_installable($plugin)
+	{
+		return($this->_get_plugins_pkgs('installable',$plugin));
+	}
+
+	private function _get_plugins_pkgs($type,$plugin)
+	{
+		switch ($type)
+		{
+			case 'installed':
+				$uri = $this->_build_uri(array('plugins',$plugin,'install','installed'));
+				break;
+			default:
+			case 'installable':
+				$uri = $this->_build_uri(array('plugins',$plugin,'install','installable'));
+		}
+
+		$rs = $this->request_get($uri);
+
+		if (is_array($rs) === false
+		|| $this->_status_code !== 200
+		|| isset($rs['pkgs']) === false
+		|| is_array($rs['pkgs']) === false)
+			return(false);
+
+		$rs = $rs['pkgs'];
+		foreach($rs as $k => &$r)
+		{
+			$r['type'] = $type;
+			$r['version-'.$type] = $r['version'];
+			$r['name'] = $k;
 		}
 
 		return($rs);
