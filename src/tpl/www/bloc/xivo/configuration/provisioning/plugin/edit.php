@@ -78,9 +78,11 @@ else:
 				$ref = &$pkgs[$i];
 
 				$upgrade = false;
+				$version = $ref['version'];
 				if (isset($ref['version-installable']) === true):
 					if($ref['version'] !== $ref['version-installable']):
 						$upgrade = true;
+					$version = '<b>'.$ref['version'].' / '.$ref['version-installable'].'</b>';
 					endif;
 				endif;
 
@@ -98,19 +100,22 @@ else:
 				<?=dwho_htmlen(dwho_trunc($ref['description'],50,'...',false));?>
 			</td>
 			<td><?=$component_size?></td>
-			<td><?=(isset($ref['version']) === true ? $ref['version'] : '-')?></td>
-			<td class="td-right">
+			<td>
+				<?=$version?>
 	<?php
 			if ($upgrade === true):
 				echo	$url->href_html($url->img_html('img/site/utils/app-upgrade.png',
-							           $this->bbf('opt_upgrade'),
-							           'border="0"'),
-						'#',
-						null,
-						'onclick="init_upgrade_pkgs(\''.$this->get_var('id').'\',\''.$ref['name'].'\');return(false);"',
-						$this->bbf('opt_upgrade'));
+								       $this->bbf('opt_upgrade'),
+								       'border="0"'),
+							'#',
+							null,
+							'onclick="init_upgrade_pkgs(\''.$this->get_var('id').'\',\''.$ref['name'].'\');return(false);"',
+							$this->bbf('opt_upgrade'));
 			endif;
-
+	?>
+			</td>
+			<td class="td-right">
+	<?php
 			if ($ref['type'] === 'installable'):
 				echo	$url->href_html($url->img_html('img/site/utils/app-install.png',
 								       $this->bbf('opt_install'),
