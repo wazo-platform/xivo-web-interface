@@ -177,7 +177,7 @@ switch($act)
 						$q = $_QRY->build_query_str($query);
 						if ($str === 'success')
 						{
-							dwho_report::push('info',dwho_i18n::babelfish('successfully_installed',array($_QR['id'])));
+							dwho_report::push('info',dwho_i18n::babelfish('successfully_installed',array($_QR['name'])));
 							$uri = $_TPL->url('xivo/configuration/provisioning/plugin').'?'.$q;
 							$msg = 'redirecturi::'.($uri);
 							$provdplugin->request_delete($path);
@@ -185,7 +185,7 @@ switch($act)
 						}
 						elseif ($str === 'fail')
 						{
-							dwho_report::push('error',dwho_i18n::babelfish('error_during_installation',array($_QR['id'])));
+							dwho_report::push('error',dwho_i18n::babelfish('error_during_installation',array($_QR['name'])));
 							$uri = $_TPL->url('xivo/configuration/provisioning/plugin').'?'.$q;
 							$msg = 'redirecturi::'.($uri);
 							$provdplugin->request_delete($path);

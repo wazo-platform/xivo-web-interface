@@ -43,39 +43,39 @@ $(function() {
 
 function init_install_pkgs(plugin, id) {
 	var url = '/xivo/configuration/ui.php/provisioning/plugin?act=install-pkgs&plugin='+ plugin + '&id=' + id;
-	init_installer(url, plugin);
+	init_installer(url, plugin, id);
 }
 
 function init_upgrade_pkgs(plugin, id) {
 	var url = '/xivo/configuration/ui.php/provisioning/plugin?act=upgrade-pkgs&plugin='+ plugin + '&id=' + id;
-	init_installer(url, plugin);
+	init_installer(url, plugin, id);
 }
 
 function init_install_plugin(id) {
 	var url = '/xivo/configuration/ui.php/provisioning/plugin?act=install_plugin&id=' + id;
-	init_installer(url, id);
+	init_installer(url, id, id);
 }
 
 function init_update_plugin() {
 	var url = '/xivo/configuration/ui.php/provisioning/plugin?act=update_plugin';
-	init_installer(url, null);
+	init_installer(url, null, null);
 }
 
-function init_installer(url, id) {
+function init_installer(url, id, name) {
 	$('#box_installer').show();
 	$.get(url, function(data) {
 				if (data === null)
 					return false;
-				ajax_request_oip(data, id);
-				this.int = setInterval(ajax_request_oip, 1000, data, id);
+				ajax_request_oip(data, id, name);
+				this.int = setInterval(ajax_request_oip, 1000, data, id, name);
 			});
 }
 
-function ajax_request_oip(url, plugin) {
+function ajax_request_oip(url, plugin, name) {
 	if (plugin == null) {
 		uri = '/xivo/configuration/ui.php/provisioning/plugin?act=request_oip&path=' + url;
 	} else {
-		uri = '/xivo/configuration/ui.php/provisioning/plugin?act=request_oip&id=' + plugin + '&path=' + url;
+		uri = '/xivo/configuration/ui.php/provisioning/plugin?act=request_oip&id=' + plugin + '&name=' + name + '&path=' + url;
 	}
 	$.get(uri, function(data) {
 		var str = data.split('::');
