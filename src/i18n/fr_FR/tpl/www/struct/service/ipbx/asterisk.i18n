@@ -63,6 +63,12 @@ JPEG (Image)
 ; ast_codec_name_type(png)
 PNG (Image)
 
+; ast_codec_name_type(red)
+T.140 avec redondance (Texte)
+
+; ast_codec_name_type(t140)
+T.140 (Texte)
+
 ; ast_codec_name_type(h261)
 H.261 (Vidéo)
 
