@@ -1,0 +1,43 @@
+server {
+    listen 80 default_server;
+    server_name $domain;
+
+    access_log /var/log/nginx/xivo.access.log;
+    error_log /var/log/nginx/xivo.error.log;
+    root /usr/share/xivo-web-interface/www;
+
+    location / {
+        rewrite ^/backup/(.*) /backup.php?path=$1 last;
+        index index.php;
+
+        fastcgi_pass unix:/var/run/php5-fpm.sock;
+
+        fastcgi_split_path_info ^(.+\.php)(.*)$;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_param PATH_INFO $fastcgi_path_info;
+        fastcgi_param PATH_TRANSLATED $document_root$fastcgi_path_info;
+        fastcgi_index index.php;
+        include fastcgi_params;
+    }
+
+    location /dlbackup/ {
+        internal;
+        alias /var/backups/xivo/;
+    }
+
+    location ^~ /extra-libs/jquery/        { alias /usr/share/javascript/jquery/; }
+    location ^~ /extra-libs/jquery-ui/     { alias /usr/share/javascript/jquery-ui/; }
+    location ^~ /extra-libs/mousewheel/    { alias /usr/share/javascript/jquery.mousewheel/; }
+    location ^~ /extra-libs/jqplot/        { alias /usr/share/javascript/jqplot/; }
+    location ^~ /extra-libs/xivo.schedule/ { alias /usr/share/javascript/xivo-schedule/src/; }
+    location ^~ /extra-libs/timepicker/    { alias /usr/share/javascript/jquery.timepicker/; }
+    location ^~ /extra-libs/multiselect/   { alias /usr/share/javascript/jquery.multiselect/; }
+    location ^~ /extra-libs/ui-timepicker/ { alias /usr/share/javascript/jquery-ui.timepicker/; }
+    location ^~ /extra-libs/select2/       { alias /usr/share/javascript/select2/; }
+
+    location ~* \.(?:ico|css|js|gif|jpe?g|png)$ {
+        expires max;
+        add_header Pragma public;
+        add_header Cache-Control "public, must-revalidate, proxy-revalidate";
+    }
+}
