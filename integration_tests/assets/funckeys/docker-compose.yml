@@ -1,0 +1,53 @@
+postgres:
+  image: xivo/xivo-postgres
+  expose:
+    - "5432"
+  ports:
+    - "15432:5432"
+  volumes:
+    - "./etc/xivo-postgres/populate_db.sh:/docker-entrypoint-initdb.d/populate_db.sh"
+    - "./etc/xivo-postgres/fsync_off.sh:/docker-entrypoint-initdb.d/fsync_off.sh"
+confd:
+  image: nickstenning/flask
+  expose:
+    - "9487"
+  volumes:
+    - "./mocks/confd/:/tmp/confd"
+  command: "python /tmp/confd/confd.py"
+provd:
+  image: xivo/xivo-provd
+  ports:
+    - "8666:8666"
+  expose:
+    - "8666"
+  volumes:
+    - "./etc/xivo-provd/provd.conf:/etc/xivo/provd/provd.conf"
+sysconfd:
+  image: nickstenning/flask
+  expose:
+    - "8668"
+  volumes:
+    - "./mocks/sysconfd:/tmp/sysconfd"
+  command: "python /tmp/sysconfd/sysconfd.py"
+webi:
+  image: xivo-webi-test
+  ports:
+    - "8080:80"
+  volumes:
+    - "./etc/xivo/datastorage.conf:/etc/xivo/datastorage.conf"
+    - "./etc/xivo/web-interface/ipbx.ini:/etc/xivo/web-interface/ipbx.ini"
+    - "./etc/xivo-sysconfd/config.inc:/usr/share/xivo-web-interface/object/xivo/sysconfd/config.inc"
+    - "./etc/xivo-confd/config.inc:/usr/share/xivo-web-interface/object/confd/abstract/config.inc"
+  links:
+    - postgres
+    - confd
+    - provd
+    - sysconfd
+tests:
+  image: n3llyb0y/wait
+  links:
+    - postgres
+    - confd
+    - webi
+  environment:
+    PORTS: "5432 9847 80"

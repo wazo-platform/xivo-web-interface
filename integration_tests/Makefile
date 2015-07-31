@@ -1,0 +1,19 @@
+.PHONY: test-image test-setup distclean
+
+MANAGE_DB_DIR=../../xivo-manage-db/
+POSTGRES_DOCKER=$(MANAGE_DB_DIR)/contribs/xivo-postgres/Dockerfile
+
+
+test-setup:
+	docker build -t xivo/xivo-postgres -f $(POSTGRES_DOCKER) $(MANAGE_DB_DIR)
+	docker pull n3llyb0y/wait
+
+test-image:
+	docker build --no-cache -t xivo-webi-test -f Dockerfile ..
+
+test:
+	nosetests suite
+
+distclean:
+	docker rmi xivo/xivo-postgres
+	docker rmi xivo-confd-test
