@@ -178,13 +178,6 @@ class xivo_object_provdplugin extends xivo_object_provd_abstract
 			return(false);
 
 		return(urlencode($decoded['Location']));
-
-		$this->request_delete($decoded['Location']);
-
-		if ($this->_status_code !== 204)
-			return(false);
-
-		return(true);
 	}
 
 	public function upgrade_pkgs($plugin,$name)
