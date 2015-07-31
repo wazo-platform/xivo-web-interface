@@ -87,7 +87,7 @@ switch($act)
 		$limit[0] = $prevpage * $nbbypage;
 		$limit[1] = $nbbypage;
 
-		$list = $appprovdplugin->get_plugin_list($search,$order,$limit);
+		$list = $appprovdplugin->get_plugin_list($search,$limit);
 		$total = $appprovdplugin->get_cnt();
 
 		if($list === false && $total > 0 && $prevpage > 0)

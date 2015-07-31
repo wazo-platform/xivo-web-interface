@@ -110,17 +110,17 @@ class xivo_object_provdplugin extends xivo_object_provd_abstract
 		return($res);
 	}
 
-	public function get_plugin_installed($search='',$assoc=false)
+	public function get_plugin_installed($search='')
 	{
-		return($this->_get_plugins('installed',$search,$assoc));
+		return($this->_get_plugins('installed',$search));
 	}
 
-	public function get_plugin_installable($search='',$assoc=false)
+	public function get_plugin_installable($search='')
 	{
-		return($this->_get_plugins('installable',$search,$assoc));
+		return($this->_get_plugins('installable',$search));
 	}
 
-	private function _get_plugins($type,$search='',$assoc=false)
+	private function _get_plugins($type,$search='')
 	{
 		switch ($type)
 		{
@@ -151,9 +151,6 @@ class xivo_object_provdplugin extends xivo_object_provd_abstract
 			&& preg_match('/'.$search.'/', $r['description']) === 0)
 				unset($rs[$k]);
 		}
-
-		if((bool) $assoc === false)
-			return(array_values($rs));
 
 		return($rs);
 	}

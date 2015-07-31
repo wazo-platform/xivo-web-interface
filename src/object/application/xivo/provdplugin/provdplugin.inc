@@ -42,14 +42,14 @@ class xivo_application_xivo_object_provdplugin extends xivo_application_xivo_obj
 		return($this->_provdplugin->get($id));
 	}
 
-	public function get_plugin_list($search='',$order=null,$limit=null)
+	public function get_plugin_list($search='',$limit=null)
 	{
 		$this->_cnt = 0;
 
-		if (($list_installed = $this->_provdplugin->get_plugin_installed($search,$order)) === false)
+		if (($list_installed = $this->_provdplugin->get_plugin_installed($search)) === false)
 			$list_installed = array();
 
-		if (($list_installable = $this->_provdplugin->get_plugin_installable($search,$order)) === false)
+		if (($list_installable = $this->_provdplugin->get_plugin_installable($search)) === false)
 			$list_installable = array();
 
 		$list_old_pni = array_diff_key($list_installed, $list_installable);
