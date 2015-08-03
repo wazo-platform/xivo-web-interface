@@ -41,12 +41,11 @@ class xivo_service_asterisk_cel extends xivo_service_asterisk_abstract
 		$this->_load_config();
 	}
 
-	public function search_idbeg($idbeg,$order=null,$limit=null)
+	public function search_idbeg($idbeg,$limit=null)
 	{
-		$search = array();
-		$search['idbeg'] = (int) $idbeg;
+		$idbeg = (int) $idbeg;
 
-		if(($result = $this->_dso->search($search,$order,$limit)) === false)
+		if(($result = $this->_dso->search_idbeg($idbeg,$limit)) === false)
 			return(null);
 
 		return($result);

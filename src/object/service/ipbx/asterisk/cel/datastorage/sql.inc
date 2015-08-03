@@ -24,69 +24,20 @@ class xivo_service_asterisk_cel_sql extends xivo_service_asterisk_abstract_sql
 {
 	var $_disable	= null;
 
-	function search($arr,$order=null,$limit=null)
+	function search_idbeg($idbeg,$limit=null)
 	{
-		$this->_cnt = 0;
-
 		$this->_dso->new_select($this->_table);
 
-		if($this->_search_where($arr) === false)
-			return(false);
-
-		$this->_dso->new_order($order);
+		$this->_dso->where('"id" > '.$idbeg);
+		$this->_dso->new_order('id');
 		$this->_dso->limit($limit);
 
 		$r = $this->_dso->select_all();
 
-		$this->_dso->reset_order();
-		$this->_dso->reset_limit();
-
-		if(($this->_cnt = $this->_dso->select_count()) === false
-		|| isset($r[0]) === false)
+		if(isset($r[0]) === false)
 			$r = false;
 
 		return($r);
-	}
-
-	function _search_where($arr)
-	{
-		if(is_array($arr) === false)
-			return(false);
-
-		if(isset($arr['idbeg']) === true)
-			$this->_dso->where('"id" > '.$arr['idbeg']);
-
-		if(isset($arr['dbeg']) === true)
-		{
-			$dbeg = $arr['dbeg'] . " 00:00:00.000001";
-
-			if(isset($arr['dend']) === true)
-				$dend = $arr['dend']." 23:59:59.999999";
-			else
-				$dend = date('Y-m-d')." 23:59:59.999999";
-
-			$this->_dso->andwhere('"eventtime" BETWEEN \''.$dbeg.'\' AND \''.$dend.'\'');
-		}
-
-		if(isset($arr['context']) === true)
-			$this->_dso->andwhere(array('context' => $arr['context']));
-
-		if(isset($arr['uniqueid']) === true)
-			$this->_dso->andwhere(array('uniqueid' => $arr['uniqueid']));
-
-		if(isset($arr['linkedid']) === true)
-			$this->_dso->andwhere(array('linkedid' => $arr['linkedid']));
-
-		if(isset($arr['dcontext']) === true)
-			$this->_dso->andwhereexact('context',$arr['dcontext']);
-
-		if(dwho_issa('accountcode',$arr) === true)
-			$this->_dso->andwherelike('accountcode',$arr['accountcode']['pattern'],$arr['accountcode']['type']);
-
-		if(dwho_issa('userfield',$arr) === true)
-			$this->_dso->andwherelike('userfield',$arr['userfield']['pattern'],$arr['userfield']['type']);
-
-		return(true);
 	}
 }
 
