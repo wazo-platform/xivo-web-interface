@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -79,11 +79,8 @@ dwho::load_class('dwho_network');
 
 $array['filter'] = array();
 $array['filter']['mainconfig'] = array();
-$array['filter']['mainconfig']['hostname'] = array('callback'		=> 'dwho_network::valid_host',
-						   'callbackarg'	=> array(DWHO_NETWORK_HOST_HOSTNAME));
-$array['filter']['mainconfig']['domain'] = array('callback'		=> 'dwho_network::valid_host',
-						 'callbackarg'		=> array(DWHO_NETWORK_HOST_HOSTNAME |
-										 DWHO_NETWORK_HOST_HOSTNAME_TLD));
+$array['filter']['mainconfig']['hostname'] = array('callback'		=> 'dwho_network::valid_hostname_part');
+$array['filter']['mainconfig']['domain'] = array('callback'		=> 'dwho_network::valid_hostname');
 $array['filter']['mainconfig']['adminpasswd'] = array('minlen'	=> 4,
 						      'maxlen'	=> 64,
 						      'regexp'	=> '/^[a-zA-Z0-9-\._~\!\$&\'\(\)\*\+,;=%]+$/');
