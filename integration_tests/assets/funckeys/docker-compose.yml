@@ -11,6 +11,8 @@ confd:
   image: nickstenning/flask
   expose:
     - "9487"
+  ports:
+    - "19487:9487"
   volumes:
     - "./mocks/confd/:/tmp/confd"
   command: "python /tmp/confd/confd.py"
