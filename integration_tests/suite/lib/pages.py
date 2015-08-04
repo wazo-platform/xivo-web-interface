@@ -6,12 +6,12 @@ from selenium.webdriver.support.ui import WebDriverWait, Select
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.alert import Alert
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.common.exceptions import NoSuchElementException
 
-from configuration import config
-
 TIMEOUT = 4
+CONFIG = {'base_url': 'http://localhost:8080'}
 
 
 class Page(object):
@@ -21,7 +21,7 @@ class Page(object):
 
     def build_url(self, *parts, **kwargs):
         path = '/'.join(parts)
-        url = "{}/{}".format(config['base_url'].rstrip('/'), path.lstrip('/'))
+        url = "{}/{}".format(CONFIG['base_url'].rstrip('/'), path.lstrip('/'))
         if kwargs:
             url += "?{}".format(urllib.urlencode(kwargs))
         return url
@@ -74,11 +74,13 @@ class LoginPage(Page):
 class UserListPage(Page):
 
     PATH = "/service/ipbx/index.php/pbx_settings/users/"
+    LINE_XPATH = "//tr[td[contains(@title, '{name}')]]"
 
     def go(self):
         url = self.build_url(self.PATH)
         self.driver.get(url)
         self.wait_find(By.NAME, "fm-users-list")
+        return self
 
     def add(self):
         url = self.build_url(self.PATH, act='add')
@@ -88,7 +90,7 @@ class UserListPage(Page):
         return UserPage(self.driver)
 
     def edit(self, name):
-        xpath = "//tr[td[contains(@title, '{name}')]]".format(name=name)
+        xpath = self.LINE_XPATH.format(name=name)
         line = self.driver.find_element_by_xpath(xpath)
 
         selector = "a[title='Edit']"
@@ -97,6 +99,22 @@ class UserListPage(Page):
 
         self.wait_find(By.ID, 'sr-users')
         return UserPage(self.driver)
+
+    def delete(self, name):
+        xpath = self.LINE_XPATH.format(name=name)
+        line = self.driver.find_element_by_xpath(xpath)
+
+        selector = "a[title='Delete']"
+        button = line.find_element_by_css_selector(selector)
+        button.click()
+
+        condition = ec.alert_is_present()
+        WebDriverWait(self.driver, TIMEOUT).until(condition)
+
+        Alert(self.driver).accept()
+
+        condition = ec.presence_of_element_located((By.XPATH, xpath))
+        WebDriverWait(self.driver, TIMEOUT).until_not(condition)
 
 
 class UserPage(Page):
@@ -125,15 +143,58 @@ class UserPage(Page):
 
 class FuncKeyTab(Page):
 
+    KEY_XPATH = "//tbody[@id='phonefunckey']/tr[//select[@name='phonefunckey[fknum][]']/option[@selected='selected' and @value='{key}']]"
+
+    def get(self, keynum):
+        xpath = self.KEY_XPATH.format(key=keynum)
+        line = self.driver.find_element_by_xpath(xpath)
+
+        key = line.find_element_by_name('phonefunckey[fknum][]')
+        type = line.find_element_by_name('phonefunckey[type][]')
+        label = line.find_element_by_name('phonefunckey[label][]')
+        supervision = line.find_element_by_name('phonefunckey[supervision][]')
+
+        key_value = int(key.get_attribute('value'))
+        type_value = type.find_element_by_css_selector('option[selected="selected"]').text
+        label_value = label.get_attribute('value')
+        supervision_value = supervision.get_attribute('value') == 'Enabled'
+        destination_value = self.get_destination_value(line)
+
+        return {'key': key_value,
+                'type': type_value,
+                'label': label_value,
+                'supervision': supervision_value,
+                'destination': destination_value}
+
+    def get_destination_value(self, line):
+        try:
+            destination = line.find_element_by_css_selector('.it-enabled')
+        except NoSuchElementException:
+            return None
+
+        if destination.tag_name == 'select':
+            return destination.find_element_by_css_selector('option[selected="selected"]').text
+
+        return destination.get_attribute('value')
+
     def add(self, type, key=None, destination=None, label=None, supervision=None):
         line = self.add_line()
+        self._fill(line, type, key, destination, label, supervision)
 
-        self.select_name('phonefunckey[type][]', type, line)
+    def edit(self, key, type=None, destination=None, label=None, supervision=None):
+        xpath = self.KEY_XPATH.format(key=key)
+        line = self.driver.find_element_by_xpath(xpath)
+        self._fill(line, type, key, destination, label, supervision)
+
+    def _fill(self, line, type, key, destination, label, supervision):
+        if type:
+            self.select_name('phonefunckey[type][]', type, line)
 
         if key:
             self.select_name('phonefunckey[fknum][]', str(key), line)
 
         if label:
+            line.find_element_by_name('phonefunckey[label][]').clear()
             self.fill_name('phonefunckey[label][]', label, line)
 
         if supervision is not None:
@@ -142,8 +203,6 @@ class FuncKeyTab(Page):
 
         if destination:
             self.fill_destination(line, type, destination)
-
-        line.find_element_by_name('phonefunckey[label][]').click()
 
     def add_line(self):
         total = self.count_lines()
@@ -174,6 +233,7 @@ class FuncKeyTab(Page):
         element = self.find_destination(line)
 
         # try and remove focus from old input field by focusing on new one
+        element.clear()
         element.click()
         element.send_keys(Keys.ESCAPE)
 
@@ -206,13 +266,3 @@ class FuncKeyTab(Page):
                 ActionChains(self.driver).move_to_element(suggestion).click().perform()
                 # wait for autocomplete to dissapear
                 WebDriverWait(self.driver, TIMEOUT).until_not(condition)
-
-
-class _ConditionGenerator(object):
-
-    def __init__(self, condition, *args):
-        self.condition = condition
-        self.args = args
-
-    def __call__(self):
-        return self.condition(*self.args)
