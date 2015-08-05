@@ -140,12 +140,30 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		|| ($func_keys_confd = $_RAPI->get_ressource('user_func_keys')) === false)
 			return(false);
 
+		if(
+			($groupfeatures = &$this->_service->get_module('groupfeatures')) === false
+			|| ($meetmefeatures = &$this->_service->get_module('meetmefeatures')) === false
+			|| ($queuefeatures = &$this->_service->get_module('queuefeatures')) === false
+			|| ($paging_dso = &$this->_service->get_module('paging')) === false
+		) {
+			dwho_report::push('error', 'could not load DSOs for func key mapper');
+			return(false);
+		}
+
 		$this->_queuemember = &$this->_service->get_module('queuemember');
 		$this->_voicemail = &$this->_service->get_application('voicemail');
 		$this->_agentfeatures = &$this->_service->get_module('agentfeatures');
 		$this->_phonefunckey = &$this->_service->get_module('phonefunckey');
 
-		$func_key_mapper = new FuncKeyMapper($this->_callfilter, $this->_callfiltermember);
+		$func_key_mapper = new FuncKeyMapper(
+			$this->_userfeatures,
+			$groupfeatures,
+			$meetmefeatures,
+			$queuefeatures,
+			$this->_agentfeatures,
+			$paging_dso,
+			$this->_callfilter,
+			$this->_callfiltermember);
 		$this->_func_keys = new FuncKeyConverter($func_keys_confd, $func_key_mapper);
 
 		return(true);
@@ -588,13 +606,12 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 	{
 		if (dwho_issa('userfeatures',$this->_info) === false)
 			return(false);
-		$res = array();
-		if (($fks_v1 = $this->_get_phonefunckey_identity_v1($this->_info['userfeatures']['id'], $result)))
-			$res = $res + $fks_v1;
-		if (($fks_v2 = $this->_get_phonefunckey_identity_v2($this->_info['userfeatures']['id'], $result)))
-			$res = $res + $fks_v2;
-		ksort($res);
-		return(array_values($res));
+
+		if(is_array($this->_info['phonefunckey'])) {
+			return $this->_info['phonefunckey'];
+       }
+
+		return $this->_func_keys->get_user_func_keys($this->_info['userfeatures']['id']);
 	}
 
 	private function _get_phonefunckey_identity_v1($user_id, $result=true)

@@ -34,7 +34,8 @@ class FuncKeyConverter {
 		if ($funckeys === null) {
 			return array();
 		}
-		return $this->mapper->map_to_legacy($user_id, $funckeys);
+		$funckeys = $this->mapper->map_to_legacy($user_id, $funckeys);
+		return $funckeys;
 	}
 
 }

@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -72,7 +72,7 @@ $supelem['default'] = $fkelem['supervision']['default'];
 
 if($nb > 0):
 	for($i = 0;$i < $nb;$i++):
-		$ref = &$fkinfo[$i]['phonefunckey'];
+		$ref = &$fkinfo[$i];
 
 		$fknumelem['value'] = $ref['fknum'];
 
@@ -82,7 +82,7 @@ if($nb > 0):
 		$fkdata['type'] = $ref['type'];
 		$fkdata['typeval'] = $ref['typeval'];
 		$fkdata['extension'] = $ref['extension'];
-		$fkdata['result'] = &$fkinfo[$i]['result'];
+		$fkdata['result'] = $ref['identity'];
 
 		if(array_key_exists($ref['type'],$ref) === true):
 			$fkdata[$ref['type']] = $ref[$ref['type']];

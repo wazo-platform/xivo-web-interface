@@ -19,8 +19,14 @@
 
 class FuncKeyMapper {
 
-	protected $callfilter = null;
-	protected $callfiltermember = null;
+	protected $user_dso = null;
+	protected $group_dso = null;
+	protected $meetme_dso = null;
+	protected $queue_dso = null;
+	protected $agent_dso = null;
+	protected $paging_dso = null;
+	protected $callfilter_dso = null;
+	protected $callfiltermember_dso = null;
 
 	protected $legacy_transfers = array(
 		'blind' => 'blindxfer',
@@ -39,15 +45,21 @@ class FuncKeyMapper {
 		'toggle' => 'agentstaticlogtoggle'
 	);
 
-	public function __construct($callfilter, $callfiltermember) {
-		$this->callfilter = $callfilter;
-		$this->callfiltermember = $callfiltermember;
+	public function __construct($user_dso, $group_dso, $meetme_dso, $queue_dso, $agent_dso, $paging_dso, $callfilter_dso, $callfiltermember_dso) {
+		$this->user_dso = $user_dso;
+		$this->group_dso = $group_dso;
+		$this->meetme_dso = $meetme_dso;
+		$this->queue_dso = $queue_dso;
+		$this->agent_dso = $agent_dso;
+		$this->paging_dso = $paging_dso;
+		$this->callfilter_dso = $callfilter_dso;
+		$this->callfiltermember_dso = $callfiltermember_dso;
 	}
 
 	public function map_to_legacy($user_id, $funckeys) {
 		$legacy_funckeys = array();
 		foreach ($funckeys as $position => $funckey) {
-			$legacy_funkeys[] = $this->map_legacy_funckey($user_id, $position, $funckey);
+			$legacy_funckeys[] = $this->map_legacy_funckey($user_id, $position, $funckey);
 		}
 		return $legacy_funckeys;
 	}
@@ -71,11 +83,13 @@ class FuncKeyMapper {
 			'queue' => '',
 			'meetme' => '',
 			'custom' => '',
-			'extension' => false
+			'extension' => false,
+			'identity' => null
 		);
 
 		$legacy_destination = $this->map_legacy_destination($user_id, $funckey['destination']);
-		return array_merge($legacy_funckey, $legacy_destination);
+		$merged_funckey = array_merge($legacy_funckey, $legacy_destination);
+		return $merged_funckey;
 	}
 
 	private function map_legacy_destination($user_id, $destination) {
@@ -86,7 +100,8 @@ class FuncKeyMapper {
 				'typevalextenumbersright' => (string) $destination['user_id'],
 				'type' => 'user',
 				'typeval' => (string) $destination['user_id'],
-				'user' => (string) $destination['user_id']
+				'user' => (string) $destination['user_id'],
+				'identity' => $this->user_identity($destination['user_id'])
 			);
 			break;
 		case 'group':
@@ -95,7 +110,8 @@ class FuncKeyMapper {
 				'typevalextenumbersright' => (string) $destination['group_id'],
 				'type' => 'group',
 				'typeval' => (string) $destination['group_id'],
-				'group' => (string) $destination['group_id']
+				'group' => (string) $destination['group_id'],
+				'identity' => $this->group_identity($destination['group_id'])
 			);
 			break;
 		case 'conference':
@@ -104,7 +120,8 @@ class FuncKeyMapper {
 				'typevalextenumbersright' => (string) $destination['conference_id'],
 				'type' => 'meetme',
 				'typeval' => (string) $destination['conference_id'],
-				'meetme' => (string) $destination['conference_id']
+				'meetme' => (string) $destination['conference_id'],
+				'identity' => $this->conference_identity($destination['conference_id'])
 			);
 			break;
 		case 'queue':
@@ -114,6 +131,7 @@ class FuncKeyMapper {
 				'type' => 'queue',
 				'typeval' => (string) $destination['queue_id'],
 				'queue' => (string) $destination['queue_id'],
+				'identity' => $this->queue_identity($destination['queue_id'])
 			);
 			break;
 		case 'custom':
@@ -170,7 +188,8 @@ class FuncKeyMapper {
 				'typeextenumbersright' => 'agent',
 				'typevalextenumbersright' => (string) $destination['agent_id'],
 				'type' => 'extenfeatures-' . $action_type,
-				'typeval' => (string) $destination['agent_id']
+				'typeval' => (string) $destination['agent_id'],
+				'identity' => $this->agent_identity($destination['agent_id'])
 			);
 			break;
 		case 'parking':
@@ -197,7 +216,8 @@ class FuncKeyMapper {
 				'typevalextenumbers' => 'paging',
 				'typeextenumbersright' => 'paging',
 				'typevalextenumbersright' => (string) $destination['paging_id'],
-				'type' => 'extenfeatures-paging'
+				'type' => 'extenfeatures-paging',
+				'identity' => $this->paging_identity($destination['paging_id'])
 			);
 			break;
 		default:
@@ -209,8 +229,8 @@ class FuncKeyMapper {
 	}
 
 	private function map_legacy_bsfilter($user_id, $destination) {
-		$filtermember = $this->callfiltermember->get($destination['filter_member_id']);
-		$callfilter = $this->callfilter->get($filtermember['callfilterid']);
+		$filtermember = $this->callfiltermember_dso->get($destination['filter_member_id']);
+		$callfilter = $this->callfilter_dso->get($filtermember['callfilterid']);
 		$boss_id = $callfilter['callfiltermember']['boss']['typeval'];
 
 		if($user_id == $boss_id) {
@@ -230,6 +250,53 @@ class FuncKeyMapper {
 
 	}
 
+	private function user_identity($user_id) {
+		$user = $this->user_dso->get($user_id);
+		return array(
+			'id' => $user_id,
+			'identity' => $user['firstname'] . " " . $user['lastname']
+		);
+	}
+
+	private function group_identity($group_id) {
+		$group = $this->group_dso->get((string)$group_id);
+		return array(
+			'id' => $group_id,
+			'identity' => $group['name']
+		);
+	}
+
+	private function conference_identity($conference_id) {
+		$conference = $this->meetme_dso->get($conference_id);
+		return array(
+			'id' => $conference_id,
+			'identity' => $conference['name']
+		);
+	}
+
+	private function queue_identity($queue_id) {
+		$queue = $this->queue_dso->get($queue_id);
+		return array(
+			'id' => $queue_id,
+			'identity' => $queue['displayname']
+		);
+	}
+
+	private function agent_identity($agent_id) {
+		$agent = $this->agent_dso->get($agent_id);
+		return array(
+			'id' => $agent_id,
+			'identity' => $agent['firstname'] . " " . $agent['lastname']
+		);
+	}
+
+	private function paging_identity($paging_id) {
+		$paging = $this->paging_dso->get($paging_id);
+		return array(
+			'id' => $paging_id,
+			'identity' => $paging['number']
+		);
+	}
 }
 
 ?>
