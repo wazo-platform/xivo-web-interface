@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,6 +23,8 @@ dwho::load_class('dwho_network');
 dwho::load_class('dwho_http');
 
 dwho_file::required(array(XIVO_PATH_OBJECT,'application','service','ipbx','asterisk.inc'),true);
+require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'converter', 'funckey', 'mapper.inc'));
+require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'converter', 'funckey', 'funckey.inc'));
 
 class xivo_application_service_asterisk_user extends xivo_application_asterisk_abstract
 {
@@ -71,6 +73,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 											'fwdbusy',
 											'fwdunc');
 	protected $_func_key_agent = null;
+	protected $_func_keys = null;
 
 	public function __construct(&$service,&$dso,$param=null,$components=true)
 	{
@@ -132,14 +135,18 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		|| ($_MGR = &dwho_gct::get('xivo_manager')) === false
 		|| ($this->_func_key_manager = &$_MGR->get_ressource('func_key')) === false
 		|| ($this->_func_key_agent = $this->_service->get_module('func_key_dest_agent')) === false
-		|| ($this->_callfilter = $this->_service->get_application('callfilter')) === false
-		|| ($this->_callfiltermember = $this->_service->get_module('callfiltermember')) === false)
+		|| ($this->_callfilter = $this->_service->get_application('callfilter', array('type' => 'bosssecretary'))) === false
+		|| ($this->_callfiltermember = $this->_service->get_module('callfiltermember')) === false
+		|| ($func_keys_confd = $_RAPI->get_ressource('user_func_keys')) === false)
 			return(false);
 
 		$this->_queuemember = &$this->_service->get_module('queuemember');
 		$this->_voicemail = &$this->_service->get_application('voicemail');
 		$this->_agentfeatures = &$this->_service->get_module('agentfeatures');
 		$this->_phonefunckey = &$this->_service->get_module('phonefunckey');
+
+		$func_key_mapper = new FuncKeyMapper($this->_callfilter, $this->_callfiltermember);
+		$this->_func_keys = new FuncKeyConverter($func_keys_confd, $func_key_mapper);
 
 		return(true);
 	}
@@ -186,7 +193,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			$this->_get_voicemail();
 
 		if(dwho_ak('phonefunckey',$nocomponents,true) === false)
-			$this->_get_phonefunckey();
+			$this->_get_phonefunckey($id);
 
 		// schedule
 		$this->_info['schedule_id'] = 0;
@@ -341,18 +348,10 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		return($this->_info['agentfeatures']);
 	}
 
-	function _get_phonefunckey()
+	function _get_phonefunckey($user_id)
 	{
-		$this->_info['phonefunckey'] = false;
+		$this->_info['phonefunckey'] = $this->_func_keys->get_user_func_keys($user_id);
 		$this->_origin['phonefunckey'] = false;
-
-		if(is_object($this->_phonefunckey) === false)
-			return(false);
-
-		$func_key = $this->get_phonefunckey_identity(false);
-
-		$this->_info['phonefunckey'] = $func_key;
-		$this->_origin['phonefunckey'] = $this->_phonefunckey->get_origin_list();
 
 		return($this->_info['phonefunckey']);
 	}

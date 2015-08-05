@@ -1,0 +1,235 @@
+<?php
+#
+# XiVO Web-Interface
+# Copyright (C) 2015  Avencall
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+
+class FuncKeyMapper {
+
+	protected $callfilter = null;
+	protected $callfiltermember = null;
+
+	protected $legacy_transfers = array(
+		'blind' => 'blindxfer',
+		'attended' => 'atxfer'
+	);
+
+	protected $legacy_forwards = array(
+		'noanswer' => 'fwdrna',
+		'busy' => 'fwdbusy',
+		'unconditional' => 'fwdunc'
+	);
+
+	protected $legacy_agent_actions = array(
+		'login' => 'agentstaticlogin',
+		'logout' => 'agentstaticlogoff',
+		'toggle' => 'agentstaticlogtoggle'
+	);
+
+	public function __construct($callfilter, $callfiltermember) {
+		$this->callfilter = $callfilter;
+		$this->callfiltermember = $callfiltermember;
+	}
+
+	public function map_to_legacy($user_id, $funckeys) {
+		$legacy_funckeys = array();
+		foreach ($funckeys as $position => $funckey) {
+			$legacy_funkeys[] = $this->map_legacy_funckey($user_id, $position, $funckey);
+		}
+		return $legacy_funckeys;
+	}
+
+	private function map_legacy_funckey($user_id, $position, $funckey) {
+		$legacy_funckey = array(
+			'fknum' => (string) $position,
+			'supervision' => (bool) $funckey['blf'],
+			'label' => $funckey['label'],
+			'exten' => null,
+			'typeextenumbers' => null,
+			'typevalextenumbers' => null,
+			'typeextenumbersright' => null,
+			'typevalextenumbersright' => null,
+			'iduserfeatures' => $user_id,
+			'progfunckey' => false,
+			'type' => '',
+			'typeval' => '',
+			'user' => '',
+			'group' => '',
+			'queue' => '',
+			'meetme' => '',
+			'custom' => '',
+			'extension' => false
+		);
+
+		$legacy_destination = $this->map_legacy_destination($user_id, $funckey['destination']);
+		return array_merge($legacy_funckey, $legacy_destination);
+	}
+
+	private function map_legacy_destination($user_id, $destination) {
+		switch ($destination['type']) {
+		case 'user':
+			$extra = array(
+				'typeextenumbersright' => 'user',
+				'typevalextenumbersright' => (string) $destination['user_id'],
+				'type' => 'user',
+				'typeval' => (string) $destination['user_id'],
+				'user' => (string) $destination['user_id']
+			);
+			break;
+		case 'group':
+			$extra = array(
+				'typeextenumbersright' => 'group',
+				'typevalextenumbersright' => (string) $destination['group_id'],
+				'type' => 'group',
+				'typeval' => (string) $destination['group_id'],
+				'group' => (string) $destination['group_id']
+			);
+			break;
+		case 'conference':
+			$extra = array(
+				'typeextenumbersright' => 'meetme',
+				'typevalextenumbersright' => (string) $destination['conference_id'],
+				'type' => 'meetme',
+				'typeval' => (string) $destination['conference_id'],
+				'meetme' => (string) $destination['conference_id']
+			);
+			break;
+		case 'queue':
+			$extra = array(
+				'typeextenumbersright' => 'queue',
+				'typevalextenumbersright' => (string) $destination['queue_id'],
+				'type' => 'queue',
+				'typeval' => (string) $destination['queue_id'],
+				'queue' => (string) $destination['queue_id'],
+			);
+			break;
+		case 'custom':
+			$extra = array(
+				'exten' => $destination['exten'],
+				'type' => 'custom',
+				'typeval' => $destination['exten'],
+				'custom' => $destination['exten']
+			);
+			break;
+		case 'onlinerec':
+			$extra = array(
+				'typeextenumbers' => 'featuremap',
+				'typevalextenumbers' => 'automon',
+				'type' => 'featuremap-automon',
+				'extension' => true
+			);
+			break;
+		case 'service':
+			$extra = array(
+				'typeextenumbers' => 'extenfeatures',
+				'typevalextenumbers' => $destination['service'],
+				'type' => 'extenfeatures-' . $destination['service'],
+				'extension' => true
+			);
+			break;
+		case 'bsfilter':
+			$extra = $this->map_legacy_bsfilter($user_id, $destination);
+			break;
+		case 'transfer':
+			$transfer_type = $this->legacy_transfers[$destination['transfer']];
+			$extra = array(
+				'typeextenumbers' => 'featuremap',
+				'typevalextenumbers' => $transfer_type,
+				'type' => 'featuremap-' . $transfer_type,
+				'extension' => true
+			);
+			break;
+		case 'forward':
+			$forward_type = $this->legacy_forwards[$destination['forward']];
+			$extra = array(
+				'typeextenumbers' => 'extenfeatures',
+				'typevalextenumbers' => $forward_type,
+				'type' => 'extenfeatures-' . $forward_type,
+				'exten' => $destination['exten'],
+				'extension' => true
+			);
+			break;
+		case 'agent':
+			$action_type = $this->legacy_agent_actions[$destination['action']];
+			$extra = array(
+				'typeextenumbers' => 'extenfeatures',
+				'typevalextenumbers' => $action_type,
+				'typeextenumbersright' => 'agent',
+				'typevalextenumbersright' => (string) $destination['agent_id'],
+				'type' => 'extenfeatures-' . $action_type,
+				'typeval' => (string) $destination['agent_id']
+			);
+			break;
+		case 'parking':
+			$extra = array(
+				'typeextenumbers' => 'generalfeatures',
+				'typevalextenumbers' => 'parkext',
+				'type' => 'generalfeatures-parkext',
+				'extension' => true
+			);
+			break;
+		case 'park_position':
+			$extra = array(
+				'typeextenumbers' => 'generalfeatures',
+				'typevalextenumbers' => 'parkpos',
+				'type' => 'generalfeatures-parkpos',
+				'typeval' => (string) $destination['position'],
+				'exten' => (string) $destination['position'],
+				'extension' => true
+			);
+			break;
+		case 'paging':
+			$extra = array(
+				'typeextenumbers' => 'extenfeatures',
+				'typevalextenumbers' => 'paging',
+				'typeextenumbersright' => 'paging',
+				'typevalextenumbersright' => (string) $destination['paging_id'],
+				'type' => 'extenfeatures-paging'
+			);
+			break;
+		default:
+			$extra = array();
+			break;
+		}
+
+		return $extra;
+	}
+
+	private function map_legacy_bsfilter($user_id, $destination) {
+		$filtermember = $this->callfiltermember->get($destination['filter_member_id']);
+		$callfilter = $this->callfilter->get($filtermember['callfilterid']);
+		$boss_id = $callfilter['callfiltermember']['boss']['typeval'];
+
+		if($user_id == $boss_id) {
+			$member_id = $filtermember['typeval'];
+		} else {
+			$member_id = $boss_id;
+		}
+
+		return array(
+			'typeextenumbers' => 'extenfeatures',
+			'typevalextenumbers' => 'bsfilter',
+			'typeextenumbersright' => 'user',
+			'typevalextenumbersright' => $member_id,
+			'type' => 'extenfeatures-bsfilter',
+			'typeval' => $member_id,
+		);
+
+	}
+
+}
+
+?>
