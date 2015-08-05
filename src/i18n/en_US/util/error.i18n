@@ -85,6 +85,3 @@ A line must be associated to user in order to create a voicemail
 
 ; user_no_remove_lines_when_voicemail
 Cannot remove a line when user has a voicemail, you must disassociate voicemail, or remove voicemail, before deleting user.
-
- ; call_log_reached_cel_fetch_limit
- The last entries are missing in call log. Please narrow your search period.
