@@ -73,7 +73,21 @@ class confd_ressource_user_func_keys extends xivo_confd_ressource_abstract {
 			}
 		}
 
-		return $funckeys;
+		return($funckeys);
+	}
+
+	public function update_user_func_key($user_id, $position, $funckey) {
+		$path = array($user_id, 'funckeys', $position);
+		$url = $this->_build_uri($path);
+		$this->request_put($url, $funckey);
+		return ($this->_status_code === 204);
+	}
+
+	public function delete_user_func_key($user_id, $position) {
+		$path = array($user_id, 'funckeys', $position);
+		$url = $this->_build_uri($path);
+		$this->request_delete($url);
+		return ($this->_status_code === 204);
 	}
 }
 

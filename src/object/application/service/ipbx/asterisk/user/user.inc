@@ -55,23 +55,6 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 	protected $_func_key_manager	= false;
 	protected $_callfilter = false;
 	protected $_callfiltermember = false;
-	protected $_valid_services	= array('vmuserpurge',
-										'vmusermsg',
-										'enablevm',
-										'phonestatus',
-										'recsnd',
-										'calllistening',
-										'directoryaccess',
-										'fwdundoall',
-										'pickup',
-										'callrecord',
-										'incallfilter',
-										'enablednd',
-										'automon'
-	);
-	protected $_forward_services	= array('fwdrna',
-											'fwdbusy',
-											'fwdunc');
 	protected $_func_key_agent = null;
 	protected $_func_keys = null;
 
@@ -1153,10 +1136,10 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		|| ($user_id = $this->add_userfeatures()) === false
 		|| $this->add_func_key_dest_user($user_id) === false
 		|| ($line = $this->edit_linefeatures($user_id)) === false
-		|| $this->add_phonefunckey($user_id) === false
 		|| $this->add_rightcall($user_id) === false
 		|| $this->add_dialaction($user_id) === false
-		|| $this->add_schedule_path($user_id) === false)
+		|| $this->add_schedule_path($user_id) === false
+		|| $this->add_phonefunckey($user_id) === false)
 		{
 			$r = false;
 			if($user_id !== null)
@@ -1297,210 +1280,14 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 
 	function add_phonefunckey($user_id)
 	{
-		$rs = false;
-
 		if(($user_id = dwho_ulongint($user_id)) === 0
-		|| ($rs = $this->get_result('phonefunckey')) === null
-		|| $rs === false)
-			return($rs);
-
-		$id = $this->_return['phonefunckey'] = array();
-		$id['iduserfeatures'] = $user_id;
-
-
-		$nb = count($rs);
-		for($i = 0;$i < $nb;$i++)
-		{
-			$ref = &$rs[$i];
-			$ref['iduserfeatures'] = $user_id;
-
-			if(($destination = $this->_determine_destination($ref)) === false) {
-				if($this->_phonefunckey->add($ref) === false)
-					return(false);
-			} else {
-				if($this->_add_func_key_v2($destination, $ref) === false)
-					return(false);
-			}
-
-			$id['fknum'] = $ref['fknum'];
-			$this->_return['phonefunckey'][] = $id;
-		}
-
-		if(isset($this->_return['phonefunckey'][0]) === false)
-			$this->_return['phonefunckey'] = false;
-
-		return(true);
-	}
-
-	private function _determine_destination($ref)
-	{
-		if($ref['typeextenumbersright'] === 'user' && $ref['typevalextenumbers'] !== 'bsfilter')
-		{
-			return('user');
-		}
-		elseif($ref['typeextenumbersright'] === 'group')
-		{
-			return('group');
-		}
-		elseif($ref['typeextenumbersright'] === 'queue')
-		{
-			return('queue');
-		}
-		elseif($ref['typeextenumbersright'] === 'meetme')
-		{
-			return('conference');
-		}
-		elseif($ref['typeextenumbers'] === 'extenfeatures'
-			  && in_array($ref['typevalextenumbers'], $this->_forward_services)
-		)
-		{
-			return('forward');
-		}
-		elseif($ref['typeextenumbers'] === 'extenfeatures'
-				&& in_array($ref['typevalextenumbers'], $this->_valid_services)
-		)
-		{
-			return('service');
-		}
-		elseif($ref['typevalextenumbers'] == 'parkpos')
-		{
-			return('park_position');
-		}
-		elseif($ref['typeextenumbers'] == 'featuremap' || $ref['typeextenumbers'] == 'generalfeatures')
-		{
-			return('features');
-		}
-		elseif($ref['typevalextenumbers'] == 'paging')
-		{
-			return('paging');
-		}
-		elseif( $ref['typeextenumbers'] === 'extenfeatures'
-				&& $this->_func_key_agent->action_exists($ref['typevalextenumbers']))
-		{
-			return('agent');
-		}
-		elseif($ref['typevalextenumbers'] == 'bsfilter')
-		{
-			return('bsfilter');
-		}
-		elseif( ($ref['typeextenumbers'] === null || $ref['typeextenumbers'] === '')
-				&& ($ref['typevalextenumbers'] === null || $ref['typevalextenumbers'] === ''))
-		{
-			return('custom');
-		}
-		return(false);
-	}
-
-	private function _determine_func_key_type($ref)
-	{
-		if($ref['typeextenumbers'] === 'featuremap')
-		{
-			return('dtmf');
-		}
-		elseif($ref['typevalextenumbers'] == 'parkext')
-		{
-			return('forward');
-		}
-		return('speeddial');
-	}
-
-	private function _add_func_key_v2($destination, $data)
-	{
-		$type = $this->_determine_func_key_type($data);
-
-		switch($destination) {
-		case 'user':
-		case 'group':
-		case 'queue':
-		case 'conference':
-		case 'paging':
-			$value = $data['typevalextenumbersright'];
-			$func_key_id = $this->_func_key_manager->get_fk_id_with_dst($destination, $value);
-			break;
-		case 'service':
-			$service_type = $data['typevalextenumbers'];
-			$extension_id = $this->_func_key_manager->get_dst_id_for_extension($service_type);
-			$func_key_id = $this->_func_key_manager->get_fk_id_with_dst($destination, $extension_id);
-			break;
-		case 'forward':
-			$forward_type = $data['typevalextenumbers'];
-			$extension_id = $this->_func_key_manager->get_dst_id_for_extension($forward_type);
-			$number = $data['exten'];
-			$func_key_id = $this->_func_key_manager->add_dst_for_forward($extension_id, $number);
-			break;
-		case 'park_position':
-			$park_position = $data['exten'];
-			$func_key_id = $this->_func_key_manager->add_dst_for_park_position($park_position);
-			break;
-		case 'features':
-			$feature_type = $data['typevalextenumbers'];
-			$func_key_id = $this->_func_key_manager->get_dst_id_for_features($feature_type);
-			break;
-		case 'custom':
-			$value = $data['exten'];
-			$func_key_id = $this->_func_key_manager->add_dst_for_custom($value);
-			break;
-		case 'agent':
-			$agent_id = $data['typevalextenumbersright'];
-			$action = $data['typevalextenumbers'];
-			$func_key_id = $this->_func_key_manager->get_dst_id_for_agent($agent_id, $action);
-			break;
-		case 'bsfilter':
-			$filtermember_id = $this->_find_filtermember_id($data);
-			$func_key_id = $this->_func_key_manager->get_fk_id_with_dst($destination, $filtermember_id);
-			break;
-		default:
-			dwho_report::push('error', "func key of type '".$destination."' is unknown");
-			return(false);
-		}
-
-		if($func_key_id === false) {
-			dwho_report::push('error', 'could not find func key for destination '.$destination);
-			return(false);
-		}
-
-		$fk = array();
-		$fk['func_key_id'] = $func_key_id;
-		$fk['type'] = $type;
-		$fk['position'] = (int) $data['fknum'];
-		$fk['blf'] = (bool) $data['supervision'];
-		$fk['label'] = (string) $data['label'];
-		$fk['template_id'] = (int) $this->get_result_var('userfeatures', 'func_key_private_template_id');
-
-		return($this->_func_key_manager->add_fk_mapping($fk));
-	}
-
-	private function _find_filtermember_id($data)
-	{
-		if($this->_is_boss($data['iduserfeatures'])) {
-			$boss_id = $data['iduserfeatures'];
-			$secretary_id = $data['typevalextenumbersright'];
-		} else {
-			$boss_id = $data['typevalextenumbersright'];
-			$secretary_id = $data['iduserfeatures'];
-		}
-
-		$callfiltermember = $this->_callfiltermember->get_by_boss_secretary($boss_id, $secretary_id);
-		if($callfiltermember === false) {
-			dwho_report::push('error', 'could not find boss or secretary member');
-			return(false);
-		}
-
-		return $callfiltermember['id'];
-	}
-
-	private function _is_boss($user_id)
-	{
-		$bosses = $this->_callfilter->get_boss_users();
-		if ($bosses === false)
+		|| ($phonefunckeys = $this->get_result('phonefunckey')) === null
+		|| $phonefunckeys === false)
 			return(false);
 
-		foreach($bosses as $boss) {
-			if($boss['id'] == $user_id)
-				return(true);
-		}
-
-		return(false);
+		$updated_phonefunckeys = $this->_func_keys->add_user_func_keys($user_id, $phonefunckeys);
+		$this->_return['phonefunckey'] = $updated_phonefunckeys;
+		return (count($phonefunckeys) === count($updated_phonefunckeys));
 	}
 
 	function add_schedule_path($user_id)
@@ -1575,6 +1362,12 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			$this->_func_key_manager->delete_dst_for_user($this->_return['func_key_dest_user']);
 		}
 
+		if(array_key_exists('phonefunckey', $this->_return)) {
+			foreach($this->_return['phonefunckey'] as $phonefunckey) {
+				$this->_func_keys->delete_user_func_key($phonefunckey['iduserfeatures'], $phonefunckey['fknum']);
+			}
+		}
+
 		foreach($this->_return as $key => $val)
 		{
 			if($val === false)
@@ -1590,16 +1383,6 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 					break;
 				case 'dialaction':
 					$this->_dialaction->reverse_add();
-					break;
-				case 'phonefunckey':
-					if(is_array($val) === false)
-						continue;
-
-					foreach($val as $phonefkeyval)
-					{
-						if($phonefkeyval !== false)
-							$this->_phonefunckey->delete($phonefkeyval);
-					}
 					break;
 				case 'voicemail':
 					$this->_voicemail->reverse_add();

@@ -28,21 +28,53 @@ class FuncKeyMapper {
 	protected $callfilter_dso = null;
 	protected $callfiltermember_dso = null;
 
-	protected $legacy_transfers = array(
+	protected $confd_transfers = array(
 		'blind' => 'blindxfer',
 		'attended' => 'atxfer'
 	);
 
-	protected $legacy_forwards = array(
+	protected $confd_forwards = array(
 		'noanswer' => 'fwdrna',
 		'busy' => 'fwdbusy',
 		'unconditional' => 'fwdunc'
 	);
 
-	protected $legacy_agent_actions = array(
+	protected $confd_agent_actions = array(
 		'login' => 'agentstaticlogin',
 		'logout' => 'agentstaticlogoff',
 		'toggle' => 'agentstaticlogtoggle'
+	);
+
+	protected $legacy_transfers = array(
+		'blindxfer' => 'blind',
+		'atxfer' => 'attended'
+	);
+
+	protected $legacy_forwards = array(
+		'fwdrna' => 'noanswer',
+		'fwdbusy' => 'busy',
+		'fwdunc' => 'unconditional'
+	);
+
+	protected $legacy_agent_actions = array(
+		'agentstaticlogin' => 'login',
+		'agentstaticlogoff' => 'logout',
+		'agentstaticlogtoggle' => 'toggle'
+	);
+
+	protected $legacy_services = array(
+		'vmuserpurge',
+		'vmusermsg',
+		'enablevm',
+		'phonestatus',
+		'recsnd',
+		'calllistening',
+		'directoryaccess',
+		'fwdundoall',
+		'pickup',
+		'callrecord',
+		'incallfilter',
+		'enablednd'
 	);
 
 	public function __construct($user_dso, $group_dso, $meetme_dso, $queue_dso, $agent_dso, $paging_dso, $callfilter_dso, $callfiltermember_dso) {
@@ -162,7 +194,7 @@ class FuncKeyMapper {
 			$extra = $this->map_legacy_bsfilter($user_id, $destination);
 			break;
 		case 'transfer':
-			$transfer_type = $this->legacy_transfers[$destination['transfer']];
+			$transfer_type = $this->confd_transfers[$destination['transfer']];
 			$extra = array(
 				'typeextenumbers' => 'featuremap',
 				'typevalextenumbers' => $transfer_type,
@@ -171,7 +203,7 @@ class FuncKeyMapper {
 			);
 			break;
 		case 'forward':
-			$forward_type = $this->legacy_forwards[$destination['forward']];
+			$forward_type = $this->confd_forwards[$destination['forward']];
 			$extra = array(
 				'typeextenumbers' => 'extenfeatures',
 				'typevalextenumbers' => $forward_type,
@@ -182,7 +214,7 @@ class FuncKeyMapper {
 			);
 			break;
 		case 'agent':
-			$action_type = $this->legacy_agent_actions[$destination['action']];
+			$action_type = $this->confd_agent_actions[$destination['action']];
 			$extra = array(
 				'typeextenumbers' => 'extenfeatures',
 				'typevalextenumbers' => $action_type,
@@ -298,6 +330,168 @@ class FuncKeyMapper {
 			'identity' => $paging['number']
 		);
 	}
+
+	public function map_to_confd($user_id, $legacy_funckeys) {
+		$funckeys = array();
+		foreach($legacy_funckeys as $legacy_funckey) {
+			$position = $legacy_funckey['fknum'];
+			$funckeys[$position] = $this->map_confd_funckey($user_id, $legacy_funckey);
+		}
+		return $funckeys;
+	}
+
+	private function map_confd_funckey($user_id, $legacy_funckey) {
+		$destination = $this->map_destination($user_id, $legacy_funckey);
+		return array(
+			'label' => $legacy_funckey['label'],
+			'blf' => (bool) ((int) $legacy_funckey['supervision']),
+			'destination' => $destination
+		);
+	}
+
+	private function map_destination($user_id, $ref)
+	{
+		if($ref['typeextenumbersright'] === 'user' && $ref['typevalextenumbers'] !== 'bsfilter')
+		{
+			return array(
+				'type' => 'user',
+				'user_id' => (int) $ref['typevalextenumbersright']
+			);
+		}
+		elseif($ref['typeextenumbersright'] === 'group')
+		{
+			return array(
+				'type' => 'group',
+				'group_id' => (int) $ref['typevalextenumbersright']
+			);
+		}
+		elseif($ref['typeextenumbersright'] === 'queue')
+		{
+			return array(
+				'type' => 'queue',
+				'queue_id' => (int) $ref['typevalextenumbersright']
+			);
+		}
+		elseif($ref['typeextenumbersright'] === 'meetme')
+		{
+			return array(
+				'type' => 'conference',
+				'conference_id' => (int) $ref['typevalextenumbersright']
+			);
+		}
+		elseif($ref['typeextenumbers'] === 'extenfeatures'
+			  && array_key_exists($ref['typevalextenumbers'], $this->legacy_forwards)
+		)
+		{
+			$forward_type = $this->legacy_forwards[$ref['typevalextenumbers']];
+			$forward = array('type' => 'forward', 'forward' => $forward_type);
+
+			if((string)$ref['exten'] !== '') {
+				$forward['exten'] = $ref['exten'];
+			}
+
+			return $forward;
+		}
+		elseif($ref['typeextenumbers'] === 'extenfeatures'
+				&& in_array($ref['typevalextenumbers'], $this->legacy_services)
+		)
+		{
+			return array(
+				'type' => 'service',
+				'service' => $ref['typevalextenumbers']
+			);
+		}
+		elseif($ref['typeextenumbers'] === 'extenfeatures'
+			&& array_key_exists($ref['typevalextenumbers'], $this->legacy_agent_actions)
+		)
+		{
+			$agent_action = $this->legacy_agent_actions[$ref['typevalextenumbers']];
+			return array(
+				'type' => 'agent',
+				'agent_id' => (int) $ref['typevalextenumbersright'],
+				'action' => $agent_action
+			);
+		}
+		elseif($ref['typeextenumbers'] === 'featuremap'
+				&& $ref['typevalextenumbers'] === 'automon')
+		{
+			return array('type' => 'onlinerec');
+		}
+		elseif($ref['typeextenumbers'] === 'featuremap'
+				&& array_key_exists($ref['typevalextenumbers'], $this->legacy_transfers))
+		{
+			$transfer_type = $this->legacy_transfers[$ref['typevalextenumbers']];
+			return array(
+				'type' => 'transfer',
+				'transfer' => $transfer_type
+			);
+		}
+		elseif($ref['typeextenumbers'] === 'generalfeatures'
+				&& $ref['typevalextenumbers'] === 'parkext')
+		{
+			return array('type' => 'parking');
+		}
+		elseif($ref['typevalextenumbers'] == 'bsfilter')
+		{
+			$filter_member_id = $this->map_bsfilter_member_id($user_id, $ref);
+			return array(
+				'type' => 'bsfilter',
+				'filter_member_id' => $filter_member_id
+			);
+		}
+		elseif($ref['typevalextenumbers'] == 'parkpos')
+		{
+			return array(
+				'type' => 'park_position',
+				'position' => (int) $ref['exten']
+			);
+		}
+		elseif($ref['typevalextenumbers'] == 'paging')
+		{
+			return array(
+				'type' => 'paging',
+				'paging_id' => (int) $ref['typevalextenumbersright']
+			);
+		}
+		elseif( ($ref['typeextenumbers'] === null || $ref['typeextenumbers'] === '')
+				&& ($ref['typevalextenumbers'] === null || $ref['typevalextenumbers'] === ''))
+		{
+			return array(
+				'type' => 'custom',
+				'exten' => $ref['exten']
+			);
+		}
+
+		dwho_report::push('error', "FK ${ref['fknum']}: cannot determine confd destination");
+		return array();
+	}
+
+	private function map_bsfilter_member_id($user_id, $phonefunckey) {
+		$member_id = (int) $phonefunckey['typevalextenumbersright'];
+
+		$callfiltermember = $this->callfilter_dso->get_by_boss_secretary($user_id, $member_id);
+		if($callfiltermember === false) {
+			$callfiltermember = $this->callfilter_dso->get_by_boss_secretary($member_id, $user_id);
+		}
+
+		if($callfiltermember === false) {
+			dwho_report::push('error', "Cannot find callfilter member for users $user_id and $member_id");
+			return null;
+		}
+		return $callfiltermember['id'];
+	}
+
+	public function map_legacy_return($user_id, $funckeys) {
+		$legacy_return = array();
+		foreach(array_keys($funckeys) as $position) {
+			$legacy_return[] = array(
+				'iduserfeatures' => (string) $user_id,
+				'fknum' =>  (string) $position
+			);
+		}
+		return $legacy_return;
+	}
+
 }
 
 ?>
