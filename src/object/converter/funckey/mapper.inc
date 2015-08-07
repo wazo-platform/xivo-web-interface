@@ -467,18 +467,19 @@ class FuncKeyMapper {
 	}
 
 	private function map_bsfilter_member_id($user_id, $phonefunckey) {
-		$member_id = (int) $phonefunckey['typevalextenumbersright'];
+		$user_id = (string) $user_id;
+		$member_id = (string) $phonefunckey['typevalextenumbersright'];
 
-		$callfiltermember = $this->callfilter_dso->get_by_boss_secretary($user_id, $member_id);
+		$callfiltermember = $this->callfiltermember_dso->get_by_boss_secretary($user_id, $member_id);
 		if($callfiltermember === false) {
-			$callfiltermember = $this->callfilter_dso->get_by_boss_secretary($member_id, $user_id);
+			$callfiltermember = $this->callfiltermember_dso->get_by_boss_secretary($member_id, $user_id);
 		}
 
 		if($callfiltermember === false) {
 			dwho_report::push('error', "Cannot find callfilter member for users $user_id and $member_id");
 			return null;
 		}
-		return $callfiltermember['id'];
+		return (int) $callfiltermember['id'];
 	}
 
 	public function map_legacy_return($user_id, $funckeys) {
