@@ -351,10 +351,10 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 
 	function _get_phonefunckey($user_id)
 	{
-		$this->_info['phonefunckey'] = $this->_func_keys->get_user_func_keys($user_id);
-		$this->_origin['phonefunckey'] = false;
-
-		return($this->_info['phonefunckey']);
+		$phonefunckeys = $this->_func_keys->get_user_func_keys($user_id);
+		$this->_info['phonefunckey'] = $phonefunckeys;
+		$this->_origin['phonefunckey'] = $phonefunckeys;
+		return($phonefunckeys);
 	}
 
 	function get_timezones()
@@ -1280,10 +1280,16 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 
 	function add_phonefunckey($user_id)
 	{
-		if(($user_id = dwho_ulongint($user_id)) === 0
-		|| ($phonefunckeys = $this->get_result('phonefunckey')) === null
-		|| $phonefunckeys === false)
+		if(
+			($user_id = dwho_ulongint($user_id)) === 0
+			|| ($phonefunckeys = $this->get_result('phonefunckey')) === false
+		) {
 			return(false);
+		}
+
+		if($phonefunckeys === null) {
+			$phonefunckeys = array();
+		}
 
 		$updated_phonefunckeys = $this->_func_keys->add_user_func_keys($user_id, $phonefunckeys);
 		$this->_return['phonefunckey'] = $updated_phonefunckeys;
@@ -1424,10 +1430,10 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		|| empty($this->_info) === true
 		|| $this->get_errnb() > 0
 		|| $this->edit_userfeatures() === false
-		|| $this->edit_phonefunckey() === false
 		|| $this->edit_rightcall() === false
 		|| $this->edit_dialaction() === false
-		|| $this->edit_schedule_path() === false)
+		|| $this->edit_schedule_path() === false
+		|| $this->edit_phonefunckey() === false)
 		{
 			$this->_reverse_edit();
 			$this->_status = '';
@@ -1698,13 +1704,10 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 	{
 		if(dwho_issa('userfeatures',$this->_info) === false)
 			return(false);
-		else if(dwho_issa('phonefunckey',$this->_info) === false)
-			return($this->add_phonefunckey($this->_info['userfeatures']['id']));
 
-		$this->_return['phonefunckey'] = $this->delete_phonefunckey();
-		$this->_func_key_manager->delete_fk_in_template($this->_info['userfeatures']['func_key_private_template_id']);
-
-		return($this->add_phonefunckey($this->_info['userfeatures']['id']));
+		$user_id = $this->_info['userfeatures']['id'];
+		$updated = $this->add_phonefunckey($user_id);
+		return $updated;
 	}
 
 	function edit_schedule_path()
