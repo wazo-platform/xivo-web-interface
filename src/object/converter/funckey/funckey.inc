@@ -45,6 +45,21 @@ class FuncKeyConverter {
 		return $this->mapper->map_legacy_return($user_id, $updated_funckeys);
 	}
 
+	public function delete_user_func_keys($user_id) {
+		$funckeys = $this->confd->get_user_func_keys($user_id);
+		if($funckeys === null) {
+			return false;
+		}
+
+		$success = true;
+		foreach(array_keys($funckeys) as $position) {
+			$deleted = $this->confd->delete_user_func_key($user_id, $position);
+			$success = $success && $deleted;
+		}
+
+		return $success;
+	}
+
 	private function remove_stale_func_keys($user_id, $funckeys) {
 		$old_funckeys = $this->confd->get_user_func_keys($user_id);
 		if ($old_funckeys === null) {
@@ -69,9 +84,6 @@ class FuncKeyConverter {
 		return $updated_funckeys;
 	}
 
-	public function delete_user_func_key($user_id, $position) {
-		return $this->confd->delete_user_func_key($user_id, $position);
-	}
 }
 
 ?>

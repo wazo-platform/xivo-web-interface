@@ -1919,13 +1919,6 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 				case 'dialaction':
 					$this->_dialaction->reverse_edit($this->_status);
 					break;
-				case 'phonefunckey':
-					$this->delete_phonefunckey();
-
-					if(isset($this->_origin['phonefunckey']) === true
-					&& $this->_origin['phonefunckey'] !== false)
-						$this->_phonefunckey->add_origin_list($this->_origin['phonefunckey']);
-					break;
 				case 'exten':
 					if(isset($this->_origin['exten']) === false
 					|| $this->_origin['exten'] === false)
@@ -1971,14 +1964,14 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			}
 		}
 
-		if($this->_delete_func_key_v2() === false
+		if($this->delete_phonefunckey() === false
+		|| $this->delete_funckey_dst() === false
 		|| $this->delete_userfeatures() === false
 		|| $this->delete_linefeatures() === false
 		|| $this->delete_exten('exten') === false
 		|| $this->delete_device_config() === false
 		|| $this->delete_rightcall() === false
 		|| $this->delete_dialaction() === false
-		|| $this->delete_phonefunckey() === false
 		|| $this->delete_callfiltermember() === false
 		|| $this->delete_groupmember() === false
 		|| $this->delete_queuemember() === false
@@ -1995,7 +1988,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		return($r);
 	}
 
-	private function _delete_func_key_v2()
+	private function delete_funckey_dst()
 	{
 		if(dwho_issa('userfeatures',$this->_info) === false)
 			return(false);
@@ -2067,21 +2060,11 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 
 	function delete_phonefunckey()
 	{
-		if(dwho_issa('phonefunckey',$this->_info) === false)
-			return(null);
-		else if(dwho_issa('userfeatures',$this->_info) === false
-		|| is_object($this->_phonefunckey) === false)
+		if(dwho_issa('userfeatures',$this->_info) === false)
 			return(false);
 
-		$where = array();
-		$where['iduserfeatures'] = $this->_info['userfeatures']['id'];
-
-		$r = $this->_phonefunckey->delete_where($where);
-
-		if($this->_status === 'delete')
-			$this->_return['phonefunckey'] = $r;
-
-		return($r);
+		$deleted = $this->_func_keys->delete_user_func_keys($this->_info['userfeatures']['id']);
+		return($deleted);
 	}
 
 	function delete_callfiltermember()
@@ -2165,17 +2148,19 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 					&& $this->_origin[$key] !== false)
 						$this->_queuemember->add_origin_list($this->_origin[$key]);
 					break;
-				case 'phonefunckey':
-					if(isset($this->_origin['phonefunckey']) === true
-					&& $this->_origin['phonefunckey'] !== false)
-						$this->_phonefunckey->add_origin_list($this->_origin['phonefunckey']);
-					break;
 				case 'exten':
 					if(isset($this->_origin[$key]) === true
 					&& $this->_origin[$key] !== false)
 						$this->_extensions->add_origin($this->_origin[$key]);
 					break;
 			}
+		}
+
+		if(isset($this->_origin['phonefunckey']) && is_array($this->_origin['phonefunckey']))
+		{
+			$user_id = $this->_origin['userfeatures']['id'];
+			$phonefunckeys = $this->_origin['phonefunckey'];
+			$this->_func_keys->add_user_func_keys($user_id, $phonefunckeys);
 		}
 
 		return(true);
