@@ -37,16 +37,19 @@ class confd_ressource_user_func_keys extends xivo_confd_ressource_abstract {
 	protected function fetch_response($response)
 	{
 		$this->_status_code = $this->_curl->get_info('http_code');
+		$url = $this->_curl->get_info('effective_url');
 		$this->_curl->close();
 
 		$decoded = dwho_json::decode(rtrim($response),true);
 
 		if($decoded === null) {
+			dwho_report::push('error', "Error occured on url $url");
 			dwho_report::push('error', $response);
 			return(null);
 		}
 
-		if (!(in_array($this->_status_code, $this->status_ok))) {
+		if(!in_array($this->_status_code, $this->status_ok)) {
+			dwho_report::push('error', "Error occured on url $url");
 			dwho_report::push('error', $decoded);
 			return(null);
 		}
@@ -80,14 +83,14 @@ class confd_ressource_user_func_keys extends xivo_confd_ressource_abstract {
 		$path = array($user_id, 'funckeys', $position);
 		$url = $this->_build_uri($path);
 		$this->request_put($url, $funckey);
-		return ($this->_status_code === 204);
+		return($this->_status_code === 204);
 	}
 
 	public function delete_user_func_key($user_id, $position) {
 		$path = array($user_id, 'funckeys', $position);
 		$url = $this->_build_uri($path);
 		$this->request_delete($url);
-		return ($this->_status_code === 204);
+		return($this->_status_code === 204);
 	}
 }
 
