@@ -177,6 +177,7 @@ class FuncKeyMapper {
 				'typevalextenumbers' => $forward_type,
 				'type' => 'extenfeatures-' . $forward_type,
 				'exten' => $destination['exten'],
+				'typeval' => $destination['exten'],
 				'extension' => true
 			);
 			break;
