@@ -51,8 +51,8 @@ class FuncKeyConverter {
 			return;
 		}
 
-		foreach(array_keys($funckeys) as $position) {
-			if (!array_key_exists($position, $old_funckeys)) {
+		foreach(array_keys($old_funckeys) as $position) {
+			if (!array_key_exists($position, $funckeys)) {
 				$this->confd->delete_user_func_key($user_id, $position);
 			}
 		}
