@@ -42,8 +42,9 @@ def setup_db():
 
 
 def setup_browser():
+    virtual = os.environ.get('VIRTUAL_DISPLAY', '1') == '1'
     pages.CONFIG['base_url'] = os.environ.get('WEBI_URL', 'http://localhost:8080')
-    return Browser()
+    return Browser(virtual)
 
 
 def setup_confd():
@@ -90,11 +91,14 @@ class Browser(object):
     pages = {'login': pages.LoginPage,
              'users': pages.UserListPage}
 
-    def __init__(self):
-        self.display = Display(visible=1, size=(1024, 768))
+    def __init__(self, virtual=True):
+        self.display = None
+        if virtual:
+            self.display = Display(visible=1, size=(1024, 768))
 
     def start(self):
-        self.display.start()
+        if self.display:
+            self.display.start()
         self.driver = webdriver.Firefox()
         self.driver.set_window_size(1024, 768)
 
@@ -104,4 +108,5 @@ class Browser(object):
 
     def stop(self):
         self.driver.close()
-        self.display.stop()
+        if self.display:
+            self.display.stop()
