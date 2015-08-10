@@ -17,7 +17,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-
 dwho::load_class('dwho_json');
 
 $url = &$this->get_module('url');
@@ -39,7 +38,7 @@ function build_bsfilter($helper, $funckey) {
 
 	if(count($bsfilters) === 0) {
 		$url = &$helper->get_module('url');
-		return $url->href_htmln($this->bbf('create_callfilter'),
+		return $url->href_htmln($helper->bbf('create_callfilter'),
 			'service/ipbx/call_management/callfilter',
 			'act=add',
 			$html
@@ -187,10 +186,18 @@ $dhtml->write_js('var xivo_fk_supervision = '. dwho_json::encode($supervisable) 
 	</tr>
 	</thead>
 	<tbody id="phonefunckey">
-	<?php foreach($funckeys as $funckey) {
-		echo build_row($this, $funckey);
-	}
+	<?php
+		foreach($funckeys as $funckey) {
+			echo build_row($this, $funckey);
+		}
 	?>
 	</tbody>
+	<?php if(count($funckeys) == 0): ?>
+       <tfoot>
+       <tr id="no-phonefunckey">
+               <td colspan="6" class="td-single"><?=$this->bbf('no_phonefunckey');?></td>
+       </tr>
+	   </tfoot>
+	<?php endif ?>
 </table>
 </div>

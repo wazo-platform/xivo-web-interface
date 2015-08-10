@@ -27,6 +27,14 @@ var xivo_fk_autocomplete = {
 	"extenfeatures-paging": '/service/ipbx/ui.php/pbx_settings/users/paging/search/?'
 }
 
+var xivo_fk_text = [
+	"custom",
+	"generalfeatures-parkpos",
+	"extenfeatures-fwdrna",
+	"extenfeatures-fwdbusy",
+	"extenfeatures-fwdunc",
+];
+
 function attachEvents(row) {
 	row = $(row);
 	var fktype = row.find('select[name="phonefunckey[type][]"]');
@@ -67,19 +75,12 @@ function attachDestinationChange(row, fktype, identity, hidden) {
 		hidden.val(bsfilter.val());
 		attachFillHidden(bsfilter, hidden);
 	}
-	else if (fktype.val() == "generalfeatures-parkpos")
+	else if (xivo_fk_text.indexOf(fktype.val()) != -1)
 	{
 		attachFillHidden(identity, hidden);
 	}
-	else if (fktype.val().indexOf("extenfeatures") === 0 ||
-			 fktype.val().indexOf("featuremap") === 0 ||
-			 fktype.val().indexOf("generalfeatures") === 0)
-	{
+	else {
 		identity.addClass("it-disabled");
-	}
-	 else 
-	{
-		attachFillHidden(identity, hidden);
 	}
 }
 
@@ -118,6 +119,7 @@ $(document).ready(function() {
 		$('#phonefunckey').append(xivo_fk_row);
 		$(selector).val(position + 1);
 		attachEvents($('#phonefunckey tr:last'));
+		$('#no-phonefunckey').detach();
 	});
 
 	$('tbody#phonefunckey tr').each(function(index, row) {

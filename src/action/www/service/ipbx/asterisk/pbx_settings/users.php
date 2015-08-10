@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -62,7 +62,6 @@ switch($act)
 		$dhtml->set_js('js/service/ipbx/'.$ipbx->get_name().'/phonefunckey.js');
 		$dhtml->set_js('js/service/ipbx/'.$ipbx->get_name().'/users.js');
 		$dhtml->set_js('js/service/ipbx/'.$ipbx->get_name().'/users/lines.js');
-		$dhtml->add_js('/bloc/service/ipbx/'.$ipbx->get_name().'/pbx_settings/users/phonefunckey/phonefunckey.js.php');
 		$dhtml->load_js_multiselect_files();
 
 		// timepicker

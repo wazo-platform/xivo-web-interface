@@ -41,7 +41,6 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 	protected $_appentity		= false;
 	protected $_entity			= false;
 	protected $_user_line		= false;
-	protected $_phonefunckey	= null;
 	protected $_provdconfig		= false;
 	protected $_provddevice		= false;
 	protected $_device		 	= false;
@@ -136,7 +135,6 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		$this->_queuemember = &$this->_service->get_module('queuemember');
 		$this->_voicemail = &$this->_service->get_application('voicemail');
 		$this->_agentfeatures = &$this->_service->get_module('agentfeatures');
-		$this->_phonefunckey = &$this->_service->get_module('phonefunckey');
 
 		$func_key_mapper = new FuncKeyMapper(
 			$this->_userfeatures,
@@ -193,8 +191,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		if(dwho_ak('voicemail',$nocomponents,true) === false)
 			$this->_get_voicemail();
 
-		if(dwho_ak('phonefunckey',$nocomponents,true) === false)
-			$this->_get_phonefunckey($id);
+		$this->_get_phonefunckey($id);
 
 		// schedule
 		$this->_info['schedule_id'] = 0;
@@ -472,11 +469,6 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		else
 			$r['voicemail'] = false;
 
-		if(is_object($this->_phonefunckey) === true)
-			$r['phonefunckey'] = $this->_phonefunckey->get_element();
-		else
-			$r['phonefunckey'] = false;
-
 		return($r);
 	}
 
@@ -552,14 +544,9 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 
 		if(is_array($result) === false
 		|| ($nb = count($result)) === 0)
-			return(null);
+		return(array());
 
-		$r = array();
-
-		for($i = 0;$i < $nb;$i++)
-			$r[$i] = $this->_phonefunckey->_prepare($result[$i]);
-
-		return($r);
+		return($result);
 	}
 
 	function get_destination_list()
@@ -588,7 +575,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 	function get_phonefunckey_identity($result=true)
 	{
 		if (dwho_issa('userfeatures',$this->_info) === false)
-			return(false);
+			return array();
 
 		if(is_array($this->_info['phonefunckey'])) {
 			return $this->_info['phonefunckey'];
@@ -960,61 +947,10 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 
 	function set_phonefunckey($list)
 	{
-		if(($list = dwho_group_array('fknum',$list)) === false)
-			return(false);
-
-		$reslist = $errlist = $tmp = array();
-		$bsfilter = $this->get_result_var('userfeatures','bsfilter');
-
-		$nb = count($list);
-
-		for($i = $j = 0;$i < $nb;$i++)
-		{
-			$ref = &$list[$i];
-			$ref['iduserfeatures'] = 0;
-
-			if(($val = $this->_phonefunckey->mk_values_array($ref)) === false)
-				continue;
-			else if(($info = $this->_phonefunckey->chk_values($val)) === false)
-			{
-				$errlist[$j] = $this->_phonefunckey->get_filter_error();
-				$reslist[$j++] = $this->_phonefunckey->get_filter_result();
-			}
-			else if($info['typeextenumbers'] === 'extenfeatures'
-			&& $info['typevalextenumbers'] === 'bsfilter'
-			&& $bsfilter === 'no')
-			{
-				continue;
-			}
-			else if(isset($tmp[$info['fknum']]) === true)
-			{
-				$errlist[$j] = 'wrong phonefunckey';
-				$reslist[$j++] = $info;
-			}
-			else
-			{
-				$tmp[$info['fknum']] = 1;
-				$reslist[$j++] = $info;
-			}
-
-			if(($info['typeextenumbers'] !== null
-			|| $info['typeextenumbersright'] !== null) === true
-			&& $this->_phonefunckey->is_valid($info['typeextenumbers'],
-							  $info['typevalextenumbers'],
-							  $info['typeextenumbersright'],
-							  $info['typevalextenumbersright'],
-							  $info['iduserfeatures'],
-							  null) === false)
-				return(false);
+		if(($list = dwho_group_array('fknum',$list)) === false) {
+			$list = array();
 		}
-
-		$this->_set_result('phonefunckey',$reslist);
-
-		if(empty($errlist) === false)
-		{
-			$this->_set_error('phonefunckey',$errlist);
-			return(false);
-		}
+		$this->_set_result('phonefunckey',$list);
 
 		return(true);
 	}

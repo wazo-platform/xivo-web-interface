@@ -288,21 +288,8 @@ class FuncKeyMapper {
 			'fknum' => (string) $position,
 			'supervision' => (bool) $funckey['blf'],
 			'label' => $funckey['label'],
-			'exten' => null,
-			'typeextenumbers' => null,
-			'typevalextenumbers' => null,
-			'typeextenumbersright' => null,
-			'typevalextenumbersright' => null,
-			'iduserfeatures' => $user_id,
-			'progfunckey' => false,
 			'type' => '',
 			'typeval' => '',
-			'user' => '',
-			'group' => '',
-			'queue' => '',
-			'meetme' => '',
-			'custom' => '',
-			'extension' => false,
 			'identity' => null
 		);
 
@@ -315,21 +302,15 @@ class FuncKeyMapper {
 		switch ($destination['type']) {
 		case 'user':
 			$extra = array(
-				'typeextenumbersright' => 'user',
-				'typevalextenumbersright' => (string) $destination['user_id'],
 				'type' => 'user',
 				'typeval' => (string) $destination['user_id'],
-				'user' => (string) $destination['user_id'],
 				'identity' => $this->user_identity($destination['user_id'])
 			);
 			break;
 		case 'group':
 			$extra = array(
-				'typeextenumbersright' => 'group',
-				'typevalextenumbersright' => (string) $destination['group_id'],
 				'type' => 'group',
 				'typeval' => (string) $destination['group_id'],
-				'group' => (string) $destination['group_id'],
 				'identity' => $this->group_identity($destination['group_id'])
 			);
 			break;
@@ -345,17 +326,13 @@ class FuncKeyMapper {
 			break;
 		case 'queue':
 			$extra = array(
-				'typeextenumbersright' => 'queue',
-				'typevalextenumbersright' => (string) $destination['queue_id'],
 				'type' => 'queue',
 				'typeval' => (string) $destination['queue_id'],
-				'queue' => (string) $destination['queue_id'],
 				'identity' => $this->queue_identity($destination['queue_id'])
 			);
 			break;
 		case 'custom':
 			$extra = array(
-				'exten' => $destination['exten'],
 				'type' => 'custom',
 				'typeval' => $destination['exten'],
 				'custom' => $destination['exten'],
@@ -366,18 +343,12 @@ class FuncKeyMapper {
 			break;
 		case 'onlinerec':
 			$extra = array(
-				'typeextenumbers' => 'featuremap',
-				'typevalextenumbers' => 'automon',
 				'type' => 'featuremap-automon',
-				'extension' => true
 			);
 			break;
 		case 'service':
 			$extra = array(
-				'typeextenumbers' => 'extenfeatures',
-				'typevalextenumbers' => $destination['service'],
 				'type' => 'extenfeatures-' . $destination['service'],
-				'extension' => true
 			);
 			break;
 		case 'bsfilter':
@@ -386,21 +357,14 @@ class FuncKeyMapper {
 		case 'transfer':
 			$transfer_type = $this->confd_transfers[$destination['transfer']];
 			$extra = array(
-				'typeextenumbers' => 'featuremap',
-				'typevalextenumbers' => $transfer_type,
 				'type' => 'featuremap-' . $transfer_type,
-				'extension' => true
 			);
 			break;
 		case 'forward':
 			$forward_type = $this->confd_forwards[$destination['forward']];
 			$extra = array(
-				'typeextenumbers' => 'extenfeatures',
-				'typevalextenumbers' => $forward_type,
 				'type' => 'extenfeatures-' . $forward_type,
-				'exten' => $destination['exten'],
 				'typeval' => $destination['exten'],
-				'extension' => true,
 				'identity' => array(
 					'identity' => $destination['exten']
 				)
@@ -409,10 +373,6 @@ class FuncKeyMapper {
 		case 'agent':
 			$action_type = $this->confd_agent_actions[$destination['action']];
 			$extra = array(
-				'typeextenumbers' => 'extenfeatures',
-				'typevalextenumbers' => $action_type,
-				'typeextenumbersright' => 'agent',
-				'typevalextenumbersright' => (string) $destination['agent_id'],
 				'type' => 'extenfeatures-' . $action_type,
 				'typeval' => (string) $destination['agent_id'],
 				'identity' => $this->agent_identity($destination['agent_id'])
@@ -420,20 +380,13 @@ class FuncKeyMapper {
 			break;
 		case 'parking':
 			$extra = array(
-				'typeextenumbers' => 'generalfeatures',
-				'typevalextenumbers' => 'parkext',
 				'type' => 'generalfeatures-parkext',
-				'extension' => true
 			);
 			break;
 		case 'park_position':
 			$extra = array(
-				'typeextenumbers' => 'generalfeatures',
-				'typevalextenumbers' => 'parkpos',
 				'type' => 'generalfeatures-parkpos',
 				'typeval' => (string) $destination['position'],
-				'exten' => (string) $destination['position'],
-				'extension' => true,
 				'identity' => array(
 					'identity' => (string) $destination['position']
 				)
@@ -441,11 +394,8 @@ class FuncKeyMapper {
 			break;
 		case 'paging':
 			$extra = array(
-				'typeextenumbers' => 'extenfeatures',
-				'typevalextenumbers' => 'paging',
-				'typeextenumbersright' => 'paging',
-				'typevalextenumbersright' => (string) $destination['paging_id'],
 				'type' => 'extenfeatures-paging',
+				'typeval' => (string) $destination['paging_id'],
 				'identity' => $this->paging_identity($destination['paging_id'])
 			);
 			break;
@@ -469,10 +419,6 @@ class FuncKeyMapper {
 		}
 
 		return array(
-			'typeextenumbers' => 'extenfeatures',
-			'typevalextenumbers' => 'bsfilter',
-			'typeextenumbersright' => 'user',
-			'typevalextenumbersright' => $member_id,
 			'type' => 'extenfeatures-bsfilter',
 			'typeval' => $member_id,
 		);
@@ -547,115 +493,113 @@ class FuncKeyMapper {
 
 	private function map_destination($user_id, $ref)
 	{
-		if($ref['typeextenumbersright'] === 'user' && $ref['typevalextenumbers'] !== 'bsfilter')
+		if ($ref['type'] === 'user')
 		{
 			return array(
 				'type' => 'user',
-				'user_id' => (int) $ref['typevalextenumbersright']
+				'user_id' => (int) $ref['typeval']
 			);
 		}
-		elseif($ref['typeextenumbersright'] === 'group')
+		elseif ($ref['type'] === 'group')
 		{
 			return array(
 				'type' => 'group',
-				'group_id' => (int) $ref['typevalextenumbersright']
+				'group_id' => (int) $ref['typeval']
 			);
 		}
-		elseif($ref['typeextenumbersright'] === 'queue')
+		elseif ($ref['type'] === 'queue')
 		{
 			return array(
 				'type' => 'queue',
-				'queue_id' => (int) $ref['typevalextenumbersright']
+				'queue_id' => (int) $ref['typeval']
 			);
 		}
-		elseif($ref['typeextenumbersright'] === 'meetme')
+		elseif ($ref['type'] === 'meetme')
 		{
 			return array(
 				'type' => 'conference',
-				'conference_id' => (int) $ref['typevalextenumbersright']
+				'conference_id' => (int) $ref['typeval']
 			);
 		}
-		elseif($ref['typeextenumbers'] === 'extenfeatures'
-			  && array_key_exists($ref['typevalextenumbers'], $this->legacy_forwards)
-		)
-		{
-			$forward_type = $this->legacy_forwards[$ref['typevalextenumbers']];
-			$forward = array('type' => 'forward', 'forward' => $forward_type);
-
-			if((string)$ref['exten'] !== '') {
-				$forward['exten'] = $ref['exten'];
-			}
-
-			return $forward;
-		}
-		elseif($ref['typeextenumbers'] === 'extenfeatures'
-				&& in_array($ref['typevalextenumbers'], $this->legacy_services)
-		)
-		{
-			return array(
-				'type' => 'service',
-				'service' => $ref['typevalextenumbers']
-			);
-		}
-		elseif($ref['typeextenumbers'] === 'extenfeatures'
-			&& array_key_exists($ref['typevalextenumbers'], $this->legacy_agent_actions)
-		)
-		{
-			$agent_action = $this->legacy_agent_actions[$ref['typevalextenumbers']];
-			return array(
-				'type' => 'agent',
-				'agent_id' => (int) $ref['typevalextenumbersright'],
-				'action' => $agent_action
-			);
-		}
-		elseif($ref['typeextenumbers'] === 'featuremap'
-				&& $ref['typevalextenumbers'] === 'automon')
-		{
-			return array('type' => 'onlinerec');
-		}
-		elseif($ref['typeextenumbers'] === 'featuremap'
-				&& array_key_exists($ref['typevalextenumbers'], $this->legacy_transfers))
-		{
-			$transfer_type = $this->legacy_transfers[$ref['typevalextenumbers']];
-			return array(
-				'type' => 'transfer',
-				'transfer' => $transfer_type
-			);
-		}
-		elseif($ref['typeextenumbers'] === 'generalfeatures'
-				&& $ref['typevalextenumbers'] === 'parkext')
-		{
-			return array('type' => 'parking');
-		}
-		elseif($ref['typevalextenumbers'] == 'bsfilter')
-		{
-			$filter_member_id = $this->map_bsfilter_member_id($user_id, $ref);
-			return array(
-				'type' => 'bsfilter',
-				'filter_member_id' => $filter_member_id
-			);
-		}
-		elseif($ref['typevalextenumbers'] == 'parkpos')
-		{
-			return array(
-				'type' => 'park_position',
-				'position' => (int) $ref['exten']
-			);
-		}
-		elseif($ref['typevalextenumbers'] == 'paging')
-		{
-			return array(
-				'type' => 'paging',
-				'paging_id' => (int) $ref['typevalextenumbersright']
-			);
-		}
-		elseif( ($ref['typeextenumbers'] === null || $ref['typeextenumbers'] === '')
-				&& ($ref['typevalextenumbers'] === null || $ref['typevalextenumbers'] === ''))
+		elseif ($ref['type'] === 'custom')
 		{
 			return array(
 				'type' => 'custom',
 				'exten' => $ref['exten']
 			);
+		}
+		elseif (strpos($ref['type'], 'extenfeatures') === 0)
+		{
+			$exten_type = substr($ref['type'], 14);
+
+			if (array_key_exists($exten_type, $this->legacy_forwards))
+			{
+				$forward_type = $this->legacy_forwards[$exten_type];
+				$forward = array('type' => 'forward', 'forward' => $forward_type);
+
+				if((string) $ref['typeval'] !== '') {
+					$forward['exten'] = $ref['typeval'];
+				}
+
+				return $forward;
+			}
+			elseif (in_array($exten_type, $this->legacy_services))
+			{
+				return array(
+					'type' => 'service',
+					'service' => $exten_type
+				);
+			}
+			elseif (array_key_exists($exten_type, $this->legacy_agent_actions))
+			{
+				$agent_action = $this->legacy_agent_actions[$exten_type];
+				return array(
+					'type' => 'agent',
+					'agent_id' => (int) $ref['typeval'],
+					'action' => $agent_action
+				);
+			}
+			elseif ($exten_type == 'bsfilter')
+			{
+				$filter_member_id = $this->map_bsfilter_member_id($user_id, $ref);
+				return array(
+					'type' => 'bsfilter',
+					'filter_member_id' => $filter_member_id
+				);
+			}
+		}
+		elseif (strpos($ref['type'], 'featuremap') === 0)
+		{
+			$feature_type = substr($ref['type'], 11);
+
+			if($feature_type === 'automon')
+			{
+				return array('type' => 'onlinerec');
+			}
+			elseif (array_key_exists($feature_type, $this->legacy_transfers))
+			{
+				$transfer_type = $this->legacy_transfers[$feature_type];
+				return array(
+					'type' => 'transfer',
+					'transfer' => $transfer_type
+				);
+			}
+		}
+		elseif(strpos($ref['type'], 'generalfeatures') === 0)
+		{
+			$general_type = substr($ref['type'], 16);
+
+			if ($general_type === 'parkext')
+			{
+				return array('type' => 'parking');
+			}
+			elseif ($general_type == 'parkpos')
+			{
+				return array(
+					'type' => 'park_position',
+					'position' => (int) $ref['typeval']
+				);
+			}
 		}
 
 		dwho_report::push('error', "FK ${ref['fknum']}: cannot determine confd destination");
