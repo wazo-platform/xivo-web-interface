@@ -143,7 +143,16 @@ class UserPage(Page):
 
 class FuncKeyTab(Page):
 
-    KEY_XPATH = "//tbody[@id='phonefunckey']/tr[//select[@name='phonefunckey[fknum][]']/option[@selected='selected' and @value='{key}']]"
+    KEY_XPATH = "//tr[td/select[@name='phonefunckey[fknum][]']/option[@selected='selected' and @value='{key}']]"
+
+    AUTOCOMPLETE = ('User',
+                    'Group',
+                    'Queue',
+                    'Conference room',
+                    'Paging',
+                    'Connect/Disconnect an agent',
+                    'Connect an agent',
+                    'Disconnect an agent')
 
     def get(self, keynum):
         xpath = self.KEY_XPATH.format(key=keynum)
@@ -158,6 +167,7 @@ class FuncKeyTab(Page):
         type_value = type.find_element_by_css_selector('option[selected="selected"]').text
         label_value = label.get_attribute('value')
         supervision_value = supervision.get_attribute('value') == 'Enabled'
+
         destination_value = self.get_destination_value(line)
 
         return {'key': key_value,
@@ -168,9 +178,9 @@ class FuncKeyTab(Page):
 
     def get_destination_value(self, line):
         try:
-            destination = line.find_element_by_css_selector('.it-enabled')
+            destination = line.find_element_by_name('phonefunckey[typevalidentity][]')
         except NoSuchElementException:
-            return None
+            destination = line.find_element_by_name('phonefunckey[fkbsfilter][]')
 
         if destination.tag_name == 'select':
             return destination.find_element_by_css_selector('option[selected="selected"]').text
@@ -231,25 +241,23 @@ class FuncKeyTab(Page):
 
     def fill_destination(self, line, fktype, destination):
         element = self.find_destination(line)
-
-        # try and remove focus from old input field by focusing on new one
         element.clear()
-        element.click()
-        element.send_keys(Keys.ESCAPE)
 
         if element.tag_name == 'select':
             Select(element).select_by_visible_text(destination)
-        elif 'typeval' in element.get_attribute('name'):
-            element.send_keys(destination)
-        else:
+        elif fktype in self.AUTOCOMPLETE:
             self.select_autocomplete(line, element, destination)
+        else:
+            element.send_keys(destination)
 
     def find_destination(self, line):
-        selector = "td:nth-child(3) .it-enabled"
-        return line.find_element_by_css_selector(selector)
+        try:
+            return line.find_element_by_name("phonefunckey[typevalidentity][]")
+        except NoSuchElementException:
+            return line.find_element_by_name("phonefunckey[fkbsfilter][]")
 
     def select_autocomplete(self, line, element, destination):
-        selector = ".dwho-suggest dt"
+        selector = '.ui-autocomplete[style*="display: block"]'
         condition = ec.presence_of_element_located((By.CSS_SELECTOR, selector))
 
         # make sure there isn't any other autocomplete still lying around
@@ -257,12 +265,7 @@ class FuncKeyTab(Page):
 
         element.send_keys(destination)
         WebDriverWait(self.driver, TIMEOUT).until(condition)
+        print "element found"
 
-        # there might be more than one suggestion, so we try and click on the
-        # right one
-        suggestions = line.find_elements_by_css_selector(selector)
-        for suggestion in suggestions:
-            if destination.lower() in suggestion.text.lower():
-                ActionChains(self.driver).move_to_element(suggestion).click().perform()
-                # wait for autocomplete to dissapear
-                WebDriverWait(self.driver, TIMEOUT).until_not(condition)
+        ActionChains(self.driver).send_keys_to_element(element, Keys.DOWN, Keys.RETURN).perform()
+        WebDriverWait(self.driver, TIMEOUT).until_not(condition)

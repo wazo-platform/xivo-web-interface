@@ -52,6 +52,7 @@ function build_bsfilter($helper, $funckey) {
 		'key' => 'callfilteridentity',
 		'altkey' => 'id',
 		'selected' => $funckey['typeval'],
+		'name' => 'phonefunckey[fkbsfilter][]'
 	);
 	return $form->select($options, $bsfilters, $html);
 }
