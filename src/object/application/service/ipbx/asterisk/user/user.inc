@@ -367,7 +367,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 
 	function get_phonefunckey_type()
 	{
-		return($this->_phonefunckey->get_type_list());
+		return($this->_func_keys->get_legacy_types());
 	}
 
 	function get_bsfilter_list()

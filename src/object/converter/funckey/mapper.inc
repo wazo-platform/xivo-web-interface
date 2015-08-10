@@ -17,6 +17,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+
 class FuncKeyMapper {
 
 	protected $user_dso = null;
@@ -77,6 +78,188 @@ class FuncKeyMapper {
 		'enablednd'
 	);
 
+	protected $legacy_types = array(
+		'user' => array(
+			'name' => 'user',
+			'destination' => true,
+			'supervisable' => true,
+		),
+		'group' => array(
+			'name' => 'group',
+			'destination' => true,
+			'supervisable' => false,
+		),
+		'queue' => array(
+			'name' => 'queue',
+			'destination' => true,
+			'supervisable' => false,
+		),
+		'meetme' => array(
+			'name' => 'meetme',
+			'destination' => true,
+			'supervisable' => true,
+		),
+		'custom' => array(
+			'name' => 'custom',
+			'destination' => true,
+			'supervisable' => true,
+		),
+		'featuremap-automon' => array(
+			'category' => 'extension-general',
+			'name' => 'featuremap-automon',
+			'extension' => true,
+		),
+		'extenfeatures-phonestatus' => array(
+			'category' => 'extension-general',
+			'name' => 'extenfeatures-phonestatus',
+			'extension' => true,
+		),
+		'extenfeatures-recsnd' => array(
+			'category' => 'extension-general',
+			'name' => 'extenfeatures-recsnd',
+			'extension' => true,
+		),
+		'extenfeatures-callrecord' => array(
+			'category' => 'extension-general',
+			'name' => 'extenfeatures-callrecord',
+			'extension' => true,
+			'supervisable' => true,
+			'progfunckey' => true,
+		),
+		'extenfeatures-incallfilter' => array(
+			'category' => 'extension-general',
+			'name' => 'extenfeatures-incallfilter',
+			'extension' => true,
+			'supervisable' => true,
+			'progfunckey' => true,
+		),
+		'extenfeatures-enablednd' => array(
+			'category' => 'extension-general',
+			'name' => 'extenfeatures-enablednd',
+			'extension' => true,
+			'supervisable' => true,
+			'progfunckey' => true,
+		),
+		'extenfeatures-pickup' => array(
+			'category' => 'extension-general',
+			'name' => 'extenfeatures-pickup',
+			'extension' => true,
+		),
+		'extenfeatures-calllistening' => array(
+			'category' => 'extension-general',
+			'name' => 'extenfeatures-calllistening',
+			'extension' => true,
+		),
+		'extenfeatures-directoryaccess' => array(
+			'category' => 'extension-general',
+			'name' => 'extenfeatures-directoryaccess',
+			'extension' => true,
+		),
+		'extenfeatures-bsfilter' => array(
+			'category' => 'extension-general',
+			'name' => 'extenfeatures-bsfilter',
+			'extension' => false,
+			'supervisable' => true,
+		),
+		'featuremap-blindxfer' => array(
+			'category' => 'extension-transfers',
+			'name' => 'featuremap-blindxfer',
+			'extension' => true,
+		),
+		'featuremap-atxfer' => array(
+			'category' => 'extension-transfers',
+			'name' => 'featuremap-atxfer',
+			'extension' => true,
+		),
+		'extenfeatures-fwdundoall' => array(
+			'category' => 'extension-forwards',
+			'name' => 'extenfeatures-fwdundoall',
+			'extension' => true,
+		),
+		'extenfeatures-fwdrna' => array(
+			'category' => 'extension-forwards',
+			'name' => 'extenfeatures-fwdrna',
+			'extension' => true,
+			'destination' => true,
+			'supervisable' => true,
+			'progfunckey' => true,
+		),
+		'extenfeatures-fwdbusy' => array(
+			'category' => 'extension-forwards',
+			'name' => 'extenfeatures-fwdbusy',
+			'extension' => true,
+			'destination' => true,
+			'supervisable' => true,
+			'progfunckey' => true,
+		),
+		'extenfeatures-fwdunc' => array(
+			'category' => 'extension-forwards',
+			'name' => 'extenfeatures-fwdunc',
+			'extension' => true,
+			'destination' => true,
+			'supervisable' => true,
+			'progfunckey' => true,
+		),
+		'extenfeatures-enablevm' => array(
+			'category' => 'extension-voicemail',
+			'name' => 'extenfeatures-enablevm',
+			'extension' => true,
+			'supervisable' => true,
+			'progfunckey' => true,
+		),
+		'extenfeatures-vmusermsg' => array(
+			'category' => 'extension-voicemail',
+			'name' => 'extenfeatures-vmusermsg',
+			'extension' => true,
+		),
+		'extenfeatures-vmuserpurge' => array(
+			'category' => 'extension-voicemail',
+			'name' => 'extenfeatures-vmuserpurge',
+			'extension' => true,
+		),
+		'extenfeatures-agentstaticlogtoggle' => array(
+			'category' => 'extension-agent',
+			'name' => 'extenfeatures-agentstaticlogtoggle',
+			'extension' => false,
+			'supervisable' => true,
+			'destination' => true,
+			'progfunckey' => true,
+		),
+		'extenfeatures-agentstaticlogin' => array(
+			'category' => 'extension-agent',
+			'name' => 'extenfeatures-agentstaticlogin',
+			'extension' => false,
+			'supervisable' => true,
+			'destination' => true,
+			'progfunckey' => true,
+		),
+		'extenfeatures-agentstaticlogoff' => array(
+			'category' => 'extension-agent',
+			'name' => 'extenfeatures-agentstaticlogoff',
+			'extension' => false,
+			'supervisable' => true,
+			'destination' => true,
+			'progfunckey' => true,
+		),
+		'generalfeatures-parkext' => array(
+			'category' => 'extension-parking',
+			'name' => 'generalfeatures-parkext',
+			'extension' => true,
+		),
+		'generalfeatures-parkpos' => array(
+			'category' => 'extension-parking',
+			'name' => 'generalfeatures-parkpos',
+			'destination' => true,
+			'supervisable' => true,
+			'extension' => true,
+		),
+		'extenfeatures-paging' => array(
+			'destination' => true,
+			'name' => 'extenfeatures-paging',
+			'category' => 'extension-paging',
+		)
+	);
+
 	public function __construct($user_dso, $group_dso, $meetme_dso, $queue_dso, $agent_dso, $paging_dso, $callfilter_dso, $callfiltermember_dso) {
 		$this->user_dso = $user_dso;
 		$this->group_dso = $group_dso;
@@ -86,6 +269,10 @@ class FuncKeyMapper {
 		$this->paging_dso = $paging_dso;
 		$this->callfilter_dso = $callfilter_dso;
 		$this->callfiltermember_dso = $callfiltermember_dso;
+	}
+
+	public function get_legacy_types() {
+		return $this->legacy_types;
 	}
 
 	public function map_to_legacy($user_id, $funckeys) {
@@ -171,7 +358,10 @@ class FuncKeyMapper {
 				'exten' => $destination['exten'],
 				'type' => 'custom',
 				'typeval' => $destination['exten'],
-				'custom' => $destination['exten']
+				'custom' => $destination['exten'],
+				'identity' => array(
+					'identity' => $destination['exten']
+				)
 			);
 			break;
 		case 'onlinerec':
@@ -210,7 +400,10 @@ class FuncKeyMapper {
 				'type' => 'extenfeatures-' . $forward_type,
 				'exten' => $destination['exten'],
 				'typeval' => $destination['exten'],
-				'extension' => true
+				'extension' => true,
+				'identity' => array(
+					'identity' => $destination['exten']
+				)
 			);
 			break;
 		case 'agent':
@@ -240,7 +433,10 @@ class FuncKeyMapper {
 				'type' => 'generalfeatures-parkpos',
 				'typeval' => (string) $destination['position'],
 				'exten' => (string) $destination['position'],
-				'extension' => true
+				'extension' => true,
+				'identity' => array(
+					'identity' => (string) $destination['position']
+				)
 			);
 			break;
 		case 'paging':

@@ -18,20 +18,154 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-$form = &$this->get_module('form');
+dwho::load_class('dwho_json');
+
 $url = &$this->get_module('url');
+$dhtml = &$this->get_module('dhtml');
 
-$fkelem = $this->get_var('element','phonefunckey');
-$fkerror = $this->get_var('error','phonefunckey');
-$fkinfo = $this->get_var('fkidentity_list');
+$funckeys = $this->get_var('fkidentity_list');
+$fktypes = $this->get_var('fktype_list');
 
-if(empty($fkinfo) === false):
-	$nb = count($fkinfo);
-	$dhtml = &$this->get_module('dhtml');
-	$dhtml->write_js('dwho.dom.set_table_list(\'phonefunckey\','.$nb.');');
-else:
-	$nb = 0;
-endif;
+$supervisable = array();
+foreach($fktypes as $fktype => $info) {
+	if(array_key_exists('supervisable', $info) && $info['supervisable'] === true) {
+		$supervisable[] = $fktype;
+	}
+}
+
+function build_bsfilter($helper, $funckey) {
+	$bsfilters = $helper->get_var('bsfilter_list');
+	$html = 'class="fkbsfilter" style="display: none;"';
+
+	if(count($bsfilters) === 0) {
+		$url = &$helper->get_module('url');
+		return $url->href_htmln($this->bbf('create_callfilter'),
+			'service/ipbx/call_management/callfilter',
+			'act=add',
+			$html
+		);
+	}
+
+	$form = &$helper->get_module('form');
+	$options = array(
+		'paragraph' => false,
+		'label' => false,
+		'key' => 'callfilteridentity',
+		'altkey' => 'id',
+		'selected' => $funckey['typeval'],
+	);
+	return $form->select($options, $bsfilters, $html);
+}
+
+function build_row($helper, $funckey) {
+	$row = "";
+
+	$form = &$helper->get_module('form');
+	$url = &$helper->get_module('url');
+	$fktype_options = $helper->get_var('fktype_list');
+
+	$defaults = array(
+		'paragraph' => false,
+		'label' => false,
+		'key' => false
+	);
+
+	$fknum = array_merge($defaults, array(
+		'name' => 'phonefunckey[fknum][]',
+		'default' => '1',
+		'selected' => $funckey['fknum']
+	));
+	$fknum_options = array_combine(range(1, 250), range(1, 250));
+
+	$fktype = array_merge($defaults, array(
+		'name' => 'phonefunckey[type][]',
+		'key' => 'name',
+		'altkey' => 'name',
+		'selected' => $funckey['type'],
+		'bbf' => 'fm_phonefunckey_type-opt',
+		'bbfopt' => array('argmode' => 'paramvalue'),
+		'optgroup' => array(
+			'key'	=> 'category',
+			'unique'	=> true,
+			'bbf'	=> 'fm_phonefunckey_type-optgroup',
+			'bbfopt'	=> array('argmode' => 'paramvalue')
+		)));
+
+	$fkidentity = array_merge($defaults, array(
+		'name' => 'phonefunckey[typevalidentity][]',
+		'size' => 20,
+		'value' => $funckey['identity']['identity']
+	));
+
+	$fktypeval = array(
+		'name' => 'phonefunckey[typeval][]',
+		'value' => $funckey['typeval']
+	);
+
+	$fklabel = array_merge($defaults, array(
+		'name' => 'phonefunckey[label][]',
+		'size' => 10,
+		'default' => $funckey['label']
+	));
+
+	$fksupervision = array_merge($defaults, array(
+		'name' => 'phonefunckey[supervision][]',
+		'class' => 'it-enabled',
+		'default' => '0',
+		'selected' => $funckey['supervision'],
+		'bbf' => 'fm_phonefunckey_supervision-opt',
+		'bbfopt' => array('argmode' => 'paramvalue')
+	));
+	$fksupervision_options = array('Enabled' => '1', 'Disabled' => '0');
+
+	$row .= '<tr class="fm-paragraph"><td>';
+	$row .= $form->select($fknum, $fknum_options);
+
+	$row .= "</td><td>";
+	$row .= $form->select($fktype, $fktype_options);
+
+	$row .= "</td><td>";
+	$row .= $form->text($fkidentity);
+	$row .= $form->hidden($fktypeval);
+	$row .= build_bsfilter($helper, $funckey);
+
+	$row .= "</td><td>";
+	$row .= $form->text($fklabel);
+
+	$row .= "</td><td>";
+	$row .= $form->select($fksupervision, $fksupervision_options);
+
+	$row .= '</td><td class="td-right">';
+	$row .= $url->href_html(
+		$url->img_html('img/site/button/mini/blue/delete.gif',
+		$helper->bbf('opt_phonefunckey-delete'),
+		'border="0"'),
+		'#',
+		null,
+		null,
+		$helper->bbf('opt_phonefunckey-delete'),
+		false,
+		'&amp;',
+		true,
+		true,
+		true,
+		true,
+		'fkdelete');
+
+	$row .= "</td></tr>";
+
+	return $row;
+}
+
+$funckey_row = build_row($this, array('fknum' => 1,
+									  'type' => 'user',
+									  'typeval' => '',
+									  'label' => '',
+									  'identity' => array('identity' => ''),
+									  'supervision' => true));
+
+$dhtml->write_js('var xivo_fk_row = ' . dwho_json::encode($funckey_row) . ';');
+$dhtml->write_js('var xivo_fk_supervision = '. dwho_json::encode($supervisable) . ';');
 
 ?>
 <div class="sb-list">
@@ -48,180 +182,15 @@ endif;
 								       'border="0"'),
 							'#',
 							null,
-							'onclick="xivo_phonefunckey_add(this);
-								  return(dwho.dom.free_focus());"
-                                                        id="add_funckey_button"',
+							'id="add_funckey_button"',
 							$this->bbf('col_phonefunckey-add'));?></th>
 	</tr>
 	</thead>
 	<tbody id="phonefunckey">
-<?php
-
-$fknumelem = array();
-$fknumelem['options'] = $fkelem['fknum']['value'];
-$fknumelem['default'] = $fkelem['fknum']['default'];
-
-$fkdata = array();
-
-$labelem = array();
-$labelem['default'] = $fkelem['label']['default'];
-
-$supelem = array();
-$supelem['options'] = $fkelem['supervision']['value'];
-$supelem['default'] = $fkelem['supervision']['default'];
-
-if($nb > 0):
-	for($i = 0;$i < $nb;$i++):
-		$ref = &$fkinfo[$i];
-
-		$fknumelem['value'] = $ref['fknum'];
-
-		$this->set_var('fknumelem',$fknumelem);
-
-		$fkdata['ex'] = false;
-		$fkdata['type'] = $ref['type'];
-		$fkdata['typeval'] = $ref['typeval'];
-		$fkdata['extension'] = $ref['extension'];
-		$fkdata['result'] = $ref['identity'];
-
-		if(array_key_exists($ref['type'],$ref) === true):
-			$fkdata[$ref['type']] = $ref[$ref['type']];
-		endif;
-
-		$fkdata['incr'] = $i;
-
-		$this->set_var('fkdata',$fkdata);
-
-		$labelem['value'] = $ref['label'];
-
-		$supelem['value'] = $ref['supervision'];
-
-		$this->set_var('labelem',$labelem);
-		$this->set_var('supelem',$supelem);
-
-		if(isset($fkerror[$i]) === true):
-			$errdisplay = ' l-infos-error';
-		else:
-			$errdisplay = '';
-		endif;
-
-		echo	'<tr class="fm-paragraph',$errdisplay,'">',
-			'<td class="td-left txt-center">';
-
-		$this->file_include('bloc/service/ipbx/asterisk/pbx_settings/users/phonefunckey/fknum');
-
-		echo	'</td><td>';
-
-		$this->file_include('bloc/service/ipbx/asterisk/pbx_settings/users/phonefunckey/type');
-
-		echo	'</td><td>';
-
-		$this->file_include('bloc/service/ipbx/asterisk/pbx_settings/users/phonefunckey/user');
-		$this->file_include('bloc/service/ipbx/asterisk/pbx_settings/users/phonefunckey/group');
-		$this->file_include('bloc/service/ipbx/asterisk/pbx_settings/users/phonefunckey/queue');
-		$this->file_include('bloc/service/ipbx/asterisk/pbx_settings/users/phonefunckey/meetme');
-		$this->file_include('bloc/service/ipbx/asterisk/pbx_settings/users/phonefunckey/extension',
-				    array('fktype'	=> 'extension',
-					  'fktypeval'	=> ''));
-
-		if($fkdata['extension'] === true):
-			$this->file_include('bloc/service/ipbx/asterisk/pbx_settings/users/phonefunckey/extension',
-					array('fktype'		=> $fkdata['type'],
-					      'fktypeval'	=> $fkdata['typeval']));
-		endif;
-
-		$this->file_include('bloc/service/ipbx/asterisk/pbx_settings/users/phonefunckey/extension-agent',
-				    array('agenttype'	=> 'extenfeatures-agentstaticlogtoggle'));
-		$this->file_include('bloc/service/ipbx/asterisk/pbx_settings/users/phonefunckey/extension-agent',
-				    array('agenttype'	=> 'extenfeatures-agentstaticlogin'));
-		$this->file_include('bloc/service/ipbx/asterisk/pbx_settings/users/phonefunckey/extension-agent',
-				    array('agenttype'	=> 'extenfeatures-agentstaticlogoff'));
-		$this->file_include('bloc/service/ipbx/asterisk/pbx_settings/users/phonefunckey/bosssecretary');
-		$this->file_include('bloc/service/ipbx/asterisk/pbx_settings/users/phonefunckey/custom');
-		$this->file_include('bloc/service/ipbx/asterisk/pbx_settings/users/phonefunckey/paging');
-
-		echo	'</td><td>';
-
-		$this->file_include('bloc/service/ipbx/asterisk/pbx_settings/users/phonefunckey/label');
-
-		echo	'</td><td>';
-
-		$this->file_include('bloc/service/ipbx/asterisk/pbx_settings/users/phonefunckey/supervision');
-
-		echo	'</td><td class="td-right">',
-			$url->href_html($url->img_html('img/site/button/mini/blue/delete.gif',
-						       $this->bbf('opt_phonefunckey-delete'),
-						       'border="0"'),
-					'#',
-					null,
-					'onclick="dwho.dom.make_table_list(\'phonefunckey\',this,1); return(dwho.dom.free_focus());"',
-					$this->bbf('opt_phonefunckey-delete')),
-			'</td></tr>';
-	endfor;
-endif;
-?>
-	</tbody>
-	<tfoot>
-	<tr id="no-phonefunckey"<?=($nb > 0 ? ' class="b-nodisplay"' : '')?>>
-		<td colspan="6" class="td-single"><?=$this->bbf('no_phonefunckey');?></td>
-	</tr>
-	</tfoot>
-</table>
-<table class="b-nodisplay">
-	<tbody id="ex-phonefunckey">
-	<tr class="fm-paragraph">
-<?php
-	$this->set_var('fknumelem',$fknumelem);
-	$this->set_var('fkdata',array('ex' => true));
-	$this->set_var('labelem',$labelem);
-	$this->set_var('supelem',$supelem);
-
-	echo	'<td class="td-left txt-center">';
-
-	$this->file_include('bloc/service/ipbx/asterisk/pbx_settings/users/phonefunckey/fknum');
-
-	echo	'</td><td>';
-
-	$this->file_include('bloc/service/ipbx/asterisk/pbx_settings/users/phonefunckey/type');
-
-	echo	'</td><td>';
-
-	$this->file_include('bloc/service/ipbx/asterisk/pbx_settings/users/phonefunckey/user');
-	$this->file_include('bloc/service/ipbx/asterisk/pbx_settings/users/phonefunckey/group');
-	$this->file_include('bloc/service/ipbx/asterisk/pbx_settings/users/phonefunckey/queue');
-	$this->file_include('bloc/service/ipbx/asterisk/pbx_settings/users/phonefunckey/meetme');
-	$this->file_include('bloc/service/ipbx/asterisk/pbx_settings/users/phonefunckey/paging');
-	$this->file_include('bloc/service/ipbx/asterisk/pbx_settings/users/phonefunckey/extension');
-	$this->file_include('bloc/service/ipbx/asterisk/pbx_settings/users/phonefunckey/extension-agent',
-			    array('agenttype'	=> 'extenfeatures-agentstaticlogtoggle'));
-	$this->file_include('bloc/service/ipbx/asterisk/pbx_settings/users/phonefunckey/extension-agent',
-			    array('agenttype'	=> 'extenfeatures-agentstaticlogin'));
-	$this->file_include('bloc/service/ipbx/asterisk/pbx_settings/users/phonefunckey/extension-agent',
-			    array('agenttype'	=> 'extenfeatures-agentstaticlogoff'));
-	$this->file_include('bloc/service/ipbx/asterisk/pbx_settings/users/phonefunckey/bosssecretary');
-	$this->file_include('bloc/service/ipbx/asterisk/pbx_settings/users/phonefunckey/custom');
-
-	echo	'</td><td>';
-
-	$this->file_include('bloc/service/ipbx/asterisk/pbx_settings/users/phonefunckey/label');
-
-	echo	'</td><td>';
-
-	$this->file_include('bloc/service/ipbx/asterisk/pbx_settings/users/phonefunckey/supervision');
-
-	echo	'</td><td class="td-right">',
-		$url->href_html($url->img_html('img/site/button/mini/blue/delete.gif',
-					       $this->bbf('opt_phonefunckey-delete'),
-					       'border="0"'),
-				'#',
-				null,
-				'onclick="dwho.dom.make_table_list(\'phonefunckey\',this,1);
-					  return(dwho.dom.free_focus());"',
-				$this->bbf('opt_phonefunckey-delete'));
-
-	echo	'</td>';
-?>
-	</tr>
+	<?php foreach($funckeys as $funckey) {
+		echo build_row($this, $funckey);
+	}
+	?>
 	</tbody>
 </table>
 </div>

@@ -29,6 +29,10 @@ class FuncKeyConverter {
 		$this->mapper = $mapper;
 	}
 
+	public function get_legacy_types() {
+		return $this->mapper->get_legacy_types();
+	}
+
 	public function get_user_func_keys($user_id) {
 		$funckeys = $this->confd->get_user_func_keys($user_id);
 		if ($funckeys === null) {
