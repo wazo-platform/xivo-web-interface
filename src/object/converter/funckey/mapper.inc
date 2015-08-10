@@ -316,8 +316,6 @@ class FuncKeyMapper {
 			break;
 		case 'conference':
 			$extra = array(
-				'typeextenumbersright' => 'meetme',
-				'typevalextenumbersright' => (string) $destination['conference_id'],
 				'type' => 'meetme',
 				'typeval' => (string) $destination['conference_id'],
 				'meetme' => (string) $destination['conference_id'],
@@ -525,7 +523,13 @@ class FuncKeyMapper {
 		{
 			return array(
 				'type' => 'custom',
-				'exten' => $ref['exten']
+				'exten' => $ref['typeval']
+			);
+		}
+		elseif ($ref['type'] === 'extenfeatures-paging') {
+			return array(
+				'type' => 'paging',
+				'paging_id' => (int) $ref['typeval']
 			);
 		}
 		elseif (strpos($ref['type'], 'extenfeatures') === 0)
@@ -608,7 +612,7 @@ class FuncKeyMapper {
 
 	private function map_bsfilter_member_id($user_id, $phonefunckey) {
 		$user_id = (string) $user_id;
-		$member_id = (string) $phonefunckey['typevalextenumbersright'];
+		$member_id = (string) $phonefunckey['typeval'];
 
 		$callfiltermember = $this->callfiltermember_dso->get_by_boss_secretary($user_id, $member_id);
 		if($callfiltermember === false) {

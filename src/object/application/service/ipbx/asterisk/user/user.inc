@@ -1304,10 +1304,8 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			$this->_func_key_manager->delete_dst_for_user($this->_return['func_key_dest_user']);
 		}
 
-		if(array_key_exists('phonefunckey', $this->_return)) {
-			foreach($this->_return['phonefunckey'] as $phonefunckey) {
-				$this->_func_keys->delete_user_func_key($phonefunckey['iduserfeatures'], $phonefunckey['fknum']);
-			}
+		if(array_key_exists('userfeatures', $this->_return)) {
+			$this->_func_keys->delete_user_func_keys($this->_return['userfeatures']);
 		}
 
 		foreach($this->_return as $key => $val)
