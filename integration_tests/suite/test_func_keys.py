@@ -153,27 +153,24 @@ class TestFuncKeyEdit(TestFuncKey):
         assert_that(funckey, has_entries(expected_funckey))
 
         expected_request = {'method': 'GET',
-                            'url': '/users/{}/funckeys'.format(user_id)}
+                            'path': '/users/{}/funckeys'.format(user_id)}
         self.confd.assert_request_sent(expected_request)
 
 
 class TestFuncKeyDelete(TestFuncKey):
 
     def test_given_user_with_funckey_when_deleting_user_then_deletes_funckeys_in_confd(self):
-        position = 2
+        user_id = self.prepare_user("John", "Doe", self.CUSTOM_TEMPLATE)
+        position = 1
 
-        with self.db.queries() as queries:
-            user_id = queries.insert_user(firstname="John", lastname="Doe")
-            queue_id = queries.insert_queue()
-            funckey_id = queries.insert_func_key('speeddial', 'queue')
-            queries.insert_destination('queue', 'queue_id', funckey_id, queue_id)
-            queries.add_func_key_to_user(position, funckey_id, user_id)
+        expected_url = "/users/{}/funckeys/{}".format(user_id, position)
+        self.confd.add_response(expected_url, method='DELETE', code=204)
 
         users = self.browser.users.go()
         users.delete("John Doe")
 
         expected_request = {'method': 'DELETE',
-                            'url': '/users/{}/funckeys/{}'.format(user_id, position)}
+                            'path': expected_url}
         self.confd.assert_request_sent(expected_request)
 
 
@@ -187,85 +184,86 @@ class TestFuncKeyCreate(TestFuncKey):
         fwd_exten = '8888'
 
         with self.db.queries() as queries:
-            user_id = queries.insert_user(firstname="Jimmy", lastname="John")
-            secretary_id = queries.insert_user(firstname="Mary", lastname="Mall")
-            group_id = queries.insert_group(name='Alcoholics Anonymous')
-            queue_id = queries.insert_queue(name='File Ariane')
-            conference_id = queries.insert_conference(name='C-F Moisi')
-            agent_id = queries.insert_agent(firstname="Mary", lastname="Mall")
+            self.user_id = queries.insert_user(firstname="Jimmy", lastname="John")
+            #secretary_id = queries.insert_user(firstname="Mary", lastname="Mall")
+            #group_id = queries.insert_group(name='Alcoholics Anonymous')
+            #queue_id = queries.insert_queue(name='File Ariane')
+            #conference_id = queries.insert_conference(name='C-F Moisi')
+            #agent_id = queries.insert_agent(firstname="Mary", lastname="Mall")
 
-            filter_id = queries.insert_callfilter(name='Bull Shit')
-            queries.insert_filter_member(filter_id, user_id, 'boss')
-            filter_member_id = queries.insert_filter_member(filter_id, secretary_id, 'secretary')
+            #filter_id = queries.insert_callfilter(name='Bull Shit')
+            #queries.insert_filter_member(filter_id, self.user_id, 'boss')
+            #filter_member_id = queries.insert_filter_member(filter_id, secretary_id, 'secretary')
+
         self.confd.add_json_response("/users/{}/funckeys".format(self.user_id), self.EMPTY_TEMPLATE)
 
         self.confd_funckeys = {
-            '1': {'blf': False, 'label': None, 'type': 'user', 'user_id': user_id},
-            '2': {'blf': False, 'label': None, 'type': 'group', 'group_id': group_id},
-            '3': {'blf': False, 'label': None, 'type': 'queue', 'queue_id': queue_id},
-            '4': {'blf': False, 'label': None, 'type': 'conference', 'conference_id': conference_id},
-            '5': {'blf': False, 'label': None, 'type': 'custom', 'exten': custom_exten},
-            '6': {'blf': False, 'label': None, 'type': 'onlinerec'},
-            '7': {'blf': False, 'label': None, 'type': 'service', 'service': 'phonestatus'},
-            '8': {'blf': False, 'label': None, 'type': 'service', 'service': 'recsnd'},
-            '9': {'blf': False, 'label': None, 'type': 'service', 'service': 'callrecord'},
-            '10': {'blf': False, 'label': None, 'type': 'service', 'service': 'incallfilter'},
-            '11': {'blf': False, 'label': None, 'type': 'service', 'service': 'enablednd'},
-            '12': {'blf': False, 'label': None, 'type': 'service', 'service': 'pickup'},
-            '13': {'blf': False, 'label': None, 'type': 'service', 'service': 'calllistening'},
-            '14': {'blf': False, 'label': None, 'type': 'service', 'service': 'directoryaccess'},
-            '15': {'blf': False, 'label': None, 'type': 'bsfilter', 'filter_member_id': filter_member_id},
-            '16': {'blf': False, 'label': None, 'type': 'service', 'service': 'fwdundoall'},
-            '17': {'blf': False, 'label': None, 'type': 'forward', 'service': 'noanswer'},
-            '18': {'blf': False, 'label': None, 'type': 'forward', 'service': 'busy'},
-            '19': {'blf': False, 'label': None, 'type': 'forward', 'service': 'unconditional'},
-            '20': {'blf': False, 'label': None, 'type': 'service', 'service': 'enablevm'},
-            '21': {'blf': False, 'label': None, 'type': 'service', 'service': 'vmusermsg'},
-            '22': {'blf': False, 'label': None, 'type': 'service', 'service': 'vmuserpurge'},
-            '23': {'blf': False, 'label': None, 'type': 'agent', 'action': 'toggle', 'agent_id': agent_id},
-            '24': {'blf': False, 'label': None, 'type': 'agent', 'action': 'login', 'agent_id': agent_id},
-            '25': {'blf': False, 'label': None, 'type': 'agent', 'action': 'logout', 'agent_id': agent_id},
-            '26': {'blf': False, 'label': None, 'type': 'service', 'service': 'paging'},
-            '27': {'blf': False, 'label': None, 'type': 'transfer', 'transfer': 'blind'},
-            '28': {'blf': False, 'label': None, 'type': 'transfer', 'transfer': 'attended'},
-            '29': {'blf': False, 'label': None, 'type': 'parking'},
-            '30': {'blf': False, 'label': None, 'type': 'park_position', 'position': park_position},
-            '31': {'blf': False, 'label': None, 'type': 'forward', 'service': 'busy', 'exten': fwd_exten},
+            '1': {'blf': True, 'label': None, 'destination': {'type': 'user', 'user_id': self.user_id}},
+            #'2': {'blf': False, 'label': None, 'destination': {'type': 'group', 'group_id': group_id}},
+            #'3': {'blf': False, 'label': None, 'destination': {'type': 'queue', 'queue_id': queue_id}},
+            #'4': {'blf': True, 'label': None, 'destination': {'type': 'conference', 'conference_id': conference_id}},
+            '5': {'blf': True, 'label': None, 'destination': {'type': 'custom', 'exten': custom_exten}},
+            '6': {'blf': False, 'label': None, 'destination': {'type': 'onlinerec'}},
+            '7': {'blf': False, 'label': None, 'destination': {'type': 'service', 'service': 'phonestatus'}},
+            '8': {'blf': False, 'label': None, 'destination': {'type': 'service', 'service': 'recsnd'}},
+            '9': {'blf': True, 'label': None, 'destination': {'type': 'service', 'service': 'callrecord'}},
+            '10': {'blf': True, 'label': None, 'destination': {'type': 'service', 'service': 'incallfilter'}},
+            '11': {'blf': True, 'label': None, 'destination': {'type': 'service', 'service': 'enablednd'}},
+            '12': {'blf': False, 'label': None, 'destination': {'type': 'service', 'service': 'pickup'}},
+            '13': {'blf': False, 'label': None, 'destination': {'type': 'service', 'service': 'calllistening'}},
+            '14': {'blf': False, 'label': None, 'destination': {'type': 'service', 'service': 'directoryaccess'}},
+            #'15': {'blf': True, 'label': None, 'destination': {'type': 'bsfilter', 'filter_member_id': filter_member_id}},
+            '16': {'blf': False, 'label': None, 'destination': {'type': 'service', 'service': 'fwdundoall'}},
+            '17': {'blf': True, 'label': None, 'destination': {'type': 'forward', 'forward': 'noanswer'}},
+            '18': {'blf': True, 'label': None, 'destination': {'type': 'forward', 'forward': 'busy'}},
+            '19': {'blf': True, 'label': None, 'destination': {'type': 'forward', 'forward': 'unconditional'}},
+            '20': {'blf': True, 'label': None, 'destination': {'type': 'service', 'service': 'enablevm'}},
+            '21': {'blf': False, 'label': None, 'destination': {'type': 'service', 'service': 'vmusermsg'}},
+            '22': {'blf': False, 'label': None, 'destination': {'type': 'service', 'service': 'vmuserpurge'}},
+            #'23': {'blf': True, 'label': None, 'destination': {'type': 'agent', 'action': 'toggle', 'agent_id': agent_id}},
+            #'24': {'blf': True, 'label': None, 'destination': {'type': 'agent', 'action': 'login', 'agent_id': agent_id}},
+            #'25': {'blf': True, 'label': None, 'destination': {'type': 'agent', 'action': 'logout', 'agent_id': agent_id}},
+            #'26': {'blf': False, 'label': None, 'destination': {'type': 'service', 'service': 'paging'}},
+            '27': {'blf': False, 'label': None, 'destination': {'type': 'transfer', 'transfer': 'blind'}},
+            '28': {'blf': False, 'label': None, 'destination': {'type': 'transfer', 'transfer': 'attended'}},
+            '29': {'blf': False, 'label': None, 'destination': {'type': 'parking'}},
+            '30': {'blf': True, 'label': None, 'destination': {'type': 'park_position', 'position': park_position}},
+            '31': {'blf': True, 'label': None, 'destination': {'type': 'forward', 'forward': 'busy', 'exten': fwd_exten}},
         }
 
-        self.webi_funckeys = {
-            '1': {'type': 'User', 'destination': 'Jimmy John'},
-            '2': {'type': 'Group', 'destination': 'Alcoholics Anonymous'},
-            '3': {'type': 'Queue', 'destination': 'File Ariane'},
-            '4': {'type': 'Conference room', 'destination': 'C-F Moisi'},
-            '5': {'type': 'Customized', 'destination': custom_exten},
-            '6': {'type': 'Online call recording'},
-            '7': {'type': 'Phone status'},
-            '8': {'type': 'Sound recording'},
-            '9': {'type': 'Call recording'},
-            '10': {'type': 'Incoming call filtering'},
-            '11': {'type': 'Do not disturb'},
-            '12': {'type': 'Group Interception'},
-            '13': {'type': 'Listen to online calls'},
-            '14': {'type': 'Directory access'},
-            '15': {'type': 'Filtering Boss - Secretary'},
-            '16': {'type': 'Disable all forwarding'},
-            '17': {'type': 'Enable / Disable forwarding on no answer'},
-            '18': {'type': 'Enable / Disable forwarding on busy'},
-            '19': {'type': 'Enable / Disable forwarding unconditional'},
-            '20': {'type': 'Enable voicemail'},
-            '21': {'type': 'Reach the voicemail'},
-            '22': {'type': 'Delete messages from voicemail'},
-            '23': {'type': 'Connect/Disconnect an agent', 'destination': 'Mary Mall'},
-            '24': {'type': 'Connect an agent', 'destination': 'Mary Mall'},
-            '25': {'type': 'Disconnect an agent', 'destination': 'Mary Mall'},
-            '26': {'type': 'Paging'},
-            '27': {'type': 'Blind transfer'},
-            '28': {'type': 'Indirect transfer'},
-            '29': {'type': 'Parking'},
-            '30': {'type': 'Parking position', 'destination': park_position},
-            '31': {'type': 'Enable / Disable forwarding on busy', 'destination': fwd_exten},
-        }
+        self.webi_funckeys = [
+            {'key': '1', 'type': 'User', 'destination': 'Jimmy John'},
+            #{'key': '2', 'type': 'Group', 'destination': 'Alcoholics Anonymous'},
+            #{'key': '3', 'type': 'Queue', 'destination': 'File Ariane'},
+            #{'key': '4', 'type': 'Conference room', 'destination': 'C-F Moisi'},
+            {'key': '5', 'type': 'Customized', 'destination': custom_exten},
+            {'key': '6', 'type': 'Online call recording'},
+            {'key': '7', 'type': 'Phone status'},
+            {'key': '8', 'type': 'Sound recording'},
+            {'key': '9', 'type': 'Call recording'},
+            {'key': '10', 'type': 'Incoming call filtering'},
+            {'key': '11', 'type': 'Do not disturb'},
+            {'key': '12', 'type': 'Group Interception'},
+            {'key': '13', 'type': 'Listen to online calls'},
+            {'key': '14', 'type': 'Directory access'},
+            #{'key': '15', 'type': 'Filtering Boss - Secretary'},
+            {'key': '16', 'type': 'Disable all forwarding'},
+            {'key': '17', 'type': 'Enable / Disable forwarding on no answer'},
+            {'key': '18', 'type': 'Enable / Disable forwarding on busy'},
+            {'key': '19', 'type': 'Enable / Disable forwarding unconditional'},
+            {'key': '20', 'type': 'Enable voicemail'},
+            {'key': '21', 'type': 'Reach the voicemail'},
+            {'key': '22', 'type': 'Delete messages from voicemail'},
+            #{'key': '23', 'type': 'Connect/Disconnect an agent', 'destination': 'Mary Mall'},
+            #{'key': '24', 'type': 'Connect an agent', 'destination': 'Mary Mall'},
+            #{'key': '25', 'type': 'Disconnect an agent', 'destination': 'Mary Mall'},
+            #{'key': '26', 'type': 'Paging'},
+            {'key': '27', 'type': 'Blind transfer'},
+            {'key': '28', 'type': 'Indirect transfer'},
+            {'key': '29', 'type': 'Parking'},
+            {'key': '30', 'type': 'Parking position', 'destination': park_position},
+            {'key': '31', 'type': 'Enable / Disable forwarding on busy', 'destination': fwd_exten},
+        ]
 
     def test_when_creating_user_with_func_key_then_creates_func_key_in_confd(self):
         self.confd.add_json_response(r"/users/\d+/funckeys", self.EMPTY_TEMPLATE)
