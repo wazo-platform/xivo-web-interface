@@ -17,37 +17,13 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 import unittest
+
 from hamcrest import assert_that, has_entries
 
 from lib import setup as testsetup
 
 
 class TestFuncKey(unittest.TestCase):
-
-    asset = 'funckeys'
-
-    @classmethod
-    def setUpClass(cls):
-        testsetup.setup_docker(cls.asset)
-
-        cls.db = testsetup.setup_db()
-        cls.db.recreate()
-
-        cls.browser = testsetup.setup_browser()
-        cls.browser.start()
-        cls.browser.login.login('root', 'proformatique')
-
-        cls.confd = testsetup.setup_confd()
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.browser.stop()
-
-    def setUp(self):
-        self.addCleanup(self.confd.clear)
-
-
-class TestFuncKeyEdit(TestFuncKey):
 
     EMPTY_TEMPLATE = {u'id': 1,
                       u'keys': {},
@@ -77,12 +53,37 @@ class TestFuncKeyEdit(TestFuncKey):
                                    u'rel': u'func_key_templates'}],
                        u'name': u'George Clooney'}
 
+    asset = 'funckeys'
+
+    @classmethod
+    def setUpClass(cls):
+        testsetup.setup_docker(cls.asset)
+
+        cls.db = testsetup.setup_db()
+        cls.db.recreate()
+
+        cls.browser = testsetup.setup_browser()
+        cls.browser.start()
+        cls.browser.login.login('root', 'proformatique')
+
+        cls.confd = testsetup.setup_confd()
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.browser.stop()
+
+    def setUp(self):
+        self.addCleanup(self.confd.clear)
+
     def prepare_user(self, firstname, lastname, template):
         with self.db.queries() as queries:
             user_id = queries.insert_user(firstname, lastname)
             url = "/users/{}/funckeys".format(user_id)
             self.confd.add_response(url, template)
             return user_id
+
+
+class TestFuncKeyEdit(TestFuncKey):
 
     def test_given_user_when_adding_funckey_then_adds_funckey_to_confd(self):
         user_id = self.prepare_user("John", "Doe", self.EMPTY_TEMPLATE)
