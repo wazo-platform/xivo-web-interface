@@ -123,6 +123,21 @@ class TestFuncKeyEdit(TestFuncKey):
                                             'exten': '666'}}
         self.confd.assert_json_request(expected_url, 'PUT', expected_funckey)
 
+    def test_given_user_when_removing_funckey_then_updates_funckey_in_confd(self):
+        user_id = self.prepare_user("Daffy", "Duck", self.DND_TEMPLATE)
+        expected_url = "/users/{}/funckeys/1".format(user_id)
+
+        self.confd.add_response(expected_url, method='DELETE', code=204)
+
+        users = self.browser.users.go()
+        user = users.edit("Daffy Duck")
+        user.funckeys().remove(1)
+        user.save()
+
+        expected_request = {'method': 'DELETE',
+                            'path': expected_url}
+        self.confd.assert_request_sent(expected_request)
+
     def test_given_user_with_dnd_when_editing_then_dnd_appears_on_funckey_page(self):
         user_id = self.prepare_user("George", "Clooney", self.CUSTOM_TEMPLATE)
 
