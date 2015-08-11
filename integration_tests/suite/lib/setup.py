@@ -92,13 +92,10 @@ class Browser(object):
              'users': pages.UserListPage}
 
     def __init__(self, virtual=True):
-        self.display = None
-        if virtual:
-            self.display = Display(visible=1, size=(1024, 768))
+        self.display = Display(visible=virtual, size=(1024, 768))
 
     def start(self):
-        if self.display:
-            self.display.start()
+        self.display.start()
         self.driver = webdriver.Firefox()
         self.driver.set_window_size(1024, 768)
 
@@ -108,5 +105,4 @@ class Browser(object):
 
     def stop(self):
         self.driver.close()
-        if self.display:
-            self.display.stop()
+        self.display.stop()
