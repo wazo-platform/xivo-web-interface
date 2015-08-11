@@ -6,6 +6,7 @@ POSTGRES_DOCKER=$(MANAGE_DB_DIR)/contribs/xivo-postgres/Dockerfile
 
 test-setup:
 	docker build -t xivo/xivo-postgres -f $(POSTGRES_DOCKER) $(MANAGE_DB_DIR)
+	docker build -t xivo/xivo-web-interface ..
 	docker pull n3llyb0y/wait
 
 test-image:
