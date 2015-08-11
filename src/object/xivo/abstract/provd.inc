@@ -382,7 +382,7 @@ abstract class xivo_object_provd_abstract extends xivo_object_abstract
 		$this->_curl->set_option('get',true);
 
 		$rs = false;
-		if(($r = $this->_connect($path,$query)) !== false
+		if(($r = $this->_connect($path)) !== false
 		&& $r['body'] !== false)
 			$rs = dwho_json::decode(rtrim($r['body']),true);
 

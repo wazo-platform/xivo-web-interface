@@ -24,6 +24,7 @@ $dhtml = &$this->get_module('dhtml');
 
 $pager = $this->get_var('pager');
 $act = $this->get_var('act');
+$list = $this->get_var('list');
 
 $page = $url->pager($pager['pages'],
 		    $pager['page'],
@@ -60,7 +61,7 @@ $page = $url->pager($pager['pages'],
 		<th class="th-right xspan"><span class="span-right">&nbsp;</span></th>
 	</tr>
 <?php
-	if(($list = $this->get_var('list')) === false || ($nb = count($list)) === 0):
+	if(($list === false) || ($nb = count($list)) === 0):
 ?>
 	<tr class="sb-content">
 		<td colspan="7" class="td-single"><?=$this->bbf('no_plugin');?></td>
