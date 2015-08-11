@@ -275,7 +275,6 @@ class FuncKeyTab(Page):
 
         element.send_keys(destination)
         WebDriverWait(self.driver, TIMEOUT).until(condition)
-        print "element found"
 
         ActionChains(self.driver).send_keys_to_element(element, Keys.DOWN, Keys.RETURN).perform()
         WebDriverWait(self.driver, TIMEOUT).until_not(condition)
