@@ -1,4 +1,6 @@
-from flask import Flask, jsonify, request
+import re
+
+from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
@@ -28,8 +30,11 @@ PROFILES = [{u'id': 1,
 def log_request():
     if not (request.path.startswith('/_requests') or
             request.path.startswith('/_responses')):
+        path = request.path
+        if path.startswith('/1.1'):
+            path = path[4:]
         log = {'method': request.method,
-               'path': request.path,
+               'path': path,
                'query': dict(request.args),
                'body': request.data,
                'headers': dict(request.headers)}
@@ -51,8 +56,9 @@ def delete_requests():
 @app.route('/_responses', methods=['POST'])
 def add_response():
     response = request.get_json(force=True)
-    method = RESPONSES.setdefault(request.method, {})
-    method[response['path']] = response['body']
+    method = RESPONSES.setdefault(response['method'], {})
+    regex = re.compile(response['path'])
+    method[regex] = (response['body'], response['code'])
     return ''
 
 
@@ -77,10 +83,12 @@ def cti_profiles():
 
 @app.route('/1.1/<path:path>', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def respond(path):
+    path = "/" + path
     method = RESPONSES.get(request.method, {})
-    response = method.get(request.path, {})
-    return jsonify(**response)
-
+    for regex, response in method.items():
+        if regex.match(path):
+            return response
+    return '["Confd mock has no response prepared"]', 400
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=9487, debug=True)

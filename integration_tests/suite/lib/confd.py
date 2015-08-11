@@ -20,7 +20,7 @@ import requests
 import json
 import re
 
-from hamcrest import assert_that, has_item, has_entries
+from hamcrest import assert_that, has_item, has_entries, equal_to
 
 
 class MockConfd(object):
@@ -48,17 +48,28 @@ class MockConfd(object):
         response.raise_for_status()
         return response.json()['requests']
 
-    def add_response(self, path, body, method='GET'):
+    def add_response(self, path, body='', method='GET', code=200):
         url = "{}/_responses".format(self.base_url)
         data = {'path': path,
                 'body': body,
-                'method': method}
+                'method': method,
+                'code': code}
         response = requests.post(url, data=json.dumps(data))
         response.raise_for_status()
+
+    def add_json_response(self, path, body=None, method='GET', code=200):
+        body = body or {}
+        self.add_response(path, json.dumps(body), method, code)
 
     def assert_request_sent(self, request):
         requests = self.requests()
         assert_that(requests, has_item(has_entries(request)))
+
+    def assert_json_request(self, expected_url, expected_method, expected_body):
+        request = self.request_matching(expected_url)
+        assert_that(request['method'], equal_to(expected_method))
+        body = json.loads(request['body'])
+        assert_that(body, has_entries(expected_body))
 
     def request_matching(self, path):
         regex = re.compile(path)
