@@ -249,6 +249,9 @@ class DatabaseQueries(object):
 
         self.insert_extension(number, context, 'group', group_id)
 
+        for event in ('noanswer', 'busy', 'congestion', 'chanunavail'):
+            self.insert_dialaction(event, 'group', str(group_id))
+
         func_key_id = self.insert_func_key('speeddial', 'group')
         self.insert_destination('group', 'group_id', func_key_id, group_id)
 
