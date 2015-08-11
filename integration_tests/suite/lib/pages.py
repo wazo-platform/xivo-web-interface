@@ -196,6 +196,16 @@ class FuncKeyTab(Page):
         line = self.driver.find_element_by_xpath(xpath)
         self._fill(line, type, key, destination, label, supervision)
 
+    def remove(self, key):
+        xpath = self.KEY_XPATH.format(key=key)
+        line = self.driver.find_element_by_xpath(xpath)
+
+        element = line.find_element_by_css_selector('.fkdelete')
+        element.click()
+
+        condition = ec.presence_of_element_located((By.XPATH, xpath))
+        WebDriverWait(self.driver, TIMEOUT).until_not(condition)
+
     def _fill(self, line, type, key, destination, label, supervision):
         if type:
             self.select_name('phonefunckey[type][]', type, line)
