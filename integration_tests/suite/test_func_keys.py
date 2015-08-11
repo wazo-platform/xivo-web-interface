@@ -79,7 +79,7 @@ class TestFuncKey(unittest.TestCase):
         with self.db.queries() as queries:
             user_id = queries.insert_user(firstname, lastname)
             url = "/users/{}/funckeys".format(user_id)
-            self.confd.add_response(url, template)
+            self.confd.add_json_response(url, template)
             return user_id
 
 
@@ -87,22 +87,26 @@ class TestFuncKeyEdit(TestFuncKey):
 
     def test_given_user_when_adding_funckey_then_adds_funckey_to_confd(self):
         user_id = self.prepare_user("John", "Doe", self.EMPTY_TEMPLATE)
+        expected_url = "/users/{}/funckeys/1".format(user_id)
+
+        self.confd.add_response(expected_url, method='PUT', code=204)
 
         users = self.browser.users.go()
         user = users.edit("John Doe")
         user.funckeys().add(type="Do not disturb")
         user.save()
 
-        expected_request = {'method': 'PUT',
-                            'url': '/users/{}/funckeys/1'.format(user_id),
-                            'body': {'blf': False,
-                                     'label': None,
-                                     'destination': {'type': 'service',
-                                                     'service': 'enablednd'}}}
-        self.confd.assert_request_sent(expected_request)
+        expected_funckey = {'blf': True,
+                            'label': None,
+                            'destination': {'type': 'service',
+                                            'service': 'enablednd'}}
+        self.confd.assert_json_request(expected_url, 'PUT', expected_funckey)
 
     def test_given_user_when_editing_funckey_then_updates_funckey_in_confd(self):
         user_id = self.prepare_user("Richard", "Smith", self.DND_TEMPLATE)
+        expected_url = "/users/{}/funckeys/1".format(user_id)
+
+        self.confd.add_response(expected_url, method='PUT', code=204)
 
         users = self.browser.users.go()
         user = users.edit("Richard Smith")
@@ -113,13 +117,11 @@ class TestFuncKeyEdit(TestFuncKey):
                              supervision=True)
         user.save()
 
-        expected_request = {'method': 'PUT',
-                            'url': '/users/{}/funckeys/1'.format(user_id),
-                            'body': {'blf': True,
-                                     'label': 'devil',
-                                     'destination': {'type': 'custom',
-                                                     'exten': '666'}}}
-        self.confd.assert_request_sent(expected_request)
+        expected_funckey = {'blf': True,
+                            'label': 'devil',
+                            'destination': {'type': 'custom',
+                                            'exten': '666'}}
+        self.confd.assert_json_request(expected_url, 'PUT', expected_funckey)
 
     def test_given_user_with_dnd_when_editing_then_dnd_appears_on_funckey_page(self):
         user_id = self.prepare_user("George", "Clooney", self.CUSTOM_TEMPLATE)
@@ -180,6 +182,7 @@ class TestFuncKeyCreate(TestFuncKey):
             filter_id = queries.insert_callfilter(name='Bull Shit')
             queries.insert_filter_member(filter_id, user_id, 'boss')
             filter_member_id = queries.insert_filter_member(filter_id, secretary_id, 'secretary')
+        self.confd.add_json_response("/users/{}/funckeys".format(self.user_id), self.EMPTY_TEMPLATE)
 
         self.confd_funckeys = {
             '1': {'blf': False, 'label': None, 'type': 'user', 'user_id': user_id},
@@ -250,21 +253,23 @@ class TestFuncKeyCreate(TestFuncKey):
         }
 
     def test_when_creating_user_with_func_key_then_creates_func_key_in_confd(self):
-        users = self.browser.users.go()
+        self.confd.add_json_response(r"/users/\d+/funckeys", self.EMPTY_TEMPLATE)
 
+        for position in self.confd_funckeys.keys():
+            self.confd.add_response(r"/users/\d+/funckeys/{}".format(position),
+                                    method='PUT',
+                                    code=204)
+
+        users = self.browser.users.go()
         user = users.add()
         user.fill_form(firstname="John", lastname="Doe")
         funckeys = user.funckeys()
 
-        webi_funckeys = sorted(self.webi_funckeys.items(), key=lambda x: int(x[0]))
-        for _, funckey in webi_funckeys:
+        for funckey in self.webi_funckeys:
             funckeys.add(**funckey)
 
         user.save()
 
-        for position, funckey in self.confd_destinations.items():
-            path = r'/users/\d+/funckeys/{}'.format(position)
-            expected = {'method': 'PUT',
-                        'body': funckey}
-            request = self.confd.request_matching(path)
-            assert_that(request, has_entries(expected))
+        for position, funckey in self.confd_funckeys.items():
+            url = r"/users/\d+/funckeys/{}".format(position)
+            self.confd.assert_json_request(url, 'PUT', funckey)
