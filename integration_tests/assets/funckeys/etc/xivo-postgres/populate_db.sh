@@ -16,7 +16,10 @@ INSERT INTO "context" (name, displayname, contexttype, description, entity) VALU
 INSERT INTO "contextinclude" (context, include) VALUES ('default', 'to-extern')
 
 INSERT INTO "contextnumbers" (context, type, numberbeg, numberend, didlength) VALUES ('default', 'user', '1000', '1999', 0)
-INSERT INTO "contextnumbers" (context, type, numberbeg, numberend, didlength) VALUES ('from-extern', 'incall', '1000', '4999', 0)
+INSERT INTO "contextnumbers" (context, type, numberbeg, numberend, didlength) VALUES ('from-extern', 'incall', '1000', '4999', 4)
+INSERT INTO "contextnumbers" (context, type, numberbeg, numberend, didlength) VALUES ('default', 'group', '2000', '2999', 0)
+INSERT INTO "contextnumbers" (context, type, numberbeg, numberend, didlength) VALUES ('default', 'queue', '3000', '3999', 0)
+INSERT INTO "contextnumbers" (context, type, numberbeg, numberend, didlength) VALUES ('default', 'meetme', '4000', '4999', 0)
 
 INSERT INTO "netiface" (ifname, networktype, type, family, options) VALUES ('eth0', 'voip', 'iface', 'inet', '')
 
