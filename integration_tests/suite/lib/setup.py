@@ -33,7 +33,7 @@ ASSET_PATH = os.path.join(os.path.dirname(__file__), '..', '..', 'assets')
 
 def setup_db():
     user = os.environ.get('DB_USER', 'asterisk')
-    password = os.environ.get('DB_PASSORD', 'proformatique')
+    password = os.environ.get('DB_PASSWORD', 'proformatique')
     host = os.environ.get('DB_HOST', 'localhost')
     port = os.environ.get('DB_PORT', 15432)
     db = os.environ.get('DB_NAME', 'asterisk')
