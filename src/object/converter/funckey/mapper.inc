@@ -482,8 +482,14 @@ class FuncKeyMapper {
 
 	private function map_confd_funckey($user_id, $legacy_funckey) {
 		$destination = $this->map_destination($user_id, $legacy_funckey);
+
+		$label = $legacy_funckey['label'];
+		if(trim($label) === '') {
+			$label = null;
+		}
+
 		return array(
-			'label' => $legacy_funckey['label'],
+			'label' => $label,
 			'blf' => (bool) ((int) $legacy_funckey['supervision']),
 			'destination' => $destination
 		);
