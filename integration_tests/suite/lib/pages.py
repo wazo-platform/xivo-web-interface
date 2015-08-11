@@ -166,7 +166,7 @@ class FuncKeyTab(Page):
         key_value = int(key.get_attribute('value'))
         type_value = type.find_element_by_css_selector('option[selected="selected"]').text
         label_value = label.get_attribute('value')
-        supervision_value = supervision.get_attribute('value') == 'Enabled'
+        supervision_value = supervision.get_attribute('value') == '1'
 
         destination_value = self.get_destination_value(line)
 
