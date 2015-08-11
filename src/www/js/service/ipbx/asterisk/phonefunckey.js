@@ -55,7 +55,9 @@ function attachEvents(row) {
 
 	attachDestinationChange(row, fktype, identity, hidden);
 
+	supervision.val('1');
 	if(xivo_fk_supervision.indexOf(fktype.val()) === -1) {
+		supervision.val('0');
 		supervision.addClass('it-disabled');
 	}
 
