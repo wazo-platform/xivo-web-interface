@@ -44,7 +44,10 @@ function attachEvents(row) {
 	var supervision = row.find('select[name="phonefunckey[supervision][]"]');
 
 	fktype.change(function() {
-		row.find('input').show().val('');
+		identity.unbind('change').val('').show();
+		hidden.val('');
+		remove.unbind('click')
+		row.find('select').unbind('change');
 		row.find('.it-disabled').removeClass('it-disabled');
 		row.find(".fkbsfilter").hide();
 		attachEvents(row);
