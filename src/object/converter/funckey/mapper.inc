@@ -324,7 +324,6 @@ class FuncKeyMapper {
 			$extra = array(
 				'type' => 'meetme',
 				'typeval' => (string) $destination['conference_id'],
-				'meetme' => (string) $destination['conference_id'],
 				'identity' => $this->conference_identity($destination['conference_id'])
 			);
 			break;
@@ -339,7 +338,6 @@ class FuncKeyMapper {
 			$extra = array(
 				'type' => 'custom',
 				'typeval' => $destination['exten'],
-				'custom' => $destination['exten'],
 				'identity' => array(
 					'identity' => $destination['exten']
 				)
