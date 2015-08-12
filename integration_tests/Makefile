@@ -4,10 +4,15 @@ MANAGE_DB_DIR=../../xivo-manage-db/
 POSTGRES_DOCKER=$(MANAGE_DB_DIR)/contribs/xivo-postgres/Dockerfile
 
 
-test-setup:
-	docker build -t xivo/xivo-postgres -f $(POSTGRES_DOCKER) $(MANAGE_DB_DIR)
-	docker build -t xivo/xivo-web-interface ..
+test-setup: build-postgres build-webi
 	docker pull n3llyb0y/wait
+
+build-postgres:
+	docker pull postgres:9.1
+	docker build -t xivo/xivo-postgres -f $(POSTGRES_DOCKER) $(MANAGE_DB_DIR)
+
+build-webi:
+	docker build -t xivo/xivo-web-interface ..
 
 test-image:
 	docker build --no-cache -t xivo-webi-test -f Dockerfile ..
