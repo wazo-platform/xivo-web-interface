@@ -299,6 +299,6 @@ class TestFuncKeyCreate(TestFuncKey):
 
         user.save()
 
-        for position, funckey in self.confd_funckeys.items():
+        for position, funckey in self.confd_funckeys.iteritems():
             url = r"/users/\d+/funckeys/{}".format(position)
             self.confd.assert_json_request(url, 'PUT', funckey)

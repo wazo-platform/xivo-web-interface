@@ -85,7 +85,7 @@ def cti_profiles():
 def respond(path):
     path = "/" + path
     method = RESPONSES.get(request.method, {})
-    for regex, response in method.items():
+    for regex, response in method.iteritems():
         if regex.match(path):
             return response
     return '["Confd mock has no response prepared"]', 400
