@@ -1,8 +1,7 @@
 <?php
-
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2013-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,31 +17,13 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-$form = &$this->get_module('form');
+$array = array();
 
-$fkdata = $this->get_var('fkdata');
-
-$inputtxt = array();
-$inputtxt['paragraph'] = false;
-$inputtxt['name'] = 'phonefunckey[typeval][]';
-$inputtxt['label'] = false;
-$inputtxt['size'] = 15;
-$inputtxt['id'] = 'it-phonefunckey-custom-typeval';
-
-if($fkdata['ex'] === false):
-	$incr = dwho_uint($fkdata['incr']);
-	$inputtxt['id'] .= '-'.$incr;
-
-	if($fkdata['type'] === 'custom'):
-		$inputtxt['value'] = $fkdata['custom'];
-	endif;
-
-	$inputtxtoptattr = '';
-else:
-	$inputtxt['disabled'] = true;
-	$inputtxtoptattr = 'style="display: none;"';
-endif;
-
-echo	$form->text($inputtxt,$inputtxtoptattr);
+$array['confd'] = array();
+$array['confd']['host'] = 'confd';
+$array['confd']['port'] = 9487;
+$array['confd']['protocol'] = '1.1';
+$array['confd']['connect_timeout'] = 180;
+$array['confd']['timeout'] = 90;
 
 ?>
