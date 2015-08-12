@@ -35,57 +35,74 @@ var xivo_fk_text = [
 	"extenfeatures-fwdunc",
 ];
 
+function resetRow(fields) {
+	fields.type
+		.unbind('change');
+	fields.identity
+		.unbind('change')
+		.removeClass('it-disabled')
+		.val('')
+		.show();
+	fields.destination
+		.val('');
+	fields.supervision
+		.removeClass('it-disabled')
+		.val('1');
+	fields.remove
+		.unbind('click');
+	fields.bsfilter
+		.hide();
+}
+
 function attachEvents(row) {
 	row = $(row);
-	var fktype = row.find('select[name="phonefunckey[type][]"]');
-	var identity = row.find('input[name="phonefunckey[typevalidentity][]"]');
-	var hidden = row.find('input[name="phonefunckey[typeval][]"]');
-	var remove = row.find('.fkdelete');
-	var supervision = row.find('select[name="phonefunckey[supervision][]"]');
 
-	fktype.change(function() {
-		identity.unbind('change').val('').show();
-		hidden.val('');
-		remove.unbind('click')
-		row.find('select').unbind('change');
-		row.find('.it-disabled').removeClass('it-disabled');
-		row.find(".fkbsfilter").hide();
+	var fields = {
+		type: row.find('select[name="phonefunckey[type][]"]'),
+	    identity: row.find('input[name="phonefunckey[typevalidentity][]"]'),
+		destination: row.find('input[name="phonefunckey[typeval][]"]'),
+		remove: row.find('.fkdelete'),
+		supervision: row.find('select[name="phonefunckey[supervision][]"]'),
+		bsfilter: row.find('.fkbsfilter')
+	}
+
+	fields.type.change(function() {
+		resetRow(fields)
 		attachEvents(row);
 	});
 
-	attachDestinationChange(row, fktype, identity, hidden);
+	attachDestinationChange(fields)
 
-	supervision.val('1');
-	if(xivo_fk_supervision.indexOf(fktype.val()) === -1) {
-		supervision.val('0');
-		supervision.addClass('it-disabled');
+	if(xivo_fk_supervision.indexOf(fields.type.val()) === -1) {
+		fields.supervision.val('0');
+		fields.supervision.addClass('it-disabled');
 	}
 
-	remove.click(function(e) {
+	fields.remove.click(function(e) {
 		e.preventDefault();
 		row.detach();
 	});
 }
 
-function attachDestinationChange(row, fktype, identity, hidden) {
-	if (fktype.val() in xivo_fk_autocomplete) 
+function attachDestinationChange(fields) {
+	var fktype = fields.type.val();
+	if (fktype in xivo_fk_autocomplete)
 	{
-		attachAutocomplete(fktype, identity, hidden);
+		attachAutocomplete(fields)
 	}
-	else if (fktype.val() == "extenfeatures-bsfilter")
+	else if (fktype == "extenfeatures-bsfilter")
 	{
-		var bsfilter = row.find(".fkbsfilter");
-		identity.hide();
-		bsfilter.show();
-		hidden.val(bsfilter.val());
-		attachFillHidden(bsfilter, hidden);
+		fields.identity.hide();
+		fields.bsfilter.show();
+		fields.destination.val(fields.bsfilter.val());
+		attachFillHidden(fields.bsfilter, fields.destination);
 	}
-	else if (xivo_fk_text.indexOf(fktype.val()) != -1)
+	else if (xivo_fk_text.indexOf(fktype) != -1)
 	{
-		attachFillHidden(identity, hidden);
+		attachFillHidden(fields.identity, fields.destination);
 	}
 	else {
-		identity.addClass("it-disabled");
+		fields.identity.addClass("it-disabled");
 	}
 }
 
@@ -95,10 +112,11 @@ function attachFillHidden(identity, hidden) {
 	});
 }
 
-function attachAutocomplete(fktype, identity, hidden) {
-	identity.autocomplete({
+function attachAutocomplete(fields) {
+	fields.identity.autocomplete({
 		source: function(request, response) {
-			var url = xivo_fk_autocomplete[fktype.val()] + dwho_sess_str;
+			var fktype = fields.type.val();
+			var url = xivo_fk_autocomplete[fktype] + dwho_sess_str;
 			var body = encodeURI("except=5&search=" + request.term);
 			$.post(url, body, function(data) {
 				var suggestions = [];
@@ -110,8 +128,8 @@ function attachAutocomplete(fktype, identity, hidden) {
 		},
 		select: function(e, ui) {
 			e.preventDefault();
-			hidden.val(ui.item.value);
-			identity.val(ui.item.label);
+			fields.destination.val(ui.item.value);
+			fields.identity.val(ui.item.label);
 		}
 	});
 }
