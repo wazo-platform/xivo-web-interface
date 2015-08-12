@@ -284,9 +284,15 @@ class FuncKeyMapper {
 	}
 
 	private function map_legacy_funckey($user_id, $position, $funckey) {
+		if($funckey['blf'] === true) {
+			$supervision = '1';
+		} else {
+			$supervision = '0';
+		}
+
 		$legacy_funckey = array(
 			'fknum' => (string) $position,
-			'supervision' => (bool) $funckey['blf'],
+			'supervision' => $supervision,
 			'label' => $funckey['label'],
 			'type' => '',
 			'typeval' => '',

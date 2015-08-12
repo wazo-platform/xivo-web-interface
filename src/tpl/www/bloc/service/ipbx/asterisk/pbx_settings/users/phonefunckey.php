@@ -111,7 +111,7 @@ function build_row($helper, $funckey) {
 	$fksupervision = array_merge($defaults, array(
 		'name' => 'phonefunckey[supervision][]',
 		'class' => 'it-enabled',
-		'default' => '0',
+		'default' => '1',
 		'selected' => $funckey['supervision'],
 		'bbf' => 'fm_phonefunckey_supervision-opt',
 		'bbfopt' => array('argmode' => 'paramvalue')
@@ -162,7 +162,7 @@ $funckey_row = build_row($this, array('fknum' => 1,
 									  'typeval' => '',
 									  'label' => '',
 									  'identity' => array('identity' => ''),
-									  'supervision' => true));
+									  'supervision' => '1'));
 
 $dhtml->write_js('var xivo_fk_row = ' . dwho_json::encode($funckey_row) . ';');
 $dhtml->write_js('var xivo_fk_supervision = '. dwho_json::encode($supervisable) . ';');
