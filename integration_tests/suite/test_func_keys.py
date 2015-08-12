@@ -18,40 +18,20 @@
 
 import unittest
 
-from hamcrest import assert_that, has_entries
+from hamcrest import assert_that, has_entries, equal_to
 
 from lib import setup as testsetup
 
 
 class TestFuncKey(unittest.TestCase):
 
-    EMPTY_TEMPLATE = {u'id': 1,
-                      u'keys': {},
-                      u'links': [{u'href': u'https://webi:9486/1.1/funckeys/templates/1',
-                                  u'rel': u'func_key_templates'}],
-                      u'name': u'John Doe'}
+    DND = {'destination': {'type': 'service',
+                           'href': None,
+                           'service': 'enablednd'}}
 
-    DND_TEMPLATE = {u'id': 1,
-                    u'keys': {u'1': {u'blf': False,
-                                     u'destination': {u'href': None,
-                                                      u'service': u'enablednd',
-                                                      u'type': u'service'},
-                                     u'id': 10,
-                                     u'inherited': False,
-                                     u'label': None}},
-                    u'links': [{u'href': u'http://webi:9487/1.1/funckeys/templates/1',
-                                u'rel': u'func_key_templates'}],
-                    u'name': u'Richard Smith'}
-
-    CUSTOM_TEMPLATE = {u'id': 1,
-                       u'keys': {u'1': {u'blf': True,
-                                        u'destination': {u'exten': u'9999', u'href': None, u'type': u'custom'},
-                                        u'id': 20,
-                                        u'inherited': False,
-                                        u'label': u'speedy'}},
-                       u'links': [{u'href': u'https://webi:9487/1.1/funckeys/templates/1',
-                                   u'rel': u'func_key_templates'}],
-                       u'name': u'George Clooney'}
+    CUSTOM = {'destination': {u'exten': u'9999',
+                              u'href': None,
+                              u'type': u'custom'}}
 
     asset = 'funckeys'
 
@@ -82,11 +62,27 @@ class TestFuncKey(unittest.TestCase):
             self.confd.add_json_response(url, template)
             return user_id
 
+    def prepare_template(self, *keys):
+        keys = {pos: self.prepare_key(key)
+                for pos, key in enumerate(keys, 1)}
+        return {'id': 1,
+                'name': None,
+                'keys': keys,
+                'links': [{u'href': u'https://webi:9486/1.1/funckeys/templates/{}'.format(id),
+                           u'rel': u'func_key_templates'}]}
+
+    def prepare_key(self, fkey):
+        fkey.setdefault('inherited', False)
+        fkey.setdefault('label', None)
+        fkey.setdefault('blf', False)
+        return fkey
+
 
 class TestFuncKeyEdit(TestFuncKey):
 
     def test_given_user_when_adding_funckey_then_adds_funckey_to_confd(self):
-        user_id = self.prepare_user("John", "Doe", self.EMPTY_TEMPLATE)
+        template = self.prepare_template()
+        user_id = self.prepare_user("John", "Doe", template)
         expected_url = "/users/{}/funckeys/1".format(user_id)
 
         self.confd.add_response(expected_url, method='PUT', code=204)
@@ -103,7 +99,8 @@ class TestFuncKeyEdit(TestFuncKey):
         self.confd.assert_json_request(expected_url, 'PUT', expected_funckey)
 
     def test_given_user_when_editing_funckey_then_updates_funckey_in_confd(self):
-        user_id = self.prepare_user("Richard", "Smith", self.DND_TEMPLATE)
+        template = self.prepare_template(self.DND)
+        user_id = self.prepare_user("Richard", "Smith", template)
         expected_url = "/users/{}/funckeys/1".format(user_id)
 
         self.confd.add_response(expected_url, method='PUT', code=204)
@@ -124,7 +121,8 @@ class TestFuncKeyEdit(TestFuncKey):
         self.confd.assert_json_request(expected_url, 'PUT', expected_funckey)
 
     def test_given_user_when_removing_funckey_then_updates_funckey_in_confd(self):
-        user_id = self.prepare_user("Daffy", "Duck", self.DND_TEMPLATE)
+        template = self.prepare_template(self.DND)
+        user_id = self.prepare_user("Daffy", "Duck", template)
         expected_url = "/users/{}/funckeys/1".format(user_id)
 
         self.confd.add_response(expected_url, method='DELETE', code=204)
@@ -138,8 +136,13 @@ class TestFuncKeyEdit(TestFuncKey):
                             'path': expected_url}
         self.confd.assert_request_sent(expected_request)
 
-    def test_given_user_with_dnd_when_editing_then_dnd_appears_on_funckey_page(self):
-        user_id = self.prepare_user("George", "Clooney", self.CUSTOM_TEMPLATE)
+    def test_given_user_with_funckey_when_editing_then_funckey_appears_on_page(self):
+        funckey = dict(self.CUSTOM)
+        funckey['blf'] = False
+        funckey['label'] = 'speedy'
+
+        template = self.prepare_template(funckey)
+        user_id = self.prepare_user("George", "Clooney", template)
 
         users = self.browser.users.go()
         user = users.edit("George Clooney")
@@ -149,18 +152,32 @@ class TestFuncKeyEdit(TestFuncKey):
                             'type': 'Customized',
                             'destination': '9999',
                             'label': 'speedy',
-                            'supervision': True}
+                            'supervision': False}
         assert_that(funckey, has_entries(expected_funckey))
 
         expected_request = {'method': 'GET',
                             'path': '/users/{}/funckeys'.format(user_id)}
         self.confd.assert_request_sent(expected_request)
 
+    def test_given_funckey_has_no_supervision_when_editing_then_supervision_disabled(self):
+        funckey = dict(self.CUSTOM)
+        funckey['blf'] = True
+        template = self.prepare_template(funckey)
+        self.prepare_user("Nicole", "Kidman", template)
+
+        users = self.browser.users.go()
+        user = users.edit("Nicole Kidman")
+        funckey = user.funckeys().get(1)
+
+        assert_that(funckey['supervision'], equal_to(True))
+
 
 class TestFuncKeyDelete(TestFuncKey):
 
     def test_given_user_with_funckey_when_deleting_user_then_deletes_funckeys_in_confd(self):
-        user_id = self.prepare_user("John", "Doe", self.CUSTOM_TEMPLATE)
+        template = self.prepare_template(self.CUSTOM)
+        print template
+        user_id = self.prepare_user("John", "Doe", template)
         position = 1
 
         expected_url = "/users/{}/funckeys/{}".format(user_id, position)
@@ -184,21 +201,19 @@ class TestFuncKeyCreate(TestFuncKey):
         fwd_exten = '8888'
 
         with self.db.queries() as queries:
-            self.user_id = queries.insert_user(firstname="Jimmy", lastname="John")
-            #secretary_id = queries.insert_user(firstname="Mary", lastname="Mall")
-            #group_id = queries.insert_group(name='Alcoholics Anonymous')
-            #queue_id = queries.insert_queue(name='File Ariane')
-            #conference_id = queries.insert_conference(name='C-F Moisi')
-            #agent_id = queries.insert_agent(firstname="Mary", lastname="Mall")
+            user_id = queries.insert_user(firstname="Jimmy", lastname="John")
+        #    secretary_id = queries.insert_user(firstname="Mary", lastname="Mall")
+        #    group_id = queries.insert_group(name='Alcoholics Anonymous')
+        #    queue_id = queries.insert_queue(name='File Ariane')
+        #    conference_id = queries.insert_conference(name='C-F Moisi')
+        #    agent_id = queries.insert_agent(firstname="Mary", lastname="Mall")
 
-            #filter_id = queries.insert_callfilter(name='Bull Shit')
-            #queries.insert_filter_member(filter_id, self.user_id, 'boss')
-            #filter_member_id = queries.insert_filter_member(filter_id, secretary_id, 'secretary')
-
-        self.confd.add_json_response("/users/{}/funckeys".format(self.user_id), self.EMPTY_TEMPLATE)
+        #    filter_id = queries.insert_callfilter(name='Bull Shit')
+        #    queries.insert_filter_member(filter_id, self.user_id, 'boss')
+        #    filter_member_id = queries.insert_filter_member(filter_id, secretary_id, 'secretary')
 
         self.confd_funckeys = {
-            '1': {'blf': True, 'label': None, 'destination': {'type': 'user', 'user_id': self.user_id}},
+            '1': {'blf': True, 'label': None, 'destination': {'type': 'user', 'user_id': user_id}},
             #'2': {'blf': False, 'label': None, 'destination': {'type': 'group', 'group_id': group_id}},
             #'3': {'blf': False, 'label': None, 'destination': {'type': 'queue', 'queue_id': queue_id}},
             #'4': {'blf': True, 'label': None, 'destination': {'type': 'conference', 'conference_id': conference_id}},
@@ -266,7 +281,8 @@ class TestFuncKeyCreate(TestFuncKey):
         ]
 
     def test_when_creating_user_with_func_key_then_creates_func_key_in_confd(self):
-        self.confd.add_json_response(r"/users/\d+/funckeys", self.EMPTY_TEMPLATE)
+        template = self.prepare_template()
+        self.confd.add_json_response(r"/users/\d+/funckeys", template)
 
         for position in self.confd_funckeys.keys():
             self.confd.add_response(r"/users/\d+/funckeys/{}".format(position),
