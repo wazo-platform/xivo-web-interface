@@ -36,25 +36,25 @@ function build_bsfilter($helper, $funckey) {
 	$bsfilters = $helper->get_var('bsfilter_list');
 	$html = 'class="fkbsfilter" style="display: none;"';
 
-	if(count($bsfilters) === 0) {
-		$url = &$helper->get_module('url');
-		return $url->href_htmln($helper->bbf('create_callfilter'),
-			'service/ipbx/call_management/callfilter',
-			'act=add',
-			$html
+	if(is_array($bsfilters) && count($bsfilters) >= 1) {
+		$form = &$helper->get_module('form');
+		$options = array(
+			'paragraph' => false,
+			'label' => false,
+			'key' => 'callfilteridentity',
+			'altkey' => 'id',
+			'selected' => $funckey['typeval'],
+			'name' => 'phonefunckey[fkbsfilter][]'
 		);
+		return $form->select($options, $bsfilters, $html);
 	}
 
-	$form = &$helper->get_module('form');
-	$options = array(
-		'paragraph' => false,
-		'label' => false,
-		'key' => 'callfilteridentity',
-		'altkey' => 'id',
-		'selected' => $funckey['typeval'],
-		'name' => 'phonefunckey[fkbsfilter][]'
+	$url = &$helper->get_module('url');
+	return $url->href_htmln($helper->bbf('create_callfilter'),
+		'service/ipbx/call_management/callfilter',
+		'act=add',
+		$html
 	);
-	return $form->select($options, $bsfilters, $html);
 }
 
 function build_row($helper, $funckey) {
