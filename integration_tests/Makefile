@@ -14,6 +14,15 @@ test-image:
 test:
 	nosetests suite
 
+stop:
+	cd assets/funckeys && \
+	docker-compose kill && \
+	docker-compose rm -f
+
+start:
+	cd assets/funckeys && \
+	docker-compose run --service-ports --rm tests
+
 distclean:
 	docker rmi xivo/xivo-postgres
 	docker rmi xivo-confd-test
