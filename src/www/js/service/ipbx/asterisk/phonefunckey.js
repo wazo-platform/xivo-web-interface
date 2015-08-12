@@ -59,7 +59,7 @@ function attachEvents(row) {
 
 	var fields = {
 		type: row.find('select[name="phonefunckey[type][]"]'),
-	    identity: row.find('input[name="phonefunckey[typevalidentity][]"]'),
+		identity: row.find('input[name="phonefunckey[typevalidentity][]"]'),
 		destination: row.find('input[name="phonefunckey[typeval][]"]'),
 		remove: row.find('.fkdelete'),
 		supervision: row.find('select[name="phonefunckey[supervision][]"]'),
