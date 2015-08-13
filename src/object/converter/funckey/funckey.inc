@@ -44,7 +44,7 @@ class FuncKeyConverter {
 
 	public function add_user_func_keys($user_id, $legacy_funckeys) {
 		$funckeys = $this->mapper->map_to_confd($user_id, $legacy_funckeys);
-		$this->remove_stale_func_keys($user_id, $funckeys);
+		$this->remove_all_func_keys($user_id, $funckeys);
 		$updated_funckeys = $this->update_func_keys($user_id, $funckeys);
 		return $this->mapper->map_legacy_return($user_id, $updated_funckeys);
 	}
@@ -64,16 +64,14 @@ class FuncKeyConverter {
 		return $success;
 	}
 
-	private function remove_stale_func_keys($user_id, $funckeys) {
+	private function remove_all_func_keys($user_id, $funckeys) {
 		$old_funckeys = $this->confd->get_user_func_keys($user_id);
 		if ($old_funckeys === null) {
 			return;
 		}
 
 		foreach(array_keys($old_funckeys) as $position) {
-			if (!array_key_exists($position, $funckeys)) {
-				$this->confd->delete_user_func_key($user_id, $position);
-			}
+			$this->confd->delete_user_func_key($user_id, $position);
 		}
 	}
 
