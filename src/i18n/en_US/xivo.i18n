@@ -59,6 +59,12 @@ Error during update
 ; successfully_updated
 Successfully updated
 
+; error_during_upgrade
+Error during upgrade of %s
+
+; successfully_upgraded
+%s successfully upgraded
+
 ; successfully_synchronize
 Device successfully synchronized
 

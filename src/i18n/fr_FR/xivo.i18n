@@ -54,10 +54,16 @@ Terminaison réinitialisée en mode "Autoprov"
 %s à rencontré une erreur durant la désinstallation
 
 ; error_during_update
-Une erreur est survenue durant la mise a jour
+Une erreur est survenue durant la mise à jour
 
 ; successfully_updated
-Mise à jour réussi
+Mise à jour réussie
+
+; error_during_upgrade
+Une erreur est survenue durant la mise à jour de %s
+
+; successfully_upgraded
+Mise à jour réussie de %s
 
 ; successfully_synchronize
 Synchronisation de la terminaison réussie
