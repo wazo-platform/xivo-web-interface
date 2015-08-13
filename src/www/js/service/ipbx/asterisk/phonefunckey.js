@@ -43,6 +43,7 @@ function resetRow(fields) {
 		.removeClass('it-disabled')
 		.val('')
 		.show();
+    fields.identity.autocomplete("destroy");
 	fields.destination
 		.val('');
 	fields.supervision
