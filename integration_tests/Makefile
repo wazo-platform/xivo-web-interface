@@ -13,8 +13,6 @@ build-postgres:
 
 build-webi:
 	docker build -t xivo/xivo-web-interface ..
-
-test-image:
 	docker build --no-cache -t xivo-webi-test -f Dockerfile ..
 
 test:

@@ -6,7 +6,6 @@ Running functional tests
 cd integration_tests
 pip install -r test-requirements.txt
 make test-setup MANAGE_DB_DIR=/path/to/xivo-manage-db
-make test-image
 nosetests suite
 ```
 

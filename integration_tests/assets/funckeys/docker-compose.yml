@@ -36,6 +36,7 @@ webi:
   ports:
     - "8080:80"
   volumes:
+    - "../../../src:/usr/share/xivo-web-interface"
     - "./etc/xivo/datastorage.conf:/etc/xivo/datastorage.conf"
     - "./etc/xivo/web-interface/ipbx.ini:/etc/xivo/web-interface/ipbx.ini"
     - "./etc/xivo-sysconfd/config.inc:/usr/share/xivo-web-interface/object/xivo/sysconfd/config.inc"
