@@ -67,16 +67,15 @@ class MockConfd(object):
         msg = pformat(requests)
         assert_that(requests, has_item(has_entries(request)), msg)
 
-    def assert_json_request(self, expected_url, expected_method, expected_body):
-        request = self.request_matching(expected_url)
-        assert_that(request['method'], equal_to(expected_method))
+    def assert_json_request(self, expected_url, expected_body, method='GET'):
+        request = self.request_matching(expected_url, method)
         body = json.loads(request['body'])
         msg = pformat(request)
         assert_that(body, has_entries(expected_body), msg)
 
-    def request_matching(self, path):
+    def request_matching(self, path, method='GET'):
         regex = re.compile(path)
         for request in self.requests():
-            if regex.match(request['path']):
+            if regex.match(request['path']) and request['method'] == method:
                 return request
         raise AssertionError("No request matching '{}' found".format(path))
