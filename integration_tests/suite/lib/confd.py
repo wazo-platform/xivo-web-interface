@@ -16,11 +16,12 @@
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
+from pprint import pformat
 import requests
 import json
 import re
 
-from hamcrest import assert_that, has_item, has_entries, equal_to
+from hamcrest import assert_that, has_item, has_entries
 
 
 class MockConfd(object):
@@ -63,13 +64,15 @@ class MockConfd(object):
 
     def assert_request_sent(self, request):
         requests = self.requests()
-        assert_that(requests, has_item(has_entries(request)))
+        msg = pformat(requests)
+        assert_that(requests, has_item(has_entries(request)), msg)
 
     def assert_json_request(self, expected_url, expected_method, expected_body):
         request = self.request_matching(expected_url)
         assert_that(request['method'], equal_to(expected_method))
         body = json.loads(request['body'])
-        assert_that(body, has_entries(expected_body))
+        msg = pformat(request)
+        assert_that(body, has_entries(expected_body), msg)
 
     def request_matching(self, path):
         regex = re.compile(path)
