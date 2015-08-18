@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -32,6 +32,7 @@ class xivo_object_provdconfig extends xivo_object_provd_abstract
 	protected $_extensions		= false;
 	protected $_sccpdevice		= false;
 	protected $_linefeatures	= false;
+	protected $_userfeatures	= false;
 	protected $_phonefunckey 	= false;
 	protected $_appsip			= false;
 	protected $_user_line 		= false;
@@ -45,6 +46,7 @@ class xivo_object_provdconfig extends xivo_object_provd_abstract
 		|| ($this->_extensions = &$this->_service->get_module('extensions')) === false
 		|| ($this->_sccpdevice = &$this->_service->get_module('sccpdevice')) === false
 		|| ($this->_linefeatures = &$this->_service->get_module('linefeatures')) === false
+		|| ($this->_userfeatures = &$this->_service->get_module('userfeatures')) === false
 		|| ($this->_phonefunckey = &$this->_service->get_module('phonefunckey')) === false
 		|| ($this->_user_line = &$this->_service->get_module('user_line')) === false
 		|| ($this->_func_key = &$this->_service->get_module('func_key')) === false
@@ -516,9 +518,8 @@ class xivo_object_provdconfig extends xivo_object_provd_abstract
 		$config['exten_voicemail'] = $this->get_exten('vmusermsg');
 	}
 
-	private function _build_funckeys(&$raw_config,$line_id)
+	private function _build_funckeys(&$raw_config,$user_id)
 	{
-		$user_id = $this->_user_line->get_master_user_id_by_line_id($line_id);
 		$funckeys = array();
 		if (($funckeys_v1 = $this->_phonefunckey->build_provd_conf_funckey($user_id)) !== false)
 			$funckeys = $funckeys + $funckeys_v1;
@@ -529,6 +530,14 @@ class xivo_object_provdconfig extends xivo_object_provd_abstract
 			unset($raw_config['funckeys']);
 		else
 			$raw_config['funckeys'] = $funckeys;
+	}
+
+	private function _add_user_uuid(&$raw_config,$user_id)
+	{
+		$user = $this->_userfeatures->get($user_id);
+		if (empty($user['uuid']) === false) {
+			$raw_config['X_xivo_user_uuid'] = $user['uuid'];
+		}
 	}
 
 	private function _build_lines(&$raw_config,$listline)
@@ -726,6 +735,7 @@ class xivo_object_provdconfig extends xivo_object_provd_abstract
 		}
 
 		$configdevice = $this->_get_config_device($configid);
+		$user_id = $this->_user_line->get_master_user_id_by_line_id($listline[0]['id']);
 
 		$newconfigid = $deviceid;
 		$newconfig = array();
@@ -735,8 +745,9 @@ class xivo_object_provdconfig extends xivo_object_provd_abstract
 		$newconfig['raw_config'] = array('X_key' => '');
 		$newrawconfig = &$newconfig['raw_config'];
 		$this->_build_exten_config($newrawconfig);
-		$this->_build_funckeys($newrawconfig,$listline[0]['id']);
+		$this->_build_funckeys($newrawconfig,$user_id);
 		$this->_build_lines($newrawconfig,$listline);
+		$this->_add_user_uuid($newrawconfig,$user_id);
 
 		$this->_create_or_edit_config($newconfigid, $newconfig);
 
