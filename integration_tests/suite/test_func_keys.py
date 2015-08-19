@@ -96,7 +96,7 @@ class TestFuncKeyEdit(TestFuncKey):
                             'label': None,
                             'destination': {'type': 'service',
                                             'service': 'enablednd'}}
-        self.confd.assert_json_request(expected_url, 'PUT', expected_funckey)
+        self.confd.assert_json_request(expected_url, expected_funckey, 'PUT')
 
     def test_given_user_when_editing_funckey_then_updates_funckey_in_confd(self):
         template = self.prepare_template(self.DND)
@@ -118,7 +118,7 @@ class TestFuncKeyEdit(TestFuncKey):
                             'label': 'devil',
                             'destination': {'type': 'custom',
                                             'exten': '666'}}
-        self.confd.assert_json_request(expected_url, 'PUT', expected_funckey)
+        self.confd.assert_json_request(expected_url, expected_funckey, 'PUT')
 
     def test_given_user_when_removing_funckey_then_updates_funckey_in_confd(self):
         template = self.prepare_template(self.DND)
@@ -301,4 +301,4 @@ class TestFuncKeyCreate(TestFuncKey):
 
         for position, funckey in self.confd_funckeys.iteritems():
             url = r"/users/\d+/funckeys/{}".format(position)
-            self.confd.assert_json_request(url, 'PUT', funckey)
+            self.confd.assert_json_request(url, funckey, 'PUT')
