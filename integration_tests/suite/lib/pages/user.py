@@ -22,57 +22,10 @@ from selenium.webdriver.support.ui import Select
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.alert import Alert
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.common.exceptions import NoSuchElementException
 
-from lib.pages import Page
-
-
-class UserListPage(Page):
-
-    PATH = "/service/ipbx/index.php/pbx_settings/users/"
-    LINE_XPATH = "//tr[td[contains(@title, '{name}')]]"
-
-    def go(self):
-        url = self.build_url(self.PATH)
-        self.driver.get(url)
-        self.wait_for(By.NAME, "fm-users-list")
-        return self
-
-    def add(self):
-        url = self.build_url(self.PATH, act='add')
-        self.driver.get(url)
-
-        self.wait_for(By.ID, 'sr-users')
-        return UserPage(self.driver)
-
-    def edit(self, name):
-        xpath = self.LINE_XPATH.format(name=name)
-        line = self.driver.find_element_by_xpath(xpath)
-
-        selector = "a[title='Edit']"
-        button = line.find_element_by_css_selector(selector)
-        button.click()
-
-        self.wait_for(By.ID, 'sr-users')
-        return UserPage(self.driver)
-
-    def delete(self, name):
-        xpath = self.LINE_XPATH.format(name=name)
-        line = self.driver.find_element_by_xpath(xpath)
-
-        selector = "a[title='Delete']"
-        button = line.find_element_by_css_selector(selector)
-        button.click()
-
-        condition = ec.alert_is_present()
-        self.wait().until(condition)
-
-        Alert(self.driver).accept()
-
-        condition = ec.presence_of_element_located((By.XPATH, xpath))
-        self.wait().until_not(condition)
+from lib.pages import Page, ListPage
 
 
 class UserPage(Page):
@@ -235,3 +188,11 @@ class FuncKeyTab(Page):
 
         ActionChains(self.driver).send_keys_to_element(element, Keys.DOWN, Keys.RETURN).perform()
         self.wait().until_not(condition)
+
+
+class UserListPage(ListPage):
+
+    url = "/service/ipbx/index.php/pbx_settings/users/"
+    list_selector = (By.NAME, "fm-users-list")
+    form_selector = (By.ID, "sr-users")
+    form_page = UserPage

@@ -15,11 +15,15 @@
 # You should have received a copy of the GNU General Public License along
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+
+import abc
+
 import urllib
 
 from selenium.webdriver.support.ui import WebDriverWait, Select
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.alert import Alert
 
 
 class Page(object):
@@ -69,3 +73,70 @@ class Page(object):
 
     def select_id(self, id_, value, root=None):
         self.select(By.ID, id_, value, root)
+
+
+class ListPage(Page):
+
+    __metaclass__ = abc.ABCMeta
+
+    line_xpath = "//tr[td[contains(@title, '{name}')]]"
+    edit_xpath = "{}/td/a[@title='Edit']".format(line_xpath)
+    delete_xpath = "{}/td/a[@title='Delete']".format(line_xpath)
+
+    @abc.abstractproperty
+    def url(self):
+        return
+
+    @abc.abstractproperty
+    def list_selector(self):
+        return
+
+    @abc.abstractproperty
+    def form_selector(self):
+        return
+
+    @abc.abstractproperty
+    def form_page(self):
+        return
+
+    def go(self):
+        url = self.build_url(self.url)
+        self.driver.get(url)
+
+        condition = ec.presence_of_element_located(self.list_selector)
+        self.wait().until(condition)
+
+        return self
+
+    def add(self):
+        url = self.build_url(self.url, act='add')
+        self.driver.get(url)
+
+        condition = ec.presence_of_element_located(self.form_selector)
+        self.wait().until(condition)
+
+        return self.form_page(self.driver)
+
+    def edit(self, name):
+        xpath = self.edit_xpath.format(name=name)
+
+        button = self.driver.find_element_by_xpath(xpath)
+        button.click()
+
+        condition = ec.presence_of_element_located(self.form_selector)
+        self.wait().until(condition)
+
+        return self.form_page(self.driver)
+
+    def delete(self, name):
+        xpath = self.delete_xpath.format(name=name)
+
+        button = self.driver.find_element_by_xpath(xpath)
+        button.click()
+
+        condition = ec.alert_is_present()
+        self.wait().until(condition)
+        Alert(self.driver).accept()
+
+        condition = ec.presence_of_element_located((By.XPATH, xpath))
+        self.wait().until_not(condition)
