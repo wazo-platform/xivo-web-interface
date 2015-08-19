@@ -16,14 +16,12 @@
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-import unittest
-
 from hamcrest import assert_that, has_entries, equal_to
 
-from lib import setup as testsetup
+from lib.testcase import TestWebi
 
 
-class TestFuncKey(unittest.TestCase):
+class TestFuncKey(TestWebi):
 
     DND = {'destination': {'type': 'service',
                            'href': None,
@@ -34,26 +32,6 @@ class TestFuncKey(unittest.TestCase):
                               u'type': u'custom'}}
 
     asset = 'funckeys'
-
-    @classmethod
-    def setUpClass(cls):
-        testsetup.setup_docker(cls.asset)
-
-        cls.db = testsetup.setup_db()
-        cls.db.recreate()
-
-        cls.browser = testsetup.setup_browser()
-        cls.browser.start()
-        cls.browser.login.login('root', 'proformatique')
-
-        cls.confd = testsetup.setup_confd()
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.browser.stop()
-
-    def setUp(self):
-        self.addCleanup(self.confd.clear)
 
     def prepare_user(self, firstname, lastname, template):
         with self.db.queries() as queries:
