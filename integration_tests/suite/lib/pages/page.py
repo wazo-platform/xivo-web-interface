@@ -55,7 +55,15 @@ class Page(object):
     def fill(self, by, arg, value, root=None):
         root = root or self.driver
         element = root.find_element(by, arg)
-        element.send_keys(value)
+        if element.tag_name == 'select':
+            Select(element).select_by_visible_text(value)
+        elif element.get_attribute('type') == 'checkbox':
+            if element.is_selected() and value is False:
+                element.click()
+            elif not element.is_selected() and value is True:
+                element.click()
+        else:
+            element.send_keys(value)
 
     def fill_name(self, name, value, root=None):
         self.fill(By.NAME, name, value, root)

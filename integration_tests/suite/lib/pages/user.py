@@ -33,11 +33,7 @@ class UserPage(Page):
     def fill_form(self, **kwargs):
         for name, value in kwargs.iteritems():
             id_ = "it-userfeatures-{}".format(name)
-            element = self.driver.find_element_by_id(id_)
-            if element.tag_name == 'select':
-                Select(element).select_by_visible_text(value)
-            else:
-                element.send_keys(value)
+            self.fill(By.ID, id_, value)
 
     def funckeys(self):
         link = self.driver.find_element_by_css_selector("a[href='#funckeys']")
