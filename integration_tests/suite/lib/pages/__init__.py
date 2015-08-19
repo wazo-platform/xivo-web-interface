@@ -29,7 +29,8 @@ from pyvirtualdisplay import Display
 class Browser(object):
 
     pages = {'login': LoginPage,
-             'users': UserListPage}
+             'users': UserListPage,
+             'voicemails': VoicemailListPage}
 
     def __init__(self, username, password, virtual=True):
         self.username = username
