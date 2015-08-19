@@ -87,7 +87,7 @@ class TestFuncKeyEdit(TestFuncKey):
 
         self.confd.add_response(expected_url, method='PUT', code=204)
 
-        users = self.browser.users.go()
+        users = self.browser.users
         user = users.edit("John Doe")
         user.funckeys().add(type="Do not disturb")
         user.save()
@@ -105,7 +105,7 @@ class TestFuncKeyEdit(TestFuncKey):
 
         self.confd.add_response(expected_url, method='PUT', code=204)
 
-        users = self.browser.users.go()
+        users = self.browser.users
         user = users.edit("Richard Smith")
         user.funckeys().edit(key=1,
                              type="Customized",
@@ -127,7 +127,7 @@ class TestFuncKeyEdit(TestFuncKey):
 
         self.confd.add_response(expected_url, method='DELETE', code=204)
 
-        users = self.browser.users.go()
+        users = self.browser.users
         user = users.edit("Daffy Duck")
         user.funckeys().remove(1)
         user.save()
@@ -144,7 +144,7 @@ class TestFuncKeyEdit(TestFuncKey):
         template = self.prepare_template(funckey)
         user_id = self.prepare_user("George", "Clooney", template)
 
-        users = self.browser.users.go()
+        users = self.browser.users
         user = users.edit("George Clooney")
 
         funckey = user.funckeys().get(1)
@@ -165,7 +165,7 @@ class TestFuncKeyEdit(TestFuncKey):
         template = self.prepare_template(funckey)
         self.prepare_user("Nicole", "Kidman", template)
 
-        users = self.browser.users.go()
+        users = self.browser.users
         user = users.edit("Nicole Kidman")
         funckey = user.funckeys().get(1)
 
@@ -183,7 +183,7 @@ class TestFuncKeyDelete(TestFuncKey):
         expected_url = "/users/{}/funckeys/{}".format(user_id, position)
         self.confd.add_response(expected_url, method='DELETE', code=204)
 
-        users = self.browser.users.go()
+        users = self.browser.users
         users.delete("John Doe")
 
         expected_request = {'method': 'DELETE',
@@ -289,7 +289,7 @@ class TestFuncKeyCreate(TestFuncKey):
                                     method='PUT',
                                     code=204)
 
-        users = self.browser.users.go()
+        users = self.browser.users
         user = users.add()
         user.fill_form(firstname="John", lastname="Doe")
         funckeys = user.funckeys()
