@@ -81,6 +81,7 @@ class TestFuncKeyEdit(TestFuncKey):
         user_id = self.prepare_user("Richard", "Smith", template)
         expected_url = "/users/{}/funckeys/1".format(user_id)
 
+        self.confd.add_response(expected_url, method='DELETE', code=204)
         self.confd.add_response(expected_url, method='PUT', code=204)
 
         users = self.browser.users
@@ -96,6 +97,8 @@ class TestFuncKeyEdit(TestFuncKey):
                             'label': 'devil',
                             'destination': {'type': 'custom',
                                             'exten': '666'}}
+
+        self.confd.request_matching(expected_url, 'DELETE')
         self.confd.assert_json_request(expected_url, expected_funckey, 'PUT')
 
     def test_given_user_when_removing_funckey_then_updates_funckey_in_confd(self):
