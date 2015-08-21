@@ -24,6 +24,6 @@ server {
     fastcgi_param HTTPS on;
     ssl_certificate /usr/share/xivo-certs/server.crt;
     ssl_certificate_key /usr/share/xivo-certs/server.key;
-    ssl_ciphers DEFAULT;
+    ssl_ciphers ALL:!aNULL:!eNULL:!LOW:!EXP:!RC4:!3DES:!SEED:+HIGH:+MEDIUM;
     ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
 }
