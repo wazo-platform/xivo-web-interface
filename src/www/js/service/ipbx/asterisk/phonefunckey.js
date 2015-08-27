@@ -119,13 +119,20 @@ function attachAutocomplete(fields) {
 			var fktype = fields.type.val();
 			var url = xivo_fk_autocomplete[fktype] + dwho_sess_str;
 			var body = encodeURI("except=5&search=" + request.term);
-			$.post(url, body, function(data) {
-				var suggestions = [];
-				$(data).each(function(pos, item) {
-					suggestions.push({label: item.identity, value: item.id});
-				});
-				response(suggestions);
-			});
+			var settings = {
+				url: url,
+				method: "POST",
+				data: body,
+				timeout: 3000,
+				success: function(data) {
+					var suggestions = [];
+					$(data).each(function(pos, item) {
+						suggestions.push({label: item.identity, value: item.id});
+					});
+					response(suggestions);
+				}
+			};
+			$.ajax(settings);
 		},
 		select: function(e, ui) {
 			e.preventDefault();
