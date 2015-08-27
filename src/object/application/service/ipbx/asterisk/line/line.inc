@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -685,14 +685,6 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 
 		$this->_status = 'delete';
 		$this->_return = array();
-
-		if(isset($this->_info['protocol']['mailbox'])
-		&& empty($this->_info['protocol']['mailbox']) === false)
-		{
-			$this->_set_error('voicemail', dwho_i18n::babelfish('user_no_remove_lines_when_voicemail'));
-			dwho_report::push('error', dwho_i18n::babelfish('user_no_remove_lines_when_voicemail'));
-			return(false);
-		}
 
 		if($this->delete_protocol() === false
 		|| $this->delete_linefeatures() === false

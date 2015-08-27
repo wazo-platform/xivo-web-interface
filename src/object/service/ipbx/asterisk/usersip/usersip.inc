@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -47,12 +47,6 @@ class xivo_service_asterisk_usersip extends xivo_service_asterisk_abstract
 		$data['initialized'] = dwho_has_len($data['fullcontact']);
 		$data['commented'] = (bool) $data['commented'];
 		$data['identity'] = strtoupper($data['protocol']).'/'.$data['name'];
-
-		if(($pos = strrpos($data['mailbox'],'@')) !== false)
-		{
-			$data['voicemailmailbox'] = substr($data['mailbox'],0,$pos);
-			$data['voicemailcontext'] = substr($data['mailbox'],$pos + 1);
-		}
 
 		return($data);
 	}

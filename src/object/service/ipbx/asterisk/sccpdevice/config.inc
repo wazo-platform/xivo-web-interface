@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -31,15 +31,11 @@ $array['element']['device']['default'] = '';
 $array['element']['line'] = array();
 $array['element']['line']['default'] = '';
 
-$array['element']['voicemail'] = array();
-$array['element']['voicemail']['default'] = '';
-
 dwho::load_class('dwho_network');
 
 $array['filter'] = array();
 $array['filter']['name'] = array('minlen' => 1,'maxlen' => 80,'regexp' => '/^[a-z0-9_-]+$/i');
 $array['filter']['device'] = array('minlen' => 1,'maxlen' => 80,'regexp' => '/^[a-z0-9_- ]+$/i');
 $array['filter']['line'] = array('minlen' => 1,'maxlen' => 80,'regexp' => '/^[a-z0-9_-]+$/i');
-$array['filter']['voicemail'] = array('minlen' => 1,'maxlen' => 80,'regexp' => '/^[a-z0-9_-]+$/i');
 
 ?>

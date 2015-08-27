@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -557,7 +557,6 @@ class xivo_application_service_asterisk_voicemail extends xivo_application_aster
 			$where['voicemailid'] = $this->_info['voicemail']['uniqueid'];
 
 			$userfeatures->edit_where($where,array('voicemailid' => 0,
-												'voicemailtype' => null,
 												'enablevoicemail' => 0));
 		}
 

@@ -31,11 +31,6 @@ $array['element']['firstname']['default'] = '';
 $array['element']['lastname'] = array();
 $array['element']['lastname']['default'] = '';
 
-$array['element']['voicemailtype'] = array();
-$array['element']['voicemailtype']['value'] = array('asterisk');
-$array['element']['voicemailtype']['default'] = '';
-$array['element']['voicemailtype']['null'] = true;
-
 $array['element']['voicemailid'] = array();
 $array['element']['voicemailid']['default'] = 0;
 $array['element']['voicemailid']['null'] = true;
@@ -207,7 +202,6 @@ $array['element']['func_key_template_id']['null'] = true;
 $array['filter'] = array();
 $array['filter']['firstname'] = array('cast' => 'sgraph','maxlen' => 128);
 $array['filter']['lastname'] = array('set' => false,'chk' => 2,'cast' => 'sgraph','maxlen' => 128);
-$array['filter']['voicemailtype'] = array('set' => false,'chk' => 2,'key' => array('asterisk','exchange'));
 $array['filter']['voicemailid'] = array('set' => false,'chk' => 2,'cast' => 'ulongint');
 $array['filter']['entityid'] = array('cast' => 'ulongint');
 $array['filter']['callerid'] = array('set'	=> false,

@@ -637,16 +637,6 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			}
 		}
 
-		switch($this->get_result_var('userfeatures','voicemailtype'))
-		{
-			case 'asterisk':
-			break;
-			default:
-				$vmaction = 'none';
-				$this->_set_result_var('userfeatures','voicemailid',null);
-			break;
-		}
-
 		if(dwho_issa('linefeatures',$arr) === true
 		&& $this->set_linefeatures($arr['linefeatures']) !== false
 		&& isset($this->_result['linefeatures'][0]))
@@ -676,7 +666,6 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			}
 			else
 			{
-				$this->_set_result_var('userfeatures','voicemailtype',null);
 				$this->_set_result_var('userfeatures','enablevoicemail',false);
 				$this->_set_result_var('userfeatures','voicemailid',null);
 			}
@@ -893,9 +882,6 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 
 			$protocolname = $ref['protocol'];
 			$number = $ref['number'];
-
-			if($protocolname === XIVO_SRE_IPBX_AST_PROTO_CUSTOM)
-				$this->_set_result_var('userfeatures','voicemailtype',null);
 
 			$ref['num'] = isset($ref['num']) ? (int) $ref['num'] : 1;
 			$ref['callerid'] = $this->_service->mk_callerid($userfeatures['callerid'],$number,$protocolname);
@@ -2214,7 +2200,6 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		&& empty($arr['voicemail']) === false
 		&& dwho_has_len($arr['voicemail'],'mailbox') === true) {
 			$arr['userfeatures']['enablevoicemail'] = true;
-			$arr['userfeatures']['voicemailtype'] = 'asterisk';
 		} else {
 			unset($arr['voicemail']);
 		}
