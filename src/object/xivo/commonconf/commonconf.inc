@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -135,11 +135,6 @@ class xivo_object_commonconf extends xivo_object_abstract
 		$conf['net4_ip'] = $voip_iface['address'];
 		$conf['net4_netmask'] = $voip_iface['netmask'];
 		$conf['net4_subnet'] = $this->_ip2subnet($voip_iface['address'], $voip_iface['netmask']);
-
-		$_cf = dwho_gat::get('_CF');
-		$conf['astdb'] = $_cf['datastorage']['general']['asterisk'];
-		$conf['xivodb'] = $_cf['datastorage']['general']['xivo'];
-
 
 		return $this->_sysconfd->request_post('/commonconf_generate', $conf);
 	}
