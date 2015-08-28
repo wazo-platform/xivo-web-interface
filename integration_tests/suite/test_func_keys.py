@@ -113,9 +113,7 @@ class TestFuncKeyEdit(TestFuncKey):
         user.funckeys().remove(1)
         user.save()
 
-        expected_request = {'method': 'DELETE',
-                            'path': expected_url}
-        self.confd.assert_request_sent(expected_request)
+        self.confd.assert_request_sent(expected_url, method="DELETE")
 
     def test_given_user_with_funckey_when_editing_then_funckey_appears_on_page(self):
         funckey = dict(self.CUSTOM)
@@ -136,9 +134,8 @@ class TestFuncKeyEdit(TestFuncKey):
                             'supervision': False}
         assert_that(funckey, has_entries(expected_funckey))
 
-        expected_request = {'method': 'GET',
-                            'path': '/users/{}/funckeys'.format(user_id)}
-        self.confd.assert_request_sent(expected_request)
+        expected_url = '/users/{}/funckeys'.format(user_id)
+        self.confd.assert_request_sent(expected_url)
 
     def test_given_funckey_has_no_supervision_when_editing_then_supervision_disabled(self):
         funckey = dict(self.CUSTOM)
@@ -167,9 +164,7 @@ class TestFuncKeyDelete(TestFuncKey):
         users = self.browser.users
         users.delete("John Doe")
 
-        expected_request = {'method': 'DELETE',
-                            'path': expected_url}
-        self.confd.assert_request_sent(expected_request)
+        self.confd.assert_request_sent(expected_url, method="DELETE")
 
 
 class TestFuncKeyCreate(TestFuncKey):

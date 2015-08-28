@@ -21,7 +21,7 @@ import requests
 import json
 import re
 
-from hamcrest import assert_that, has_item, has_entries
+from hamcrest import assert_that, has_entries, equal_to
 
 
 class MockConfd(object):
@@ -62,10 +62,10 @@ class MockConfd(object):
         body = body or {}
         self.add_response(path, json.dumps(body), method, code)
 
-    def assert_request_sent(self, request):
-        requests = self.requests()
-        msg = pformat(requests)
-        assert_that(requests, has_item(has_entries(request)), msg)
+    def assert_request_sent(self, url, method='GET', body=None):
+        request = self.request_matching(url, method)
+        if body:
+            assert_that(request['body'], equal_to(body), pformat(request))
 
     def assert_json_request(self, expected_url, expected_body, method='GET'):
         request = self.request_matching(expected_url, method)
