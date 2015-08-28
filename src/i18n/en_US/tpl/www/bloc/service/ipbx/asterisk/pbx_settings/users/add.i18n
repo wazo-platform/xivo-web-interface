@@ -232,9 +232,6 @@ E-mail:
 ; fm_voicemail_tz
 Time zone:
 
-; fm_voicemail_skipcheckpass
-Disable password checking:
-
 ; fm_voicemail_attach
 Attach the audio file:
 

@@ -13,6 +13,9 @@ Nom complet :
 ; fm_voicemail_mailbox
 Numéro de boîte vocale :
 
+; fm_voicemail_ask-password
+Demander le mot de passe: 
+
 ; fm_voicemail_password
 Mot de passe :
 
@@ -209,3 +212,14 @@ Répertoire de stockage des messages
 ; fm_voicemail-passwordlocation-opt(voicemail)
 Configuration
 
+; col_voicemail-option-name
+Option
+
+; col_voicemail-option-value
+Valeur
+
+; col_voicemail-option-add
+Ajouter option
+
+; col_voicemail-option-delete
+Supprimer option

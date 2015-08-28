@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@ if(empty($list) === false):
 				    'name'	=> 'dialaction['.$event.'][actionarg1]',
 				    'labelid'	=> 'dialaction-'.$event.'-voicemail-actionarg1',
 				    'key'	=> 'identity',
-				    'altkey'	=> 'uniqueid',
+				    'altkey'	=> 'id',
 				    'invalid'	=> ($linked === false && $action === 'voicemail'),
 				    'default'	=> $element['dialaction']['actionarg1']['default'],
 				    'selected'	=> $this->get_var('dialaction',$event,'voicemail','actionarg1')),
