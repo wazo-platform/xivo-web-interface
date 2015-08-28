@@ -30,6 +30,28 @@ class VoicemailPage(Page):
             id_ = "it-voicemail-{}".format(key)
             self.fill(By.ID, id_, value)
 
+    def add_options(self, **kwargs):
+        for name, value in kwargs.iteritems():
+            self.add_option(name, value)
+
+    def add_option(self, name, value):
+        nb_rows = self.count_option_rows()
+
+        button = self.driver.find_element_by_id("vm-option-add")
+        button.click()
+        self.wait().until(lambda d: self.count_option_rows() > nb_rows)
+
+        selector = "#voicemail-options tr:last-child .vm-option-name"
+        self.fill(By.CSS_SELECTOR, selector, name)
+
+        selector = "#voicemail-options tr:last-child .vm-option-value"
+        self.fill(By.CSS_SELECTOR, selector, value)
+
+    def count_option_rows(self):
+        selector = "#voicemail-options tr"
+        rows = self.driver.find_elements_by_css_selector(selector)
+        return len(rows)
+
     def email(self):
         selector = "a[href='#email']"
         tab = self.driver.find_element_by_css_selector(selector)
