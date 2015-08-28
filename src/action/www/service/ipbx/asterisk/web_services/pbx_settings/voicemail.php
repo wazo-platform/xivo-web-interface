@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -105,7 +105,7 @@ switch($act)
 
 		$appvoicemail = &$ipbx->get_application('voicemail',null,false);
 
-		if(($list = $appvoicemail->get_voicemail_list()) === false)
+		if(($list = $appvoicemail->get_voicemail_search()) === false)
 		{
 			$http_response->set_status_line(204);
 			$http_response->send(true);

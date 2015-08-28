@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@ $act     = isset($_QR['act']) === true ? $_QR['act'] : '';
 $page    = dwho_uint($prefs->get('page', 1));
 $search  = strval($prefs->get('search', ''));
 $context = strval($prefs->get('context', ''));
-$sort    = $prefs->flipflop('sort', 'fullname');
+$sort    = $prefs->flipflop('sort', 'name');
 
 $info = array();
 
@@ -44,8 +44,7 @@ switch($act)
 
 		if(isset($_QR['fm_send']) === true && dwho_issa('voicemail',$_QR) === true)
 		{
-			if($appvoicemail->set_add($_QR) === false
-			|| $appvoicemail->add() === false)
+			if($appvoicemail->add($_QR) === false)
 			{
 				$fm_save = false;
 				$result = $appvoicemail->get_result();
@@ -61,24 +60,23 @@ switch($act)
 		$_TPL->set_var('info',$result);
 		$_TPL->set_var('error',$error);
 		$_TPL->set_var('fm_save',$fm_save);
-		$_TPL->set_var('element',$appvoicemail->get_elements());
 		$_TPL->set_var('tz_list',$appvoicemail->get_timezones());
 		$_TPL->set_var('context_list',$appvoicemail->get_context_list(null,null,null,false,'internal'));
 		break;
 
 	case 'edit':
 		if(isset($_QR['id']) === false
-		|| ($info = $appvoicemail->get($_QR['id'])) === false)
-			$_QRY->go($_TPL->url('service/ipbx/pbx_settings/voicemail'),$param);
+		|| ($voicemail = $appvoicemail->get($_QR['id'])) === false)
+		$_QRY->go($_TPL->url('service/ipbx/pbx_settings/voicemail'),$param);
 
+		$info = array('voicemail' => $voicemail);
 		$result = $fm_save = $error = null;
 		$return = &$info;
 
 		if(isset($_QR['fm_send']) === true && dwho_issa('voicemail',$_QR) === true)
 		{
 			$return = &$result;
-			if($appvoicemail->set_edit($_QR) === false
-			|| $appvoicemail->edit() === false)
+			if($appvoicemail->edit($_QR) === false)
 			{
 				$fm_save = false;
 				$result = $appvoicemail->get_result();
@@ -90,11 +88,10 @@ switch($act)
 		$dhtml = &$_TPL->get_module('dhtml');
 		$dhtml->set_js('js/dwho/submenu.js');
 
-		$_TPL->set_var('id',$info['voicemail']['uniqueid']);
+		$_TPL->set_var('id',$info['voicemail']['id']);
 		$_TPL->set_var('info',$return);
 		$_TPL->set_var('error',$error);
 		$_TPL->set_var('fm_save',$fm_save);
-		$_TPL->set_var('element',$appvoicemail->get_elements());
 		$_TPL->set_var('tz_list',$appvoicemail->get_timezones());
 		$_TPL->set_var('context_list',$appvoicemail->get_context_list(null,null,null,false,'internal'));
 		break;
@@ -102,10 +99,11 @@ switch($act)
 	case 'delete':
 		$param['page'] = $page;
 
-		if(isset($_QR['id']) === false || $appvoicemail->get($_QR['id']) === false)
+		if(isset($_QR['id']) === false)
 			$_QRY->go($_TPL->url('service/ipbx/pbx_settings/voicemail'),$param);
 
-		$appvoicemail->delete();
+		if($appvoicemail->delete($_QR['id']) === false)
+			$_QRY->go($_TPL->url('service/ipbx/pbx_settings/voicemail'),$param);
 
 		$_QRY->go($_TPL->url('service/ipbx/pbx_settings/voicemail'),$param);
 		break;
@@ -120,8 +118,8 @@ switch($act)
 
 		for($i = 0;$i < $nb;$i++)
 		{
-			if($appvoicemail->get($values[$i]) !== false)
-				$appvoicemail->delete();
+			$voicemail_id = $values[$i];
+			$appvoicemail->delete($voicemail_id);
 		}
 
 		$_QRY->go($_TPL->url('service/ipbx/pbx_settings/voicemail'),$param);
@@ -138,12 +136,12 @@ switch($act)
 
 		for($i = 0;$i < $nb;$i++)
 		{
-			if($appvoicemail->get($values[$i]) === false)
-				continue;
-			else if($act === 'disables')
-				$appvoicemail->disable();
-			else
-				$appvoicemail->enable();
+			$voicemail_id = $values[$i];
+			if($act == 'disables') {
+				$appvoicemail->disable($voicemail_id);
+			} else {
+				$appvoicemail->enable($voicemail_id);
+			}
 		}
 
 		$_QRY->go($_TPL->url('service/ipbx/pbx_settings/voicemail'),$param);
@@ -161,12 +159,8 @@ switch($act)
 		$limit[0] = $prevpage * $nbbypage;
 		$limit[1] = $nbbypage;
 
-		if($search !== '')
-			$list = $appvoicemail->get_voicemail_search($search,null,$order,$limit);
-		else
-			$list = $appvoicemail->get_voicemail_list(null,$order,$limit);
-
-		$total = $appvoicemail->get_cnt();
+		$list = $appvoicemail->get_voicemail_search($search,$order,$limit);
+		$total = $appvoicemail->get_search_total();
 
 		if($list === false && $total > 0 && $prevpage > 0)
 		{

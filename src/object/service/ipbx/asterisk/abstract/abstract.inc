@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -290,14 +290,28 @@ abstract class xivo_service_asterisk_abstract extends xivo_libdatastorage_abstra
 		if($id !== null)
 			$id = dwho_ulongint($id);
 
-		if(($module = $this->_sre->get_module('voicemail')) === false
-		|| ($info = $module->get(intval($actionarg1),$disable)) === false
-		|| ($id !== null && $id === $info['uniqueid']) === true)
+		$voicemail_id = intval($actionarg);
+
+		$appvoicemail = $this->_sre->get_application('voicemail');
+		if($appvoicemail === false)
 			return(false);
+
+		$voicemail = $appvoicemail->get($voicemail_id);
+		if($voicemail === false)
+			return(false);
+
+		if ($voicemail['id'] === $id)
+			return(false);
+
+		if($disable !== null) {
+			$enabled = (!((bool)$disable));
+			if ($voicemail['enabled'] !== $enabled)
+				return(false);
+		}
 
 		$r = array();
 		$r['action'] = 'voicemail';
-		$r['actionarg1'] = $info['uniqueid'];
+		$r['actionarg1'] = $voicemail['id'];
 		$r['actionarg2'] = '';
 
 		if(dwho_has_len($actionarg2) === false)
