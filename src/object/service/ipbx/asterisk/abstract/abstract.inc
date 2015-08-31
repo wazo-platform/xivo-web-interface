@@ -290,7 +290,7 @@ abstract class xivo_service_asterisk_abstract extends xivo_libdatastorage_abstra
 		if($id !== null)
 			$id = dwho_ulongint($id);
 
-		$voicemail_id = intval($actionarg);
+		$voicemail_id = intval($actionarg1);
 
 		$appvoicemail = $this->_sre->get_application('voicemail');
 		if($appvoicemail === false)
