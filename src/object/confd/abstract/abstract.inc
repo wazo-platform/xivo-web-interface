@@ -1,7 +1,7 @@
 <?php
 #
 # XiVO Web-Interface
-# Copyright (C) 2013-2014  Avencall
+# Copyright (C) 2013-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -145,13 +145,17 @@ abstract class xivo_confd_ressource_abstract
 		return($this->_curl->connect());
 	}
 
-	protected function _build_uri($arr=false)
+	protected function _build_uri($arr=false, $base_url=null)
 	{
+		if($base_url === null) {
+			$base_url = $this->_base_url;
+		}
+
 		if (is_array($arr) === false
 		|| ($nb = count($arr)) === 0)
-			return($this->_base_url);
+			return($base_url);
 
-		$path = $this->_base_url.'/'.implode('/', $arr);
+		$path = $base_url.'/'.implode('/', $arr);
 
 		if ($this->_uri->valid_path($path) === false)
 			return(false);

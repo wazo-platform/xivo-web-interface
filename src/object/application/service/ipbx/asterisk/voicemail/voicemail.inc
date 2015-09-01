@@ -19,6 +19,7 @@
 #
 
 dwho_file::required(array(XIVO_PATH_OBJECT,'application','service','ipbx','asterisk.inc'),true);
+require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'converter', 'voicemail', 'mapper.inc'));
 
 class xivo_application_service_asterisk_voicemail extends xivo_application_asterisk_abstract
 {
@@ -29,6 +30,7 @@ class xivo_application_service_asterisk_voicemail extends xivo_application_aster
 	var $_confd			= null;
 	var $_context		= null;
 	var $_entity		= null;
+	var $_vm_mapper		= null;
 
 	public function __construct(&$service,&$dso,$param=null,$components=true)
 	{
@@ -63,6 +65,8 @@ class xivo_application_service_asterisk_voicemail extends xivo_application_aster
 			trigger_error('error', 'Cannot load entity module', E_USER_ERROR);
 			return(false);
 		}
+
+		$this->_vm_mapper = new VoicemailMapper();
 
 		if((bool) $components === true)
 			$this->load_components();
@@ -168,7 +172,7 @@ class xivo_application_service_asterisk_voicemail extends xivo_application_aster
 	}
 
 	private function map_voicemail(&$voicemail) {
-		$voicemail['identity'] = "${voicemail['name']} (${voicemail['number']}@${voicemail['context']}";
+		$voicemail['identity'] = "${voicemail['name']} (${voicemail['number']}@${voicemail['context']})";
 
 		$context = $this->_context->get($voicemail['context']);
 		if($context === false)
@@ -186,17 +190,16 @@ class xivo_application_service_asterisk_voicemail extends xivo_application_aster
 	function add($form)
 	{
 		$voicemail = $this->convert_form($form);
-		$created = $this->_confd->add($voicemail);
-		if($created === false) {
+		$voicemail_id = $this->_confd->add($voicemail);
+		if($voicemail_id === false) {
 			dwho_report::push('error', 'Cannot create voicemail');
 			return(false);
 		}
-		return(true);
+		return($voicemail_id);
 	}
 
-	function edit($form)
+	function edit($voicemail_id, $form)
 	{
-		$voicemail_id = $form['id'];
 		$voicemail = $this->convert_form($form);
 
 		$status = $this->_confd->edit($voicemail_id, $voicemail);
@@ -208,33 +211,7 @@ class xivo_application_service_asterisk_voicemail extends xivo_application_aster
 	}
 
 	private function convert_form($form) {
-		$form = $form['voicemail'];
-
-		$options = array();
-		for($i = 0; $i < count($form['optionname']); $i++) {
-			$name = $form['optionname'][$i];
-			$value = $form['optionvalue'][$i];
-			if(trim($name) !== '' && trim($value) !== '') {
-				$options[] = array($name, $value);
-			}
-		}
-
-		$form['password'] = (trim($form['password']) !== '' ? $form['password'] : null);
-		$form['email'] = (trim($form['email']) !== '' ? $form['email'] : null);
-		$form['pager'] = (trim($form['pager']) !== '' ? $form['pager'] : null);
-		$form['language'] = (trim($form['language']) !== '' ? $form['language'] : null);
-		$form['max_messages'] = ((int) $form['max_messages'] > 0 ? (int) $form['max_messages'] : null);
-		$form['ask_password'] = (array_key_exists('ask_password', $form) ? true : false);
-		$form['attach_audio'] = (array_key_exists('attach_audio', $form) ? true : false);
-		$form['delete_messages'] = (array_key_exists('delete_messages', $form) ? true : false);
-		$form['options'] = $options;
-
-		unset($form['optionname']);
-		unset($form['optionvalue']);
-
-		$this->_result['voicemail'] = $form;
-
-		return $form;
+		return $this->_vm_mapper->map_form($form['voicemail']);
 	}
 
 	function delete($voicemail_id)
@@ -292,9 +269,25 @@ class xivo_application_service_asterisk_voicemail extends xivo_application_aster
 		}
 	}
 
+	function associate($voicemail_id, $user_id) 
+	{
+		return $this->_confd->associate_user_voicemail($user_id, $voicemail_id);
+	}
 
+	function dissociate($user_id)
+	{
+		return $this->_confd->dissociate_user_voicemail($user_id);
+	}
 
+	function get_voicemail_id_for_user($user_id)
+	{
+		$association = $this->_confd->get_user_voicemail($user_id);
+		if($association === false)
+			return false;
 
+		return $association['voicemail_id'];
+
+	}
 }
 
 ?>

@@ -31,6 +31,49 @@ class confd_ressource_voicemail extends xivo_confd_helpers_abstract
 		$this->_httpheaders[] = dwho_json::get_header();
 		$this->_httpheaders[] = 'Accept: application/json';
 	}
+
+	public function associate_user_voicemail($user_id, $voicemail_id)
+	{
+		$uri = $this->_build_uri(array($user_id, 'voicemail'), 'users');
+		$data = array('voicemail_id' => $voicemail_id);
+		$rs = $this->request_post($uri,$data);
+
+		if($this->_status_code !== 201)
+		{
+			$this->_build_error_message($rs);
+			return(false);
+		}
+
+		return(true);
+	}
+
+	public function dissociate_user_voicemail($user_id)
+	{
+		if($this->get_user_voicemail($user_id) !== false) {
+			$uri = $this->_build_uri(array($user_id, 'voicemail'), 'users');
+			$rs = $this->request_delete($uri);
+
+			if($this->_status_code !== 204)
+			{
+				$this->_build_error_message($rs);
+				return(false);
+			}
+		}
+		return(true);
+	}
+
+	public function get_user_voicemail($user_id)
+	{
+		$uri = $this->_build_uri(array($user_id, 'voicemail'), 'users');
+		$association = $this->request_get($uri);
+		if($this->_status_code !== 200)
+		{
+			return false;
+		}
+
+		return $association;
+	}
+
 }
 
 ?>
