@@ -209,9 +209,6 @@ $array['service/ipbx/asterisk/web_services/restricted/pbx_settings/groups'] = ar
 $array['service/ipbx/asterisk/web_services/restricted/pbx_settings/meetme'] = array(
 	'path'		=> 'service/ipbx/asterisk/web_services/pbx_settings/meetme',
 	'define'	=> array('XIVO_LOC_WEBSERVICES_MODE'	=> 'restricted'));
-$array['service/ipbx/asterisk/web_services/restricted/pbx_settings/voicemail'] = array(
-	'path'		=> 'service/ipbx/asterisk/web_services/pbx_settings/voicemail',
-	'define'	=> array('XIVO_LOC_WEBSERVICES_MODE'	=> 'restricted'));
 
 $array['service/ipbx/asterisk/web_services/private/pbx_settings/users'] = array(
 	'path'		=> 'service/ipbx/asterisk/web_services/pbx_settings/users',
@@ -227,9 +224,6 @@ $array['service/ipbx/asterisk/web_services/private/pbx_settings/groups'] = array
 	'define'	=> array('XIVO_LOC_WEBSERVICES_MODE'	=> 'private'));
 $array['service/ipbx/asterisk/web_services/private/pbx_settings/meetme'] = array(
 	'path'		=> 'service/ipbx/asterisk/web_services/pbx_settings/meetme',
-	'define'	=> array('XIVO_LOC_WEBSERVICES_MODE'	=> 'private'));
-$array['service/ipbx/asterisk/web_services/private/pbx_settings/voicemail'] = array(
-	'path'		=> 'service/ipbx/asterisk/web_services/pbx_settings/voicemail',
 	'define'	=> array('XIVO_LOC_WEBSERVICES_MODE'	=> 'private'));
 
 # UI

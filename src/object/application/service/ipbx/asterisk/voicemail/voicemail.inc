@@ -292,23 +292,9 @@ class xivo_application_service_asterisk_voicemail extends xivo_application_aster
 		}
 	}
 
-	function add_from_json()
-	{
-		if(($data = $this->_get_data_from_json()) === false
-		|| $this->add($data) === false)
-			return(false);
 
-		return(true);
-	}
 
-	function edit_from_json()
-	{
-		if(($data = $this->_get_data_from_json()) === false
-		|| $this->edit($data) === false)
-			return(false);
 
-		return(true);
-	}
 }
 
 ?>
