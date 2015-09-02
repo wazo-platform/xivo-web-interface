@@ -1,4 +1,4 @@
-; title_content_name
+; title_content_nam;
 Users > Add
 
 ; smenu_general
@@ -211,11 +211,20 @@ Add one or more queues ->
 ; fm_codec-custom
 Customize:
 
-; fm_userfeatures_voicemailid
-Selection of voicemail:
+; user_vm_header
+Actions
 
-; fm_voicemail-opt-add
-[Add a voicemail]
+; user_vm_form
+Voicemail
+
+; user_vm_add
+Add a new voicemail:
+
+; user_vm_delete
+Delete voicemail:
+
+; user_vm_search
+Search for existing voicemail: 
 
 ; fm_voicemail_fullname
 Full name:
@@ -232,14 +241,26 @@ E-mail:
 ; fm_voicemail_tz
 Time zone:
 
+; fm_voicemail_language
+Language:
+
 ; fm_voicemail_attach
 Attach the audio file:
 
 ; fm_voicemail_deletevoicemail
 Delete message after notification:
 
+; fm_voicemail_maxmsg
+Maximum number of messages:
+
+; fm_voicemail_ask-password
+Ask password: 
+
 ; fm_userfeatures_description
 Description:
+
+; fm_voicemail_context
+Context:
 
 ; bt_inrightcall
 Add one or more call permission ->
@@ -432,18 +453,6 @@ None
 
 ; fm_userfeatures_voicemailtype-opt(asterisk)
 Asterisk
-
-; fm_voicemail_option
-Option:
-
-; fm_voicemail_option-opt(add)
-Add
-
-; fm_voicemail_option-opt(search)
-Search
-
-; fm_voicemail_suggest
-Search filter
 
 ; fm_userfeatures_loginclient
 Login:

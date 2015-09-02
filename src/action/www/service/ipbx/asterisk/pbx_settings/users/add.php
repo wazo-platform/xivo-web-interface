@@ -20,6 +20,7 @@
 
 $appqueue = &$ipbx->get_application('queue');
 $apprightcall = &$ipbx->get_application('rightcall',null,false);
+$appvoicemail = &$ipbx->get_application('voicemail');
 $appgroup = &$ipbx->get_application('group',null,false);
 $general_module   = &$ipbx->get_module('general');
 
@@ -64,8 +65,6 @@ if(isset($_QR['fm_send']) === true
 		$result['phonefunckey'] = $appuser->get_phonefunckey_result();
 
 		$error = $appuser->get_error();
-
-		$result['voicemail-option'] = $_QRY->get('voicemail-option');
 	}
 	else
 		$_QRY->go($_TPL->url('service/ipbx/pbx_settings/users'),$param);
@@ -181,5 +180,6 @@ $_TPL->set_var('fktype_list',$appuser->get_phonefunckey_type());
 $_TPL->set_var('profileclient_list',$appuser->get_profileclient_list());
 $_TPL->set_var('order_list', $order_list);
 $_TPL->set_var('softkeys_list', $softkeys_list);
+$_TPL->set_var('context_list', $appvoicemail->get_context_list(null,null,null,false,'internal'));
 
 ?>

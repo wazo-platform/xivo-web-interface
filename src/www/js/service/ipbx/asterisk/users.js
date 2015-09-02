@@ -105,56 +105,12 @@ var xivo_ast_users_elt_default = {
 	'userfeatures-description' : {
 		it : true
 	},
-	'userfeatures-voicemailtype' : {
-		it : true,
-		fd : true
-	},
-	'userfeatures-voicemailid' : {
-		it : true,
-		fd : false
-	},
 	'userfeatures-callerid' : {
 		it : true
 	},
 	'userfeatures-entityid' : {
 		it : true
 	},
-	'userfeatures-enablevoicemail' : {
-		it : true
-	},
-
-	'voicemail-option' : {
-		it : true
-	},
-	'voicemail-suggest' : {
-		it : false,
-		fd : false
-	},
-	'voicemail-fullname' : {
-		it : false
-	},
-	'voicemail-mailbox' : {
-		it : false
-	},
-	'voicemail-password' : {
-		it : false
-	},
-	'voicemail-email' : {
-		it : false
-	},
-	'voicemail-tz' : {
-		it : false
-	},
-	'voicemail-skipcheckpass' : {
-		it : false
-	},
-	'voicemail-attach' : {
-		it : false
-	},
-	'voicemail-deletevoicemail' : {
-		it : false
-	},
-
 	'grouplist' : {
 		it : true
 	},
@@ -212,52 +168,6 @@ var xivo_ast_fm_user_enableunc = {
 
 xivo_attrib_register('ast_fm_user_enableunc', xivo_ast_fm_user_enableunc);
 
-var xivo_ast_fm_user_voicemailtype = {
-	'it-userfeatures-voicemailid' : {
-		property : [ {
-			disabled : true
-		}, {
-			disabled : false
-		} ],
-		link : 'it-voicemail-option'
-	},
-	'it-voicemail-option' : {
-		property : [ {
-			disabled : true,
-			className : 'it-disabled'
-		}, {
-			disabled : false,
-			className : 'it-enabled'
-		} ]
-	}
-};
-
-xivo_attrib_register('ast_fm_user_voicemailtype',
-		xivo_ast_fm_user_voicemailtype);
-
-var xivo_ast_fm_user_voicemailoption = {
-	'fd-voicemail-suggest' : {
-		style : [ {
-			display : 'none'
-		}, {
-			display : 'block'
-		} ],
-		link : 'it-voicemail-suggest'
-	},
-	'it-voicemail-suggest' : {
-		property : [ {
-			disabled : true,
-			className : 'it-disabled'
-		}, {
-			disabled : false,
-			className : 'it-enabled'
-		} ]
-	}
-};
-
-xivo_attrib_register('ast_fm_user_voicemailoption',
-		xivo_ast_fm_user_voicemailoption);
-
 var xivo_ast_fm_user_outcallerid = {
 	'fd-userfeatures-outcallerid-custom' : {
 		style : [ {
@@ -278,105 +188,8 @@ var xivo_ast_fm_user_outcallerid = {
 
 xivo_attrib_register('ast_fm_user_outcallerid', xivo_ast_fm_user_outcallerid);
 
-var xivo_ast_fm_user_voicemail = {
-	'it-voicemail-fullname' : {
-		property : [ {
-			disabled : false,
-			className : 'it-enabled'
-		}, {
-			disabled : true,
-			className : 'it-disabled'
-		} ],
-		link : 'it-voicemail-mailbox'
-	},
-	'it-voicemail-mailbox' : {
-		property : [ {
-			disabled : false,
-			className : 'it-enabled'
-		}, {
-			disabled : true,
-			className : 'it-disabled'
-		} ],
-		link : 'it-voicemail-password'
-	},
-	'it-voicemail-password' : {
-		property : [ {
-			disabled : false,
-			className : 'it-enabled'
-		}, {
-			disabled : true,
-			className : 'it-disabled'
-		} ],
-		link : 'it-voicemail-email'
-	},
-	'it-voicemail-email' : {
-		property : [ {
-			disabled : false,
-			className : 'it-enabled'
-		}, {
-			disabled : true,
-			className : 'it-disabled'
-		} ],
-		link : 'it-voicemail-tz'
-	},
-	'it-voicemail-tz' : {
-		property : [ {
-			disabled : false,
-			className : 'it-enabled'
-		}, {
-			disabled : true,
-			className : 'it-disabled'
-		} ],
-		link : 'it-voicemail-skipcheckpass'
-	},
-	'it-voicemail-skipcheckpass' : {
-		property : [ {
-			disabled : false,
-			className : 'it-enabled'
-		}, {
-			disabled : true,
-			className : 'it-disabled'
-		} ],
-		link : 'it-voicemail-attach'
-	},
-	'it-voicemail-attach' : {
-		property : [ {
-			disabled : false,
-			className : 'it-enabled'
-		}, {
-			disabled : true,
-			className : 'it-disabled'
-		} ],
-		link : 'it-voicemail-deletevoicemail'
-	},
-	'it-voicemail-deletevoicemail' : {
-		property : [ {
-			disabled : false,
-			className : 'it-enabled'
-		}, {
-			disabled : true,
-			className : 'it-disabled'
-		} ],
-	}
-};
-
-xivo_attrib_register('ast_fm_user_voicemail', xivo_ast_fm_user_voicemail);
-
-var xivo_ast_fm_user_enablevoicemail = dwho_clone(xivo_ast_fm_user_voicemail);
-xivo_ast_fm_user_enablevoicemail['it-userfeatures-enablevoicemail'] = {
-	property : [ {
-		checked : true
-	}, {
-		checked : false
-	} ]
-};
-
-xivo_attrib_register('ast_fm_user_enablevoicemail',
-		xivo_ast_fm_user_enablevoicemail);
-
 var xivo_ast_fm_cpy_user_name = {
-	'userfeatures-callerid' : false,
-	'voicemail-fullname' : false
+	'userfeatures-callerid' : false
 };
 
 function xivo_ast_user_cpy_name() {
@@ -401,24 +214,9 @@ function xivo_ast_user_cpy_name() {
 		callerid = '';
 	else
 		callerid = callerid.replace(/^(?:"(.+)"|([^"]+))\s*<[^<]*>$/, '\$1');
-
-	if (dwho_eid('it-voicemail-fullname') === false)
-		return (false);
-
-	var fullname = dwho_eid('it-voicemail-fullname').value;
-
-	if (dwho_is_undef(fullname) === true || fullname === name
-			|| fullname.length === 0)
-		xivo_ast_fm_cpy_user_name['voicemail-fullname'] = true;
-	else
-		xivo_ast_fm_cpy_user_name['voicemail-fullname'] = false;
 }
 
 function xivo_ast_user_chg_name() {
-	if (xivo_ast_fm_cpy_user_name['userfeatures-callerid'] === false
-			&& xivo_ast_fm_cpy_user_name['voicemail-fullname'] === false)
-		return (false);
-
 	var name = '';
 	var firstname = dwho_eid('it-userfeatures-firstname').value;
 	var lastname = dwho_eid('it-userfeatures-lastname').value;
@@ -431,9 +229,6 @@ function xivo_ast_user_chg_name() {
 
 	if (xivo_ast_fm_cpy_user_name['userfeatures-callerid'] === true)
 		dwho_eid('it-userfeatures-callerid').value = name;
-
-	if (xivo_ast_fm_cpy_user_name['voicemail-fullname'] === true)
-		dwho_eid('it-voicemail-fullname').value = name;
 
 	return (true);
 }
@@ -492,165 +287,6 @@ function xivo_ast_user_outgroup() {
 	return (true);
 }
 
-function xivo_ast_user_http_search_voicemail(dwsptr) {
-	new dwho.http('/service/ipbx/ui.php/pbx_settings/users/voicemail/search/?'
-			+ dwho_sess_str, {
-		'callbackcomplete' : function(xhr) {
-			dwsptr.set(xhr, dwsptr.get_search_value());
-		},
-		'method' : 'post',
-		'cache' : false
-	}, {
-		'search' : dwsptr.get_search_value()
-	}, true);
-}
-
-var xivo_ast_user_suggest_voicemail = new dwho.suggest({
-	'requestor' : xivo_ast_user_http_search_voicemail
-});
-
-function xivo_ast_user_voicemail_reset_search() {
-	dwho.form.reset_field(dwho_eid('it-userfeatures-voicemailid'), true);
-
-	for (property in xivo_ast_fm_user_voicemail)
-		dwho.form.reset_field(dwho_eid(property), true);
-
-	xivo_chg_attrib('ast_fm_user_enablevoicemail', 'it-voicemail-fullname', 0);
-}
-
-function xivo_ast_user_chg_voicemail(option) {
-	xivo_chg_attrib('ast_fm_user_voicemailoption', 'fd-voicemail-suggest',
-			Number(option === 'search'));
-
-	switch (option) {
-	case 'add':
-		if ((voicemail_option = dwho_eid('it-voicemail-option')) !== false)
-			reset_field_empty = voicemail_option.defaultValue !== option;
-		else
-			reset_field_empty = true;
-
-		for (property in xivo_ast_fm_user_voicemail)
-			dwho.form.reset_field(dwho_eid(property), reset_field_empty);
-
-		xivo_chg_attrib('ast_fm_user_enablevoicemail', 'it-voicemail-fullname',
-				0);
-
-		if (dwho_eid('it-userfeatures-firstname') === false
-				|| dwho_eid('it-userfeatures-lastname') === false
-				|| dwho_eid('it-voicemail-fullname') === false)
-			break;
-
-		var name = '';
-		var firstname = dwho_eid('it-userfeatures-firstname').value;
-		var lastname = dwho_eid('it-userfeatures-lastname').value;
-
-		if (dwho_has_len(firstname) === true)
-			name += firstname;
-
-		if (dwho_has_len(lastname) === true)
-			name += name.length === 0 ? lastname : ' ' + lastname;
-
-		dwho_eid('it-voicemail-fullname').value = name;
-		break;
-	case 'search':
-		dwho_eid('it-voicemail-suggest').value = '';
-		xivo_ast_user_voicemail_reset_search();
-		break;
-	case 'exchange':
-		dwho.form.reset_field(dwho_eid('it-userfeatures-voicemailid'), false);
-
-		for (property in xivo_ast_fm_user_enablevoicemail)
-			dwho.form.reset_field(dwho_eid(property), false);
-
-		xivo_chg_attrib('ast_fm_user_enablevoicemail', 'it-voicemail-fullname',
-				1);
-		xivo_chg_attrib('ast_fm_user_enablevoicemail',
-				'it-userfeatures-enablevoicemail', 0);
-		break;
-	case 'none':
-	default:
-		dwho.form.reset_field(dwho_eid('it-userfeatures-voicemailid'), false);
-
-		for (property in xivo_ast_fm_user_enablevoicemail)
-			dwho.form.reset_field(dwho_eid(property), false);
-		
-		xivo_chg_attrib(
-				'ast_fm_user_enablevoicemail',
-				'it-voicemail-fullname',
-				Number((option === 'none' || dwho_eid('it-userfeatures-voicemailid').value === '')));
-	}
-}
-
-function xivo_ast_user_chg_voicemailtype(type) {
-	xivo_chg_attrib('ast_fm_user_voicemailtype', 'it-userfeatures-voicemailid',
-			Number(type === 'asterisk'));
-
-	switch (type) {
-	case 'asterisk':
-		dwho_eid('it-userfeatures-enablevoicemail').disabled = false;
-		return (xivo_ast_user_chg_voicemail(dwho_eid('it-voicemail-option').value));
-
-	case 'exchange':
-		return (xivo_ast_user_chg_voicemail('m$exchangeserver2010'));
-
-	default:		
-		dwho_eid('it-userfeatures-enablevoicemail').disabled = true;
-		return (xivo_ast_user_chg_voicemail('none'));
-	}
-}
-
-function xivo_ast_user_http_get_voicemail(obj) {
-	if (dwho_is_object(obj) === false || dwho_has_len(obj.value) === false) {
-		xivo_chg_attrib('ast_fm_user_voicemailoption', 'fd-voicemail-suggest',
-				1);
-
-		return (xivo_ast_user_voicemail_reset_search());
-	}
-
-	new dwho.http('/service/ipbx/ui.php/pbx_settings/users/voicemail/view/?'
-			+ dwho_sess_str, {
-		'callbackcomplete' : function(xhr) {
-			xivo_ast_user_voicemail_set_info(xhr);
-		},
-		'method' : 'post',
-		'cache' : false
-	}, {
-		'id' : obj.value
-	}, true);
-
-	return (true);
-}
-
-function xivo_ast_user_suggest_event_voicemail() {
-	xivo_ast_user_suggest_voicemail.set_option('result_field',
-			'it-userfeatures-voicemailid');
-	xivo_ast_user_suggest_voicemail.set_option('result_onsetfield',
-			xivo_ast_user_http_get_voicemail);
-
-	xivo_ast_user_suggest_voicemail.set_field(this.id);
-}
-
-function xivo_ast_user_voicemail_set_info(request) {
-	if (dwho_has_len(request.responseText) === false)
-		return (null);
-
-	obj = eval('(' + request.responseText + ')');
-
-	if (dwho_is_object(obj.voicemail) === false)
-		return (false);
-
-	dwho_eid('it-voicemail-fullname').value = obj['voicemail']['fullname'];
-	dwho_eid('it-voicemail-mailbox').value = obj['voicemail']['mailbox'];
-	dwho_eid('it-voicemail-password').value = obj['voicemail']['password'];
-	dwho_eid('it-voicemail-email').value = obj['voicemail']['email'];
-	dwho_eid('it-voicemail-tz').value = obj['voicemail']['tz'];
-	dwho_eid('it-voicemail-skipcheckpass').checked = dwho_bool(obj['voicemail']['skipcheckpass']);
-	dwho_eid('it-voicemail-attach').value = obj['voicemail']['attach'];
-	dwho_eid('it-voicemail-deletevoicemail').checked = dwho_bool(obj['voicemail']['deletevoicemail']);
-
-	return (true);
-}
-
 function xivo_ast_user_onload() {
 	if ((firstname = dwho_eid('it-userfeatures-firstname')) !== false) {
 		dwho.dom.add_event('change', firstname, xivo_ast_user_cpy_name);
@@ -662,29 +298,6 @@ function xivo_ast_user_onload() {
 		dwho.dom.add_event('change', lastname, xivo_ast_user_chg_name);
 		dwho.dom.add_event('focus', lastname, xivo_ast_user_cpy_name);
 		dwho.dom.add_event('blur', lastname, xivo_ast_user_chg_name);
-	}
-
-	if ((voicemailtype = dwho_eid('it-userfeatures-voicemailtype')) !== false) {
-		var voicemailtype_fn = function() {
-			xivo_ast_user_chg_voicemailtype(voicemailtype.value);
-		};
-
-		xivo_ast_user_chg_voicemailtype(voicemailtype.value);
-
-		dwho.dom.add_event('change', voicemailtype, voicemailtype_fn);
-	}
-
-	if ((voicemailoption = dwho_eid('it-voicemail-option')) !== false) {
-		dwho_eid('it-voicemail-suggest').setAttribute('autocomplete', 'off');
-
-		dwho.dom.add_event('focus', dwho_eid('it-voicemail-suggest'),
-				xivo_ast_user_suggest_event_voicemail);
-
-		var voicemailoption_fn = function() {
-			xivo_ast_user_chg_voicemail(voicemailoption.value);
-		};
-
-		dwho.dom.add_event('change', voicemailoption, voicemailoption_fn);
 	}
 
 	if ((outcallerid_type = dwho_eid('it-userfeatures-outcallerid-type')) !== false) {
@@ -730,7 +343,6 @@ function update_callerid() {
 	callerid = name.replace(/^(?:"(.+)"|([^"]+))\s*<[^<]*>$/, '\$1');
 	
 	$('#it-userfeatures-callerid').val(callerid);
-	$('#it-voicemail-fullname').val( name);
 	
 	//xivo_ast_user_cpy_name();
 	//xivo_ast_user_chg_name();
@@ -742,3 +354,100 @@ $(function() {
 });
 
 dwho.dom.set_onload(xivo_ast_user_onload);
+
+function updateVoicemailName() {
+	var name = $("#it-userfeatures-firstname").val();
+	var lastname = $("#it-userfeatures-lastname").val();
+
+	if(lastname != "") {
+		name += " " + lastname;
+	}
+
+	$("#it-voicemail-name").val(name);
+}
+
+function updateVoicemailLanguage() {
+	var language = $("#it-userfeatures-language").val();
+	$("#it-voicemail-language").val(language);
+}
+
+$(function() {
+	var voicemail_id = $('#it-voicemail-id').val();
+	if (voicemail_id == "") {
+		// create
+		$("#fld-voicemail-form").hide();
+		$("#vm-action-delete").hide();
+	} else {
+		// update
+		$("#vm-action-add").hide();
+		$("#vm-action-search").hide();
+	}
+
+	$("#it-userfeatures-language").change(updateVoicemailLanguage);
+	$("#it-userfeatures-firstname").change(updateVoicemailName);
+	$("#it-userfeatures-lastname").change(updateVoicemailName);
+
+	$("#user-vm-add").click(function(e) {
+		e.preventDefault();
+		$('#fld-voicemail-form').show();
+		$('#user-vm-action').val('add');
+		$('#fld-voicemail-form input[type="text"]').val('');
+		$('#fld-voicemail-form input[type="hidden"]').val('');
+		$('#fld-voicemail-form select').val('');
+		$('#fld-voicemail-form input[type="checkbox"]').attr('checked', false);
+		$('#it-userfeatures-enablevoicemail').attr('checked', true);
+		updateVoicemailName();
+		updateVoicemailLanguage();
+	});
+
+	$("#user-vm-delete").click(function(e) {
+		e.preventDefault();
+		$("#fld-voicemail-form").hide();
+		$('#user-vm-action').val('delete');
+	});
+
+	$('#user-vm-search').autocomplete({
+		source: function(request, response) {
+			$.ajax({
+				url: '/service/ipbx/ui.php/pbx_settings/users/voicemail/search/?' + dwho_sess_str,
+				data: encodeURI("search=" + request.term),
+				method: "POST",
+				timeout: 3000,
+				success: function(data) {
+					var suggestions = [];
+					$(data).each(function(pos, item) {
+						suggestions.push({label: item.identity, value: item.id});
+					});
+					response(suggestions);
+				}
+			});
+		},
+		select: function(e, ui) {
+			e.preventDefault();
+			$("#fld-voicemail-form").show();
+			$.ajax({
+				url: '/service/ipbx/ui.php/pbx_settings/users/voicemail/view/?' + dwho_sess_str,
+				method: "POST",
+				data: encodeURI("id=" + ui.item.value),
+				timeout: 3000,
+				success: function(data) {
+					$("#user-vm-action").val('search');
+					$('#it-userfeatures-enablevoicemail').attr('checked', true);
+					$("input[name='voicemail[id]']").val(data.id);
+					$("input[name='voicemail[name]']").val(data.name);
+					$("input[name='voicemail[number]']").val(data.number);
+					$("input[name='voicemail[password]']").val(data.password);
+					$("input[name='voicemail[email]']").val(data.email);
+					$("input[name='voicemail[context]']").val(data.context);
+					$("input[name='voicemail[timezone]']").val(data.timezone);
+					$("input[name='voicemail[language]']").val(data.language);
+					$("input[name='voicemail[max_messages]']").val(data.max_messages);
+					$("input[name='voicemail[ask_password]']").attr('checked', data.ask_password);
+					$("input[name='voicemail[attach_audio]']").attr('checked', data.attach_audio);
+					$("input[name='voicemail[delete_messages]']").attr('checked', data.delete_messages);
+				}
+			});
+			$("#user-vm-search").val('');
+		}
+	})
+});
