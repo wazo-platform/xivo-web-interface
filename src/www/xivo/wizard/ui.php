@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,12 +23,18 @@ define('FORCE_WIZARD',true);
 
 require_once('xivo.php');
 
-$ipbx = &$_SRE->get('ipbx');
-
 dwho::load_class('dwho_http');
 $http_response = dwho_http::factory('response');
 
 $action_path = $_LOC->get_action_path('xivo/ui/',3);
+
+if(dwho_constant('XIVO_WEBI_CONFIGURED',false) === true)
+{
+    $http_response->set_status_line(403);
+    $http_response->send(true);
+}
+
+$ipbx = &$_SRE->get('ipbx');
 
 if($action_path === false)
 {
