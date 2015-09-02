@@ -590,7 +590,10 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 
 	function set_add($arr)
 	{
-		return($this->_set('add',$arr));
+		$r = $this->_set('add', $arr);
+		if($r === false)
+			$this->_set_result_var('voicemail', 'id', '');
+		return $r;
 	}
 
 	function set_edit($arr)
@@ -1218,6 +1221,8 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 
 	function _reverse_add()
 	{
+		$this->_set_result_var('voicemail', 'id', '');
+
 		if($this->_status !== 'add'
 		|| is_array($this->_return) === false
 		|| empty($this->_return) === true)
