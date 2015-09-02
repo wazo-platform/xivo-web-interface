@@ -61,8 +61,6 @@ Transitions automatiques entre les états de présence
 ; pref-(adlibitum)
 Ad libitum
 
-
-
 ; xlet-(agents)
 Agents (liste)
 
@@ -119,9 +117,6 @@ Tabber
 
 ; xlet-(switchboard)
 POPC
-
-; xlet-(remotedirectory)
-Répertoire externe
 
 ; xlet-(agentstatusdashboard)
 Grille des agents
