@@ -76,7 +76,8 @@ switch($act)
 		if(isset($_QR['fm_send']) === true && dwho_issa('voicemail',$_QR) === true)
 		{
 			$return = &$result;
-			if($appvoicemail->edit($_QR) === false)
+			$voicemail_id = $_QR['id'];
+			if($appvoicemail->edit($voicemail_id, $_QR) === false)
 			{
 				$fm_save = false;
 				$result = $appvoicemail->get_result();
