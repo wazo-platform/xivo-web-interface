@@ -2172,11 +2172,18 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			$arr['userfeatures']['cti_profile_id'] = $profile_id;
 		}
 
+		$arr['user_vm_action'] = '';
+
 		if(dwho_issa('voicemail',$arr) === true
 		&& empty($arr['voicemail']) === false
-		&& dwho_has_len($arr['voicemail'],'mailbox') === true) {
-			$arr['voicemail'] = $this->_vm_mapper->map_legacy($arr['voicemail']);
+		&& dwho_has_len($arr['voicemail'], 'number') === true
+		&& dwho_has_len($arr['voicemail'], 'context') === true
+		) {
+			if(dwho_has_len($arr['voicemail'], 'name') !== true) {
+				$arr['voicemail']['name'] = trim($arr['userfeatures']['firstname'] . " " . $arr['userfeatures']['lastname']);
+			}
 			$arr['userfeatures']['enablevoicemail'] = true;
+			$arr['user_vm_action'] = 'add';
 		} else {
 			unset($arr['voicemail']);
 		}

@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -47,13 +47,14 @@ $array['import']['field']['protocol'] = array('linefeatures','protocol',0);
 $array['import']['field']['linename'] = array('linefeatures','name',0);
 $array['import']['field']['linesecret'] = array('linefeatures','secret',0);
 
-$array['import']['field']['voicemailname'] = array('voicemail','fullname');
-$array['import']['field']['voicemailmailbox'] = array('voicemail','mailbox');
+$array['import']['field']['voicemailname'] = array('voicemail','name');
+$array['import']['field']['voicemailcontext'] = array('voicemail','context');
+$array['import']['field']['voicemailnumber'] = array('voicemail','number');
 $array['import']['field']['voicemailpassword'] = array('voicemail','password');
 $array['import']['field']['voicemailemail'] = array('voicemail','email');
-$array['import']['field']['voicemailattach'] = array('voicemail','attach');
-$array['import']['field']['voicemaildelete'] = array('voicemail','deletevoicemail');
-$array['import']['field']['voicemailskippass'] = array('voicemail','skipcheckpass');
+$array['import']['field']['voicemailattach'] = array('voicemail','attach_audio');
+$array['import']['field']['voicemaildelete'] = array('voicemail','delete_messages');
+$array['import']['field']['voicemailaskpassword'] = array('voicemail','ask_password');
 
 $array['import']['field']['incallexten'] = array('incall','exten');
 $array['import']['field']['incallcontext'] = array('incall','context');

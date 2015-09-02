@@ -31,11 +31,6 @@ class VoicemailMapper {
 			}
 		}
 
-		$pager = null;
-		if(isset($form['pager']) && trim($form['pager'] != '')) {
-			$pager = $form['pager'];
-		}
-
 		return array(
 			'name' => $form['name'],
 			'number' => $form['number'],
@@ -43,11 +38,11 @@ class VoicemailMapper {
 			'password' => (trim($form['password']) !== '' ? $form['password'] : null),
 			'email' => (trim($form['email']) !== '' ? $form['email'] : null),
 			'language' => (trim($form['language']) !== '' ? $form['language'] : null),
+			'pager' => trim($form['pager']) !== '' ? $form['pager'] : null,
 			'max_messages' => ((int) $form['max_messages'] > 0 ? (int) $form['max_messages'] : null),
-			'ask_password' => (array_key_exists('ask_password', $form) ? true : false),
-			'attach_audio' => (array_key_exists('attach_audio', $form) ? true : false),
-			'delete_messages' => (array_key_exists('delete_messages', $form) ? true : false),
-			'pager' => $pager,
+			'ask_password' => (string) $form['ask_password'] === "1" ? true : false,
+			'attach_audio' => (string) $form['attach_audio'] === "1" ? true : false,
+			'delete_messages' => (string) $form['delete_messages'] === "1" ? true : false,
 			'options' => $options
 		);
 	}
