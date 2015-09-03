@@ -179,10 +179,11 @@ class xivo_application_service_asterisk_voicemail extends xivo_application_aster
 			return(false);
 
 		$entity = $this->_entity->get_where(array('name' => $context['entity']));
-		if($entity === false)
-			return(false);
-
-		$voicemail['entity_displayname'] = $entity['displayname'];
+		if($entity === false) {
+			$voicemail['entity_displayname'] = '';
+		} else {
+			$voicemail['entity_displayname'] = $entity['displayname'];
+		}
 
 		return $voicemail;
 	}
