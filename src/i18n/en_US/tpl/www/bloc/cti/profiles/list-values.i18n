@@ -120,9 +120,6 @@ Tabber
 ; xlet-(switchboard)
 Switchboard
 
-; xlet-(remotedirectory)
-Remote directory
-
 ; xlet-(agentstatusdashboard)
 Agent status dashboard
 
