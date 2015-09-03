@@ -31,7 +31,7 @@ class VoicemailMapper {
 			}
 		}
 
-		return array(
+		$voicemail =  array(
 			'name' => $form['name'],
 			'number' => $form['number'],
 			'context' => $form['context'],
@@ -41,10 +41,12 @@ class VoicemailMapper {
 			'pager' => trim($form['pager']) !== '' ? $form['pager'] : null,
 			'max_messages' => ((int) $form['max_messages'] > 0 ? (int) $form['max_messages'] : null),
 			'ask_password' => (string) $form['ask_password'] === "1" ? true : false,
-			'attach_audio' => (string) $form['attach_audio'] === "1" ? true : false,
+			'attach_audio' => $form['attach_audio'] === "" ? null : $form['attach_audio'] === "1",
 			'delete_messages' => (string) $form['delete_messages'] === "1" ? true : false,
 			'options' => $options
 		);
+
+		return $voicemail;
 	}
 
 	private function map_legacy($voicemail) 
