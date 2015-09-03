@@ -19,12 +19,10 @@ import os
 import subprocess
 import logging
 
-import pages
 import database
 import confd
 
-from selenium import webdriver
-from pyvirtualdisplay import Display
+from pages import Browser, Page
 
 logger = logging.getLogger(__name__)
 
@@ -43,8 +41,10 @@ def setup_db():
 
 def setup_browser():
     virtual = os.environ.get('VIRTUAL_DISPLAY', '1') == '1'
-    pages.CONFIG['base_url'] = os.environ.get('WEBI_URL', 'http://localhost:8080')
-    return Browser(virtual)
+    username = os.environ.get('WEBI_USERNAME', 'root')
+    password = os.environ.get('WEBI_PASSWORD', 'proformatique')
+    Page.CONFIG['base_url'] = os.environ.get('WEBI_URL', 'http://localhost:8080')
+    return Browser(username, password, virtual)
 
 
 def setup_confd():
@@ -84,25 +84,3 @@ def run_cmd(cmd):
     out, _ = process.communicate()
     logger.info(out)
     return out
-
-
-class Browser(object):
-
-    pages = {'login': pages.LoginPage,
-             'users': pages.UserListPage}
-
-    def __init__(self, virtual=True):
-        self.display = Display(visible=virtual, size=(1024, 768))
-
-    def start(self):
-        self.display.start()
-        self.driver = webdriver.Firefox()
-        self.driver.set_window_size(1024, 768)
-
-    def __getattr__(self, name):
-        page = self.pages[name](self.driver)
-        return page
-
-    def stop(self):
-        self.driver.close()
-        self.display.stop()

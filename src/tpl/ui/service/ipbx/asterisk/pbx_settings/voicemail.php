@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -55,16 +55,13 @@ switch($this->get_var('act'))
 		{
 			$ref = &$list[$i];
 
-			if($ref['uniqueid'] === $except)
+			if($ref['id'] === $except)
 				continue;
-			else if(preg_match('/^(.+) \((.+)\)$/',$ref['identity'],$match) !== 1)
-				$data[] = array('id'		=> $ref['uniqueid'],
-						'identity'	=> $ref['identity'],
-						'info'		=> '');
-			else
-				$data[] = array('id'		=> $ref['uniqueid'],
-						'identity'	=> $match[1],
-						'info'		=> $match[2]);
+			$data[] = array(
+				'id' => $ref['id'],
+				'identity' => $ref['identity'],
+				'info' => $ref['number'] . '@' . $ref['context']
+			);
 		}
 }
 

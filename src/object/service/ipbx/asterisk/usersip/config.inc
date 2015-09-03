@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -69,10 +69,6 @@ $array['element']['fromuser']['null'] = true;
 $array['element']['fromdomain'] = array();
 $array['element']['fromdomain']['default'] = '';
 $array['element']['fromdomain']['null'] = true;
-
-$array['element']['mailbox'] = array();
-$array['element']['mailbox']['default'] = '';
-$array['element']['mailbox']['null'] = true;
 
 $array['element']['subscribemwi'] = array();
 $array['element']['subscribemwi']['value'] = array(0,1);
@@ -429,7 +425,6 @@ $array['filter']['fromdomain'] = array('set' => false,
 					'callback'	=> 'dwho_network::valid_host',
 					'callbackarg'	=> array((DWHO_NETWORK_HOST_IPV4_DOTDEC |
 						DWHO_NETWORK_HOST_HOSTNAME)));
-$array['filter']['mailbox'] = array('set' => false,'chk' => 2,'regexp' => '/^[0-9#\*]{1,40}(?:@[a-z0-9@_\-]{1,39})?$/','maxlen' => 80);
 $array['filter']['subscribemwi'] = array('bool' => true);
 $array['filter']['buggymwi'] = array('set' => false,'chk' => 2,'bool' => true);
 $array['filter']['call-limit'] = array('set' => false,'chk' => 2,'cast' => 'uint','between' => array(0,40));

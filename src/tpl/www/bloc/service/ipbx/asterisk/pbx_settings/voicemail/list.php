@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -63,28 +63,28 @@ $page = $url->pager($pager['pages'],
 	<tr class="sb-top">
 		<th class="th-left xspan"><span class="span-left">&nbsp;</span></th>
 		<th class="th-center">
-			<span class="title <?= $sort[1]=='fullname'?'underline':''?>">
+			<span class="title <?= $sort[1]=='name'?'underline':''?>">
 				<?=$this->bbf('col_fullname');?>
 			</span>
 <?php
 	echo	$url->href_html(
 					$url->img_html('img/updown.png', $this->bbf('col_sort_fullname'), 'border="0"'),
 					'service/ipbx/pbx_settings/voicemail',
-					array('act'	=> 'list', 'sort' => 'fullname'),
+					array('act'	=> 'list', 'sort' => 'name'),
 					null,
 					$this->bbf('col_sort_fullname'));
 ?>
 		</th>
 		<th class="th-center"><?=$this->bbf('col_entity');?></th>
 		<th class="th-center">
-			<span class="title <?= $sort[1]=='mailbox'?'underline':''?>">
+			<span class="title <?= $sort[1]=='number'?'underline':''?>">
 				<?=$this->bbf('col_mailbox');?>
 			</span>
 <?php
 	echo	$url->href_html(
 					$url->img_html('img/updown.png', $this->bbf('col_sort_mailbox'), 'border="0"'),
 					'service/ipbx/pbx_settings/voicemail',
-					array('act'	=> 'list', 'sort' => 'mailbox'),
+					array('act'	=> 'list', 'sort' => 'number'),
 					null,
 					$this->bbf('col_sort_mailbox'));
 ?>
@@ -117,10 +117,10 @@ $page = $url->pager($pager['pages'],
 
 			$ref = &$list[$i];
 
-			if($ref['commented'] === true):
-				$icon = 'disable';
-			else:
+			if($ref['enabled'] === true):
 				$icon = 'enable';
+			else:
+				$icon = 'disable';
 			endif;
 ?>
 	<tr onmouseover="this.tmp = this.className; this.className = 'sb-content l-infos-over';"
@@ -128,22 +128,22 @@ $page = $url->pager($pager['pages'],
 	    class="sb-content l-infos-<?=(($i % 2) + 1)?>on2">
 		<td class="td-left">
 			<?=$form->checkbox(array('name'		=> 'voicemails[]',
-						 'value'	=> $ref['uniqueid'],
+						 'value'	=> $ref['id'],
 						 'label'	=> false,
 						 'id'		=> 'it-voicemails-'.$i,
 						 'checked'	=> false,
 						 'paragraph'	=> false));?>
 		</td>
-		<td class="txt-left" title="<?=dwho_alttitle($ref['fullname']);?>">
+		<td class="txt-left" title="<?=dwho_alttitle($ref['name']);?>">
 			<label for="it-voicemails-<?=$i?>" id="lb-voicemails-<?=$i?>">
 <?php
 				echo	$url->img_html('img/site/flag/'.$icon.'.gif',null,'class="icons-list"'),
-					dwho_htmlen(dwho_trunc($ref['fullname'],25,'...',false));
+					dwho_htmlen(dwho_trunc($ref['name'],25,'...',false));
 ?>
 			</label>
 		</td>
 		<td class="col_entity"><?=$ref['entity_displayname']?></td>
-		<td><?=$ref['mailbox']?></td>
+		<td><?=$ref['number']?></td>
 		<td><?=(dwho_has_len($ref['email']) === true ? $ref['email'] : '-')?></td>
 		<td class="td-right" colspan="2">
 <?php
@@ -152,7 +152,7 @@ $page = $url->pager($pager['pages'],
 						       'border="0"'),
 					'service/ipbx/pbx_settings/voicemail',
 					array('act'	=> 'edit',
-					      'id'	=> $ref['uniqueid']),
+					      'id'	=> $ref['id']),
 					null,
 					$this->bbf('opt_modify')),"\n",
 			$url->href_html($url->img_html('img/site/button/delete.gif',
@@ -160,7 +160,7 @@ $page = $url->pager($pager['pages'],
 						       'border="0"'),
 					'service/ipbx/pbx_settings/voicemail',
 					array('act'	=> 'delete',
-					      'id'	=> $ref['uniqueid'],
+					      'id'	=> $ref['id'],
 					      'page'	=> $pager['page'],
 					      $param),
 					'onclick="return(confirm(\''.$dhtml->escape($this->bbf('opt_delete_confirm')).'\'));"',

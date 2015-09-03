@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -105,8 +105,6 @@ class xivo_service_asterisk_sccpdevice extends xivo_service_asterisk_abstract
 		$arr['device'] = $arr['name'];
 		if ($line !== false)
 			$arr['line'] = (string) $line;
-		if ($voicemail !== false)
-			$arr['voicemail'] = (string) $voicemail;
 
 		if (($info = $this->get_by_mac($mac)) === false)
 			$ret = parent::add($arr);
@@ -125,8 +123,6 @@ class xivo_service_asterisk_sccpdevice extends xivo_service_asterisk_abstract
 		$arr['name'] = $this->sccp_normalize_mac($mac);
 		$arr['device'] = $arr['name'];
 		$arr['line'] = (string) $line;
-		if ($voicemail !== false)
-			$arr['voicemail'] = (string) $voicemail;
 
 		return(parent::edit($info['id'],$arr));
 	}

@@ -16,14 +16,12 @@
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-import unittest
-
 from hamcrest import assert_that, has_entries, equal_to
 
-from lib import setup as testsetup
+from lib.testcase import TestWebi
 
 
-class TestFuncKey(unittest.TestCase):
+class TestFuncKey(TestWebi):
 
     DND = {'destination': {'type': 'service',
                            'href': None,
@@ -34,26 +32,6 @@ class TestFuncKey(unittest.TestCase):
                               u'type': u'custom'}}
 
     asset = 'funckeys'
-
-    @classmethod
-    def setUpClass(cls):
-        testsetup.setup_docker(cls.asset)
-
-        cls.db = testsetup.setup_db()
-        cls.db.recreate()
-
-        cls.browser = testsetup.setup_browser()
-        cls.browser.start()
-        cls.browser.login.login('root', 'proformatique')
-
-        cls.confd = testsetup.setup_confd()
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.browser.stop()
-
-    def setUp(self):
-        self.addCleanup(self.confd.clear)
 
     def prepare_user(self, firstname, lastname, template):
         with self.db.queries() as queries:
@@ -87,7 +65,7 @@ class TestFuncKeyEdit(TestFuncKey):
 
         self.confd.add_response(expected_url, method='PUT', code=204)
 
-        users = self.browser.users.go()
+        users = self.browser.users
         user = users.edit("John Doe")
         user.funckeys().add(type="Do not disturb")
         user.save()
@@ -96,16 +74,17 @@ class TestFuncKeyEdit(TestFuncKey):
                             'label': None,
                             'destination': {'type': 'service',
                                             'service': 'enablednd'}}
-        self.confd.assert_json_request(expected_url, 'PUT', expected_funckey)
+        self.confd.assert_json_request(expected_url, expected_funckey, 'PUT')
 
     def test_given_user_when_editing_funckey_then_updates_funckey_in_confd(self):
         template = self.prepare_template(self.DND)
         user_id = self.prepare_user("Richard", "Smith", template)
         expected_url = "/users/{}/funckeys/1".format(user_id)
 
+        self.confd.add_response(expected_url, method='DELETE', code=204)
         self.confd.add_response(expected_url, method='PUT', code=204)
 
-        users = self.browser.users.go()
+        users = self.browser.users
         user = users.edit("Richard Smith")
         user.funckeys().edit(key=1,
                              type="Customized",
@@ -118,7 +97,9 @@ class TestFuncKeyEdit(TestFuncKey):
                             'label': 'devil',
                             'destination': {'type': 'custom',
                                             'exten': '666'}}
-        self.confd.assert_json_request(expected_url, 'PUT', expected_funckey)
+
+        self.confd.request_matching(expected_url, 'DELETE')
+        self.confd.assert_json_request(expected_url, expected_funckey, 'PUT')
 
     def test_given_user_when_removing_funckey_then_updates_funckey_in_confd(self):
         template = self.prepare_template(self.DND)
@@ -127,14 +108,12 @@ class TestFuncKeyEdit(TestFuncKey):
 
         self.confd.add_response(expected_url, method='DELETE', code=204)
 
-        users = self.browser.users.go()
+        users = self.browser.users
         user = users.edit("Daffy Duck")
         user.funckeys().remove(1)
         user.save()
 
-        expected_request = {'method': 'DELETE',
-                            'path': expected_url}
-        self.confd.assert_request_sent(expected_request)
+        self.confd.assert_request_sent(expected_url, method="DELETE")
 
     def test_given_user_with_funckey_when_editing_then_funckey_appears_on_page(self):
         funckey = dict(self.CUSTOM)
@@ -144,7 +123,7 @@ class TestFuncKeyEdit(TestFuncKey):
         template = self.prepare_template(funckey)
         user_id = self.prepare_user("George", "Clooney", template)
 
-        users = self.browser.users.go()
+        users = self.browser.users
         user = users.edit("George Clooney")
 
         funckey = user.funckeys().get(1)
@@ -155,9 +134,8 @@ class TestFuncKeyEdit(TestFuncKey):
                             'supervision': False}
         assert_that(funckey, has_entries(expected_funckey))
 
-        expected_request = {'method': 'GET',
-                            'path': '/users/{}/funckeys'.format(user_id)}
-        self.confd.assert_request_sent(expected_request)
+        expected_url = '/users/{}/funckeys'.format(user_id)
+        self.confd.assert_request_sent(expected_url)
 
     def test_given_funckey_has_no_supervision_when_editing_then_supervision_disabled(self):
         funckey = dict(self.CUSTOM)
@@ -165,7 +143,7 @@ class TestFuncKeyEdit(TestFuncKey):
         template = self.prepare_template(funckey)
         self.prepare_user("Nicole", "Kidman", template)
 
-        users = self.browser.users.go()
+        users = self.browser.users
         user = users.edit("Nicole Kidman")
         funckey = user.funckeys().get(1)
 
@@ -183,12 +161,10 @@ class TestFuncKeyDelete(TestFuncKey):
         expected_url = "/users/{}/funckeys/{}".format(user_id, position)
         self.confd.add_response(expected_url, method='DELETE', code=204)
 
-        users = self.browser.users.go()
+        users = self.browser.users
         users.delete("John Doe")
 
-        expected_request = {'method': 'DELETE',
-                            'path': expected_url}
-        self.confd.assert_request_sent(expected_request)
+        self.confd.assert_request_sent(expected_url, method="DELETE")
 
 
 class TestFuncKeyCreate(TestFuncKey):
@@ -289,7 +265,7 @@ class TestFuncKeyCreate(TestFuncKey):
                                     method='PUT',
                                     code=204)
 
-        users = self.browser.users.go()
+        users = self.browser.users
         user = users.add()
         user.fill_form(firstname="John", lastname="Doe")
         funckeys = user.funckeys()
@@ -301,4 +277,4 @@ class TestFuncKeyCreate(TestFuncKey):
 
         for position, funckey in self.confd_funckeys.iteritems():
             url = r"/users/\d+/funckeys/{}".format(position)
-            self.confd.assert_json_request(url, 'PUT', funckey)
+            self.confd.assert_json_request(url, funckey, 'PUT')

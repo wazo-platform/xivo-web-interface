@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,38 +19,57 @@
 #
 
 dwho_file::required(array(XIVO_PATH_OBJECT,'application','service','ipbx','asterisk.inc'),true);
+require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'converter', 'voicemail', 'mapper.inc'));
 
 class xivo_application_service_asterisk_voicemail extends xivo_application_asterisk_abstract
 {
-	var $_dso			= null;
-	var $_voicemail		= false;
-	var $_contextmember	= false;
 	var $_zonemessages	= null;
 	var $_timezones		= array();
 	var $_contextlist	= array();
 	var $_modules		= array();
-	var $_sysconfd = false;
+	var $_confd			= null;
+	var $_context		= null;
+	var $_entity		= null;
+	var $_vm_mapper		= null;
 
 	public function __construct(&$service,&$dso,$param=null,$components=true)
 	{
 		parent::__construct($service);
 
-		if(is_object($dso) === false)
-			trigger_error('Invalid Datastorage object',E_USER_ERROR);
-
-		$this->_dso = &$dso;
-
-
-		if(($this->_voicemail = &$this->_service->get_module('voicemail')) === false)
+		$_RAPI = &dwho_gct::get('xivo_confd');
+		if($_RAPI === false) {
+			trigger_error('Invalid CONFD object',E_USER_ERROR);
 			return(false);
-		else if((bool) $components === true)
-			$this->load_components();
+		}
 
-		// sysconfd is a xivo object
-		$_XOBJ = &dwho_gct::get('xivo_object');
-		if ($_XOBJ == false
-		|| ($this->_sysconfd = &$_XOBJ->get_module('sysconfd')) == false)
-			return false;
+		$_XOBJ = dwho_gct::get('xivo_object');
+		if($_XOBJ === false) {
+			trigger_error('Invalid XiVO object',E_USER_ERROR);
+			return(false);
+		}
+
+		$this->_confd = $_RAPI->get_ressource('voicemail');
+		if($this->_confd === false) {
+			trigger_error('Cannot load voicemail confd resource',E_USER_ERROR);
+			return(false);
+		}
+
+		$this->_context = $this->_service->get_module('context');
+		if($this->_context === false) {
+			trigger_error('error', 'Cannot load context module', E_USER_ERROR);
+			return(false);
+		}
+
+		$this->_entity = $_XOBJ->get_module('entity');
+		if($this->_entity === false) {
+			trigger_error('error', 'Cannot load entity module', E_USER_ERROR);
+			return(false);
+		}
+
+		$this->_vm_mapper = new VoicemailMapper();
+
+		if((bool) $components === true)
+			$this->load_components();
 
 		return(true);
 	}
@@ -59,55 +78,42 @@ class xivo_application_service_asterisk_voicemail extends xivo_application_aster
 	{
 		$this->_components = true;
 
-		if(($this->_contextmember = $this->get_abstract('contextmember',array('type' => 'voicemail'))) === false)
-			return(false);
-		else if(($appvoicemail = &$this->_service->get_apprealstatic('voicemail')) !== false)
+		if(($appvoicemail = &$this->_service->get_apprealstatic('voicemail')) !== false)
 			$this->_zonemessages = &$appvoicemail->get_module('zonemessages');
 
 		return(true);
 	}
 
-	function get($id,$disable=null,$nocomponents=null)
+	function get($id)
 	{
-		$this->_info = $this->_origin = array();
-
-		if(($this->_info['voicemail'] = $this->_voicemail->get($id,$disable)) === false)
+		$voicemail = $this->_confd->get($id);
+		if($voicemail === false) {
+			dwho_report::push('error', 'Cannot get voicemail ', $id);
 			return(false);
-
-		$this->_origin['voicemail'] = $this->_voicemail->get_origin();
-
-		if($this->_components === false)
-			return($this->_info);
-
-		if(dwho_ak('contextmember',$nocomponents,true) === false)
-			$this->_get_contextmember($this->_info['voicemail']['uniqueid']);
-
-		return($this->_info);
+		}
+		return $this->map_voicemail($voicemail);
 	}
-
+			
 	function get_nb($arr=null,$disable=null)
 	{
-		return($this->_voicemail->get_nb($arr,$disable));
-	}
-
-	function get_by_mailbox_context($mailbox,$context,$disable=null,$nocomponents=null)
-	{
-		$this->_info = $this->_origin = array();
-
-		if(($this->_info['voicemail'] = $this->_voicemail->get_where(
-							array('mailbox'	=> $mailbox,
-							      'context'	=> $context),$disable)) === false)
+		$voicemails = $this->_confd->find_all();
+		if($voicemails === false) {
+			dwho_report::push('error', 'Cannot get number of voicemails');
 			return(false);
+		}
 
-		$this->_origin['voicemail'] = $this->_voicemail->get_origin();
+		if($disable !== null) {
+			$enabled = !((bool)$disable);
+			$nb = 0;
+			foreach($voicemails as $voicemail) {
+				if($voicemail['enabled'] === $enabled) {
+					$nb++;
+				}
+			}
+			return $nb;
+		}
 
-		if($this->_components === false)
-			return($this->_info);
-
-		if(dwho_ak('contextmember',$nocomponents,true) === false)
-			$this->_get_contextmember($this->_info['voicemail']['uniqueid']);
-
-		return($this->_info);
+		return count($voicemails);
 	}
 
 	function get_timezones()
@@ -121,424 +127,105 @@ class xivo_application_service_asterisk_voicemail extends xivo_application_aster
 		return(($this->_timezones = $this->_zonemessages->get_all_name()));
 	}
 
-	function get_elements()
+	function get_voicemail_search($search='',$order=null,$limit=null)
 	{
-		$r = array();
-		$r['voicemail'] = $this->_voicemail->get_element();
-
-		return($r);
-	}
-
-	function get_voicemail_search($search,$disable=null,$order=null,$limit=null,$assoc=false)
-	{
-		return($this->_get_voicemail('search',$disable,$search,$order,$limit,$assoc));
-	}
-
-	function get_voicemail_list($disable=null,$order=null,$limit=null,$assoc=false)
-	{
-		return($this->_get_voicemail('list',$disable,null,$order,$limit,$assoc));
-	}
-
-	function _get_voicemail($action,$disable=null,$search='',$order=null,$limit=null,$assoc=false)
-	{
-		$search = strval($search);
-
-		$rs = false;
-
-		switch($action)
-		{
-			case 'search':
-				$rs = $this->_dso->search($search,$disable,$order,$limit);
-
-				$this->_cnt = $this->_dso->get_cnt();
-
-				if($rs === false || ($nb = count($rs)) === 0)
-					return(false);
-
-				$r = $identity = array();
-
-				for($i = 0;$i < $nb;$i++)
-				{
-					$r[$rs[$i]['uniqueid']] = $rs[$i];
-
-					$ref = &$r[$rs[$i]['uniqueid']];
-
-					$identity['mailbox'] = $ref['mailbox'];
-					$identity['fullname'] = $ref['fullname'];
-					$identity['context'] = $ref['context'];
-
-					$ref['identity'] = $this->_voicemail->mk_identity($identity);
-					$ref['commented'] = (bool) $ref['commented'];
-				}
-
-				$rs = $r;
-				break;
-
-			case 'list':
-			default:
-				if(($rs = $this->_dso->get_all($disable,$order,$limit)) !== false
-				&& empty($rs) === true)
-					$rs = false;
-
-				$this->_cnt = $this->_dso->get_cnt();
-		}
-
-		if(empty($rs) === true)
-			return(false);
-		else if((bool) $assoc === false)
-			return(array_values($rs));
-
-		return($rs);
-	}
-
-	function set_add($arr)
-	{
-		return($this->_set('add',$arr));
-	}
-
-	function set_edit($arr,$setval=true)
-	{
-		if(empty($this->_info) === true)
-			return(false);
-
-		return($this->_set('edit',$arr,$setval));
-	}
-
-	function _set($action,$arr,$setval=true)
-	{
-		$this->_reset();
-
-		if(($action !== 'add' && $action !== 'edit') === true
-		|| dwho_issa('voicemail',$arr) === false)
-			return(false);
-
-		$this->set_voicemail($arr['voicemail'],$setval);
-
-		if($action === 'edit'
-		&& (bool) $setval === false
-		&& (string) $this->get_result_var('voicemail','context') !== '')
-			$this->_set_result_var('voicemail','context',$this->_info['voicemail']['context']);
-
-		$this->set_contextmember();
-
-		return(($this->get_errnb() < 1));
-	}
-
-	function set_voicemail($arr,$setval=true)
-	{
-		if(is_array($arr) === false)
-		{
-			$this->_set_result('voicemail',null);
-			$this->_set_error('voicemail','invalid data');
+		$voicemails = $this->_confd->find_all($search, $order, $limit);
+		if($voicemails === false) {
+			dwho_report::push('error', 'Cannot search for voicemails');
 			return(false);
 		}
 
-		$arr['commented'] = false;
-
-		if(($rs = $this->_voicemail->chk_values($arr,true,$setval)) === false)
-		{
-			$this->_set_result('voicemail',$this->_voicemail->get_filter_result());
-			$this->_set_error('voicemail',$this->_voicemail->get_filter_error());
-			return(false);
-		}
-		else if(dwho_has_len($rs,'tz') === true
-		&& ($this->get_timezones() === false
-		   || isset($this->_timezones[$rs['tz']]) === false) === true)
-		{
-			$this->_set_result('voicemail',$rs);
-			$this->_set_error('voicemail','invalid tz');
-			return(false);
-		}
-
-		$this->_set_result('voicemail',$rs);
-
-		return(true);
+		$voicemails = $this->filter_on_entity($voicemails);
+		$voicemails = $this->map_voicemails($voicemails);
+		return $voicemails;
 	}
 
-	function set_contextmember()
+	function get_search_total()
 	{
-		$rs = array();
-		$rs['voicemail-context']['context'] = (string) $this->get_result_var('voicemail','context');
-		$rs['voicemail-context']['typeval'] = 0;
-		$rs['voicemail-context']['varname'] = 'context';
-
-		if(($dialout = (string) $this->get_result_var('voicemail','dialout')) !== '')
-		{
-			$rs['voicemail-dialout']['context'] = $dialout;
-			$rs['voicemail-dialout']['typeval'] = 0;
-			$rs['voicemail-dialout']['varname'] = 'dialout';
-		}
-
-		if(($callback = (string) $this->get_result_var('voicemail','callback')) !== '')
-		{
-			$rs['voicemail-callback']['context'] = $callback;
-			$rs['voicemail-callback']['typeval'] = 0;
-			$rs['voicemail-callback']['varname'] = 'callback';
-		}
-
-		if(($exitcontext = (string) $this->get_result_var('voicemail','exitcontext')) !== '')
-		{
-			$rs['voicemail-exitcontext']['context'] = $exitcontext;
-			$rs['voicemail-exitcontext']['typeval'] = 0;
-			$rs['voicemail-exitcontext']['varname'] = 'exitcontext';
-		}
-
-		return(parent::set_contextmember($rs));
+		return $this->_confd->get_total();
 	}
 
-	function add()
+	private function filter_on_entity(&$voicemails) 
 	{
-		$r = true;
+		if(!defined('ENTITY_FILTER_CONTEXTS'))
+			return $voicemails;
 
-		$this->_status = 'add';
-		$this->_return = array();
-		$voicemailid = null;
+		$contexts = explode(',', ENTITY_FILTER_CONTEXTS);
 
-		if($this->get_errnb() > 0
-		|| ($voicemailid = $this->add_voicemail()) === false
-		|| $this->add_contextmember($voicemailid) === false)
-		{
-			$r = false;
-
-			if($voicemailid !== null)
-				$this->reverse_add($voicemailid);
-		}
-
-		$this->_status = '';
-
-		return($r);
-	}
-
-	function add_voicemail()
-	{
-		if(($rs = $this->get_result('voicemail')) === null
-		|| $rs === false)
-			return(false);
-
-		return(($this->_return['voicemail'] = $this->_voicemail->add($rs)));
-	}
-
-	function reverse_add($voicemailid)
-	{
-		if($this->get_errnb() > 0
-		|| $this->_status !== 'add'
-		|| ($voicemailid = dwho_ulongint($voicemailid)) === 0
-		|| is_array($this->_return) === false
-		|| empty($this->_return) === true)
-			return(false);
-
-		foreach($this->_return as $key => $val)
-		{
-			if($val === false)
-				continue;
-
-			switch($key)
-			{
-				case 'voicemail':
-					$this->_voicemail->delete($voicemailid);
-					break;
-				case 'contextmember':
-					$this->_contextmember->reverse_add();
-					break;
+		$filtered = array();
+		foreach($voicemails as &$voicemail) {
+			if(in_array($voicemail['context'], $contexts)) {
+				$filtered[] = $voicemail;
 			}
 		}
 
+		return $filtered;
+	}
+
+	private function map_voicemails(&$voicemails) 
+	{
+		foreach($voicemails as &$voicemail) {
+			$voicemail = $this->map_voicemail($voicemail);
+		}
+
+		return $voicemails;
+	}
+
+	private function map_voicemail(&$voicemail) {
+		$voicemail['identity'] = "${voicemail['name']} (${voicemail['number']}@${voicemail['context']})";
+
+		$context = $this->_context->get($voicemail['context']);
+		if($context === false)
+			return(false);
+
+		$entity = $this->_entity->get_where(array('name' => $context['entity']));
+		if($entity === false) {
+			$voicemail['entity_displayname'] = '';
+		} else {
+			$voicemail['entity_displayname'] = $entity['displayname'];
+		}
+
+		return $voicemail;
+	}
+
+	function add($form)
+	{
+		$voicemail = $this->convert_form($form);
+		$voicemail_id = $this->_confd->add($voicemail);
+		if($voicemail_id === false) {
+			dwho_report::push('error', 'Cannot create voicemail');
+			return(false);
+		}
+		return($voicemail_id);
+	}
+
+	function edit($voicemail_id, $form)
+	{
+		$voicemail = $this->convert_form($form);
+
+		$status = $this->_confd->edit($voicemail_id, $voicemail);
+		if($status === false) {
+			dwho_report::push('error', 'Cannot edit voicemail');
+			return(false);
+		}
 		return(true);
 	}
 
-	function edit($chkunique=true)
+	private function convert_form($form) {
+		return $this->_vm_mapper->map_form($form['voicemail']);
+	}
+
+	function delete($voicemail_id)
 	{
-		$r = true;
-
-		$this->_status = 'edit';
-		$this->_return = array();
-
-		if($this->get_errnb() > 0
-		|| $this->edit_voicemail($chkunique) === false
-		|| $this->edit_contextmember() === false)
-		{
-			$r = false;
-			$this->reverse_edit();
+		$status = $this->_confd->delete($voicemail_id);
+		if($status === false) {
+			dwho_report::push('error', 'Cannot delete voicemail');
+			return(false);
 		}
-
-		$this->_status = '';
-
-		return($r);
+		return $this->unlinks($voicemail_id);
 	}
 
-	function edit_voicemail($chkunique=true)
-	{
-		if(dwho_issa('voicemail',$this->_origin) === false
-		|| ($rs = $this->get_result('voicemail')) === null
-		|| $rs === false)
-			return(false);
-
-		$rs['commented'] = $this->_info['voicemail']['commented'];
-		if(!isset($rs['skipcheckpass']))
-			$rs['skipcheckpass'] = false;
-
-		if(($this->_return['voicemail'] = $this->_voicemail->edit(
-								$this->_origin['voicemail']['uniqueid'],
-								$rs,
-								null,
-								$chkunique)) === false)
-			return(false);
-
-		if(isset($rs['mailbox'],$rs['context']) === true
-		&& ($this->_info['voicemail']['mailbox'] !== (string) $rs['mailbox']
-		   || $this->_info['voicemail']['context'] !== (string) $rs['context']) === true
-		&& $this->_update_user_mailbox($this->_origin['voicemail']['mailbox'].
-					       '@'.$this->_origin['voicemail']['context'],
-					       $rs['mailbox'].
-					       '@'.$rs['context']) === false)
-			return(false);
-		return($this->_return['voicemail']);
-	}
-
-
-	function edit_contextmember()
-	{
-		if(dwho_issa('voicemail',$this->_info) === false)
-			return(false);
-
-		return(parent::edit_contextmember($this->_info['voicemail']['uniqueid']));
-	}
-
-	function _update_user_mailbox($mailbox,$newmailbox)
-	{
-		if(dwho_issa('usermailbox',$this->_return) === false)
-			$this->_return['usermailbox'] = array();
-
-		$ref = &$this->_return['usermailbox'];
-
-		$ref['_mailbox'] = $mailbox;
-		$ref['_newmailbox'] = $newmailbox;
-
-		$where = array('mailbox' => $mailbox);
-		$value = array('mailbox' => $newmailbox);
-
-		if(((isset($this->_modules['usersip']) === false
-		    || is_object($this->_modules['usersip']) === false) === true
-		   && ($this->_modules['usersip'] = &$this->_service->get_module('usersip')) === false) === true
-		|| ($ref['usersip'] = $this->_modules['usersip']->edit_where($where,$value,
-									     null,null,false)) === false)
-			return(false);
-
-		return(true);
-	}
-
-	function reverse_edit()
-	{
-		if($this->get_errnb() > 0
-		|| $this->_status !== 'edit'
-		|| is_array($this->_return) === false
-		|| empty($this->_return) === true)
-			return(false);
-
-		foreach($this->_return as $key => $val)
-		{
-			if($val === false)
-				continue;
-
-			switch($key)
-			{
-				case 'voicemail':
-					if(isset($this->_origin['voicemail']) === false
-					|| $this->_origin['voicemail'] === false)
-						$this->delete_voicemail();
-					else
-						$this->_voicemail->edit_origin($this->_origin['voicemail']);
-					break;
-				case 'contextmember':
-					$this->_contextmember->reverse_edit($this->_status);
-					break;
-				case 'usermailbox':
-					if(is_array($val) === false
-					|| isset($val['_mailbox'],$val['_newmailbox']) === false)
-						continue;
-
-					$this->_update_user_mailbox($val['_newmailbox'],$val['_mailbox']);
-					break;
-			}
-		}
-
-		return(true);
-	}
-
-	function delete()
-	{
-		$r = true;
-
-		$this->_status = 'delete';
-		$this->_return = array();
-
-		if($this->delete_voicemail() === false
-		|| $this->delete_contextmember() === false)
-		{
-			$r = false;
-			$this->reverse_delete();
-		}
-		else
-		{
-			$this->unlinks();
-			$this->delete_storage();
-		}
-
-		$this->_status = '';
-
-		return($r);
-	}
-
-	function delete_voicemail()
-	{
-		if(dwho_issa('voicemail',$this->_info) === false)
-			return(false);
-
-		$r = $this->_voicemail->delete($this->_info['voicemail']['uniqueid']);
-
-		if($this->_status === 'delete')
-			$this->_return['voicemail'] = $r;
-
-		return($r);
-	}
-
-	function delete_storage()
-	{
-		$this->_sysconfd->request_get('/delete_voicemail', array(
-			array('context', $this->_info['voicemail']['context']),
-			array('name'   , $this->_info['voicemail']['mailbox'])
-		));
-	}
-
-	function reverse_delete()
-	{
-		if($this->_status !== 'delete'
-		|| is_array($this->_return) === false
-		|| empty($this->_return) === true)
-			return(false);
-
-		foreach($this->_return as $key => $val)
-		{
-			if($val === false)
-				continue;
-
-			switch($key)
-			{
-				case 'voicemail':
-					if(isset($this->_origin['voicemail']) === true
-					&& $this->_origin['voicemail'] !== false)
-						$this->_voicemail->add_origin($this->_origin['voicemail']);
-					break;
-				case 'contextmember':
-					$this->_contextmember->add_origin_list();
-					break;
-			}
-		}
-
-		return(true);
-	}
-
-	function unlinks()
+	function unlinks($voicemail_id)
 	{
 		if(dwho_issa('voicemail',$this->_info) === false)
 			return(false);
@@ -546,7 +233,7 @@ class xivo_application_service_asterisk_voicemail extends xivo_application_aster
 		{
 			$where = array();
 			$where['action'] = 'voicemail';
-			$where['actionarg1'] = (string) $this->_info['voicemail']['uniqueid'];
+			$where['actionarg1'] = (string) $voicemail_id;
 
 			$dialaction->unlinked_where($where);
 		}
@@ -554,97 +241,53 @@ class xivo_application_service_asterisk_voicemail extends xivo_application_aster
 		if(($userfeatures = &$this->_service->get_module('userfeatures')) !== false)
 		{
 			$where = array();
-			$where['voicemailid'] = $this->_info['voicemail']['uniqueid'];
+			$where['voicemailid'] = $voicemail_id;
 
 			$userfeatures->edit_where($where,array('voicemailid' => 0,
-												'voicemailtype' => null,
 												'enablevoicemail' => 0));
 		}
 
-		if((isset($this->_modules['usersip']) === true
-		   && is_object($this->_modules['usersip']) === true) === true
-		|| ($this->_modules['usersip'] = &$this->_service->get_module('usersip')) !== false)
-		{
-			$where = array();
-			$where['mailbox'] = $this->_info['voicemail']['mailbox'].'@'.$this->_info['voicemail']['context'];
+		return(true);
+	}
 
-			$this->_modules['usersip']->edit_where($where,array('mailbox' => null));
+	function enable($voicemail_id)
+	{
+		$voicemail = array('enabled' => true);
+		$status = $this->_confd->edit($voicemail_id, $voicemail);
+		if($status === false) {
+			dwho_report::push('error', 'Cannot enable voicemail ' . $voicemail_id);
+			return(false);
 		}
-
-		return(true);
 	}
 
-	function enable()
+	function disable($voicemail_id)
 	{
-		$r = true;
-		$this->_status = 'enable';
-		$this->_return = array();
-
-		if($this->enable_voicemail() === false)
-			$r = false;
-
-		$this->_status = '';
-
-		return($r);
-	}
-
-	function disable()
-	{
-		$r = true;
-		$this->_status = 'disable';
-		$this->_return = array();
-
-		if($this->disable_voicemail() === false)
-			$r = false;
-
-		$this->_status = '';
-
-		return($r);
-	}
-
-	function enable_voicemail()
-	{
-		return($this->_enable_disable_voicemail(false));
-	}
-
-	function disable_voicemail()
-	{
-		return($this->_enable_disable_voicemail(true));
-	}
-
-	function _enable_disable_voicemail($disable=false)
-	{
-		if(dwho_issa('voicemail',$this->_info) === false)
+		$voicemail = array('enabled' => false);
+		$status = $this->_confd->edit($voicemail_id, $voicemail);
+		if($status === false) {
+			dwho_report::push('error', 'Cannot disable voicemail ' . $voicemail_id);
 			return(false);
-		else if((bool) $disable === false)
-			$r = $this->_voicemail->enable($this->_info['voicemail']['uniqueid']);
-		else
-			$r = $this->_voicemail->disable($this->_info['voicemail']['uniqueid']);
-
-		if($this->_status === 'enable' || $this->_status === 'disable')
-			$this->_return['voicemail'] = $r;
-
-		return($r);
+		}
 	}
 
-	function add_from_json()
+	function associate($voicemail_id, $user_id) 
 	{
-		if(($data = $this->_get_data_from_json()) === false
-		|| $this->set_add($data) === false
-		|| $this->add() === false)
-			return(false);
-
-		return(true);
+		return $this->_confd->associate_user_voicemail($user_id, $voicemail_id);
 	}
 
-	function edit_from_json()
+	function dissociate($user_id)
 	{
-		if(($data = $this->_get_data_from_json()) === false
-		|| $this->set_edit($data) === false
-		|| $this->edit() === false)
-			return(false);
+		return $this->_confd->dissociate_user_voicemail($user_id);
+	}
 
-		return(true);
+	function get_voicemail_id_for_user($user_id)
+	{
+		$association = $this->_confd->get_user_voicemail($user_id);
+		if($association === false)
+			return false;
+
+		return $association['voicemail_id'];
+
 	}
 }
 

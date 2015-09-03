@@ -13,6 +13,9 @@ Full name:
 ; fm_voicemail_mailbox
 Voicemail number:
 
+; fm_voicemail_ask-password
+Ask password: 
+
 ; fm_voicemail_password
 Password:
 
@@ -30,9 +33,6 @@ Time zone:
 
 ; fm_voicemail_language
 Language :
-
-; fm_voicemail_skipcheckpass
-Disable password checking:
 
 ; fm_voicemail_maxmsg
 Maximum number of messages:
@@ -209,3 +209,14 @@ Messages store directory
 ; fm_voicemail-passwordlocation-opt(voicemail)
 Configuration
 
+; col_voicemail-option-name
+Option
+
+; col_voicemail-option-value
+Value
+
+; col_voicemail-option-add
+Add option
+
+; col_voicemail-option-delete
+Delete option

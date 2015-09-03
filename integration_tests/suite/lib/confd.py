@@ -16,11 +16,12 @@
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
+from pprint import pformat
 import requests
 import json
 import re
 
-from hamcrest import assert_that, has_item, has_entries, equal_to
+from hamcrest import assert_that, has_entries, equal_to
 
 
 class MockConfd(object):
@@ -61,19 +62,20 @@ class MockConfd(object):
         body = body or {}
         self.add_response(path, json.dumps(body), method, code)
 
-    def assert_request_sent(self, request):
-        requests = self.requests()
-        assert_that(requests, has_item(has_entries(request)))
+    def assert_request_sent(self, url, method='GET', body=None):
+        request = self.request_matching(url, method)
+        if body:
+            assert_that(request['body'], equal_to(body), pformat(request))
 
-    def assert_json_request(self, expected_url, expected_method, expected_body):
-        request = self.request_matching(expected_url)
-        assert_that(request['method'], equal_to(expected_method))
+    def assert_json_request(self, expected_url, expected_body, method='GET'):
+        request = self.request_matching(expected_url, method)
         body = json.loads(request['body'])
-        assert_that(body, has_entries(expected_body))
+        msg = pformat(request)
+        assert_that(body, has_entries(expected_body), msg)
 
-    def request_matching(self, path):
+    def request_matching(self, path, method='GET'):
         regex = re.compile(path)
         for request in self.requests():
-            if regex.match(request['path']):
+            if regex.match(request['path']) and request['method'] == method:
                 return request
         raise AssertionError("No request matching '{}' found".format(path))

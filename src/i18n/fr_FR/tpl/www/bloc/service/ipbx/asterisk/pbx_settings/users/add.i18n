@@ -88,26 +88,17 @@ Créer un horaire
 ; fm_userfeatures_musiconhold
 Musique d'attente :
 
-; fm_userfeatures_voicemailtype
-Messagerie vocale :
+; user_vm_form
+Messagerie Vocale:
 
-; fm_userfeatures_voicemailtype-opt(none)
-Aucune
+; user_vm_add
+Ajouter une nouvelle messagerie : 
 
-; fm_userfeatures_voicemailtype-opt(asterisk)
-Asterisk
+; user_vm_delete
+Supprimer messagerie :
 
-; fm_voicemail_option
-Messagerie vocale :
-
-; fm_voicemail_option-opt(add)
-Ajouter
-
-; fm_voicemail_option-opt(search)
-Rechercher
-
-; fm_voicemail_suggest
-Rechercher :
+; user_vm_search
+Recherche de messagerie : 
 
 ; fm_voicemail_fullname
 Nom complet :
@@ -121,17 +112,26 @@ Mot de passe :
 ; fm_voicemail_email
 E-mail :
 
+; fm_voicemail_language
+Langue :
+
 ; fm_voicemail_tz
 Fuseau horaire :
-
-; fm_voicemail_skipcheckpass
-Désactiver la vérification du mot de passe :
 
 ; fm_voicemail_attach
 Joindre le fichier audio :
 
 ; fm_voicemail_deletevoicemail
 Supprimer message après notification :
+
+; fm_voicemail_maxmsg
+Nombre maximum de messages :
+
+; fm_voicemail_ask-password
+Demander le mot de passe: 
+
+; fm_voicemail_context
+Contexte :
 
 ; fld-rightcalls
 Droits d'appels

@@ -796,9 +796,7 @@ class xivo_application_service_asterisk_context extends xivo_application_asteris
 		|| (isset($refinfo['trunkiax']) === true
 		   && $this->_update_trunkiax_contextmember($context,$newcontext) === false) === true
 		|| (isset($refinfo['trunkcustom']) === true
-		   && $this->_update_trunkcustom_contextmember($context,$newcontext) === false) === true
-		|| (isset($refinfo['voicemail']) === true
-		   && $this->_update_voicemail_contextmember($context,$newcontext,$refinfo['voicemail']) === false) === true)
+		   && $this->_update_trunkcustom_contextmember($context,$newcontext) === false) === true)
 			return(false);
 
 		return($this->_return['contextmember']);
@@ -1059,49 +1057,6 @@ class xivo_application_service_asterisk_context extends xivo_application_asteris
 		return($this->_update_context_contextmember('trunkcustom',$context,$newcontext));
 	}
 
-	function _update_voicemail_contextmember($context,$newcontext,$data)
-	{
-		if(dwho_issa('contextmember',$this->_return) === false
-		|| is_array($data) === false)
-			return(false);
-
-		$ref = &$this->_return['contextmember'];
-
-		if(((isset($this->_modules['voicemail']) === false
-		    || is_object($this->_modules['voicemail']) === false) === true
-		   && ($this->_modules['voicemail'] = $this->_service->get_module('voicemail')) === false) === true)
-			return(false);
-		else if(isset($data['context']) === true
-		&& (($ref['voicemail']['context'] = $this->_modules['voicemail']->edit_where(
-							array('context'		=> $context),
-							array('context'		=> $newcontext),
-							null,null,false)) === false
-		    || ($ref['voicemail']['usersip'] = $this->_dso->update_usersip_mailbox(
-							$newcontext,
-							$newcontext)) === false) === true)
-			return(false);
-		else if(isset($data['dialout']) === true
-		&& ($ref['voicemail']['dialout'] = $this->_modules['voicemail']->edit_where(
-							array('dialout'		=> $context),
-							array('dialout'		=> $newcontext),
-							null,null,false)) === false)
-			return(false);
-		else if(isset($data['callback']) === true
-		&& ($ref['voicemail']['callback'] = $this->_modules['voicemail']->edit_where(
-							array('callback'	=> $context),
-							array('callback'	=> $newcontext),
-							null,null,false)) === false)
-			return(false);
-		else if(isset($data['exitcontext']) === true
-		&& ($ref['voicemail']['exitcontext'] = $this->_modules['voicemail']->edit_where(
-							array('exitcontext'	=> $context),
-							array('exitcontext'	=> $newcontext),
-							null,null,false)) === false)
-			return(false);
-
-		return(true);
-	}
-
 	function _reverse_edit()
 	{
 		if($this->get_errnb() > 0
@@ -1197,8 +1152,6 @@ class xivo_application_service_asterisk_context extends xivo_application_asteris
 					if(isset($val['trunkcustom']) === true)
 						$this->_update_trunkcustom_contextmember($context,$newcontext);
 
-					if(isset($val['voicemail']) === true)
-						$this->_update_voicemail_contextmember($context,$newcontext,$val['voicemail']);
 					break;
 				case 'contextincludename':
 					if(is_array($val) === false

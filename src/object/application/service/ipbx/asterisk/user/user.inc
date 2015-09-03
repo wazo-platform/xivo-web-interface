@@ -25,6 +25,7 @@ dwho::load_class('dwho_http');
 dwho_file::required(array(XIVO_PATH_OBJECT,'application','service','ipbx','asterisk.inc'),true);
 require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'converter', 'funckey', 'mapper.inc'));
 require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'converter', 'funckey', 'funckey.inc'));
+require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'converter', 'voicemail', 'mapper.inc'));
 
 class xivo_application_service_asterisk_user extends xivo_application_asterisk_abstract
 {
@@ -33,7 +34,6 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 	protected $_rightcall		= false;
 	protected $_dialaction		= false;
 	protected $_queuemember		= null;
-	protected $_voicemail		= null;
 	protected $_agentfeatures	= null;
 	protected $_linefeatures	= false;
 	protected $_line			= false;
@@ -56,6 +56,8 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 	protected $_callfiltermember = false;
 	protected $_func_key_agent = null;
 	protected $_func_keys = null;
+	protected $_vm_mapper = null;
+	protected $_voicemail = null;
 
 	public function __construct(&$service,&$dso,$param=null,$components=true)
 	{
@@ -119,7 +121,8 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		|| ($this->_func_key_agent = $this->_service->get_module('func_key_dest_agent')) === false
 		|| ($this->_callfilter = $this->_service->get_application('callfilter', array('type' => 'bosssecretary'))) === false
 		|| ($this->_callfiltermember = $this->_service->get_module('callfiltermember')) === false
-		|| ($func_keys_confd = $_RAPI->get_ressource('user_func_keys')) === false)
+		|| ($func_keys_confd = $_RAPI->get_ressource('user_func_keys')) === false
+		|| ($this->_voicemail = $this->_service->get_application('voicemail')) === false)
 			return(false);
 
 		if(
@@ -133,7 +136,6 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		}
 
 		$this->_queuemember = &$this->_service->get_module('queuemember');
-		$this->_voicemail = &$this->_service->get_application('voicemail');
 		$this->_agentfeatures = &$this->_service->get_module('agentfeatures');
 
 		$func_key_mapper = new FuncKeyMapper(
@@ -145,7 +147,9 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			$paging_dso,
 			$this->_callfilter,
 			$this->_callfiltermember);
+
 		$this->_func_keys = new FuncKeyConverter($func_keys_confd, $func_key_mapper);
+		$this->_vm_mapper = new VoicemailMapper();
 
 		return(true);
 	}
@@ -311,24 +315,23 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		return($this->_info[$membertype]);
 	}
 
-	function _get_voicemail($voicemailid=null)
+	function _get_voicemail()
 	{
 		$this->_info['voicemail'] = false;
 		$this->_origin['voicemail'] = false;
 
-		if ($voicemailid === null) {
-			$voicemailid = (int) $this->_info['userfeatures']['voicemailid'];
-		}
+		$user_id = $this->_info['userfeatures']['id'];
+		$voicemail_id = $this->_voicemail->get_voicemail_id_for_user($user_id);
 
-		if(is_object($this->_voicemail) === false
-		|| $voicemailid === 0
-		|| $this->_voicemail->get($voicemailid) === false)
-			return(false);
+		if($voicemail_id === false)
+			return false;
 
-		$this->_info['voicemail'] = $this->_voicemail->get_info('voicemail');
+		$voicemail = $this->_voicemail->get($voicemail_id);
+		if($voicemail === false)
+			return false;
 
-		$this->_origin['voicemail'] = $this->_voicemail->get_origin('voicemail');
-
+		$this->_info['voicemail'] = $voicemail;
+		$this->_origin['voicemail'] = $voicemail;
 		return($this->_info['voicemail']);
 	}
 
@@ -410,11 +413,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		if(is_object($this->_voicemail) === false)
 			return(false);
 
-		$order = array();
-		$order['fullname'] = SORT_ASC;
-		$order['mailbox'] = SORT_ASC;
-
-		return($this->_voicemail->get_voicemail_list(null,$order));
+		return($this->_voicemail->get_voicemail_search());
 	}
 
 	function get_agent_list()
@@ -463,11 +462,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		else
 			$r['qmember'] = false;
 
-		if(is_object($this->_voicemail) === true
-		&& ($vmelement = $this->_voicemail->get_elements()) !== false)
-			$r = array_merge($vmelement,$r);
-		else
-			$r['voicemail'] = false;
+		$r['voicemail'] = false;
 
 		return($r);
 	}
@@ -563,7 +558,6 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		$r['groups'] = $this->get_destination_groups();
 		$r['queues'] = $this->get_destination_queues();
 		$r['meetme'] = $this->get_destination_meetme();
-		$r['voicemail'] = $this->get_destination_voicemail();
 		$r['schedule'] = $this->get_destination_schedule();
 		$r['sounds'] = $this->_dialaction->get_sound();
 		$r['outcalls']  = $this->get_destination_outcall();
@@ -596,7 +590,10 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 
 	function set_add($arr)
 	{
-		return($this->_set('add',$arr));
+		$r = $this->_set('add', $arr);
+		if($r === false)
+			$this->_set_result_var('voicemail', 'id', '');
+		return $r;
 	}
 
 	function set_edit($arr)
@@ -621,32 +618,6 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 
 		$vmaction = $action;
 
-		if(isset($arr['voicemail-option']) === true)
-		{
-			switch($arr['voicemail-option'])
-			{
-				case 'add':
-				case 'none':
-					$vmaction = $arr['voicemail-option'];
-					$arr['userfeatures']['voicemailid'] = null;
-					break;
-				case 'search':
-					$vmaction = 'edit';
-					$this->_get_voicemail((int) $arr['userfeatures']['voicemailid']);
-					break;
-			}
-		}
-
-		switch($this->get_result_var('userfeatures','voicemailtype'))
-		{
-			case 'asterisk':
-			break;
-			default:
-				$vmaction = 'none';
-				$this->_set_result_var('userfeatures','voicemailid',null);
-			break;
-		}
-
 		if(dwho_issa('linefeatures',$arr) === true
 		&& $this->set_linefeatures($arr['linefeatures']) !== false
 		&& isset($this->_result['linefeatures'][0]))
@@ -655,31 +626,6 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			$name = $this->_result['linefeatures'][0]['name'];
 			$number = $this->_result['linefeatures'][0]['number'];
 			$context = $this->_result['linefeatures'][0]['context'];
-
-			if(dwho_issa('voicemail',$arr) === true)
-			{
-				if($vmaction === 'add')
-					$arr['voicemail']['context'] = $context;
-
-				$arr['voicemail']['locale'] = $this->get_result_var('userfeatures','language');
-
-				if(isset($arr['voicemail']['deletevoicemail']) === false)
-					$arr['voicemail']['deletevoicemail'] = 0;
-
-				if($vmaction !== 'disable')
-					$this->set_voicemail($vmaction,$arr['voicemail']);
-
-				if(isset($this->_info['voicemail']['context']) === true && $vmaction !== 'add')
-					$this->_set_result('mailbox', $arr['voicemail']['mailbox'].'@'.$this->_info['voicemail']['context']);
-				else
-					$this->_set_result('mailbox', $arr['voicemail']['mailbox'].'@'.$context);
-			}
-			else
-			{
-				$this->_set_result_var('userfeatures','voicemailtype',null);
-				$this->_set_result_var('userfeatures','enablevoicemail',false);
-				$this->_set_result_var('userfeatures','voicemailid',null);
-			}
 
 			if(dwho_issa('group',$arr) === true
 			&& dwho_issa('group-select',$arr) === true)
@@ -711,14 +657,6 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 				$this->_set_result('exten',$rsexten);
 			}
 		}
-		elseif(dwho_issa('voicemail',$arr) === true
-		&& (isset($this->_info['linefeatures']) === false
-			|| $this->_info['linefeatures'] === false))
-		{
-			$this->_set_error('voicemail', dwho_i18n::babelfish('user_need_lines_to_have_voicemail'));
-			dwho_report::push('error', dwho_i18n::babelfish('user_need_lines_to_have_voicemail'));
-			return(false);
-		}
 
 		if(dwho_issa('dialaction',$arr) === true)
 			$this->set_dialaction($arr['dialaction']);
@@ -728,6 +666,9 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 
 		if(dwho_issa('phonefunckey',$arr) === true)
 			$this->set_phonefunckey($arr['phonefunckey']);
+
+		if(dwho_issa('voicemail', $arr) === true)
+			$this->set_voicemail($arr, $action);
 
 		if(array_key_exists('schedule_id', $arr))
 			$this->_set_result('schedule_id', intval($arr['schedule_id']));
@@ -894,9 +835,6 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			$protocolname = $ref['protocol'];
 			$number = $ref['number'];
 
-			if($protocolname === XIVO_SRE_IPBX_AST_PROTO_CUSTOM)
-				$this->_set_result_var('userfeatures','voicemailtype',null);
-
 			$ref['num'] = isset($ref['num']) ? (int) $ref['num'] : 1;
 			$ref['callerid'] = $this->_service->mk_callerid($userfeatures['callerid'],$number,$protocolname);
 
@@ -918,31 +856,12 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		return(true);
 	}
 
-	function set_voicemail($action,$voicemail)
+	function set_voicemail($form, $action)
 	{
-		if(($action !== 'add' && $action !== 'edit') === true
-		|| is_array($voicemail) === false
-		|| empty($voicemail) === true
-		|| is_object($this->_voicemail) === false)
-			return(false);
-
-		$rs = array();
-		$rs['voicemail'] = $voicemail;
-
-		if($action === 'add')
-			$r = $this->_voicemail->set_add($rs);
-		else
-			$r = $this->_voicemail->set_edit($rs,false);
-
-		if(($voicemailerror = $this->_voicemail->get_error('voicemail')) !== null)
-		{
-			$this->_set_error('voicemail',$voicemailerror);
-			$this->_set_result('voicemail',$this->_voicemail->get_result('voicemail'));
-		}
-		else
-			$this->_set_result('voicemail',$this->_voicemail->get_result('voicemail'));
-
-		return($r);
+		$voicemail = $form['voicemail'];
+		$this->_set_result('voicemail', $voicemail);
+		$this->_set_result('user_vm_action', $form['user_vm_action']);
+		return(true);
 	}
 
 	function set_phonefunckey($list)
@@ -1066,6 +985,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		$this->_status = 'add';
 		$this->_return = array();
 		$user_id = null;
+		$line_id = null;
 
 		if($this->get_errnb() > 0
 		|| $this->add_func_key_private_tpl() === false
@@ -1087,12 +1007,16 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			$line_id = $line[0]['id'];
 			if($this->add_groupmember($user_id) === false
 			|| $this->add_queuemember($user_id) === false
-			|| $this->add_voicemail($user_id) === false
 			|| ($extension_id = $this->add_exten($user_id)) === false
-			|| $this->add_user_line($user_id, $line_id, $extension_id) === false
-			|| $this->add_device_config($line_id) === false)
+			|| $this->add_user_line($user_id, $line_id, $extension_id) === false)
 				$r = false;
 		}
+
+		if($r === true && $user_id !== null)
+			$r = $this->add_voicemail($user_id);
+
+		if($r === true && $line_id !== null)
+			$r = $this->add_device_config($line_id);
 
 		if($r === false && $user_id !== null)
 			$this->_reverse_add();
@@ -1165,7 +1089,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		// new device associated
 		if (empty($new_device['device']) === false)
 		{
-			$vm_number = (string) $this->get_result_var('voicemail', 'mailbox');
+			$vm_number = (string) $this->get_result_var('voicemail', 'number');
 
 			if (($device = $this->_device->get($new_device['device'])) === false)
 			{
@@ -1189,29 +1113,31 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 
 	function add_voicemail($user_id)
 	{
-		if(($voicemailid = dwho_ulongint($this->get_result_var('userfeatures','voicemailid'))) === 0)
-			return($this->_add_voicemail($user_id));
-		else if(is_object($this->_voicemail) === false
-		|| $this->_voicemail->get($voicemailid) === false
-		|| ($rs = $this->get_result('voicemail')) === null
-		|| $rs === false)
-			return($rs);
+		$this->_return['voicemail'] = false;
 
-		return(($this->_return['voicemail'] = $this->_voicemail->edit(false)));
-	}
+		$action = $this->_result['user_vm_action'];
+		if($action === '')
+			return true;
 
-	function _add_voicemail($user_id)
-	{
-		if(($user_id = dwho_ulongint($user_id)) === 0
-		|| ($rs = $this->get_result('voicemail')) === null
-		|| $rs === false)
-			return($rs);
-		else if(($this->_return['voicemail'] = $this->_voicemail->add()) === true
-		&& (($voicemailid = dwho_ulongint($voicemailid = $this->_voicemail->get_return('voicemail'))) === 0
-		   || $this->_userfeatures->edit($user_id,array('voicemailid' => $voicemailid)) === false) === true)
-			return(false);
+		if(is_object($this->_voicemail) === false) {
+			dwho_report::push('error', 'voicemail app not loaded. cannot add voicemail');
+			return false;
+		}
 
-		return($this->_return['voicemail']);
+		if ($action == 'add') {
+			$voicemail_id = $this->_voicemail->add($this->_result);
+		} else if ($action == 'search') {
+			$voicemail_id = (int) $this->get_result_var('voicemail', 'id');
+		}
+
+		if($voicemail_id === false)
+			return false;
+
+		if($this->_voicemail->associate($voicemail_id, $user_id) === false)
+			return false;
+
+		$this->_return['voicemail'] = $voicemail_id;
+		return true;
 	}
 
 	function add_phonefunckey($user_id)
@@ -1295,6 +1221,8 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 
 	function _reverse_add()
 	{
+		$this->_set_result_var('voicemail', 'id', '');
+
 		if($this->_status !== 'add'
 		|| is_array($this->_return) === false
 		|| empty($this->_return) === true)
@@ -1306,6 +1234,20 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 
 		if(array_key_exists('userfeatures', $this->_return)) {
 			$this->_func_keys->delete_user_func_keys($this->_return['userfeatures']);
+		}
+
+		if(isset($this->_return['voicemail'])
+			&& isset($this->_return['userfeatures'])
+			&& $this->_return['userfeatures'] !== false
+			&& $this->_return['voicemail'] !== false)
+		{
+			$user_id = $this->_return['userfeatures'];
+			$voicemail_id = $this->_return['voicemail'];
+
+			$this->_voicemail->dissociate($user_id);
+			if($this->get_result('user_vm_action') === 'add') {
+				$this->_voicemail->delete($voicemail_id);
+			}
 		}
 
 		foreach($this->_return as $key => $val)
@@ -1323,9 +1265,6 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 					break;
 				case 'dialaction':
 					$this->_dialaction->reverse_add();
-					break;
-				case 'voicemail':
-					$this->_voicemail->reverse_add();
 					break;
 				case 'exten':
 					$this->_extensions->delete_exten($val);
@@ -1376,8 +1315,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 
 		if(($line = $this->get_result('linefeatures')) !== null
 		&& dwho_issa(0, $line) === true
-		&& ($existingline = $this->edit_linefeatures($user_id)) !== false
-		&& $this->edit_voicemail() !== false)
+		&& ($existingline = $this->edit_linefeatures($user_id)) !== false)
 		{
 			if(isset($this->_info['linefeatures'][0])
 			&& $this->_info['linefeatures'][0]['number'] !== '')
@@ -1408,14 +1346,6 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		elseif($this->get_result('linefeatures') === null
 		&& $this->_info['linefeatures'] !== false)
 		{
-			if(isset($this->_info['userfeatures']['voicemailid'])
-			&& (int) $this->_info['userfeatures']['voicemailid'] !== 0)
-			{
-				$this->_set_error('voicemail', dwho_i18n::babelfish('user_no_remove_lines_when_voicemail'));
-				dwho_report::push('error', dwho_i18n::babelfish('user_no_remove_lines_when_voicemail'));
-				return(false);
-			}
-
 			if ($this->delete_linefeatures() === false
 			|| $this->delete_exten('exten') === false
 			|| $this->delete_device_config() === false)
@@ -1424,6 +1354,12 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 				$this->_status = '';
 				return(false);
 			}
+		}
+
+		if($this->edit_voicemail() === false) {
+			$this->_reverse_edit();
+			$this->_status = '';
+			return(false);
 		}
 
 		$this->_status = '';
@@ -1620,18 +1556,53 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 
 	function edit_voicemail()
 	{
-		$rs = false;
+		$this->_return['voicemail'] = false;
 
-		if(dwho_issa('userfeatures',$this->_info) === false)
-			return(false);
-		else if(($voicemailid = dwho_ulongint($this->get_result_var('userfeatures','voicemailid'))) === 0)
-			return($this->_add_voicemail($this->_info['userfeatures']['id']));
-		else if(is_object($this->_voicemail) === false
-		|| $this->_voicemail->get($voicemailid) === false
-		|| ($rs = $this->get_result('voicemail')) === null
-		|| $rs === false)
-			return($rs);
-		return(($this->_return['voicemail'] = $this->_voicemail->edit(false)));
+		if(dwho_issa('userfeatures', $this->_info) === false)
+			return false;
+
+		$user_id = dwho_ulongint($this->_info['userfeatures']['id']);
+		if($user_id === 0) {
+			dwho_report::push('error', 'cannot find user id needed for editing voicemail');
+			return false;
+		}
+
+		$action = $this->get_result('user_vm_action');
+		if($action === false) {
+			dwho_report::push('error', 'cannot find voicemail action needed editing voicemail');
+			return false;
+		}
+
+		if($action === 'add' || $action === 'search')
+		{
+			return $this->add_voicemail($user_id);
+		}
+		else if ($action === 'edit' || $action === 'delete')
+		{
+			return $this->update_voicemail($user_id, $action);
+		}
+
+	}
+
+	private function update_voicemail($user_id, $action)
+	{
+		$voicemail_id = dwho_ulongint($this->_info['voicemail']['id']);
+		if($voicemail_id === 0) {
+			dwho_report::push('error', 'cannot find voicemail id needed for voicemail update');
+			return false;
+		}
+
+		if ($action === 'delete') {
+			if($this->_voicemail->dissociate($user_id) === false)
+				return false;
+		}
+
+		if($action === 'edit') {
+			if($this->_voicemail->edit($voicemail_id, $this->_result) === false)
+				return false;
+		}
+
+		return true;
 	}
 
 	function edit_phonefunckey()
@@ -1669,7 +1640,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		|| $rs === false)
 			return(false);
 
-		$vm_number = (string) $this->get_result_var('voicemail', 'mailbox');
+		$vm_number = (string) $this->get_result_var('voicemail', 'number');
 
 		$existing_device = $this->_info['linefeatures'][0];
 		$new_device = $rs[0];
@@ -1844,9 +1815,6 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 					else
 						$this->_userfeatures->edit_origin($this->_origin['userfeatures']);
 					break;
-				case 'voicemail':
-					$this->_voicemail->reverse_edit();
-					break;
 				case 'rightcall':
 					$this->_rightcall->reverse_edit($this->_status);
 					break;
@@ -1887,18 +1855,8 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		$this->_status = 'delete';
 		$this->_return = array();
 
-		if ($this->has_existing_line())
-		{
-			if(isset($this->_info['userfeatures']['voicemailid'])
-			&& (int) $this->_info['userfeatures']['voicemailid'] !== 0)
-			{
-				$this->_set_error('voicemail', dwho_i18n::babelfish('user_no_remove_lines_when_voicemail'));
-				dwho_report::push('error', dwho_i18n::babelfish('user_no_remove_lines_when_voicemail'));
-				return(false);
-			}
-		}
-
 		if($this->delete_phonefunckey() === false
+		|| $this->delete_voicemail() === false
 		|| $this->delete_funckey_dst() === false
 		|| $this->delete_userfeatures() === false
 		|| $this->delete_linefeatures() === false
@@ -1920,6 +1878,15 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		$this->_status = '';
 
 		return($r);
+	}
+
+	private function delete_voicemail()
+	{
+		if(dwho_issa('userfeatures',$this->_info) === false)
+			return(false);
+
+		$user_id = $this->_info['userfeatures']['id'];
+		$this->_voicemail->dissociate($user_id);
 	}
 
 	private function delete_funckey_dst()
@@ -2210,11 +2177,18 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			$arr['userfeatures']['cti_profile_id'] = $profile_id;
 		}
 
+		$arr['user_vm_action'] = '';
+
 		if(dwho_issa('voicemail',$arr) === true
 		&& empty($arr['voicemail']) === false
-		&& dwho_has_len($arr['voicemail'],'mailbox') === true) {
+		&& dwho_has_len($arr['voicemail'], 'number') === true
+		&& dwho_has_len($arr['voicemail'], 'context') === true
+		) {
+			if(dwho_has_len($arr['voicemail'], 'name') !== true) {
+				$arr['voicemail']['name'] = trim($arr['userfeatures']['firstname'] . " " . $arr['userfeatures']['lastname']);
+			}
 			$arr['userfeatures']['enablevoicemail'] = true;
-			$arr['userfeatures']['voicemailtype'] = 'asterisk';
+			$arr['user_vm_action'] = 'add';
 		} else {
 			unset($arr['voicemail']);
 		}

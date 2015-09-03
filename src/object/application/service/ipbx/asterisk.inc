@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -511,16 +511,11 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 
 	public function get_destination_voicemail()
 	{
-		$order = array();
-		$order['fullname'] = SORT_ASC;
-		$order['mailbox'] = SORT_ASC;
-		$order['context'] = SORT_ASC;
+		$appvoicemail = $this->_service->get_application('voicemail');
+		if($appvoicemail === false)
+			return(false);
 
-		if(($voicemail = &$this->_service->get_module('voicemail')) !== false
-		&& ($r = $voicemail->get_all(null,true,$order)) !== false)
-			return($r);
-
-		return(false);
+		return $appvoicemail->get_voicemail_search();
 	}
 
 	public function get_destination_schedule($id=0)
