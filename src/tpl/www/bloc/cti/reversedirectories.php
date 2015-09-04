@@ -93,6 +93,9 @@ echo	$form->hidden(array('name'	=> DWHO_SESS_NAME,
 		</div>
 	</fieldset>
 </div>
+
+<div class="fm-paragraph fm-description"><p><?=$this->bbf('need-xivo-dird-restart');?></p></div>
+
 <?php
 
 echo	$form->submit(array('name'	=> 'submit',

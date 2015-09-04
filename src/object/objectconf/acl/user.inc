@@ -72,6 +72,7 @@ $array['tree']['service']['ipbx']['control_system']['logfiles'] = true;
 $array['tree']['service']['ipbx']['control_system']['reload'] = true;
 $array['tree']['service']['ipbx']['control_system']['restart'] = true;
 $array['tree']['service']['ipbx']['control_system']['cti_restart'] = true;
+$array['tree']['service']['ipbx']['control_system']['dird_restart'] = true;
 
 
 // cti
