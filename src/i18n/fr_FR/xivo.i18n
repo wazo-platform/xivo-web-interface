@@ -76,3 +76,5 @@ Chargement...
 
 ; zoom
 Zoom
+; need-xivo-dird-restart
+Vous devez redémarrer le serveur Dird pour appliquer les changements.

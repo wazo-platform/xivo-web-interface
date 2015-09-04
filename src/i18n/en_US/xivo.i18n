@@ -76,3 +76,6 @@ Loading...
 
 ; zoom
 Zoom
+
+; need-xivo-dird-restart
+You need to restart the Dird server to apply changes.

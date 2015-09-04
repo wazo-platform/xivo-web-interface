@@ -112,3 +112,4 @@ $yesno = array($this->bbf('no'), $this->bbf('yes'));
 	</div>
 </div>
 
+<div class="fm-paragraph fm-description"><p><?=$this->bbf('need-xivo-dird-restart');?></p></div>
