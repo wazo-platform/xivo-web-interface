@@ -1488,7 +1488,6 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			if ($protocolname === XIVO_SRE_IPBX_AST_PROTO_SIP)
 				$arr['protocol']['call-limit'] = (2 * (int) $this->get_result_var('userfeatures', 'simultcalls'));
 			$arr['protocol']['language'] = $this->get_result_var('userfeatures', 'language');
-			$arr['protocol']['mailbox'] = $this->get_result('mailbox');
 			$arr['protocol']['name'] = $line['name'];
 			$arr['protocol']['context'] = $line['context'];
 

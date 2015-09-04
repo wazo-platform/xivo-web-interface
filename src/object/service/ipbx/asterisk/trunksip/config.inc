@@ -70,9 +70,6 @@ $array['element']['fromdomain'] = array();
 $array['element']['fromdomain']['default'] = '';
 $array['element']['fromdomain']['null'] = true;
 
-$array['element']['mailbox'] = array();
-$array['element']['mailbox']['unset'] = true;
-
 $array['element']['subscribemwi'] = array();
 $array['element']['subscribemwi']['default'] = 0;
 $array['element']['subscribemwi']['forcedef'] = true;
@@ -406,7 +403,6 @@ $array['filter']['fromdomain'] = array('set' => false,
 					'callback'	=> 'dwho_network::valid_host',
 					'callbackarg'	=> array((DWHO_NETWORK_HOST_IPV4_DOTDEC |
 						DWHO_NETWORK_HOST_HOSTNAME)));
-$array['filter']['mailbox'] = array('set' => false,'chk' => 0);
 $array['filter']['subscribemwi'] = array('set' => false);
 $array['filter']['buggymwi'] = array('set' => false,'chk' => 0);
 $array['filter']['call-limit'] = array('set' => false,'chk' => 2,'cast' => 'uint','between' => array(0,50));
