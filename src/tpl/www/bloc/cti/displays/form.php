@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -46,10 +46,6 @@ $presence = $this->get_var('displays');
 	$errdisplay = '';
 ?>
 	<p>&nbsp;</p>
-	<p>
-	<?=$this->bbf('list-avail-formats');?>
-	{db-phone} {db-firstname} {db-lastname} {db-fullname} {db-company} {db-mail}
-	</p>
 	<div class="sb-list">
 		<table>
 			<thead>

@@ -19,9 +19,6 @@ Add a field
 ; fm_description
 Description
 
-; list-avail-formats
-<i>Available display formats :&nbsp;</i>
-
 ; opt_disp-delete
 Remove this field
 
