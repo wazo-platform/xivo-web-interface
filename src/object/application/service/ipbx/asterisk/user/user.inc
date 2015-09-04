@@ -1116,7 +1116,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		$this->_return['voicemail'] = false;
 
 		$action = $this->_result['user_vm_action'];
-		if($action === '')
+		if(!($action === 'add' || $action === 'search'))
 			return true;
 
 		if(is_object($this->_voicemail) === false) {
