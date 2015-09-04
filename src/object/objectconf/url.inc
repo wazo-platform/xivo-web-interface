@@ -259,6 +259,7 @@ $array['service/ipbx/control_system/logfiles'] = 'service/ipbx/index.php/control
 $array['service/ipbx/control_system/reload'] = 'service/ipbx/index.php/control_system/reload/';
 $array['service/ipbx/control_system/restart'] = 'service/ipbx/index.php/control_system/restart/';
 $array['service/ipbx/control_system/cti_restart'] = 'service/ipbx/index.php/control_system/cti_restart/';
+$array['service/ipbx/control_system/dird_restart'] = 'service/ipbx/index.php/control_system/dird_restart/';
 
 
 /*

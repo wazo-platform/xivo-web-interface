@@ -124,6 +124,9 @@ Redémarrer IPBX
 ; acl(service-ipbx-control_system-cti_restart)
 Redémarrage du serveur CTI
 
+; acl(service-ipbx-control_system-dird_restart)
+Redémarrage du serveur Dird
+
 ; acl(service-ipbx-general_settings)
 Paramètres globaux
 

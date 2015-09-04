@@ -366,6 +366,17 @@ $dhtml = &$this->get_module('dhtml');
 			'</dd>';
 		endif;
 
+		if(xivo_user::chk_acl('control_system','dird_restart') === true):
+			echo	'<dd id="mn-restart">',
+			$url->href_html($this->bbf('mn_left_dirdsettings-restart'),
+				'service/ipbx/control_system/dird_restart',
+				null,
+				'onclick="return(confirm(\''.
+				$dhtml->escape($this->bbf('dirdsettings_restart_confirm')).
+				'\'));"'),
+			'</dd>';
+		endif;
+
 		echo	'</dl>';
 
 	endif;
