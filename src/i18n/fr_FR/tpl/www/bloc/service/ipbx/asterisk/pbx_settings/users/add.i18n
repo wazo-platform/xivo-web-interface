@@ -88,8 +88,11 @@ Créer un horaire
 ; fm_userfeatures_musiconhold
 Musique d'attente :
 
+; user_vm_header
+Actions
+
 ; user_vm_form
-Messagerie Vocale:
+Messagerie vocale
 
 ; user_vm_add
 Ajouter une nouvelle messagerie : 
@@ -98,7 +101,7 @@ Ajouter une nouvelle messagerie :
 Supprimer messagerie :
 
 ; user_vm_search
-Recherche de messagerie : 
+Rechercher une messagerie : 
 
 ; fm_voicemail_fullname
 Nom complet :
