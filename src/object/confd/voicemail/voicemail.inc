@@ -49,15 +49,13 @@ class confd_ressource_voicemail extends xivo_confd_helpers_abstract
 
 	public function dissociate_user_voicemail($user_id)
 	{
-		if($this->get_user_voicemail($user_id) !== false) {
-			$uri = $this->_build_uri(array($user_id, 'voicemail'), 'users');
-			$rs = $this->request_delete($uri);
+		$uri = $this->_build_uri(array($user_id, 'voicemail'), 'users');
+		$rs = $this->request_delete($uri);
 
-			if($this->_status_code !== 204)
-			{
-				$this->_build_error_message($rs);
-				return(false);
-			}
+		if($this->_status_code !== 204)
+		{
+			$this->_build_error_message($rs);
+			return(false);
 		}
 		return(true);
 	}
@@ -72,6 +70,18 @@ class confd_ressource_voicemail extends xivo_confd_helpers_abstract
 		}
 
 		return $association;
+	}
+
+	public function get_associations_for_voicemail($voicemail_id)
+	{
+		$uri = $this->_build_uri(array($voicemail_id, 'users'));
+		$response = $this->request_get($uri);
+		if($this->_status_code !== 200)
+		{
+			return false;
+		}
+
+		return $response['items'];
 	}
 
 }
