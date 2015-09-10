@@ -30,149 +30,195 @@ class TestVoicemail(TestWebi):
 
 class TestVoicemailCreate(TestVoicemail):
 
+    voicemail = {u'ask_password': True,
+                 u'attach_audio': True,
+                 u'delete_messages': True,
+                 u'context': u'default',
+                 u'email': u"test@example.com",
+                 u'language': u"en_US",
+                 u'max_messages': 10,
+                 u'name': u"My Voicemail",
+                 u'number': u'1000',
+                 u'pager': u"test@example.com",
+                 u'password': u"1234",
+                 u'timezone': u'eu-fr',
+                 u'enabled': True,
+                 u'options': [
+                     ["attachfmt", "G729"],
+                     ["volgain", "2"],
+                     ["emailsubject", "Email subject"],
+                     ["emailbody", "Email body"],
+                     ["imapuser", "imapuser"],
+                     ["imappassword", "imappassword"],
+                     ["imapfolder", "imapfolder"],
+                     ["imapvmsharedid", "imapvmsharedid"],
+                     ["serveremail", "serveremail"],
+                     ["saycid", "yes"],
+                     ["review", "yes"],
+                     ["operator", "yes"],
+                     ["envelope", "yes"],
+                     ["sayduration", "yes"],
+                     ["saydurationm", "1"],
+                     ["sendvoicemail", "yes"],
+                     ["forcename", "yes"],
+                     ["forcegreetings", "yes"],
+                     ["hidefromdir", "yes"],
+                     ["dialout", "default"],
+                     ["callback", "default"],
+                     ["exitcontext", "default"],
+                     ["locale", "en_US"],
+                     ["tempgreetwarn", "yes"],
+                     ["messagewrap", "yes"],
+                     ["moveheard", "yes"],
+                     ["minsecs", "1"],
+                     ["maxsecs", "30"],
+                     ["nextaftercmd", "yes"],
+                     ["backupdeleted", "yes"],
+                     ["passwordlocation", "localdir"]
+                 ]}
+
+    expected_voicemail = has_entries({u'ask_password': True,
+                                      u'attach_audio': True,
+                                      u'delete_messages': True,
+                                      u'context': u'default',
+                                      u'email': u"test@example.com",
+                                      u'language': u"en_US",
+                                      u'max_messages': 10,
+                                      u'name': u"My Voicemail",
+                                      u'number': u'1000',
+                                      u'pager': u"test@example.com",
+                                      u'password': u"1234",
+                                      u'timezone': u'eu-fr',
+                                      u'options': has_items(
+                                          ["attachfmt", "G729"],
+                                          ["volgain", "2"],
+                                          ["emailsubject", "Email subject"],
+                                          ["emailbody", "Email body"],
+                                          ["imapuser", "imapuser"],
+                                          ["imappassword", "imappassword"],
+                                          ["imapfolder", "imapfolder"],
+                                          ["imapvmsharedid", "imapvmsharedid"],
+                                          ["serveremail", "serveremail"],
+                                          ["saycid", "yes"],
+                                          ["review", "yes"],
+                                          ["operator", "yes"],
+                                          ["envelope", "yes"],
+                                          ["sayduration", "yes"],
+                                          ["saydurationm", "1"],
+                                          ["sendvoicemail", "yes"],
+                                          ["forcename", "yes"],
+                                          ["forcegreetings", "yes"],
+                                          ["hidefromdir", "yes"],
+                                          ["dialout", "default"],
+                                          ["callback", "default"],
+                                          ["exitcontext", "default"],
+                                          ["locale", "en_US"],
+                                          ["tempgreetwarn", "yes"],
+                                          ["messagewrap", "yes"],
+                                          ["moveheard", "yes"],
+                                          ["minsecs", "1"],
+                                          ["maxsecs", "30"],
+                                          ["nextaftercmd", "yes"],
+                                          ["backupdeleted", "yes"],
+                                          ["passwordlocation", "localdir"])
+                                      })
+
     def test_when_adding_voicemail_then_creates_voicemail_in_confd(self):
-        expected_voicemail = {u'ask_password': True,
-                              u'attach_audio': True,
-                              u'delete_messages': True,
-                              u'context': u'default',
-                              u'email': u"test@example.com",
-                              u'language': u"en_US",
-                              u'max_messages': 10,
-                              u'name': u"My Voicemail",
-                              u'number': u'1000',
-                              u'pager': u"test@example.com",
-                              u'password': u"1234",
-                              u'timezone': u'eu-fr',
-                              u'enabled': True,
-                              u'options': [
-                                  ["attachfmt", "G729"],
-                                  ["volgain", "2"],
-                                  ["emailsubject", "Email subject"],
-                                  ["emailbody", "Email body"],
-                                  ["imapuser", "imapuser"],
-                                  ["imappassword", "imappassword"],
-                                  ["imapfolder", "imapfolder"],
-                                  ["imapvmsharedid", "imapvmsharedid"],
-                                  ["serveremail", "serveremail"],
-                                  ["saycid", "yes"],
-                                  ["review", "yes"],
-                                  ["operator", "yes"],
-                                  ["envelope", "yes"],
-                                  ["sayduration", "yes"],
-                                  ["saydurationm", "1"],
-                                  ["sendvoicemail", "yes"],
-                                  ["forcename", "yes"],
-                                  ["forcegreetings", "yes"],
-                                  ["hidefromdir", "yes"],
-                                  ["dialout", "default"],
-                                  ["callback", "default"],
-                                  ["exitcontext", "default"],
-                                  ["locale", "en_US"],
-                                  ["tempgreetwarn", "yes"],
-                                  ["messagewrap", "yes"],
-                                  ["moveheard", "yes"],
-                                  ["minsecs", "1"],
-                                  ["maxsecs", "30"],
-                                  ["nextaftercmd", "yes"],
-                                  ["backupdeleted", "yes"],
-                                  ["passwordlocation", "localdir"]
-                              ]}
+        self.confd.add_json_response("/voicemails", self.voicemail, method='POST', code=201)
 
-        self.confd.add_json_response("/voicemails", expected_voicemail, 'POST', 201)
+        voicemail_page = self.browser.voicemails.add()
+        voicemail_page.fill_form(fullname="My Voicemail",
+                                 mailbox="1000",
+                                 password="1234",
+                                 email="test@example.com",
+                                 language="en_US",
+                                 maxmsg="10",
+                                 tz="eu-fr",
+                                 ask_password=True,
+                                 deletevoicemail=True,
+                                 attach_audio="Yes")
 
-        voicemail = self.browser.voicemails.add()
-        voicemail.fill_form(fullname="My Voicemail",
-                            mailbox="1000",
-                            password="1234",
-                            email="test@example.com",
-                            language="en_US",
-                            maxmsg="10",
-                            ask_password=True,
-                            deletevoicemail=True,
-                            attach=True)
+        email_tab = voicemail_page.email()
+        email_tab.fill_form(emailsubject="Email subject",
+                            emailbody="Email body",
+                            pager="test@example.com")
 
-        email = voicemail.email()
-        email.fill_form(emailsubject="Email subject",
-                        emailbody="Email body",
-                        pager="test@example.com")
+        advanced_tab = voicemail_page.advanced()
+        advanced_tab.add_options(saycid="yes",
+                                 review="yes",
+                                 operator="yes",
+                                 envelope="yes",
+                                 sayduration="yes",
+                                 saydurationm="1",
+                                 sendvoicemail="yes",
+                                 forcename="yes",
+                                 forcegreetings="yes",
+                                 hidefromdir="yes",
+                                 dialout="default",
+                                 callback="default",
+                                 exitcontext="default",
+                                 locale="en_US",
+                                 tempgreetwarn="yes",
+                                 messagewrap="yes",
+                                 moveheard="yes",
+                                 minsecs="1",
+                                 maxsecs="30",
+                                 nextaftercmd="yes",
+                                 backupdeleted="yes",
+                                 passwordlocation="localdir",
+                                 attachfmt="G729",
+                                 volgain="2",
+                                 imapuser="imapuser",
+                                 imappassword="imappassword",
+                                 imapfolder="imapfolder",
+                                 imapvmsharedid="imapvmsharedid",
+                                 serveremail="serveremail")
 
-        advanced = voicemail.advanced()
-        advanced.add_options(saycid="yes",
-                             review="yes",
-                             operator="yes",
-                             envelope="yes",
-                             sayduration="yes",
-                             saydurationm="1",
-                             sendvoicemail="yes",
-                             forcename="yes",
-                             forcegreetings="yes",
-                             hidefromdir="yes",
-                             dialout="default",
-                             callback="default",
-                             exitcontext="default",
-                             locale="en_US",
-                             tempgreetwarn="yes",
-                             messagewrap="yes",
-                             moveheard="yes",
-                             minsecs="1",
-                             maxsecs="30",
-                             nextaftercmd="yes",
-                             backupdeleted="yes",
-                             passwordlocation="localdir",
-                             attachfmt="G729",
-                             volgain="2",
-                             imapuser="imapuser",
-                             imappassword="imappassword",
-                             imapfolder="imapfolder",
-                             imapvmsharedid="imapvmsharedid",
-                             serveremail="serveremail")
-
-        voicemail.save()
+        voicemail_page.save()
 
         request = self.confd.request_matching('/voicemails', 'POST')
         voicemail = json.loads(request['body'])
-        options = expected_voicemail.pop('options')
-        del expected_voicemail['enabled']
-
-        assert_that(voicemail, has_entries(expected_voicemail))
-        assert_that(voicemail['options'], has_items(*options))
+        assert_that(voicemail, self.expected_voicemail)
 
 
 class TestVoicemailEdit(TestVoicemail):
-    def test_given_voicemail_when_editing_then_updates_via_confd(self):
-        confd_voicemail = {u'ask_password': True,
-                           u'attach_audio': False,
-                           u'context': u'default',
-                           u'delete_messages': False,
-                           u'email': None,
-                           u'id': 1,
-                           u'language': None,
-                           u'max_messages': None,
-                           u'name': u'Edited Voicemail',
-                           u'number': u'1001',
-                           u'pager': None,
-                           u'password': None,
-                           u'timezone': u'eu-fr',
-                           u'enabled': True,
-                           u'options': [],
-                           u'links': [{u'href': u'https://dev:9486/1.1/voicemails/38',
-                                       u'rel': u'voicemails'}],
-                           }
 
-        self.confd.add_json_response("/voicemails", {'total': 1, 'items': [confd_voicemail]})
-        self.confd.add_json_response("/voicemails/1", confd_voicemail)
+    voicemail = {u'ask_password': True,
+                 u'attach_audio': False,
+                 u'context': u'default',
+                 u'delete_messages': False,
+                 u'email': None,
+                 u'id': 1,
+                 u'language': None,
+                 u'max_messages': None,
+                 u'name': u'Edited Voicemail',
+                 u'number': u'1001',
+                 u'pager': None,
+                 u'password': None,
+                 u'timezone': u'eu-fr',
+                 u'enabled': True,
+                 u'options': [],
+                 u'links': [{u'href': u'https://dev:9486/1.1/voicemails/38',
+                             u'rel': u'voicemails'}],
+                 }
+
+    def test_given_voicemail_when_editing_then_updates_via_confd(self):
+        self.confd.add_json_response("/voicemails", {'total': 1,
+                                                     'items': [self.voicemail]})
+        self.confd.add_json_response("/voicemails/1", self.voicemail)
+        self.confd.add_json_response("/voicemails/1", self.voicemail)
         self.confd.add_response("/voicemails/1", method="PUT", code=204)
 
-        voicemail = self.browser.voicemails.edit("Edited Voicemail")
-        voicemail.fill_form(email="test@example.com")
+        voicemail_page = self.browser.voicemails.edit("Edited Voicemail")
+        voicemail_page.fill_form(email="test@example.com")
 
-        email = voicemail.email()
-        email.fill_form(emailbody="Hello world\nThis is an email\nGoodbye|")
+        email_tab = voicemail_page.email()
+        email_tab.fill_form(emailbody="Hello world\nThis is an email\nGoodbye|")
 
-        advanced = voicemail.advanced()
-        advanced.add_option("saycid", "yes")
+        advanced_tab = voicemail_page.advanced()
+        advanced_tab.add_option("saycid", "yes")
 
-        voicemail.save()
+        voicemail_page.save()
 
         expected_voicemail = has_entries({u'ask_password': True,
                                           u'attach_audio': False,
@@ -191,40 +237,47 @@ class TestVoicemailEdit(TestVoicemail):
                                               [u"saycid", u"yes"])
                                           })
 
-        request = self.confd.request_matching('/voicemails/1', 'PUT')
+        request = self.confd.request_matching('/voicemails/1', method='PUT')
         assert_that(json.loads(request['body']), expected_voicemail)
 
 
 class TestVoicemailDelete(TestVoicemail):
 
-    def test_given_voicemail_when_deleting_then_deletes_via_confd(self):
-        confd_response = {'total': 1,
-                          'items': [
-                              {u'ask_password': True,
-                               u'attach_audio': False,
-                               u'context': u'default',
-                               u'delete_messages': False,
-                               u'email': None,
-                               u'id': 1,
-                               u'language': None,
-                               u'max_messages': None,
-                               u'name': u'Deleted Voicemail',
-                               u'number': u'1001',
-                               u'pager': None,
-                               u'password': None,
-                               u'timezone': u'eu-fr',
-                               u'enabled': True,
-                               u'options': [],
-                               u'links': [{u'href': u'https://dev:9486/1.1/voicemails/38',
-                                           u'rel': u'voicemails'}],
-                               }]
-                          }
+    voicemail = {u'ask_password': True,
+                 u'attach_audio': False,
+                 u'context': u'default',
+                 u'delete_messages': False,
+                 u'email': None,
+                 u'id': 1,
+                 u'language': None,
+                 u'max_messages': None,
+                 u'name': u'deleted voicemail',
+                 u'number': u'1001',
+                 u'pager': None,
+                 u'password': None,
+                 u'timezone': u'eu-fr',
+                 u'enabled': True,
+                 u'options': [],
+                 u'links': [{u'href': u'https://dev:9486/1.1/voicemails/38',
+                             u'rel': u'voicemails'}]}
 
-        self.confd.add_json_response("/voicemails", confd_response)
-        voicemails = self.browser.voicemails
+    def test_given_voicemail_when_deleting_then_deletes_via_confd(self):
+        self.confd.add_json_response("/voicemails", {'total': 1,
+                                                     'items': [self.voicemail]})
+        self.confd.add_json_response("/voicemails/1/users", {'total': 0,
+                                                             'items': []})
+        self.confd.add_json_response("/voicemails", {'total': 0,
+                                                     'items': []})
+        self.confd.add_response("/voicemails/1", method="DELETE", code=204)
+
+        voicemail_page = self.browser.voicemails
+        voicemail_page.delete("deleted voicemail")
+
+        self.confd.assert_request_sent("/voicemails/1", method="DELETE")
 
         self.confd.add_response("/voicemails/1", method="DELETE", code=204)
-        self.confd.add_json_response("/voicemails", {'total': 0, 'items': []})
-        voicemails.delete("Deleted Voicemail")
+
+        voicemail_page = self.browser.voicemails
+        voicemail_page.delete("deleted voicemail")
 
         self.confd.assert_request_sent("/voicemails/1", method="DELETE")
