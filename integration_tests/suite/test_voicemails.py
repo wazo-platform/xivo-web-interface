@@ -275,9 +275,25 @@ class TestVoicemailDelete(TestVoicemail):
 
         self.confd.assert_request_sent("/voicemails/1", method="DELETE")
 
+    def test_given_voicemail_associated_to_user_when_deleting_then_dissociates_voicemail(self):
+        association = {u'enabled': True,
+                       u'user_id': 10,
+                       u'voicemail_id': 1,
+                       u'links': [{u'href': u'https://confd:9486/1.1/voicemails/1',
+                                   u'rel': u'voicemails'},
+                                  {u'href': u'https://confd:9486/1.1/users/10',
+                                   u'rel': u'users'}]
+                       }
+
+        self.confd.add_json_response("/voicemails", {'total': 1,
+                                                     'items': [self.voicemail]})
+        self.confd.add_json_response("/voicemails/1/users", {'total': 1,
+                                                             'items': [association]})
+        self.confd.add_response("/users/10/voicemail", method="DELETE", code=204)
         self.confd.add_response("/voicemails/1", method="DELETE", code=204)
 
         voicemail_page = self.browser.voicemails
         voicemail_page.delete("deleted voicemail")
 
         self.confd.assert_request_sent("/voicemails/1", method="DELETE")
+        self.confd.assert_request_sent("/users/10/voicemail", method="DELETE")
