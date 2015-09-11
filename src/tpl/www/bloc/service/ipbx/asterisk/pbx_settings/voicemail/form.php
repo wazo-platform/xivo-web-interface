@@ -175,7 +175,7 @@ endif;
 				      'name'	=> 'voicemail[ask_password]',
 				      'labelid'	=> 'voicemail-ask_password',
 				      'default'	=> '1',
-					  'checked'	=> (int)$info['voicemail']['ask_password'])),
+					'checked' => $info === null ? 1 : (int)$info['voicemail']['ask_password'])),
 
 	   $form->select(array('desc'      => $this->bbf('fm_voicemail_attach'),
 						   'name'      => 'voicemail[attach_audio]',
