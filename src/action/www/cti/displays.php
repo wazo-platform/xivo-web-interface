@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -93,6 +93,7 @@ switch($act)
 		$arr = array();
 		$data = array();
 		$arr = dwho_json::decode($return['displays']['data'], true);
+		ksort($arr);
 		foreach($arr as $d)
 			$data[] = $d;
 
