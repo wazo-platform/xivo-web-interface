@@ -1,6 +1,6 @@
 import unittest
 
-from lib import setup as testsetup
+from lib import testsetup
 
 
 class TestWebi(unittest.TestCase):
