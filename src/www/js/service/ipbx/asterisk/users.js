@@ -431,6 +431,13 @@ $(function() {
 				data: encodeURI("id=" + ui.item.value),
 				timeout: 3000,
 				success: function(data) {
+					var attach_audio = "";
+					if (data.attach_audio === true) {
+						attach_audio = "1";
+					} else if (data.attach_audio === false) {
+						attach_audio = "0";
+					}
+
 					$("#user-vm-action").val('search');
 					$('#it-userfeatures-enablevoicemail').attr('checked', true);
 					$("input[name='voicemail[id]']").val(data.id);
@@ -438,12 +445,12 @@ $(function() {
 					$("input[name='voicemail[number]']").val(data.number);
 					$("input[name='voicemail[password]']").val(data.password);
 					$("input[name='voicemail[email]']").val(data.email);
-					$("input[name='voicemail[context]']").val(data.context);
-					$("input[name='voicemail[timezone]']").val(data.timezone);
-					$("input[name='voicemail[language]']").val(data.language);
+					$("select[name='voicemail[context]']").val(data.context);
+					$("select[name='voicemail[timezone]']").val(data.timezone);
+					$("select[name='voicemail[language]']").val(data.language);
 					$("input[name='voicemail[max_messages]']").val(data.max_messages);
 					$("input[name='voicemail[ask_password]']").attr('checked', data.ask_password);
-					$("input[name='voicemail[attach_audio]']").attr('checked', data.attach_audio);
+					$("select[name='voicemail[attach_audio]']").val(attach_audio);
 					$("input[name='voicemail[delete_messages]']").attr('checked', data.delete_messages);
 				}
 			});
