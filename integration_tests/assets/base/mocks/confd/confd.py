@@ -57,8 +57,8 @@ def delete_requests():
 def add_response():
     response = request.get_json(force=True)
     method = RESPONSES.setdefault(response['method'], {})
-    regex = re.compile(response['path'])
-    method[regex] = (response['body'], response['code'])
+    path = method.setdefault(response['path'], [])
+    path.append((response['body'], response['code']))
     return ''
 
 
@@ -81,13 +81,13 @@ def cti_profiles():
                    items=PROFILES)
 
 
-@app.route('/1.1/<path:path>', methods=['GET', 'POST', 'PUT', 'DELETE'])
-def respond(path):
-    path = "/" + path
+@app.route('/1.1/<path:expected>', methods=['GET', 'POST', 'PUT', 'DELETE'])
+def respond(expected):
+    expected = "/" + expected
     method = RESPONSES.get(request.method, {})
-    for regex, response in method.iteritems():
-        if regex.match(path):
-            return response
+    for path, responses in method.iteritems():
+        if len(responses) > 0 and re.match(path, expected):
+            return responses.pop(0)
     return '["Confd mock has no response prepared"]', 400
 
 if __name__ == "__main__":

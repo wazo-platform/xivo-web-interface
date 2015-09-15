@@ -35,6 +35,7 @@ class VoicemailMapper {
 			'name' => $form['name'],
 			'number' => $form['number'],
 			'context' => $form['context'],
+			'timezone' => (trim($form['timezone']) !== '' ? $form['timezone'] : null),
 			'password' => (trim($form['password']) !== '' ? $form['password'] : null),
 			'email' => (trim($form['email']) !== '' ? $form['email'] : null),
 			'language' => (trim($form['language']) !== '' ? $form['language'] : null),

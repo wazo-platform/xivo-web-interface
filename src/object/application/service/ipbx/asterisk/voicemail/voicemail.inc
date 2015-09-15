@@ -217,11 +217,18 @@ class xivo_application_service_asterisk_voicemail extends xivo_application_aster
 
 	function delete($voicemail_id)
 	{
+		$success = $this->dissociate_users_from_voicemail($voicemail_id);
+		if($success === false) {
+			dwho_report::push('error', 'Cannot dissociate users from voicemail');
+			return(false);
+		}
+
 		$status = $this->_confd->delete($voicemail_id);
 		if($status === false) {
 			dwho_report::push('error', 'Cannot delete voicemail');
 			return(false);
 		}
+
 		return $this->unlinks($voicemail_id);
 	}
 
@@ -277,7 +284,27 @@ class xivo_application_service_asterisk_voicemail extends xivo_application_aster
 
 	function dissociate($user_id)
 	{
-		return $this->_confd->dissociate_user_voicemail($user_id);
+		$association = $this->_confd->get_user_voicemail($user_id);
+		if($association !== false) {
+			return $this->_confd->dissociate_user_voicemail($user_id);
+		}
+	}
+
+	function dissociate_users_from_voicemail($voicemail_id)
+	{
+		$associations = $this->_confd->get_associations_for_voicemail($voicemail_id);
+		if($associations === false) {
+			dwho_report::push('error', 'Cannot get users associated to voicemail ' . $voicemail_id);
+			return(false);
+		}
+
+		foreach($associations as $association) {
+			$success = $this->_confd->dissociate_user_voicemail($association['user_id']);
+			if($success === false) {
+				dwho_report::push('error', 'Cannot dissociate voicemail from user'. $association['user_id']);
+				return(false);
+			}
+		}
 	}
 
 	function get_voicemail_id_for_user($user_id)
