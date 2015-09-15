@@ -266,12 +266,12 @@ class TestVoicemailDelete(TestVoicemail):
                                                      'items': [self.voicemail]})
         self.confd.add_json_response("/voicemails/1/users", {'total': 0,
                                                              'items': []})
+        self.confd.add_response("/voicemails/1", method="DELETE", code=204)
         self.confd.add_json_response("/voicemails", {'total': 0,
                                                      'items': []})
-        self.confd.add_response("/voicemails/1", method="DELETE", code=204)
 
         voicemail_page = self.browser.voicemails
-        voicemail_page.delete("deleted voicemail")
+        voicemail_page.delete(self.voicemail['name'])
 
         self.confd.assert_request_sent("/voicemails/1", method="DELETE")
 
@@ -293,7 +293,7 @@ class TestVoicemailDelete(TestVoicemail):
         self.confd.add_response("/voicemails/1", method="DELETE", code=204)
 
         voicemail_page = self.browser.voicemails
-        voicemail_page.delete("deleted voicemail")
+        voicemail_page.delete(self.voicemail['name'])
 
         self.confd.assert_request_sent("/voicemails/1", method="DELETE")
         self.confd.assert_request_sent("/users/10/voicemail", method="DELETE")
