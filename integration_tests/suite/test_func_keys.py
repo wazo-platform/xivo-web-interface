@@ -154,7 +154,6 @@ class TestFuncKeyDelete(TestFuncKey):
 
     def test_given_user_with_funckey_when_deleting_user_then_deletes_funckeys_in_confd(self):
         template = self.prepare_template(self.CUSTOM)
-        print template
         user_id = self.prepare_user("John", "Doe", template)
         position = 1
 
