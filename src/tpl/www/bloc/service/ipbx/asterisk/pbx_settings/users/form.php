@@ -418,8 +418,9 @@ if(dwho_issa('linefeatures',$info) === true
 		$form->checkbox(array('desc'	=> $this->bbf('fm_voicemail_ask-password'),
 				      'name'	=> 'voicemail[ask_password]',
 				      'labelid'	=> 'voicemail-ask-password',
-				      'default'	=> '1',
-					  'checked'	=> (int)$this->get_var('voicemail', 'ask_password'))),
+				  'default'	=> '1',
+				  'checked' => $this->get_var('voicemail', 'ask_password') === null ?
+							   1 : (int)$this->get_var('voicemail', 'ask_password'))),
 
 	   $form->select(array('desc'      => $this->bbf('fm_voicemail_attach'),
 						   'name'      => 'voicemail[attach_audio]',

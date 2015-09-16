@@ -396,6 +396,7 @@ $(function() {
 		$('#fld-voicemail-form select').val('');
 		$('#fld-voicemail-form input[type="checkbox"]').attr('checked', false);
 		$('#it-userfeatures-enablevoicemail').attr('checked', true);
+		$('#it-voicemail-ask-password').attr('checked', true);
 		updateVoicemailName();
 		updateVoicemailLanguage();
 	});
