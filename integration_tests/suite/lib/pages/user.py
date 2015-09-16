@@ -35,6 +35,13 @@ class UserPage(Page):
             id_ = "it-userfeatures-{}".format(name)
             self.fill(By.ID, id_, value)
 
+    def voicemail(self):
+        link = self.driver.find_element_by_css_selector("a[href='#voicemail']")
+        link.click()
+        self.wait_visible(By.ID, 'sb-part-voicemail')
+
+        return VoicemailTab(self.driver)
+
     def funckeys(self):
         link = self.driver.find_element_by_css_selector("a[href='#funckeys']")
         link.click()
@@ -46,6 +53,66 @@ class UserPage(Page):
         btn = self.driver.find_element_by_id("it-submit")
         btn.click()
         self.wait_for(By.NAME, 'fm-users-list')
+
+
+class VoicemailTab(Page):
+
+    def get(self):
+        search = self.driver.find_element_by_id("user-vm-search").get_attribute('value')
+        enabled = self.driver.find_element_by_id("it-userfeatures-enablevoicemail").is_selected()
+        name = self.driver.find_element_by_id("it-voicemail-name").get_attribute('value')
+        number = self.driver.find_element_by_id("it-voicemail-number").get_attribute('value')
+        password = self.driver.find_element_by_id("it-voicemail-password").get_attribute('value')
+        email = self.driver.find_element_by_id("it-voicemail-email").get_attribute('value')
+        context = Select(self.driver.find_element_by_id("it-voicemail-context")).first_selected_option.get_attribute('value')
+        time_zone = Select(self.driver.find_element_by_id("it-voicemail-timezone")).first_selected_option.get_attribute('value')
+        language = Select(self.driver.find_element_by_id("it-voicemail-language")).first_selected_option.get_attribute('value')
+        max_messages = int(self.driver.find_element_by_id("it-voicemail-max-messages").get_attribute('value'))
+        ask_password = self.driver.find_element_by_id("it-voicemail-ask-password").is_selected()
+        attach_audio = Select(self.driver.find_element_by_id("it-voicemail-attach_audio")).first_selected_option.get_attribute('value')
+        if attach_audio == '':
+            attach_audio = None
+        elif attach_audio == '1':
+            attach_audio = True
+        elif attach_audio == '0':
+            attach_audio = False
+        delete_message = self.driver.find_element_by_id("it-voicemail-delete-messages").is_selected()
+
+        return {
+            'search': search,
+            'enabled': enabled,
+            'name': name,
+            'number': number,
+            'password': password,
+            'email': email,
+            'context': context,
+            'time_zone': time_zone,
+            'language': language,
+            'max_messages': max_messages,
+            'ask_password': ask_password,
+            'attach_audio': attach_audio,
+            'delete_message': delete_message,
+        }
+
+    def select_voicemail(self, search):
+        element = self.driver.find_element_by_id("user-vm-search")
+        element.clear()
+
+        selector = '.ui-autocomplete[style*="display: block"]'
+        condition = ec.presence_of_element_located((By.CSS_SELECTOR, selector))
+
+        # make sure there isn't any other autocomplete still lying around
+        self.wait().until_not(condition)
+
+        element.send_keys(search)
+        self.wait().until(condition)
+
+        ActionChains(self.driver).send_keys_to_element(element, Keys.DOWN, Keys.RETURN).perform()
+        self.wait().until(self.check_number_filled)
+
+    def check_number_filled(self, driver):
+        number = self.driver.find_element_by_id("it-voicemail-number").get_attribute('value')
+        return number != ""
 
 
 class FuncKeyTab(Page):
