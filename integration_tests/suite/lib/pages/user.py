@@ -108,7 +108,11 @@ class VoicemailTab(Page):
         self.wait().until(condition)
 
         ActionChains(self.driver).send_keys_to_element(element, Keys.DOWN, Keys.RETURN).perform()
-        self.wait().until_not(condition)
+        self.wait().until(self.check_number_filled)
+
+    def check_number_filled(self, driver):
+        number = self.driver.find_element_by_id("it-voicemail-number").get_attribute('value')
+        return number != ""
 
 
 class FuncKeyTab(Page):
