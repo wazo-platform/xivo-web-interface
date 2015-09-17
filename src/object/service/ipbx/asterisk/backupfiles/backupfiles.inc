@@ -51,7 +51,7 @@ class xivo_service_asterisk_backupfiles extends xivo_service_asterisk_abstract
 	{
 		$name = basename(strval($name));
 
-		if(preg_match('/^[a-zA-Z0-9_\-\.]+\.(?:tgz|\d+)$/',$name) === 1)
+		if(preg_match('/^[a-zA-Z0-9_\-\.]+\.(?:tgz|gz|\d+)$/',$name) === 1)
 			return(dwho_file::is_f_r($this->_bakpath.DWHO_SEP_DIR.$name));
 
 		return(false);
@@ -71,7 +71,7 @@ class xivo_service_asterisk_backupfiles extends xivo_service_asterisk_abstract
 
 	function get_list()
 	{
-		$r = dwho_file::read_d($this->_bakpath,'file',FILE_R_OK,'/^[a-zA-Z0-9_\-\.]+\.(?:tgz|\d+)$/',false,true);
+		$r = dwho_file::read_d($this->_bakpath,'file',FILE_R_OK,'/^[a-zA-Z0-9_\-\.]+\.(?:tgz|gz|\d+)$/',false,true);
 
 		if($r !== false && isset($r[0]) === false)
 			return(false);
