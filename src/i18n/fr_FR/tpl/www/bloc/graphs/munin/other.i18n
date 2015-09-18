@@ -13,6 +13,9 @@ Débit des disques
 ; diskstats_utilization
 Utilisation des disques
 
+; fail2ban
+Fail2ban
+
 ; fw_packets
 Paquets reçus par le pare-feu
 
