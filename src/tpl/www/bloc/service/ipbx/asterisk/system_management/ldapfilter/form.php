@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -90,7 +90,8 @@ $element = $this->get_var('element');
 				  'notag'	=> false,
 				  'default'	=> $element['ldapfilter']['filter']['default'],
 				  'value'	=> $info['ldapfilter']['filter'],
-				  'error'	=> $this->bbf_args('error',
+				  'help'	=> $this->bbf('help_fm_ldapfilter_filter'),
+				  'error'	=> $this->bbf_args('error_fm_ldapfilter_filter',
 					   $this->get_var('error', 'ldapfilter', 'filter')))),
 
 		$form->select(array('desc'	=> $this->bbf('fm_ldapfilter_additionaltype'),

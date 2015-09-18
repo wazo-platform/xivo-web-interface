@@ -87,3 +87,9 @@ Monter un ou plusieurs attributs
 
 ; bt_down_ldapfilter-attrphonenumber
 Descendre un ou plusieurs attributs
+
+; error_fm_ldapfilter_filter(regexp)
+Le filtre LDAP ne doit pas avoir de parenthèses de premier niveau
+
+; help_fm_ldapfilter_filter
+Le filtre LDAP ne doit pas avoir de parenthèses de premier niveau

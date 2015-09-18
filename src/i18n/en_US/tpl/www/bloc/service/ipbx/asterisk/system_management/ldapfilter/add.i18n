@@ -87,3 +87,9 @@ Up one or more attributes
 
 ; bt_down_ldapfilter-attrphonenumber
 Down one or more attributes
+
+; error_fm_ldapfilter_filter(regexp)
+LDAP filter must not contain top-level parenthesis
+
+; help_fm_ldapfilter_filter
+LDAP filter must not contain top-level parenthesis
