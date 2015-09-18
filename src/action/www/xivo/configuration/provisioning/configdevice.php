@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,17 +18,10 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-dwho::load_class('dwho_prefs');
-$prefs = new dwho_prefs('provd_config');
-
 $act = isset($_QR['act']) === true ? $_QR['act']  : '';
-$search = strval($prefs->get('search', ''));
 
 $param = array();
 $param['act'] = 'list';
-
-if($search !== '')
-	$param['search'] = $search;
 
 $result = $fm_save = $error = null;
 
@@ -119,11 +112,10 @@ switch($act)
 		$order = array();
 		$order['id'] = SORT_ASC;
 
-		if (($list = $appprovdconfig->get_config_list($search,$order,null,false,false,'device')) === false)
+		if (($list = $appprovdconfig->get_config_list('',$order,null,false,false,'device')) === false)
 			$list = array();
 
 		$_TPL->set_var('list',$list);
-		$_TPL->set_var('search',$search);
 }
 
 $_TPL->set_var('act',$act);
