@@ -532,11 +532,14 @@ class xivo_object_provdconfig extends xivo_object_provd_abstract
 			$raw_config['funckeys'] = $funckeys;
 	}
 
-	private function _add_user_uuid(&$raw_config,$user_id)
+	private function _add_user_info(&$raw_config,$user_id,$main_line)
 	{
 		$user = $this->_userfeatures->get($user_id);
 		if (empty($user['uuid']) === false) {
 			$raw_config['X_xivo_user_uuid'] = $user['uuid'];
+		}
+		if (empty($main_line['context']) === false) {
+			$raw_config['X_xivo_phonebook_profile'] = $main_line['context'];
 		}
 	}
 
@@ -747,7 +750,7 @@ class xivo_object_provdconfig extends xivo_object_provd_abstract
 		$this->_build_exten_config($newrawconfig);
 		$this->_build_funckeys($newrawconfig,$user_id);
 		$this->_build_lines($newrawconfig,$listline);
-		$this->_add_user_uuid($newrawconfig,$user_id);
+		$this->_add_user_info($newrawconfig,$user_id,$listline[0]);
 
 		$this->_create_or_edit_config($newconfigid, $newconfig);
 
@@ -795,6 +798,9 @@ class xivo_object_provdconfig extends xivo_object_provd_abstract
 		$this->_set_config_var($conf,$raw,'sip_local_certificate');
 		$this->_set_config_var($conf,$raw,'sip_local_key');
 		$this->_set_config_var($conf,$raw,'sip_subscribe_mwi','int');
+		$this->_set_config_var($conf,$raw,'X_xivo_phonebook_scheme');
+		$this->_set_config_var($conf,$raw,'X_xivo_phonebook_ip');
+		$this->_set_config_var($conf,$raw,'X_xivo_phonebook_port');
 
 		return($conf);
 	}

@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -252,6 +252,39 @@ $element = $this->get_var('element');
 				  	'default'	=> $element['config']['syslog_level']['default'],
 				    'selected'	=> $this->get_var('info','config','syslog_level')),
 			      $element['config']['syslog_level']['value']);
+?>
+</fieldset>
+<fieldset>
+	<legend><?=$this->bbf('fld-device-directory')?></legend>
+<?php
+	echo	$form->select(array('desc'	=> $this->bbf('fm_config_directory_scheme'),
+				    'name'		=> 'config[X_xivo_phonebook_scheme]',
+				    'labelid'	=> 'config-X_xivo_phonebook_scheme',
+				    'key'		=> false,
+				    'help'		=> $this->bbf('hlp_fm_config_directory_scheme'),
+				    'default'	=> $element['config']['X_xivo_phonebook_scheme']['default'],
+				    'selected'	=> $this->get_var('info','config','X_xivo_phonebook_scheme')),
+			      $element['config']['X_xivo_phonebook_scheme']['value']),
+
+		$form->text(array('desc'	=> $this->bbf('fm_config_directory_ip'),
+				  'name'	=> 'config[X_xivo_phonebook_ip]',
+				  'labelid'	=> 'config-X_xivo_phonebook_ip',
+				  'size'	=> 15,
+				  'help'	=> $this->bbf('hlp_fm_config_directory_ip'),
+				  'default'	=> $element['config']['X_xivo_phonebook_ip']['default'],
+				  'value'	=> $this->get_var('info','config','X_xivo_phonebook_ip'),
+				  'error'	=> $this->bbf_args('error',
+						   $this->get_var('error', 'X_xivo_phonebook_ip')) )),
+
+		$form->text(array('desc'	=> $this->bbf('fm_config_directory_port'),
+				  'name'	=> 'config[X_xivo_phonebook_port]',
+				  'labelid'	=> 'config-X_xivo_phonebook_port',
+				  'size'	=> 4,
+				  'help'	=> $this->bbf('hlp_fm_config_directory_port'),
+				  'default'	=> $element['config']['X_xivo_phonebook_port']['default'],
+				  'value'	=> $this->get_var('info','config','X_xivo_phonebook_port'),
+				  'error'	=> $this->bbf_args('error',
+						   $this->get_var('error', 'X_xivo_phonebook_port')) ));
 ?>
 </fieldset>
 </div>

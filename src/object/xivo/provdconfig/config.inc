@@ -184,6 +184,17 @@ $array['element']['sip_subscribe_mwi']['value'] = array('',0,1);
 $array['element']['sip_subscribe_mwi']['default'] = '';
 $array['element']['sip_subscribe_mwi']['null'] = true;
 
+$array['element']['X_xivo_phonebook_scheme'] = array();
+$array['element']['X_xivo_phonebook_scheme']['value'] = array('','http','https');
+$array['element']['X_xivo_phonebook_scheme']['default'] = '';
+$array['element']['X_xivo_phonebook_scheme']['null'] = true;
+
+$array['element']['X_xivo_phonebook_ip'] = array();
+$array['element']['X_xivo_phonebook_ip']['default'] = '';
+
+$array['element']['X_xivo_phonebook_port'] = array();
+$array['element']['X_xivo_phonebook_port']['default'] = '';
+
 // exten
 $array['element']['exten_dnd'] = array();
 $array['element']['exten_dnd']['default'] = '';
@@ -253,6 +264,11 @@ $array['filter']['protocol'] = array('set' => false,'chk' => 2,'key' => $array['
 $array['filter']['sip_dtmf_mode'] = array('set' => false,'chk' => 2,'key' => $array['element']['sip_dtmf_mode']['value']);
 $array['filter']['sip_srtp_mode'] = array('set' => false,'chk' => 2,'key' => $array['element']['sip_srtp_mode']['value']);
 $array['filter']['sip_transport'] = array('set' => false,'chk' => 2,'key' => $array['element']['sip_transport']['value']);
-
+$array['filter']['X_xivo_phonebook_scheme'] = array('set' => false,'chk' => 2,'key' => $array['element']['X_xivo_phonebook_scheme']['value']);
+$array['filter']['X_xivo_phonebook_ip'] = array('set' => false,
+				    'chk'			=> 2,
+				    'callback'		=> 'dwho_network::valid_host',
+				    'callbackarg'	=> array(DWHO_NETWORK_HOST_ALL));
+$array['filter']['X_xivo_phonebook_port'] = array('set' => false,'chk' => 2,'cast' => 'uint','between' => array(1,65535));
 
 ?>
