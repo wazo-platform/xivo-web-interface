@@ -127,32 +127,3 @@ Port:
 
 ; hlp_fm_config_directory_port
 Par défaut: 9498
-
-; nb_line_busy-free
-Liste des lignes:
-Occupée: %d
-Disponible: %d
-
-; col_line-line	
-Ligne
-
-; col_line-protocol	
-Protocole
-
-; col_line-name	
-Nom
-
-; col_line-context
-Contexte
-	
-; col_line-number
-Numéro
-
-; col_line-config_registrar	
-Site
-
-; col_line-user
- Utilisateur
- 
-; no_lines
-Aucune ligne
