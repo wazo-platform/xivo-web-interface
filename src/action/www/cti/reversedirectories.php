@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -40,7 +40,7 @@ if(isset($_QR['fm_send']) === true)
 	{
 		foreach($_QR['directories'] as $v)
 		{
-			$str .= '"'.trim($diravail[$v]).'",';
+			$str .= '"'.trim($v).'",';
 		}
 	}
 	$str = trim($str, ',');
@@ -68,18 +68,18 @@ $info['directoriz']['list'] = $diravail;
 if(isset($info['directories']) && dwho_has_len($info['directories']))
 {
 	$sel = dwho_json::decode($info['directories'], true);
-	$info['directoriz']['slt'] =
-		array_intersect(
-			$info['directoriz']['list'],$sel);
-	$info['directoriz']['list'] =
-		array_diff(
-			$info['directoriz']['list'],
-			$info['directoriz']['slt']);
+	$info['directoriz']['slt'] = array_values(array_intersect($info['directoriz']['list'], $sel));
 }
 
 $_TPL->set_var('info'		, $info);
 $_TPL->set_var('fm_save'	, $fm_save);
 $_TPL->set_var('error'		, $error);
+
+$dhtml = &$_TPL->get_module('dhtml');
+$dhtml->set_js('js/dwho/submenu.js');
+$dhtml->set_js('js/jscolor/jscolor.js');
+$dhtml->load_js_multiselect_files();
+
 
 $menu = &$_TPL->get_module('menu');
 $menu->set_top('top/user/'.$_USR->get_info('meta'));
