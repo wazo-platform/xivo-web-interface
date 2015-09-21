@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -29,86 +29,53 @@ $yesno = array($this->bbf('no'), $this->bbf('yes'));
 ?>
 
 <div id="sb-part-first">
-<?php
-	echo	$form->select(array('desc'	=> $this->bbf('fm_contexts_name'),
-				  'name'	=> 'contexts-name',
-				  'labelid'	=> 'contexts-name',
-				  'key'		=> false,
-				  'selected'	=> $info['cticontexts']['name']
-				  ),
-				  $info['displays']['pbxctx']);
-
-	echo	$form->select(array('desc'	=> $this->bbf('fm_contexts_display'),
-				  'name'	=> 'contexts-display',
-				  'labelid'	=> 'contexts-display',
-				  'key'		=> false,
-				  'selected'	=> $info['cticontexts']['display']
-				  ),
-				  $info['displays']['list']);
+<?=
+	$form->select(array('desc'	=> $this->bbf('fm_contexts_name'),
+			    'name'	=> 'contexts-name',
+			    'labelid'	=> 'contexts-name',
+			    'key'	=> false,
+			    'selected'	=> $info['cticontexts']['name']),
+		      $info['displays']['pbxctx']);
+?>
+<?=
+	$form->select(array('desc'	=> $this->bbf('fm_contexts_display'),
+			    'name'	=> 'contexts-display',
+			    'labelid'	=> 'contexts-display',
+			    'key'	=> false,
+			    'selected'	=> $info['cticontexts']['display']),
+		      $info['displays']['list']);
 ?>
 	<div class="fm-paragraph fm-description">
 		<fieldset id="cti-contexts_services">
 			<legend><?=$this->bbf('cti-contexts-directories');?></legend>
-			<div id="contexts_services" class="fm-paragraph fm-multilist">
-				<?=$form->input_for_ms('directorieslist',$this->bbf('ms_seek'))?>
-				<div class="slt-outlist">
-<?php
-				echo    $form->select(array('name'  => 'directorieslist',
-							'label' => false,
-							'id'    => 'it-directorieslist',
-							'key' => false,
-							'multiple'  => true,
-							'size'  => 5,
-							'paragraph' => false),
-							$info['directories']['list']);
+			<div id="contexts_services" class="fm-paragraph fm-description">
+<?=
+	$form->jq_select(array('paragraph'	=> false,
+			       'label'		=> false,
+			       'name'		=> 'directories[]',
+			       'id'		=> 'it-directorieslist',
+			       'selected'	=> $info['directories']['slt'],
+			       'key'		=> false),
+			 $info['directories']['list']);
 ?>
-				</div>
-				<div class="inout-list">
-					<a href="#"
-					onclick="dwho.form.move_selected('it-directorieslist','it-directories');
-					return(dwho.dom.free_focus());"
-					title="<?=$this->bbf('bt_inaccess_contexts');?>">
-					<?=$url->img_html('img/site/button/arrow-left.gif',
-							$this->bbf('bt_inaccess_contexts'),
-							'class="bt-inlist" id="bt-inaccess_contexts" border="0"');?></a><br />
-
-					<a href="#"
-					onclick="dwho.form.move_selected('it-directories','it-directorieslist');
-					return(dwho.dom.free_focus());"
-					title="<?=$this->bbf('bt_outaccess_contexts');?>">
-					<?=$url->img_html('img/site/button/arrow-right.gif',
-							$this->bbf('bt_outaccess_contexts'),
-							'class="bt-outlist" id="bt-outaccess_contexts" border="0"');?></a>
-				</div>
-				<div class="slt-inlist">
-<?php
-				echo    $form->select(array('name'  => 'directories[]',
-						'label' => false,
-						'id'    => 'it-directories',
-						'key' => false,
-						'multiple'  => true,
-						'size'  => 5,
-						'paragraph' => false),
-					$info['directories']['slt']);
-?>
-				</div>
 			</div>
 		</fieldset>
-		<div class="clearboth"></div>
-	   <div class="fm-paragraph fm-description">
-			<p>
-				<label id="lb-contexts-description" for="it-contexts-description"><?=$this->bbf('fm_contexts_description');?></label>
-			</p>
-			<?=$form->textarea(array('paragraph'    => false,
-						 'label'    => false,
-						 'name'     => 'contexts[description]',
-						 'id'       => 'it-contexts-description',
-						 'cols'     => 60,
-						 'rows'     => 5,
-						 'default'  => $element['cticontexts']['description']['default']),
-					   $info['cticontexts']['description']);?>
-		</div>
+	</div>
 
+	<div class="fm-paragraph fm-description">
+		<p>
+			<label id="lb-contexts-description" for="it-contexts-description"><?=$this->bbf('fm_contexts_description');?></label>
+		</p>
+<?=
+	$form->textarea(array('paragraph'	=> false,
+			      'label'		=> false,
+			      'name'		=> 'contexts[description]',
+			      'id'		=> 'it-contexts-description',
+			      'cols'		=> 60,
+			      'rows'		=> 5,
+			      'default'	=> $element['cticontexts']['description']['default']),
+			$info['cticontexts']['description']);
+?>
 	</div>
 </div>
 

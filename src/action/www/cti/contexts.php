@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -104,6 +104,7 @@ switch($act)
 		$dhtml = &$_TPL->get_module('dhtml');
 		$dhtml->set_js('js/dwho/submenu.js');
 		$dhtml->set_js('js/jscolor/jscolor.js');
+		$dhtml->load_js_multiselect_files();
 		break;
 
 	case 'edit':
@@ -174,14 +175,7 @@ switch($act)
 		if(isset($info['cticontexts']['directories']) && dwho_has_len($info['cticontexts']['directories']))
 		{
 			$sel = explode(',', $info['cticontexts']['directories']);
-			$info['directories']['slt'] =
-				array_intersect(
-					$sel,
-					$info['directories']['list']);
-			$info['directories']['list'] =
-				array_diff(
-					$info['directories']['list'],
-					$info['directories']['slt']);
+			$info['directories']['slt'] = array_intersect($sel, $info['directories']['list']);
 		}
 
 		dwho::load_class('dwho_sort');
@@ -194,6 +188,7 @@ switch($act)
 		$dhtml = &$_TPL->get_module('dhtml');
 		$dhtml->set_js('js/dwho/submenu.js');
 		$dhtml->set_js('js/jscolor/jscolor.js');
+		$dhtml->load_js_multiselect_files();
 		break;
 
 	case 'delete':

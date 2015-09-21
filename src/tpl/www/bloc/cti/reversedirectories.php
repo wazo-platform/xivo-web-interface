@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -45,49 +45,17 @@ echo	$form->hidden(array('name'	=> DWHO_SESS_NAME,
 ?>
 	<fieldset id="cti-contexts_services">
 		<legend><?=$this->bbf('cti-contexts-directories');?></legend>
-		<div id="contexts_services" class="fm-paragraph fm-multilist">
+		<div id="contexts_services" class="fm-paragraph fm-description">
 			<?=$form->input_for_ms('directorieslist',$this->bbf('ms_seek'))?>
 			<div class="slt-outlist">
-<?php
-				echo    $form->select(array('name'  => 'directorieslist',
-							'label' => false,
-							'id'    => 'it-directorieslist',
-							'key'   => 'name',
-							'altkey'    => 'id',
-							'multiple'  => true,
-							'size'  => 5,
-							'paragraph' => false),
-							$info['directoriz']['list']);
-?>
-			</div>
-			<div class="inout-list">
-				<a href="#"
-				onclick="dwho.form.move_selected('it-directorieslist','it-directories');
-				return(dwho.dom.free_focus());"
-				title="<?=$this->bbf('bt_inaccess_contexts');?>">
-				<?=$url->img_html('img/site/button/arrow-left.gif',
-						$this->bbf('bt_inaccess_contexts'),
-						'class="bt-inlist" id="bt-inaccess_contexts" border="0"');?></a><br />
-
-				<a href="#"
-				onclick="dwho.form.move_selected('it-directories','it-directorieslist');
-				return(dwho.dom.free_focus());"
-				title="<?=$this->bbf('bt_outaccess_contexts');?>">
-				<?=$url->img_html('img/site/button/arrow-right.gif',
-						$this->bbf('bt_outaccess_contexts'),
-						'class="bt-outlist" id="bt-outaccess_contexts" border="0"');?></a>
-			</div>
-			<div class="slt-inlist">
-<?php
-				echo    $form->select(array('name'  => 'directories[]',
-						'label' => false,
-						'id'    => 'it-directories',
-						'key'	=> 'name',
-						'altkey'    => 'id',
-						'multiple'  => true,
-						'size'  => 5,
-						'paragraph' => false),
-					$info['directoriz']['slt']);
+<?=
+	$form->jq_select(array('paragraph'	=> false,
+						   'label'		=> false,
+						   'name'		=> 'directories[]',
+						   'id'		=> 'it-directorieslist',
+						   'selected'	=> $info['directoriz']['slt'],
+						   'key'		=> false),
+					 $info['directoriz']['list']);
 ?>
 			</div>
 		</div>
