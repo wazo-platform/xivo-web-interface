@@ -29,22 +29,21 @@ $yesno = array($this->bbf('no'), $this->bbf('yes'));
 ?>
 
 <div id="sb-part-first">
-<?php
-	echo	$form->select(array('desc'	=> $this->bbf('fm_contexts_name'),
-				  'name'	=> 'contexts-name',
-				  'labelid'	=> 'contexts-name',
-				  'key'		=> false,
-				  'selected'	=> $info['cticontexts']['name']
-				  ),
-				  $info['displays']['pbxctx']);
-
-	echo	$form->select(array('desc'	=> $this->bbf('fm_contexts_display'),
-				  'name'	=> 'contexts-display',
-				  'labelid'	=> 'contexts-display',
-				  'key'		=> false,
-				  'selected'	=> $info['cticontexts']['display']
-				  ),
-				  $info['displays']['list']);
+<?=
+	$form->select(array('desc'	=> $this->bbf('fm_contexts_name'),
+			    'name'	=> 'contexts-name',
+			    'labelid'	=> 'contexts-name',
+			    'key'	=> false,
+			    'selected'	=> $info['cticontexts']['name']),
+		      $info['displays']['pbxctx']);
+?>
+<?=
+	$form->select(array('desc'	=> $this->bbf('fm_contexts_display'),
+			    'name'	=> 'contexts-display',
+			    'labelid'	=> 'contexts-display',
+			    'key'	=> false,
+			    'selected'	=> $info['cticontexts']['display']),
+		      $info['displays']['list']);
 ?>
 	<div class="fm-paragraph fm-description">
 		<fieldset id="cti-contexts_services">
@@ -52,12 +51,12 @@ $yesno = array($this->bbf('no'), $this->bbf('yes'));
 			<div id="contexts_services" class="fm-paragraph fm-description">
 <?=
 	$form->jq_select(array('paragraph'	=> false,
-						   'label'		=> false,
-						   'name'		=> 'directories[]',
-						   'id'		=> 'it-directorieslist',
-						   'selected'	=> $info['directories']['slt'],
-						   'key'		=> false),
-					 $info['directories']['list']);
+			       'label'		=> false,
+			       'name'		=> 'directories[]',
+			       'id'		=> 'it-directorieslist',
+			       'selected'	=> $info['directories']['slt'],
+			       'key'		=> false),
+			 $info['directories']['list']);
 ?>
 			</div>
 		</fieldset>
@@ -69,13 +68,13 @@ $yesno = array($this->bbf('no'), $this->bbf('yes'));
 		</p>
 <?=
 	$form->textarea(array('paragraph'	=> false,
-						  'label'		=> false,
-						  'name'		=> 'contexts[description]',
-						  'id'			=> 'it-contexts-description',
-						  'cols'		=> 60,
-						  'rows'		=> 5,
-						  'default'	=> $element['cticontexts']['description']['default']),
-					$info['cticontexts']['description']);
+			      'label'		=> false,
+			      'name'		=> 'contexts[description]',
+			      'id'		=> 'it-contexts-description',
+			      'cols'		=> 60,
+			      'rows'		=> 5,
+			      'default'	=> $element['cticontexts']['description']['default']),
+			$info['cticontexts']['description']);
 ?>
 	</div>
 </div>
