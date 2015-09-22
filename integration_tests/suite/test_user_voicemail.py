@@ -16,7 +16,7 @@
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-from hamcrest import assert_that, has_entries
+from hamcrest import assert_that, has_entries, none, contains
 
 from lib.testcase import TestWebi
 
@@ -24,6 +24,52 @@ from lib.testcase import TestWebi
 class TestUserVoicemail(TestWebi):
 
     asset = 'user_voicemail'
+
+
+class TestUserVoicemailNoAnswer(TestUserVoicemail):
+
+    voicemail = {u'ask_password': True,
+                 u'attach_audio': True,
+                 u'context': u'default',
+                 u'delete_messages': True,
+                 u'email': 'my-email@example.com',
+                 u'id': 1,
+                 u'language': 'fr_FR',
+                 u'max_messages': 5,
+                 u'name': u'NA voicemail',
+                 u'number': u'1001',
+                 u'pager': None,
+                 u'password': '12345',
+                 u'timezone': u'eu-fr',
+                 u'enabled': True,
+                 u'options': [],
+                 u'links': [{u'href': u'https://localhost:9486/1.1/voicemails/1',
+                             u'rel': u'voicemails'}]}
+
+    def test_given_no_vm_when_selecting_no_answer_strategy_then_button_for_creating_vm_appears(self):
+        self.confd.add_json_response("/voicemails", {'total': 0, 'items': []})
+
+        user_page = self.browser.users.add()
+        no_answer_tab = user_page.no_answer()
+        busy_section = no_answer_tab.busy()
+        busy_section.select_destination("Voicemail")
+        redirects = busy_section.redirection_list()
+
+        assert_that(redirects, none())
+        self.confd.assert_request_sent('/voicemails')
+
+    def test_given_one_vm_when_selecting_no_answer_strategy_then_list_of_vm_appears(self):
+        self.confd.add_json_response("/voicemails", {'total': 1,
+                                                     'items': [self.voicemail]})
+
+        user_page = self.browser.users.add()
+        no_answer_tab = user_page.no_answer()
+        busy_section = no_answer_tab.busy()
+        busy_section.select_destination("Voicemail")
+        redirects = busy_section.redirection_list()
+
+        assert_that(redirects, contains("NA voicemail (1001@default)"))
+        self.confd.assert_request_sent('/voicemails')
 
 
 class TestUserChooseVoicemail(TestUserVoicemail):
