@@ -107,32 +107,23 @@ Port:
 ; fm_config_syslog_level
 Niveau:
 
+; fld-device-directory
+ANNUAIRE
 
-; nb_line_busy-free
-Liste des lignes:
-Occupée: %d
-Disponible: %d
+; fm_config_directory_scheme
+Protocole:
 
-; col_line-line	
-Ligne
+; hlp_fm_config_directory_scheme
+Par défaut: http
 
-; col_line-protocol	
-Protocole
+; fm_config_directory_ip
+Serveur:
 
-; col_line-name	
-Nom
+; hlp_fm_config_directory_ip
+Par défaut: adresse IP de l'interface Voix
 
-; col_line-context
-Contexte
-	
-; col_line-number
-Numéro
+; fm_config_directory_port
+Port:
 
-; col_line-config_registrar	
-Site
-
-; col_line-user
- Utilisateur
- 
-; no_lines
-Aucune ligne
+; hlp_fm_config_directory_port
+Par défaut: 9498

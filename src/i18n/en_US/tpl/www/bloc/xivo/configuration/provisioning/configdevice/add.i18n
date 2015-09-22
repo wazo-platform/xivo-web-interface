@@ -107,31 +107,23 @@ Port:
 ; fm_config_syslog_level
 Level:
 
-; nb_line_busy-free
-Lines list:
-Busy: %d
-Free: %d
+; fld-device-directory
+DIRECTORY
 
-; col_line-line    
-Line
+; fm_config_directory_scheme
+Scheme:
 
-; col_line-protocol    
-Protocol
+; hlp_fm_config_directory_scheme
+Default: http
 
-; col_line-name    
-Name
+; fm_config_directory_ip
+Server:
 
-; col_line-context
-Context
-    
-; col_line-number
-Number
+; hlp_fm_config_directory_ip
+Default: IP address of the VoIP network interface
 
-; col_line-config_registrar    
-Site
+; fm_config_directory_port
+Port:
 
-; col_line-user
- User
- 
-; no_lines
-No line
+; hlp_fm_config_directory_port
+Default: 9498

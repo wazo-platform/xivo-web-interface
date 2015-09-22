@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -38,7 +38,7 @@ $element = $this->get_var('element');
 				  'size'	=> 25,
 				  'value'	=> $this->get_var('info','config','label'),
 				  'error'	=> $this->bbf_args('error',
-						   $this->get_var('error', 'config', 'label')) )),
+						   $this->get_var('error', 'label')) )),
 
 		$form->select(array('desc'	=> $this->bbf('fm_config_language'),
 				    'name'		=> 'config[locale]',
@@ -84,7 +84,7 @@ $element = $this->get_var('element');
 				  'default'	=> $element['config']['ntp_ip']['default'],
 				  'value'	=> $this->get_var('info','config','ntp_ip'),
 				  'error'	=> $this->bbf_args('error',
-						   $this->get_var('error', 'config', 'ntp_ip')) )),
+						   $this->get_var('error', 'ntp_ip')) )),
 
 		$form->select(array('desc'	=> $this->bbf('fm_config_sip_dtmf_mode'),
 				    'name'	=> 'config[sip_dtmf_mode]',
@@ -101,7 +101,7 @@ $element = $this->get_var('element');
 				  'default'	=> $element['config']['admin_username']['default'],
 				  'value'	=> $this->get_var('info','config','admin_username'),
 				  'error'	=> $this->bbf_args('error',
-						   $this->get_var('error', 'config', 'admin_username')) )),
+						   $this->get_var('error', 'admin_username')) )),
 
 		$form->text(array('desc'	=> $this->bbf('fm_config_admin_password'),
 				  'name'	=> 'config[admin_password]',
@@ -110,7 +110,7 @@ $element = $this->get_var('element');
 				  'default'	=> $element['config']['admin_password']['default'],
 				  'value'	=> $this->get_var('info','config','admin_password'),
 				  'error'	=> $this->bbf_args('error',
-						   $this->get_var('error', 'config', 'admin_password')) )),
+						   $this->get_var('error', 'admin_password')) )),
 
 		$form->text(array('desc'	=> $this->bbf('fm_config_user_username'),
 				  'name'	=> 'config[user_username]',
@@ -119,7 +119,7 @@ $element = $this->get_var('element');
 				  'default'	=> $element['config']['user_username']['default'],
 				  'value'	=> $this->get_var('info','config','user_username'),
 				  'error'	=> $this->bbf_args('error',
-						   $this->get_var('error', 'config', 'user_username')) )),
+						   $this->get_var('error', 'user_username')) )),
 
 		$form->text(array('desc'	=> $this->bbf('fm_config_user_password'),
 				  'name'	=> 'config[user_password]',
@@ -128,7 +128,7 @@ $element = $this->get_var('element');
 				  'default'	=> $element['config']['user_password']['default'],
 				  'value'	=> $this->get_var('info','config','user_password'),
 				  'error'	=> $this->bbf_args('error',
-						   $this->get_var('error', 'config', 'user_password')) )),
+						   $this->get_var('error', 'user_password')) )),
 
 		$form->checkbox(array('desc'	=> $this->bbf('fm_config_sip_subscribe_mwi'),
 				      'name'	=> 'config[sip_subscribe_mwi]',
@@ -148,7 +148,7 @@ $element = $this->get_var('element');
 					 'rows'		=> 5,
 					 'default'	=> $element['config']['_comment']['default'],
 					 'error'	=> $this->bbf_args('error',
-						   $this->get_var('error', '_comment', 'description')) ),
+						   $this->get_var('error', 'description')) ),
 				   $this->get_var('info','config','_comment'));?>
 	</div>
 </div>
@@ -164,7 +164,7 @@ $element = $this->get_var('element');
 				    'selected'	=> $this->get_var('info','config','sip_transport'),
 				  'legend'	=> $this->get_var('configdevice','raw_config','sip_transport'),
 				  'error'	=> $this->bbf_args('error',
-						   $this->get_var('error', 'config', 'sip_transport')) ),
+						   $this->get_var('error', 'sip_transport')) ),
 			      $element['config']['sip_transport']['value']);
 ?>
 </fieldset>
@@ -178,7 +178,7 @@ $element = $this->get_var('element');
 				  'selected'	=> $this->get_var('info','config','sip_srtp_mode'),
 				  'legend'	=> $this->get_var('configdevice','raw_config','sip_srtp_mode'),
 				  'error'	=> $this->bbf_args('error',
-						   $this->get_var('error', 'config', 'sip_srtp_mode')) ),
+						   $this->get_var('error', 'sip_srtp_mode')) ),
 			      $element['config']['sip_srtp_mode']['value']);
 ?>
 </fieldset>
@@ -198,7 +198,7 @@ $element = $this->get_var('element');
 				  'default'	=> $element['config']['vlan_id']['default'],
 				  'value'	=> $this->get_var('info','config','vlan_id'),
 				  'error'	=> $this->bbf_args('error',
-						   $this->get_var('error', 'config', 'vlan_id')) )),
+						   $this->get_var('error', 'vlan_id')) )),
 
 		$form->select(array('desc'	=> $this->bbf('fm_config_vlan_priority'),
 				    'name'	=> 'config[vlan_priority]',
@@ -215,7 +215,7 @@ $element = $this->get_var('element');
 				  'default'	=> $element['config']['vlan_pc_port_id']['default'],
 				  'value'	=> $this->get_var('info','config','vlan_pc_port_id'),
 				  'error'	=> $this->bbf_args('error',
-						   $this->get_var('error', 'config', 'vlan_pc_port_id')) ));
+						   $this->get_var('error', 'vlan_pc_port_id')) ));
 ?>
 </fieldset>
 <fieldset>
@@ -234,7 +234,7 @@ $element = $this->get_var('element');
 				  'default'	=> $element['config']['syslog_ip']['default'],
 				  'value'	=> $this->get_var('info','config','syslog_ip'),
 				  'error'	=> $this->bbf_args('error',
-						   $this->get_var('error', 'config', 'syslog_ip')) )),
+						   $this->get_var('error', 'syslog_ip')) )),
 
 		$form->text(array('desc'	=> $this->bbf('fm_config_syslog_port'),
 				  'name'	=> 'config[syslog_port]',
@@ -243,7 +243,7 @@ $element = $this->get_var('element');
 				  'default'	=> $element['config']['syslog_port']['default'],
 				  'value'	=> $this->get_var('info','config','syslog_port'),
 				  'error'	=> $this->bbf_args('error',
-						   $this->get_var('error', 'config', 'syslog_port')) )),
+						   $this->get_var('error', 'syslog_port')) )),
 
 		$form->select(array('desc'	=> $this->bbf('fm_config_syslog_level'),
 				    'name'		=> 'config[syslog_level]',
@@ -252,6 +252,39 @@ $element = $this->get_var('element');
 				  	'default'	=> $element['config']['syslog_level']['default'],
 				    'selected'	=> $this->get_var('info','config','syslog_level')),
 			      $element['config']['syslog_level']['value']);
+?>
+</fieldset>
+<fieldset>
+	<legend><?=$this->bbf('fld-device-directory')?></legend>
+<?php
+	echo	$form->select(array('desc'	=> $this->bbf('fm_config_directory_scheme'),
+				    'name'		=> 'config[X_xivo_phonebook_scheme]',
+				    'labelid'	=> 'config-X_xivo_phonebook_scheme',
+				    'key'		=> false,
+				    'help'		=> $this->bbf('hlp_fm_config_directory_scheme'),
+				    'default'	=> $element['config']['X_xivo_phonebook_scheme']['default'],
+				    'selected'	=> $this->get_var('info','config','X_xivo_phonebook_scheme')),
+			      $element['config']['X_xivo_phonebook_scheme']['value']),
+
+		$form->text(array('desc'	=> $this->bbf('fm_config_directory_ip'),
+				  'name'	=> 'config[X_xivo_phonebook_ip]',
+				  'labelid'	=> 'config-X_xivo_phonebook_ip',
+				  'size'	=> 15,
+				  'help'	=> $this->bbf('hlp_fm_config_directory_ip'),
+				  'default'	=> $element['config']['X_xivo_phonebook_ip']['default'],
+				  'value'	=> $this->get_var('info','config','X_xivo_phonebook_ip'),
+				  'error'	=> $this->bbf_args('error',
+						   $this->get_var('error', 'X_xivo_phonebook_ip')) )),
+
+		$form->text(array('desc'	=> $this->bbf('fm_config_directory_port'),
+				  'name'	=> 'config[X_xivo_phonebook_port]',
+				  'labelid'	=> 'config-X_xivo_phonebook_port',
+				  'size'	=> 4,
+				  'help'	=> $this->bbf('hlp_fm_config_directory_port'),
+				  'default'	=> $element['config']['X_xivo_phonebook_port']['default'],
+				  'value'	=> $this->get_var('info','config','X_xivo_phonebook_port'),
+				  'error'	=> $this->bbf_args('error',
+						   $this->get_var('error', 'X_xivo_phonebook_port')) ));
 ?>
 </fieldset>
 </div>
