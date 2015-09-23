@@ -49,10 +49,51 @@ class UserPage(Page):
 
         return FuncKeyTab(self.driver)
 
+    def no_answer(self):
+        link = self.driver.find_element_by_css_selector("a[href='#dialaction']")
+        link.click()
+        self.wait_visible(By.ID, 'sb-part-dialaction')
+
+        return NoAnswerTab(self.driver)
+
     def save(self):
         btn = self.driver.find_element_by_id("it-submit")
         btn.click()
         self.wait_for(By.NAME, 'fm-users-list')
+
+
+class NoAnswerTab(Page):
+
+    def no_answer(self):
+        return NoAnswerSection(self.driver, 'noanswer')
+
+    def busy(self):
+        return NoAnswerSection(self.driver, 'busy')
+
+    def congestion(self):
+        return NoAnswerSection(self.driver, 'congestion')
+
+    def fail(self):
+        return NoAnswerSection(self.driver, 'chanunavail')
+
+
+class NoAnswerSection(Page):
+
+    def __init__(self, driver, section):
+        super(NoAnswerSection, self).__init__(driver)
+        self.section = section
+
+    def select_destination(self, destination):
+        id = 'it-dialaction-{}-actiontype'.format(self.section)
+        self.fill_id(id, destination)
+
+    def redirection_list(self):
+        selector = '#fld-dialaction-{} div[style*="display: block"] select'.format(self.section)
+        try:
+            dropdown = Select(self.driver.find_element_by_css_selector(selector))
+        except NoSuchElementException:
+            return None
+        return [o.text for o in dropdown.options]
 
 
 class VoicemailTab(Page):
