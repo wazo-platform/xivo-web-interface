@@ -46,7 +46,6 @@ echo	$form->hidden(array('name'	=> DWHO_SESS_NAME,
 	<fieldset id="cti-contexts_services">
 		<legend><?=$this->bbf('cti-contexts-directories');?></legend>
 		<div id="contexts_services" class="fm-paragraph fm-description">
-			<div class="slt-outlist">
 <?=
 	$form->jq_select(array('paragraph'	=> false,
 						   'label'		=> false,
@@ -56,7 +55,6 @@ echo	$form->hidden(array('name'	=> DWHO_SESS_NAME,
 						   'key'		=> false),
 					 $info['directoriz']['list']);
 ?>
-			</div>
 		</div>
 	</fieldset>
 </div>
