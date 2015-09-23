@@ -33,7 +33,7 @@ $info = $this->get_var('info');
 </h3>
 
 <div class="sb-content">
-<form action="#" method="post" accept-charset="utf-8" onsubmit="dwho.form.select('it-directories');">
+<form action="#" method="post" accept-charset="utf-8">
 
 <div id="sb-part-first">
 <?php
@@ -46,7 +46,6 @@ echo	$form->hidden(array('name'	=> DWHO_SESS_NAME,
 	<fieldset id="cti-contexts_services">
 		<legend><?=$this->bbf('cti-contexts-directories');?></legend>
 		<div id="contexts_services" class="fm-paragraph fm-description">
-			<?=$form->input_for_ms('directorieslist',$this->bbf('ms_seek'))?>
 			<div class="slt-outlist">
 <?=
 	$form->jq_select(array('paragraph'	=> false,
