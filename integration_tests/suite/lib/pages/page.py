@@ -29,7 +29,7 @@ from selenium.webdriver.common.alert import Alert
 class Page(object):
 
     TIMEOUT = 4
-    CONFIG = {'base_url': 'http://localhost:8080'}
+    CONFIG = {'base_url': 'http://localhost:10080'}
 
     def __init__(self, driver):
         self.driver = driver

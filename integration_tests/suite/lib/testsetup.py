@@ -43,7 +43,7 @@ def setup_browser():
     virtual = os.environ.get('VIRTUAL_DISPLAY', '1') == '1'
     username = os.environ.get('WEBI_USERNAME', 'root')
     password = os.environ.get('WEBI_PASSWORD', 'proformatique')
-    Page.CONFIG['base_url'] = os.environ.get('WEBI_URL', 'http://localhost:8080')
+    Page.CONFIG['base_url'] = os.environ.get('WEBI_URL', 'http://localhost:10080')
     return Browser(username, password, virtual)
 
 

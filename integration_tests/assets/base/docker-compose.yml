@@ -34,7 +34,7 @@ sysconfd:
 webi:
   image: xivo-webi-test
   ports:
-    - "8080:80"
+    - "10080:80"
   volumes:
     - "../../../src:/usr/share/xivo-web-interface"
     - "./etc/xivo/datastorage.conf:/etc/xivo/datastorage.conf"
