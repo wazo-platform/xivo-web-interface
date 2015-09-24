@@ -1,4 +1,4 @@
-.PHONY: test-image test-setup distclean
+.PHONY: test-setup distclean
 
 MANAGE_DB_DIR=../../xivo-manage-db/
 POSTGRES_DOCKER=$(MANAGE_DB_DIR)/contribs/xivo-postgres/Dockerfile
