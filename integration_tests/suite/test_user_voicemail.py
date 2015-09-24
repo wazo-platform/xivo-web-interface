@@ -93,12 +93,13 @@ class TestUserChooseVoicemail(TestUserVoicemail):
                              u'rel': u'voicemails'}]}
 
     def test_given_voicemail_not_associated_when_selecting_for_association_then_voicemail_parameters_are_loaded(self):
-        self.confd.add_json_response("/voicemails", {'total': 1,
-                                                     'items': [self.voicemail]})
+        voicemail_list = {'total': 1, 'items': [self.voicemail]}
+        self.confd.add_json_response("/voicemails", voicemail_list)
+        self.confd.add_json_response("/voicemails", voicemail_list)
         self.confd.add_json_response("/voicemails/1", self.voicemail)
+
         user_page = self.browser.users.add()
         voicemail_tab = user_page.voicemail()
-
         voicemail_tab.select_voicemail(self.voicemail['number'])
 
         voicemail = voicemail_tab.get()
