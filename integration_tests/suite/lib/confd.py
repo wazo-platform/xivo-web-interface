@@ -30,11 +30,11 @@ class MockConfd(object):
         self.base_url = url
 
     def clear(self):
-        self.clear_requests()
+        self.clear_logs()
         self.clear_responses()
 
-    def clear_requests(self):
-        url = "{}/_requests".format(self.base_url)
+    def clear_logs(self):
+        url = "{}/_logs".format(self.base_url)
         response = requests.delete(url)
         response.raise_for_status()
 
@@ -43,11 +43,20 @@ class MockConfd(object):
         response = requests.delete(url)
         response.raise_for_status()
 
-    def requests(self):
-        url = "{}/_requests".format(self.base_url)
+    def logs(self):
+        url = "{}/_logs".format(self.base_url)
         response = requests.get(url)
         response.raise_for_status()
-        return response.json()['requests']
+        return response.json()['logs']
+
+    def requests(self):
+        return [l['request'] for l in self.logs()]
+
+    def remaining_responses(self):
+        url = "{}/_responses".format(self.base_url)
+        response = requests.get(url)
+        response.raise_for_status()
+        return response.json()['responses']
 
     def add_response(self, path, body='', method='GET', code=200):
         url = "{}/_responses".format(self.base_url)
@@ -65,13 +74,12 @@ class MockConfd(object):
     def assert_request_sent(self, url, method='GET', body=None):
         request = self.request_matching(url, method)
         if body:
-            assert_that(request['body'], equal_to(body), pformat(request))
+            assert_that(request['body'], equal_to(body), pformat(self.logs()))
 
     def assert_json_request(self, path, expected_body, method='GET'):
         request = self.request_matching(path, method)
         body = json.loads(request['body'])
-        msg = pformat(request)
-        assert_that(body, has_entries(expected_body), msg)
+        assert_that(body, has_entries(expected_body), pformat(self.logs()))
 
     def request_matching(self, path, method='GET'):
         requests = self.requests()
@@ -80,6 +88,6 @@ class MockConfd(object):
             if regex.match(request['path']) and request['method'] == method:
                 return request
 
-        msg = "No request matching '{}' found. Requests issued:\n{}"
-        formatted_requests = pformat(requests)
-        raise AssertionError(msg.format(path, formatted_requests))
+        msg = "No requests found matching {} '{}'.\n{}"
+        formatted_logs = pformat(self.logs())
+        raise AssertionError(msg.format(method, path, formatted_logs))

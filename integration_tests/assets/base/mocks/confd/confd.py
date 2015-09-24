@@ -4,7 +4,7 @@ from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
-REQUESTS = []
+LOGS = []
 
 RESPONSES = {}
 
@@ -26,30 +26,42 @@ PROFILES = [{u'id': 1,
              u'name': u'Client'}]
 
 
-@app.before_request
-def log_request():
-    if not (request.path.startswith('/_requests') or
+@app.after_request
+def log_request(response):
+    if not (request.path.startswith('/_logs') or
             request.path.startswith('/_responses')):
-        path = request.path
-        if path.startswith('/1.1'):
-            path = path[4:]
-        log = {'method': request.method,
-               'path': path,
-               'query': dict(request.args),
-               'body': request.data,
-               'headers': dict(request.headers)}
-        REQUESTS.append(log)
+        req = request_log()
+        rep = response_log(response)
+        LOGS.append({'request': req, 'response': rep})
+    return response
 
 
-@app.route('/_requests', methods=['GET'])
-def list_requests():
-    return jsonify(requests=REQUESTS)
+def request_log():
+    path = request.path
+    if path.startswith('/1.1'):
+        path = path[4:]
+    log = {'method': request.method,
+           'path': path,
+           'query': dict(request.args),
+           'body': request.data,
+           'headers': dict(request.headers)}
+    return log
 
 
-@app.route('/_requests', methods=['DELETE'])
-def delete_requests():
-    global REQUESTS
-    REQUESTS = []
+def response_log(response):
+    return {'code': response.status_code,
+            'data': response.data}
+
+
+@app.route('/_logs', methods=['GET'])
+def list_logs():
+    return jsonify(logs=LOGS)
+
+
+@app.route('/_logs', methods=['DELETE'])
+def delete_logs():
+    global LOGS
+    LOGS = []
     return ''
 
 
@@ -67,6 +79,11 @@ def delete_responses():
     global RESPONSES
     RESPONSES = {}
     return ''
+
+
+@app.route('/_responses', methods=['GET'])
+def get_responses():
+    return jsonify(responses=RESPONSES)
 
 
 @app.route('/1.1/devices')
