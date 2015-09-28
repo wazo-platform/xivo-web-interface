@@ -346,7 +346,7 @@ General
 ; fm_phonefunckey_type-opt(extenfeatures-pickup)
 Group Interception
 
-; fm_phonefunckey_type-opt(featuremap-automon)
+; fm_phonefunckey_type-opt(featuremap-automixmon)
 Online call recording
 
 ; fm_phonefunckey_type-opt(extenfeatures-recsnd)

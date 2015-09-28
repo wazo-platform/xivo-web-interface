@@ -301,7 +301,7 @@ Chambre de conférence
 ; fm_phonefunckey_type-optgroup(extension-general)
 Général
 
-; fm_phonefunckey_type-opt(featuremap-automon)
+; fm_phonefunckey_type-opt(featuremap-automixmon)
 Enregistrement d'appel à la volée
 
 ; fm_phonefunckey_type-opt(extenfeatures-phonestatus)

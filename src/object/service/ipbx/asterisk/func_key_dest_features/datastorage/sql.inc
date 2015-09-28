@@ -26,7 +26,7 @@ class xivo_service_asterisk_func_key_dest_features_sql extends xivo_service_aste
 		'parkext' => 'park',
 		'blindxfer' => 'speeddial',
 		'atxfer' => 'speeddial',
-		'automon' => 'speeddial',
+		'automixmon' => 'speeddial',
 	);
 	var $_exten_regex = '/[0-9\*#]+/';
 

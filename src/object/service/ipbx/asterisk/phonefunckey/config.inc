@@ -46,10 +46,10 @@ $array['type']['custom']['name'] = 'custom';
 $array['type']['custom']['destination'] = true;
 $array['type']['custom']['supervisable'] = true;
 
-$array['type']['featuremap-automon'] = array();
-$array['type']['featuremap-automon']['category'] = 'extension-general';
-$array['type']['featuremap-automon']['name'] = 'featuremap-automon';
-$array['type']['featuremap-automon']['extension'] = true;
+$array['type']['featuremap-automixmon'] = array();
+$array['type']['featuremap-automixmon']['category'] = 'extension-general';
+$array['type']['featuremap-automixmon']['name'] = 'featuremap-automixmon';
+$array['type']['featuremap-automixmon']['extension'] = true;
 
 $array['type']['extenfeatures-phonestatus'] = array();
 $array['type']['extenfeatures-phonestatus']['category'] = 'extension-general';
