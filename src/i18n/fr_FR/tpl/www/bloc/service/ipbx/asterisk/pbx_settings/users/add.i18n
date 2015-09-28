@@ -166,7 +166,7 @@ Activer la messagerie vocale :
 ; fm_userfeatures_enablexfer
 Activer les transferts :
 
-; fm_userfeatures_enableautomon
+; fm_userfeatures_enableonlinerec
 Activer l'enregistrement à la volée :
 
 ; fm_userfeatures_callrecord

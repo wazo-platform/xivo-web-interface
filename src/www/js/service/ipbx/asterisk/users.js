@@ -57,7 +57,7 @@ var xivo_ast_users_elt_default = {
 	'userfeatures-enablexfer' : {
 		it : true
 	},
-	'userfeatures-enableautomon' : {
+	'userfeatures-enableonlinerec' : {
 		it : true
 	},
 	'userfeatures-callrecord' : {

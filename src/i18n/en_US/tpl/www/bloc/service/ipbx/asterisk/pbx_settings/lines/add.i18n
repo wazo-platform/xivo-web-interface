@@ -268,21 +268,6 @@ Simultaneous calls:
 ; fm_linefeatures_musiconhold
 On-Hold Music:
 
-; fm_linefeatures_enableclient
-Enable XiVO Client:
-
-; fm_linefeatures_enablehint
-Enable supervision:
-
-; fm_linefeatures_enablevoicemail
-Enable voicemail:
-
-; fm_linefeatures_enablexfer
-Enable call transfer:
-
-; fm_linefeatures_enableautomon
-Enable online call recording:
-
 ; fm_linefeatures_callrecord
 Call recording:
 

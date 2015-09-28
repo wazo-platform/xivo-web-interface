@@ -492,11 +492,11 @@ if(dwho_issa('linefeatures',$info) === true
 				      'default'	=> $element['userfeatures']['enablexfer']['default'],
 				      'checked'	=> $info['userfeatures']['enablexfer'])),
 
-		$form->checkbox(array('desc'	=> $this->bbf('fm_userfeatures_enableautomon'),
-				      'name'	=> 'userfeatures[enableautomon]',
-				      'labelid'	=> 'userfeatures-enableautomon',
-				      'default'	=> $element['userfeatures']['enableautomon']['default'],
-				      'checked'	=> $info['userfeatures']['enableautomon'])),
+		$form->checkbox(array('desc'	=> $this->bbf('fm_userfeatures_enableonlinerec'),
+				      'name'	=> 'userfeatures[enableonlinerec]',
+				      'labelid'	=> 'userfeatures-enableonlinerec',
+				      'default'	=> $element['userfeatures']['enableonlinerec']['default'],
+				      'checked'	=> $info['userfeatures']['enableonlinerec'])),
 
 		$form->checkbox(array('desc'	=> $this->bbf('fm_userfeatures_callrecord'),
 				      'name'	=> 'userfeatures[callrecord]',

@@ -127,7 +127,7 @@ Enable voicemail:
 ; fm_userfeatures_enablexfer
 Enable call transfer:
 
-; fm_userfeatures_enableautomon
+; fm_userfeatures_enableonlinerec
 Enable online call recording:
 
 ; fm_userfeatures_callrecord

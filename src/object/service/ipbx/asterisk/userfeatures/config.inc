@@ -82,10 +82,10 @@ $array['element']['enablexfer']['value'] = array(0,1);
 $array['element']['enablexfer']['default'] = 1;
 $array['element']['enablexfer']['set'] = true;
 
-$array['element']['enableautomon'] = array();
-$array['element']['enableautomon']['value'] = array(0,1);
-$array['element']['enableautomon']['default'] = 0;
-$array['element']['enableautomon']['set'] = true;
+$array['element']['enableonlinerec'] = array();
+$array['element']['enableonlinerec']['value'] = array(0,1);
+$array['element']['enableonlinerec']['default'] = 0;
+$array['element']['enableonlinerec']['set'] = true;
 
 $array['element']['callrecord'] = array();
 $array['element']['callrecord']['value'] = array(0,1);
@@ -222,7 +222,7 @@ $array['filter']['cti_profile_id'] = array('set' => false,'chk' => 2,'cast' => '
 $array['filter']['enablehint'] = array('bool' => true);
 $array['filter']['enablevoicemail'] = array('bool' => true);
 $array['filter']['enablexfer'] = array('bool' => true);
-$array['filter']['enableautomon'] = array('bool' => true);
+$array['filter']['enableonlinerec'] = array('bool' => true);
 $array['filter']['callrecord'] = array('bool' => true);
 $array['filter']['incallfilter'] = array('bool' => true);
 $array['filter']['enablednd'] = array('bool' => true);
