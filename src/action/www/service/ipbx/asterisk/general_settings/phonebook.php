@@ -21,8 +21,6 @@
 $appaccessfeatures = &$ipbx->get_application('accessfeatures',array('feature' => 'phonebook'));
 
 $info = array();
-$info['ldapfilter'] = array();
-$info['ldapfilter']['slt'] = false;
 
 dwho::load_class('dwho_sort');
 
@@ -31,16 +29,8 @@ $accessfeaturessort = new dwho_sort(array('key' => 'host'));
 if(($info['accessfeatures'] = $appaccessfeatures->get()) !== false)
 	uasort($info['accessfeatures'],array($accessfeaturessort,'str_usort'));
 
-$serversort = new dwho_sort(array('key' => 'identity'));
-
-$appldapfilter = $ipbx->get_application('serverfeatures',array('feature' => 'phonebook','type' => 'ldap'));
-$info['ldapfilter']['info'] = $appldapfilter->get();
-if(($info['ldapfilter']['list'] = $appldapfilter->get_server_list()) !== false)
-	uasort($info['ldapfilter']['list'],array($serversort,'str_usort'));
-
 $error = array();
 $error['accessfeatures'] = array();
-$error['ldapfilter']     = array();
 
 $fm_save = null;
 
@@ -63,43 +53,12 @@ if(isset($_QR['fm_send']) === true)
 		$fm_save = false;
 	else if($fm_save !== false)
 		$fm_save = true;
-
-	if(isset($_QR['ldapfilter']) === false)
-		$_QR['ldapfilter'] = array();
-
-	$appldapfilter = $ipbx->get_application('serverfeatures',array('feature' => 'phonebook','type' => 'ldap'));
-	if($appldapfilter->set($_QR['ldapfilter']) !== false)
-		$appldapfilter->save();
-
-	$info['ldapfilter']['info'] = $appldapfilter->get_result();
-	$error['ldapfilter'] = $appldapfilter->get_error();
-
-	if(isset($error['ldapfilter'][0]) === true)
-		$fm_save = false;
-	else if($fm_save !== false)
-		$fm_save = true;
-}
-
-if($info['ldapfilter']['list'] !== false
-&& $info['ldapfilter']['info'] !== false)
-{
-	$info['ldapfilter']['slt'] = dwho_array_intersect_key($info['ldapfilter']['info'],
-							      $info['ldapfilter']['list'],
-							      'serverid');
-
-	if($info['ldapfilter']['slt'] !== false)
-	{
-		$info['ldapfilter']['list'] = dwho_array_diff_key($info['ldapfilter']['list'],
-								  $info['ldapfilter']['slt']);
-		uasort($info['ldapfilter']['slt'],array($serversort,'str_usort'));
-	}
 }
 
 $_TPL->set_var('fm_save',$fm_save);
 $_TPL->set_var('info',$info);
 
 $dhtml = &$_TPL->get_module('dhtml');
-$dhtml->set_js('js/dwho/submenu.js');
 
 $menu = &$_TPL->get_module('menu');
 $menu->set_top('top/user/'.$_USR->get_info('meta'));

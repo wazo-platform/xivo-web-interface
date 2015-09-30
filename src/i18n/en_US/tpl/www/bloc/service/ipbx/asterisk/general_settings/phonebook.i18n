@@ -1,11 +1,8 @@
 ; title_content_name
 Phonebook properties
 
-; smenu_access
-Hosts
-
-; smenu_ldapfilters
-LDAP filters
+; fm_access
+Hosts:
 
 ; accessfeatures_add
 Add an host:
@@ -18,15 +15,6 @@ Add an host
 
 ; bt_deleteaccess
 Delete one or more hosts
-
-; bt_inldapfilter
-Add one or more LDAP filters ->
-
-; bt_outldapfilter
-<- Remove one or more LDAP filters
-
-; create_ldapfilter
-Create a LDAP filter
 
 ; fm_success-save
 Phonebook properties successfully saved
