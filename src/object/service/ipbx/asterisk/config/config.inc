@@ -24,9 +24,6 @@ $array = array();
 
 $array['appcustom'] = array();
 
-$array['appcustom']['webservices'] = array();
-$array['appcustom']['webservices']['phonebook'] = true;
-
 $array['realstatic'] = array();
 
 $array['realstatic']['features'] = array();

@@ -237,8 +237,6 @@ $array['service/ipbx/json/restricted/pbx_services/extenfeatures'] = 'service/ipb
 $array['service/ipbx/json/private/pbx_services/extenfeatures'] = 'service/ipbx/json.php/private/pbx_services/extenfeatures/';
 
 # special..
-$array['service/ipbx/web_services/phonebook/search'] = 'service/ipbx/web_services.php/phonebook/search/';
-$array['service/ipbx/web_services/phonebook/menu'] = 'service/ipbx/web_services.php/phonebook/menu/';
 $array['service/ipbx/json/phonebook/local'] = 'service/ipbx/json.php/phonebook/local/';
 
 

@@ -6,8 +6,3 @@ location / {
     index index.php;
     include /etc/nginx/xivo_params;
 }
-
-location /service/ipbx/web_services.php/phonebook/ {
-    index index.php;
-    include /etc/nginx/xivo_params;
-}

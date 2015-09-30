@@ -472,11 +472,6 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		return($this->_get_users('search',$disable,$search,$order,$limit,$assoc));
 	}
 
-	function get_users_search_number($search,$disable=null,$order=null,$limit=null,$assoc=false)
-	{
-		return($this->_get_users('search_number',$disable,$search,$order,$limit,$assoc));
-	}
-
 	function get_users_list($disable=null,$order=null,$limit=null,$assoc=false,$initialized=null)
 	{
 		return($this->_get_users('list',$disable,null,$order,$limit,$assoc,$initialized));
