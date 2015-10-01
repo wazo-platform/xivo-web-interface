@@ -144,7 +144,7 @@ switch($act)
 
 		$arr = array();
 
-		foreach(array('match_direct', 'match_reverse', 'field_phone', 'field_firstname', 'field_lastname', 'field_fullname', 'field_company', 'field_mail', 'display_reverse') as $v)
+		foreach(array('match_direct', 'match_reverse') as $v)
 		{
 			if($return['directories'][$v] != '')
 			{
