@@ -150,13 +150,13 @@ if(isset($error_js[0]) === true)
 ?>
 	<div id="sb-part-first" class="b-nodisplay">
 <?php
-	echo	$form->text(array('desc'	=> $this->bbf('fm_featuremap_automon'),
-				  'name'	=> 'featuremap[automon]',
-				  'labelid'	=> 'featuremap-automon',
+	echo	$form->text(array('desc'	=> $this->bbf('fm_featuremap_automixmon'),
+				  'name'	=> 'featuremap[automixmon]',
+				  'labelid'	=> 'featuremap-automixmon',
 				  'size'	=> 15,
-				  'value'	=> $this->get_var('featuremap','automon','var_val'),
-				  'default'	=> $element['featuremap']['automon']['default'],
-				  'invalid'	=> isset($invalid['featuremap']['automon']))),
+				  'value'	=> $this->get_var('featuremap','automixmon','var_val'),
+				  'default'	=> $element['featuremap']['automixmon']['default'],
+				  'invalid'	=> isset($invalid['featuremap']['automixmon']))),
 
         $form->text(array('desc'        => $this->bbf('fm_featuremap_disconnect'),
                           'name'        => 'featuremap[disconnect]',

@@ -104,9 +104,9 @@ class FuncKeyMapper {
 			'destination' => true,
 			'supervisable' => true,
 		),
-		'featuremap-automon' => array(
+		'featuremap-automixmon' => array(
 			'category' => 'extension-general',
-			'name' => 'featuremap-automon',
+			'name' => 'featuremap-automixmon',
 			'extension' => true,
 		),
 		'extenfeatures-phonestatus' => array(
@@ -345,7 +345,7 @@ class FuncKeyMapper {
 			break;
 		case 'onlinerec':
 			$extra = array(
-				'type' => 'featuremap-automon',
+				'type' => 'featuremap-automixmon',
 			);
 			break;
 		case 'service':
@@ -586,7 +586,7 @@ class FuncKeyMapper {
 		{
 			$feature_type = substr($ref['type'], 11);
 
-			if($feature_type === 'automon')
+			if($feature_type === 'automixmon')
 			{
 				return array('type' => 'onlinerec');
 			}

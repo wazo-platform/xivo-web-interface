@@ -127,7 +127,7 @@ Enable voicemail:
 ; fm_userfeatures_enablexfer
 Enable call transfer:
 
-; fm_userfeatures_enableautomon
+; fm_userfeatures_enableonlinerec
 Enable online call recording:
 
 ; fm_userfeatures_callrecord
@@ -346,7 +346,7 @@ General
 ; fm_phonefunckey_type-opt(extenfeatures-pickup)
 Group Interception
 
-; fm_phonefunckey_type-opt(featuremap-automon)
+; fm_phonefunckey_type-opt(featuremap-automixmon)
 Online call recording
 
 ; fm_phonefunckey_type-opt(extenfeatures-recsnd)

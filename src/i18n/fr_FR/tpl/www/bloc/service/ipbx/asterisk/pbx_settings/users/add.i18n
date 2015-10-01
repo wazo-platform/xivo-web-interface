@@ -166,7 +166,7 @@ Activer la messagerie vocale :
 ; fm_userfeatures_enablexfer
 Activer les transferts :
 
-; fm_userfeatures_enableautomon
+; fm_userfeatures_enableonlinerec
 Activer l'enregistrement à la volée :
 
 ; fm_userfeatures_callrecord
@@ -301,7 +301,7 @@ Chambre de conférence
 ; fm_phonefunckey_type-optgroup(extension-general)
 Général
 
-; fm_phonefunckey_type-opt(featuremap-automon)
+; fm_phonefunckey_type-opt(featuremap-automixmon)
 Enregistrement d'appel à la volée
 
 ; fm_phonefunckey_type-opt(extenfeatures-phonestatus)
