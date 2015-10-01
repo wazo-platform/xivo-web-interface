@@ -46,16 +46,6 @@ class xivo_service_asterisk_ldapfilter extends xivo_service_asterisk_abstract
 	{
 		$data['commented'] = (bool) $data['commented'];
 
-		if(is_scalar($data['attrdisplayname']) === true)
-			$data['attrdisplayname'] = explode(',',$data['attrdisplayname']);
-		else
-			$data['attrdisplayname'] = array();
-
-		if(is_scalar($data['attrphonenumber']) === true)
-			$data['attrphonenumber'] = explode(',',$data['attrphonenumber']);
-		else
-			$data['attrphonenumber'] = array();
-
 		return($data);
 	}
 

@@ -41,19 +41,6 @@ $array['element']['basedn']['default'] = '';
 $array['element']['filter'] = array();
 $array['element']['filter']['default'] = '';
 
-$array['element']['attrdisplayname'] = array();
-$array['element']['attrdisplayname']['default'] = '';
-
-$array['element']['attrphonenumber'] = array();
-$array['element']['attrphonenumber']['default'] = '';
-
-$array['element']['additionaltype'] = array();
-$array['element']['additionaltype']['value'] = array('office','home','mobile','fax','other','custom');
-$array['element']['additionaltype']['default'] = 'office';
-
-$array['element']['additionaltext'] = array();
-$array['element']['additionaltext']['default'] = '';
-
 $array['element']['commented'] = array();
 $array['element']['commented']['value'] = array(0,1);
 $array['element']['commented']['default'] = 0;
@@ -70,10 +57,6 @@ $array['filter']['user'] = array('set' => false,'chk' => 2,'maxlen' => 255,'cast
 $array['filter']['passwd'] = array('set' => false,'chk' => 2,'maxlen' => 255,'cast' => 'sgraph');
 $array['filter']['basedn'] = array('minlen' => 1,'maxlen' => 255,'callback' => 'ldap_explode_dn','callbackarg' => 1);
 $array['filter']['filter'] = array('set' => false,'chk' => 2,'maxlen' => 255,'cast' => 'sgraph','notag' => false, 'regexp' => '/^[^\(]/');
-$array['filter']['attrdisplayname'] = array('minlen' => 1,'maxlen' => 255,'regexp' => '/^(?:(?:[a-zA-Z0-9-]+|[0-9]+(?:\.[0-9]+)*)[,]?)+$/');
-$array['filter']['attrphonenumber'] = array('minlen' => 1,'maxlen' => 255,'regexp' => '/^(?:(?:[a-zA-Z0-9-]+|[0-9]+(?:\.[0-9]+)*)[,]?)+$/');
-$array['filter']['additionaltype'] = array('key' => array('office','home','mobile','fax','other','custom'));
-$array['filter']['additionaltext'] = array('set' => false,'chk' => 2,'maxlen' => 16,'cast' => 'sgraph');
 $array['filter']['commented'] = array('bool' => true);
 $array['filter']['description'] = array('set' => false,'chk' => 2,'maxlen' => 1000,'cast' => 'sgraph_crlf_tab','eol' => true);
 
