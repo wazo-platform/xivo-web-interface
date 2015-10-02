@@ -745,7 +745,7 @@ class xivo_object_provdconfig extends xivo_object_provd_abstract
 		$newconfig['id'] = $newconfigid;
 		$newconfig['configdevice'] = $configdevice;
 		$newconfig['parent_ids'] = array('base',$configdevice);
-		$newconfig['raw_config'] = array('X_key' => '', 'config_version' => 0);
+		$newconfig['raw_config'] = array('X_key' => '', 'config_version' => 1);
 		$newrawconfig = &$newconfig['raw_config'];
 		$this->_build_exten_config($newrawconfig);
 		$this->_build_funckeys($newrawconfig,$user_id);
