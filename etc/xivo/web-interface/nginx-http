@@ -8,13 +8,13 @@ location / {
 }
 
 location /service/ipbx/web_services.php/phonebook/menu {
-    return http://$host:9498/0.1/directories/menu/autodetect;
+    proxy_pass http://$server_addr:9498/0.1/directories/menu/autodetect;
 }
 
 location /service/ipbx/web_services.php/phonebook/search {
     if ($arg_name) {
-        return http://$host:9498/0.1/directories/lookup/autodetect?term=$arg_name;
+        proxy_pass http://$server_addr:9498/0.1/directories/lookup/autodetect?term=$arg_name;
     }
 
-    return http://$host:9498/0.1/directories/input/autodetect;
+    proxy_pass http://$server_addr:9498/0.1/directories/input/autodetect;
 }
