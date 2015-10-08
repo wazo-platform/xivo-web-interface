@@ -1,11 +1,8 @@
 ; title_content_name
 Propriétés du carnet d'adresses
 
-; smenu_access
-Hôtes
-
-; smenu_ldapfilters
-Filtres LDAP
+; fm_access
+Hôtes :
 
 ; accessfeatures_add
 Ajouter un hôte :
@@ -18,15 +15,6 @@ Ajouter un hôte
 
 ; bt_deleteaccess
 Supprimer un ou plusieurs hôtes
-
-; bt_inldapfilter
-Ajouter un ou plusieurs filtres LDAP ->
-
-; bt_outldapfilter
-<- Enlever un ou plusieurs filtres LDAP
-
-; create_ldapfilter
-Créer un filtre LDAP
 
 ; fm_success-save
 Propriétés du carnet d'adresses sauvegardés avec succès

@@ -24,9 +24,6 @@ $array = array();
 
 $array['appcustom'] = array();
 
-$array['appcustom']['webservices'] = array();
-$array['appcustom']['webservices']['phonebook'] = true;
-
 $array['realstatic'] = array();
 
 $array['realstatic']['features'] = array();
@@ -336,9 +333,6 @@ $array['module']['schedule_path']['datastorage'] = true;
 
 $array['module']['schedule_time'] = array();
 $array['module']['schedule_time']['datastorage'] = true;
-
-$array['module']['serverfeatures'] = array();
-$array['module']['serverfeatures']['datastorage'] = true;
 
 $array['module']['sipauthentication'] = array();
 $array['module']['sipauthentication']['datastorage'] = true;

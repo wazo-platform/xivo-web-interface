@@ -33,6 +33,18 @@ location /server-status {
     deny all;
 }
 
+location /service/ipbx/web_services.php/phonebook/menu {
+    proxy_pass https://$server_addr:9499/0.1/directories/menu/autodetect;
+}
+
+location /service/ipbx/web_services.php/phonebook/search {
+    if ($arg_name) {
+        proxy_pass https://$server_addr:9499/0.1/directories/lookup/autodetect?term=$arg_name;
+    }
+
+    proxy_pass https://$server_addr:9499/0.1/directories/input/autodetect;
+}
+
 ## for debug purpose
 #location /pgadmin {
 #    alias /usr/share/phppgadmin;

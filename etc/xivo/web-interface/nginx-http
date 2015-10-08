@@ -7,7 +7,14 @@ location / {
     include /etc/nginx/xivo_params;
 }
 
-location /service/ipbx/web_services.php/phonebook/ {
-    index index.php;
-    include /etc/nginx/xivo_params;
+location /service/ipbx/web_services.php/phonebook/menu {
+    proxy_pass http://$server_addr:9498/0.1/directories/menu/autodetect;
+}
+
+location /service/ipbx/web_services.php/phonebook/search {
+    if ($arg_name) {
+        proxy_pass http://$server_addr:9498/0.1/directories/lookup/autodetect?term=$arg_name;
+    }
+
+    proxy_pass http://$server_addr:9498/0.1/directories/input/autodetect;
 }

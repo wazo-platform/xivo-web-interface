@@ -26,10 +26,6 @@ include(dwho_file::joinpath(dirname(__FILE__),'..','_common.php'));
 $appaccessfeatures = &$ipbx->get_application('accessfeatures',array('feature' => 'phonebook'));
 $info['accessfeatures'] = $appaccessfeatures->get();
 
-$appldapfilter = $ipbx->get_application('serverfeatures',array('feature' => 'phonebook','type' => 'ldap'));
-$info['ldapfilter'] = $appldapfilter->get();
-$info['ldapfilter'] = $appldapfilter->get_server_list();
-
 $act = $_QRY->get('act');
 
 switch($act)

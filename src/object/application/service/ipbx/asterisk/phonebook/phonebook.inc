@@ -134,10 +134,12 @@ class xivo_application_service_asterisk_phonebook extends xivo_application_aster
 		$search = strval($search);
 
 		$subsort = false;
-		foreach(array('office-number', 'mobile-number') as $fld)
-		{
-			if(array_key_exists($fld, $order))
-			{ $subsort = array($fld, $order[$fld]); unset($order[$fld]); }
+		if ($order !== null) {
+			foreach(array('office-number', 'mobile-number') as $fld)
+			{
+				if(array_key_exists($fld, $order))
+				{ $subsort = array($fld, $order[$fld]); unset($order[$fld]); }
+			}
 		}
 
 		switch($action)

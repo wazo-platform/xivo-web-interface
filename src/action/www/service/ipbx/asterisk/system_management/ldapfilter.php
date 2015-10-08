@@ -46,17 +46,6 @@ switch($act)
 				$_QRY->go($_TPL->url('service/ipbx/system_management/ldapfilter'),$param);
 		}
 
-		if(dwho_issa('ldapfilter',$result) === true)
-		{
-			if(dwho_ak('attrdisplayname',$result['ldapfilter']) === true
-			&& dwho_has_len($result['ldapfilter'],'attrdisplayname') === true)
-				$result['ldapfilter']['attrdisplayname'] = explode(',',$result['ldapfilter']['attrdisplayname']);
-
-			if(dwho_ak('attrphonenumber',$result['ldapfilter']) === true
-			&& dwho_has_len($result['ldapfilter'],'attrphonenumber') === true)
-				$result['ldapfilter']['attrphonenumber'] = explode(',',$result['ldapfilter']['attrphonenumber']);
-		}
-
 		$_TPL->set_var('info',$result);
 		$_TPL->set_var('error',$error);
 		$_TPL->set_var('fm_save',$fm_save);
@@ -64,8 +53,6 @@ switch($act)
 		$_TPL->set_var('ldapservers',$appldapfilter->get_ldapservers_list(null,array('name' => SORT_ASC)));
 
 		$dhtml = &$_TPL->get_module('dhtml');
-		$dhtml->set_js('js/dwho/submenu.js');
-		$dhtml->set_js('js/service/ipbx/'.$ipbx->get_name().'/ldapfilter.js');
 		break;
 	case 'edit':
 		$appldapfilter = &$ipbx->get_application('ldapfilter');
@@ -91,17 +78,6 @@ switch($act)
 				$_QRY->go($_TPL->url('service/ipbx/system_management/ldapfilter'),$param);
 		}
 
-		if(dwho_issa('ldapfilter',$return) === true)
-		{
-			if(dwho_ak('attrdisplayname',$return['ldapfilter']) === true
-			&& dwho_has_len($return['ldapfilter'],'attrdisplayname') === true)
-				$return['ldapfilter']['attrdisplayname'] = explode(',',$return['ldapfilter']['attrdisplayname']);
-
-			if(dwho_ak('attrphonenumber',$return['ldapfilter']) === true
-			&& dwho_has_len($return['ldapfilter'],'attrphonenumber') === true)
-				$return['ldapfilter']['attrphonenumber'] = explode(',',$return['ldapfilter']['attrphonenumber']);
-		}
-
 		$_TPL->set_var('id',$info['ldapfilter']['id']);
 		$_TPL->set_var('info',$return);
 		$_TPL->set_var('error',$error);
@@ -110,8 +86,6 @@ switch($act)
 		$_TPL->set_var('ldapservers',$appldapfilter->get_ldapservers_list(null,array('name' => SORT_ASC)));
 
 		$dhtml = &$_TPL->get_module('dhtml');
-		$dhtml->set_js('js/dwho/submenu.js');
-		$dhtml->set_js('js/service/ipbx/'.$ipbx->get_name().'/ldapfilter.js');
 		break;
 	case 'delete':
 		$param['page'] = $page;

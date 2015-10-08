@@ -392,10 +392,6 @@ $array['schedule_time'] = array();
 $array['schedule_time']['table'] = 'schedule_time';
 $array['schedule_time']['primary'] = array('id' => '');
 
-$array['serverfeatures'] = array();
-$array['serverfeatures']['table'] = 'serverfeatures';
-$array['serverfeatures']['primary'] = array('id' => '');
-
 $array['sipauthentication'] = array();
 $array['sipauthentication']['table'] = 'sipauthentication';
 $array['sipauthentication']['primary'] = array('id' => '');

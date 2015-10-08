@@ -33,34 +33,8 @@ $element = $this->get_var('element');
 		<span class="span-right">&nbsp;</span>
 	</h3>
 
-<div class="sb-smenu">
-	<ul>
-		<li id="dwsm-tab-1"
-			class="dwsm-blur"
-			onclick="dwho_submenu.select(this,'sb-part-first');"
-			onmouseout="dwho_submenu.blur(this);"
-			onmouseover="dwho_submenu.focus(this);">
-			<div class="tab">
-				<span class="span-center"><a href="#first"><?=$this->bbf('smenu_access');?></a></span>
-			</div>
-			<span class="span-right">&nbsp;</span>
-		</li>
-		<li id="dwsm-tab-2"
-			class="dwsm-blur-last"
-			onclick="dwho_submenu.select(this,'sb-part-last',1);"
-			onmouseout="dwho_submenu.blur(this,1);"
-			onmouseover="dwho_submenu.focus(this,1);">
-			<div class="tab">
-				<span class="span-center"><a href="#last"><?=$this->bbf('smenu_ldapfilters');?></a></span>
-			</div>
-			<span class="span-right">&nbsp;</span>
-			</li>
-	</ul>
-</div>
-
 <div class="sb-content">
-	<form action="#" method="post" accept-charset="utf-8" onsubmit="dwho.form.select('it-access');
-									dwho.form.select('it-ldapfilter');">
+	<form action="#" method="post" accept-charset="utf-8" onsubmit="dwho.form.select('it-access');">
 
 <?php
 	echo	$form->hidden(array('name'	=> DWHO_SESS_NAME,
@@ -70,8 +44,12 @@ $element = $this->get_var('element');
 				    'value'	=> 1));
 ?>
 
-<div id="sb-part-first" class="b-nodisplay">
 	<div id="accesslist" class="fm-paragraph fm-multilist">
+		<p>
+			<label id="lb-localnetlist" for="it-localnet">
+				<?=$this->bbf('fm_access');?>
+			</label>
+		</p>
 		<div class="slt-list">
 <?php
 		echo	$form->select(array('name'	=> 'accessfeatures[]',
@@ -105,70 +83,6 @@ $element = $this->get_var('element');
 	</div>
 </div>
 <div class="clearboth"></div>
-
-</div>
-
-<div id="sb-part-last" class="b-nodisplay">
-<?php
-	if($info['ldapfilter']['list'] !== false):
-?>
-		<div id="ldapfilterlist" class="fm-paragraph fm-multilist">
-			<div class="slt-outlist">
-<?php
-		echo	$form->select(array('name'	=> 'ldapfilterlist',
-					    'label'	=> false,
-					    'id'	=> 'it-ldapfilterlist',
-					    'key'	=> 'identity',
-					    'altkey'	=> 'id',
-#					    'help'	=> $this->bbf('hlp_ldapfilterlist'),
-					    'multiple'	=> true,
-					    'size'	=> 5,
-					    'paragraph'	=> false),
-				      $info['ldapfilter']['list']);
-?>
-			</div>
-			<div class="inout-list">
-				<a href="#"
-				   onclick="dwho.form.move_selected('it-ldapfilterlist','it-ldapfilter');
-					    return(dwho.dom.free_focus());"
-				   title="<?=$this->bbf('bt_inldapfilter');?>">
-					<?=$url->img_html('img/site/button/arrow-left.gif',
-							  $this->bbf('bt_inldapfilter'),
-							  'class="bt-inlist" id="bt-inldapfilter" border="0"');?></a><br />
-				<a href="#"
-				   onclick="dwho.form.move_selected('it-ldapfilter','it-ldapfilterlist');
-					    return(dwho.dom.free_focus());"
-				   title="<?=$this->bbf('bt_outldapfilter');?>">
-					<?=$url->img_html('img/site/button/arrow-right.gif',
-							  $this->bbf('bt_outldapfilter'),
-							  'class="bt-outlist" id="bt-outldapfilter" border="0"');?></a>
-			</div>
-			<div class="slt-inlist">
-<?php
-		echo	$form->select(array('name'	=> 'ldapfilter[]',
-					    'label'	=> false,
-					    'id'	=> 'it-ldapfilter',
-					    'key'	=> 'identity',
-					    'altkey'	=> 'id',
-#					    'help'	=> $this->bbf('hlp_ldapfilter'),
-					    'multiple'	=> true,
-					    'size'	=> 5,
-					    'paragraph'	=> false),
-				      $info['ldapfilter']['slt']);
-?>
-			</div>
-		</div>
-		<div class="clearboth"></div>
-<?php
-	else:
-		echo	'<div class="txt-center">',
-			$url->href_htmln($this->bbf('create_ldapfilter'),
-					'service/ipbx/system_management/ldapfilter',
-					'act=add'),
-			'</div>';
-	endif;
-?>
-	</div>
 
 	<?=$form->submit(array('name'	=> 'submit',
 			       'id'	=> 'it-submit',

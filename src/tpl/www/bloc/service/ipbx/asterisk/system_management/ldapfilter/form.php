@@ -27,7 +27,6 @@ $element = $this->get_var('element');
 
 ?>
 
-<div id="sb-part-first" class="b-nodisplay">
 <?php
 	echo	$form->text(array('desc'	=> $this->bbf('fm_ldapfilter_name'),
 				  'name'	=> 'ldapfilter[name]',
@@ -92,27 +91,7 @@ $element = $this->get_var('element');
 				  'value'	=> $info['ldapfilter']['filter'],
 				  'help'	=> $this->bbf('help_fm_ldapfilter_filter'),
 				  'error'	=> $this->bbf_args('error_fm_ldapfilter_filter',
-					   $this->get_var('error', 'ldapfilter', 'filter')))),
-
-		$form->select(array('desc'	=> $this->bbf('fm_ldapfilter_additionaltype'),
-				    'name'	=> 'ldapfilter[additionaltype]',
-				    'labelid'	=> 'ldapfilter-additionaltype',
-				    'key'	=> false,
-				    'bbf'	=> 'fm_ldapfilter_additionaltype-opt',
-				    'bbfopt'	=> array('argmode' => 'paramvalue'),
-				    'default'	=> $element['ldapfilter']['additionaltype']['default'],
-				    'selected'	=> $info['ldapfilter']['additionaltype']),
-			      $element['ldapfilter']['additionaltype']['value'],
-			      'onchange="xivo_chg_additionaltype(this.value);"'),
-
-		$form->text(array('desc'	=> '&nbsp;',
-				  'name'	=> 'ldapfilter[additionaltext]',
-				  'labelid'	=> 'ldapfilter-additionaltext',
-				  'size'	=> 15,
-				  'default'	=> $element['ldapfilter']['additionaltext']['default'],
-				  'value'	=> $info['ldapfilter']['additionaltext'],
-				  'error'	=> $this->bbf_args('error',
-					   $this->get_var('error', 'ldapfilter', 'additionaltext'))));
+					   $this->get_var('error', 'ldapfilter', 'filter'))));
 ?>
 	<div class="fm-paragraph fm-description">
 		<p>
@@ -127,132 +106,3 @@ $element = $this->get_var('element');
 					 'default'	=> $element['ldapfilter']['description']['default']),
 				   $info['ldapfilter']['description']);?>
 	</div>
-</div>
-
-<div id="sb-part-last" class="b-nodisplay">
-
-<fieldset id="fld-ldapfilter-attrdisplayname">
-	<legend><?=$this->bbf('fld-ldapfilter-attrdisplayname');?></legend>
-
-	<div class="fm-paragraph fm-multilist">
-		<div class="slt-list">
-			<div class="bt-adddelete">
-				<a href="#"
-				   onclick="xivo_fm_select_add_attrldap('it-ldapfilter-attrdisplayname',
-									prompt('<?=$dhtml->escape($this->bbf('add_ldapfilter-attrdisplayname'));?>'));
-					    return(dwho.dom.free_focus());"
-				   title="<?=$this->bbf('bt_ldapfilter-attrdisplayname-add');?>">
-					<?=$url->img_html('img/site/button/mini/blue/add.gif',
-							  $this->bbf('bt_ldapfilter-attrdisplayname-add'),
-							  'class="bt-addlist"
-							   id="bt-ldapfilter-attrdisplayname-add"
-							   border="0"');?></a><br />
-					<a href="#"
-					   onclick="dwho.form.select_delete_entry('it-ldapfilter-attrdisplayname');
-						    return(dwho.dom.free_focus());"
-					   title="<?=$this->bbf('bt_delete_ldapfilter-attrdisplayname');?>">
-					<?=$url->img_html('img/site/button/mini/orange/delete.gif',
-							  $this->bbf('bt_delete_ldapfilter-attrdisplayname'),
-							  'class="bt-deletelist"
-							   id="bt-ldapfilter-attrdisplayname-delete"
-							   border="0"');?></a>
-			</div>
-<?php
-		echo	$form->select(array('name'	=> 'ldapfilter[attrdisplayname][]',
-					    'label'	=> false,
-					    'id'	=> 'it-ldapfilter-attrdisplayname',
-					    'key'	=> false,
-					    'multiple'	=> true,
-					    'size'	=> 5,
-					    'paragraph'	=> false),
-				      $info['ldapfilter']['attrdisplayname']);
-?>
-		</div>
-
-		<div class="bt-updown">
-			<a href="#"
-			   onclick="dwho.form.order_selected('it-ldapfilter-attrdisplayname',1);
-				    return(dwho.dom.free_focus());"
-			   title="<?=$this->bbf('bt_up_ldapfilter-attrdisplayname');?>">
-				<?=$url->img_html('img/site/button/arrow-up.gif',
-						  $this->bbf('bt_up_ldapfilter-attrdisplayname'),
-						  'class="bt-uplist"
-						   id="bt-ldapfilter-attrdisplayname-up"
-						   border="0"');?></a><br />
-			<a href="#"
-			   onclick="dwho.form.order_selected('it-ldapfilter-attrdisplayname',-1);
-				    return(dwho.dom.free_focus());"
-			   title="<?=$this->bbf('bt_down_ldapfilter-attrdisplayname');?>">
-				<?=$url->img_html('img/site/button/arrow-down.gif',
-						  $this->bbf('bt_down_ldapfilter-attrdisplayname'),
-						  'class="bt-downlist"
-						   id="bt-ldapfilter-attrdisplayname-down"
-						   border="0"');?></a>
-		</div>
-	</div>
-	<div class="clearboth"></div>
-</fieldset>
-
-<fieldset id="fld-ldapfilter-attrphonenumber">
-	<legend><?=$this->bbf('fld-ldapfilter-attrphonenumber');?></legend>
-
-	<div class="fm-paragraph fm-multilist">
-		<div class="slt-list">
-			<div class="bt-adddelete">
-				<a href="#"
-				   onclick="xivo_fm_select_add_attrldap('it-ldapfilter-attrphonenumber',
-									prompt('<?=$dhtml->escape($this->bbf('add_ldapfilter-attrphonenumber'));?>'));
-					    return(dwho.dom.free_focus());"
-				   title="<?=$this->bbf('bt_ldapfilter-attrphonenumber-add');?>">
-					<?=$url->img_html('img/site/button/mini/blue/add.gif',
-							  $this->bbf('bt_ldapfilter-attrphonenumber-add'),
-							  'class="bt-addlist"
-							   id="bt-ldapfilter-attrphonenumber-add"
-							   border="0"');?></a><br />
-				<a href="#"
-				   onclick="dwho.form.select_delete_entry('it-ldapfilter-attrphonenumber');
-					    return(dwho.dom.free_focus());"
-				   title="<?=$this->bbf('bt_delete_ldapfilter-attrphonenumber');?>">
-					<?=$url->img_html('img/site/button/mini/orange/delete.gif',
-							  $this->bbf('bt_delete_ldapfilter-attrphonenumber'),
-							  'class="bt-deletelist"
-							   id="bt-ldapfilter-attrphonenumber-delete"
-							   border="0"');?></a>
-			</div>
-<?php
-		echo	$form->select(array('name'	=> 'ldapfilter[attrphonenumber][]',
-					    'label'	=> false,
-					    'id'	=> 'it-ldapfilter-attrphonenumber',
-					    'key'	=> false,
-					    'multiple'	=> true,
-					    'size'	=> 5,
-					    'paragraph'	=> false),
-				      $info['ldapfilter']['attrphonenumber']);
-?>
-		</div>
-
-		<div class="bt-updown">
-			<a href="#"
-			   onclick="dwho.form.order_selected('it-ldapfilter-attrphonenumber',1);
-				    return(dwho.dom.free_focus());"
-			   title="<?=$this->bbf('bt_up_ldapfilter-attrphonenumber');?>">
-				<?=$url->img_html('img/site/button/arrow-up.gif',
-						  $this->bbf('bt_up_ldapfilter-attrphonenumber'),
-						  'class="bt-uplist"
-						   id="bt-ldapfilter-attrphonenumber-up"
-						   border="0"');?></a><br />
-			<a href="#"
-			   onclick="dwho.form.order_selected('it-ldapfilter-attrphonenumber',-1);
-				    return(dwho.dom.free_focus());"
-			   title="<?=$this->bbf('bt_down_ldapfilter-attrphonenumber');?>">
-				<?=$url->img_html('img/site/button/arrow-down.gif',
-						  $this->bbf('bt_down_ldapfilter-attrphonenumber'),
-						  'class="bt-downlist"
-						   id="bt-ldapfilter-attrphonenumber-down"
-						   border="0"');?></a>
-		</div>
-	</div>
-	<div class="clearboth"></div>
-</fieldset>
-
-</div>
