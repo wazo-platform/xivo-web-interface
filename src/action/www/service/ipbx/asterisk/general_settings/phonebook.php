@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -39,8 +39,11 @@ if(isset($_QR['fm_send']) === true)
 	if(isset($_QR['accessfeatures']) === false)
 		$_QR['accessfeatures'] = array();
 
-	if($appaccessfeatures->set($_QR['accessfeatures']) !== false)
+	if($appaccessfeatures->set($_QR['accessfeatures']) !== false) {
 		$appaccessfeatures->save();
+		$sysconfd = &$_XOBJ->get_module('sysconfd');
+		$sysconfd->request_post('/services', array('xivo-dird-phoned' => 'restart'));
+	}
 
 	$info['accessfeatures'] = $appaccessfeatures->get_result();
 
