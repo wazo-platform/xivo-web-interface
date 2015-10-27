@@ -123,6 +123,17 @@ class TestVoicemailCreate(TestVoicemail):
                                           ["passwordlocation", "localdir"])
                                       })
 
+    def test_when_adding_voicemail_with_0_max_messages_then_creates_voicemail_in_confd(self):
+        self.confd.add_json_response("/voicemails", self.voicemail, method='POST', code=201)
+
+        voicemail_page = self.browser.voicemails.add()
+        voicemail_page.fill_form(fullname="0 max messages",
+                                 mailbox="1100",
+                                 maxmsg="0")
+        voicemail_page.save()
+
+        self.confd.assert_json_request('/voicemails', {'max_messages': 0}, method='POST')
+
     def test_when_adding_voicemail_then_creates_voicemail_in_confd(self):
         self.confd.add_json_response("/voicemails", self.voicemail, method='POST', code=201)
 
