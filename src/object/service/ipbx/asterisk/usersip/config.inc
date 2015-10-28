@@ -82,7 +82,7 @@ $array['element']['buggymwi']['null'] = true;
 
 $array['element']['call-limit'] = array();
 $array['element']['call-limit']['value'] = range(0,40);
-$array['element']['call-limit']['default'] = 0;
+$array['element']['call-limit']['default'] = 10;
 $array['element']['call-limit']['setdef'] = true;
 
 $array['element']['callerid'] = array();
