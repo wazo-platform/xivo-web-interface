@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,16 +18,14 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-require_once('xivo.php');
+dwho_file::required(array(XIVO_PATH_OBJECT,'user','authent','abstract','auth.inc'),true);
 
-$login = '';
-if (isset($_USR->_info['login']) === true)
-    $login = $_USR->_info['login'];
-
-dwho_logw('logoff',$login,'logoff');
-
-$_USR->auth_logoff();
-
-$_QRY->go($_TPL->url('index'), array_key_exists('go', $_GET)?array('go' => $_GET['go']):null);
+class xivo_authent_xivo extends xivo_authent_abstract_auth
+{
+	public function __construct($param=array())
+	{
+		parent::_init($param);
+	}
+}
 
 ?>

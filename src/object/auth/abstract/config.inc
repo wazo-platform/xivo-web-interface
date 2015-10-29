@@ -1,8 +1,7 @@
 <?php
-
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2013-2014  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,16 +17,15 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-require_once('xivo.php');
+$array = array();
 
-$login = '';
-if (isset($_USR->_info['login']) === true)
-    $login = $_USR->_info['login'];
-
-dwho_logw('logoff',$login,'logoff');
-
-$_USR->auth_logoff();
-
-$_QRY->go($_TPL->url('index'), array_key_exists('go', $_GET)?array('go' => $_GET['go']):null);
+$array['auth'] = array();
+$array['auth']['scheme'] = 'https';
+$array['auth']['host'] = '127.0.0.1';
+$array['auth']['port'] = 9497;
+$array['auth']['verify_certificate'] = false;
+$array['auth']['protocol'] = '0.1';
+$array['auth']['connect_timeout'] = 180;
+$array['auth']['timeout'] = 90;
 
 ?>

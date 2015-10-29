@@ -454,6 +454,14 @@ abstract class xivo_user_abstract extends xivo_libdatastorage_abstract
 
 		return(false);
 	}
+
+	function auth_logoff()
+	{
+		if(method_exists($this->_authent,'logoff')) {
+			$this->_authent->logoff();
+		}
+		xivo_user::logoff();
+	}
 }
 
 ?>
