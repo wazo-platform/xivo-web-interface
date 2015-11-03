@@ -94,14 +94,14 @@ class xivo_application_service_asterisk_pickup extends xivo_application_asterisk
 		switch($action)
 		{
 			case 'search':
-				$rs = $this->_dso->search($search,$disable,$order,$limit);
+				$rs = $this->_pickup->search($search,$disable,$order,$limit);
 				break;
 			case 'list':
 			default:
-				$rs = $this->_pickup->get_all($disable,true,$order);
+				$rs = $this->_pickup->get_all($disable,true,$order,$limit);
 		}
 
-		$this->_cnt = $this->_dso->get_cnt();
+		$this->_cnt = $this->_pickup->get_cnt();
 
 		if($rs === false || ($nb = count($rs)) === 0)
 			return(false);
@@ -171,7 +171,7 @@ class xivo_application_service_asterisk_pickup extends xivo_application_asterisk
 		return(($this->get_errnb() < 1));
 	}
 
-	function set_pickup($arr, $dialaction)
+	function set_pickup($arr)
 	{
 		$r = true;
 		$arr['commented'] = false;
