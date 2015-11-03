@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -98,7 +98,7 @@ class xivo_application_service_asterisk_pickup extends xivo_application_asterisk
 				break;
 			case 'list':
 			default:
-				$rs = $this->_pickup->get_all();
+				$rs = $this->_pickup->get_all($disable,true,$order);
 		}
 
 		$this->_cnt = $this->_dso->get_cnt();

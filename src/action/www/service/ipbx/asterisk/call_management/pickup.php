@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -299,7 +299,6 @@ switch($act)
 
 		$order = array();
 		$order['name'] = SORT_ASC;
-		$order['context'] = SORT_ASC;
 
 		$limit = array();
 		$limit[0] = $prevpage * $nbbypage;
