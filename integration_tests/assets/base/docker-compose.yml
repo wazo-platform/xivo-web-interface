@@ -8,7 +8,7 @@ postgres:
     - "./etc/xivo-postgres/populate.sql:/docker-entrypoint-initdb.d/populate.sql"
     - "./etc/xivo-postgres/fsync_off.sh:/docker-entrypoint-initdb.d/fsync_off.sh"
 confd:
-  image: nickstenning/flask
+  image: p0bailey/docker-flask
   expose:
     - "9487"
   ports:
@@ -25,7 +25,7 @@ provd:
   volumes:
     - "./etc/xivo-provd/provd.conf:/etc/xivo/provd/provd.conf"
 sysconfd:
-  image: nickstenning/flask
+  image: p0bailey/docker-flask
   expose:
     - "8668"
   volumes:
