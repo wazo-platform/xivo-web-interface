@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,10 +18,16 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+$form = &$this->get_module('form');
 $url = &$this->get_module('url');
 $dhtml = &$this->get_module('dhtml');
 
+$act = $this->get_var('act');
+
+$search = (string) $this->get_var('search');
+
 $toolbar_js = array();
+$toolbar_js[] = 'var xivo_toolbar_fm_search = \''.$dhtml->escape($search).'\';';
 $toolbar_js[] = 'var xivo_toolbar_form_name = \'fm-pickup-list\';';
 $toolbar_js[] = 'var xivo_toolbar_form_list = \'pickups[]\';';
 $toolbar_js[] = 'var xivo_toolbar_adv_menu_delete_confirm = \''.$dhtml->escape($this->bbf('toolbar_adv_menu_delete_confirm')).'\';';
@@ -30,6 +36,33 @@ $dhtml->write_js($toolbar_js);
 
 ?>
 <script type="text/javascript" src="<?=$this->file_time($this->url('js/xivo_toolbar.js'));?>"></script>
+
+<form action="#" method="post" accept-charset="utf-8">
+<?php
+	echo	$form->hidden(array('name'	=> DWHO_SESS_NAME,
+				    'value'	=> DWHO_SESS_ID)),
+
+		$form->hidden(array('name'	=> 'act',
+				    'value'	=> 'list'));
+?>
+	<div class="fm-paragraph">
+<?php
+		echo	$form->text(array('name'	=> 'search',
+					  'id'		=> 'it-toolbar-search',
+					  'size'	=> 20,
+					  'paragraph'	=> false,
+					  'value'	=> $search,
+					  'default'	=> $this->bbf('toolbar_fm_search'))),
+
+			$form->image(array('name'	=> 'submit',
+					   'id'		=> 'it-toolbar-subsearch',
+					   'src'	=> $url->img('img/menu/top/toolbar/bt-search.gif'),
+					   'paragraph'	=> false,
+					   'alt'	=> $this->bbf('toolbar_fm_search')));
+?>
+	</div>
+</form>
+
 <?php
 
 echo	$url->href_html($url->img_html('img/menu/top/toolbar/bt-add.gif',

@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,7 +24,34 @@ class xivo_service_asterisk_pickup_sql extends xivo_service_asterisk_abstract_sq
 {
 	var $_autoincrement	= false;
 	var $_unique	= 'name';
-	
+
+	function search($value,$disable=null,$order=null,$limit=null)
+	{
+		$this->_cnt = 0;
+
+		$this->_dso->new_select($this->_table);
+		$this->_dso->wherecontain('name',$value);
+
+		if($disable !== null && isset($this->_disable) === true)
+			$this->_dso->andwhere(array($this->_disable => intval((bool) $disable)));
+
+		$this->_add_entity_filter();
+
+		$this->_dso->new_order($order);
+		$this->_dso->limit($limit);
+
+		$r = $this->_dso->select_all();
+
+		$this->_dso->reset_order();
+		$this->_dso->reset_limit();
+
+		if(($this->_cnt = $this->_dso->select_count()) === false
+		|| isset($r[0]) === false)
+			$r = false;
+
+		return($r);
+	}
+
 	function get_empty()
 	{
 		$this->_dso->new_select($this->_table,array('id'));
@@ -39,7 +66,7 @@ class xivo_service_asterisk_pickup_sql extends xivo_service_asterisk_abstract_sq
 			$cur++;
 		}
 
-		return($cur < 64?$cur:false);
+		return($cur);
 	}
 	
 }

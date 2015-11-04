@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -25,12 +25,18 @@ $dhtml = &$this->get_module('dhtml');
 $pager = $this->get_var('pager');
 $act = $this->get_var('act');
 
+$param = array();
+
+if(($search = (string) $this->get_var('search')) !== ''):
+	$param['search'] = $search;
+endif;
+
 $page = $url->pager($pager['pages'],
 		    $pager['page'],
 		    $pager['prev'],
 		    $pager['next'],
 		    'service/ipbx/call_management/pickup',
-		    array('act' => $act));
+		    array('act' => $act,$param));
 
 ?>
 <div class="b-list">
@@ -49,6 +55,9 @@ $page = $url->pager($pager['pages'],
 
 		$form->hidden(array('name'	=> 'page',
 				    'value'	=> $pager['page']));
+
+		$form->hidden(array('name'	=> 'search',
+				    'value'	=> ''));
 ?>
 <table id="table-main-listing">
 	<tr class="sb-top">
@@ -112,7 +121,8 @@ $page = $url->pager($pager['pages'],
 						'service/ipbx/call_management/pickup',
 						array('act'	=> 'delete',
 						      'id'	=> $ref['id'],
-						      'page'	=> $pager['page']),
+						      'page'	=> $pager['page'],
+						      $param),
 						'onclick="return(confirm(\''.$dhtml->escape($this->bbf('opt_delete_confirm')).'\'));"',
 						$this->bbf('opt_delete'));
 ?>

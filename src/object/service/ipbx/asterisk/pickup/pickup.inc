@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -48,6 +48,24 @@ class xivo_service_asterisk_pickup extends xivo_service_asterisk_abstract
 		$data['commented'] = (bool) $data['commented'];
 
 		return($data);
+	}
+
+	function search($value,$disable=null,$order=null,$limit=null)
+	{
+		if(($list = $this->_dso->search($value,$disable,$order,$limit)) === false)
+			return(false);
+
+		$nb = count($list);
+
+		$r = array();
+
+		for($i = 0;$i < $nb;$i++)
+			$r[] = $this->_prepare($list[$i]);
+
+		if(isset($r[0]) === false)
+			$r = false;
+
+		return($r);
 	}
 }
 

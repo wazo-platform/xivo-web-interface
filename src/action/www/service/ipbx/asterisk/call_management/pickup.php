@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,15 +18,20 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+dwho::load_class('dwho_prefs');
+$prefs = new dwho_prefs('pickup');
+
 $act = isset($_QR['act']) === true ? $_QR['act'] : '';
-$page = isset($_QR['page']) === true ? dwho_uint($_QR['page'],1) : 1;
+$page = dwho_uint($prefs->get('page', 1));
+$search  = strval($prefs->get('search', ''));
 
 $apppickup = &$ipbx->get_application('pickup');
-$info = array();
 
 $param = array();
 $param['act'] = 'list';
 
+if($search !== '')
+	$param['search'] = $search;
 
 switch($act)
 {
@@ -292,6 +297,7 @@ switch($act)
 		$_QRY->go($_TPL->url('service/ipbx/call_management/pickup'),$param);
 		break;
 
+	case 'list':
 	default:
 		$act = 'list';
 		$prevpage = $page - 1;
@@ -299,13 +305,17 @@ switch($act)
 
 		$order = array();
 		$order['name'] = SORT_ASC;
-		$order['context'] = SORT_ASC;
 
 		$limit = array();
 		$limit[0] = $prevpage * $nbbypage;
 		$limit[1] = $nbbypage;
 
-		$list = $apppickup->get_pickups_list(null,$order,$limit);
+		if ($search !== '') {
+			$list = $apppickup->get_pickups_search($search,null,$order,$limit);
+		} else {
+			$list = $apppickup->get_pickups_list(null,$order,$limit);
+		}
+
 		$total = $apppickup->get_cnt();
 
 		if($list === false && $total > 0 && $prevpage > 0)
@@ -316,6 +326,7 @@ switch($act)
 
 		$_TPL->set_var('pager',dwho_calc_page($page,$nbbypage,$total));
 		$_TPL->set_var('list',$list);
+		$_TPL->set_var('search',$search);
 }
 
 $modentity = &$_XOBJ->get_module('entity');
