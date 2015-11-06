@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -113,7 +113,7 @@ $page = $url->pager($pager['pages'],
 			<?=dwho_htmlen(dwho_trunc($ref['fullname'],25,'...',false))?>
 			</label>
 		</td>
-		<td class="txt-center col_provisioning_code"><?=(!isset($line['provisioningid'])) ? '-' : $line['provisioningid']?></td>
+		<td class="txt-center col_provisioning_code"><?=(isset($line['provisioningid']) && $line['protocol'] !== XIVO_SRE_IPBX_AST_PROTO_SCCP) ? $line['provisioningid'] : '-'?></td>
 		<td class="txt-center col_protocol"><?=($line['protocol']);?></td>
 		<td class="txt-center col_number"><?=(!isset($line['number'])) ? '-' : $line['number']?></td>
 		<td class="txt-center col_entity"><?=($entity['displayname']);?></td>
