@@ -125,7 +125,7 @@ Enable forwarding on no-answer:
 Enable forwarding on busy:
 
 ; fm_extenfeatures_enable-fwdunc
-Enable unconditionnal forwarding:
+Enable unconditional forwarding:
 
 ; fm_extenfeatures_enable-enablevm
 Enable voicemail:
