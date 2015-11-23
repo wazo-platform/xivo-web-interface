@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -42,8 +42,7 @@ $element = $this->get_var('element');
 				'altkey' => false,
 				'default'	=> $element['type']['default'],
 				'selected'	=> $info['type']),
-				$this->get_var('types'),
-				'onchange="javascript:hidediv();"'),
+				$this->get_var('types')),
 
 		$form->text(array('desc'	=> $this->bbf('fm_uri'),
 				  'name'	=> 'uri',
