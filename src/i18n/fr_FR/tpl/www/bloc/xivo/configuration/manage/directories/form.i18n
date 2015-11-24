@@ -9,3 +9,30 @@ URI :
 
 ; fm_description
 Description
+
+; fm_xivo_form
+Répertoire XiVO
+
+; fm_xivo_username
+Identifiant :
+
+; fm_xivo_password
+Mot de passe :
+
+; fm_xivo_verify_certificate_select
+Verifier le certificat:
+
+; fm_xivo_verify_certificate_select-opt(yes)
+Oui
+
+; fm_xivo_verify_certificate_select-opt(no)
+Non
+
+; fm_xivo_verify_certificate_select-opt(custom)
+Personnalisé
+
+; fm_xivo_custom_ca_path
+Certificat CA personnalisé :
+
+; help_xivo_custom_ca_path
+Chemin vers un fichier contenant la concaténation de certificats CA en format PEM

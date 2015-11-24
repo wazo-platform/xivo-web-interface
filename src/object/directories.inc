@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -32,6 +32,13 @@ class xivo_directories extends xivo_libdatastorage_abstract
 	{
 		$this->_load_config(dirname(__FILE__).DWHO_SEP_DIR.'directories');
 		$this->_load_dso();
+	}
+
+	function _prepare($data)
+	{
+		$data['xivo_verify_certificate'] = dwho_bool($data['xivo_verify_certificate']);
+
+		return($data);
 	}
 
 	function add($arr,$id=0)

@@ -50,6 +50,24 @@ $types = array(
 		'type' => 'phonebook',
 		'name' => 'Phonebook'));
 
+function set_xivo_verify_certificate(&$data)
+{
+	global $_QR;
+	if (isset($_QR['xivo_verify_certificate_select']) === false)
+		return;
+
+	if ($_QR['xivo_verify_certificate_select'] === 'custom') {
+		$data['xivo_verify_certificate'] = true;
+		$data['xivo_custom_ca_path'] = $_QR['xivo_custom_ca_path'];
+	} else if ($_QR['xivo_verify_certificate_select'] === 'yes') {
+		$data['xivo_verify_certificate'] = true;
+		$data['xivo_custom_ca_path'] = '';
+	} else {
+		$data['xivo_verify_certificate'] = false;
+		$data['xivo_custom_ca_path'] = '';
+	}
+}
+
 switch($act)
 {
 	case 'add':
@@ -63,6 +81,9 @@ switch($act)
 			$data['name']        = $_QR['name'];
 			$data['description'] = $_QR['description'];
 			$data['dirtype']     = $types[$_QR['type']]['type'];
+			$data['xivo_username'] = $_QR['xivo_username'];
+			$data['xivo_password'] = $_QR['xivo_password'];
+			set_xivo_verify_certificate($data);
 
 			if($_QR['type'] == XIVO_PHONEBOOK_TYPE_CSV_FILE)
 				$data['uri'] = 'file://' . $_QR['uri'];
@@ -87,6 +108,7 @@ switch($act)
 
 		$dhtml = &$_TPL->get_module('dhtml');
 		$dhtml->set_js('js/dwho/submenu.js');
+		$dhtml->set_js('js/xivo/configuration/manage/directories.js');
 
 		$_TPL->set_var('info',$info);
 		$_TPL->set_var('element',$element);
@@ -95,6 +117,16 @@ switch($act)
 		if(isset($_QR['id']) === false
 		|| ($info = $_DIR->get($_QR['id'])) === false)
 			$_QRY->go($_TPL->url('xivo/configuration/manage/directories'),$param);
+
+		if ($info['xivo_verify_certificate'] === true) {
+			if (empty($info['xivo_custom_ca_path']) === true) {
+				$info['xivo_verify_certificate_select'] = 'yes';
+			} else {
+				$info['xivo_verify_certificate_select'] = 'custom';
+			}
+		} else {
+			$info['xivo_verify_certificate_select'] = 'no';
+		}
 
 		$return = &$info;
 
@@ -106,10 +138,12 @@ switch($act)
 			$data['name'] = $_QR['name'];
 			$data['description'] = $_QR['description'];
 			$data['dirtype'] = $types[$_QR['type']]['type'];
+			$data['xivo_username'] = $_QR['xivo_username'];
+			$data['xivo_password'] = $_QR['xivo_password'];
+			set_xivo_verify_certificate($data);
 
 			if($_QR['type'] == XIVO_PHONEBOOK_TYPE_CSV_FILE)
 				$data['uri'] = 'file://' . $_QR['uri'];
-
 
 			if(($result = $_DIR->chk_values($data)) === false
 			|| $_DIR->edit($info['id'], $result)    === false)
@@ -143,6 +177,8 @@ switch($act)
 
 		$dhtml = &$_TPL->get_module('dhtml');
 		$dhtml->set_js('js/dwho/submenu.js');
+		$dhtml->set_js('js/xivo/configuration/manage/directories.js');
+
 		$_TPL->set_var('id',$info['id']);
 		$_TPL->set_var('info',$return);
 		$_TPL->set_var('element',$element);
