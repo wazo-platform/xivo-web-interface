@@ -42,27 +42,6 @@ class xivo_directories extends xivo_libdatastorage_abstract
 		return($data);
 	}
 
-	function add($arr,$id=0)
-	{
-		if(is_array($arr) === false)
-			return(false);
-
-		if(isset($arr['name']) === true)
-			$arr['name'] = strtolower($arr['name']);
-
-		return(parent::add($arr,$id));
-	}
-
-	function edit($id,$arr,$disable=null)
-	{
-		if(is_array($arr) === false)
-			return(false);
-		else if(isset($arr['name']) === true)
-			$arr['name'] = strtolower($arr['name']);
-
-		return(parent::edit($id,$arr,$disable));
-	}
-
 	function _load_dso()
 	{
 		$dso = &dwho_gct::get('DWHO_DSO');

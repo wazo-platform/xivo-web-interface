@@ -58,7 +58,7 @@ $array['element']['xivo_custom_ca_path']['null'] = true;
 dwho::load_class('dwho_network');
 
 $array['filter'] = array();
-$array['filter']['name'] = array('set' => false, 'chk' => 2, 'regexp' => '/^[a-z0-9_\.-]+$/','maxlen' => 64);
+$array['filter']['name'] = array('set' => false, 'chk' => 2, 'regexp' => '/^[a-zA-Z0-9_\.-]+$/','maxlen' => 64);
 $array['filter']['uri'] = array('set' => false, 'chk' => 2, 'regexp' => '/^.*$/','maxlen' => 255);
 $array['filter']['dirtype'] = array('set' => false, 'chk' => 2, 'regexp' => '/^[a-z0-9_\.-]+$/','maxlen' => 255);
 $array['filter']['description'] = array('set' => false,'chk' => 2,'maxlen' => 1000,'cast' => 'sgraph_crlf_tab','eol' => true);
