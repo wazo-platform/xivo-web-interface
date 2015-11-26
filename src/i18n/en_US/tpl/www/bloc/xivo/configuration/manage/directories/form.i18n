@@ -13,8 +13,14 @@ XiVO directory
 ; fm_xivo_username
 Username:
 
+; hlp_xivo_username
+"Web service" username. Only applies to a remote XiVO directory.
+
 ; fm_xivo_password
 Password:
+
+; hlp_xivo_password
+"Web service" password. Only applies to a remote XiVO directory.
 
 ; fm_xivo_verify_certificate_select
 Verify certificate:
@@ -31,7 +37,7 @@ Custom
 ; fm_xivo_custom_ca_path
 Custom CA certificate:
 
-; help_xivo_custom_ca_path
+; hlp_xivo_custom_ca_path
 Path to a file of concatenated CA certificates in PEM format
 
 ; fm_description

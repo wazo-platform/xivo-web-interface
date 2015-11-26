@@ -7,17 +7,20 @@ Type :
 ; fm_uri
 URI :
 
-; fm_description
-Description
-
 ; fm_xivo_form
 Répertoire XiVO
 
 ; fm_xivo_username
 Identifiant :
 
+; hlp_xivo_username
+Identifiant "service web". S'applique uniquement pour un répertoire XiVO distant.
+
 ; fm_xivo_password
 Mot de passe :
+
+; hlp_xivo_password
+Mot de passe "service web". S'applique uniquement pour un répertoire XiVO distant.
 
 ; fm_xivo_verify_certificate_select
 Verifier le certificat:
@@ -34,5 +37,8 @@ Personnalisé
 ; fm_xivo_custom_ca_path
 Certificat CA personnalisé :
 
-; help_xivo_custom_ca_path
+; hlp_xivo_custom_ca_path
 Chemin vers un fichier contenant la concaténation de certificats CA en format PEM
+
+; fm_description
+Description
