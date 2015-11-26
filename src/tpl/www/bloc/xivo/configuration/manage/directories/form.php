@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -42,8 +42,7 @@ $element = $this->get_var('element');
 				'altkey' => false,
 				'default'	=> $element['type']['default'],
 				'selected'	=> $info['type']),
-				$this->get_var('types'),
-				'onchange="javascript:hidediv();"'),
+				$this->get_var('types')),
 
 		$form->text(array('desc'	=> $this->bbf('fm_uri'),
 				  'name'	=> 'uri',
@@ -54,6 +53,50 @@ $element = $this->get_var('element');
 		          'error'	=> $this->bbf_args('error',
 					   $this->get_var('error', 'uri')) ));
 ?>
+	<fieldset id='fld-xivo-form'>
+	<legend><?= $this->bbf('fm_xivo_form') ?></legend>
+<?php
+	echo $form->text(array('desc' => $this->bbf('fm_xivo_username'),
+			'name'		=> 'xivo_username',
+			'labelid'	=> 'xivo-username',
+			'size'		=> 15,
+			'help'		=> $this->bbf('hlp_xivo_username'),
+			'default'	=> $element['xivo_username']['default'],
+			'value'		=> $info['xivo_username'],
+			'error'		=> $this->bbf_args('error',
+					$this->get_var('error', 'xivo_username')) )),
+
+	$form->password(array('desc' => $this->bbf('fm_xivo_password'),
+			'name'		=> 'xivo_password',
+			'labelid'	=> 'xivo-password',
+			'size'		=> 15,
+			'help'		=> $this->bbf('hlp_xivo_password'),
+			'default'	=> $element['xivo_password']['default'],
+			'value'		=> $info['xivo_password'],
+			'error'		=> $this->bbf_args('error',
+					$this->get_var('error', 'xivo_password')) )),
+
+	$form->select(array('desc' => $this->bbf('fm_xivo_verify_certificate_select'),
+			'name'		=> 'xivo_verify_certificate_select',
+			'labelid'	=> 'xivo-verify-certificate-select',
+			'key'		=> false,
+			'bbf'		=> 'fm_xivo_verify_certificate_select-opt',
+			'bbfopt'	=> array('argmode' => 'paramvalue'),
+			'default'	=> $element['xivo_verify_certificate_select']['default'],
+			'selected'	=> $info['xivo_verify_certificate_select']),
+			$element['xivo_verify_certificate_select']['value']),
+
+	$form->text(array('desc' => $this->bbf('fm_xivo_custom_ca_path'),
+			'name'		=> 'xivo_custom_ca_path',
+			'labelid'	=> 'xivo-custom-ca-path',
+			'size'		=> 30,
+			'help'		=> $this->bbf('hlp_xivo_custom_ca_path'),
+			'default'	=> $element['xivo_custom_ca_path']['default'],
+			'value'		=> $info['xivo_custom_ca_path'],
+			'error'		=> $this->bbf_args('error',
+					$this->get_var('error', 'xivo_custom_ca_path')) ));
+?>
+	</fieldset>
 	<div class="fm-paragraph fm-description">
 		<p>
 			<label id="lb-description" for="it-description"><?=$this->bbf('fm_description');?></label>

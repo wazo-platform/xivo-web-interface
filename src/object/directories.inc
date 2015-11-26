@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,6 +24,7 @@ class xivo_directories extends xivo_libdatastorage_abstract
 {
 	var $_conf		= array();
 	var $_dso		= null;
+	var $_name		= 'directories';
 	var $_filter		= false;
 	var $_origin		= false;
 	var $_origin_list	= false;
@@ -34,25 +35,11 @@ class xivo_directories extends xivo_libdatastorage_abstract
 		$this->_load_dso();
 	}
 
-	function add($arr,$id=0)
+	function _prepare($data)
 	{
-		if(is_array($arr) === false)
-			return(false);
+		$data['xivo_verify_certificate'] = dwho_bool($data['xivo_verify_certificate']);
 
-		if(isset($arr['name']) === true)
-			$arr['name'] = strtolower($arr['name']);
-
-		return(parent::add($arr,$id));
-	}
-
-	function edit($id,$arr,$disable=null)
-	{
-		if(is_array($arr) === false)
-			return(false);
-		else if(isset($arr['name']) === true)
-			$arr['name'] = strtolower($arr['name']);
-
-		return(parent::edit($id,$arr,$disable));
+		return($data);
 	}
 
 	function _load_dso()

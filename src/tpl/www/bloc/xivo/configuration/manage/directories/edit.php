@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -21,20 +21,6 @@
 $form = &$this->get_module('form');
 
 ?>
-<script type="text/javascript">
-function hidediv() {
-		val = document.getElementById('it-type').value;
-		if(val != 1) {
-			document.getElementById('sgbdr').setAttribute("class", "b-nodisplay");
-		}
-		else {
-			document.getElementById('sgbdr').setAttribute("class", "");
-		}
-
-	}
-
-dwho.dom.set_onload(hidediv);
-</script>
 
 <div class="b-infos b-form">
 	<h3 class="sb-top xspan">
