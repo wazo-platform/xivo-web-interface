@@ -58,8 +58,6 @@ Période de récupération des statistiques (xlet "Liste des Files")
 ; pref-(presence.autochangestate)
 Transitions automatiques entre les états de présence
 
-; pref-(adlibitum)
-Ad libitum
 
 ; xlet-(agents)
 Agents (liste)
@@ -75,9 +73,6 @@ Membres d'une file d'attente
 
 ; xlet-(queueentrydetails)
 Files d'attente (détail des entrées)
-
-; xlet-(calls)
-Appels (expérimental)
 
 ; xlet-(customerinfo)
 Fiches clients
@@ -100,17 +95,8 @@ Historique
 ; xlet-(identity)
 Identité
 
-; xlet-(search)
-Contacts
-
 ; xlet-(conference)
 Chambres de conférence
-
-; xlet-(operator)
-Opérateur (expérimental)
-
-; xlet-(mylocaldir)
-Mon répertoire local
 
 ; xlet-(tabber)
 Tabber

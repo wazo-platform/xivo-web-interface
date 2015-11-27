@@ -58,9 +58,6 @@ Statistics fetch period ("Queues list" xlet)
 ; pref-(presence.autochangestate)
 Automatic transitions between presence states
 
-; pref-(adlibitum)
-Ad libitum
-
 
 
 ; xlet-(agents)
@@ -77,9 +74,6 @@ Queue members
 
 ; xlet-(queueentrydetails)
 Queues (entries detail)
-
-; xlet-(calls)
-Calls (experimental)
 
 ; xlet-(customerinfo)
 Customer info
@@ -102,17 +96,8 @@ History
 ; xlet-(identity)
 Identity
 
-; xlet-(search)
-Search
-
 ; xlet-(conference)
 Conference rooms
-
-; xlet-(operator)
-Operator (experimental)
-
-; xlet-(mylocaldir)
-MyDirectory
 
 ; xlet-(tabber)
 Tabber
