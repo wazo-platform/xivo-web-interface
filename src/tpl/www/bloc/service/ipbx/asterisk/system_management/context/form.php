@@ -23,6 +23,7 @@ $url = &$this->get_module('url');
 
 $info = $this->get_var('info');
 $element = $this->get_var('element');
+$act = $this->get_var('act');
 
 $user_nb = $group_nb = $queue_nb = $meetme_nb = $incall_nb = 0;
 $user_list = $group_list = $queue_list = $meetme_list = $incall_list = false;
@@ -77,16 +78,28 @@ $incall_err = $this->get_var('error','contextnumbers','incall');
 <div id="sb-part-first" class="b-nodisplay">
 
 <?php
+if($act == "add") {
 	echo	$form->text(array('desc'	=> $this->bbf('fm_context_name'),
 				  'name'	=> 'context[name]',
 				  'labelid'	=> 'context-name',
 				  'size'	=> 15,
 				  'default'	=> $element['context']['name']['default'],
 				  'value'	=> $info['context']['name'],
-			          'error'	=> $this->bbf_args('error',
-						   $this->get_var('error', 'context', 'name')) )),
-
-		$form->text(array('desc'	=> $this->bbf('fm_context_displayname'),
+				  'error'	=> $this->bbf_args('error',
+					  $this->get_var('error', 'context', 'name')) ));
+} else {
+	echo	$form->text(array('desc'	=> $this->bbf('fm_context_name'),
+				  'name'	=> 'context[name]',
+				  'labelid'	=> 'context-name',
+				  'size'	=> 15,
+				  'readonly' => true,
+				  'class' => 'it-disabled',
+				  'default'	=> $element['context']['name']['default'],
+				  'value'	=> $info['context']['name'],
+				  'error'	=> $this->bbf_args('error',
+					  $this->get_var('error', 'context', 'name')) ));
+}
+		echo $form->text(array('desc'	=> $this->bbf('fm_context_displayname'),
 				  'name'	=> 'context[displayname]',
 				  'labelid'	=> 'context-displayname',
 				  'size'	=> 15,
