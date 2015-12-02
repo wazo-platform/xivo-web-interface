@@ -283,6 +283,10 @@ class xivo_application_service_asterisk_context extends xivo_application_asteris
 		|| dwho_issa('context',$arr) === false)
 			return(false);
 
+		if ($action === "edit") {
+			$arr['context']['name'] = $this->_info['context']['name'];
+		}
+
 		$this->set_context($arr['context']);
 
 		$name = (string) $this->get_result_var('context','name');
