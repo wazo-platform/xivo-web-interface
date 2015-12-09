@@ -1,4 +1,4 @@
-xivo-web-interface (14.01~20140114.162330.1e19d0f-wheezy-2) xivo-dev; urgency=low
+xivo-web-interface (14.01~20140114.162330.1e19d0f) xivo-dev; urgency=low
 
   * fix paths in preinst
 
