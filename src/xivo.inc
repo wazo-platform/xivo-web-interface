@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -90,8 +90,6 @@ class xivo extends dwho
 
 		define('XIVO_WEBI_CONFIGURED', (bool) file_exists(XIVO_LIB.'/configured'));
 
-		$this->_conf['xivo']['ini']['general'] = $xivo_ini['general'];
-
 		if(dwho_issa('locale',$xivo_ini) === true)
 			$this->_cfg_ini_locale($xivo_ini['locale']);
 		else
@@ -153,11 +151,17 @@ class xivo extends dwho
 
 	protected function _init_datastorage()
 	{
-		if(isset($this->_conf['xivo']['ini']['general']) === false
-		|| isset($this->_conf['xivo']['ini']['general']['database']) ===false)
-			die('ERR: Missing datastorage param in general section in XIVO ini file');
+		if(($dso_conf = parent::load_init(XIVO_CONF.DWHO_SEP_DIR.'datastorage.conf')) === false)
+			die('ERR: Missing datastorage file in XIVO');
 
-		$this->_cfg_ini_datastorage($this->_conf['xivo']['ini']['general']['database']);
+		$this->_conf['datastorage'] = $dso_conf;
+
+		if(dwho_issa('general',$dso_conf) === true) {
+			if (isset($dso_conf['general']['xivo']) === true)
+				$this->_cfg_ini_datastorage($dso_conf['general']['xivo']);
+			else
+				die('ERR: Missing xivo param in general section in XIVO in datastorage file');
+		}
 	}
 
 	protected function _set_language()
