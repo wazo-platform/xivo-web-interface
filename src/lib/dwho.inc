@@ -143,10 +143,7 @@ class dwho
 
 		if($this->load_extension('mbstring') !== false)
 		{
-			ini_set('mbstring.internal_encoding',DWHO_LC_CHARSET);
 			ini_set('mbstring.language',DWHO_LC_CHARSET);
-			ini_set('mbstring.http_input',DWHO_LC_CHARSET);
-			ini_set('mbstring.http_output',DWHO_LC_CHARSET);
 		}
 	}
 

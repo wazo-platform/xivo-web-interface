@@ -42,4 +42,4 @@ WORKDIR /root
 EXPOSE 80
 EXPOSE 443
 
-CMD /etc/init.d/php5-fpm start && nginx
+CMD service php5-fpm start && nginx

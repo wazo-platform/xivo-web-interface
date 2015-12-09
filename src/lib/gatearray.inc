@@ -106,38 +106,38 @@ abstract class dwho_gatearray
 		return($r);
 	}
 
-	public static function &get($name='')
+	public static function get($name='')
 	{
 		$name = (string) $name;
 
 		if($name === '')
-			$r = &self::$_array;
+			$r = self::$_array;
 		else if(dwho_issa($name,self::$_array) === true)
-			$r = &self::$_array[$name];
+			$r = self::$_array[$name];
 		else
 			$r = false;
 
-		return(($ref = &$r));
+		return(($ref = $r));
 	}
 
-	public static function &load_get($file,$path='',$name='')
+	public static function load_get($file,$path='',$name='')
 	{
 		$r = false;
 
 		if(($name = self::load($file,$path,$name)) !== false)
-			$r = &self::get($name);
+			$r = self::get($name);
 
 		return(($ref = &$r));
 	}
 
-	public static function &set_get($name,&$array)
+	public static function set_get($name,&$array)
 	{
 		$r = false;
 
 		if(self::set($name,$array) === true)
-			$r = &self::get($name);
+			$r = self::get($name);
 
-		return(($ref = &$r));
+		return(($ref = $r));
 	}
 
 	public static function is_valid($name)
@@ -163,9 +163,9 @@ abstract class dwho_gat
 		return(dwho_gatearray::load($file,$path,$name));
 	}
 
-	public static function &get($name='')
+	public static function get($name='')
 	{
-		return(($ref = &dwho_gatearray::get($name)));
+		return(($ref = dwho_gatearray::get($name)));
 	}
 
 	public static function get_file($path,$once=false)
@@ -173,14 +173,14 @@ abstract class dwho_gat
 		return(dwho_gatearray::get_file($path,$once));
 	}
 
-	public static function &load_get($file,$path='',$name='')
+	public static function load_get($file,$path='',$name='')
 	{
-		return(($ref = &dwho_gatearray::load_get($file,$path,$name)));
+		return(($ref = dwho_gatearray::load_get($file,$path,$name)));
 	}
 
-	public static function &set_get($name,&$array)
+	public static function set_get($name,&$array)
 	{
-		return(($ref = &dwho_gatearray::set_get($name,$array)));
+		return(($ref = dwho_gatearray::set_get($name,$array)));
 	}
 
 	public static function is_valid($name)

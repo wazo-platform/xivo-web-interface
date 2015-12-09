@@ -39,7 +39,7 @@ abstract class dwho_gateclass
 		return(true);
 	}
 
-	public static function &get($name)
+	public static function get($name)
 	{
 		$r = false;
 
@@ -48,19 +48,19 @@ abstract class dwho_gateclass
 		if(isset(self::$_class[$name]) === true)
 			$r = &self::$_class[$name];
 
-		return(($ref = &$r));
+		return(($ref = $r));
 	}
 
-	public static function &set_get($obj,$name='')
+	public static function set_get($obj,$name='')
 	{
 		$r = false;
 
 		$name = (string) $name;
 
 		if(self::set($obj,$name) === true)
-			$r = &self::get(($name === '' ? get_class($obj) : $name));
+			$r = self::get(($name === '' ? get_class($obj) : $name));
 
-		return(($ref = &$r));
+		return(($ref = $r));
 	}
 
 	public static function is_valid($name)

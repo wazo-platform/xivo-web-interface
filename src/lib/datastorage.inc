@@ -39,7 +39,7 @@ abstract class dwho_datastorage
 	{
 		$type = (string) $type;
 
-		$datastorage = &dwho_gat::get('datastorage');
+		$datastorage = dwho_gat::get('datastorage');
 
 		return(isset($datastorage[$type]));
 	}
@@ -48,7 +48,7 @@ abstract class dwho_datastorage
 	{
 		$type = (string) $type;
 
-		$datastorage = &dwho_gat::get('datastorage');
+		$datastorage = dwho_gat::get('datastorage');
 
 		if(self::is_valid($type) === true
 				&& (bool) $datastorage[$type]['ssl'] === true)
@@ -61,7 +61,7 @@ abstract class dwho_datastorage
 	{
 		$type = (string) $type;
 
-		$datastorage = &dwho_gat::get('datastorage');
+		$datastorage = dwho_gat::get('datastorage');
 
 		if(substr($type,-1) === 's'
 				&& ($type = substr($type,0,-1)) !== false
@@ -138,7 +138,7 @@ abstract class dwho_datastorage
 		if(self::chk_extension_exists($type) === false)
 			return(false);
 
-		$datastorage = &dwho_gat::get('datastorage');
+		$datastorage = dwho_gat::get('datastorage');
 
 		return($datastorage[$type]['extension']);
 	}
@@ -150,7 +150,7 @@ abstract class dwho_datastorage
 		if(self::chk_extension_exists($type) === false)
 			return(false);
 
-		$datastorage = &dwho_gat::get('datastorage');
+		$datastorage = dwho_gat::get('datastorage');
 
 		if((bool) $load === true)
 			dwho::load_extension($datastorage[$type]['extension']);
@@ -165,7 +165,7 @@ abstract class dwho_datastorage
 		if(self::is_valid($type) === false)
 			return(false);
 
-		$datastorage = &dwho_gat::get('datastorage');
+		$datastorage = dwho_gat::get('datastorage');
 
 		return(dwho_ak('extension',$datastorage[$type]));
 	}
@@ -177,7 +177,7 @@ abstract class dwho_datastorage
 		if(self::is_valid($type) === false)
 			return(false);
 
-		$datastorage = &dwho_gat::get('datastorage');
+		$datastorage = dwho_gat::get('datastorage');
 
 		return(dwho_ak('meta',$datastorage[$type],true));
 	}
