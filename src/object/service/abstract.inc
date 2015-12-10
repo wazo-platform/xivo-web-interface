@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -182,7 +182,7 @@ abstract class xivo_service_abstract
 		if($this->_load_module($name,$param) === true)
 			$r = &$this->_module[$name];
 
-		return(($ref = &$r));
+		return $r;
 	}
 
 	public function &get_application($name,$param=null,$components=true)

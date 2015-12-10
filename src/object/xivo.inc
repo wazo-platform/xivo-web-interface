@@ -206,7 +206,7 @@ class xivo_object
 		if($this->_load_module($name,$param) === true)
 			$r = &$this->_module[$name];
 
-		return(($ref = &$r));
+		return $r;
 	}
 
 	function &get_application($name,$param=null,$components=true)
@@ -218,7 +218,7 @@ class xivo_object
 		if($this->_load_application($name,$param,$components) === true)
 			$r = &$this->_application[$name];
 
-		return(($ref = &$r));
+		return $r;
 	}
 
 	function chk_module_enable($name)

@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -91,7 +91,7 @@ class dwho_query
 		else
 			$r = &$this->_filter($data, $mode, ($this->_mquotes === false ? false : null));    // remove spaces and is quoted
 
-		return(($ref = &$r));
+		return $r;
 	}
 
 	public function go($location='',$query='')
@@ -396,17 +396,17 @@ class dwho_query
 			if($quote !== null)
 				$value = (bool) $quote === true ? stripslashes($value) : addslashes($value);
 
-			return(($ref = &$value));
+			return $value;
 		}
 		else if(empty($value) === true)
-			return(($ref = &$value));
+			return $value;
 
 		reset($value);
 
 		while(list($key,$val) = each($value))
 			$value[$key] = &$this->_filter($val,$mode,$quote);
 
-		return(($ref = &$value));
+		return $value;
 	}
 }
 

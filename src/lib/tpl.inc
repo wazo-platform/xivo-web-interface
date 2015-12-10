@@ -170,7 +170,7 @@ class dwho_tpl
 		if($this->_load_module($name,$param) === true)
 			$r = &$this->_module[$name];
 
-		return(($ref = &$r));
+		return $r;
 	}
 
 	function _load_class($module)
