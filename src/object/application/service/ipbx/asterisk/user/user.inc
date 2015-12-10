@@ -109,14 +109,14 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		|| ($this->_schedule_path = &$this->_service->get_module('schedule_path')) === false
 		|| ($this->_linefeatures = $this->_service->get_module('linefeatures')) === false
 		|| ($this->_user_line = $this->_service->get_module('user_line')) === false
-		|| ($_XOBJ = &dwho_gct::get('xivo_object')) === false
+		|| ($_XOBJ = dwho_gct::get('xivo_object')) === false
 		|| ($this->_appentity = &$_XOBJ->get_application('entity')) === false
 		|| ($this->_entity = &$_XOBJ->get_module('entity')) === false
 		|| ($this->_provdconfig = &$_XOBJ->get_module('provdconfig')) === false
-		|| ($_RAPI = &dwho_gct::get('xivo_confd')) === false
+		|| ($_RAPI = dwho_gct::get('xivo_confd')) === false
 		|| ($this->_cti_profile = $_RAPI->get_ressource('cti_profile')) === false
 		|| ($this->_provddevice = &$_XOBJ->get_module('provddevice')) === false
-		|| ($_MGR = &dwho_gct::get('xivo_manager')) === false
+		|| ($_MGR = dwho_gct::get('xivo_manager')) === false
 		|| ($this->_func_key_manager = &$_MGR->get_ressource('func_key')) === false
 		|| ($this->_func_key_agent = $this->_service->get_module('func_key_dest_agent')) === false
 		|| ($this->_callfilter = $this->_service->get_application('callfilter', array('type' => 'bosssecretary'))) === false
@@ -2376,7 +2376,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 
 	function import_from_csv()
 	{
-		$_QRY = &dwho_gct::get('dwho_query');
+		$_QRY = dwho_gct::get('dwho_query');
 
 		if(dwho::load_class('dwho::file::csv') === false
 		|| ($data_input = $_QRY->get_input()) === false)

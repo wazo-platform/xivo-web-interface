@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -74,7 +74,7 @@ class xivo_ldapserver extends xivo_libdatastorage_abstract
 
 	function _load_dso()
 	{
-		$dso = &dwho_gct::get('DWHO_DSO');
+		$dso = dwho_gct::get('DWHO_DSO');
 		$type = $dso->get_type();
 		$class = 'xivo_ldapserver_'.$type;
 

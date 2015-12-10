@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -387,7 +387,7 @@ abstract class xivo_application_abstract extends xivo_libconfig_abstract
 
 	function _get_data_from_json()
 	{
-		$_QRY = &dwho_gct::get('dwho_query');
+		$_QRY = dwho_gct::get('dwho_query');
 
 		if(dwho::load_class('dwho_json') === false
 		|| ($data = dwho_json::decode($_QRY->get_input(),true)) === false

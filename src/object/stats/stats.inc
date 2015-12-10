@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -76,8 +76,8 @@ class xivo_stats_lib
 		if(dwho_issa('_statsconf',$_SESSION) === false)
 			$_SESSION['_statsconf'] = array();
 
-		$this->_sts = &dwho_gct::get('xivo_stats');
-		$this->_xobj = &dwho_gct::get('xivo_object');
+		$this->_sts = dwho_gct::get('xivo_stats');
+		$this->_xobj = dwho_gct::get('xivo_object');
 		$this->_statsconfsess = &$_SESSION['_statsconf'];
 		$this->_statsconfsess['_date_process'] = null;
 	}
@@ -97,7 +97,7 @@ class xivo_stats_lib
 
 		$appstats_conf = $this->_xobj->get_application('stats_conf');
 
-		$_USR = &dwho_gct::get('_USR');
+		$_USR = dwho_gct::get('_USR');
 
 		$userid = false;
 		if (isset($_USR->_info['meta']) === true

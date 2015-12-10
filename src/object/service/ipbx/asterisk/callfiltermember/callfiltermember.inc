@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -102,7 +102,7 @@ class xivo_service_asterisk_callfiltermember extends xivo_service_asterisk_abstr
 
 	public function delete_member($user_id)
 	{
-		if(($_MGR = &dwho_gct::get('xivo_manager')) === false
+		if(($_MGR = dwho_gct::get('xivo_manager')) === false
 		|| ($func_key_manager = &$_MGR->get_ressource('func_key')) === false)
 			return(false);
 

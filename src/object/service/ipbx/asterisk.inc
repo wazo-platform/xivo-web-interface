@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -63,7 +63,7 @@ class xivo_service_asterisk extends xivo_service_abstract
 	public function discuss_ipbx($cmd)
 	{
 		if (! is_object($this->_request_handlers)) {
-			$_XOBJ = &dwho_gct::get('xivo_object');
+			$_XOBJ = dwho_gct::get('xivo_object');
 			if ($_XOBJ) {
 				$this->_request_handlers = &$_XOBJ->get_module('request_handlers');
 				if(! $this->_request_handlers) {
@@ -83,7 +83,7 @@ class xivo_service_asterisk extends xivo_service_abstract
 	private function _load_sysconfd()
 	{
 		if (! is_object($this->_sysconfd)) {
-			$_XOBJ = &dwho_gct::get('xivo_object');
+			$_XOBJ = dwho_gct::get('xivo_object');
 			if ($_XOBJ) {
 				$this->_sysconfd = &$_XOBJ->get_module('sysconfd');
 				if(! $this->_sysconfd) {

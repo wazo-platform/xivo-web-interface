@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -50,7 +50,7 @@ class xivo_application_xivo_object_stats_conf extends xivo_application_xivo_obje
 	{
 		$this->_components = true;
 
-		if(($_SRE = &dwho_gct::get('xivo_service')) === false
+		if(($_SRE = dwho_gct::get('xivo_service')) === false
 		|| ($this->_queuefeatures = &$_SRE->get_module('ipbx','queuefeatures')) === false
 		|| ($this->_agentfeatures = &$_SRE->get_module('ipbx','agentfeatures')) === false
 		|| ($this->_stats_conf_queue = &$this->_xobj->get_module('stats_conf_queue')) === false
@@ -159,7 +159,7 @@ class xivo_application_xivo_object_stats_conf extends xivo_application_xivo_obje
 		foreach($rs as $qid)
 			array_push($tmp,$qid['user_id']);
 
-		$_USR = &dwho_gct::get('_USR');
+		$_USR = dwho_gct::get('_USR');
 
 		if($_USR === false
 		|| ($this->_info['xivouser'] = $_USR->get_all_wherein('id',$tmp)) === false
@@ -391,7 +391,7 @@ class xivo_application_xivo_object_stats_conf extends xivo_application_xivo_obje
 			return(false);
 		}
 
-		$_USR = &dwho_gct::get('_USR');
+		$_USR = dwho_gct::get('_USR');
 
 		$error = $reslist = array();
 		$errnb = 0;

@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@ class dwho_tpl_url extends dwho_tpl_module
 	public function __construct(&$tpl)
 	{
 		$this->_tpl = &$tpl;
-		$this->_query = &dwho_gct::set_get(new dwho_query());
+		$this->_query = dwho_gct::set_get(new dwho_query());
 		$this->_uri = new dwho_uri();
 		$this->_separator = '&amp;';
 	}

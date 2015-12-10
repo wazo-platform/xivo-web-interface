@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -247,7 +247,7 @@ class xivo_application_service_asterisk_context extends xivo_application_asteris
 	function _load_entity()
 	{
 		if(is_object($this->_entity) === false
-		&& (($_XOBJ = &dwho_gct::get('xivo_object')) === false
+		&& (($_XOBJ = dwho_gct::get('xivo_object')) === false
 		   || ($this->_entity = &$_XOBJ->get_module('entity')) === false) === true)
 		   return(false);
 

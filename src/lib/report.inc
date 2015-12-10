@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -92,7 +92,7 @@ abstract class dwho_report {
 			return(false);
 		}
 
-		$_I18N = &dwho_gct::get('dwho_i18n');
+		$_I18N = dwho_gct::get('dwho_i18n');
 		$_I18N->load_file('report/common');
 
 		krsort($self);

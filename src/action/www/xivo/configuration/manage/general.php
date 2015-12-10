@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-$RAPI = &dwho_gct::get('xivo_confd');
+$RAPI = dwho_gct::get('xivo_confd');
 $config_api = $RAPI->get_ressource('configuration');
 
 $fm_save = null;

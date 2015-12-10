@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -336,7 +336,7 @@ class xivo_object
 		$name = (string) $name;
 
 		if(is_object($this->_dso) === false)
-			$this->_dso = &dwho_gct::get('DWHO_DSO');
+			$this->_dso = dwho_gct::get('DWHO_DSO');
 
 		if(is_object($this->_dso) === false)
 			return(false);
@@ -390,7 +390,7 @@ class xivo_object
 		if(xivo::load_class($class,$dir,$metatype,false) === false)
 			return(false);
 		else if(is_object($this->_dso) === false)
-			$this->_dso = &dwho_gct::get('DWHO_DSO');
+			$this->_dso = dwho_gct::get('DWHO_DSO');
 
 		return(new $class($this->_dso,$param));
 	}

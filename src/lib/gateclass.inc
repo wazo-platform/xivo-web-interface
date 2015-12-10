@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,16 +27,16 @@ abstract class dwho_gateclass
 		$name = (string) $name;
 
 		if(is_object($obj) === false)
-			return(false);
+			return false;
 		else if($name === '')
 			$name = get_class($obj);
 
 		if($name !== '' && preg_match('/^[a-z0-9\-_]+$/i',$name) !== 1)
-			return(false);
+			return false;
 		#else if(isset(self::$_class[$name]) === false)
-		self::$_class[$name] = &$obj;
+		self::$_class[$name] = $obj;
 
-		return(true);
+		return true;
 	}
 
 	public static function get($name)
@@ -46,9 +46,9 @@ abstract class dwho_gateclass
 		$name = (string) $name;
 
 		if(isset(self::$_class[$name]) === true)
-			$r = &self::$_class[$name];
+			$r = self::$_class[$name];
 
-		return(($ref = $r));
+		return $r;
 	}
 
 	public static function set_get($obj,$name='')
@@ -60,12 +60,12 @@ abstract class dwho_gateclass
 		if(self::set($obj,$name) === true)
 			$r = self::get(($name === '' ? get_class($obj) : $name));
 
-		return(($ref = $r));
+		return $r;
 	}
 
 	public static function is_valid($name)
 	{
-		return((isset(self::$_class[$name]) === true && is_object(self::$_class[$name]) === true));
+		return (isset(self::$_class[$name]) === true && is_object(self::$_class[$name]) === true);
 	}
 }
 
@@ -73,22 +73,22 @@ abstract class dwho_gct
 {
 	public static function set($obj,$name='')
 	{
-		return(dwho_gateclass::set($obj,$name));
+		return dwho_gateclass::set($obj,$name);
 	}
 
 	public static function get($name)
 	{
-		return(dwho_gateclass::get($name));
+		return dwho_gateclass::get($name);
 	}
 
 	public static function set_get($obj,$name='')
 	{
-		return(dwho_gateclass::set_get($obj,$name));
+		return dwho_gateclass::set_get($obj,$name);
 	}
 
 	public static function is_valid($name)
 	{
-		return(dwho_gateclass::is_valid($name));
+		return dwho_gateclass::is_valid($name);
 	}
 }
 

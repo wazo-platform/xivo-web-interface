@@ -65,7 +65,7 @@ function dwho_array_set_value_to_key($arr, $key_of_expected_value, $only_value=f
 function dwho_clean_cmd_list_to_process()
 {
 	$_SRE = dwho_gct::get('xivo_service');
-	$_XOBJ = &dwho_gct::get('xivo_object');
+	$_XOBJ = dwho_gct::get('xivo_object');
 	$ipbx = &$_SRE->get('ipbx');
 	$ctimain = &$ipbx->get_module('ctimain');
 	$request_handlers = &$_XOBJ->get_module('request_handlers');

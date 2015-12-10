@@ -41,7 +41,7 @@ class xivo_object_provdconfig extends xivo_object_provd_abstract
 
 	public function __construct(&$xobj,$param=array())
 	{
-		if(($_SRE = &dwho_gct::get('xivo_service')) === false
+		if(($_SRE = dwho_gct::get('xivo_service')) === false
 		|| ($this->_service = &$_SRE->get('ipbx')) === false
 		|| ($this->_extensions = &$this->_service->get_module('extensions')) === false
 		|| ($this->_sccpdevice = &$this->_service->get_module('sccpdevice')) === false
@@ -51,7 +51,7 @@ class xivo_object_provdconfig extends xivo_object_provd_abstract
 		|| ($this->_user_line = &$this->_service->get_module('user_line')) === false
 		|| ($this->_func_key = &$this->_service->get_module('func_key')) === false
 		|| ($this->_appsip = &$this->_service->get_apprealstatic('sip')) === false
-		|| ($_RAPI = &dwho_gct::get('xivo_confd')) === false
+		|| ($_RAPI = dwho_gct::get('xivo_confd')) === false
 		|| ($this->_device_api = $_RAPI->get_ressource('device')) === false)
 			return(false);
 
@@ -380,7 +380,7 @@ class xivo_object_provdconfig extends xivo_object_provd_abstract
 		if ($this->chk_confregistrar($confregistrar) === false)
 			return(false);
 
-		if(($_SRE = &dwho_gct::get('xivo_service')) !== false
+		if(($_SRE = dwho_gct::get('xivo_service')) !== false
 		&& ($ipbx = &$_SRE->get('ipbx')) !== false)
 		{
 			$appsip = &$ipbx->get_apprealstatic('sip');

@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -41,9 +41,9 @@ dwho::load_class('location');
 $_LOC = dwho_gct::set_get(new dwho_location($_CF['location'],$_ACTION_MISC));
 
 $_XOBJ = dwho_gct::get('xivo_object');
-$_STS = &dwho_gct::get('xivo_stats');
-$_RAPI = &dwho_gct::get('xivo_confd');
-$_MGR = &dwho_gct::get('xivo_manager');
+$_STS = dwho_gct::get('xivo_stats');
+$_RAPI = dwho_gct::get('xivo_confd');
+$_MGR = dwho_gct::get('xivo_manager');
 $_SRE = dwho_gct::get('xivo_service');
 $_USR = dwho_gct::get('_USR');
 

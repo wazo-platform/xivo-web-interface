@@ -62,7 +62,7 @@ class xivo extends dwho
 		&& ($entity_id = $_SESSION["_USR"]->entity_id) > 0
 		&& $_SESSION["_USR"]->meta != 'root')
 		{
-			$_XOBJ = &dwho_gct::get('xivo_object');
+			$_XOBJ = dwho_gct::get('xivo_object');
 			$_SRE = dwho_gct::get('xivo_service');
 			$modcontext = &$_SRE->get_module('ipbx', 'context');
 			$modentity = &$_XOBJ->get_module('entity');

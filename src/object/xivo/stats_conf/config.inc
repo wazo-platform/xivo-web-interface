@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -36,7 +36,7 @@ $array['element']['hour_end']['default'] = '00:00';
 
 
 $array['element']['dbegcache'] = array();
-$_SRE = &dwho_gct::get('xivo_service');
+$_SRE = dwho_gct::get('xivo_service');
 $ipbx = &$_SRE->get('ipbx');
 $stat_queue_periodic = &$ipbx->get_module('stat_queue_periodic');
 if (($interval = $stat_queue_periodic->get_min_and_max_time()) === false)

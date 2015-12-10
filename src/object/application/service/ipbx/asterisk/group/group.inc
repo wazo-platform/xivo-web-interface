@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -62,7 +62,7 @@ class xivo_application_service_asterisk_group extends xivo_application_asterisk_
 		|| ($this->_dialaction = $this->get_abstract('dialaction',array('category' => 'group'))) === false
 		|| ($this->_schedule_path = &$this->_service->get_module('schedule_path')) === false
 		|| ($this->_callerid = $this->get_abstract('callerid',array('type' => 'group'))) === false
-		|| ($_MGR = &dwho_gct::get('xivo_manager')) === false
+		|| ($_MGR = dwho_gct::get('xivo_manager')) === false
 		|| ($this->_func_key_manager = &$_MGR->get_ressource('func_key')) === false)
 			return(false);
 

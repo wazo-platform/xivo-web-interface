@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -80,7 +80,7 @@ class dwho_tpl
 			$namespace = $this->get_option('i18n_namespace');
 
 		if($this->_i18n === null)
-			$this->_i18n = &dwho_gct::get('dwho_i18n');
+			$this->_i18n = dwho_gct::get('dwho_i18n');
 
 		if(is_object($this->_i18n) === false)
 			return(false);

@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -38,10 +38,10 @@ class xivo_application_service_asterisk_device extends xivo_application_asterisk
 
 		if(($this->_linefeatures = &$this->_service->get_module('linefeatures')) === false
 		|| ($this->_sccpdevice = &$this->_service->get_module('sccpdevice')) === false
-		|| ($_XOBJ = &dwho_gct::get('xivo_object')) === false
+		|| ($_XOBJ = dwho_gct::get('xivo_object')) === false
 		|| ($this->_provdplugin = &$_XOBJ->get_module('provdplugin')) === false
 		|| ($this->_provddevice = &$_XOBJ->get_module('provddevice')) === false
-		|| ($_RAPI = &dwho_gct::get('xivo_confd')) === false
+		|| ($_RAPI = dwho_gct::get('xivo_confd')) === false
 		|| ($this->_device_api = $_RAPI->get_ressource('device')) === false)
 			return(false);
 

@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -270,27 +270,27 @@ class xivo_user
 		return($class);
 	}
 
-	function set($name,&$obj)
+	function set($name,$obj)
 	{
 		if($name === '' || is_object($obj) === false)
-			return(false);
+			return false;
 
-		return(dwho_gct::set($obj,XIVO_USER_CLASS_PRE.$name));
+		return dwho_gct::set($obj,XIVO_USER_CLASS_PRE.$name);
 	}
 
-	function &get($name)
+	function get($name)
 	{
-		return(($ref = dwho_gct::get(XIVO_USER_CLASS_PRE.$name)));
+		return dwho_gct::get(XIVO_USER_CLASS_PRE.$name);
 	}
 
-	function &set_get($name,&$obj)
+	function set_get($name,$obj)
 	{
 		$r = false;
 
 		if($name !== '')
-			$r = &dwho_gct::set_get($obj,XIVO_USER_CLASS_PRE.$name);
+			$r = dwho_gct::set_get($obj,XIVO_USER_CLASS_PRE.$name);
 
-		return($r);
+		return $r;
 	}
 }
 

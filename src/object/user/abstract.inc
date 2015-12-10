@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -84,7 +84,7 @@ abstract class xivo_user_abstract extends xivo_libdatastorage_abstract
 		if (($users = parent::get_all($disable,$prepare,$order,$limit,$assoc)) === false)
 			return(false);
 
-		$_XOBJ = &dwho_gct::get('xivo_object');
+		$_XOBJ = dwho_gct::get('xivo_object');
 		$modentity = &$_XOBJ->get_module('entity');
 
 		foreach ($users as &$user)
@@ -303,7 +303,7 @@ abstract class xivo_user_abstract extends xivo_libdatastorage_abstract
 	{
 		if(dwho_gct::is_valid('XIVO_USER_DSO') === true)
 		{
-			$this->_dso = &dwho_gct::get('XIVO_USER_DSO');
+			$this->_dso = dwho_gct::get('XIVO_USER_DSO');
 			return(true);
 		}
 
@@ -313,7 +313,7 @@ abstract class xivo_user_abstract extends xivo_libdatastorage_abstract
 		if(isset($ini['datastorage']) === true)
 			$datastorage = &$ini['datastorage'];
 
-		$dso = &dwho_gct::get('DWHO_DSO');
+		$dso = dwho_gct::get('DWHO_DSO');
 		$type = $dso->get_type();
 		$name = 'xivo_user_'.$type;
 		$dir = dwho_file::joinpath(XIVO_PATH_OBJECT,'user','datastorage');
@@ -327,7 +327,7 @@ abstract class xivo_user_abstract extends xivo_libdatastorage_abstract
 		if(isset($ini['datastorage']) === true)
 			$datastorage = &$ini['datastorage'];
 
-		$this->_dso = &dwho_gct::set_get(new $name($dso,$datastorage),'XIVO_USER_DSO');
+		$this->_dso = dwho_gct::set_get(new $name($dso,$datastorage),'XIVO_USER_DSO');
 
 		return(true);
 	}
@@ -393,7 +393,7 @@ abstract class xivo_user_abstract extends xivo_libdatastorage_abstract
 		if($type !== 'internal')
 			return(false);
 
-		$dso = &dwho_gct::get('DWHO_DSO');
+		$dso = dwho_gct::get('DWHO_DSO');
 		$type = $dso->get_type();
 		$name = 'xivo_authent_'.$type;
 		$dir = dwho_file::joinpath(XIVO_PATH_OBJECT,'user','authent');

@@ -36,7 +36,7 @@ class xivo_application_service_asterisk_voicemail extends xivo_application_aster
 	{
 		parent::__construct($service);
 
-		$_RAPI = &dwho_gct::get('xivo_confd');
+		$_RAPI = dwho_gct::get('xivo_confd');
 		if($_RAPI === false) {
 			trigger_error('Invalid CONFD object',E_USER_ERROR);
 			return(false);

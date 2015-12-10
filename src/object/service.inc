@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -127,33 +127,33 @@ class xivo_service
 		return(($ref = &$class->get_module($module)));
 	}
 
-	protected function _set($service,&$obj)
+	protected function _set($service,$obj)
 	{
 		if(dwho_has_len($service) === false
 		|| is_object($obj) === false)
-			return(false);
+			return false;
 
-		return(dwho_gct::set($obj,XIVO_SRE_CLASS_PRE.$service));
+		return dwho_gct::set($obj,XIVO_SRE_CLASS_PRE.$service);
 	}
 
-	public function &get($service,$engine=null,$reload=false)
+	public function get($service,$engine=null,$reload=false)
 	{
 		$r = false;
 
 		if($this->_load_service($service,$engine,$reload) !== false)
 			$r = dwho_gct::get(XIVO_SRE_CLASS_PRE.$service);
 
-		return(($ref = &$r));
+		return $r;
 	}
 
-	public function &_set_get($service,&$obj)
+	public function _set_get($service,$obj)
 	{
 		$r = false;
 
 		if(dwho_has_len($service) === true)
 			$r = dwho_gct::set_get($obj,XIVO_SRE_CLASS_PRE.$service);
 
-		return(($ref = &$r));
+		return $r;
 	}
 
 	public function is_loaded($service)

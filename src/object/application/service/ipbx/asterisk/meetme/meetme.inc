@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -60,7 +60,7 @@ class xivo_application_service_asterisk_meetme extends xivo_application_asterisk
 		|| ($this->_userfeatures = &$this->_service->get_module('userfeatures')) === false
 		|| ($this->_extensions = &$this->_service->get_module('extensions')) === false
 		|| ($this->_contextmember = $this->get_abstract('contextmember',array('type' => 'meetme'))) === false
-		|| ($_MGR = &dwho_gct::get('xivo_manager')) === false
+		|| ($_MGR = dwho_gct::get('xivo_manager')) === false
 		|| ($this->_func_key_manager = &$_MGR->get_ressource('func_key')) === false)
 			return(false);
 

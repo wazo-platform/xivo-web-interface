@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@ class dwho_session
 		{
 			define('DWHO_SESS_HANDLER',true);
 
-			if(($dso = &dwho_gct::get('DWHO_DSO')) !== false)
+			if(($dso = dwho_gct::get('DWHO_DSO')) !== false)
 			{
 				$name = 'dwho_session_'.$dso->get_type();
 

@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -46,7 +46,7 @@ class xivo_application_xivo_object_entity extends xivo_application_xivo_object_a
 	{
 		$this->_components = true;
 
-		if(($_SRE = &dwho_gct::get('xivo_service')) === false
+		if(($_SRE = dwho_gct::get('xivo_service')) === false
 		|| ($this->_context = &$_SRE->get_module('ipbx','context')) === false)
 			return(false);
 

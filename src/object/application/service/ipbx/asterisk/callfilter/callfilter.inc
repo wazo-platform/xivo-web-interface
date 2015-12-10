@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -72,7 +72,7 @@ class xivo_application_service_asterisk_callfilter extends xivo_application_aste
 		if(($this->_callfiltermember = &$this->_service->get_module('callfiltermember')) === false
 		|| ($this->_dialaction = $this->get_abstract('dialaction',array('category' => 'callfilter'))) === false
 		|| ($this->_callerid = $this->get_abstract('callerid',array('type' => 'callfilter'))) === false
-		|| ($_MGR = &dwho_gct::get('xivo_manager')) === false
+		|| ($_MGR = dwho_gct::get('xivo_manager')) === false
 		|| ($this->_func_key_manager = &$_MGR->get_ressource('func_key')) === false)
 			return(false);
 

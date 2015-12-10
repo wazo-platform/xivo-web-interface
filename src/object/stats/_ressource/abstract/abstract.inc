@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -38,7 +38,7 @@ abstract class xivo_stats_ressource_abstract
 	public function __construct(&$_XS)
 	{
 		$this->_xs = &$_XS;
-		$this->_sts = &dwho_gct::get('xivo_stats');
+		$this->_sts = dwho_gct::get('xivo_stats');
 		$_SRE = dwho_gct::get('xivo_service');
 		$ipbx = &$_SRE->get('ipbx');
 		$this->_stat_queue_periodic = $ipbx->get_module('stat_queue_periodic');

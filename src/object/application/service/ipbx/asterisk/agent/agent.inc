@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -40,10 +40,10 @@ class xivo_application_service_asterisk_agent extends xivo_application_asterisk_
 		if(($this->_agentfeatures = &$this->_service->get_module('agentfeatures')) === false
 		|| ($this->_agentgroup = &$this->_service->get_module('agentgroup')) === false
 		|| ($this->_queueskills = &$this->_service->get_module('agentqueueskill')) === false
-		|| ($_XOBJ = &dwho_gct::get('xivo_object')) === false
+		|| ($_XOBJ = dwho_gct::get('xivo_object')) === false
 		|| ($this->_entity = &$_XOBJ->get_module('entity')) === false
 		|| ($this->_context = &$this->_service->get_module('context')) === false
-		|| ($_MGR = &dwho_gct::get('xivo_manager')) === false
+		|| ($_MGR = dwho_gct::get('xivo_manager')) === false
 		|| ($this->_func_key_manager = &$_MGR->get_ressource('func_key')) === false)
 			return(false);
 		else if((bool) $components === true)

@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -57,7 +57,7 @@ abstract class xivo_object_provd_abstract extends xivo_object_abstract
 
 	protected function _set_configuration()
 	{
-		$_XOBJ = &dwho_gct::get('xivo_object');
+		$_XOBJ = dwho_gct::get('xivo_object');
 		$appprovisionning = &$_XOBJ->get_application('provisioning');
 		$ref = $appprovisionning->get(1);
 

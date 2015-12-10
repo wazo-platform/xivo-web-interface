@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -367,7 +367,7 @@ class dwho_i18n
 						if($language !== null)
 							return($language);
 
-						$i18n = &dwho_gct::get('dwho_i18n');
+						$i18n = dwho_gct::get('dwho_i18n');
 
 						if($i18n->load_file('util'.DWHO_SEP_DIR.'language') === false
 								|| ($list = $mediator->get_language_list()) === false
@@ -389,7 +389,7 @@ class dwho_i18n
 						if($territory !== null)
 							return($territory);
 
-						$i18n = &dwho_gct::get('dwho_i18n');
+						$i18n = dwho_gct::get('dwho_i18n');
 
 						if($i18n->load_file('util'.DWHO_SEP_DIR.'territory') === false
 								|| ($list = $mediator->get_territory_list()) === false
