@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -405,9 +405,6 @@ class dwho_curl
 						case 'maxconnects':
 						case CURLOPT_MAXCONNECTS:
 							return(CURLOPT_MAXCONNECTS);
-						case 'closepolicy':
-						case CURLOPT_CLOSEPOLICY:
-							return(CURLOPT_CLOSEPOLICY);
 						case 'fresh_connect':
 						case CURLOPT_FRESH_CONNECT:
 							return(CURLOPT_FRESH_CONNECT);
