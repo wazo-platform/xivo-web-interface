@@ -194,7 +194,7 @@ abstract class xivo_service_abstract
 		if($this->_load_application($name,$param,$components) === true)
 			$r = &$this->_application[$name];
 
-		return(($ref = &$r));
+		return $r;
 	}
 
 	public function &get_appcustom($type,$name)
@@ -207,7 +207,7 @@ abstract class xivo_service_abstract
 		if($this->_load_appcustom($type,$name) === true)
 			$r = &$this->_appcustom[$type][$name];
 
-		return(($ref = &$r));
+		return $r;
 	}
 
 	public function chk_module_enable($name)

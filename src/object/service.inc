@@ -124,7 +124,7 @@ class xivo_service
 		if(($class = &$this->get($service,$engine)) === false)
 			trigger_error('Service not found or not installed',E_USER_ERROR);
 
-		return(($ref = &$class->get_module($module)));
+		return $class->get_module($module);
 	}
 
 	protected function _set($service,$obj)

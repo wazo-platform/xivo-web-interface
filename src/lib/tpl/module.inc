@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -109,7 +109,7 @@ class dwho_tpl_module
 
 	function &_get_module($name)
 	{
-		return(($ref = &$this->_tpl->get_module($name)));
+		return $this->_tpl->get_module($name);
 	}
 }
 

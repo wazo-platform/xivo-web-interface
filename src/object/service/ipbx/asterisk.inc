@@ -175,7 +175,7 @@ class xivo_service_asterisk extends xivo_service_abstract
 		if($this->_load_identity($module) === true)
 			$r = &$this->_identity[$module];
 
-		return(($ref = &$r));
+		return $r;
 	}
 
 	public function identity($module,$arr,$full=true)
@@ -267,7 +267,7 @@ class xivo_service_asterisk extends xivo_service_abstract
 		if($this->_load_realstatic($name,$param) === true)
 			$r = &$this->_realstatic[$name];
 
-		return(($ref = &$r));
+		return $r;
 	}
 
 	private function _load_apprealstatic_class($application)
@@ -306,7 +306,7 @@ class xivo_service_asterisk extends xivo_service_abstract
 			$r = call_user_func_array(array($this->_apprealstatic[$name],$func),$args);
 		}
 
-		return(($ref = &$r));
+		return $r;
 	}
 
 	public function &get_apprealstatic($name)
@@ -316,7 +316,7 @@ class xivo_service_asterisk extends xivo_service_abstract
 		if($this->_load_apprealstatic($name) === true)
 			$r = &$this->_apprealstatic[$name];
 
-		return(($ref = &$r));
+		return $r;
 	}
 
 	private function _load_apprealstatic($name)
@@ -453,7 +453,7 @@ class xivo_service_asterisk extends xivo_service_abstract
 		if(($module = $this->get_protocol_module_name($name)) !== false)
 			$r = &$this->get_module($module);
 
-		return(($ref = &$r));
+		return $r;
 	}
 
 	public function get_element($modules=array())

@@ -97,7 +97,7 @@ class xivo_object
 		if($this->_load_identity($module) === true)
 			$r = &$this->_identity[$module];
 
-		return(($ref = &$r));
+		return $r;
 	}
 
 	function identity($module,$arr,$full=true)

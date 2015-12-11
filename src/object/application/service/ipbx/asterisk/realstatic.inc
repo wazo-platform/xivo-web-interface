@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -85,7 +85,7 @@ class xivo_application_service_asterisk_realstatic
 		if($this->_load_module($name) === true)
 			$r = &$this->_module[$name];
 
-		return(($ref = &$r));
+		return $r;
 	}
 
 	private function is_valid($name)

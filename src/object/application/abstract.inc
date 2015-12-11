@@ -80,7 +80,7 @@ abstract class xivo_application_abstract extends xivo_libconfig_abstract
 		if($this->_load_abstract($name,$param) === true)
 			$r = &$this->_abstract[$name];
 
-		return(($ref = &$r));
+		return $r;
 	}
 
 	function &get_provd_module($name,$param=null)
