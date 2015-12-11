@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -90,7 +90,6 @@ case 'add':
 		$_TPL->set_var('destination_list',$appschedule->get_dialaction_destination_list());
 
 		$dhtml = &$_TPL->get_module('dhtml');
-		$dhtml->set_css('extra-libs/jquery-ui/css/ui-lightness/jquery-ui.css', true);
 		$dhtml->set_css('extra-libs/xivo.schedule/xivo.schedule.css'       , true);
 
 		$dhtml->set_js('extra-libs/mousewheel/jquery.mousewheel.js'  , true);
@@ -173,7 +172,6 @@ case 'add':
 		$_TPL->set_var('context_list',$appschedule->get_context_list());
 
 		$dhtml = &$_TPL->get_module('dhtml');
-		$dhtml->set_css('extra-libs/jquery-ui/css/ui-lightness/jquery-ui.css', true);
 		$dhtml->set_css('extra-libs/xivo.schedule/xivo.schedule.css'       , true);
 
 		$dhtml->set_js('extra-libs/mousewheel/jquery.mousewheel.js'  , true);

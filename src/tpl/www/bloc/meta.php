@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -41,7 +41,7 @@
 
 <script type="text/javascript" src="<?=$this->file_time($this->url('js/utils/func.js'));?>"></script>
 
-<link rel="stylesheet" type="text/css" href="<?=$this->file_time($this->url('extra-libs/jquery-ui/css/ui-lightness/jquery-ui.css'));?>">
+<link rel="stylesheet" type="text/css" href="<?=$this->file_time($this->url('extra-libs/jquery-ui/css/smoothness/jquery-ui.min.css'));?>">
 <script type="text/javascript" src="<?=$this->file_time($this->url('extra-libs/jquery/jquery.min.js'));?>"></script>
 <script type="text/javascript" src="<?=$this->file_time($this->url('extra-libs/jquery-ui/jquery-ui.min.js'));?>"></script>
 

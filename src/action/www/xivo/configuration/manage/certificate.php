@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -98,7 +98,6 @@ switch($act)
 		$_TPL->set_var('ca_authorities', $authorities);
 
 		$dhtml = &$_TPL->get_module('dhtml');
-		$dhtml->set_css('extra-libs/jquery-ui/css/ui-lightness/jquery-ui.css', true);
 
 		$dhtml->set_js('extra-libs/jquery-ui/ui/minified/jquery.ui.datepicker.min.js', true);
 		$dhtml->set_js('extra-libs/jquery-ui/ui/i18n/jquery.ui.datepicker-'.$language.'.js', true);

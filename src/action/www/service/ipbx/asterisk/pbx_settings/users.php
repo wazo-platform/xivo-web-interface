@@ -68,10 +68,6 @@ switch($act)
 		$dhtml->set_css('extra-libs/timepicker/jquery-ui-timepicker-addon.css',true);
 		$dhtml->set_js('extra-libs/timepicker/jquery-ui-timepicker-addon.js',true);
 
-		// autocomplete
-		$dhtml->set_css('extra-libs/jquery-ui/themes/ui-lightness/jquery.ui.autocomplete.css',true);
-		$dhtml->set_js('extra-libs/jquery-ui/ui/jquery.ui.autocomplete.js',true);
-
 		// select2
 		$dhtml->set_css('extra-libs/select2/select2-xivo.css', true);
 		$dhtml->set_js('extra-libs/select2/select2.min.js', true);
