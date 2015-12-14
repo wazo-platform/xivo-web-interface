@@ -41,7 +41,7 @@
 
 <script type="text/javascript" src="<?=$this->file_time($this->url('js/utils/func.js'));?>"></script>
 
-<link rel="stylesheet" type="text/css" href="<?=$this->file_time($this->url('extra-libs/jquery-ui/css/smoothness/jquery-ui.min.css'));?>">
+<link rel="stylesheet" type="text/css" href="<?=$this->file_time($this->url('extra-libs/jquery-ui/css/ui-lightness/jquery-ui.css'));?>">
 <script type="text/javascript" src="<?=$this->file_time($this->url('extra-libs/jquery/jquery.min.js'));?>"></script>
 <script type="text/javascript" src="<?=$this->file_time($this->url('extra-libs/jquery-ui/jquery-ui.min.js'));?>"></script>
 
