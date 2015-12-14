@@ -11,11 +11,6 @@ Pre-depends: xivo-config (>= 14.17~20140902.163641.dc5c476-1)
 Architecture: all
 Depends: 
     curl,
-    libjs-jquery-ui-lightness,
-    libjs-jquery-ui-multiselect,
-    libjs-jquery-ui-timepicker,
-    libjs-jquery.timepicker,
-    libjs-select2,
     munin,
     nginx,
     php5-cgi (>= 5.6),
@@ -26,9 +21,6 @@ Depends:
     php5-ldap,
     php5-pgsql,
     spawn-fcgi,
-    xivo-lib-js-jqplot,
-    xivo-lib-js-jquery.mousewheel,
-    xivo-lib-js-schedule,
     xivo-sysconfd
 Provides: pf-xivo-web-interface
 Conflicts: pf-xivo-web-interface
