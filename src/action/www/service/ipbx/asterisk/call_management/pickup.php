@@ -124,13 +124,7 @@ switch($act)
 		$_TPL->set_var('pickup',$pksource);
 
 		$dhtml = &$_TPL->get_module('dhtml');
-		$dhtml->set_css('/extra-libs/multiselect/css/ui.multiselect.css', true);
-		$dhtml->set_css('css/xivo.multiselect.css');
-		$dhtml->set_js('/extra-libs/multiselect/js/plugins/localisation/jquery.localisation-min.js', true);
-		$dhtml->set_js('/extra-libs/multiselect/js/plugins/scrollTo/jquery.scrollTo-min.js', true);
-		$dhtml->set_js('/extra-libs/multiselect/js/ui.multiselect.js', true);
-
-		$dhtml->set_css('css/service/ipbx/pickup.css');
+		$dhtml->load_js_multiselect_files();
 
 		$dhtml->set_js('js/dwho/uri.js');
 		$dhtml->set_js('js/dwho/http.js');
