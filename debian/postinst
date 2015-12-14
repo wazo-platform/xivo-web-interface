@@ -61,6 +61,10 @@ case "$1" in
 		if [ -x /etc/init.d/spawn-fcgi ]; then
 			invoke-rc.d spawn-fcgi restart
 		fi
+
+		# link need to be created in postinst, otherwise it isn't placed at
+		# the right place during the wheezy to jessie upgrade
+		ln -sf /etc/xivo/web-interface/php.ini /etc/php5/cgi/conf.d/xivo.ini
 	;;
 	abort-upgrade|abort-remove|abort-deconfigure)
 
