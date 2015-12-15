@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -35,7 +35,6 @@ echo	$form->hidden(array('name'	=> 'entity[name]',
 			  'size'	=> 15,
 			  'required'=> true,
 			  'comment'	=> $this->bbf('cmt_fm_entity_displayname'),
-			  'default'	=> $element['entity']['displayname']['default'],
 			  'value'	=> $this->get_var('info','entity','displayname'),
 			  'error'	=> $this->bbf_args('error_generic',
 							   $this->get_var('error','entity','displayname'))));

@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -713,7 +713,7 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 			'hostname'    => $this->_wizsess['mainconfig']['hostname'],
 			'domain'      => $this->_wizsess['mainconfig']['domain'],
 			'nameserver1' => $resolvconf['nameservers'][0],
-			'nameserver2' => $resolvconf['nameservers'][1],
+			'nameserver2' => isset($resolvconf['nameservers'][1]) ? $resolvconf['nameservers'][1] : '',
 			'nameserver3' => '',
 			'search'      => $resolvconf['search'],
 			'description' => 'wizard configuration'
@@ -765,15 +765,18 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 		$appcontext = &$this->_ipbx->get_application('context');
 
 		// allow to reexecute the process several times
-		foreach($appcontext->get_contexts_list() as $context)
+		if (($contexts = $appcontext->get_contexts_list()) !== false)
 		{
-			if($appcontext->get($context['context']['name']) !== false)
+			foreach($contexts as $context)
 			{
-				$appcontext->_info['deletable']       = true;
-				$appcontext->_info['deletablenumber'] = true;
-				$appcontext->_info['deletablemember'] = true;
+				if($appcontext->get($context['context']['name']) !== false)
+				{
+					$appcontext->_info['deletable']       = true;
+					$appcontext->_info['deletablenumber'] = true;
+					$appcontext->_info['deletablemember'] = true;
 
-				$appcontext->delete();
+					$appcontext->delete();
+				}
 			}
 		}
 
