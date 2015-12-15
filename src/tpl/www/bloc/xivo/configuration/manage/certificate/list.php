@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -107,7 +107,7 @@ $page = $url->pager($pager['pages'],
 		<td><?=in_array('certificate', $ref['types'])?$ref['length']:'&nbsp;'?></td>
 		<td><?=in_array('certificate', $ref['types'])?$ref['validity-end']:'&nbsp;'?></td>
 		<td class="td-right" colspan="2">
-<?
+<?php
 		if(in_array('certificate', $ref['types']))
 			echo	$url->href_html($url->img_html('img/site/button/monitor.gif',
 							       $this->bbf('opt_modify'),

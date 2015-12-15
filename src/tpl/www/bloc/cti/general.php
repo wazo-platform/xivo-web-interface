@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -158,7 +158,7 @@ if(isset($error_js[0]) === true)
 				'paragraph'	=> false));?>
 			</td>
 			<td>
-			<?
+			<?php
 				echo $form->text(array('desc'	=> $this->bbf('fm_cti_ctis_ip'),
 								'name'		=> 'cti[ctis_ip]',
 								'labelid'	=> 'cti_ctis_ip',

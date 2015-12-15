@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2015  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -38,7 +38,6 @@ $params = $info['params'];
 	<div class="sb-content">
 	<fieldset>
 		<legend><?=$this->bbf('plugin-description_legend',array($this->get_var('id'),$pginfo['version']));?></legend>
-		<?$this->bbf('plugin-description');?>
 		<?=$pginfo['description'];?>
 	</fieldset>
 <?php
