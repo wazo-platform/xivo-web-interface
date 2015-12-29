@@ -79,19 +79,6 @@ switch($act)
 		$http_response->set_status_line($status);
 		$http_response->send(true);
 		break;
-	case 'import':
-		$appuser = &$ipbx->get_application('user');
-
-		if($appuser->import_from_csv() === true)
-			$status = 200;
-		else
-			$status = 400;
-
-		dwho_error_log($appuser->get_error(), $status);
-
-		$http_response->set_status_line($status);
-		$http_response->send(true);
-		break;
 	case 'delete':
 		$appuser = &$ipbx->get_application('user');
 
