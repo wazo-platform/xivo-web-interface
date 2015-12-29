@@ -2227,10 +2227,8 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		return($arr);
 	}
 
-	function import_csv()
+	private function upload_csv_file()
 	{
-		$success = true;
-
 		$http_response = dwho_http::factory('response');
 		if($http_response === false) {
 			dwho_report::push('error', 'could not parse HTTP request');
@@ -2250,7 +2248,38 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			return(false);
 		}
 
-		$result = $this->_confd_user->import_csv($csvdata);
+		$fileinfo['data'] = $csvdata;
+		return $fileinfo;
+	}
+
+	function import_csv()
+	{
+		$fileinfo = $this->upload_csv_file();
+		if($fileinfo === false)
+			return(false);
+
+		$result = $this->_confd_user->import_csv($fileinfo['data']);
+		if($result === true) {
+			dwho_file::rm($fileinfo['tmp_name']);
+			return(true);
+		}
+
+		foreach($result as $error) {
+			error_log($error);
+			dwho_report::push('error', $error);
+		}
+
+		dwho_file::rm($fileinfo['tmp_name']);
+		return(false);
+	}
+
+	function update_csv()
+	{
+		$fileinfo = $this->upload_csv_file();
+		if($fileinfo === false)
+			return(false);
+
+		$result = $this->_confd_user->update_csv($fileinfo['data']);
 		if($result === true) {
 			dwho_file::rm($fileinfo['tmp_name']);
 			return(true);

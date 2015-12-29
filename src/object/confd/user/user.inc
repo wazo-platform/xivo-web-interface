@@ -29,19 +29,31 @@ class UserResource {
 
 	public function import_csv($csvdata) 
 	{
-		$request = $this->build_csv_request($csvdata);
+		$request = $this->build_csv_request("POST", $csvdata);
 		$response = $this->client->send($request);
+		return $this->process_response($response);
+	}
+
+	public function update_csv($csvdata)
+	{
+		$request = $this->build_csv_request("PUT", $csvdata);
+		$response = $this->client->send($request);
+		return $this->process_response($response);
+	}
+
+	private function build_csv_request($verb, $csvdata)
+	{
+		$headers = array('Content-Type: text/csv; charset=utf-8');
+		return new Request($verb, "/users/import", $csvdata, $headers);
+	}
+
+	private function process_response($response)
+	{
 		if (!$response->status_ok()) {
 			return $this->extract_errors($response);
 		} else {
 			return true;
 		}
-	}
-
-	private function build_csv_request($csvdata) 
-	{
-		$headers = array('Content-Type: text/csv; charset=utf-8');
-		return Request::post("/users/import", $csvdata, $headers);
 	}
 
 	private function extract_errors($response)
