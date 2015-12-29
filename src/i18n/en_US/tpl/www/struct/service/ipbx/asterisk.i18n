@@ -129,6 +129,9 @@ Import a file
 ; toolbar_add_menu_update_import
 Update from file
 
+; toolbar_add_menu_export
+Export to CSV
+
 ; toolbar_adv_menu_add-category
 Add a category
 

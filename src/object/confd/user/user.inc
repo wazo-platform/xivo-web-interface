@@ -41,6 +41,19 @@ class UserResource {
 		return $this->process_response($response);
 	}
 
+	public function export_csv()
+	{
+		$request = Request::get("/users/export");
+		$response = $this->client->send($request);
+		if(!$response->status_ok()) {
+			foreach($response->get_errors() as $error) {
+				dwho_report::push('error', $error);
+			}
+			return false;
+		}
+		return $response->get_body();
+	}
+
 	private function build_csv_request($verb, $csvdata)
 	{
 		$headers = array('Content-Type: text/csv; charset=utf-8');

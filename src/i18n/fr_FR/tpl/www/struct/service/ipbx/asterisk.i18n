@@ -141,6 +141,9 @@ Importer un fichier
 ; toolbar_add_menu_update_import
 Mise à jour à partir de fichier
 
+; toolbar_add_menu_export
+Exporter en CSV
+
 ; toolbar_adv_menu_add-category
 Ajouter une catégorie
 

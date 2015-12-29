@@ -148,6 +148,12 @@ switch($act)
 
 		$_TPL->set_var('import_file',$appuser->get_config_import_file());
 		break;
+	case 'export':
+		$appuser = &$ipbx->get_application('user');
+		$data = $appuser->export_csv();
+		$_TPL->set_var('result', $data);
+		$_TPL->display('/bloc/service/ipbx/'.$ipbx->get_name().'/pbx_settings/users/export');
+		break;
 	case 'list':
 	default:
 		$act = 'list';
