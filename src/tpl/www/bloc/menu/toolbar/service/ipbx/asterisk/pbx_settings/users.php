@@ -76,6 +76,9 @@ $dhtml->write_js($toolbar_js);
 		<li><?=$url->href_html($this->bbf('toolbar_add_menu_import-file'),
 				       'service/ipbx/pbx_settings/users',
 				       'act=import');?></li>
+		<li><?=$url->href_html($this->bbf('toolbar_add_menu_update_import'),
+				       'service/ipbx/pbx_settings/users',
+				       'act=update_import');?></li>
 	</ul>
 </div><?php
 if($act === 'list'):

@@ -137,6 +137,17 @@ switch($act)
 
 		$_TPL->set_var('import_file',$appuser->get_config_import_file());
 		break;
+	case 'update_import':
+		$appuser = &$ipbx->get_application('user');
+
+		if(isset($_QR['fm_send']) === true)
+		{
+			$appuser->update_csv();
+			$_QRY->go($_TPL->url('service/ipbx/pbx_settings/users'),$param);
+		}
+
+		$_TPL->set_var('import_file',$appuser->get_config_import_file());
+		break;
 	case 'list':
 	default:
 		$act = 'list';

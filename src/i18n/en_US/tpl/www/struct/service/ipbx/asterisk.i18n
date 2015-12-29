@@ -126,6 +126,9 @@ Add
 ; toolbar_add_menu_import-file
 Import a file
 
+; toolbar_add_menu_update_import
+Update an import
+
 ; toolbar_adv_menu_add-category
 Add a category
 

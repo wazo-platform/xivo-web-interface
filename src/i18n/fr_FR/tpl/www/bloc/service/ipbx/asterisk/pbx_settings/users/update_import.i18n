@@ -1,0 +1,31 @@
+; title_content_name
+Utilisateurs > Mise à jour d'une importation
+
+; ipbximportuser_instruction
+Le fichier à importer doit être encodé en UTF-8 et composé de lignes au format CSV.
+
+; fm_example
+Exemple du contenu du fichier :
+
+; fm_example-content
+firstname,lastname,line_protocol,exten,context
+John,Doe,sip,1001,default
+John,Doe,sccp,1002,default
+
+; fm_import
+Fichier :
+
+; import_fail
+Échec partiel de l'import des utilisateurs
+
+; error(userfeatures__client login exists)
+Login CTI déjà affecté à un autre utilisateur
+
+; error(extenumbers__exists)
+Numéro de téléphone déjà affecté à un autre utilisateur
+
+; error(protocol__invalid module)
+Protocol inconnu
+
+; error(userfeatures__Array)
+
