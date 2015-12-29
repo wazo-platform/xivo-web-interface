@@ -20,6 +20,7 @@ import abc
 
 import urllib
 
+from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.support.ui import WebDriverWait, Select
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.common.by import By
@@ -81,6 +82,15 @@ class Page(object):
 
     def select_id(self, id_, value, root=None):
         self.select(By.ID, id_, value, root)
+
+    def extract_errors(self):
+        try:
+            container = self.driver.find_element_by_id("report-xivo-error")
+        except NoSuchElementException:
+            return []
+
+        return [message.text
+                for message in container.find_elements_by_css_selector("li")]
 
 
 class ListPage(Page):
