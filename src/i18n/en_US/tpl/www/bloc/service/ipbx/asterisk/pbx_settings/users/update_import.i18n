@@ -3,14 +3,15 @@ Users > Update an import
 
 ; ipbximportuser_instruction
 File to be imported must be encoded in UTF-8 and contain CSV data.
+For a complete list of CSV fields, consult the documentation.
 
 ; fm_example
 Example :
 
 ; fm_example-content
-firstname,lastname,line_protocol,exten,context
-John,Doe,sip,1001,default
-John,Doe,sccp,1002,default
+uuid,firstname,lastname,line_protocol,exten,context
+70b58d8a-95f1-42dc-a984-be192d7cf80a,John,Doe,sip,1001,default
+a7ff57ad-6370-4f95-96f3-c32498ab554b,John,Doe,sccp,1002,default
 
 ; fm_import
 File:
