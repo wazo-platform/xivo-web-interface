@@ -42,6 +42,11 @@ class Request {
 		return new Request("POST", $url, $body, $headers);
 	}
 
+	static public function get($url, $body="", $headers=null)
+	{
+		return new Request("GET", $url, $body, $headers);
+	}
+
 	public function get_verb()
 	{
 		return $this->verb;

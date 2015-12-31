@@ -2294,6 +2294,11 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		return(false);
 	}
 
+	function export_csv()
+	{
+		return $this->_confd_user->export_csv();
+	}
+
 	function add_from_json()
 	{
 		if(($data = $this->_get_data_from_json()) === false
