@@ -294,9 +294,30 @@ class FuncKeyTab(Page):
         self.wait().until_not(condition)
 
 
+class ImportPage(Page):
+
+    def upload_file(self, filepath):
+        self.fill_id("it-import", filepath)
+
+    def save(self):
+        btn = self.driver.find_element_by_id("it-submit")
+        btn.click()
+        self.wait_for(By.NAME, 'fm-users-list')
+
+
 class UserListPage(ListPage):
 
     url = "/service/ipbx/index.php/pbx_settings/users/"
     list_selector = (By.NAME, "fm-users-list")
     form_selector = (By.ID, "sr-users")
     form_page = UserPage
+
+    def import_csv(self):
+        url = self.build_url(self.url, act='import')
+        self.driver.get(url)
+        return ImportPage(self.driver)
+
+    def update_csv(self):
+        url = self.build_url(self.url, act='update_import')
+        self.driver.get(url)
+        return ImportPage(self.driver)

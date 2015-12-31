@@ -1,16 +1,17 @@
 ; title_content_name
-Utilisateurs > Importer un fichier
+Utilisateurs > Mise à jour à partir d'un fichier
 
 ; ipbximportuser_instruction
 Le fichier à importer doit être encodé en UTF-8 et composé de lignes au format CSV.
+Veuillez consulter la documentation pour une liste complète de champs disponibles.
 
 ; fm_example
 Exemple du contenu du fichier :
 
 ; fm_example-content
-firstname,lastname,line_protocol,exten,context
-John,Doe,sip,1001,default
-John,Doe,sccp,1002,default
+uuid,firstname,lastname,line_protocol,exten,context
+70b58d8a-95f1-42dc-a984-be192d7cf80a,John,Doe,sip,1001,default
+a7ff57ad-6370-4f95-96f3-c32498ab554b,John,Doe,sccp,1002,default
 
 ; fm_import
 Fichier :
