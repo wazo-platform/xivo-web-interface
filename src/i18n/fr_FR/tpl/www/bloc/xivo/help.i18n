@@ -8,7 +8,10 @@ Téléchargez XiVO Client à l'adresse suivante :
 http://%s
 
 ; info_xivo-documentation
-Documentation: 
+Documentation:
+
+; info_xivo-documentation-api
+Documentation API REST:
 
 ; url_xivo-documentation
 http://%s

@@ -22,6 +22,7 @@ $url = &$this->get_module('url');
 
 $client_url = $this->bbf('download_soft_url_xivo-client',XIVO_DOWNLOAD_URL);
 $doc_url = $this->bbf('url_xivo-documentation',XIVO_DOC_URL);
+$doc_api_url = $this->bbf('url_xivo-documentation',XIVO_DOC_API_URL);
 $blog_url = $this->bbf('url_xivo-blog',XIVO_BLOG_URL);
 
 ?>
@@ -46,6 +47,16 @@ $blog_url = $this->bbf('url_xivo-blog',XIVO_BLOG_URL);
 			<dt><?=$this->bbf('info_xivo-documentation');?></dt>
 			<dd><?=$url->href_html($doc_url,
 					       $doc_url,
+					       null,
+					       'target="_blank"',
+					       null,
+					       false,
+					       null,
+					       false,
+					       false);?>
+			<dt><?=$this->bbf('info_xivo-documentation-api');?></dt>
+			<dd><?=$url->href_html($doc_api_url,
+					       $doc_api_url,
 					       null,
 					       'target="_blank"',
 					       null,

@@ -33,6 +33,7 @@ define('XIVO_SOFT_CODENAME','Five');
 define('XIVO_SOFT_URL','xivo.io');
 define('XIVO_DOWNLOAD_URL','mirror.xivo.io/iso/archives/xivo-'.XIVO_SOFT_VERSION);
 define('XIVO_DOC_URL','documentation.xivo.io');
+define('XIVO_DOC_API_URL','api.xivo.io');
 define('XIVO_BLOG_URL','blog.xivo.io');
 define('XIVO_CORP_LABEL','Avencall');
 define('XIVO_PF_FR_CORP_LABEL','Avencall');
