@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2015  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -56,15 +56,7 @@ if(isset($error_js[0]) === true)
 ?>
 
 <div id="sb-part-first">
-	<?=$form->select(array('desc'	=> $this->bbf('fm_cti_commandset'),
-				    'name'	=> 'cti[commandset]',
-				    'labelid'	=> 'cti_commandset',
-				    'key'	=> false,
-				    'default'	=> $element['ctimain']['commandset']['default'],
-#				    'help'	=> $this->bbf('hlp_fm_cti_commandset'),
-				    'selected'	=> $this->get_var('ctimain','commandset','var_val')),
-			      $element['ctimain']['commandset']['value']);
-	?>
+
 <fieldset id="cti-ami">
 	<legend><?=$this->bbf('cti-ami');?></legend>
 			<?=$form->text(array('desc'	=> $this->bbf('fm_cti_ami_login'),

@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,10 +20,6 @@
 
 $array = array();
 $array['element'] = array();
-
-$array['element']['commandset'] = array();
-$array['element']['commandset']['value'] = array('xivocti');
-$array['element']['commandset']['default'] = 'xivocti';
 
 $array['element']['ami_login'] = array();
 $array['element']['ami_login']['default'] = 'xivo_cti_user';
@@ -92,7 +88,6 @@ $array['element']['live_reload_conf']['set'] = true;
 dwho::load_class('dwho_network');
 
 $array['filter'] = array();
-$array['filter']['commandset'] 		= array('key' => array('xivocti'));
 $array['filter']['ami_ip']          = array('callback' => 'dwho_network::valid_host_subnet_ipv4');
 $array['filter']['ami_port']        = array('cast' => 'uint', 'between' => array(1,65535));
 $array['filter']['ami_login']       = array('cast' => 'sgraph','minlen' => 3,'maxlen' => 64);
