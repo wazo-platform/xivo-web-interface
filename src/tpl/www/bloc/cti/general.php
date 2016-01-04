@@ -151,15 +151,7 @@ if(isset($error_js[0]) === true)
 			</td>
 			<td>
 			<?php
-				echo $form->text(array('desc'	=> $this->bbf('fm_cti_ctis_ip'),
-								'name'		=> 'cti[ctis_ip]',
-								'labelid'	=> 'cti_ctis_ip',
-								'value'		=> $info['ctimain']['ctis_ip'],
-								'required'	=> 1,
-								'regexp'	=> '[[:ipv4:]]',
-								'default'	=> $element['ctimain']['ctis_ip']['default'])),
-
-							$form->select(array('desc'  => $this->bbf('fm_tlscertfile'),
+				echo $form->select(array('desc'  => $this->bbf('fm_tlscertfile'),
 		            'name'    => 'cti[tlscertfile]',
 		            'labelid' => 'tlscertfile',
 								'key'     => 'name',
@@ -184,16 +176,6 @@ if(isset($error_js[0]) === true)
 			?>
 			</td>
 			<td class="td-right">
-			<?=$form->text(array(#'desc'	=> $this->bbf('fm_cti_ctis_port'),
-					'name'		=> 'cti[ctis_port]',
-					'labelid'	=> 'cti_ctis_port',
-					'value'		=> $info['ctimain']['ctis_port'],
-					'required'	=> 1,
-					'regexp'	=> '[[:port:]]',
-					'default'	=> $element['ctimain']['ctis_port']['default'],
-#					'help'		=> $this->bbf('hlp_fm_cti_ctis_port')
-					))
-				?>
 			</td>
 		</tr>
 		<tr onmouseover="this.tmp = this.className; this.className = 'sb-content l-infos-over';"

@@ -39,10 +39,6 @@ $array['element']['cti_active']['value'] = array(0,1);
 $array['element']['cti_active']['default'] = 1;
 $array['element']['cti_active']['set'] = true;
 
-$array['element']['ctis_ip'] = array();
-$array['element']['ctis_ip']['default'] = '0.0.0.0';
-$array['element']['ctis_port'] = array();
-$array['element']['ctis_port']['default'] = 5013;
 $array['element']['ctis_active'] = array();
 $array['element']['ctis_active']['value'] = array(0,1);
 $array['element']['ctis_active']['default'] = 1;
@@ -96,8 +92,6 @@ $array['filter']['cti_active'] = array('set' => true, 'chk' => 2, 'cast' => 'boo
 $array['filter']['cti_ip'] 			= array('callback' => 'dwho_network::valid_host_subnet_ipv4');
 $array['filter']['cti_port'] 		= array('set' => false, 'chk' => 2, 'cast' => 'uint', 'between' => array(1,65535));
 $array['filter']['ctis_active'] = array('set' => true, 'chk' => 2, 'cast' => 'bool');
-$array['filter']['ctis_ip'] 		= array('callback' => 'dwho_network::valid_host_subnet_ipv4');
-$array['filter']['ctis_port'] 		= array('set' => false, 'chk' => 2, 'cast' => 'uint', 'between' => array(1,65535));
 $array['filter']['webi_active'] = array('set' => true, 'chk' => 2, 'cast' => 'bool');
 $array['filter']['webi_ip'] 		= array('callback' => 'dwho_network::valid_host_subnet_ipv4');
 $array['filter']['webi_port'] 		= array('set' => false, 'chk' => 2, 'cast' => 'uint', 'between' => array(1,65535));

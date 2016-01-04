@@ -37,9 +37,6 @@ Ports en écoute
 ; fm_cti_cti_ip
 CTI:
 
-; fm_cti_ctis_ip
-CTIS: 
-
 ; hlp_fm_cti_cti_ip
 aide IP cti
 
