@@ -34,6 +34,12 @@ Port
 ; cti-servers
 Ports en écoute
 
+; cti-start-tls
+Options de StartTLS
+
+; fm_start_tls
+StartTLS :
+
 ; fm_cti_cti_ip
 CTI:
 
