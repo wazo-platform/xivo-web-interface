@@ -35,10 +35,10 @@ Port
 Ports en écoute
 
 ; cti-start-tls
-Options de StartTLS
+Options de STARTTLS
 
 ; fm_start_tls
-StartTLS :
+STARTTLS :
 
 ; fm_cti_cti_ip
 CTI:

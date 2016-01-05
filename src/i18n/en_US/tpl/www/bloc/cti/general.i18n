@@ -29,7 +29,7 @@ Activated
 Listening ports
 
 ; cti-start-tls
-StartTLS options
+STARTTLS options
 
 ; fm_cti_list_ip
 IP address
@@ -41,7 +41,7 @@ Port
 CTI:
 
 ; fm_start_tls
-StartTLS:
+STARTTLS:
 
 ; hlp_fm_cti_cti_ip
 IP cti help
