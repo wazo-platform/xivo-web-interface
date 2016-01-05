@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2015  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -56,15 +56,7 @@ if(isset($error_js[0]) === true)
 ?>
 
 <div id="sb-part-first">
-	<?=$form->select(array('desc'	=> $this->bbf('fm_cti_commandset'),
-				    'name'	=> 'cti[commandset]',
-				    'labelid'	=> 'cti_commandset',
-				    'key'	=> false,
-				    'default'	=> $element['ctimain']['commandset']['default'],
-#				    'help'	=> $this->bbf('hlp_fm_cti_commandset'),
-				    'selected'	=> $this->get_var('ctimain','commandset','var_val')),
-			      $element['ctimain']['commandset']['value']);
-	?>
+
 <fieldset id="cti-ami">
 	<legend><?=$this->bbf('cti-ami');?></legend>
 			<?=$form->text(array('desc'	=> $this->bbf('fm_cti_ami_login'),
@@ -151,62 +143,6 @@ if(isset($error_js[0]) === true)
 		<tr onmouseover="this.tmp = this.className; this.className = 'sb-content l-infos-over';"
 		    onmouseout="this.className = this.tmp;">
 			<td class="td-left">
-			<?=$form->checkbox(array('name'	=> 'cti[ctis_active]',
-				'checked'=> $info['ctimain']['ctis_active'],
-				'label'		=> false,
-				'id'		=> 'it-ctis_active',
-				'paragraph'	=> false));?>
-			</td>
-			<td>
-			<?php
-				echo $form->text(array('desc'	=> $this->bbf('fm_cti_ctis_ip'),
-								'name'		=> 'cti[ctis_ip]',
-								'labelid'	=> 'cti_ctis_ip',
-								'value'		=> $info['ctimain']['ctis_ip'],
-								'required'	=> 1,
-								'regexp'	=> '[[:ipv4:]]',
-								'default'	=> $element['ctimain']['ctis_ip']['default'])),
-
-							$form->select(array('desc'  => $this->bbf('fm_tlscertfile'),
-		            'name'    => 'cti[tlscertfile]',
-		            'labelid' => 'tlscertfile',
-								'key'     => 'name',
-								'altkey'  => 'path',
-		            'empty'   => true,
-								'label'		=> false,
-		            'selected'=> $this->get_var('info','ctimain','tlscertfile'),
-		            'default' => $element['ctimain']['tlscertfile']['default']),
-					         $this->get_var('tlscertfiles')),
-
-
-					    $form->select(array('desc'  => $this->bbf('fm_tlsprivkeyfile'),
-							  'name'    => 'cti[tlsprivkeyfile]',
-		            'labelid' => 'tlsprivkeyfile',
-								'key'     => 'name',
-								'altkey'  => 'path',
-		            'empty'   => true,
-				        'help'    => $this->bbf('hlp_fm_tlsprivkeyfile'),
-						    'selected'=> $this->get_var('info','ctimain','tlsprivkeyfile'),
-								'default' => $element['ctimain']['tlsprivkeyfile']['default']),
-					         $this->get_var('tlsprivkeyfiles'));
-			?>
-			</td>
-			<td class="td-right">
-			<?=$form->text(array(#'desc'	=> $this->bbf('fm_cti_ctis_port'),
-					'name'		=> 'cti[ctis_port]',
-					'labelid'	=> 'cti_ctis_port',
-					'value'		=> $info['ctimain']['ctis_port'],
-					'required'	=> 1,
-					'regexp'	=> '[[:port:]]',
-					'default'	=> $element['ctimain']['ctis_port']['default'],
-#					'help'		=> $this->bbf('hlp_fm_cti_ctis_port')
-					))
-				?>
-			</td>
-		</tr>
-		<tr onmouseover="this.tmp = this.className; this.className = 'sb-content l-infos-over';"
-		    onmouseout="this.className = this.tmp;">
-			<td class="td-left">
 			<?=$form->checkbox(array('name'	=> 'cti[webi_active]',
 				'checked'		=> $info['ctimain']['webi_active'],
 				'label'		=> false,
@@ -272,6 +208,39 @@ if(isset($error_js[0]) === true)
 		</tr>
 		</table>
 	</div>
+</fieldset>
+<fieldset id="cti-start-tls">
+	<legend><?=$this->bbf('cti-start-tls');?></legend>
+	<?=
+		$form->checkbox(array(
+			'name' => 'cti[ctis_active]',
+			'checked' => $info['ctimain']['ctis_active'],
+			'label' => false,
+			'id' => 'it-ctis_active',
+			'desc' => $this->bbf('fm_start_tls'))),
+		$form->select(array(
+			'desc' => $this->bbf('fm_tlscertfile'),
+			'name' => 'cti[tlscertfile]',
+			'labelid' => 'tlscertfile',
+			'key' => 'name',
+			'altkey' => 'path',
+			'empty' => true,
+			'label' => false,
+			'selected'=> $this->get_var('info','ctimain','tlscertfile'),
+			'default' => $element['ctimain']['tlscertfile']['default']),
+		$this->get_var('tlscertfiles')),
+		$form->select(array(
+			'desc' => $this->bbf('fm_tlsprivkeyfile'),
+			'name' => 'cti[tlsprivkeyfile]',
+			'labelid' => 'tlsprivkeyfile',
+			'key' => 'name',
+			'altkey' => 'path',
+			'empty' => true,
+			'help' => $this->bbf('hlp_fm_tlsprivkeyfile'),
+			'selected' => $this->get_var('info','ctimain','tlsprivkeyfile'),
+			'default' => $element['ctimain']['tlsprivkeyfile']['default']),
+		$this->get_var('tlsprivkeyfiles'));
+	?>
 </fieldset>
 <fieldset id="cti-intervals">
 	<legend><?=$this->bbf('cti-intervals');?></legend>

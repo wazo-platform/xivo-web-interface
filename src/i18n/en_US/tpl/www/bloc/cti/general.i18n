@@ -7,12 +7,6 @@ General Settings
 ; fm_bt-save
 Save
 
-; fm_cti_commandset
-Command set:
-
-; hlp_fm_cti_commandset
-Command set help
-
 ; cti-ami
 AMI Connection 
 
@@ -34,6 +28,9 @@ Activated
 ; cti-servers
 Listening ports
 
+; cti-start-tls
+STARTTLS options
+
 ; fm_cti_list_ip
 IP address
 
@@ -43,8 +40,8 @@ Port
 ; fm_cti_cti_ip
 CTI:
 
-; fm_cti_ctis_ip
-CTIS: 
+; fm_start_tls
+STARTTLS:
 
 ; hlp_fm_cti_cti_ip
 IP cti help

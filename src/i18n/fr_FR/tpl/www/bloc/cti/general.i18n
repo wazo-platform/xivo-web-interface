@@ -31,20 +31,17 @@ Adresses IP
 ; fm_cti_list_port
 Port
 
-; fm_cti_commandset
-Jeu de commandes:
-
-; hlp_fm_cti_commandset
-aide jeu de commandes
-
 ; cti-servers
 Ports en écoute
 
+; cti-start-tls
+Options de STARTTLS
+
+; fm_start_tls
+STARTTLS :
+
 ; fm_cti_cti_ip
 CTI:
-
-; fm_cti_ctis_ip
-CTIS: 
 
 ; hlp_fm_cti_cti_ip
 aide IP cti
