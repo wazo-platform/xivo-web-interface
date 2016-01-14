@@ -1,6 +1,6 @@
 /*
  * XiVO Web-Interface
- * Copyright (C) 2006-2014  Avencall
+ * Copyright (C) 2006-2016  Avencall
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,8 +23,6 @@
 #r-xivo-configuration #index #xivo-stats a:hover {text-decoration: none;}
 #r-xivo-configuration #index #xivo-logo {float: left;width: 50%;padding: 10px 0px;text-align: center;}
 #r-xivo-configuration #index #xivo-logo ul {margin-top: 10px}
-
-#b-content #r-xivo-configuration #sr-accesswebservice.b-list th.col-action {width: 75px;}
 
 #r-xivo-configuration #acl table {border: 0px solid #999;border-bottom-width: 1px;}
 #r-xivo-configuration #acl table th {background-image: url(../../img/content/top/bg-1.gif);background-color: #fff;width: 745px;padding: 1px 0px;border: 1px solid #999;border-bottom-width: 0px;}

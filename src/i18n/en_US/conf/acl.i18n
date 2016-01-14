@@ -25,9 +25,6 @@ Skill rules
 ; acl(service-callcenter-settings-queueskills)
 Skills
 
-; acl(xivo-configuration-check)
-Check
-
 ; acl(service-cti)
 CTI server
 
@@ -136,9 +133,6 @@ Advanced
 ; acl(service-ipbx-general_settings-iax)
 IAX Protocol
 
-; acl(service-ipbx-general_settings-outboundmwi)
-MWI registration
-
 ; acl(service-ipbx-general_settings-phonebook)
 Phonebook
 
@@ -172,9 +166,6 @@ IPBX settings
 ; acl(service-ipbx-pbx_settings-devices)
 Devices
 
-; acl(service-ipbx-pbx_settings-extension)
-Free extensions
-
 ; acl(service-ipbx-pbx_settings-groups)
 Groups
 
@@ -204,9 +195,6 @@ Configuration files
 
 ; acl(service-ipbx-system_management-context)
 Contexts
-
-; acl(service-ipbx-system_management-extensions)
-Extensions
 
 ; acl(service-ipbx-system_management-ldapfilter)
 LDAP filters
@@ -328,9 +316,6 @@ Resolv DNS
 ; acl(xivo-configuration-provisioning)
 Provisioning
 
-; acl(xivo-configuration-provisioning-autoprov)
-Autoprovisioning
-
 ; acl(xivo-configuration-provisioning-configdevice)
 Template device
 
@@ -352,9 +337,6 @@ Alerts
 ; acl(xivo-configuration-support-limits)
 Limits
 
-; acl(xivo-configuration-support-monitoring)
-Monitoring
-
 ; acl(xivo-configuration-support-xivo)
 XiVO
 
@@ -369,6 +351,3 @@ Apply network configuration
 
 ; acl(xivo-monit)
 Monit
-
-; acl(cti-profiles)
-CTI profiles

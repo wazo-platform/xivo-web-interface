@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -92,25 +92,6 @@ switch($act)
 		$_TPL->set_var('id',$info['id']);
 		$_TPL->set_var('info',$return);
 		$_TPL->set_var('element',$_AWS->get_element());
-		break;
-	case 'acl':
-		if(isset($_QR['id']) === false
-		|| ($info = $_AWS->get($_QR['id'])) === false)
-			$_QRY->go($_TPL->url('xivo/configuration/manage/accesswebservice'),$param);
-
-		$webservice_acl = $_AWS->get_acl();			
-
-		if(isset($_QR['fm_send']) === true)
-		{
-			$webservice_acl->edit($_QR);
-			$_QRY->go($_TPL->url('xivo/configuration/manage/accesswebservice'),$param);
-		}
-		else if(($tree = $webservice_acl->get_access_tree($info['id'])) !== false)
-		{
-			$_TPL->set_var('info',$info);
-			$_TPL->set_var('tree',$tree);
-		}
-		else $_QRY->go($_TPL->url('xivo/configuration/manage/accesswebservice'),$param);
 		break;
 	case 'delete':
 		$param['page'] = $page;
