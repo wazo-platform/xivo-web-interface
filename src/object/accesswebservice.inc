@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2015  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -88,7 +88,7 @@ class xivo_accesswebservice extends xivo_libdatastorage_abstract
 		if($id === false)
 			return(null);
 
-		return($this->_chk_acl($id,$category,$subcategory,$section));
+		return(true);
 	}
 
 	function chk_access($user=null,$passwd=null,$host=null,$category='',$subcategory='',$section='')
@@ -98,7 +98,7 @@ class xivo_accesswebservice extends xivo_libdatastorage_abstract
 		else if(($id = $this->chk_host_access($host)) === false)
 			return(false);
 
-		return($this->_chk_acl($id,$category,$subcategory,$section));
+		return(true);
 	}
 
 	function chk_user_access($user,$passwd,$host=null)
@@ -143,35 +143,6 @@ class xivo_accesswebservice extends xivo_libdatastorage_abstract
 		}
 
 		return(false);
-	}
-
-	function _chk_acl($id,$category='',$subcategory='',$section='')
-	{
-		$this->_load_acl();
-
-		$section = $this->_acl->get_section($category,$subcategory,$section);
-
-		return($this->_acl->_chk_section($section,$id));
-	}
-
-	function _load_acl()
-	{
-		if(is_object($this->_acl) === true)
-			return(true);
-		else if(xivo::load_class('xivo_accesswebservice_acl',
-					 XIVO_PATH_OBJECT.DWHO_SEP_DIR.'accesswebservice',
-					 'acl',
-					 false) === false)
-			trigger_error('Failed to load web services ACL',E_USER_ERROR);
-
-		$this->_acl = new xivo_accesswebservice_acl($this->_dso);
-	}
-
-	function get_acl()
-	{
-		$this->_load_acl();
-
-		return($this->_acl);
 	}
 }
 
