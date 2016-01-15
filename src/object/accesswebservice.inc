@@ -48,8 +48,6 @@ class xivo_accesswebservice extends xivo_libdatastorage_abstract
 	{
 		if(is_array($arr) === false)
 			return(false);
-		else if(isset($arr['obj']) === false)
-			$arr['obj'] = '';
 
 		return(parent::add($arr,$id));
 	}

@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -37,43 +37,7 @@ abstract class xivo_accesswebservice_abstract_sql extends dwho_datastorage_helpe
 		if(($r = parent::get($id,$disable)) === false)
 			return(false);
 
-		$r['obj'] = dwho_unserialize($r['obj']);
-
 		return($r);
-	}
-
-	function acl_edit($id,$arr)
-	{
-		if(($obj = $this->_get_obj($id)) === false)
-			return(false);
-
-		$obj['acl'] = $arr;
-
-		return($this->_save_obj($id,$obj));
-	}
-
-	function _save_obj($id,$obj)
-	{
-		if(($id = dwho_ulongint($id)) === 0 || is_array($obj) === false)
-			return(false);
-
-		return($this->_dso->update($this->_table,
-					   array('obj' => serialize($obj)),
-					   array('id' => $id)));
-	}
-
-	function _get_obj($id)
-	{
-		if(($id = dwho_ulongint($id)) === 0)
-			return(false);
-
-		$this->_dso->new_select($this->_table,'obj');
-		$this->_dso->where(array('id' => $id));
-
-		if(($r = $this->_dso->select_one()) === false)
-			return(false);
-
-		return(dwho_unserialize($r));
 	}
 }
 
