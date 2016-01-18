@@ -3,6 +3,9 @@
 
 $array = array();
 
+$array['accesswebservice'] = array();
+$array['accesswebservice']['update_keys'] = array('reload');
+
 $array['userfeatures'] = array();
 $array['userfeatures']['ctibus'] = array('xivo[user,%s,%s]');
 $array['userfeatures']['ipbx'] = array('dialplan reload', 'module reload app_queue.so', 'sip reload');

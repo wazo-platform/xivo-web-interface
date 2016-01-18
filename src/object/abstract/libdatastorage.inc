@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -520,6 +520,8 @@ abstract class xivo_libdatastorage_abstract extends xivo_libconfig_abstract
 			$cmds['dird'] = array();
 		if (!isset($cmds['agentbus']))
 			$cmds['agentbus'] = array();
+		if (!isset($cmds['update_keys']))
+			$cmds['update_keys'] = array();
 
 		$name = $this->_name;
 
