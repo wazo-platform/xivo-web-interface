@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016 Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,6 +17,58 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
+
+function build_row($option, $form, $url, $helper) {
+	$row = '<tr class="fm-paragraph"><td>';
+	$row .= $form->text(
+		array(
+			'paragraph' => false,
+			'label' => false,
+			'key' => false,
+			'size' => 30,
+			'name' => 'options[optionname][]',
+			'value' => $option[0],
+			'class' => 'sip-option-name',
+		)
+	);
+
+	$row .= "</td><td>";
+	$row .= $form->text(
+		array(
+			'paragraph' => false,
+			'label' => false,
+			'key' => false,
+			'size' => 30,
+			'name' => 'options[optionvalue][]',
+			'value' => $option[1],
+			'class' => 'sip-option-value',
+		)
+	);
+
+	$row .= '</td><td class="td-right">';
+	$row .= $url->href_html(
+		$url->img_html(
+			'img/site/button/mini/blue/delete.gif',
+			$helper->bbf('opt_line-sip-option-delete'),
+			'border="0"'
+		),
+		'#',
+		null,
+		null,
+		$helper->bbf('opt_line-sip-option-delete'),
+		false,
+		'&amp;',
+		true,
+		true,
+		true,
+		true,
+		'sip-option-remove'
+	);
+
+	$row .= "</td></tr>";
+
+	return $row;
+}
 
 ?>
 
@@ -691,4 +743,73 @@
             'error'    => $this->bbf_args('error',$this->get_var('error', 'unsolicited_mailbox')) ));
 
 ?>
+</div>
+
+<div id="sb-part-sip-options" class="b-nodisplay">
+	<div class="sb-list">
+		<table>
+			<thead>
+				<th class="th-left">
+					<?= $this->bbf('col_line-sip-option-name') ?>
+				</th>
+				<th class="th-center">
+					<?= $this->bbf('col_line-sip-option-value') ?>
+				</th>
+				<th class="th-right">
+					<?= $url->href_html(
+							$url->img_html(
+								'img/site/button/mini/orange/bo-add.gif',
+								$this->bbf('col_line-sip-option-add'),
+								'border="0"'),
+							'#',
+							null,
+							'id="sip-option-add"',
+							$this->bbf('col_line-sip-option-option-add')
+						);
+					?>
+				</th>
+			</thead>
+			<tbody id="sip-options">
+				<?php foreach($sip_options as $option_row): ?>
+					<?= build_row($option_row, $form, $url, $this) ?>
+				<?php endforeach ?>
+			</tbody>
+		</table>
+
+		<script type='text/javascript'>
+		var optionRow = <?= dwho_json::encode(build_row(
+			array('', ''),
+			$form, $url, $this))
+		?>;
+
+		function attachEvents(row) {
+			remove = row.find(".sip-option-remove");
+			remove.click(function(e) {
+				e.preventDefault();
+				row.detach();
+			});
+		}
+
+		$(function() {
+			$("#sip-option-add").click(function(e) {
+				e.preventDefault();
+				$("#sip-options").append(optionRow);
+				row = $("#sip-options tr:last");
+				attachEvents(row);
+			});
+
+			$("#sip-options tr").each(function(pos, row) {
+				attachEvents($(row));
+			});
+		});
+		</script>
+
+		<style>
+		.ui-autocomplete {
+			max-height: 200px;
+			overflow-y: auto;
+			overflow-x: hidden;
+		}
+		</style>
+	</div>
 </div>

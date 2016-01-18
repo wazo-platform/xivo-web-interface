@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016 Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -66,6 +66,17 @@
 			<span class="span-right">&nbsp;</span>
 		</li>
 		<li id="dwsm-tab-5"
+		    class="dwsm-blur"
+		    onclick="dwho_submenu.select(this,'sb-part-sip-options');"
+		    onmouseout="dwho_submenu.blur(this);"
+		    onmouseover="dwho_submenu.focus(this);">
+			<div class="tab">
+				<span class="span-center">
+					<a href="#sip-options"><?=$this->bbf('smenu_sip_options');?></a></span>
+			</div>
+			<span class="span-right">&nbsp;</span>
+		</li>
+		<li id="dwsm-tab-6"
 		    class="dwsm-blur-last"
 		    onclick="dwho_submenu.select(this,'sb-part-ipbxinfos',1);"
 		    onmouseout="dwho_submenu.blur(this,1);"

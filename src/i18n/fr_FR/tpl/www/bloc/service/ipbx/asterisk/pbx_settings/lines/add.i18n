@@ -19,6 +19,9 @@ T38
 ; smenu_advanced
 Avancé
 
+; smenu_sip_options
+Paramètres Optionels
+
 ; smenu_ipbxinfos
 Infos IPBX
 
@@ -721,3 +724,15 @@ Toujours
 
 ; no_ipbxinfos_found
 Aucune information IPBX disponible
+
+; col_line-sip-option-name
+Option
+
+; col_line-sip-option-value
+Valeur
+
+; col_line-sip-option-add
+Ajouter option
+
+; col_line-sip-option-delete
+Supprimer option
