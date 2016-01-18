@@ -25,9 +25,6 @@ Règles de compétences
 ; acl(service-callcenter-settings-queueskills)
 Compétences
 
-; acl(xivo-configuration-check)
-Check
-
 ; acl(service-cti)
 Serveur CTI
 
@@ -136,9 +133,6 @@ Avancés
 ; acl(service-ipbx-general_settings-iax)
 Protocole IAX
 
-; acl(service-ipbx-general_settings-outboundmwi)
-Abonnements MWI
-
 ; acl(service-ipbx-general_settings-phonebook)
 Carnet d'adresses
 
@@ -171,9 +165,6 @@ Paramètres IPBX
 
 ; acl(service-ipbx-pbx_settings-devices)
 Terminaisons
-
-; acl(service-ipbx-pbx_settings-extension)
-Disponibilité des extensions
 
 ; acl(service-ipbx-pbx_settings-groups)
 Groupes
@@ -328,9 +319,6 @@ Résolution DNS
 ; acl(xivo-configuration-provisioning)
 Approvisionnement
 
-; acl(xivo-configuration-provisioning-autoprov)
-Autoapprovisionnement
-
 ; acl(xivo-configuration-provisioning-configdevice)
 Modèles terminaison
 
@@ -352,9 +340,6 @@ Gestion des alertes
 ; acl(xivo-configuration-support-limits)
 Limitations
 
-; acl(xivo-configuration-support-monitoring)
-Monitoring
-
 ; acl(xivo-configuration-support-xivo)
 Maintenance XiVO
 
@@ -369,6 +354,3 @@ Appliquer les modifications réseau
 
 ; acl(xivo-monit)
 Monit
-
-; acl(cti-profiles)
-Profils CTI

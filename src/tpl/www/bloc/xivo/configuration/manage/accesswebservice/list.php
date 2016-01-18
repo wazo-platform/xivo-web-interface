@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -128,14 +128,6 @@ $page = $url->pager($pager['pages'],
 						      'id'	=> $ref['id']),
 						null,
 						$this->bbf('opt_modify')),"\n",
-				$url->href_html($url->img_html('img/site/button/key.gif',
-							       $this->bbf('opt_acl'),
-							       'border="0"'),
-						'xivo/configuration/manage/accesswebservice',
-						array('act'	=> 'acl',
-						      'id'	=> $ref['id']),
-						null,
-						$this->bbf('opt_acl')),"\n",
 				$url->href_html($url->img_html('img/site/button/delete.gif',
 							       $this->bbf('opt_delete'),
 							       'border="0"'),
