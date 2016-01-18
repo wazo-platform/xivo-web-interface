@@ -32,13 +32,6 @@ abstract class xivo_accesswebservice_abstract_sql extends dwho_datastorage_helpe
 		parent::_init($dso,$param);
 	}
 
-	function get($id,$disable=null)
-	{
-		if(($r = parent::get($id,$disable)) === false)
-			return(false);
-
-		return($r);
-	}
 }
 
 ?>

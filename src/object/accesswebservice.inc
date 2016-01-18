@@ -89,16 +89,6 @@ class xivo_accesswebservice extends xivo_libdatastorage_abstract
 		return(true);
 	}
 
-	function chk_access($user=null,$passwd=null,$host=null,$category='',$subcategory='',$section='')
-	{
-		if($user !== null && ($id = $this->chk_user_access($user,$passwd,$host)) === false)
-			return(false);
-		else if(($id = $this->chk_host_access($host)) === false)
-			return(false);
-
-		return(true);
-	}
-
 	function chk_user_access($user,$passwd,$host=null)
 	{
 		if(dwho_has_len($user) === false
