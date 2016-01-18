@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -45,6 +45,8 @@ $array['element']['disable']['set'] = true;
 $array['element']['description'] = array();
 $array['element']['description']['default'] = '';
 
+$array['element']['acl'] = array();
+$array['element']['acl']['default'] = '';
 
 dwho::load_class('dwho_network');
 

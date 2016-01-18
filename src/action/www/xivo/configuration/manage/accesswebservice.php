@@ -38,7 +38,11 @@ switch($act)
 		{
 			$add = false;
 
-			if(($result = $_AWS->chk_values($_QR)) === false)
+			$acl = array();
+			$acl = array_filter($_QR['acl']);
+			unset( $_QR['acl']);
+
+			if(($result = $_AWS->chk_values($_QR)) === false || _chk_acl($acl) === false)
 			{
 				$fm_save = false;
 				$result = $_AWS->get_filter_result();
@@ -50,8 +54,12 @@ switch($act)
 			else if(dwho_has_len($result['host']) === true)
 				$add = true;
 
-			if($add === true && $_AWS->add($result) !== false)
-				$_QRY->go($_TPL->url('xivo/configuration/manage/accesswebservice'),$param);
+			if($add === true) {
+				$result['acl'] = "{" . implode(",", $acl) . "}";
+				if($_AWS->add($result) !== false) {
+					$_QRY->go($_TPL->url('xivo/configuration/manage/accesswebservice'),$param);
+				 }
+			}
 		}
 
 		$_TPL->set_var('info',$result);
@@ -73,7 +81,11 @@ switch($act)
 
 			$_QR['disable'] = $info['disable'];
 
-			if(($result = $_AWS->chk_values($_QR)) === false)
+			$acl = array();
+			$acl = array_filter($_QR['acl']);
+			unset( $_QR['acl']);
+
+			if(($result = $_AWS->chk_values($_QR)) === false || _chk_acl($acl) === false)
 			{
 				$fm_save = false;
 				$result = $_AWS->get_filter_result();
@@ -85,8 +97,12 @@ switch($act)
 			else if(dwho_has_len($result['host']) === true)
 				$edit = true;
 
-			if($edit === true && $_AWS->edit($info['id'],$result) !== false)
-				$_QRY->go($_TPL->url('xivo/configuration/manage/accesswebservice'),$param);
+			if($edit === true) {
+				$result['acl'] = "{" . implode(",", $acl) . "}";
+				if($_AWS->edit($info['id'],$result) !== false) {
+					$_QRY->go($_TPL->url('xivo/configuration/manage/accesswebservice'),$param);
+				}
+			}
 		}
 
 		$_TPL->set_var('id',$info['id']);
@@ -158,9 +174,22 @@ switch($act)
 		$_TPL->set_var('list',$list);
 }
 
+function _chk_acl($acl)
+{
+			foreach($acl as $policy) {
+				if (preg_match('/^[a-zA-Z0-9-_\.\*#]+$/', $policy) === 0) {
+						return(false);
+				}
+			}
+			return(true);
+}
+
 $_TPL->set_var('act',$act);
 $_TPL->set_var('fm_save',$fm_save);
 $_TPL->set_var('error',$error);
+
+$dhtml = &$_TPL->get_module('dhtml');
+$dhtml->set_js('js/dwho/submenu.js');
 
 $menu = &$_TPL->get_module('menu');
 $menu->set_top('top/user/'.$_USR->get_info('meta'));

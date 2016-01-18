@@ -15,3 +15,18 @@ Host:
 
 ; fm_description
 Description:
+
+; fm_acl
+ACL
+
+; smenu_general
+General
+
+; smenu_acl
+ACL
+
+; col_add
+Add
+
+; opt_disp-delete
+Delete
