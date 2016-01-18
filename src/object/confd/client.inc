@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2015 Avencall
+# Copyright (C) 2015-2016 Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -26,6 +26,11 @@ class Request {
 	private $body = null;
 	private $headers = null;
 
+	static private $json_headers = array(
+		'Content-Type: application/json',
+		'Accept: application/json'
+	);
+
 	function __construct($verb, $url, $body="", $headers=null)
 	{
 		$this->verb = $verb;
@@ -45,6 +50,16 @@ class Request {
 	static public function get($url, $body="", $headers=null)
 	{
 		return new Request("GET", $url, $body, $headers);
+	}
+
+	static public function json_get($url, $body="")
+	{
+		return new Request("GET", $url, json_encode($body), self::$json_headers);
+	}
+
+	static public function json_put($url, $body)
+	{
+		return new Request("PUT", $url, json_encode($body), self::$json_headers);
 	}
 
 	public function get_verb()
@@ -110,6 +125,11 @@ class Response {
 		}
 	}
 
+	public function get_status()
+	{
+		return $this->status_code;
+	}
+
 	public function get_body()
 	{
 		return $this->body;
@@ -155,12 +175,12 @@ class Client {
 	private function prepare_curl($request) 
 	{
 		$curl = curl_init();
-		curl_setopt($curl, CURLOPT_HTTPHEADER, $request->get_headers());
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($curl, CURLOPT_FORBID_REUSE, true);
-		curl_setopt($curl, CURLOPT_URL, $request->build_url($this->rooturl));
 		curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, $this->connect_timeout);
 		curl_setopt($curl, CURLOPT_TIMEOUT, $this->timeout);
+		curl_setopt($curl, CURLOPT_URL, $request->build_url($this->rooturl));
+		curl_setopt($curl, CURLOPT_HTTPHEADER, $request->get_headers());
 
 		$verb = $request->get_verb();
 		if($verb == "GET") {
