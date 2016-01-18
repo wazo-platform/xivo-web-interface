@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2015  Avencall
+# Copyright (C) 2006-2016 Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,6 +23,9 @@ dwho::load_class('dwho_network');
 dwho::load_class('dwho_http');
 
 dwho_file::required(array(XIVO_PATH_OBJECT,'application','service','ipbx','asterisk.inc'),true);
+require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'converter', 'line', 'mapper.inc'));
+require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'client.inc'));
+require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'sip', 'sip.inc'));
 
 class xivo_application_service_asterisk_line extends xivo_application_asterisk_abstract
 {
@@ -35,6 +38,8 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 	protected $_extensions		= false;
 	protected $_provddevice		= false;
 	protected $_entity			= false;
+	protected $_option_mapper   = false;
+	protected $_sip_confd		= false;
 	protected $_conf			= array();
 
 	public function __construct(&$service,&$dso,$param=null,$components=true)
@@ -77,6 +82,11 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 		|| ($this->_provddevice = &$_XOBJ->get_module('provddevice')) === false)
 			return(false);
 
+		$this->_option_mapper = new OptionMapper();
+
+		$client = Client::default_config();
+		$this->_sip_confd = new SipResource($client);
+
 		return(true);
 	}
 
@@ -107,6 +117,8 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 		$this->_origin['protocol'] = $this->_protocol->get_origin();
 		$this->_origin['linefeatures'] = $this->_linefeatures->get_origin();
 
+		$this->get_options();
+
 		if($this->_components === false)
 			return($this->_info);
 
@@ -117,6 +129,20 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 			$this->_get_ipbx_infos();
 
 		return($this->_info);
+	}
+
+	private function get_options()
+	{
+		$options = array();
+		$protocol = $this->_info['linefeatures']['protocol'];
+
+		if($protocol === "sip") {
+			$protocolid = $this->_info['linefeatures']['protocolid'];
+			$sip = $this->_sip_confd->get($protocolid);
+			$options = $this->_option_mapper->extract_options($sip['options']);
+		}
+
+		$this->_origin['options'] = $this->_info['options'] = $options;
 	}
 
 	function _get_exten()
@@ -367,6 +393,8 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 
 		$this->set_linefeatures($action,$arr['linefeatures']);
 
+		$this->set_options($arr);
+
 		if($this->get_errnb() > 0)
 			$this->_protocolname = $r = false;
 		else
@@ -452,6 +480,21 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 		return(true);
 	}
 
+	private function set_options($arr)
+	{
+		if(is_array($arr) === false)
+			return(false);
+
+		$this->_set_result('options', null);
+
+		if(array_key_exists('options', $arr)) {
+			$mapped_options = $this->_option_mapper->map_form($arr['options']);
+			$this->_set_result('options', $mapped_options);
+		}
+
+		return(true);
+	}
+
 	function add()
 	{
 		$r = true;
@@ -474,9 +517,45 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 		if ($user_id !== 0)
 			$this->update_protocol_setvar($this->_protocolname, $protocol_id, $user_id);
 
+		if($protocol_id !== null && $this->_protocolname !== null) {
+			$success = $this->update_options($protocol_id, $this->_protocolname);
+			if($sucess !== true) {
+				$this->_reverse_add();
+				return false;
+			}
+		}
+
 		$this->_status = '';
 
 		return($line_id);
+	}
+
+	private function update_options($protocol_id, $protocol)
+	{
+		if($protocol == "sip")
+		{
+			$sip = $this->_sip_confd->get($protocol_id);
+			if($sip === null) {
+				dwho_report::push('error', 'cannot get options for endpoint sip ' . $protocol_id);
+				return(false);
+			}
+
+			$current_options = $sip['options'];
+
+			$new_options = $this->get_result('options');
+			if($new_options === null) {
+				$new_options = array();
+			}
+
+			$options = $this->_option_mapper->merge_options($current_options, $new_options);
+			$success = $this->_sip_confd->update($protocol_id, array('options' => $options));
+			if($success !== true) {
+				dwho_report::push('error', 'could not update options for endpoint sip ' . $protocol_id);
+				return(false);
+			}
+		}
+
+		return(true);
 	}
 
 	function add_protocol()
@@ -556,6 +635,14 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 
 		if ($user_id !== 0)
 			$this->update_protocol_setvar($this->_protocolname, $protocol_id, $user_id);
+
+		if($protocol_id !== null && $this->_protocolname !== null) {
+			$success = $this->update_options($protocol_id, $this->_protocolname);
+			if($success !== true) {
+				$this->_reverse_edit($protocol_id);
+				return false;
+			}
+		}
 
 		$this->_status = '';
 		return($this->_info['linefeatures']['id']);
