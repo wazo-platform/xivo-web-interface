@@ -519,7 +519,7 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 
 		if($protocol_id !== null && $this->_protocolname !== null) {
 			$success = $this->update_options($protocol_id, $this->_protocolname);
-			if($sucess !== true) {
+			if($success !== true) {
 				$this->_reverse_add();
 				return false;
 			}
