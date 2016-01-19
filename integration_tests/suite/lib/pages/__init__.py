@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-# Copyright (C) 2015 Avencall
+# Copyright (C) 2015-2016 Avencall
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@ from page import Page, ListPage
 from login import LoginPage
 from user import UserListPage
 from voicemail import VoicemailListPage
+from line import LineListPage
 
 from selenium import webdriver
 from pyvirtualdisplay import Display
@@ -30,7 +31,8 @@ class Browser(object):
 
     pages = {'login': LoginPage,
              'users': UserListPage,
-             'voicemails': VoicemailListPage}
+             'voicemails': VoicemailListPage,
+             'lines': LineListPage}
 
     def __init__(self, username, password, virtual=True):
         self.username = username
