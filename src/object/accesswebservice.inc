@@ -26,7 +26,7 @@ class xivo_accesswebservice extends xivo_libdatastorage_abstract
 {
 	var $_conf		= array();
 	var $_dso		= null;
-	var $_acl		= null;
+	var $_name		= 'accesswebservice';
 	var $_filter		= false;
 	var $_origin		= false;
 	var $_origin_list	= false;
