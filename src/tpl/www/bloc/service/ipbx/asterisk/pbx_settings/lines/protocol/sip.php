@@ -679,16 +679,14 @@ function build_row($option, $form, $url, $helper) {
 			      $element['protocol']['sip']['useclientcode']['value']),
 
 	// asterisk 1.8 fields
-    $form->select(array('desc'  => $this->bbf('fm_protocol-transport'),
+    $form->text(array('desc'  => $this->bbf('fm_protocol-transport'),
             		'name'      => 'protocol[transport]',
-            		'labelid'   => 'protocol-transport',
-					'key'       => false,
-					'empty'     => true,
+					'labelid'   => 'protocol-transport',
+					'size'      => 15,
             		'help'      => $this->bbf('hlp_fm_protocol-transport'),
-            		'selected'  => $info['protocol']['transport'],
+					'value'     => $this->get_var('info', 'protocol', 'transport'),
 					'default'   => $element['protocol']['sip']['transport']['default'],
-					'error'     => $this->bbf_args('error', $this->get_var('error','protocol','transport'))),
-         $element['protocol']['sip']['transport']['value']),
+					'error'     => $this->bbf_args('error', $this->get_var('error','protocol','transport')))),
 
     $form->select(array('desc'  => $this->bbf('fm_protocol-callcounter'),
             'name'      => 'protocol[callcounter]',
