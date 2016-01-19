@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016 Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@ $url = &$this->get_module('url');
 $proto = $this->get_var('proto');
 
 ?>
-<div id="sr-users" class="b-infos b-form">
+<div id="sr-lines" class="b-infos b-form">
 	<h3 class="sb-top xspan">
 		<span class="span-left">&nbsp;</span>
 		<span class="span-center"><?=$this->bbf('title_content_name');?></span>
