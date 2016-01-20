@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016 Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,17 +20,25 @@
 
 class xivo_service_asterisk_userfeatures_identity
 {
-	function _prepare_identity(&$data,$full=true)
+	function _prepare_identity(&$data,$full=true,$main_line=null)
 	{
 		$data['fullname'] = trim(trim($data['firstname']).' '.trim($data['lastname']));
 
 		if($data['fullname'] === '')
 			$data['fullname'] = '-';
 
-		if((bool) $full === false)
-			$data['identity'] = $data['fullname'];
-		else
-			$data['identity'] = $data['fullname'];
+		$data['identity'] = $data['fullname'];
+
+		if((bool) $full === true && is_array($main_line)) {
+			if((string)$main_line['number'] !== "") {
+				$data['identity'] .=
+					" ("
+					. $main_line['number']
+					. "@"
+					. $main_line['context']
+					. ")";
+			}
+		}
 
 		return($data);
 	}

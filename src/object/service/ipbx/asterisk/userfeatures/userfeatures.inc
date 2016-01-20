@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2015  Avencall
+# Copyright (C) 2006-2016 Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -43,9 +43,9 @@ class xivo_service_asterisk_userfeatures extends xivo_service_asterisk_abstract
 		$this->_identity = &$this->_sre->get_identity($this->_name);
 	}
 
-	function _prepare($data)
+	function _prepare($data, $main_line=null)
 	{
-		$this->_identity->_prepare_identity($data);
+		$this->_identity->_prepare_identity($data, true, $main_line);
 
 		$data['id'] = (int) $data['id'];
 		$data['entityid'] = (int) $data['entityid'];

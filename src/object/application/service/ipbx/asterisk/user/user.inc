@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2015  Avencall
+# Copyright (C) 2006-2016 Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -512,13 +512,17 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			$ref = &$rs[$i];
 
 			$userfeatures = dwho_array_startswith_key($ref,'userfeatures.',true);
-			$r[$userfeatures['id']] = $this->_userfeatures->_prepare($userfeatures);
-			if($this->_components === false)
-				continue;
 
-			$entity = dwho_array_startswith_key($ref,'entity.',true);
-			$r[$userfeatures['id']]['entity'] = $this->_entity->_prepare($entity);
-			$r[$userfeatures['id']]['masterline'] = $this->_linefeatures->get_user_masterline($userfeatures['id']);
+			if($this->_components === false) {
+				$r[$userfeatures['id']] = $this->_userfeatures->_prepare($userfeatures);
+				continue;
+			} else {
+				$main_line = $this->_linefeatures->get_user_masterline($userfeatures['id']);
+				$entity = dwho_array_startswith_key($ref,'entity.',true);
+				$r[$userfeatures['id']] = $this->_userfeatures->_prepare($userfeatures, $main_line);
+				$r[$userfeatures['id']]['entity'] = $this->_entity->_prepare($entity);
+				$r[$userfeatures['id']]['masterline'] = $main_line;
+			}
 		}
 
 		if(empty($r) === true)
