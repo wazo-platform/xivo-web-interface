@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2015  Avencall
+# Copyright (C) 2006-2016 Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -285,7 +285,6 @@ $array['element']['category']['forcedef'] = true;
 
 // asterisk 1.8 fields
 $array['element']['transport'] = array();
-$array['element']['transport']['value'] = array('udp','tcp','tls', 'udp,tcp', 'tcp,tls', 'udp,tcp,tls');
 $array['element']['transport']['default'] = '';
 $array['element']['transport']['null']    = true;
 
@@ -490,7 +489,7 @@ $array['filter']['regserver'] = array('set' => false,'chk' => 0);
 $array['filter']['lastms'] = array('set' => false,'chk' => 0);
 $array['filter']['protocol'] = array('set' => false);
 $array['filter']['category'] = array('set' => false);
-$array['filter']['transport'] = array('set' => false, 'chk' => 2, 'key' => array('udp','tcp','tls', 'udp,tcp', 'tcp,tls', 'udp,tcp,tls'));
+$array['filter']['transport'] = array('set' => false, 'chk' => 2);
 $array['filter']['directmedia'] = array('set' => false, 'chk' => 2, 'key' => array('no','yes','nonat','update','update,nonat','outgoing'));
 $array['filter']['callcounter'] = array('set' => false, 'chk' => 2, 'bool' => true);
 $array['filter']['busylevel'] = array('set' => false, 'chk' => 2, 'cast' => 'uint','between' => array(1,100,1));

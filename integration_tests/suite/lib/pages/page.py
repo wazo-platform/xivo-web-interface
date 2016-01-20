@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-# Copyright (C) 2015 Avencall
+# Copyright (C) 2015-2016 Avencall
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -127,13 +127,17 @@ class ListPage(Page):
         return self
 
     def add(self):
+        self.add_form()
+        self.wait_for_form()
+        return self.form_page(self.driver)
+
+    def add_form(self):
         url = self.build_url(self.url, act='add')
         self.driver.get(url)
 
+    def wait_for_form(self):
         condition = ec.presence_of_element_located(self.form_selector)
         self.wait().until(condition)
-
-        return self.form_page(self.driver)
 
     def edit(self, name):
         xpath = self.edit_xpath.format(name=name)

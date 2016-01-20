@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016 Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,6 +27,8 @@ $element = $this->get_var('element');
 
 $context_list = $this->get_var('context_list');
 $ipbxinfos = $this->get_var('info','ipbx');
+
+$sip_options = $this->get_var('info', 'options');
 
 $allow = array();
 if(isset($info['protocol'])):

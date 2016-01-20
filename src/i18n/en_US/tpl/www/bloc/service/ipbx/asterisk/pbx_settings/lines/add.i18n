@@ -25,6 +25,9 @@ Provisioning
 ; smenu_advanced
 Advanced
 
+; smenu_sip_options
+Optional Parameters
+
 ; smenu_ipbxinfos
 IPBX Infos
 
@@ -1100,3 +1103,15 @@ Create a schedule
 
 ; no_ipbxinfos_found
 No IPBX infos found
+
+; col_line-sip-option-name
+Option
+
+; col_line-sip-option-value
+Value
+
+; col_line-sip-option-add
+Add option
+
+; opt_line-sip-option-delete
+Delete option

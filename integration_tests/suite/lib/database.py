@@ -1,4 +1,5 @@
 import uuid
+import random
 
 import sqlalchemy as sa
 
@@ -385,3 +386,59 @@ class DatabaseQueries(object):
                                 user_id=user_id,
                                 label=label,
                                 blf=blf)
+
+    def insert_sip_line(self, username, secret='secret', context='default', provisioningid=None):
+        provisioningid = provisioningid or random.randint(100000, 999999)
+
+        query = text("""
+                     INSERT INTO usersip
+                     (
+                        name,
+                        secret,
+                        type,
+                        category,
+                        context
+                     )
+                     VALUES
+                     (
+                        :username,
+                        :secret,
+                        'friend',
+                        'user',
+                        :context
+                     )
+                     RETURNING id
+                     """)
+
+        sip_id = self.connection.execute(query,
+                                         username=username,
+                                         secret=secret,
+                                         context=context).scalar()
+
+        query = text("""
+                     INSERT INTO linefeatures
+                     (
+                        protocol,
+                        protocolid,
+                        name,
+                        configregistrar,
+                        context,
+                        provisioningid,
+                        ipfrom
+                     )
+                     VALUES
+                     (
+                        'sip',
+                        :sipid,
+                        (SELECT name FROM usersip WHERE id = :sipid),
+                        'default',
+                        :context,
+                        :provisioningid,
+                        '127.0.0.1'
+                     )
+                     """)
+
+        self.connection.execute(query,
+                                sipid=sip_id,
+                                context=context,
+                                provisioningid=provisioningid)
