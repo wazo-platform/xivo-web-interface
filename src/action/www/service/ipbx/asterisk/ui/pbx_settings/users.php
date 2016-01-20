@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016 Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@ switch($act)
 	case 'search':
 	default:
 		$act = 'search';
-		$appuser = &$ipbx->get_application('user',null,false);
+		$appuser = &$ipbx->get_application('user',null);
 
 		if(($list = $appuser->get_users_search($_QRY->get('search'),false)) === false)
 		{
