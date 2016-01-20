@@ -762,7 +762,7 @@ function build_row($option, $form, $url, $helper) {
 							'#',
 							null,
 							'id="sip-option-add"',
-							$this->bbf('col_line-sip-option-option-add')
+							$this->bbf('col_line-sip-option-add')
 						);
 					?>
 				</th>

@@ -20,7 +20,7 @@ T38
 Avancé
 
 ; smenu_sip_options
-Paramètres Optionels
+Paramètres Optionnels
 
 ; smenu_ipbxinfos
 Infos IPBX
@@ -734,5 +734,5 @@ Valeur
 ; col_line-sip-option-add
 Ajouter option
 
-; col_line-sip-option-delete
+; opt_line-sip-option-delete
 Supprimer option

@@ -1113,5 +1113,5 @@ Value
 ; col_line-sip-option-add
 Add option
 
-; col_line-sip-option-delete
+; opt_line-sip-option-delete
 Delete option
