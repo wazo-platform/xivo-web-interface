@@ -1,7 +1,7 @@
 <?php
 #
 # XiVO Web-Interface
-# Copyright (C) 2013-2014  Avencall
+# Copyright (C) 2013-2016 Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -79,7 +79,7 @@ class confd_ressource_device extends xivo_confd_helpers_abstract
 		$ipbx = &$_SRE->get('ipbx');
 		$line_module = $ipbx->get_module('linefeatures');
 
-		$device['number'] = $device['context'] ='';
+		$device['number'] = $device['context'] = $device['line_id'] = '';
 		switch ($device['status'])
 		{
 			case 'configured':
@@ -87,6 +87,7 @@ class confd_ressource_device extends xivo_confd_helpers_abstract
 				{
 					$device['number'] = $line['number'];
 					$device['context'] = $line['context'];
+					$device['line_id'] = $line['id'];
 					if (defined('ENTITY_FILTER_CONTEXTS'))
 					{
 						$contexts = explode(',', ENTITY_FILTER_CONTEXTS);
