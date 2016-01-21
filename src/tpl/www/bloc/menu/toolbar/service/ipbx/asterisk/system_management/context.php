@@ -25,6 +25,7 @@ $dhtml = &$this->get_module('dhtml');
 $search = (string) $this->get_var('search');
 
 $toolbar_js = array();
+$toolbar_js[] = 'var xivo_toolbar_fm_search = \''.$dhtml->escape($search).'\';';
 $toolbar_js[] = 'var xivo_toolbar_form_name = \'fm-context-list\';';
 $toolbar_js[] = 'var xivo_toolbar_form_list = \'contexts[]\';';
 $toolbar_js[] = 'var xivo_toolbar_adv_menu_delete_confirm = \''.$dhtml->escape($this->bbf('toolbar_adv_menu_delete_confirm')).'\';';

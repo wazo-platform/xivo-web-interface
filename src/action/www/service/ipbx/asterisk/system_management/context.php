@@ -19,7 +19,7 @@
 #
 
 dwho::load_class('dwho_prefs');
-$prefs = new dwho_prefs('pickup');
+$prefs = new dwho_prefs('context');
 
 $act = isset($_QR['act']) === true ? $_QR['act'] : '';
 $page = dwho_uint($prefs->get('page', 1));
