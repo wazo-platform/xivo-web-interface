@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016 Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -162,7 +162,21 @@ $page = $url->pager($pager['pages'],
 			?></label>
 		</td>
 		<td class="col_ip_address"><?=(dwho_has_len($ref, 'ip') === true ? $ref['ip'] : '-')?></td>
-		<td class="col_number"><?=(dwho_has_len($ref, 'number') === true ? $ref['number'] : '-')?></td>
+		<td class="col_number">
+			<?php
+				if(dwho_has_len($ref, 'number') && dwho_has_len($ref, 'line_id')) {
+					echo $url->href_html(
+						$ref['number'],
+						'service/ipbx/pbx_settings/lines',
+						array(
+							'id' => $ref['line_id'],
+							'act' => 'edit'
+						));
+				} else {
+					echo "-";
+				}
+			?>
+		</td>
 		<td class="col_entity"><?=(dwho_has_len($ref, 'entity_displayname') === true ? $ref['entity_displayname'] : '-')?></td>
 		<td class="col_vendor"><?=(dwho_has_len($ref, 'vendor') === true ? $ref['vendor'] : '-')?></td>
 		<td class="col_model"><?=(dwho_has_len($ref, 'model') === true ? $ref['model'] : '-')?></td>
