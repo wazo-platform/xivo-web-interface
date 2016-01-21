@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016 Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,13 +18,20 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+dwho::load_class('dwho_prefs');
+$prefs = new dwho_prefs('context');
+
 $act = isset($_QR['act']) === true ? $_QR['act'] : '';
-$page = isset($_QR['page']) === true ? dwho_uint($_QR['page'],1) : 1;
+$page = dwho_uint($prefs->get('page', 1));
+$search  = strval($prefs->get('search', ''));
 
 $info = array();
 
 $param = array();
 $param['act'] = 'list';
+
+if($search !== '')
+	$param['search'] = $search;
 
 $modcontexttype = &$ipbx->get_module('contexttype');
 
@@ -245,6 +252,7 @@ switch($act)
 
 		$_QRY->go($_TPL->url('service/ipbx/system_management/context'),$param);
 		break;
+	case 'list':
 	default:
 		$act = 'list';
 		$prevpage = $page - 1;
@@ -259,7 +267,11 @@ switch($act)
 		$limit[0] = $prevpage * $nbbypage;
 		$limit[1] = $nbbypage;
 
-		$list = $appcontext->get_contexts_list(null,$order,$limit);
+		if($search !== '')
+			$list = $appcontext->get_contexts_search($search,null,$order,$limit);
+		else
+			$list = $appcontext->get_contexts_list(null,$order,$limit);
+
 		$total = $appcontext->get_cnt();
 
 		if($list === false && $total > 0 && $prevpage > 0)
@@ -270,6 +282,7 @@ switch($act)
 
 		$_TPL->set_var('pager',dwho_calc_page($page,$nbbypage,$total));
 		$_TPL->set_var('list',$list);
+		$_TPL->set_var('search', $search);
 }
 
 $_TPL->set_var('act',$act);
