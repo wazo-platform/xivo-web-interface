@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016 Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -54,7 +54,7 @@ switch($act)
 		$userorder['firstname'] = SORT_ASC;
 		$userorder['lastname'] = SORT_ASC;
 
-		$appuser = &$ipbx->get_application('user',null,false);
+		$appuser = &$ipbx->get_application('user',null);
 		$user['list'] = $appuser->get_users_list(null,$userorder,null,true);
 
 		$appagent = &$ipbx->get_application('agent',null,false);
@@ -186,7 +186,7 @@ switch($act)
 		$userorder['firstname'] = SORT_ASC;
 		$userorder['lastname'] = SORT_ASC;
 
-		$appuser = &$ipbx->get_application('user',null,false);
+		$appuser = &$ipbx->get_application('user',null);
 		$user['list'] = $appuser->get_users_list(null,$userorder,null,true);
 
 		$appagent = &$ipbx->get_application('agent',null,false);
