@@ -15,3 +15,18 @@ Hôte :
 
 ; fm_description
 Description :
+
+; fm_acl
+ACL
+
+; smenu_general
+Général
+
+; smenu_acl
+ACL
+
+; col_add
+Ajouter
+
+; opt_disp-delete
+Supprimer

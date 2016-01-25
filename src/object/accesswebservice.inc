@@ -37,9 +37,21 @@ class xivo_accesswebservice extends xivo_libdatastorage_abstract
 		$this->_load_dso();
 	}
 
+	function _pg_array_parse($literal)
+	{
+		if ($literal == '') return;
+		preg_match_all('/(?<=^\{|,)(([^,"{]*)|\s*"((?:[^"\\\\]|\\\\(?:.|[0-9]+|x[0-9a-f]+))*)"\s*)(,|(?<!^\{)(?=\}$))/i', $literal, $matches, PREG_SET_ORDER);
+		$values = [];
+		foreach ($matches as $match) {
+			$values[] = $match[3] != '' ? stripcslashes($match[3]) : (strtolower($match[2]) == 'null' ? null : $match[2]);
+		}
+		return $values;
+	}
+
 	function _prepare($data)
 	{
 		$data['disable'] = (bool) $data['disable'];
+		$data['acl'] = $this->_pg_array_parse($data['acl']);
 
 		return($data);
 	}
