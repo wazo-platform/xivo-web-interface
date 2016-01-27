@@ -59,6 +59,10 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 		else if((bool) $components === true)
 			$this->load_components();
 
+		$client = Client::default_config();
+		$this->_sip_confd = new SipResource($client);
+		$this->_option_mapper = new OptionMapper();
+
 		return(true);
 	}
 
@@ -81,11 +85,6 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 		|| ($this->_entity = &$_XOBJ->get_module('entity')) === false
 		|| ($this->_provddevice = &$_XOBJ->get_module('provddevice')) === false)
 			return(false);
-
-		$this->_option_mapper = new OptionMapper();
-
-		$client = Client::default_config();
-		$this->_sip_confd = new SipResource($client);
 
 		return(true);
 	}
