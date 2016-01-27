@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2016  Avencall
+# Copyright (C) 2006-2014  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -60,6 +60,9 @@ class xivo_service_asterisk_usercustom extends xivo_service_asterisk_abstract
 		$arr['protocol'] = XIVO_SRE_IPBX_AST_PROTO_CUSTOM;
 		$arr['category'] = 'user';
 
+		if(isset($arr['interface']) === true)
+			$arr['interface'] = strtolower($arr['interface']);
+
 		return(parent::add($arr,$id));
 	}
 
@@ -71,6 +74,9 @@ class xivo_service_asterisk_usercustom extends xivo_service_asterisk_abstract
 		$arr['name'] = null;
 		$arr['protocol'] = XIVO_SRE_IPBX_AST_PROTO_CUSTOM;
 		$arr['category'] = 'user';
+
+		if(isset($arr['interface']) === true)
+			$arr['interface'] = strtolower($arr['interface']);
 
 		return(parent::edit($id,$arr,$disable));
 	}
