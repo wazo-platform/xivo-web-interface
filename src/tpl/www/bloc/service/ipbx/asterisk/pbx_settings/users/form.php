@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -77,7 +77,16 @@ if(dwho_issa('linefeatures',$info) === true
 				  'default'	=> $element['userfeatures']['mobilephonenumber']['default'],
 				  'value'	=> $info['userfeatures']['mobilephonenumber'],
 				  'error'	=> $this->bbf_args('error',
-						   $this->get_var('error', 'userfeatures', 'mobilephonenumber')) ));
+						   $this->get_var('error', 'userfeatures', 'mobilephonenumber')) )),
+
+		$form->text(array('desc'	=> $this->bbf('fm_userfeatures_email'),
+				  'name'	=> 'userfeatures[email]',
+				  'labelid'	=> 'userfeatures-email',
+				  'size'	=> 15,
+				  'default'	=> $element['userfeatures']['email']['default'],
+				  'value'	=> $info['userfeatures']['email'],
+				  'error'	=> $this->bbf_args('error',
+						   $this->get_var('error', 'userfeatures', 'email')) ));
 
 	if($schedules === false):
 		echo	'<div class="txt-center">',
