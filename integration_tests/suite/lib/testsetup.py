@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-# Copyright (C) 2015 Avencall
+# Copyright (C) 2015-2016 Avencall
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@ def setup_db():
     user = os.environ.get('DB_USER', 'asterisk')
     password = os.environ.get('DB_PASSWORD', 'proformatique')
     host = os.environ.get('DB_HOST', 'localhost')
-    port = os.environ.get('DB_PORT', 15432)
+    port = os.environ.get('DB_PORT', 15433)
     db = os.environ.get('DB_NAME', 'asterisk')
 
     return database.DbHelper.build(user, password, host, port, db)
