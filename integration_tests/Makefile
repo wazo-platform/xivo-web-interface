@@ -1,15 +1,15 @@
 .PHONY: test-setup distclean
 
 MANAGE_DB_DIR=../../xivo-manage-db/
-POSTGRES_DOCKER=$(MANAGE_DB_DIR)/contribs/xivo-postgres/Dockerfile
+POSTGRES_DOCKER=$(MANAGE_DB_DIR)/contribs/postgres-test/Dockerfile
 
 
-test-setup: build-postgres build-webi
+test-setup: build-webi
 	docker pull n3llyb0y/wait
+	docker pull xivo/postgres-test
 
-build-postgres:
-	docker pull postgres:9.4
-	docker build -t xivo/xivo-postgres -f $(POSTGRES_DOCKER) $(MANAGE_DB_DIR)
+update-db:
+	docker build -t xivo/postgres-test -f $(POSTGRES_DOCKER) $(MANAGE_DB_DIR)
 
 build-webi:
 	docker build -t xivo/xivo-web-interface ..
@@ -28,5 +28,5 @@ start:
 	docker-compose run --service-ports --rm tests
 
 distclean:
-	docker rmi xivo/xivo-postgres
+	docker rmi xivo/postgres-test
 	docker rmi xivo-confd-test
