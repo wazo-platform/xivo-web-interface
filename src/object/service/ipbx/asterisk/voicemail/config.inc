@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016 Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -251,8 +251,8 @@ $array['filter']['context'] = array('callback' => 'xivo_service_asterisk::chk_co
 $array['filter']['mailbox'] = array('minlen' => 1,'maxlen' => 40,'regexp' => '/^[0-9#\*]+$/');
 $array['filter']['password'] = array('set' => false,'chk' => 2,'regexp' => '/^[0-9#\*]+$/','maxlen' => 80);
 $array['filter']['fullname'] = array('cast' => 'sgraph','maxlen' => 80);
-$array['filter']['email'] = array('set' => false,'chk' => 2,'maxlen' => 80,'callback' => 'dwho_network::valid_email');
-$array['filter']['pager'] = array('set' => false,'chk' => 2,'maxlen' => 80,'callback' => 'dwho_network::valid_email');
+$array['filter']['email'] = array('set' => false,'chk' => 2,'maxlen' => 80);
+$array['filter']['pager'] = array('set' => false,'chk' => 2,'maxlen' => 80);
 $array['filter']['dialout'] = array('set' => false,
 				    'chk' => 2,
 				    'callback' => 'xivo_service_asterisk::chk_context',

@@ -247,7 +247,7 @@ $array['filter']['mobilephonenumber'] = array('set'	=> false,
 					      'chk'	=> 2,
 					      'regexp'	=> '/^\+?[0-9\*#]+$/',
 					      'maxlen'	=> 128);
-$array['filter']['email'] = array('set' => false,'chk' => 2,'maxlen' => 128,'callback' => 'dwho_network::valid_email');
+$array['filter']['email'] = array('set' => false,'chk' => 2,'maxlen' => 128);
 $array['filter']['preprocess_subroutine'] = array('set' => false,
 						  'chk'	=> 2,
 						  'callback' => 'xivo_service_asterisk::chk_context',
