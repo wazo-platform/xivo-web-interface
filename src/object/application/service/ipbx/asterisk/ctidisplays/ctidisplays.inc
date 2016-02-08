@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -114,6 +114,11 @@ class xivo_application_service_asterisk_ctidisplays extends xivo_application_ast
 
 		$this->set_displays($arr['displays']);
 
+		if ($this->_is_number_type_unique($arr) === false) {
+			$this->_errnb++;
+			dwho_report::push('error', 'Only one Field type: \'number\' is supported');
+		}
+
 		return(($this->get_errnb() < 1));
 	}
 
@@ -134,6 +139,20 @@ class xivo_application_service_asterisk_ctidisplays extends xivo_application_ast
 
 		$this->_set_result('displays',$rs);
 
+		return(true);
+	}
+
+	function _is_number_type_unique($data)
+	{
+		$cpt = 0;
+		foreach($data['dispcol2'] as $type)
+		{
+			if ($type === 'number') {
+				if (($cpt += 1) > 1) {
+						return(false);
+				}
+			}
+		}
 		return(true);
 	}
 
