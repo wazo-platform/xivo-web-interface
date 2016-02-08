@@ -218,5 +218,5 @@ Value
 ; col_voicemail-option-add
 Add option
 
-; col_voicemail-option-delete
+; opt_voicemail-option-delete
 Delete option
