@@ -1518,6 +1518,11 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 				$arr['group-select'] = $group_select;
 			}
 
+			if (isset($line['id'])) {
+				$actual_line = $this->_line->get($line['id']);
+				$arr['options'] = $actual_line['options'];
+			}
+
 			if($this->_line->$methodset($arr,$protocolname) === false
 			|| ($line_id = $this->_line->$method()) === false)
 			{

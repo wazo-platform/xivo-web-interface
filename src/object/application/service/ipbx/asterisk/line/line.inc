@@ -399,6 +399,7 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 		else
 			$r = true;
 
+
 		return($r);
 	}
 
@@ -547,6 +548,7 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 			}
 
 			$options = $this->_option_mapper->merge_options($current_options, $new_options);
+
 			$success = $this->_sip_confd->update($protocol_id, array('options' => $options));
 			if($success !== true) {
 				dwho_report::push('error', 'could not update options for endpoint sip ' . $protocol_id);
