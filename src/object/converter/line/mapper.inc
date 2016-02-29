@@ -118,6 +118,8 @@ class OptionMapper {
 					$options[] = array($name, $value);
 				}
 			}
+		} else if (is_array($form)) {
+			$options = $form;
 		}
 
 		return $options;
