@@ -344,6 +344,8 @@ $array['statistics/call_center/data/stats2'] = 'statistics/index.php/call_center
 #$array['statistics/call_center/data/stats3'] = 'statistics/index.php/call_center/data/stats3';
 $array['statistics/call_center/data/stats4'] = 'statistics/index.php/call_center/data/stats4';
 $array['statistics/call_center/settings/configuration'] = 'statistics/index.php/call_center/settings/configuration/';
+$array['statistics/switchboard'] = 'statistics/index.php/switchboard';
+$array['statistics/switchboard/data'] = 'statistics/index.php/switchboard/data';
 
 $array['statistics/call_center/json/private/settings/configuration'] = 'statistics/call_center/json.php/private/settings/configuration/';
 $array['statistics/call_center/json/private/data/stats1'] = 'statistics/call_center/json.php/private/data/stats1/';

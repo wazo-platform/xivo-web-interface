@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016 Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -113,6 +113,8 @@ $array['tree']['statistics']['call_center']['data']['stats1'] = true;
 $array['tree']['statistics']['call_center']['data']['stats2'] = true;
 #$array['tree']['statistics']['call_center']['data']['stats3'] = true;
 $array['tree']['statistics']['call_center']['data']['stats4'] = true;
+$array['tree']['statistics']['switchboard'] = array();
+$array['tree']['statistics']['switchboard']['data'] = true;
 
 // callcenter
 $array['tree']['service']['callcenter'] = array();

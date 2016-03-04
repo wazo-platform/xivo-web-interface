@@ -131,6 +131,26 @@ if(xivo_user::chk_acl_section('statistics/call_center') === true):
 	endif;
 endif;
 ?>
+
+		</dl>
+	</dd>
+	<dd>
+		<dl>
+<?php
+if(xivo_user::chk_acl_section('statistics/switchboard') === true):
+?>
+			<dt><?=$this->bbf('mn_left_ti_switchboard')?></dt>
+<?php
+	if(xivo_user::chk_acl('switchboard', 'data') === true):
+?>
+			<dd id="mn-switchboard--data">
+				<?=$url->href_html($this->bbf('mn_left_data_switchboard'),
+				                   'statistics/switchboard/data');?>
+			</dd>
+<?php
+	endif;
+endif;
+?>
 		</dl>
 	</dd>
 	<dd class="b-nosize">
