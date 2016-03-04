@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2015  Avencall
+# Copyright (C) 2006-2016 Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -436,6 +436,7 @@ class xivo_object_provdconfig extends xivo_object_provd_abstract
 		$conf['raw_config'] = array();
 		$conf['raw_config']['ntp_enabled'] = true;
 		$conf['raw_config']['ntp_ip'] = $confregistrar['proxy_main'];
+		$conf['raw_config']['sip_dtmf_mode'] = 'SIP-INFO';
 
 		if (($rs = $this->get('defaultconfigdevice')) !== false)
 			$this->delete('defaultconfigdevice');
