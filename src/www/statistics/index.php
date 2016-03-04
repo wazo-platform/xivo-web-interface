@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016 Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,9 +20,27 @@
 
 require_once('xivo.php');
 
+$go = array_key_exists('go', $_GET)?$_GET['go']:null;
+
 if($_USR->mk_active() === false)
 	$_QRY->go($_TPL->url('xivo'), array('go' => urlencode($_SERVER['REQUEST_URI'])));
 
-$_QRY->go($_TPL->url('statistics/call_center/index.php'));
+if(xivo_user::chk_acl(true) === false)
+	$_QRY->go($_TPL->url('statistics'));
+
+$ipbx = &$_SRE->get('ipbx');
+
+$action_path = $_LOC->get_action_path('statistics',0);
+
+$dhtml = &$_TPL->get_module('dhtml');
+$dhtml->set_css('/css/statistics/statistics.css');
+$dhtml->set_css('extra-libs/jqplot/jquery.jqplot.css',true);
+$dhtml->set_js('extra-libs/jqplot/jquery.jqplot.js',true);
+$dhtml->add_js('/struct/js/date.js.php');
+
+if($action_path === false)
+	$_QRY->go($_TPL->url('xivo/logoff'), is_null($go)?null:array('go' => $go));
+
+die(include($action_path));
 
 ?>
