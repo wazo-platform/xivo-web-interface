@@ -46,8 +46,9 @@ $switchboards = $this->get_var('switchboards');
 					'labelid'	=> 'switchboard',
 					'empty'	=> false,
 					'paragraph'	=> false,
-					'key'		=> false),
-				  array_keys($switchboards));
+					'key'		=> 'display_name',
+					'altkey'	=> 'id'),
+				  $switchboards);
 ?>
 	</div>
 </div>

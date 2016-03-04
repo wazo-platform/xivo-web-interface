@@ -62,10 +62,7 @@ if(isset($_QR['fm_send']) === true || isset($_QR['search']) === true)
 }
 
 $switchboards_api = $switchboards_api->list_();
-$switchboards_display = array();
-foreach($switchboards_api['items'] as $switchboard_api) {
-	$switchboards_display[$switchboard_api['id']] = array('switchboard' => $switchboard_api['id']);
-}
+$switchboards_display =$switchboards_api['items'];
 
 $_TPL->set_var('result',$result);
 $_TPL->set_var('switchboards', $switchboards_display);
