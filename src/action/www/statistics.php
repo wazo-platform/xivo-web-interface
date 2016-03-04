@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2016 Avencall
+# Copyright (C) 2016 Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,6 +18,22 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-$_QRY->go($_TPL->url('statistics/call_center'), $param);
+if(xivo_user::chk_acl('settings', 'configuration', 'statistics/call_center') === false) {
+	if(xivo_user::chk_acl('data', 'stats1', 'statistics/call_center') === true) {
+		$_QRY->go($_TPL->url('statistics/call_center/data/stats1'));
+	} else if(xivo_user::chk_acl('data', 'stats2', 'statistics/call_center') === true) {
+		$_QRY->go($_TPL->url('statistics/call_center/data/stats2'));
+	//} else if(xivo_user::chk_acl('data', 'stats3', 'statistics/call_center') === true) {
+		//$_QRY->go($_TPL->url('statistics/call_center/data/stats3'));
+	} else if(xivo_user::chk_acl('data', 'stats4', 'statistics/call_center') === true) {
+		$_QRY->go($_TPL->url('statistics/call_center/data/stats4'));
+	} else if(xivo_user::chk_acl('data', null, 'statistics/switchboard') === true) {
+		$_QRY->go($_TPL->url('statistics/switchboard/data'));
+	} else {
+		$_QRY->go($_TPL->url('xivo'), array('go' => urlencode($_SERVER['REQUEST_URI'])));
+	}
+}
+
+$_QRY->go($_TPL->url('statistics/call_center/settings/configuration'));
 
 ?>

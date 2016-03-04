@@ -26,7 +26,7 @@ if($_USR->mk_active() === false)
 	$_QRY->go($_TPL->url('xivo'), array('go' => urlencode($_SERVER['REQUEST_URI'])));
 
 if(xivo_user::chk_acl(true) === false)
-	$_QRY->go($_TPL->url('statistics'));
+	$_QRY->go($_TPL->url('xivo'));
 
 $ipbx = &$_SRE->get('ipbx');
 
