@@ -41,12 +41,7 @@ header('Content-Type: text/csv; charset=utf-8');
 
 ob_start();
 
-if($result === null)
-{
-	echo $this->bbf('no_stats-result');
-} else {
-	echo $result;
-}
+echo $result;
 
 header('Content-Length: '.ob_get_length());
 ob_end_flush();
