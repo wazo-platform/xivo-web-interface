@@ -82,6 +82,6 @@ $dhtml->set_js('extra-libs/timepicker/jquery-ui-timepicker-addon.js',true);
 
 $_TPL->set_bloc('main','statistics/switchboard/data');
 $_TPL->set_struct('statistics/index');
-$_TPL->display('index');;
+$_TPL->display('index');
 
 ?>
