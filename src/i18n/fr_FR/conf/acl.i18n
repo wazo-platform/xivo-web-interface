@@ -265,6 +265,12 @@ Configuration
 ; acl(statistics-call_center-settings-genercache)
 Génération du cache
 
+; acl(statistics-switchboard)
+Statistiques POPC
+
+; acl(statistics-switchboard-data)
+Données
+
 ; acl(xivo-configuration)
 Configuration
 

@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,18 +18,10 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-if(xivo_user::chk_acl('settings','configuration') === false) {
-	if(xivo_user::chk_acl('data','stats1') === true) {
-		$_QRY->go($_TPL->url('statistics/call_center/data/stats1'));
-	} else if(xivo_user::chk_acl('data','stats2') === true) {
-		$_QRY->go($_TPL->url('statistics/call_center/data/stats2'));
-	//} else if(xivo_user::chk_acl('data','stats3') === true) {
-		//$_QRY->go($_TPL->url('statistics/call_center/data/stats3'));
-	} else if(xivo_user::chk_acl('data','stats4') === true) {
-		$_QRY->go($_TPL->url('statistics/call_center/data/stats4'));
-	}
+if(xivo_user::chk_acl('data') === false) {
+	$_QRY->go($_TPL->url('statistics/switchboard/data'));
 }
 
-$_QRY->go($_TPL->url('statistics/call_center/settings/configuration'));
+$_QRY->go($_TPL->url('statistics/switchboard/data'));
 
 ?>

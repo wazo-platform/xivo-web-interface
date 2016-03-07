@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016 Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -338,12 +338,14 @@ $array['graphs/munin/other'] = 'graphs/munin/index.php/other';
  */
 
 $array['statistics'] = 'statistics/index.php';
-$array['statistics/call_center'] = 'statistics/call_center/index.php';
-$array['statistics/call_center/data/stats1'] = 'statistics/call_center/index.php/data/stats1';
-$array['statistics/call_center/data/stats2'] = 'statistics/call_center/index.php/data/stats2';
-#$array['statistics/call_center/data/stats3'] = 'statistics/call_center/index.php/data/stats3';
-$array['statistics/call_center/data/stats4'] = 'statistics/call_center/index.php/data/stats4';
-$array['statistics/call_center/settings/configuration'] = 'statistics/call_center/index.php/settings/configuration/';
+$array['statistics/call_center'] = 'statistics/index.php/call_center';
+$array['statistics/call_center/data/stats1'] = 'statistics/index.php/call_center/data/stats1';
+$array['statistics/call_center/data/stats2'] = 'statistics/index.php/call_center/data/stats2';
+#$array['statistics/call_center/data/stats3'] = 'statistics/index.php/call_center/data/stats3';
+$array['statistics/call_center/data/stats4'] = 'statistics/index.php/call_center/data/stats4';
+$array['statistics/call_center/settings/configuration'] = 'statistics/index.php/call_center/settings/configuration/';
+$array['statistics/switchboard'] = 'statistics/index.php/switchboard';
+$array['statistics/switchboard/data'] = 'statistics/index.php/switchboard/data';
 
 $array['statistics/call_center/json/private/settings/configuration'] = 'statistics/call_center/json.php/private/settings/configuration/';
 $array['statistics/call_center/json/private/data/stats1'] = 'statistics/call_center/json.php/private/data/stats1/';

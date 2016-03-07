@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016 Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -189,7 +189,7 @@ $dhtml = &$this->get_module('dhtml');
 				'</dd>';
 		endif;
 		if(xivo_user::chk_acl('call_management','cel') === true):
-			echo	'<dd id="mn-call_management--cel">',
+			echo	'<dd id="mn-call-management--cel">',
 				$url->href_html($this->bbf('mn_left_callmanagement-cel'),
 						'service/ipbx/call_management/cel'),
 				'</dd>';

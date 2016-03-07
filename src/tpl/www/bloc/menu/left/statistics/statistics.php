@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016 Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -72,17 +72,15 @@ if(xivo_user::chk_acl_section('statistics/call_center') === true):
 ?>
 			<dt><?=$this->bbf('mn_left_ti_call_center')?></dt>
 <?php
-	if(xivo_user::chk_acl('settings') === true):
-		if(xivo_user::chk_acl('settings','configuration') === true):
+	if(xivo_user::chk_acl('call_center', 'settings') === true):
 ?>
-			<dd id="mn-settings--configuration">
+			<dd id="mn-call-center--settings--configuration">
 				<?=$url->href_html($this->bbf('mn_left_configuration_call_center'),
 						'statistics/call_center/settings/configuration','act=list');?>
 			</dd>
 <?php
-		endif;
 	endif;
-	if(xivo_user::chk_acl('data') === true):
+	if(xivo_user::chk_acl('call_center', 'data') === true):
 		$pi = $_SERVER['PATH_INFO'];
 		$params = array();
 		if (is_null($axetype) === false)
@@ -104,32 +102,52 @@ if(xivo_user::chk_acl_section('statistics/call_center') === true):
 				$params['dyear'] = $infocal['dyear'];
 		endif;
 
-		if (xivo_user::chk_acl('data', 'stats1') === true):
-			echo '<dd id="mn-data--stats1">',
+		if (xivo_user::chk_acl('data', 'stats1', 'statistics/call_center') === true):
+			echo '<dd id="mn-call-center--data--stats1">',
 			      $url->href_html($this->bbf('mn_left_statistics_call_center-1'),
 			                      'statistics/call_center/data/stats1',(($pi == '/stats1') ? null : $params)),
 			     '</dd>';
 		endif;
-		if (xivo_user::chk_acl('data', 'stats2') === true):
-			echo '<dd id="mn-data--stats2">',
+		if (xivo_user::chk_acl('data', 'stats2', 'statistics/call_center') === true):
+			echo '<dd id="mn-call-center--data--stats2">',
 			      $url->href_html($this->bbf('mn_left_statistics_call_center-2'),
 			                      'statistics/call_center/data/stats2',(($pi == '/stats2') ? null : $params)),
 			     '</dd>';
 		endif;
 		/*
-		if (xivo_user::chk_acl('data', 'stats3') === true):
-			echo '<dd id="mn-data--stats3">',
+		if (xivo_user::chk_acl('data', 'stats3', 'statistics/call_center') === true):
+			echo '<dd id="mn-call-center--data--stats3">',
 			      $url->href_html($this->bbf('mn_left_statistics_call_center-3'),
 			                      'statistics/call_center/data/stats3',(($pi == '/stats3') ? null : $params)),
 			     '</dd>';
 		endif;
 		*/
-		if (xivo_user::chk_acl('data', 'stats4') === true):
-			echo '<dd id="mn-data--stats4">',
+		if (xivo_user::chk_acl('data', 'stats4', 'statistics/call_center') === true):
+			echo '<dd id="mn-call-center--data--stats4">',
 			      $url->href_html($this->bbf('mn_left_statistics_call_center-4'),
 			                      'statistics/call_center/data/stats4',(($pi == '/stats4') ? null : $params)),
 			     '</dd>';
 		endif;
+	endif;
+endif;
+?>
+
+		</dl>
+	</dd>
+	<dd>
+		<dl>
+<?php
+if(xivo_user::chk_acl_section('statistics/switchboard') === true):
+?>
+			<dt><?=$this->bbf('mn_left_ti_switchboard')?></dt>
+<?php
+	if(xivo_user::chk_acl('switchboard', 'data') === true):
+?>
+			<dd id="mn-switchboard--data">
+				<?=$url->href_html($this->bbf('mn_left_data_switchboard'),
+				                   'statistics/switchboard/data');?>
+			</dd>
+<?php
 	endif;
 endif;
 ?>
