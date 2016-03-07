@@ -29,7 +29,6 @@ class confd_ressource_switchboards extends xivo_confd_helpers_abstract
 	public function __construct($_RAPI, $param=null)
 	{
 		parent::__construct($_RAPI, $param);
-		/* $this->_httpheaders[] = dwho_json::get_header(); */
 		$this->_httpheaders[] = 'Accept: application/json';
 	}
 
