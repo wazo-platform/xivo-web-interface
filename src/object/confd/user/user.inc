@@ -57,7 +57,8 @@ class UserResource {
 	private function build_csv_request($verb, $csvdata)
 	{
 		$headers = array('Content-Type: text/csv; charset=utf-8');
-		return new Request($verb, "/users/import", $csvdata, $headers);
+		$query = null;
+		return new Request($verb, "/users/import", $csvdata, $query, $headers);
 	}
 
 	private function process_response($response)

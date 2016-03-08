@@ -18,7 +18,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-
 class Request {
 
 	private $verb = null;
@@ -31,40 +30,39 @@ class Request {
 		'Accept: application/json'
 	);
 
-	function __construct($verb, $url, $body="", $headers=null, $query=null)
+	function __construct($verb, $url, $body="", $query=null, $headers=null)
 	{
 		$this->verb = $verb;
 		$this->url = $url;
 		$this->body = $body;
-		$this->headers = array();
-		if ($headers !== null) {
-			$this->headers = array_merge($this->headers, $headers);
-		}
+		$this->query = array();
 		if ($query !== null) {
 			$this->query = $query;
-		} else {
-			$this->query = array();
+		}
+		$this->headers = array();
+		if ($headers !== null) {
+			$this->headers = $headers;
 		}
 	}
 
-	static public function post($url, $body, $headers=null, $query=null)
+	static public function post($url, $body, $query=null, $headers=null)
 	{
 		return new Request("POST", $url, $body, $headers, $query);
 	}
 
-	static public function get($url, $body="", $headers=null, $query=null)
+	static public function get($url, $body="", $query=null, $headers=null)
 	{
 		return new Request("GET", $url, $body, $headers, $query);
 	}
 
 	static public function json_get($url, $body="", $query=null)
 	{
-		return new Request("GET", $url, json_encode($body), self::$json_headers, $query);
+		return new Request("GET", $url, json_encode($body), $query, self::$json_headers);
 	}
 
 	static public function json_put($url, $body, $query=null)
 	{
-		return new Request("PUT", $url, json_encode($body), self::$json_headers, $query);
+		return new Request("PUT", $url, json_encode($body), $query, self::$json_headers);
 	}
 
 	public function get_verb()

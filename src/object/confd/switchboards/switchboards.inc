@@ -37,7 +37,8 @@ class SwitchboardResource {
 
 	public function stats($switchboard, $query)
 	{
-		$request = Request::get("/switchboards/".$switchboard."/stats", "", null, $query);
+		$body = '';
+		$request = Request::get("/switchboards/".$switchboard."/stats", $body, $query);
 		$response = $this->client->send($request);
 		if(!$response->status_ok()) {
 			if(is_array($response->get_errors())) {
