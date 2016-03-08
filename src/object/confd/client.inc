@@ -67,7 +67,7 @@ class Request {
 		return $this->verb;
 	}
 
-	public function get_headers() 
+	public function get_headers()
 	{
 		return $this->headers;
 	}
@@ -145,7 +145,7 @@ class Client {
 	private $timeout = null;
 
 	function __construct($rooturl, $connect_timeout=10, $timeout=10) {
-		$this->rooturl = $rooturl; 
+		$this->rooturl = $rooturl;
 		$this->connect_timeout = $connect_timeout;
 		$this->timeout = $timeout;
 	}
@@ -159,8 +159,8 @@ class Client {
 		}
 
 		$confd_config = $config['confd'];
-		$url = "http://" . $confd_config['host'] 
-			. ":" . (string)$confd_config['port'] 
+		$url = "http://" . $confd_config['host']
+			. ":" . (string)$confd_config['port']
 			. "/" . $confd_config['protocol'];
 
 		return new Client($url, $confd_config['connect_timeout'], $confd_config['timeout']);
@@ -172,7 +172,7 @@ class Client {
 		return $this->build_response($curl);
 	}
 
-	private function prepare_curl($request) 
+	private function prepare_curl($request)
 	{
 		$curl = curl_init();
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
