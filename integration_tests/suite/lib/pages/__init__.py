@@ -22,6 +22,7 @@ from login import LoginPage
 from user import UserListPage
 from voicemail import VoicemailListPage
 from line import LineListPage
+from switchboard_stats import SwitchboardStatsPage
 
 from selenium import webdriver
 from pyvirtualdisplay import Display
@@ -32,7 +33,8 @@ class Browser(object):
     pages = {'login': LoginPage,
              'users': UserListPage,
              'voicemails': VoicemailListPage,
-             'lines': LineListPage}
+             'lines': LineListPage,
+             'switchboard_stats': SwitchboardStatsPage}
 
     def __init__(self, username, password, virtual=True):
         self.username = username

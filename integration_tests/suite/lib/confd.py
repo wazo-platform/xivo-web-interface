@@ -71,8 +71,10 @@ class MockConfd(object):
         body = body or {}
         self.add_response(path, json.dumps(body), method, code)
 
-    def assert_request_sent(self, url, method='GET', body=None):
+    def assert_request_sent(self, url, method='GET', query=None, body=None):
         request = self.request_matching(url, method)
+        if query:
+            assert_that(request['query'], equal_to(query), pformat(self.logs()))
         if body:
             assert_that(request['body'], equal_to(body), pformat(self.logs()))
 
