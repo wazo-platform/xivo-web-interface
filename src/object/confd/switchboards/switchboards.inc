@@ -17,69 +17,38 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'abstract.inc'));
+class SwitchboardResource {
 
-class confd_ressource_switchboards extends xivo_confd_helpers_abstract
-{
+	private $client = null;
 
-	protected $_name      = 'switchboards';
-	protected $_base_url  = 'switchboards';
-
-
-	public function __construct($_RAPI, $param=null)
-	{
-		parent::__construct($_RAPI, $param);
-		$this->_httpheaders[] = 'Accept: application/json';
-	}
-
-	protected function fetch_response($response)
-	{
-		if ($this->_curl->get_info('content_type') == 'application/json') {
-			$decoded = dwho_json::decode(rtrim($response),true);
-
-			if(is_null($decoded) === true)
-				$this->_build_error_message($response);
-		} else {
-			$decoded = $response;
-		}
-
-		$this->_status_code = $this->_curl->get_info('http_code');
-		$this->_curl->close();
-
-		return($decoded);
+	function __construct($client) {
+		$this->client = $client;
 	}
 
 	public function list_()
 	{
-		$uri = $this->_build_uri();
-		$rs = $this->request_get($uri);
-
-		if($this->_status_code !== 200
-		|| empty($rs) === true)
-		{
-			$this->_build_error_message($rs);
-			return(false);
+		$request = Request::json_get("/switchboards");
+		$response = $this->client->send($request);
+		if(!$response->status_ok()) {
+			return false;
 		}
-
-		return($rs);
+		return $response->decode_json();
 	}
 
 	public function stats($switchboard, $query)
 	{
-		$uri = $this->_build_uri(array($switchboard, 'stats'));
-		$httpheaders[] = 'Accept: text/csv; charset=utf-8';
-		$rs = $this->request_get($uri, $query, $httpheaders);
-
-		if($this->_status_code !== 200
-		|| empty($rs) === true)
-		{
-			$this->_build_error_message($rs);
-			return(false);
+		$request = Request::get("/switchboards/".$switchboard."/stats", "", null, $query);
+		$response = $this->client->send($request);
+		if(!$response->status_ok()) {
+			if(is_array($response->get_errors())) {
+				foreach($response->get_errors() as $error) {
+					dwho_report::push('error', $error);
+				}
+			}
+			return false;
 		}
-
-		return($rs);
+		return $response->get_body();
 	}
-
 }
 
 ?>

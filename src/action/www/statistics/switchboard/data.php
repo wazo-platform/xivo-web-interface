@@ -18,12 +18,16 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'client.inc'));
+require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'switchboards', 'switchboards.inc'));
+
 if(xivo_user::chk_acl('switchboard', 'data') === false)
 	$_QRY->go($_TPL->url('statistics/switchboard'));
 
 $_I18N->load_file('tpl/www/bloc/statistics/switchboard');
 
-$switchboards_api = &$_RAPI->get_ressource('switchboards');
+$client = Client::default_config();
+$switchboards_api = new SwitchboardResource($client);
 
 $result = false;
 

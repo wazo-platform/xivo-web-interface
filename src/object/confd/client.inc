@@ -31,7 +31,7 @@ class Request {
 		'Accept: application/json'
 	);
 
-	function __construct($verb, $url, $body="", $headers=null)
+	function __construct($verb, $url, $body="", $headers=null, $query=null)
 	{
 		$this->verb = $verb;
 		$this->url = $url;
@@ -40,26 +40,31 @@ class Request {
 		if ($headers !== null) {
 			$this->headers = array_merge($this->headers, $headers);
 		}
+		if ($query !== null) {
+			$this->query = $query;
+		} else {
+			$this->query = array();
+		}
 	}
 
-	static public function post($url, $body, $headers=null)
+	static public function post($url, $body, $headers=null, $query=null)
 	{
-		return new Request("POST", $url, $body, $headers);
+		return new Request("POST", $url, $body, $headers, $query);
 	}
 
-	static public function get($url, $body="", $headers=null)
+	static public function get($url, $body="", $headers=null, $query=null)
 	{
-		return new Request("GET", $url, $body, $headers);
+		return new Request("GET", $url, $body, $headers, $query);
 	}
 
-	static public function json_get($url, $body="")
+	static public function json_get($url, $body="", $query=null)
 	{
-		return new Request("GET", $url, json_encode($body), self::$json_headers);
+		return new Request("GET", $url, json_encode($body), self::$json_headers, $query);
 	}
 
-	static public function json_put($url, $body)
+	static public function json_put($url, $body, $query=null)
 	{
-		return new Request("PUT", $url, json_encode($body), self::$json_headers);
+		return new Request("PUT", $url, json_encode($body), self::$json_headers, $query);
 	}
 
 	public function get_verb()
@@ -74,7 +79,12 @@ class Request {
 
 	public function build_url($root)
 	{
-		return $root . $this->url;
+		$url = $root . $this->url;
+		$query_string = http_build_query($this->query);
+		if (! empty($query_string)) {
+			$url = $url . "?" . $query_string;
+		}
+		return $url;
 	}
 
 	public function get_body()
