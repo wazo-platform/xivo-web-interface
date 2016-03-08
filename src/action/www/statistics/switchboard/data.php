@@ -31,32 +31,34 @@ $switchboards_api = new SwitchboardResource($client);
 
 $result = false;
 
-if(isset($_QR['fm_send']) === true || isset($_QR['search']) === true)
+if(isset($_QR['fm_send']) === true)
 {
-	$switchboard = $_QR['switchboard'];
 	$query = array();
-	if(isset($_QR['dbeg']) === true && $_QR['dbeg'])
+	if(isset($_QR['dbeg']) === true
+	&& ($start_datetime = strtotime($_QR['dbeg'])) !== false)
 	{
-		$start_date = date("Y-m-d", strtotime($_QR['dbeg']));
-		$start_time = date("Y-m-d\TH:i:s", strtotime($_QR['dbeg']));
-		array_push($query, array('start_date', $start_time));
+		$start_date = date("Y-m-d", $start_datetime);
+		$start_time = date("Y-m-d\TH:i:s", $start_datetime);
+		$query['start_date'] = $start_time;
 	} else {
-		$start = '';
+		$start_date = '';
 	}
-	if(isset($_QR['dend']) === true && $_QR['dend'])
+	if(isset($_QR['dend']) === true
+	&& ($end_datetime = strtotime($_QR['dend'])) !== false)
 	{
-		$end_date = date("Y-m-d", strtotime($_QR['dend']));
-		$end_time = date("Y-m-d\T23:59:59", strtotime($_QR['dend']));
+		$end_date = date("Y-m-d", $end_datetime);
+		$end_time = date("Y-m-d\T23:59:59", $end_datetime);
 	} else {
 		$end_date = date("Y-m-d");
 		$end_time = date("Y-m-d\TH:i:s");
 	}
-	array_push($query, array('end_date', $end_time));
+	$query['end_date'] = $end_time;
 
 	if(isset($_QR['switchboard']) === false
-	|| ! $_QR['switchboard']
-	|| ($result = $switchboards_api->stats($switchboard, $query)) === false)
+	|| ! ($switchboard = $_QR['switchboard']))
 	{
+		dwho_report::push('error', 'No switchboard selected');
+	} else if (($result = $switchboards_api->stats($switchboard, $query)) === false) {
 		dwho_report::push('error', 'Could not fetch switchboard statistics: switchboard_id='.$switchboard);
 	} else {
 		$_TPL->set_var('result', $result);
