@@ -20,7 +20,6 @@
 
 $form = &$this->get_module('form');
 
-$result = $this->get_var('result');
 $switchboards = $this->get_var('switchboards');
 
 ?>
@@ -33,7 +32,7 @@ $switchboards = $this->get_var('switchboards');
 
 <div class="sb-content">
 
-<div id="sb-part-first"<?=($result !== false ? ' class="b-nodisplay"' : '')?>>
+<div id="sb-part-first">
 <form action="#" method="post" accept-charset="utf-8">
 <?=$form->hidden(array('name' => DWHO_SESS_NAME,'value' => DWHO_SESS_ID))?>
 <?=$form->hidden(array('name' => 'act','value' => 'exportcsv'))?>
