@@ -46,7 +46,8 @@ $switchboards = $this->get_var('switchboards');
 					'empty'	=> false,
 					'paragraph'	=> false,
 					'key'		=> 'display_name',
-					'altkey'	=> 'id'),
+					'altkey'	=> 'id',
+					'help'		=> $this->bbf('hlp_fm_switchboard')),
 				  $switchboards);
 ?>
 	</div>
