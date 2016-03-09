@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016 Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@ xivo_service_asterisk::required(array('abstract','datastorage','abstract','sql.i
 
 class xivo_service_asterisk_userfeatures_sql extends xivo_service_asterisk_abstract_sql
 {
-	var $_unique	= array();
+	var $_unique	= array('email');
 	var $_param		= array();
 
 	function get($arr,$disable=null,$primary=false)
