@@ -18,53 +18,66 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'client.inc'));
+require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'switchboards', 'switchboards.inc'));
+
 if(xivo_user::chk_acl('switchboard', 'data') === false)
 	$_QRY->go($_TPL->url('statistics/switchboard'));
 
 $_I18N->load_file('tpl/www/bloc/statistics/switchboard');
 
-$switchboards_api = &$_RAPI->get_ressource('switchboards');
+$client = Client::default_config();
+$switchboards_api = new SwitchboardResource($client);
 
 $result = false;
 
-if(isset($_QR['fm_send']) === true || isset($_QR['search']) === true)
+if(isset($_QR['fm_send']) === true)
 {
-	if(isset($_QR['switchboard']) === false || ! $_QR['switchboard'])
-	{
-		return false;  // FIXME
-	}
-	$switchboard = $_QR['switchboard'];
 	$query = array();
-	if(isset($_QR['dbeg']) === true && $_QR['dbeg'])
+	if(isset($_QR['dbeg']) === true
+	&& ($start_datetime = strtotime($_QR['dbeg'])) !== false)
 	{
-		$start_date = date("Y-m-d", strtotime($_QR['dbeg']));
-		$start_time = date("Y-m-d\TH:i:s", strtotime($_QR['dbeg']));
-		array_push($query, array('start_date', $start_time));
+		$start_date = date("Y-m-d", $start_datetime);
+		$start_time = date("Y-m-d\TH:i:s", $start_datetime);
+		$query['start_date'] = $start_time;
 	} else {
-		$start = '';
+		$start_date = '';
 	}
-	if(isset($_QR['dend']) === true && $_QR['dend'])
+	if(isset($_QR['dend']) === true
+	&& ($end_datetime = strtotime($_QR['dend'])) !== false)
 	{
-		$end_date = date("Y-m-d", strtotime($_QR['dend']));
-		$end_time = date("Y-m-d\T23:59:59", strtotime($_QR['dend']));
+		$end_date = date("Y-m-d", $end_datetime);
+		$end_time = date("Y-m-d\T23:59:59", $end_datetime);
 	} else {
 		$end_date = date("Y-m-d");
 		$end_time = date("Y-m-d\TH:i:s");
 	}
-	array_push($query, array('end_date', $end_time));
+	$query['end_date'] = $end_time;
 
-	$_TPL->set_var('result', $switchboards_api->stats($switchboard, $query));
-	$_TPL->set_var('dbeg', $start_date);
-	$_TPL->set_var('dend', $end_date);
-	$_TPL->set_var('switchboard', $switchboard);
-	$_TPL->display('/bloc/statistics/switchboard/exportcsv');
-	die();
+	if(isset($_QR['switchboard']) === false
+	|| ! ($switchboard = $_QR['switchboard']))
+	{
+		dwho_report::push('error', 'No switchboard selected');
+	} else if (($result = $switchboards_api->stats($switchboard, $query)) === false) {
+		dwho_report::push('error', 'Could not fetch switchboard statistics: switchboard_id='.$switchboard);
+	} else {
+		$_TPL->set_var('result', $result);
+		$_TPL->set_var('dbeg', $start_date);
+		$_TPL->set_var('dend', $end_date);
+		$_TPL->set_var('switchboard', $switchboard);
+		$_TPL->display('/bloc/statistics/switchboard/exportcsv');
+		die();
+	}
 }
 
-$switchboards_api = $switchboards_api->list_();
-$switchboards_display =$switchboards_api['items'];
+if(($switchboards_api = $switchboards_api->list_()) === false)
+{
+	dwho_report::push('error', 'Could not fetch switchboard list');
+	$switchboards_display = array();
+} else {
+	$switchboards_display = $switchboards_api['items'];
+}
 
-$_TPL->set_var('result',$result);
 $_TPL->set_var('switchboards', $switchboards_display);
 
 $menu = &$_TPL->get_module('menu');

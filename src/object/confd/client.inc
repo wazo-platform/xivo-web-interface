@@ -18,7 +18,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-
 class Request {
 
 	private $verb = null;
@@ -31,35 +30,39 @@ class Request {
 		'Accept: application/json'
 	);
 
-	function __construct($verb, $url, $body="", $headers=null)
+	function __construct($verb, $url, $body="", $query=null, $headers=null)
 	{
 		$this->verb = $verb;
 		$this->url = $url;
 		$this->body = $body;
+		$this->query = array();
+		if ($query !== null) {
+			$this->query = $query;
+		}
 		$this->headers = array();
 		if ($headers !== null) {
-			$this->headers = array_merge($this->headers, $headers);
+			$this->headers = $headers;
 		}
 	}
 
-	static public function post($url, $body, $headers=null)
+	static public function post($url, $body, $query=null, $headers=null)
 	{
-		return new Request("POST", $url, $body, $headers);
+		return new Request("POST", $url, $body, $query, $headers);
 	}
 
-	static public function get($url, $body="", $headers=null)
+	static public function get($url, $body="", $query=null, $headers=null)
 	{
-		return new Request("GET", $url, $body, $headers);
+		return new Request("GET", $url, $body, $query, $headers);
 	}
 
-	static public function json_get($url, $body="")
+	static public function json_get($url, $body="", $query=null)
 	{
-		return new Request("GET", $url, json_encode($body), self::$json_headers);
+		return new Request("GET", $url, json_encode($body), $query, self::$json_headers);
 	}
 
-	static public function json_put($url, $body)
+	static public function json_put($url, $body, $query=null)
 	{
-		return new Request("PUT", $url, json_encode($body), self::$json_headers);
+		return new Request("PUT", $url, json_encode($body), $query, self::$json_headers);
 	}
 
 	public function get_verb()
@@ -67,14 +70,19 @@ class Request {
 		return $this->verb;
 	}
 
-	public function get_headers() 
+	public function get_headers()
 	{
 		return $this->headers;
 	}
 
 	public function build_url($root)
 	{
-		return $root . $this->url;
+		$url = $root . $this->url;
+		$query_string = http_build_query($this->query);
+		if (! empty($query_string)) {
+			$url = $url . "?" . $query_string;
+		}
+		return $url;
 	}
 
 	public function get_body()
@@ -145,7 +153,7 @@ class Client {
 	private $timeout = null;
 
 	function __construct($rooturl, $connect_timeout=10, $timeout=10) {
-		$this->rooturl = $rooturl; 
+		$this->rooturl = $rooturl;
 		$this->connect_timeout = $connect_timeout;
 		$this->timeout = $timeout;
 	}
@@ -159,8 +167,8 @@ class Client {
 		}
 
 		$confd_config = $config['confd'];
-		$url = "http://" . $confd_config['host'] 
-			. ":" . (string)$confd_config['port'] 
+		$url = "http://" . $confd_config['host']
+			. ":" . (string)$confd_config['port']
 			. "/" . $confd_config['protocol'];
 
 		return new Client($url, $confd_config['connect_timeout'], $confd_config['timeout']);
@@ -172,7 +180,7 @@ class Client {
 		return $this->build_response($curl);
 	}
 
-	private function prepare_curl($request) 
+	private function prepare_curl($request)
 	{
 		$curl = curl_init();
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);

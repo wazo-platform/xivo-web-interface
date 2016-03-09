@@ -7,6 +7,9 @@ Start date:
 ; fm_dend
 End date:
 
+; hlp_fm_switchboard
+Empty when there are no statistics.
+
 ; fm_switchboard
 Switchboard:
 

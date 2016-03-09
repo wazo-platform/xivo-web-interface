@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2015 Avencall
+# Copyright (C) 2015-2016 Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@ class UserResource {
 		$this->client = $client;
 	}
 
-	public function import_csv($csvdata) 
+	public function import_csv($csvdata)
 	{
 		$request = $this->build_csv_request("POST", $csvdata);
 		$response = $this->client->send($request);
@@ -57,7 +57,8 @@ class UserResource {
 	private function build_csv_request($verb, $csvdata)
 	{
 		$headers = array('Content-Type: text/csv; charset=utf-8');
-		return new Request($verb, "/users/import", $csvdata, $headers);
+		$query = null;
+		return new Request($verb, "/users/import", $csvdata, $query, $headers);
 	}
 
 	private function process_response($response)
