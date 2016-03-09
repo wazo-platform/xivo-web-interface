@@ -47,12 +47,12 @@ class Request {
 
 	static public function post($url, $body, $query=null, $headers=null)
 	{
-		return new Request("POST", $url, $body, $headers, $query);
+		return new Request("POST", $url, $body, $query, $headers);
 	}
 
 	static public function get($url, $body="", $query=null, $headers=null)
 	{
-		return new Request("GET", $url, $body, $headers, $query);
+		return new Request("GET", $url, $body, $query, $headers);
 	}
 
 	static public function json_get($url, $body="", $query=null)
