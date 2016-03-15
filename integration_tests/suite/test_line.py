@@ -85,7 +85,7 @@ class TestLineEdit(TestLine):
 
     def test_when_adding_options_to_a_line_then_options_sent_to_confd(self):
         with self.db.queries() as queries:
-            queries.insert_sip_line("addoptions")
+            queries.insert_sip_line({"username": "addoptions"})
 
         options = [["foo", "bar"],
                    ["foo", "baz"],
@@ -106,7 +106,7 @@ class TestLineEdit(TestLine):
 
     def test_when_changing_options_on_a_line_then_options_sent_to_confd(self):
         with self.db.queries() as queries:
-            queries.insert_sip_line("changeoptions")
+            queries.insert_sip_line({"username": "changeoptions"})
 
         old_options = [["foo", "bar"],
                        ["foo", "baz"],
@@ -132,7 +132,7 @@ class TestLineEdit(TestLine):
 
     def test_when_removing_options_on_a_line_then_options_removed_from_confd(self):
         with self.db.queries() as queries:
-            queries.insert_sip_line("rmoptions")
+            queries.insert_sip_line({"username": "rmoptions"})
 
         options = [["foo", "bar"],
                    ["foo", "baz"],
