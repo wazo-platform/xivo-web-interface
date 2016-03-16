@@ -82,7 +82,7 @@ Customer info
 Datetime
 
 ; xlet-(directory)
-Directory
+Directory (switchboard only)
 
 ; xlet-(fax)
 Fax
