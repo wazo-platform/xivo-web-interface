@@ -27,7 +27,80 @@ $info = $this->get_var('info');
 $data = $this->get_var('data');
 $urilist = $this->get_var('urilist');
 $presence = $this->get_var('displays');
-$field_types = array('', 'agent', 'callable', 'email', 'favorite', 'name', 'number', 'personal', 'voicemail');
+
+function build_row($data, $form, $url, $helper) {
+	$row = '<tr class="fm-paragraph"><td>';
+	$row .= $form->text(
+		array(
+			'paragraph' => false,
+			'label' => false,
+			'key' => false,
+			'size' => 15,
+			'name' => 'dispcol1[]',
+			'value' => $data[0],
+		)
+	);
+
+	$row .= "</td><td>";
+	$row .= $form->text(
+		array(
+			'paragraph' => false,
+			'label' => false,
+			'key' => false,
+			'size' => 15,
+			'name' => 'dispcol2[]',
+			'value' => $data[1],
+			'class' => 'field-type-name',
+		)
+	);
+
+	$row .= "</td><td>";
+	$row .= $form->text(
+		array(
+			'paragraph' => false,
+			'label' => false,
+			'key' => false,
+			'size' => 15,
+			'name' => 'dispcol3[]',
+			'value' => $data[2],
+		)
+	);
+
+	$row .= "</td><td>";
+	$row .= $form->text(
+		array(
+			'paragraph' => false,
+			'label' => false,
+			'key' => false,
+			'size' => 15,
+			'name' => 'dispcol4[]',
+			'value' => $data[3],
+		)
+	);
+	$row .= '</td><td class="td-right">';
+	$row .= $url->href_html(
+		$url->img_html(
+			'img/site/button/mini/blue/delete.gif',
+			$helper->bbf('opt_disp-delete'),
+			'border="0"'
+		),
+		'#',
+		null,
+		null,
+		$helper->bbf('opt_disp-delete'),
+		false,
+		'&amp;',
+		true,
+		true,
+		true,
+		true,
+		'display-filter-remove'
+	);
+
+	$row .= "</td></tr>";
+
+	return $row;
+}
 
 ?>
 
@@ -40,11 +113,6 @@ $field_types = array('', 'agent', 'callable', 'email', 'favorite', 'name', 'numb
 				  'default'	=> $element['displays']['name']['default'],
 				  'value'	=> $info['displays']['name']));
 
-?>
-<?php
-	$type = 'disp';
-	$count = count($data);
-	$errdisplay = '';
 ?>
 	<p>&nbsp;</p>
 	<div class="sb-list">
@@ -62,145 +130,72 @@ $field_types = array('', 'agent', 'callable', 'email', 'favorite', 'name', 'numb
 									  'border="0"'),
 							   '#',
 							   null,
-							   'onclick="dwho.dom.make_table_list(\'disp\',this); return(dwho.dom.free_focus());"',
+							   'id="display-filter-add"',
 							   $this->bbf('col_add'));?>
 				</th>
 			</tr>
 			</thead>
 			<tbody id="disp">
-		<?php
-		if($count > 0):
-			for($i = 0;$i < $count;$i++):
-
-		?>
-			<tr class="fm-paragraph<?=$errdisplay?>">
-				<td class="td-left">
-	<?php
-					echo $form->text(array('paragraph'	=> false,
-								   'name'		=> 'dispcol1[]',
-								   'id'		=> false,
-								   'label'		=> false,
-								   'size'		=> 15,
-								   'key'		=> false,
-								   'value'		=> $data[$i][0],
-								   'default'	=> ''));
-	 ?>
-				</td>
-				<td>
-	<?php
-					echo $form->select(array('paragraph'	=> false,
-								   'name'		=> 'dispcol2[]',
-								   'id'		=> false,
-								   'label'		=> false,
-								   'key'		=> false,
-								   'selected'		=> $data[$i][1],
-								   'default'	=> ''), $field_types);
-	 ?>
-				</td>
-				<td>
-	<?php
-					echo $form->text(array('paragraph'	=> false,
-								   'name'		=> 'dispcol3[]',
-								   'id'		=> false,
-								   'label'		=> false,
-								   'size'		=> 15,
-								   'key'		=> false,
-								   'value'		=> $data[$i][2],
-								   'default'	=> ''));
-	 ?>
-				</td>
-				<td>
-	<?php
-					echo $form->text(array('paragraph'	=> false,
-								   'name'		=> 'dispcol4[]',
-								   'id'		=> false,
-								   'label'		=> false,
-								   'size'		=> 15,
-								   'key'		=> false,
-								   'value'		=> $data[$i][3],
-								   'default'	=> ''));
-	 ?>
-				</td>
-				<td class="td-right">
-					<?=$url->href_html($url->img_html('img/site/button/mini/blue/delete.gif',
-									  $this->bbf('opt_'.$type.'-delete'),
-									  'border="0"'),
-							   '#',
-							   null,
-							   'onclick="dwho.dom.make_table_list(\''.$type.'\',this,1); return(dwho.dom.free_focus());"',
-							   $this->bbf('opt_'.$type.'-delete'));?>
-				</td>
-			</tr>
-
-		<?php
-			endfor;
-		endif;
-		?>
-			</tbody>
-			<tfoot>
-			<tr id="no-<?=$type?>"<?=($count > 0 ? ' class="b-nodisplay"' : '')?>>
-				<td colspan="5" class="td-single"><?=$this->bbf('no_'.$type);?></td>
-			</tr>
-			</tfoot>
-		</table>
-		<table class="b-nodisplay">
-			<tbody id="ex-<?=$type?>">
-			<tr class="fm-paragraph">
-				<td class="td-left">
-	<?php
-					echo $form->text(array('paragraph'	=> false,
-								   'name'		=> 'dispcol1[]',
-								   'id'		=> false,
-								   'label'		=> false,
-								   'size'		=> 15,
-								   'key'		=> false,
-								   'default'	=> ''));
-	 ?>
-				</td>
-				<td>
-	<?php
-					echo $form->select(array('paragraph'	=> false,
-								   'name'		=> 'dispcol2[]',
-								   'id'		=> false,
-								   'label'		=> false,
-								   'key'		=> false,
-								   'default'	=> ''), $field_types);
-	 ?>
-				</td>
-				<td>
-	<?php
-					echo $form->text(array('paragraph'	=> false,
-								   'name'		=> 'dispcol3[]',
-								   'id'		=> false,
-								   'label'		=> false,
-								   'size'		=> 15,
-								   'key'		=> false,
-								   'default'	=> ''));
-	 ?>
-				</td>
-				<td>
-	<?php
-					echo $form->text(array('paragraph'	=> false,
-								   'name'		=> 'dispcol4[]',
-								   'id'		=> false,
-								   'label'		=> false,
-								   'size'		=> 15,
-								   'key'		=> false,
-								   'default'	=> ''));
-	 ?>
-				</td>
-				<td class="td-right">
-					<?=$url->href_html($url->img_html('img/site/button/mini/blue/delete.gif',
-									  $this->bbf('opt_'.$type.'-delete'),
-									  'border="0"'),
-							   '#',
-							   null,
-							   'onclick="dwho.dom.make_table_list(\''.$type.'\',this,1); return(dwho.dom.free_focus());"',
-							   $this->bbf('opt_'.$type.'-delete'));?>
-				</td>
-			</tr>
+					<?php foreach($data as $data_row): ?>
+						<?= build_row($data_row, $form, $url, $this) ?>
+					<?php endforeach ?>
 			</tbody>
 		</table>
+
+<script type='text/javascript'>
+
+var displayFilterRow = <?= dwho_json::encode(build_row(array('', '', '', ''),
+												$form, $url, $this)) ?>;
+
+var fieldTypes = [
+		"agent",
+		"callable",
+		"email",
+		"favorite",
+		"name",
+		"number",
+		"personal",
+		"voicemail",
+];
+
+function attachEvents(row) {
+	option = row.find(".field-type-name");
+    option.autocomplete({
+      source: fieldTypes,
+      minLength: 0
+    });
+    option.focus(function() {
+        $(this).autocomplete("search", "");
+    });
+
+	remove = row.find(".display-filter-remove");
+	remove.click(function(e) {
+		e.preventDefault();
+		row.detach();
+	});
+}
+
+$(function() {
+	$("#display-filter-add").click(function(e) {
+		e.preventDefault();
+		$("#disp").append(displayFilterRow);
+		row = $("#disp tr:last");
+		attachEvents(row);
+	});
+
+	$("#disp tr").each(function(pos, row) {
+		attachEvents($(row));
+	});
+});
+
+</script>
+<style>
+.ui-autocomplete {
+	max-height: 200px;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+</style>
 	</div>
 <br />
 <div class="fm-paragraph fm-description">
