@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2015  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,6 +27,7 @@ $info = $this->get_var('info');
 $data = $this->get_var('data');
 $urilist = $this->get_var('urilist');
 $presence = $this->get_var('displays');
+$field_types = array('', 'agent', 'callable', 'email', 'favorite', 'name', 'number', 'personal', 'voicemail');
 
 ?>
 
@@ -87,14 +88,13 @@ $presence = $this->get_var('displays');
 				</td>
 				<td>
 	<?php
-					echo $form->text(array('paragraph'	=> false,
+					echo $form->select(array('paragraph'	=> false,
 								   'name'		=> 'dispcol2[]',
 								   'id'		=> false,
 								   'label'		=> false,
-								   'size'		=> 15,
 								   'key'		=> false,
-								   'value'		=> $data[$i][1],
-								   'default'	=> ''));
+								   'selected'		=> $data[$i][1],
+								   'default'	=> ''), $field_types);
 	 ?>
 				</td>
 				<td>
@@ -159,13 +159,12 @@ $presence = $this->get_var('displays');
 				</td>
 				<td>
 	<?php
-					echo $form->text(array('paragraph'	=> false,
+					echo $form->select(array('paragraph'	=> false,
 								   'name'		=> 'dispcol2[]',
 								   'id'		=> false,
 								   'label'		=> false,
-								   'size'		=> 15,
 								   'key'		=> false,
-								   'default'	=> ''));
+								   'default'	=> ''), $field_types);
 	 ?>
 				</td>
 				<td>
