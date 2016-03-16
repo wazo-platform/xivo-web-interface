@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2010-2014  Avencall
+# Copyright (C) 2010-2016 Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,6 +17,20 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
+
+if(xivo_user::chk_acl('settings', 'queues', 'service/callcenter') === false) {
+	if(xivo_user::chk_acl('settings', 'agents', 'service/callcenter') === true) {
+		$_QRY->go($_TPL->url('callcenter/settings/agents'));
+	} else if(xivo_user::chk_acl('settings', 'queuepenalty', 'service/callcenter') === true) {
+		$_QRY->go($_TPL->url('callcenter/settings/queuepenalty'));
+	} else if(xivo_user::chk_acl('settings', 'queueskills', 'service/callcenter') === true) {
+		$_QRY->go($_TPL->url('callcenter/settings/queueskills'));
+	} else if(xivo_user::chk_acl('settings', 'queueskillrules', 'service/callcenter') === true) {
+		$_QRY->go($_TPL->url('callcenter/settings/queueskillrules'));
+	} else {
+		$_QRY->go($_TPL->url('xivo'));
+	}
+}
 
 $_QRY->go($_TPL->url('callcenter/settings/queues'));
 
