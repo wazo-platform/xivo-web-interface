@@ -342,7 +342,7 @@ $array['element']['timerb']['default'] = '';
 $array['element']['timerb']['null'] = true;
 
 $array['element']['qualifyfreq'] = array();
-$array['element']['qualifyfreq']['value'] = range(1,300,10);
+$array['element']['qualifyfreq']['value'] = range(10,300,10);
 $array['element']['qualifyfreq']['default'] = '';
 $array['element']['qualifyfreq']['null'] = true;
 
@@ -501,7 +501,7 @@ $array['filter']['session-refresher'] = array('set' => false, 'chk' => 2, 'key' 
 $array['filter']['registertrying'] = array('set' => false, 'chk' => 2, 'bool' => true);
 $array['filter']['timert1'] = array('set' => false,'chk' => 2,'maxlen' => 5);
 $array['filter']['timerb'] = array('set' => false,'chk' => 2,'maxlen' => 5);
-$array['filter']['qualifyfreq'] = array('set' => false, 'chk' => 2, 'cast' => 'uint','between' => array(1,300,10));
+$array['filter']['qualifyfreq'] = array('set' => false, 'chk' => 2, 'cast' => 'uint');
 $array['filter']['contactpermit'] = array('set' => false,'chk' => 2,'maxlen' => 35);
 $array['filter']['contactdeny'] = array('set' => false,'chk' => 2,'maxlen' => 35);
 $array['filter']['unsolicited_mailbox'] = array('set' => false,'chk' => 2,'maxlen' => 1024);
