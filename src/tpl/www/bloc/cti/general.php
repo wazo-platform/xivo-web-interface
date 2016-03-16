@@ -57,48 +57,6 @@ if(isset($error_js[0]) === true)
 
 <div id="sb-part-first">
 
-<fieldset id="cti-ami">
-	<legend><?=$this->bbf('cti-ami');?></legend>
-			<?=$form->text(array('desc'	=> $this->bbf('fm_cti_ami_login'),
-						  'name'	=> 'cti[ami_login]',
-						  'labelid'	=> 'cti-ami_login',
-						  'required'	=> 1,
-						  'size'	=> 15,
-						  'default'	=> $element['ctimain']['ami_login']['default'],
-						  'value'	=> $info['ctimain']['ami_login'],
-				          'error'	=> $this->bbf_args('error',
-							   $this->get_var('error', 'ctimain','ami_login'))))?>
-			<?=$form->text(array('desc'	=> $this->bbf('fm_cti_ami_password'),
-						  'name'	=> 'cti[ami_password]',
-						  'labelid'	=> 'cti-ami_password',
-						  'required'	=> 1,
-						  'size'	=> 15,
-						  'default'	=> $element['ctimain']['ami_password']['default'],
-						  'value'	=> $info['ctimain']['ami_password'],
-				          'error'	=> $this->bbf_args('error',
-							   $this->get_var('error', 'ctimain','ami_password'))))?>
-			<?=$form->text(array('desc'	=> $this->bbf('fm_cti_ami_ip'),
-						  'name'	=> 'cti[ami_ip]',
-						  'labelid'	=> 'cti-ami_ip',
-						  'required'	=> 1,
-						  'regexp'	=> '[[:ipv4:]]',
-						  'size'	=> 15,
-						  'default'	=> $element['ctimain']['ami_ip']['default'],
-						  'value'	=> $info['ctimain']['ami_ip'],
-				          'error'	=> $this->bbf_args('error',
-							   $this->get_var('error', 'ctimain','ami_ip'))))?>
-			<?=$form->text(array('desc'	=> $this->bbf('fm_cti_ami_port'),
-						  'name'	=> 'cti[ami_port]',
-						  'labelid'	=> 'cti-ami_port',
-						  'required'	=> 1,
-						  'regexp'	=> '[[:port:]]',
-						  'size'	=> 4,
-						  'default'	=> $element['ctimain']['ami_port']['default'],
-						  'value'	=> $info['ctimain']['ami_port'],
-				          'error'	=> $this->bbf_args('error',
-							   $this->get_var('error', 'ctimain','ami_port'))))?>
-</fieldset>
-
 <fieldset id="cti-servers">
 	<legend><?=$this->bbf('cti-servers');?></legend>
 	<div class="sb-list">

@@ -21,15 +21,6 @@
 $array = array();
 $array['element'] = array();
 
-$array['element']['ami_login'] = array();
-$array['element']['ami_login']['default'] = 'xivo_cti_user';
-$array['element']['ami_password'] = array();
-$array['element']['ami_password']['default'] = 'phaickbebs9';
-$array['element']['ami_ip'] = array();
-$array['element']['ami_ip']['default'] = '127.0.0.1';
-$array['element']['ami_port'] = array();
-$array['element']['ami_port']['default'] = 5038;
-
 $array['element']['cti_ip'] = array();
 $array['element']['cti_ip']['default'] = '0.0.0.0';
 $array['element']['cti_port'] = array();
@@ -84,10 +75,6 @@ $array['element']['live_reload_conf']['set'] = true;
 dwho::load_class('dwho_network');
 
 $array['filter'] = array();
-$array['filter']['ami_ip']          = array('callback' => 'dwho_network::valid_host_subnet_ipv4');
-$array['filter']['ami_port']        = array('cast' => 'uint', 'between' => array(1,65535));
-$array['filter']['ami_login']       = array('cast' => 'sgraph','minlen' => 3,'maxlen' => 64);
-$array['filter']['ami_password']    = array('cast' => 'sgraph','minlen' => 3,'maxlen' => 64);
 $array['filter']['cti_active'] = array('set' => true, 'chk' => 2, 'cast' => 'bool');
 $array['filter']['cti_ip'] 			= array('callback' => 'dwho_network::valid_host_subnet_ipv4');
 $array['filter']['cti_port'] 		= array('set' => false, 'chk' => 2, 'cast' => 'uint', 'between' => array(1,65535));
