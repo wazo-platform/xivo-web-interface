@@ -104,7 +104,9 @@ def respond(expected):
     for path, response in DEFAULTS.iteritems():
         if re.match(path, expected):
             return jsonify(response)
-    return '["Confd mock has no response prepared"]', 400
+
+    error_msg = '["Confd mock has no response prepared for {} {}"]'
+    return error_msg.format(request.method, expected), 400
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=9487, debug=True)
