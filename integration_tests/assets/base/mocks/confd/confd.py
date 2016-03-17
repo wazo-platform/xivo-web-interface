@@ -8,22 +8,30 @@ LOGS = []
 
 RESPONSES = {}
 
-PROFILES = [{u'id': 1,
-             u'links': [{u'href': u'https://webi:9486/1.1/cti_profiles/1',
-                         u'rel': u'cti_profiles'}],
-             u'name': u'Supervisor'},
-            {u'id': 2,
-             u'links': [{u'href': u'https://webi:9486/1.1/cti_profiles/2',
-                         u'rel': u'cti_profiles'}],
-             u'name': u'Agent'},
-            {u'id': 4,
-             u'links': [{u'href': u'https://webi:9486/1.1/cti_profiles/4',
-                         u'rel': u'cti_profiles'}],
-             u'name': u'Switchboard'},
-            {u'id': 3,
-             u'links': [{u'href': u'https://webi:9486/1.1/cti_profiles/3',
-                         u'rel': u'cti_profiles'}],
-             u'name': u'Client'}]
+DEFAULTS = {
+    '/devices': {'total': 0,
+                 'items': []},
+    '/voicemails': {'total': 0,
+                    'items': []},
+    '/cti_profiles': {'total': 4,
+                      'items': [{u'id': 1,
+                                 u'links': [{u'href': u'https://webi:9486/1.1/cti_profiles/1',
+                                             u'rel': u'cti_profiles'}],
+                                 u'name': u'Supervisor'},
+                                {u'id': 2,
+                                 u'links': [{u'href': u'https://webi:9486/1.1/cti_profiles/2',
+                                             u'rel': u'cti_profiles'}],
+                                 u'name': u'Agent'},
+                                {u'id': 4,
+                                 u'links': [{u'href': u'https://webi:9486/1.1/cti_profiles/4',
+                                             u'rel': u'cti_profiles'}],
+                                 u'name': u'Switchboard'},
+                                {u'id': 3,
+                                 u'links': [{u'href': u'https://webi:9486/1.1/cti_profiles/3',
+                                             u'rel': u'cti_profiles'}],
+                                 u'name': u'Client'}]
+                      }
+}
 
 
 @app.after_request
@@ -86,18 +94,6 @@ def get_responses():
     return jsonify(responses=RESPONSES)
 
 
-@app.route('/1.1/devices')
-def devices():
-    return jsonify(total=0,
-                   items={})
-
-
-@app.route('/1.1/cti_profiles')
-def cti_profiles():
-    return jsonify(total=len(PROFILES),
-                   items=PROFILES)
-
-
 @app.route('/1.1/<path:expected>', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def respond(expected):
     expected = "/" + expected
@@ -105,6 +101,9 @@ def respond(expected):
     for path, responses in method.iteritems():
         if len(responses) > 0 and re.match(path, expected):
             return responses.pop(0)
+    for path, response in DEFAULTS.iteritems():
+        if re.match(path, expected):
+            return jsonify(response)
     return '["Confd mock has no response prepared"]', 400
 
 if __name__ == "__main__":
