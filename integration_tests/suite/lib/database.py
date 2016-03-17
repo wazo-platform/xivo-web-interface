@@ -142,11 +142,11 @@ class DatabaseQueries(object):
         return conference_id
 
     def insert_extension(self, exten, context, type_, typeval):
-        extension = dict(context=context,
-                         exten=exten,
-                         type=type_,
-                         typeval=str(typeval))
-        return self.db['extension'].insert(extension)
+        extension = {"context": context,
+                     "exten": exten,
+                     "type": type_,
+                     "typeval": str(typeval)}
+        return self.db['extensions'].insert(extension)
 
     def insert_group(self, name='mygroup', number='1234', context='default'):
         group = dict(name=name,
