@@ -163,3 +163,27 @@ class ListPage(Page):
 
         condition = ec.presence_of_element_located((By.XPATH, xpath))
         self.wait().until_not(condition)
+
+    def find_row(self, text):
+        table = self.driver.find_element_by_id("table-main-listing")
+        xpath = '//tr[td[contains(., "{}")]]'.format(text)
+        try:
+            return ListRow(table.find_element_by_xpath(xpath))
+        except NoSuchElementException:
+            return None
+
+    def get_row(self, text):
+        table = self.driver.find_element_by_id("table-main-listing")
+        xpath = '//tr[td[contains(., "{}")]]'.format(text)
+        return ListRow(table.find_element_by_xpath(xpath))
+
+
+class ListRow(object):
+
+    def __init__(self, row):
+        self.row = row
+
+    def extract(self, column):
+        selector = "td.col_{}".format(column)
+        box = self.row.find_element_by_css_selector(selector)
+        return box.text
