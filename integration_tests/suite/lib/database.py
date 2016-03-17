@@ -70,11 +70,13 @@ class DatabaseQueries(object):
     def insert_user(self, firstname, lastname=None):
         template_id = self.insert_func_key_template(private=True)
         entity_id = self.db['entity'].find_one()['id']
+        caller_name = " ".join([firstname, lastname or ""]).strip()
         user = {'firstname': firstname,
-                'lastname': lastname,
+                'lastname': lastname or "",
                 'uuid': str(uuid.uuid4()),
                 'description': '',
                 'func_key_private_template_id': template_id,
+                'callerid': '"{}"'.format(caller_name),
                 'entityid': entity_id}
 
         user_id = self.db['userfeatures'].insert(user)
