@@ -260,3 +260,24 @@ class DatabaseQueries(object):
         line.update(params)
         return self.db['linefeatures'].insert(line)
 
+    def insert_sccp_line(self, extra_sccp, line_extra=None):
+        sccp = {"name": str(random.randint(1000, 9999)),
+                "context": "default",
+                "cid_name": "",
+                "cid_num": ""}
+        sccp.update(extra_sccp)
+        sccp_id = self.db['sccpline'].insert(sccp)
+
+        line = {'context': extra_sccp.get('context', 'default'),
+                'protocol': 'sccp',
+                'protocolid': sccp_id}
+        line.update(line_extra or {})
+        return self.insert_line(**line)
+
+    def associate_user_line_extension(self, user_id, line_id, extension_id, main_user=True, main_line=True):
+        user_line = {"user_id": user_id,
+                     "line_id": line_id,
+                     "extension_id": extension_id,
+                     "main_line": main_line,
+                     "main_user": main_user}
+        return self.db['user_line'].insert(user_line)
