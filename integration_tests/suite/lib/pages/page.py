@@ -64,6 +64,7 @@ class Page(object):
             elif not element.is_selected() and value is True:
                 element.click()
         else:
+            element.clear()
             element.send_keys(value)
 
     def fill_name(self, name, value, root=None):
