@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -689,12 +689,12 @@ class xivo_application_service_asterisk_rightcall extends xivo_application_aster
 		$this->_status = 'delete';
 		$this->_return = array();
 
-		if($this->delete_rightcall() === false
+		if($this->delete_rightcallexten() === false
 		|| $this->delete_rightcalluser() === false
 		|| $this->delete_rightcallgroup() === false
 		|| $this->delete_rightcallincall() === false
 		|| $this->delete_rightcalloutcall() === false
-		|| $this->delete_rightcallexten() === false)
+		|| $this->delete_rightcall() === false)
 		{
 			$r = false;
 			$this->_reverse_delete();
