@@ -273,20 +273,14 @@ class LineManager
 		return($r);
 	}
 
-	function get_linefeatures()
+	function get_linefeatures($line_id)
 	{
-		$this->_userapp->_info['linefeatures'] = false;
-		$this->_userapp->_origin['linefeatures'] = false;
+		$features = array(
+			'info' => array($this->_linefeatures->get($line_id)),
+			'origin' => $this->_linefeatures->get_origin_list()
+		);
 
-		if(is_object($this->_linefeatures) === false
-		|| $this->_userapp->_info['user_line'] === false
-		|| count($this->_userapp->_info['user_line']) === 0)
-			return(false);
-
-		$this->_userapp->_info['linefeatures'] = array($this->_linefeatures->get($this->_userapp->_info['user_line'][0]['line_id']));
-		$this->_userapp->_origin['linefeatures'] = $this->_linefeatures->get_origin_list();
-
-		return($this->_userapp->_info['linefeatures']);
+		return $features;
 	}
 
 	function reverse_add()

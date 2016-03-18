@@ -234,7 +234,19 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 
 	function _get_linefeatures()
 	{
-		return $this->_line_manager->get_linefeatures();
+		$this->_info['linefeatures'] = false;
+		$this->_origin['linefeatures'] = false;
+
+		if($this->_info['user_line'] === false
+		|| count($this->_info['user_line']) === 0)
+			return(false);
+
+		$line_id = $this->_info['user_line'][0]['line_id'];
+		$features = $this->_line_manager->get_linefeatures($line_id);
+
+		$this->_info['linefeatures'] = $features['info'];
+		$this->_origin['linefeatures'] = $features['origin'];
+		return($this->_info['linefeatures']);
 	}
 
 	function _get_exten()
@@ -785,7 +797,10 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 
 	function set_linefeatures($arr)
 	{
-		return $this->_line_manager->set_linefeatures($arr);
+		if (($userfeatures = $this->get_result('userfeatures')) === null)
+			return(false);
+
+		return $this->_line_manager->set_linefeatures($arr, $userfeatures['callerid']);
 	}
 
 	function set_voicemail($form, $action)
