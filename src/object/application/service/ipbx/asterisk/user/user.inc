@@ -1717,7 +1717,13 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 
 	function delete_linefeatures()
 	{
-		return $this->_line_manager->delete_linefeatures();
+		if(dwho_issa('linefeatures',$this->_info) === false)
+			return(null);
+
+		$result = $this->_line_manager->delete_linefeatures($this->_info['linefeatures']);
+
+		if($this->_status === 'delete')
+			$this->_return['linefeatures'] = $result;
 	}
 
 	function delete_device_config()

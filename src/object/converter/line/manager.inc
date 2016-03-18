@@ -257,28 +257,20 @@ class LineManager
 		return(($this->_userapp->_return['linefeatures'] = $return));
 	}
 
-	function delete_linefeatures()
+	function delete_linefeatures($lines)
 	{
-		if(dwho_issa('linefeatures',$this->_userapp->_info) === false)
-			return(null);
-
 		$r = true;
-		foreach($this->_userapp->_info['linefeatures'] as $line)
+		foreach($lines as $line)
 		{
 			if($this->_line->get($line['id']) === false
 			|| $this->_line->delete() === false)
 			{
 				$r = false;
-				$identity = $this->_userapp->_info['userfeatures']['identity'];
-				dwho_report::push('error','Can\'t remove line (id #'.$line['id'].') for user "'.$identity.'"', 'lines');
+				dwho_report::push('error','Can\'t remove line (id #'.$line['id'].')', 'lines');
 			}
 		}
 
-		if($this->_userapp->_status === 'delete')
-			$this->_userapp->_return['linefeatures'] = $r;
-
 		return($r);
-
 	}
 
 	function get_linefeatures()
