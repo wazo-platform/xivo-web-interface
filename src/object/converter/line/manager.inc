@@ -44,9 +44,7 @@ class LineManager
 	function set_linefeatures($arr)
 	{
 		if(is_array($arr) === false
-		|| $this->_linefeatures === false
-		|| ($userfeatures = $this->_userapp->get_result('userfeatures')) === null)
-			return(false);
+		|| $this->_linefeatures === false)
 
 		$reslist = $error = array();
 		$errnb = 0;
@@ -93,7 +91,7 @@ class LineManager
 			$number = $ref['number'];
 
 			$ref['num'] = isset($ref['num']) ? (int) $ref['num'] : 1;
-			$ref['callerid'] = $this->_userapp->_service->mk_callerid($userfeatures['callerid'],$number,$protocolname);
+			$ref['callerid'] = '"fake" <1000>';
 
 			if($this->_linefeatures->chk_values($ref) === false)
 			{

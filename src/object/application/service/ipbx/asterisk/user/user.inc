@@ -797,10 +797,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 
 	function set_linefeatures($arr)
 	{
-		if (($userfeatures = $this->get_result('userfeatures')) === null)
-			return(false);
-
-		return $this->_line_manager->set_linefeatures($arr, $userfeatures['callerid']);
+		return $this->_line_manager->set_linefeatures($arr);
 	}
 
 	function set_voicemail($form, $action)
