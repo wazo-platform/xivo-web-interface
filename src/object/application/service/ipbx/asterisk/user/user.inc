@@ -465,7 +465,6 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		$r = array();
 
 		$r['userfeatures'] = $this->_userfeatures->get_element();
-		$r['linefeatures'] = $this->_line_manager->get_element();
 		$r['dialaction'] = $this->_dialaction->get_element();
 
 		if(is_object($this->_queuemember) === true)

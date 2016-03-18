@@ -30,11 +30,6 @@ class LineManager
 		$this->_userapp = $userapp;
 	}
 
-	function get_element()
-	{
-		return $this->_linefeatures->get_element();
-	}
-
 	function get_user_masterline($user_id)
 	{
 		$masterline = $this->_linefeatures->get_user_masterline($user_id);
