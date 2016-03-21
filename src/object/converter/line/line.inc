@@ -81,6 +81,28 @@ class LineResource {
 		return array();
 	}
 
+	function get_main_line($user_id)
+	{
+		$associations = $this->list_user_line($user_id);
+		foreach ($associations as $association) {
+			if($association['main_line'] === true) {
+				return $this->get($association['line_id']);
+			}
+		}
+		return null;
+	}
+
+	function list_user_line($user_id)
+	{
+		$url = "/users/" . $user_id . "/lines";
+		$request = Request::json_get($url);
+		$response = $this->client->send($request);
+		if($response->status_ok()) {
+			return $response->decode_json()['items'];
+		}
+		return array();
+	}
+
 	private function get_extension($association) {
 		$request = Request::json_get("/extensions/" . $association['extension_id']);
 		$response = $this->client->send($request);

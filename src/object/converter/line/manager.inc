@@ -36,7 +36,19 @@ class LineManager
 
 	function get_user_masterline($user_id)
 	{
-		return $this->_linefeatures->get_user_masterline($user_id);
+		$line = $this->line->get_main_line($user_id);
+		if($line === null) {
+			return false;
+		}
+
+		if(defined('ENTITY_FILTER_CONTEXTS')) {
+			$contexts = explode(',', ENTITY_FILTER_CONTEXTS);
+			if(!in_array($line['context'], $contexts)) {
+				return false;
+			}
+		}
+
+		return $this->get_legacy_line($line);
 	}
 
 	function set_linefeatures($arr)
@@ -272,18 +284,24 @@ class LineManager
 	function get_linefeatures($line_id)
 	{
 		$line = $this->line->get($line_id);
+		$line = $this->get_legacy_line($line);
+		if ($line === null) {
+			return array('info' => false, 'origin' => false);
+		}
+		return array('info' => array($line), 'origin' => false);
+	}
+
+	private function get_legacy_line($line)
+	{
 		$endpoint = $this->line->get_endpoint($line);
 		$extension = $this->line->get_internal_extension($line);
 
 		if ($line === null || $endpoint === null || $extension === null) {
 			dwho_report::push('error', "Could not get Line (ID $line_id) and its associations");
-			return array('info' => false, 'origin' => false);
+			return null;
 		}
-				
-		$mapped_line = $this->mapper->map_line($line, $endpoint, $extension);
-		$features = array('info' => array($mapped_line), 'origin' => false);
 
-		return $features;
+		return $this->mapper->map_line($line, $endpoint, $extension);
 	}
 
 	function reverse_add()
