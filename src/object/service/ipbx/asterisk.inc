@@ -951,6 +951,7 @@ class xivo_service_asterisk extends xivo_service_abstract
 	{
 		return(array(XIVO_SRE_IPBX_AST_CODEC_AUDIO_ULAW,
 				XIVO_SRE_IPBX_AST_CODEC_AUDIO_ALAW,
+				XIVO_SRE_IPBX_AST_CODEC_AUDIO_G722,
 				XIVO_SRE_IPBX_AST_CODEC_AUDIO_G729));
 	}
 
