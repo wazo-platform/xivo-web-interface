@@ -267,18 +267,16 @@ class LineManager
 
 	function delete_linefeatures($lines)
 	{
-		$r = true;
 		foreach($lines as $line)
 		{
-			if($this->_line->get($line['id']) === false
-			|| $this->_line->delete() === false)
-			{
-				$r = false;
-				dwho_report::push('error','Can\'t remove line (id #'.$line['id'].')', 'lines');
+			if($this->line->dissociate($line) === false) {
+				return false;
+			}
+
+			if($this->line->delete($line['id']) === false) {
+				return false;
 			}
 		}
-
-		return($r);
 	}
 
 	function get_linefeatures($line_id)

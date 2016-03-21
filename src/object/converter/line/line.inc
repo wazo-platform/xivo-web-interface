@@ -36,6 +36,16 @@ class LineResource {
 		return null;
 	}
 
+	function delete($id) {
+		$request = Request::delete("/lines/" . $id);
+		$response = $this->client->send($request);
+		if(!$response->status_ok()) {
+			$response->report_errors();
+			return false;
+		}
+		return true;
+	}
+
 	function get_endpoint($line) {
 		$association = $this->get_endpoint_association($line);
 		if($association != null) {
@@ -81,6 +91,115 @@ class LineResource {
 		return array();
 	}
 
+	function get_device_association($line)
+	{
+		$request = Request::json_get("/lines/" . $line['id'] . "/devices");
+		$response = $this->client->send($request);
+		if($response->status_ok()) {
+			return $response->decode_json();
+		}
+		return null;
+	}
+
+	function list_user_associations($line)
+	{
+		$request = Request::json_get("/lines/" . $line['id'] . "/users");
+		$response = $this->client->send($request);
+		if($response->status_ok()) {
+			return $response->decode_json()['items'];
+		}
+		return array();
+	}
+
+	function dissociate($line)
+	{
+		if($this->dissociate_device($line) === false) {
+			dwho_report::push('error', 'error while dissociating device');
+			return false;
+		}
+
+		if($this->dissociate_extensions($line) === false) {
+			dwho_report::push('error', 'error while dissociating extensions');
+			return false;
+		}
+
+		if($this->dissociate_users($line) === false) {
+			dwho_report::push('error', 'error while dissociating users');
+			return false;
+		}
+
+		if($this->dissociate_endpoint($line) === false) {
+			dwho_report::push('error', 'error while dissociating endpoint');
+			return false;
+		}
+
+		return true;
+	}
+
+	function dissociate_device($line)
+	{
+		$association = $this->get_device_association($line);
+		if($association !== null) {
+			$request = Request::delete("/lines/" . $line['id'] . "/devices/" . $association['device_id']);
+			$response = $this->client->send($request);
+			if(!$response->status_ok()) {
+				$response->report_errors();
+				return false;
+			}
+		}
+		return true;
+	}
+
+	function dissociate_extensions($line)
+	{
+		$extension = $this->get_internal_extension($line);
+		if($extension !== null) {
+			$success = $this->dissociate_extension($line['id'], $extension['id']);
+			if($success !== true) {
+				return false;
+			}
+		}
+
+		$associations = $this->list_extension_associations($line);
+		foreach($associations as $association) {
+			$success = $this->dissociate_extension($line['id'], $association['extension_id']);
+			if($success !== false) {
+				return false;
+			}
+		}
+		return true;
+	} 
+
+	function dissociate_users($line)
+	{
+		$associations = $this->list_user_associations($line);
+		foreach($associations as $association)
+		{
+			$request = Request::delete("/users/" . $association['user_id'] . "/lines/" . $line['id']);
+			$response = $this->client->send($request);
+			if(!$response->status_ok()) {
+				$response->report_errors();
+				return false;
+			}
+		}
+	}
+
+	function dissociate_endpoint($line)
+	{
+		$association = $this->get_endpoint_association($line);
+		if($association !== null)
+		{
+			$url = "/lines/" . $line['id'] . "/endpoints/" . $association['endpoint'] . "/" . $association['endpoint_id'];
+			$request = Request::delete($url);
+			$response = $this->client->send($request);
+			if(!$response->status_ok()) {
+				$response->report_errors();
+				return false;
+			}
+		}
+		return true;
+	}
+
 	function get_main_line($user_id)
 	{
 		$associations = $this->list_user_line($user_id);
@@ -103,6 +222,17 @@ class LineResource {
 		return array();
 	}
 
+	private function dissociate_extension($line_id, $extension_id) 
+	{
+		$request = Request::delete("/lines/" . $line_id . "/extensions/" . $extension_id);
+		$response = $this->client->send($request);
+		if(!$response->status_ok()) {
+			$response->report_errors();
+			return false;
+		}
+		return true;
+	}
+
 	private function get_extension($association) {
 		$request = Request::json_get("/extensions/" . $association['extension_id']);
 		$response = $this->client->send($request);
@@ -122,6 +252,5 @@ class LineResource {
 	}
 
 }
-
 
 ?>
