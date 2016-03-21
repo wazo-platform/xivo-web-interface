@@ -27,6 +27,8 @@ require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'converter', 'funckey', 'mappe
 require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'converter', 'funckey', 'funckey.inc'));
 require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'converter', 'voicemail', 'mapper.inc'));
 require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'converter', 'line', 'manager.inc'));
+require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'converter', 'line', 'line.inc'));
+require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'converter', 'line', 'mapper.inc'));
 require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'client.inc'));
 require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'user', 'user.inc'));
 
@@ -159,7 +161,11 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		$client = Client::default_config();
 		$this->_confd_user = new UserResource($client);
 
-		$this->_line_manager = new LineManager($this->_line, $this->_linefeatures, $this);
+		$context_dso = &$this->_service->get_module('context');
+
+		$this->_line_manager = new LineManager($this->_line, $this->_linefeatures, $this,
+			new LineResource($client, $context_dso),
+			new LineMapper());
 
 		return(true);
 	}

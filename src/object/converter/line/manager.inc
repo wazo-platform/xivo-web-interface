@@ -23,17 +23,20 @@ class LineManager
 	private $_line = null;
 	private $_linefeatures = null;
 	private $_userapp = null;
+	private $line = null;
+	private $mapper = null;
 
-	function __construct($lineapp, $linefeatures, $userapp) {
+	function __construct($lineapp, $linefeatures, $userapp, $line_resource, $line_mapper) {
 		$this->_line = $lineapp;
 		$this->_linefeatures = $linefeatures;
 		$this->_userapp = $userapp;
+		$this->line = $line_resource;
+		$this->mapper = $line_mapper;
 	}
 
 	function get_user_masterline($user_id)
 	{
-		$masterline = $this->_linefeatures->get_user_masterline($user_id);
-		return $masterline;
+		return $this->_linefeatures->get_user_masterline($user_id);
 	}
 
 	function set_linefeatures($arr)
@@ -268,10 +271,17 @@ class LineManager
 
 	function get_linefeatures($line_id)
 	{
-		$features = array(
-			'info' => array($this->_linefeatures->get($line_id)),
-			'origin' => $this->_linefeatures->get_origin_list()
-		);
+		$line = $this->line->get($line_id);
+		$endpoint = $this->line->get_endpoint($line);
+		$extension = $this->line->get_internal_extension($line);
+
+		if ($line === null || $endpoint === null || $extension === null) {
+			dwho_report::push('error', "Could not get Line (ID $line_id) and its associations");
+			return array('info' => false, 'origin' => false);
+		}
+				
+		$mapped_line = $this->mapper->map_line($line, $endpoint, $extension);
+		$features = array('info' => array($mapped_line), 'origin' => false);
 
 		return $features;
 	}
