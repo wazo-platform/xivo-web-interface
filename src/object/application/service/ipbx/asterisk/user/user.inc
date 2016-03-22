@@ -27,10 +27,13 @@ require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'converter', 'funckey', 'mappe
 require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'converter', 'funckey', 'funckey.inc'));
 require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'converter', 'voicemail', 'mapper.inc'));
 require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'converter', 'line', 'manager.inc'));
-require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'converter', 'line', 'line.inc'));
 require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'converter', 'line', 'mapper.inc'));
 require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'client.inc'));
 require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'user', 'user.inc'));
+require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'line', 'line.inc'));
+require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'extension', 'extension.inc'));
+require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'sip', 'sip.inc'));
+require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'sccp', 'sccp.inc'));
 
 class xivo_application_service_asterisk_user extends xivo_application_asterisk_abstract
 {
@@ -159,13 +162,22 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		$this->_vm_mapper = new VoicemailMapper();
 
 		$client = Client::default_config();
-		$this->_confd_user = new UserResource($client);
+		$user_resource = new UserResource($client);
+		$this->_confd_user = $user_resource;
 
 		$context_dso = &$this->_service->get_module('context');
 
-		$this->_line_manager = new LineManager($this->_line, $this->_linefeatures, $this,
-			new LineResource($client, $context_dso),
-			new LineMapper());
+		$this->_line_manager = new LineManager(
+			$this->_line, 
+			$this->_linefeatures, 
+			$this,
+			new LineResource($client),
+			$user_resource,
+			new SipResource($client),
+			new SccpResource($client),
+			new ExtensionResource($client),
+			new LineMapper(),
+			$context_dso);
 
 		return(true);
 	}

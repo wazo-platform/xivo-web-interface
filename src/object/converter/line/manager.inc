@@ -24,31 +24,49 @@ class LineManager
 	private $_linefeatures = null;
 	private $_userapp = null;
 	private $line = null;
+	private $sip = null;
+	private $sccp = null;
+	private $extension = null;
+	private $user = null;
 	private $mapper = null;
+	private $context_dso = null;
 
-	function __construct($lineapp, $linefeatures, $userapp, $line_resource, $line_mapper) {
+	function __construct($lineapp, $linefeatures, $userapp, $line_resource, $user_resource, $sip_resource, $sccp_resource, $extension_resource, $line_mapper, $context_dso) {
 		$this->_line = $lineapp;
 		$this->_linefeatures = $linefeatures;
 		$this->_userapp = $userapp;
 		$this->line = $line_resource;
+		$this->user = $user_resource;
+		$this->sip = $sip_resource;
+		$this->sccp = $sccp_resource;
+		$this->extension = $extension_resource;
 		$this->mapper = $line_mapper;
+		$this->context_dso = $context_dso;
 	}
 
-	function get_user_masterline($user_id)
+	public function get_user_masterline($user_id)
 	{
-		$line = $this->line->get_main_line($user_id);
-		if($line === null) {
-			return false;
+		$associations = $this->user->list_line_associations($user_id);
+		foreach($associations as $association) {
+			if ($association['main_line'] == true) {
+				$line = $this->line->get($association['line_id']);
+				if($line !== null && $this->entity_allowed($line)) {
+					return $this->get_legacy_line($line);
+				}
+			}
 		}
+		return false;
+	}
 
+	private function entity_allowed($line)
+	{
 		if(defined('ENTITY_FILTER_CONTEXTS')) {
 			$contexts = explode(',', ENTITY_FILTER_CONTEXTS);
 			if(!in_array($line['context'], $contexts)) {
 				return false;
 			}
 		}
-
-		return $this->get_legacy_line($line);
+		return true;
 	}
 
 	function set_linefeatures($arr)
@@ -267,16 +285,55 @@ class LineManager
 
 	function delete_linefeatures($lines)
 	{
-		foreach($lines as $line)
-		{
-			if($this->line->dissociate($line) === false) {
-				return false;
-			}
-
-			if($this->line->delete($line['id']) === false) {
+		foreach($lines as $line) {
+			$deleted = $this->delete_line($line);
+			if(!$deleted) {
 				return false;
 			}
 		}
+	}
+
+	private function delete_line($line)
+	{
+		return $this->dissociate_device($line) && $this->delete_endpoint($line);
+	}
+
+	private function dissociate_device($line)
+	{
+		$association = $this->line->get_device_association($line['id']);
+		if($association !== null) {
+			return  $this->line->dissociate_device($line['id'], $association['device_id']);
+		}
+		return true;
+	}
+
+	private function delete_endpoint($line)
+	{
+		$protocol = $line['protocol'];
+
+		if($protocol == 'sip') {
+			$association = $this->line->get_sip_association($line['id']);
+		} else {
+			$association = $this->line->get_sccp_association($line['id']);
+		}
+
+		if($association !== null) {
+			if($protocol == 'sip') {
+				$dissociated = $this->line->dissociate_sip($line['id'], $association['endpoint_id']);
+			} else {
+				$dissociated = $this->line->dissociate_sccp($line['id'], $association['endpoint_id']);
+			}
+
+			if($dissociated === true) {
+				if($protocol == 'sip') {
+					return $this->sip->delete($endpoint['id']);
+				} else {
+					return $this->sccp->delete($endpoint['id']);
+				}
+			}
+		}
+
+		return false;
 	}
 
 	function get_linefeatures($line_id)
@@ -291,8 +348,8 @@ class LineManager
 
 	private function get_legacy_line($line)
 	{
-		$endpoint = $this->line->get_endpoint($line);
-		$extension = $this->line->get_internal_extension($line);
+		$endpoint = $this->get_endpoint($line);
+		$extension = $this->get_internal_extension($line);
 
 		if ($line === null || $endpoint === null || $extension === null) {
 			dwho_report::push('error', "Could not get Line (ID $line_id) and its associations");
@@ -300,6 +357,47 @@ class LineManager
 		}
 
 		return $this->mapper->map_line($line, $endpoint, $extension);
+	}
+
+	private function get_endpoint($line) {
+		$protocol = $line['protocol'];
+
+		if($protocol == "sip") {
+			$association = $this->line->get_sip_association($line['id']);
+		} else {
+			$association = $this->line->get_sccp_association($line['id']);
+		}
+
+		if($association !== null) {
+			if($protocol == "sip") {
+				return $this->sip->get($association['endpoint_id']);
+			} else {
+				return $this->sccp->get($association['endpoint_id']);
+			}
+		}
+
+		return null;
+	}
+
+	private function get_internal_extension($line) {
+		$associations = $this->line->list_extension_associations($line['id']);
+		foreach($associations as $association) {
+			$extension = $this->extension->get($association['extension_id']);
+			if($this->is_internal_extension($extension)) {
+				return $extension;
+			}
+		}
+		return null;
+	}
+
+	private function is_internal_extension($extension) {
+		$contexts = $this->context_dso->get_all(null, null, null, false, 'internal');
+		foreach($contexts as $context) {
+			if($context['name'] == $extension['context']) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	function reverse_add()
