@@ -52,6 +52,18 @@ class UserResource {
 		return $response->get_body();
 	}
 
+	public function list_line_associations($id)
+	{
+		$url = "/users/" . $id . "/lines";
+		$request = Request::json_get($url);
+		$response = $this->client->send($request);
+		if($response->status_ok()) {
+			return $response->decode_json()['items'];
+		}
+		return array();
+
+	}
+
 	private function build_csv_request($verb, $csvdata)
 	{
 		$headers = array('Content-Type: text/csv; charset=utf-8');

@@ -1,4 +1,5 @@
 <?php
+
 #
 # XiVO Web-Interface
 # Copyright (C) 2016 Avencall
@@ -15,9 +16,9 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
 
-
-class SipResource {
+class SccpResource {
 
 	private $client = null;
 
@@ -25,27 +26,24 @@ class SipResource {
 		$this->client = $client;
 	}
 
-	public function get($id)
-	{
-		$request = Request::json_get("/endpoints/sip/" . $id);
+	function get($id) {
+		$request = Request::json_get("/endpoints/sccp/" . $id);
 		$response = $this->client->send($request);
-		return $response->decode_or_raise();
+		if($response->status_ok()) {
+			return $response->decode_json();
+		}
+		return null;
 	}
 
-	public function delete($id)
-	{
-		$request = Request::delete("/endpoints/sip/" . $id);
+	function delete($id) {
+		$request = Request::json_get("/endpoints/sccp/" . $id);
 		$response = $this->client->send($request);
-		return $response->status_ok_or_raise();
-	}
-
-	public function update($id, $parameters)
-	{
-		$request = Request::json_put("/endpoints/sip/" . $id, $parameters);
-		$response = $this->client->send($request);
-		return $response->status_ok_or_raise();
+		if($response->status_ok()) {
+			return true;
+		} else {
+			$response->report_errors();
+			return false;
+		}
 	}
 
 }
-
-?>
