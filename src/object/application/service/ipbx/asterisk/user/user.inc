@@ -814,7 +814,18 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 
 	function set_linefeatures($arr)
 	{
-		return $this->_line_manager->set_linefeatures($arr);
+		if(is_array($arr)) {
+			$line = array();
+			foreach($arr as $key => $values) {
+				if(count($values) > 1) {
+					$line[$key] = $values[0];
+				}
+			}
+			$this->_set_result('linefeatures', array($line));
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	function set_voicemail($form, $action)
