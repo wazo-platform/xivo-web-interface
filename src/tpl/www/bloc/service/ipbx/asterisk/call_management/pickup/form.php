@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -74,51 +74,63 @@ echo	$form->text(array('desc'	=> $this->bbf('fm_pickup_name'),
 <div id="sb-part-members" class="b-nodisplay">
 	<fieldset id="fld-members-groups">
 		<legend><?=$this->bbf('fld-members-groups');?></legend>
+		<div id="interceptorgrouplist" class="fm-paragraph fm-description">
 <?php
 		$this->file_include('bloc/service/ipbx/asterisk/call_management/pickup/member',
 			array('membertype' => 'groups', 'category' => 'member'));
 ?>
+		</div>
 	</fieldset>
 
 	<fieldset id="fld-members-queues">
 		<legend><?=$this->bbf('fld-members-queues');?></legend>
+		<div id="interceptorqueuelist" class="fm-paragraph fm-description">
 <?php
 		$this->file_include('bloc/service/ipbx/asterisk/call_management/pickup/member',
 			array('membertype' => 'queues', 'category' => 'member'));
 ?>
+		</div>
 	</fieldset>
 
 	<fieldset id="fld-members-users">
 		<legend><?=$this->bbf('fld-members-users');?></legend>
+		<div id="interceptoruserlist" class="fm-paragraph fm-description">
 <?php
 		$this->file_include('bloc/service/ipbx/asterisk/call_management/pickup/member',
 			array('membertype' => 'users', 'category' => 'member'));
 ?>
+		</div>
 	</fieldset>
 </div>
 
 <div id="sb-part-interceptors" class="b-nodisplay">
 	<fieldset id="fld-interceptors-groups">
 		<legend><?=$this->bbf('fld-interceptors-groups');?></legend>
+		<div id="interceptedgrouplist" class="fm-paragraph fm-description">
 <?php
 		$this->file_include('bloc/service/ipbx/asterisk/call_management/pickup/member',
 			array('membertype' => 'groups', 'category' => 'pickup'));
 ?>
+		</div>
 	</fieldset>
 
 	<fieldset id="fld-interceptors-queues">
 		<legend><?=$this->bbf('fld-interceptors-queues');?></legend>
+		<div id="interceptedqueuelist" class="fm-paragraph fm-description">
 <?php
 		$this->file_include('bloc/service/ipbx/asterisk/call_management/pickup/member',
 			array('membertype' => 'queues', 'category' => 'pickup'));
 ?>
+		</div>
 	</fieldset>
 
 	<fieldset id="fld-interceptors-users">
 		<legend><?=$this->bbf('fld-interceptors-users');?></legend>
+		<div id="intercepteduserlist" class="fm-paragraph fm-description">
 <?php
 		$this->file_include('bloc/service/ipbx/asterisk/call_management/pickup/member',
 			array('membertype' => 'users', 'category' => 'pickup'));
 ?>
+		</div>
 	</fieldset>
 </div>
