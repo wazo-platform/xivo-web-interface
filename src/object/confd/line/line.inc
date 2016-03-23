@@ -35,6 +35,18 @@ class LineResource {
 		return null;
 	}
 
+	function create($line)
+	{
+		$request = Request::json_post("/lines", $line);
+		$response = $this->client->send($request);
+		if($response->status_ok()) {
+			return $response->decode_json();
+		} else {
+			$response->report_errors();
+			return null;
+		}
+	}
+
 	function delete($id) {
 		$request = Request::delete("/lines/" . $id);
 		$response = $this->client->send($request);
@@ -96,7 +108,70 @@ class LineResource {
 		return null;
 	}
 
-	function dissociate_extension($line_id, $extension_id) 
+	function associate_device($line_id, $device_id)
+	{
+		$request = Request::put("/lines/" . $line_id . "/devices/" . $device_id);
+		$response = $this->client->send($request);
+		if(!$response->status_ok()) {
+			$response->report_errors();
+			return false;
+		}
+		return true;
+	}
+
+	function associate_sip($line_id, $sip_id)
+	{
+		$request = Request::put("/lines/" . $line_id . "/endpoints/sip/" . $sip_id);
+		$response = $this->client->send($request);
+		if(!$response->status_ok()) {
+			$response->report_errors();
+			return false;
+		}
+		return true;
+	}
+
+	function associate_sccp($line_id, $sccp_id)
+	{
+		$request = Request::put("/lines/" . $line_id . "/endpoints/sccp/" . $sccp_id);
+		$response = $this->client->send($request);
+		if(!$response->status_ok()) {
+			$response->report_errors();
+			return false;
+		}
+		return true;
+	}
+
+	function associate_extension($line_id, $extension_id)
+	{
+		$request = Request::json_post(
+			"/lines/" . $line_id . "/extensions",
+			array('extension_id' => $extension_id)
+		);
+
+		$response = $this->client->send($request);
+		if(!$response->status_ok()) {
+			$response->report_errors();
+			return false;
+		}
+		return true;
+	}
+
+	function associate_user($line_id, $user_id)
+	{
+		$request = Request::json_post(
+			"/users/" . $user_id . "/lines",
+			array('line_id' => $line_id)
+		);
+
+		$response = $this->client->send($request);
+		if(!$response->status_ok()) {
+			$response->report_errors();
+			return false;
+		}
+		return true;
+	}
+
+	function dissociate_extension($line_id, $extension_id)
 	{
 		$request = Request::delete("/lines/" . $line_id . "/extensions/" . $extension_id);
 		$response = $this->client->send($request);

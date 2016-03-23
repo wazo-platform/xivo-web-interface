@@ -35,6 +35,18 @@ class SccpResource {
 		return null;
 	}
 
+	function create($sip)
+	{
+		$request = Request::json_post("/endpoints/sccp", $sip);
+		$response = $this->client->send($request);
+		if($response->status_ok()) {
+			return $response->decode_json();
+		} else {
+			$response->report_errors();
+			return null;
+		}
+	}
+
 	function delete($id) {
 		$request = Request::json_get("/endpoints/sccp/" . $id);
 		$response = $this->client->send($request);

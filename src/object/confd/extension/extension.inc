@@ -35,4 +35,16 @@ class ExtensionResource {
 		return null;
 	}
 
+	function create($extension)
+	{
+		$request = Request::json_post("/extensions", $line);
+		$response = $this->client->send($request);
+		if($response->status_ok()) {
+			return $response->decode_json();
+		} else {
+			$response->report_errors();
+			return null;
+		}
+	}
+
 }

@@ -32,6 +32,18 @@ class SipResource {
 		return $response->decode_or_raise();
 	}
 
+	function create($sip)
+	{
+		$request = Request::json_post("/endpoints/sip", $sip);
+		$response = $this->client->send($request);
+		if($response->status_ok()) {
+			return $response->decode_json();
+		} else {
+			$response->report_errors();
+			return null;
+		}
+	}
+
 	public function delete($id)
 	{
 		$request = Request::delete("/endpoints/sip/" . $id);
