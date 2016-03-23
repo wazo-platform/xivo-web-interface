@@ -156,6 +156,15 @@ class OptionMapper {
 
 class LineMapper {
 
+	function map_form($form)
+	{
+		return array(
+			'context' => $form['context'],
+			'registrar' => $form['configregistrar'],
+			'position' => $form['num']
+		);
+	}
+
 	function map_line($line, $endpoint=null, $extension=null)
 	{
 		return array(

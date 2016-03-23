@@ -139,148 +139,86 @@ class LineManager
 		return(true);
 	}
 
-	function edit_linefeatures()
+	function edit_linefeatures($user_id, $lines, $action)
 	{
-		if(($rs = $this->_userapp->get_result('linefeatures')) === null
-		|| (($nbrs = count($rs)) === 0
-			&& $this->_userapp->has_existing_line() === false))
-			return(null);
+		if($action == "add") {
+			return $this->create($user_id, $lines);
+		} else {
+			return $this->update($user_id, $lines);
+		}
+	}
 
-		if(is_null($rs) === true)
-			$rs = array();
+	private function create($user_id, $lines)
+	{
+		$created_lines = array();
+		$line_devices = array();
 
-		$res = array();
-		if (isset($this->_userapp->_info['linefeatures']) === true
-		&& ($info = $this->_userapp->_info['linefeatures']) !== false
-		&& ($nbinfo = count($info)) !== 0)
-		{
-			for($i = 0;$i < $nbinfo;$i++)
-			{
-				$ref = &$info[$i];
-				$res[$ref['id']] = $ref;
+		foreach($lines as $form) {
+			$created_line = $this->create_line($user_id, $form);
+			if($created_line === null) {
+				return false;
+			}
+			$created_lines[] = $created_line;
+
+			if($form['device'] !== '') {
+				$line_devices[] = array(
+					'line_id' => $created_line['id'],
+					'device_id' => $form['device']
+				);
 			}
 		}
 
-		$return = $error = array();
-		$errnb = 0;
-		$linefeatures = array();
-		$linefeatures['list'] = $res;
-		$linefeatures['slt'] = dwho_array_intersect_key($rs,$linefeatures['list'],'id');
-		$linefeatures['info'] = false;
+		return array(
+			'linefeatures' => $created_lines,
+			'line_device' => $line_devices
+		);
+	}
 
-		if($linefeatures['slt'] !== false)
-		{
-			$linefeatures['info'] = dwho_array_copy_intersect_key($rs,$linefeatures['slt'],'id');
-			$linefeatures['list'] = dwho_array_diff_key($linefeatures['list'],$linefeatures['slt']);
-		}
+	private function create_line($user_id, $form) {
+		$protocol = $form['protocol'];
+		$mapped_line = $this->mapper->map_form($form);
+		$line = $this->line->create($mapped_line);
 
-		if(empty($linefeatures['list']) === false)
-		{
-			$nb = count($linefeatures['list']);
-			$linefeatures_list = array_values($linefeatures['list']);
-			for($i = 0;$i < $nb;$i++)
-			{
-				$ref = &$linefeatures_list[$i];
-				if (isset($ref['id']) === false)
-					continue;
-				if($this->_line->get($ref['id']) === false
-				|| $this->_line->delete() === false)
-				{
-					dwho_report::push('error','Can\'t remove line: '.$ref['id'],'linefeatures');
-					$this->_userapp->_set_error('line',$this->_line->get_error());
-					return(false);
+		if($line !== null) {
+			$endpoint = $this->create_endpoint($protocol);
+			if($endpoint !== null) {
+				$associated = $this->associate_endpoint($line, $protocol, $endpoint);
+				if($associated == true) {
+					$line['protocol'] = $protocol;
+					$legacy_line = $this->mapper->map_line($line, $endpoint);
+					return $legacy_line;
 				}
 			}
 		}
 
-		for($i = 0;$i < $nbrs;$i++)
-		{
-			$line = &$rs[$i];
+		return false;
+	}
 
-			$this->_line->_reset();
-			$protocolname = $line['protocol'];
-			$arr = array();
-
-			if (isset($line['id']) === true
-			&& (int) $line['id'] !== 0)
-			{
-				$methodset = 'set_edit';
-				$method = 'edit';
-
-				if (($existline = $this->_line->get($line['id'])) === false)
-				{
-					$errnb++;
-					$error[$i] = 'line_not_exist';
-					dwho_report::push('error',dwho_i18n::babelfish('Row '.($i+1).': line_not_exist'),'linefeatures');
-					continue;
-				}
-			}
-			else
-			{
-				$methodset = 'set_add';
-				$method = 'add';
-			}
-
-			$arr['linefeatures'] =  $this->_userapp->get_result_var('linefeatures', 0);
-
-			$arr['user_id'] = $user_id;
-			$arr['protocol'] = array();
-
-			if ($protocolname === XIVO_SRE_IPBX_AST_PROTO_SIP)
-				$arr['protocol']['call-limit'] = (2 * (int) $this->_userapp->get_result_var('userfeatures', 'simultcalls'));
-			$arr['protocol']['language'] = $this->_userapp->get_result_var('userfeatures', 'language');
-			$arr['protocol']['name'] = $line['name'];
-			$arr['protocol']['context'] = $line['context'];
-
-			if($protocolname === XIVO_SRE_IPBX_AST_PROTO_CUSTOM)
-				$arr['protocol']['interface'] = $line['name'];
-			elseif($protocolname === XIVO_SRE_IPBX_AST_PROTO_SCCP)
-			{
-				$arr['protocol']['cid_name'] = str_replace('"','',$line['callerid']);
-				$arr['protocol']['cid_num'] = $line['number'];
-			}
-
-			if(($queue = $this->_userapp->get_result('queue')) !== null
-			&& ($queue_select = $this->_userapp->get_result('queue-select')) !== null)
-			{
-				$arr['queue'] = $queue;
-				$arr['queue-select'] = $queue_select;
-			}
-			if(($group = $this->_userapp->get_result('group')) !== null
-			&& ($group_select = $this->_userapp->get_result('group-select')) !== null)
-			{
-				$arr['group'] = $group;
-				$arr['group-select'] = $group_select;
-			}
-
-			if (isset($line['id'])) {
-				$actual_line = $this->_line->get($line['id']);
-				$arr['options'] = $actual_line['options'];
-			}
-
-			if($this->_line->$methodset($arr,$protocolname) === false
-			|| ($line_id = $this->_line->$method()) === false)
-			{
-				$errnb++;
-				$error[$i] = $this->_line->get_error();
-				$msgkey = array_shift(array_keys($this->_line->get_error()));
-				$msg = array_shift($this->_line->get_error());
-				if (empty($msgkey) === false)
-					dwho_report::push('error','Line '.($i+1).': '.$msgkey.' '.$msg,'linefeatures');
-				else
-					dwho_report::push('error','Line '.($i+1).': unknow error during '.$method,'linefeatures');
-			}
-			$line['id'] = $line_id;
-			$return[$i] = $line;
+	private function create_endpoint($protocol)
+	{
+		if($protocol == "sip") {
+			return $this->sip->create(array());
+		} else {
+			return $this->sccp->create(array());
 		}
+	}
 
-		if ($errnb >> 0)
-		{
-			$this->_userapp->_set_error('linefeatures',$error);
-			return(false);
+	private function associate_endpoint($line, $protocol, $endpoint)
+	{
+		if($protocol == "sip") {
+			return $this->line->associate_sip($line['id'], $endpoint['id']);
+		} else {
+			return $this->line->associate_sccp($line['id'], $endpoint['id']);
 		}
+	}
 
-		return(($this->_userapp->_return['linefeatures'] = $return));
+	function add_device_config($line_devices)
+	{
+		foreach($line_devices as $association) {
+			if (!$this->line->associate_device($association['line_id'], $association['device_id'])) {
+				return false;
+			}
+		}
 	}
 
 	function delete_linefeatures($lines)
@@ -352,7 +290,7 @@ class LineManager
 		$extension = $this->get_internal_extension($line);
 
 		if ($line === null || $endpoint === null || $extension === null) {
-			dwho_report::push('error', "Could not get Line (ID $line_id) and its associations");
+			dwho_report::push('error', "Could not get Line (ID ${line['id']}) and its associations");
 			return null;
 		}
 

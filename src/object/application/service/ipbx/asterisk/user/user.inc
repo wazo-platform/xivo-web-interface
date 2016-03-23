@@ -1040,36 +1040,10 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 
 	function add_device_config($line_id)
 	{
-		if($this->_provddevice === false
-		|| ($rs = $this->get_result('linefeatures')) === null
-		|| $rs === false)
-			return(false);
-
-		$new_device = $rs[0];
-
-		// new device associated
-		if (empty($new_device['device']) === false)
-		{
-			$vm_number = (string) $this->get_result_var('voicemail', 'number');
-
-			if (($device = $this->_device->get($new_device['device'])) === false)
-			{
-				dwho_report::push('error', 'device doesn\'t exist');
-				return(false);
-			}
-			elseif($this->_provddevice->rebuild_device_config($new_device['device']) === false)
-			{
-				dwho_report::push('error', 'could not rebuild device config for device '.$new_device['device']);
-				return(false);
-			}
-			elseif ($new_device['protocol'] === XIVO_SRE_IPBX_AST_PROTO_SCCP
-			&& $this->_sccpdevice->init_device($device['device']['mac'],$new_device['name'],$vm_number) === false)
-			{
-				dwho_report::push('error', 'Can\'t initialize SCCP device');
-				return(false);
-			}
+		if(is_array($this->_return['line_device'])) {
+			return $this->_line_manager->add_device_config($this->_return['line_device']);
 		}
-		return(true);
+		return true;
 	}
 
 	function add_voicemail($user_id)
@@ -1360,7 +1334,22 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 
 	function edit_linefeatures($user_id)
 	{
-		return $this->_line_manager->edit_linefeatures($user_id);
+		$lines = $this->get_result('linefeatures');
+		if($lines === false || count($lines) === 0) {
+			return null;
+		}
+
+		$result = $this->_line_manager->edit_linefeatures(
+			$user_id,
+			$lines,
+			$this->_status
+		);
+
+		if($result !== false) {
+			$this->_return = array_merge($this->_return, $result);
+		}
+
+		return $this->_return['linefeatures'];
 	}
 
 	function edit_rightcall()
