@@ -47,6 +47,18 @@ class LineResource {
 		}
 	}
 
+	function update($line)
+	{
+		$request = Request::json_put("/lines/" . $line['id'], $line);
+		$response = $this->client->send($request);
+		if($response->status_ok()) {
+			return true;
+		} else {
+			$response->report_errors();
+			return false;
+		}
+	}
+
 	function delete($id) {
 		$request = Request::delete("/lines/" . $id);
 		$response = $this->client->send($request);

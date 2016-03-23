@@ -104,6 +104,30 @@ class LineManager
 		);
 	}
 
+	private function update($user_id, $lines)
+	{
+		$updated_lines = array();
+		$line_devices = array();
+
+		foreach($lines as $form) {
+			$updated_line = $this->update_line($user_id, $form);
+			if($updated_line === null) {
+				return false;
+			}
+			$update_lines[] = $updated_line;
+
+			$line_devices[] = array(
+				'line_id' => $updated_line['id'],
+				'device_id' => $form['device']
+			);
+		}
+
+		return array(
+			'linefeatures' => $updated_lines,
+			'line_device' => $line_devices
+		);
+	}
+
 	private function create_line($user_id, $form) {
 		$protocol = $form['protocol'];
 		$mapped_line = $this->mapper->map_form($form);
@@ -121,6 +145,21 @@ class LineManager
 			}
 		}
 
+		return false;
+	}
+
+	private function update_line($user_id, $form) {
+		$protocol = $form['protocol'];
+		$line = $this->line->get($form['id']);
+		if($line !== null) {
+			$line = $this->mapper->map_form($form);
+			$line['id'] = $form['id'];
+			$updated = $this->line->update($line);
+			if ($updated == true) {
+				$line = $this->line->get($line['id']);
+				return $this->get_legacy_line($line);
+			}
+		}
 		return false;
 	}
 
@@ -149,6 +188,47 @@ class LineManager
 				return false;
 			}
 		}
+	}
+
+	function edit_device_config($line_devices)
+	{
+		foreach($line_devices as $line_device) {
+			if(!$this->update_device_association($line_device)) {
+				return false;
+			}
+		}
+	}
+
+	function update_device_association($line_device)
+	{
+		$association = $this->line->get_device_association($line_device['line_id']);
+		if($association === null) {
+			if($line_device['device_id'] != "") {
+				return $this->line->associate_device(
+					$line_device['line_id'],
+					$line_device['device_id']
+				);
+			}
+		} else {
+			if($line_device['device_id'] == "") {
+				return $this->line->dissociate_device(
+					$association['line_id'],
+					$association['device_id']
+				);
+			} else if ($association['device_id'] != $line_device['device_id']) {
+				return
+					$this->line->dissociate_device(
+						$association['line_id'],
+						$association['device_id']
+					)
+					&&
+					$this->line->associate_device(
+						$line_device['line_id'],
+						$line_device['device_id']
+					);
+			}
+		}
+		return true;
 	}
 
 	function delete_linefeatures($lines)

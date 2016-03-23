@@ -1460,82 +1460,9 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 
 	function edit_device_config()
 	{
-		if(dwho_issa('linefeatures',$this->_info) === false
-		|| ($rs = $this->get_result('linefeatures')) === null
-		|| $rs === false)
-			return(false);
-
-		$vm_number = (string) $this->get_result_var('voicemail', 'number');
-
-		$existing_device = $this->_info['linefeatures'][0];
-		$new_device = $rs[0];
-
-		// Device change, update it.
-		if ($existing_device['device'] !== $new_device['device'])
-		{
-			// Delete the old device associated.
-			if (empty($existing_device['device']) === false)
-			{
-				if (($device = $this->_device->get($existing_device['device'],null,true)) === false)
-				{
-					dwho_report::push('error', 'device doesn\'t exist: '.$existing_device['device']);
-					return(false);
-				}
-				elseif ($this->_provddevice->rebuild_device_config($existing_device['device']) === false)
-				{
-					dwho_report::push('error', 'could not rebuild device config for device '.$existing_device['device']);
-					return(false);
-				}
-				elseif ($existing_device['protocol'] === XIVO_SRE_IPBX_AST_PROTO_SCCP
-				&& $this->_sccpdevice->init_device($device['device']['mac'],'') === false)
-				{
-					dwho_report::push('error', 'Can\'t initialize SCCP device');
-					return(false);
-				}
-			}
-			// Add the new device associated.
-			if (empty($new_device['device']) === false)
-			{
-				if (($device = $this->_device->get($new_device['device'])) === false)
-				{
-					dwho_report::push('error', 'device doesn\'t exist: '.$new_device['device']);
-					return(false);
-				}
-				elseif ($this->_provddevice->rebuild_device_config($new_device['device']) === false)
-				{
-					dwho_report::push('error', 'could not rebuild device config for device '.$new_device['device']);
-					return(false);
-				}
-				elseif ($new_device['protocol'] === XIVO_SRE_IPBX_AST_PROTO_SCCP
-				&& $this->_sccpdevice->init_device($device['device']['mac'],$new_device['number'],$vm_number) === false)
-				{
-					dwho_report::push('error', 'Can\'t initialize SCCP device');
-					return(false);
-				}
-			}
+		if(is_array($this->_return['line_device'])) {
+			return $this->_line_manager->edit_device_config($this->_return['line_device']);
 		}
-		// Device has not changed, just update.
-		elseif (empty($new_device['device']) === false
-		&& empty($existing_device['device']) === false)
-		{
-			if (($device = $this->_device->get($existing_device['device'])) === false)
-			{
-				dwho_report::push('error', 'device doesn\'t exist: '.$existing_device['device']);
-				return(false);
-			}
-			elseif ($this->_provddevice->rebuild_device_config($existing_device['device']) === false)
-			{
-				dwho_report::push('error', 'could not rebuild device config for device '.$existing_device['device']);
-				return(false);
-			}
-			elseif ($new_device['protocol'] === XIVO_SRE_IPBX_AST_PROTO_SCCP
-			&& $this->_sccpdevice->init_device($device['device']['mac'],$new_device['number'],$vm_number) === false)
-			{
-				dwho_report::push('error', 'Can\'t initialize SCCP device');
-				return(false);
-			}
-		}
-
 		return(true);
 	}
 
