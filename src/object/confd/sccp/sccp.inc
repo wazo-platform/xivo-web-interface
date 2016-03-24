@@ -29,33 +29,20 @@ class SccpResource {
 	function get($id) {
 		$request = Request::json_get("/endpoints/sccp/" . $id);
 		$response = $this->client->send($request);
-		if($response->status_ok()) {
-			return $response->decode_json();
-		}
-		return null;
+		return $response->decode_or_raise();
 	}
 
 	function create($sip)
 	{
 		$request = Request::json_post("/endpoints/sccp", $sip);
 		$response = $this->client->send($request);
-		if($response->status_ok()) {
-			return $response->decode_json();
-		} else {
-			$response->report_errors();
-			return null;
-		}
+		return $response->decode_or_raise();
 	}
 
 	function delete($id) {
 		$request = Request::json_get("/endpoints/sccp/" . $id);
 		$response = $this->client->send($request);
-		if($response->status_ok()) {
-			return true;
-		} else {
-			$response->report_errors();
-			return false;
-		}
+		return $response->status_ok_or_raise();
 	}
 
 }

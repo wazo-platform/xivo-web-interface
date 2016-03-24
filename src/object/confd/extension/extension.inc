@@ -29,22 +29,14 @@ class ExtensionResource {
 	function get($id) {
 		$request = Request::json_get("/extensions/" . $id);
 		$response = $this->client->send($request);
-		if($response->status_ok()) {
-			return $response->decode_json();
-		}
-		return null;
+		return $response->decode_or_raise();
 	}
 
 	function create($extension)
 	{
 		$request = Request::json_post("/extensions", $line);
 		$response = $this->client->send($request);
-		if($response->status_ok()) {
-			return $response->decode_json();
-		} else {
-			$response->report_errors();
-			return null;
-		}
+		return $response->decode_or_raise();
 	}
 
 }

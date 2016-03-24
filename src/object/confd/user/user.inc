@@ -57,11 +57,8 @@ class UserResource {
 		$url = "/users/" . $id . "/lines";
 		$request = Request::json_get($url);
 		$response = $this->client->send($request);
-		if($response->status_ok()) {
-			return $response->decode_json()['items'];
-		}
-		return array();
-
+		$content = $response->decode_or_raise();
+		return $content === null ? array() : $content['items'];
 	}
 
 	private function build_csv_request($verb, $csvdata)
