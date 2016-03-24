@@ -26,6 +26,7 @@ dwho_file::required(array(XIVO_PATH_OBJECT,'application','service','ipbx','aster
 require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'converter', 'funckey', 'mapper.inc'));
 require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'converter', 'funckey', 'funckey.inc'));
 require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'converter', 'voicemail', 'mapper.inc'));
+require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'converter', 'line', 'shim.inc'));
 require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'converter', 'line', 'manager.inc'));
 require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'converter', 'line', 'mapper.inc'));
 require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'client.inc'));
@@ -167,17 +168,18 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 
 		$context_dso = &$this->_service->get_module('context');
 
-		$this->_line_manager = new LineManager(
-			$this->_line, 
-			$this->_linefeatures, 
-			$this,
+		$client = Client::default_config(true);
+		$manager = new LineManager(
 			new LineResource($client),
-			$user_resource,
+			new UserResource($client),
 			new SipResource($client),
 			new SccpResource($client),
 			new ExtensionResource($client),
 			new LineMapper(),
-			$context_dso);
+			$context_dso
+		);
+
+		$this->_line_manager = new LineShim($this->_line, $manager);
 
 		return(true);
 	}

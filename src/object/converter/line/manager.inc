@@ -20,9 +20,6 @@
 
 class LineManager
 {
-	private $_line = null;
-	private $_linefeatures = null;
-	private $_userapp = null;
 	private $line = null;
 	private $sip = null;
 	private $sccp = null;
@@ -31,10 +28,7 @@ class LineManager
 	private $mapper = null;
 	private $context_dso = null;
 
-	function __construct($lineapp, $linefeatures, $userapp, $line_resource, $user_resource, $sip_resource, $sccp_resource, $extension_resource, $line_mapper, $context_dso) {
-		$this->_line = $lineapp;
-		$this->_linefeatures = $linefeatures;
-		$this->_userapp = $userapp;
+	function __construct($line_resource, $user_resource, $sip_resource, $sccp_resource, $extension_resource, $line_mapper, $context_dso) {
 		$this->line = $line_resource;
 		$this->user = $user_resource;
 		$this->sip = $sip_resource;
@@ -44,18 +38,18 @@ class LineManager
 		$this->context_dso = $context_dso;
 	}
 
-	public function get_user_masterline($user_id)
+	public function get_main_line($user_id)
 	{
 		$associations = $this->user->list_line_associations($user_id);
 		foreach($associations as $association) {
 			if ($association['main_line'] == true) {
 				$line = $this->line->get($association['line_id']);
-				if($line !== null && $this->entity_allowed($line)) {
+				if($this->entity_allowed($line)) {
 					return $this->get_legacy_line($line);
 				}
 			}
 		}
-		return false;
+		return null;
 	}
 
 	private function entity_allowed($line)
@@ -69,25 +63,13 @@ class LineManager
 		return true;
 	}
 
-	function edit_linefeatures($user_id, $lines, $action)
-	{
-		if($action == "add") {
-			return $this->create($user_id, $lines);
-		} else {
-			return $this->update($user_id, $lines);
-		}
-	}
-
-	private function create($user_id, $lines)
+	public function create($user_id, $lines)
 	{
 		$created_lines = array();
 		$line_devices = array();
 
 		foreach($lines as $form) {
 			$created_line = $this->create_line($user_id, $form);
-			if($created_line === null) {
-				return false;
-			}
 			$created_lines[] = $created_line;
 
 			if($form['device'] !== '') {
@@ -104,16 +86,13 @@ class LineManager
 		);
 	}
 
-	private function update($user_id, $lines)
+	public function update($user_id, $lines)
 	{
 		$updated_lines = array();
 		$line_devices = array();
 
 		foreach($lines as $form) {
 			$updated_line = $this->update_line($user_id, $form);
-			if($updated_line === null) {
-				return false;
-			}
 			$update_lines[] = $updated_line;
 
 			$line_devices[] = array(
@@ -132,35 +111,24 @@ class LineManager
 		$protocol = $form['protocol'];
 		$mapped_line = $this->mapper->map_form($form);
 		$line = $this->line->create($mapped_line);
+		$endpoint = $this->create_endpoint($protocol);
+		$associated = $this->associate_endpoint($line, $protocol, $endpoint);
 
-		if($line !== null) {
-			$endpoint = $this->create_endpoint($protocol);
-			if($endpoint !== null) {
-				$associated = $this->associate_endpoint($line, $protocol, $endpoint);
-				if($associated == true) {
-					$line['protocol'] = $protocol;
-					$legacy_line = $this->mapper->map_line($line, $endpoint);
-					return $legacy_line;
-				}
-			}
-		}
-
-		return false;
+		$line['protocol'] = $protocol;
+		$legacy_line = $this->mapper->map_line($line, $endpoint);
+		return $legacy_line;
 	}
 
 	private function update_line($user_id, $form) {
 		$protocol = $form['protocol'];
 		$line = $this->line->get($form['id']);
-		if($line !== null) {
-			$line = $this->mapper->map_form($form);
-			$line['id'] = $form['id'];
-			$updated = $this->line->update($line);
-			if ($updated == true) {
-				$line = $this->line->get($line['id']);
-				return $this->get_legacy_line($line);
-			}
-		}
-		return false;
+		$line = $this->mapper->map_form($form);
+
+		$line['id'] = $form['id'];
+		$updated = $this->line->update($line);
+
+		$line = $this->line->get($line['id']);
+		return $this->get_legacy_line($line);
 	}
 
 	private function create_endpoint($protocol)
@@ -175,27 +143,16 @@ class LineManager
 	private function associate_endpoint($line, $protocol, $endpoint)
 	{
 		if($protocol == "sip") {
-			return $this->line->associate_sip($line['id'], $endpoint['id']);
+			$this->line->associate_sip($line['id'], $endpoint['id']);
 		} else {
-			return $this->line->associate_sccp($line['id'], $endpoint['id']);
+			$this->line->associate_sccp($line['id'], $endpoint['id']);
 		}
 	}
 
-	function add_device_config($line_devices)
-	{
-		foreach($line_devices as $association) {
-			if (!$this->line->associate_device($association['line_id'], $association['device_id'])) {
-				return false;
-			}
-		}
-	}
-
-	function edit_device_config($line_devices)
+	function associate_devices($line_devices)
 	{
 		foreach($line_devices as $line_device) {
-			if(!$this->update_device_association($line_device)) {
-				return false;
-			}
+			$this->update_device_association($line_device);
 		}
 	}
 
@@ -204,46 +161,41 @@ class LineManager
 		$association = $this->line->get_device_association($line_device['line_id']);
 		if($association === null) {
 			if($line_device['device_id'] != "") {
-				return $this->line->associate_device(
+				$this->line->associate_device(
 					$line_device['line_id'],
 					$line_device['device_id']
 				);
 			}
 		} else {
 			if($line_device['device_id'] == "") {
-				return $this->line->dissociate_device(
+				$this->line->dissociate_device(
 					$association['line_id'],
 					$association['device_id']
 				);
 			} else if ($association['device_id'] != $line_device['device_id']) {
-				return
 					$this->line->dissociate_device(
 						$association['line_id'],
 						$association['device_id']
-					)
-					&&
+					);
 					$this->line->associate_device(
 						$line_device['line_id'],
 						$line_device['device_id']
 					);
 			}
 		}
-		return true;
 	}
 
-	function delete_linefeatures($lines)
+	function delete($lines)
 	{
 		foreach($lines as $line) {
-			$deleted = $this->delete_line($line);
-			if(!$deleted) {
-				return false;
-			}
+			$this->delete_line($line);
 		}
 	}
 
 	private function delete_line($line)
 	{
-		return $this->dissociate_device($line) && $this->delete_endpoint($line);
+		$this->dissociate_device($line);
+		$this->delete_endpoint($line);
 	}
 
 	private function dissociate_device($line)
@@ -252,7 +204,6 @@ class LineManager
 		if($association !== null) {
 			return  $this->line->dissociate_device($line['id'], $association['device_id']);
 		}
-		return true;
 	}
 
 	private function delete_endpoint($line)
@@ -261,27 +212,13 @@ class LineManager
 
 		if($protocol == 'sip') {
 			$association = $this->line->get_sip_association($line['id']);
+			$this->line->dissociate_sip($line['id'], $association['endpoint_id']);
+			$this->sip->delete($endpoint['id']);
 		} else {
 			$association = $this->line->get_sccp_association($line['id']);
+			$this->line->dissociate_sccp($line['id'], $association['endpoint_id']);
+			return $this->sccp->delete($endpoint['id']);
 		}
-
-		if($association !== null) {
-			if($protocol == 'sip') {
-				$dissociated = $this->line->dissociate_sip($line['id'], $association['endpoint_id']);
-			} else {
-				$dissociated = $this->line->dissociate_sccp($line['id'], $association['endpoint_id']);
-			}
-
-			if($dissociated === true) {
-				if($protocol == 'sip') {
-					return $this->sip->delete($endpoint['id']);
-				} else {
-					return $this->sccp->delete($endpoint['id']);
-				}
-			}
-		}
-
-		return false;
 	}
 
 	function get_linefeatures($line_id)
@@ -294,16 +231,16 @@ class LineManager
 		return array('info' => array($line), 'origin' => false);
 	}
 
+	function get($line_id)
+	{
+		$line = $this->line->get($line_id);
+		return $this->get_legacy_line($line);
+	}
+
 	private function get_legacy_line($line)
 	{
 		$endpoint = $this->get_endpoint($line);
 		$extension = $this->get_internal_extension($line);
-
-		if ($line === null || $endpoint === null || $extension === null) {
-			dwho_report::push('error', "Could not get Line (ID ${line['id']}) and its associations");
-			return null;
-		}
-
 		return $this->mapper->map_line($line, $endpoint, $extension);
 	}
 
@@ -312,14 +249,12 @@ class LineManager
 
 		if($protocol == "sip") {
 			$association = $this->line->get_sip_association($line['id']);
+			if($association !== null) {
+				return $this->sip->get($association['endpoint_id']);
+			}
 		} else {
 			$association = $this->line->get_sccp_association($line['id']);
-		}
-
-		if($association !== null) {
-			if($protocol == "sip") {
-				return $this->sip->get($association['endpoint_id']);
-			} else {
+			if($association !== null) {
 				return $this->sccp->get($association['endpoint_id']);
 			}
 		}
@@ -348,19 +283,6 @@ class LineManager
 		return false;
 	}
 
-	function reverse_add()
-	{
-		$this->_line->_status = 'add';
-		$this->_line->_reverse_add();
-	}
-
-	function reverse_edit()
-	{
-		$this->_line->_status = 'edit';
-		$this->_line->_reverse_edit();
-	}
-
 }
-
 
 ?>
