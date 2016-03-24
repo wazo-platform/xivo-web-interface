@@ -312,6 +312,11 @@ class LineManager
 		return false;
 	}
 
+	function update_caller_id($user_id)
+	{
+		$this->user->update(array('id' => $user_id));
+	}
+
 }
 
 ?>

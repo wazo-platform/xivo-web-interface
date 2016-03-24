@@ -1059,7 +1059,9 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		$rs['main_line'] = true;
 		$rs['main_user'] = true;
 
-		return(($this->_return['user_line'] = $this->_user_line->add($rs)));
+		$this->_return['user_line'] = $this->_user_line->add($rs);
+		$this->_line_manager->update_caller_id($user_id);
+		return $this->_return['user_line'];
 	}
 
 	function add_device_config($line_id)
@@ -1354,7 +1356,10 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		$rs['main_line'] = true;
 		$rs['main_user'] = true;
 
-		return(($this->_return['user_line'] = $this->_user_line->edit_where($where, $rs)));
+		$this->_return['user_line'] = $this->_user_line->edit_where($where, $rs);
+
+		$this->_line_manager->update_caller_id($user_id);
+		return($this->_return['user_line']);
 	}
 
 	function edit_linefeatures($user_id)

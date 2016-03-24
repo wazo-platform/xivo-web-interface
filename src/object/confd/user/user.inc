@@ -27,6 +27,13 @@ class UserResource {
 		$this->client = $client;
 	}
 
+	public function update($user)
+	{
+		$request = Request::json_put("/users/" . $user['id'], $user);
+		$response = $this->client->send($request);
+		return $response->status_ok_or_raise();
+	}
+
 	public function import_csv($csvdata)
 	{
 		$request = $this->build_csv_request("POST", $csvdata);
