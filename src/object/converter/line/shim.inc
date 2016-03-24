@@ -20,12 +20,10 @@
 
 class LineShim {
 
-	private $_line = null;
 	private $manager = null;
 
-	function __construct($lineapp, $manager)
+	function __construct($manager)
 	{
-		$this->_line = $lineapp;
 		$this->manager = $manager;
 	}
 
@@ -102,16 +100,15 @@ class LineShim {
 		}
 	}
 
-	function reverse_add()
+	function reverse_add($lines)
 	{
-		$this->_line->_status = 'add';
-		$this->_line->_reverse_add();
+		try {
+			$this->manager->delete($lines);
+		} catch (ClientException $e) {}
 	}
 
 	function reverse_edit()
 	{
-		$this->_line->_status = 'edit';
-		$this->_line->_reverse_edit();
 	}
 
 }

@@ -179,7 +179,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			$context_dso
 		);
 
-		$this->_line_manager = new LineShim($this->_line, $manager);
+		$this->_line_manager = new LineShim($manager);
 
 		return(true);
 	}
@@ -1246,7 +1246,9 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			$this->_func_key_manager->delete_template($this->_return['func_key_private_template_id']);
 		}
 
-		$this->_line_manager->reverse_add();
+		if(array_key_exists('linefeatures', $this->_return)) {
+			$this->_line_manager->reverse_add($this->_return['linefeatures']);
+		}
 
 		return(true);
 	}
