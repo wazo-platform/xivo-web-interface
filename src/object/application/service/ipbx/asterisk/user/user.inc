@@ -35,6 +35,7 @@ require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'line', 'line.inc'));
 require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'extension', 'extension.inc'));
 require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'sip', 'sip.inc'));
 require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'sccp', 'sccp.inc'));
+require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'custom', 'custom.inc'));
 
 class xivo_application_service_asterisk_user extends xivo_application_asterisk_abstract
 {
@@ -174,6 +175,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			new UserResource($client),
 			new SipResource($client),
 			new SccpResource($client),
+			new CustomResource($client),
 			new ExtensionResource($client),
 			new LineMapper(),
 			$context_dso

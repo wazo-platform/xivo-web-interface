@@ -99,6 +99,16 @@ class LineResource {
 		return $response->decode_or_raise();
 	}
 
+	function get_custom_association($id)
+	{
+		$request = Request::json_get("/lines/" . $id . "/endpoints/custom");
+		$response = $this->client->send($request);
+		if($response->get_status() == 404) {
+			return null;
+		}
+		return $response->decode_or_raise();
+	}
+
 	function associate_device($line_id, $device_id)
 	{
 		$request = Request::put("/lines/" . $line_id . "/devices/" . $device_id);
@@ -116,6 +126,13 @@ class LineResource {
 	function associate_sccp($line_id, $sccp_id)
 	{
 		$request = Request::put("/lines/" . $line_id . "/endpoints/sccp/" . $sccp_id);
+		$response = $this->client->send($request);
+		return $response->status_ok_or_raise();
+	}
+
+	function associate_custom($line_id, $custom_id)
+	{
+		$request = Request::put("/lines/" . $line_id . "/endpoints/custom/" . $custom_id);
 		$response = $this->client->send($request);
 		return $response->status_ok_or_raise();
 	}
@@ -159,6 +176,13 @@ class LineResource {
 	function dissociate_sccp($line_id, $sccp_id)
 	{
 		$request = Request::delete("/lines/" . $line_id . "/endpoints/sccp/" . $sccp_id);
+		$response = $this->client->send($request);
+		return $response->status_ok_or_raise();
+	}
+
+	function dissociate_custom($line_id, $custom_id)
+	{
+		$request = Request::delete("/lines/" . $line_id . "/endpoints/custom/" . $custom_id);
 		$response = $this->client->send($request);
 		return $response->status_ok_or_raise();
 	}

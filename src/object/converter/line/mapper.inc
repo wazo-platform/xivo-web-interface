@@ -187,6 +187,8 @@ class LineMapper {
 			return $endpoint['username'];
 		} else if ($line['protocol'] == 'sccp' and !is_null($extension)) {
 			return $extension['exten'];
+		} else if ($line['protocol'] == 'custom') {
+			return $endpoint['interface'];
 		}
 	}
 

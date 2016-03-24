@@ -24,15 +24,17 @@ class LineManager
 	private $sip = null;
 	private $sccp = null;
 	private $extension = null;
+	private $custom = null;
 	private $user = null;
 	private $mapper = null;
 	private $context_dso = null;
 
-	function __construct($line_resource, $user_resource, $sip_resource, $sccp_resource, $extension_resource, $line_mapper, $context_dso) {
+	function __construct($line_resource, $user_resource, $sip_resource, $sccp_resource, $custom_resource, $extension_resource, $line_mapper, $context_dso) {
 		$this->line = $line_resource;
 		$this->user = $user_resource;
 		$this->sip = $sip_resource;
 		$this->sccp = $sccp_resource;
+		$this->custom = $custom_resource;
 		$this->extension = $extension_resource;
 		$this->mapper = $line_mapper;
 		$this->context_dso = $context_dso;
@@ -135,17 +137,31 @@ class LineManager
 	{
 		if($protocol == "sip") {
 			return $this->sip->create(array());
-		} else {
+		} else if ($protocol == "sccp") {
 			return $this->sccp->create(array());
+		} else if ($protocol == "custom") {
+			$endpoint = array('interface' => $this->generate_custom_interface());
+			return $this->custom->create($endpoint);
+		} else {
+			throw new ClientException(array('Unknown endpoint protocol: ' . $protocol));
 		}
+	}
+
+	private function generate_custom_interface()
+	{
+		return substr(md5(microtime()), rand(0,26), 8);
 	}
 
 	private function associate_endpoint($line, $protocol, $endpoint)
 	{
 		if($protocol == "sip") {
 			$this->line->associate_sip($line['id'], $endpoint['id']);
-		} else {
+		} else if ($protocol == "sccp") {
 			$this->line->associate_sccp($line['id'], $endpoint['id']);
+		} else if ($protocol == "custom") {
+			$this->line->associate_custom($line['id'], $endpoint['id']);
+		} else {
+			throw new ClientException(array('Unknown endpoint protocol: ' . $protocol));
 		}
 	}
 
@@ -243,10 +259,15 @@ class LineManager
 			$association = $this->line->get_sip_association($line['id']);
 			$this->line->dissociate_sip($line['id'], $association['endpoint_id']);
 			$this->sip->delete($endpoint['id']);
-		} else {
+		} else if ($protocol == 'sccp') {
 			$association = $this->line->get_sccp_association($line['id']);
 			$this->line->dissociate_sccp($line['id'], $association['endpoint_id']);
 			return $this->sccp->delete($endpoint['id']);
+		} else if ($protocol == 'custom') {
+			$association = $this->line->get_custom_association($line['id']);
+			$this->line->dissociate_custom($line['id'], $association['endpoint_id']);
+		} else {
+			throw new ClientException(array('Unknown endpoint protocol: ' . $protocol));
 		}
 	}
 
@@ -281,10 +302,15 @@ class LineManager
 			if($association !== null) {
 				return $this->sip->get($association['endpoint_id']);
 			}
-		} else {
+		} else if ($protocol == "sccp") {
 			$association = $this->line->get_sccp_association($line['id']);
 			if($association !== null) {
 				return $this->sccp->get($association['endpoint_id']);
+			}
+		} else if ($protocol == "custom") {
+			$association = $this->line->get_custom_association($line['id']);
+			if($association !== null) {
+				return $this->custom->get($association['endpoint_id']);
 			}
 		}
 
