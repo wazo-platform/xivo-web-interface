@@ -42,10 +42,10 @@ class LineManager
 
 	public function get_main_line($user_id)
 	{
-		$associations = $this->user->list_line_associations($user_id);
-		foreach($associations as $association) {
-			if ($association['main_line'] == true) {
-				$line = $this->line->get($association['line_id']);
+		$userlines = $this->user->list_line_associations($user_id);
+		foreach($userlines as $userline) {
+			if ($userline['main_line'] == true) {
+				$line = $this->line->get($userline['line_id']);
 				if($this->entity_allowed($line)) {
 					return $this->get_legacy_line($line);
 				}
@@ -95,7 +95,7 @@ class LineManager
 
 		foreach($lines as $form) {
 			$updated_line = $this->update_line($user_id, $form);
-			$update_lines[] = $updated_line;
+			$updated_lines[] = $update_line;
 
 			$line_devices[] = array(
 				'line_id' => $updated_line['id'],
@@ -111,58 +111,48 @@ class LineManager
 
 	private function create_line($user_id, $form) {
 		$protocol = $form['protocol'];
+
 		$mapped_line = $this->mapper->map_form($form);
 		$line = $this->line->create($mapped_line);
-		$endpoint = $this->create_endpoint($protocol);
-		$associated = $this->associate_endpoint($line, $protocol, $endpoint);
+		$endpoint = $this->create_and_associate_endpoint($line, $protocol);
 
 		$line['protocol'] = $protocol;
-		$legacy_line = $this->mapper->map_line($line, $endpoint);
-		return $legacy_line;
+		return $this->mapper->map_line($line, $endpoint);
 	}
 
 	private function update_line($user_id, $form) {
 		$protocol = $form['protocol'];
+
 		$line = $this->line->get($form['id']);
-		$line = $this->mapper->map_form($form);
+		$mapped_line = $this->mapper->map_form($form);
+		$this->line->update($mapped_line);
 
-		$line['id'] = $form['id'];
-		$updated = $this->line->update($line);
-
-		$line = $this->line->get($line['id']);
-		return $this->get_legacy_line($line);
+		return $this->get($line['id']);
 	}
 
-	private function create_endpoint($protocol)
+	private function create_and_associate_endpoint($line, $protocol)
 	{
 		if($protocol == "sip") {
-			return $this->sip->create(array());
-		} else if ($protocol == "sccp") {
-			return $this->sccp->create(array());
-		} else if ($protocol == "custom") {
-			$endpoint = array('interface' => $this->generate_custom_interface());
-			return $this->custom->create($endpoint);
-		} else {
-			throw new ClientException(array('Unknown endpoint protocol: ' . $protocol));
-		}
-	}
-
-	private function generate_custom_interface()
-	{
-		return substr(md5(microtime()), rand(0,26), 8);
-	}
-
-	private function associate_endpoint($line, $protocol, $endpoint)
-	{
-		if($protocol == "sip") {
+			$endpoint = $this->sip->create(array());
 			$this->line->associate_sip($line['id'], $endpoint['id']);
 		} else if ($protocol == "sccp") {
+			$endpoint = $this->sccp->create(array());
 			$this->line->associate_sccp($line['id'], $endpoint['id']);
 		} else if ($protocol == "custom") {
+			$custom = $this->generate_custom();
+			$endpoint = $this->custom->create($custom);
 			$this->line->associate_custom($line['id'], $endpoint['id']);
 		} else {
 			throw new ClientException(array('Unknown endpoint protocol: ' . $protocol));
 		}
+		return $endpoint;
+	}
+
+	private function generate_custom_interface()
+	{
+		return array(
+			'interface' => substr(md5(microtime()), rand(0,26), 8)
+		);
 	}
 
 	function associate_devices($line_devices)
@@ -269,16 +259,6 @@ class LineManager
 		} else {
 			throw new ClientException(array('Unknown endpoint protocol: ' . $protocol));
 		}
-	}
-
-	function get_linefeatures($line_id)
-	{
-		$line = $this->line->get($line_id);
-		$line = $this->get_legacy_line($line);
-		if ($line === null) {
-			return array('info' => false, 'origin' => false);
-		}
-		return array('info' => array($line), 'origin' => false);
 	}
 
 	function get($line_id)

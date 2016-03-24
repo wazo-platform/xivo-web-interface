@@ -158,11 +158,18 @@ class LineMapper {
 
 	function map_form($form)
 	{
-		return array(
+		$line = array(
+			'protocol' => $form['protocol'],
 			'context' => $form['context'],
 			'registrar' => $form['configregistrar'],
 			'position' => $form['num']
 		);
+
+		if($form['id'] != "0") {
+			$line['id'] = $form['id'];
+		}
+
+		return $line;
 	}
 
 	function map_line($line, $endpoint=null, $extension=null)
