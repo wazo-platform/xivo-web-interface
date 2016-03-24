@@ -195,6 +195,8 @@ class LineManager
 	private function delete_line($line)
 	{
 		$this->dissociate_device($line);
+		$this->dissociate_users($line);
+		$this->dissociate_extensions($line);
 		$this->delete_endpoint($line);
 	}
 
@@ -203,6 +205,33 @@ class LineManager
 		$association = $this->line->get_device_association($line['id']);
 		if($association !== null) {
 			return  $this->line->dissociate_device($line['id'], $association['device_id']);
+		}
+	}
+
+	private function dissociate_users($line)
+	{
+		$associations = $this->line->list_user_associations($line['id']);
+		foreach($associations as $userline) {
+			$this->line->dissociate_user($line['id'], $userline['user_id']);
+		}
+	}
+
+	private function dissociate_extensions($line)
+	{
+		$internal = array();
+		$associations = $this->line->list_extension_associations($line['id']);
+
+		foreach($associations as $association) {
+			$extension = $this->extension->get($association['extension_id']);
+			if($this->is_internal_extension($extension)) {
+				$internal[] = $extension;
+			} else {
+				$this->line->dissociate_extension($line['id'], $extension['id']);
+			}
+		}
+
+		foreach($internal as $extension) {
+			$this->line->dissociate_extension($line['id'], $extension['id']);
 		}
 	}
 
