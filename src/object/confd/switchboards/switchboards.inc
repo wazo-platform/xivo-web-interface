@@ -41,11 +41,7 @@ class SwitchboardResource {
 		$request = Request::get("/switchboards/".$switchboard."/stats", $body, $query);
 		$response = $this->client->send($request);
 		if(!$response->status_ok()) {
-			if(is_array($response->get_errors())) {
-				foreach($response->get_errors() as $error) {
-					dwho_report::push('error', $error);
-				}
-			}
+			$response->report_errors();
 			return false;
 		}
 		return $response->get_body();

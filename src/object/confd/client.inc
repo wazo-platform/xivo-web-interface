@@ -18,6 +18,27 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+class ClientException extends Exception
+{
+	private $messages = null;
+
+	public function __construct($messages, $code = 0, $previous = null)
+	{
+		$message = implode(',', $messages);
+		parent::__construct($message, $code, $previous);
+		$this->messages = $messages;
+	}
+
+	public function report_errors()
+	{
+		foreach($this->messages as $error) {
+			dwho_report::push('error', $error);
+		}
+	}
+
+}
+
+
 class Request {
 
 	private $verb = null;
@@ -50,14 +71,29 @@ class Request {
 		return new Request("POST", $url, $body, $query, $headers);
 	}
 
+	static public function put($url, $body="", $query=null, $headers=null)
+	{
+		return new Request("PUT", $url, $body, $query, $headers);
+	}
+
 	static public function get($url, $body="", $query=null, $headers=null)
 	{
 		return new Request("GET", $url, $body, $query, $headers);
 	}
 
+	static public function delete($url, $body="", $query=null, $headers=null)
+	{
+		return new Request("DELETE", $url, $body, $query, $headers);
+	}
+
 	static public function json_get($url, $body="", $query=null)
 	{
 		return new Request("GET", $url, json_encode($body), $query, self::$json_headers);
+	}
+
+	static public function json_post($url, $content, $query=null)
+	{
+		return new Request("POST", $url, json_encode($content), $query, self::$json_headers);
 	}
 
 	static public function json_put($url, $body, $query=null)
@@ -73,6 +109,11 @@ class Request {
 	public function get_headers()
 	{
 		return $this->headers;
+	}
+
+	public function get_url()
+	{
+		return $this->url;
 	}
 
 	public function build_url($root)
@@ -97,14 +138,17 @@ class Response {
 
 	private $status_code = null;
 	private $body = null;
+	private $request = null;
 	private $error = "";
+	private $raise = false;
 
-	function __construct($status_code, $body, $error)
+	function __construct($status_code, $body, $error, $request, $raise=false)
 	{
 		$this->status_code = $status_code;
 		$this->body = $body;
 		$this->error = $error;
-
+		$this->raise = $raise;
+		$this->request = $request;
 	}
 
 	public function status_ok()
@@ -133,6 +177,18 @@ class Response {
 		}
 	}
 
+	public function report_errors()
+	{
+		foreach($this->get_errors() as $error) {
+			$msg = $this->request->get_verb()
+				. " "
+				. $this->request->get_url()
+				. " - "
+				. $error;
+			dwho_report::push('error', $msg);
+		}
+	}
+
 	public function get_status()
 	{
 		return $this->status_code;
@@ -141,6 +197,35 @@ class Response {
 	public function get_body()
 	{
 		return $this->body;
+	}
+
+	public function decode_or_raise()
+	{
+		if ($this->status_ok()) {
+			return $this->decode_json();
+		} else {
+			$this->handle_error();
+		}
+		return null;
+	}
+
+	public function status_ok_or_raise()
+	{
+		if($this->status_ok()) {
+			return true;
+		} else {
+			$this->handle_error();
+		}
+		return false;
+	}
+
+	private function handle_error()
+	{
+		if($this->raise == true) {
+			throw new ClientException($this->get_errors(), $this->status_code);
+		} else {
+			$this->report_errors();
+		}
 	}
 
 }
@@ -152,13 +237,14 @@ class Client {
 	private $connect_timeout = null;
 	private $timeout = null;
 
-	function __construct($rooturl, $connect_timeout=10, $timeout=10) {
+	function __construct($rooturl, $connect_timeout=10, $timeout=10, $raise=false) {
 		$this->rooturl = $rooturl;
 		$this->connect_timeout = $connect_timeout;
 		$this->timeout = $timeout;
+		$this->raise = $raise;
 	}
 
-	static function default_config() {
+	static function default_config($raise=false) {
 		$dir = dwho_file::joinpath(XIVO_PATH_OBJECT, 'confd', 'abstract', 'config');
 
 		if(($config = dwho_gat::get_file($dir)) === false) {
@@ -171,13 +257,13 @@ class Client {
 			. ":" . (string)$confd_config['port']
 			. "/" . $confd_config['protocol'];
 
-		return new Client($url, $confd_config['connect_timeout'], $confd_config['timeout']);
+		return new Client($url, $confd_config['connect_timeout'], $confd_config['timeout'], $raise);
 	}
 
 	function send($request)
 	{
 		$curl = $this->prepare_curl($request);
-		return $this->build_response($curl);
+		return $this->build_response($curl, $request);
 	}
 
 	private function prepare_curl($request)
@@ -206,12 +292,12 @@ class Client {
 		return $curl;
 	}
 
-	private function build_response($curl) {
+	private function build_response($curl, $request) {
 		$body = curl_exec($curl);
 		$status_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 		$error = curl_error($curl);
 		curl_close($curl);
-		return new Response($status_code, $body, $error);
+		return new Response($status_code, $body, $error, $request, $this->raise);
 	}
 
 }

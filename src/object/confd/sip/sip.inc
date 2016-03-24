@@ -29,35 +29,19 @@ class SipResource {
 	{
 		$request = Request::json_get("/endpoints/sip/" . $id);
 		$response = $this->client->send($request);
-
-		if($response->status_ok()) {
-			return $response->decode_json();
-		} else if ($response->get_status() == 404) {
-			return null;
-		} else {
-			$this->report_errors($response);
-			return null;
-		}
+		return $response->decode_or_raise();
 	}
 
-	private function report_errors($response)
+	}
+
 	{
-		foreach($response->get_errors() as $error) {
-			dwho_report::push('error', $error);
-		}
 	}
 
 	public function update($id, $parameters)
 	{
 		$request = Request::json_put("/endpoints/sip/" . $id, $parameters);
 		$response = $this->client->send($request);
-
-		if($response->status_ok()) {
-			return true;
-		} else {
-			$this->report_errors($response);
-			return false;
-		}
+		return $response->status_ok_or_raise();
 	}
 
 }

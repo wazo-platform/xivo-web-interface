@@ -46,9 +46,7 @@ class UserResource {
 		$request = Request::get("/users/export");
 		$response = $this->client->send($request);
 		if(!$response->status_ok()) {
-			foreach($response->get_errors() as $error) {
-				dwho_report::push('error', $error);
-			}
+			$response->report_errors();
 			return false;
 		}
 		return $response->get_body();
