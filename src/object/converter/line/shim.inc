@@ -42,6 +42,7 @@ class LineShim {
 	public function edit_linefeatures($user_id, $lines, $action)
 	{
 		try {
+			$action = $this->determine_action($action, $lines);
 			if($action == "add") {
 				return $this->manager->create($user_id, $lines);
 			} else {
@@ -51,6 +52,18 @@ class LineShim {
 			$e->report_errors();
 			return false;
 		}
+	}
+
+	private function determine_action($action, $lines)
+	{
+		if($action == "edit") {
+			foreach($lines as $line) {
+				if($line['id'] == "0") {
+					$action = "add";
+				}
+			}
+		}
+		return $action;
 	}
 
 	public function delete_linefeatures($lines)
