@@ -1305,8 +1305,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		&& $this->_info['linefeatures'] !== false)
 		{
 			if ($this->delete_linefeatures() === false
-			|| $this->delete_exten('exten') === false
-			|| $this->delete_device_config() === false)
+			|| $this->delete_exten('exten') === false)
 			{
 				$this->_reverse_edit();
 				$this->_status = '';
@@ -1625,7 +1624,6 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		|| $this->delete_userfeatures() === false
 		|| $this->delete_linefeatures() === false
 		|| $this->delete_exten('exten') === false
-		|| $this->delete_device_config() === false
 		|| $this->delete_rightcall() === false
 		|| $this->delete_dialaction() === false
 		|| $this->delete_callfiltermember() === false
@@ -1693,22 +1691,6 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 
 		if($this->_status === 'delete')
 			$this->_return['linefeatures'] = $result;
-	}
-
-	function delete_device_config()
-	{
-		if(dwho_issa('linefeatures',$this->_info) === false)
-			return(null);
-		// remove device if associated
-		elseif(($device = $this->_device->get($this->_info['linefeatures'][0]['device'],null,true)) === false)
-			return(true);
-		elseif($this->_provddevice->rebuild_device_config($this->_info['linefeatures'][0]['device']) === false)
-			return(false);
-		elseif ($this->_info['linefeatures'][0]['protocol'] === XIVO_SRE_IPBX_AST_PROTO_SCCP
-		&& $this->_sccpdevice->init_device($device['device']['mac'],'') === false)
-			return(false);
-
-		return(true);
 	}
 
 	function delete_phonefunckey()
