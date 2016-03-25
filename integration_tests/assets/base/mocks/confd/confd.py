@@ -7,6 +7,7 @@ app = Flask(__name__)
 LOGS = []
 
 RESPONSES = {}
+PRESERVE = {}
 
 DEFAULTS = {
     '/devices': {'total': 0,
@@ -76,16 +77,22 @@ def delete_logs():
 @app.route('/_responses', methods=['POST'])
 def add_response():
     response = request.get_json(force=True)
-    method = RESPONSES.setdefault(response['method'], {})
-    path = method.setdefault(response['path'], [])
-    path.append((response['body'], response['code']))
+    if response.get('preserve', False):
+        method = PRESERVE.setdefault(response['method'], dict())
+        method[response['path']] = (response['body'], response['code'])
+    else:
+        method = RESPONSES.setdefault(response['method'], dict())
+        path = method.setdefault(response['path'], [])
+        path.append((response['body'], response['code']))
     return ''
 
 
 @app.route('/_responses', methods=['DELETE'])
 def delete_responses():
     global RESPONSES
+    global PRESERVE
     RESPONSES = {}
+    PRESERVE = {}
     return ''
 
 
@@ -97,10 +104,17 @@ def get_responses():
 @app.route('/1.1/<path:expected>', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def respond(expected):
     expected = "/" + expected
+
     method = RESPONSES.get(request.method, {})
     for path, responses in method.iteritems():
         if len(responses) > 0 and re.match(path, expected):
             return responses.pop(0)
+
+    method = PRESERVE.get(request.method, {})
+    for path, response in method.iteritems():
+        if re.match(path, expected):
+            return response
+
     for path, response in DEFAULTS.iteritems():
         if re.match(path, expected):
             return jsonify(response)

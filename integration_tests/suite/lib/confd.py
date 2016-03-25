@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-# Copyright (C) 2015 Avencall
+# Copyright (C) 2015-2016 Avencall
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -58,18 +58,20 @@ class MockConfd(object):
         response.raise_for_status()
         return response.json()['responses']
 
-    def add_response(self, path, body='', method='GET', code=200):
+    def add_response(self, path, body='', method='GET', code=200, preserve=False):
         url = "{}/_responses".format(self.base_url)
-        data = {'path': path,
+        data = {'path': r"^{}$".format(path),
                 'body': body,
                 'method': method,
-                'code': code}
+                'code': code,
+                'preserve': preserve}
+        logger.info("Adding {} {} {}".format(method, path, body))
         response = requests.post(url, data=json.dumps(data))
         response.raise_for_status()
 
-    def add_json_response(self, path, body=None, method='GET', code=200):
+    def add_json_response(self, path, body=None, method='GET', code=200, preserve=False):
         body = body or {}
-        self.add_response(path, json.dumps(body), method, code)
+        self.add_response(path, json.dumps(body), method, code, preserve)
 
     def assert_request_sent(self, url, method='GET', query=None, body=None):
         request = self.request_matching(url, method)
