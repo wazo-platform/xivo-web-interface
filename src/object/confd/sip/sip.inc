@@ -32,11 +32,6 @@ class SipResource {
 		return $response->decode_or_raise();
 	}
 
-	}
-
-	{
-	}
-
 	public function update($id, $parameters)
 	{
 		$request = Request::json_put("/endpoints/sip/" . $id, $parameters);
