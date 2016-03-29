@@ -19,7 +19,6 @@
 import random
 import hashlib
 import string
-import unittest
 
 from lib.testcase import TestWebi
 
@@ -130,7 +129,7 @@ class TestUser(TestWebi):
             user_id = q.insert_user(firstname)
 
         self.confd.add_response("/users/{}/voicemail".format(user_id), code=404)
-        self.confd.add_json_response("/users/{}/funckeys", self.FK_TEMPLATE, preserve=True)
+        self.confd.add_json_response("/users/{}/funckeys".format(user_id), self.FK_TEMPLATE, preserve=True)
 
         return user_id
 
@@ -200,7 +199,9 @@ class TestUser(TestWebi):
         with self.db.queries() as q:
             q.associate_user_line_extension(user_id, line_id, extension_id)
 
-        url = "/users/{}/lines".format(user_id)
+        user_url = "/users/{}/lines".format(user_id)
+        line_url = "/lines/{}/users".format(line_id)
+
         user_lines = {'total': 1,
                       'items': [
                           {
@@ -210,7 +211,8 @@ class TestUser(TestWebi):
                               'line_id': line_id
                           }
                       ]}
-        self.confd.add_json_response(url, user_lines, preserve=True)
+        self.confd.add_json_response(user_url, user_lines, preserve=True)
+        self.confd.add_json_response(line_url, user_lines, preserve=True)
 
         url = "/lines/{}/extensions".format(line_id)
         line_extensions = {'total': 1,
@@ -540,51 +542,75 @@ class TestUserEdit(TestUser):
 
 class TestUserDelete(TestUser):
 
-    def setUp(self):
-        super(TestUserDelete, self).setUp()
-        self.confd.add_json_response(r"/users/\d+/funckeys", self.FK_TEMPLATE)
-        self.confd.add_json_response(r"/users/\d+/funckeys", self.FK_TEMPLATE)
-        self.confd.add_json_response(r"/users/\d+/funckeys", self.FK_TEMPLATE)
-        self.confd.add_json_response(r"/endpoints/sip/\d+", self.ENDPOINT_SIP)
+    def simulate_line_delete(self, line):
+        protocol = line['protocol']
+        url = r"/lines/\d+/endpoints/{}/\d+".format(protocol)
+        self.confd.add_response(url, method="DELETE", code=204)
+        self.confd.add_response(r"/lines/\d+", method="DELETE", code=204)
+        self.confd.add_response(r"/users/\d+/lines/\d+", method="DELETE", code=204)
+        self.confd.add_response(r"/lines/\d+/extensions/\d+", method="DELETE", code=204)
+        self.confd.add_response(r"/endpoints/(sip|sccp|custom)/\d+", method="DELETE", code=204)
+
+    def simulate_device_delete(self, line, device):
+        self.confd.add_response(r"/lines/\d+/devices/[a-z0-9]+", method="DELETE", code=204)
 
     def test_when_user_has_no_line_then_user_deleted(self):
-        with self.db.queries() as q:
-            q.insert_user("UserNoLine")
+        self.add_empty_user("UserNoLine")
 
         page = self.browser.users
         page.delete("UserNoLine")
         assert_that(page.find_row("UserNoLine"), none())
 
     def test_when_user_has_sip_line_then_user_deleted(self):
-        self.add_sip_user("UserDeleteSipLine", "1400", "101400")
+        line = self.add_sip_user("UserDeleteSipLine", "1400", "101400")
+        self.simulate_line_delete(line)
 
         page = self.browser.users
         page.delete("UserDeleteSipLine")
         assert_that(page.find_row("UserDeleteSipLine"), none())
 
+        self.confd.assert_request_sent(r"/users/\d+/lines/\d+", method="DELETE")
+        self.confd.assert_request_sent(r"/lines/\d+/extensions/\d+", method="DELETE")
+        self.confd.assert_request_sent(r"/lines/\d+/endpoints/sip/\d+", method="DELETE")
+        self.confd.assert_request_sent(r"/endpoints/sip/\d+", method="DELETE")
+        self.confd.assert_request_sent(r"/lines/\d+", method="DELETE")
+
     def test_when_user_has_sccp_line_then_user_deleted(self):
-        self.add_sccp_user("UserDeleteSccpLine", "1401")
+        line = self.add_sccp_user("UserDeleteSccpLine", "1401")
+        self.simulate_line_delete(line)
 
         page = self.browser.users
         page.delete("UserDeleteSccpLine")
         assert_that(page.find_row("UserDeleteSccpLine"), none())
 
-    def test_when_user_has_sip_device_then_user_deleted(self):
-        device = self.build_device()
-        self.add_autoprov_device(device)
+        self.confd.assert_request_sent(r"/users/\d+/lines/\d+", method="DELETE")
+        self.confd.assert_request_sent(r"/lines/\d+/extensions/\d+", method="DELETE")
+        self.confd.assert_request_sent(r"/lines/\d+/endpoints/sccp/\d+", method="DELETE")
+        self.confd.assert_request_sent(r"/endpoints/sccp/\d+", method="DELETE")
+        self.confd.assert_request_sent(r"/lines/\d+", method="DELETE")
 
-        self.add_sip_user("UserDeleteSipDevice", "1410", "101410", device=device['id'])
+    def test_when_user_has_sip_device_then_user_deleted(self):
+        device = self.add_autoprov_device()
+        line = self.add_sip_user("UserDeleteSipDevice", "1410", "101410", device=device['id'])
+
+        self.simulate_line_delete(line)
+        self.simulate_device_delete(line, device)
 
         page = self.browser.users
         page.delete("UserDeleteSipDevice")
         assert_that(page.find_row("UserDeleteSipDevice"), none())
 
-    def test_when_user_has_sccp_device_then_user_deleted(self):
-        device = self.build_device()
-        self.add_autoprov_device(device)
+        self.confd.assert_request_sent(r"/lines/\d+/devices/[a-z0-9]+", method="DELETE")
 
-        self.add_sccp_user("UserDeleteSccpDevice", "1411", device=device['id'])
+    def test_when_user_has_sccp_device_then_user_deleted(self):
+        device = self.add_autoprov_device()
+        line = self.add_sccp_user("UserDeleteSccpDevice", "1411", device=device['id'])
+
+        self.simulate_line_delete(line)
+        self.simulate_device_delete(line, device)
 
         page = self.browser.users
         page.delete("UserDeleteSccpDevice")
         assert_that(page.find_row("UserDeleteSccpDevice"), none())
+
+        self.confd.assert_request_sent(r"/lines/\d+/devices/[a-z0-9]+", method="DELETE")
