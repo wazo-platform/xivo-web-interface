@@ -80,6 +80,14 @@ class LineTab(Page):
     def edit_line(self, **form):
         self.fill_form(form)
 
+    def remove_line(self):
+        selector = "tbody#linefeatures tr td:last-child a"
+        btn = self.driver.find_element_by_css_selector(selector)
+        btn.click()
+
+        condition = ec.invisibility_of_element_located((By.CSS_SELECTOR, "tbody#linefeatures tr"))
+        self.wait().until(condition)
+
     def remove_device(self):
         dropdown = self.driver.find_element_by_id("s2id_linefeatures-device")
         dropdown.click()

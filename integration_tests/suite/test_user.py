@@ -19,6 +19,7 @@
 import random
 import hashlib
 import string
+import unittest
 
 from lib.testcase import TestWebi
 
@@ -34,15 +35,6 @@ class TestUser(TestWebi):
                    'keys': [],
                    'links': [{u'href': u'https://webi:9486/1.1/funckeys/templates/1',
                               u'rel': u'func_key_templates'}]}
-
-    ENDPOINT_SIP = {'id': 1,
-                    'host': 'dynamic',
-                    'username': 'mockusername',
-                    'secret': 'mocksecret',
-                    'options': [],
-                    'links': [{u'href': u'https://confd:9486/1.1/endpoints/sip/1',
-                               u'rel': u'endpoint_sip'}]
-                    }
 
     def setUp(self):
         super(TestUser, self).setUp()
@@ -444,6 +436,21 @@ class TestUserEdit(TestUser):
         self.confd.add_response(r"/lines/\d+", method="PUT", code=204)
         self.confd.add_response(r"/users/\d+", method="PUT", code=204)
 
+    def simulate_line_add(self, line, endpoint):
+        self.confd.add_json_response(r"/lines", line, method="POST", code=201)
+        self.confd.add_json_response(r"/endpoints/(sip|sccp|custom)", endpoint, method="POST", code=201)
+        self.confd.add_response(r"/lines/\d+/endpoints/(sip|sccp|custom)/\d+", method="PUT", code=204)
+        self.confd.add_response(r"/lines/\d+/devices", code=404)
+        self.confd.add_response(r"/users/\d+", method="PUT", code=204)
+
+    def simulate_line_remove(self, line, device):
+        self.confd.add_response(r"/lines/\d+", method="DELETE", code=204)
+        self.confd.add_response(r"/endpoints/sip/\d+", method="DELETE", code=204)
+        self.confd.add_response(r"/lines/\d+/extensions/\d+", method="DELETE", code=204)
+        self.confd.add_response(r"/lines/\d+/endpoints/sip/\d+", method="DELETE", code=204)
+        self.confd.add_response(r"/lines/\d+/devices/[a-z0-9]+", method="DELETE", code=204)
+        self.confd.add_response(r"/users/\d+/lines/\d+", method="DELETE", code=204)
+
     def simulate_device_update(self, device=None):
         method = "PUT" if device else "DELETE"
         self.confd.add_response("/lines/\d+/devices/[a-z0-9]+", method=method, code=204)
@@ -605,6 +612,122 @@ class TestUserEdit(TestUser):
         self.confd.assert_request_sent("/lines/\d+", method="PUT")
         self.confd.assert_request_sent("/lines/\d+/devices/{}".format(device1['id']), method="DELETE")
         self.confd.assert_request_sent("/lines/\d+/devices/{}".format(device2['id']), method="PUT")
+
+    def test_given_user_has_no_line_when_adding_sip_line_then_user_updated(self):
+        self.add_empty_user("UserEditAddSipLine")
+        device = self.add_autoprov_device()
+        line = self.add_line(context="default")
+        sip = self.add_sip()
+
+        self.simulate_line_add(line, sip)
+        self.simulate_device_update(device)
+
+        page = self.browser.users.edit("UserEditAddSipLine")
+        page.lines().add_line(protocol="SIP",
+                              context="Default",
+                              number="1100",
+                              device=device['mac'])
+        page.save()
+
+        self.confd.assert_json_request(r"/lines", {"context": "default"}, method="POST")
+        self.confd.assert_json_request(r"/endpoints/sip", {}, method="POST")
+        self.confd.assert_request_sent(r"/lines/\d+/endpoints/sip/\d+", method="PUT")
+        self.confd.assert_request_sent(r"/lines/\d+/devices/[a-z0-9]+", method="PUT")
+        self.confd.assert_request_sent(r"/users/\d+", method="PUT")
+
+    def test_given_user_has_no_line_when_adding_sccp_line_then_user_updated(self):
+        self.add_empty_user("UserEditAddSccpLine")
+        device = self.add_autoprov_device()
+        line = self.add_line(context="default")
+        sccp = self.add_sccp()
+
+        self.simulate_line_add(line, sccp)
+        self.simulate_device_update(device)
+
+        page = self.browser.users.edit("UserEditAddSccpLine")
+        page.lines().add_line(protocol="SCCP",
+                              context="Default",
+                              number="1200",
+                              device=device['mac'])
+        page.save()
+
+        self.confd.assert_json_request(r"/lines", {"context": "default"}, method="POST")
+        self.confd.assert_json_request(r"/endpoints/sccp", {}, method="POST")
+        self.confd.assert_request_sent(r"/lines/\d+/endpoints/sccp/\d+", method="PUT")
+        self.confd.assert_request_sent(r"/lines/\d+/devices/[a-z0-9]+", method="PUT")
+        self.confd.assert_request_sent(r"/users/\d+", method="PUT")
+
+    def test_given_user_has_no_line_when_adding_custom_line_then_user_updated(self):
+        self.add_empty_user("UserEditAddCustomLine")
+        line = self.add_line(context="default")
+        custom = self.add_custom()
+
+        self.simulate_line_add(line, custom)
+
+        page = self.browser.users.edit("UserEditAddCustomLine")
+        page.lines().add_line(protocol="Customized",
+                              context="Default",
+                              number="1300")
+        page.save()
+
+        self.confd.assert_json_request(r"/lines", {"context": "default"}, method="POST")
+        self.confd.assert_json_request(r"/endpoints/custom", {}, method="POST")
+        self.confd.assert_request_sent(r"/lines/\d+/endpoints/custom/\d+", method="PUT")
+        self.confd.assert_request_sent(r"/users/\d+", method="PUT")
+
+    @unittest.skip("table user_line is still managed by webi")
+    def test_given_user_has_sip_line_when_removing_line_then_user_updated(self):
+        device = self.add_autoprov_device()
+        line = self.add_sip_user("UserEditRemoveSipLine", "1500", device['id'])
+
+        self.simulate_line_remove(line, device)
+
+        page = self.browser.users.edit("UserEditRemoveSipLine")
+
+        tab = page.lines()
+        tab.remove_line()
+
+        page.save()
+
+        self.confd.assert_request_sent(r"/lines/\d+", method="DELETE")
+        self.confd.assert_request_sent(r"/endpoints/sip/\d+", method="DELETE")
+        self.confd.assert_request_sent(r"/lines/\d+/endpoints/sip/\d+", method="DELETE")
+        self.confd.assert_request_sent(r"/lines/\d+/devices/[a-z0-9]+", method="DELETE")
+        self.confd.assert_request_sent(r"/users/\d+/lines/\d+", method="DELETE")
+
+    @unittest.skip("table user_line is still managed by webi")
+    def test_given_user_has_sccp_line_when_removing_line_then_user_updated(self):
+        device = self.add_autoprov_device()
+        line = self.add_sccp_user("UserEditRemoveSccpLine", "1500", device['id'])
+
+        self.simulate_line_remove(line, device)
+
+        page = self.browser.users.edit("UserEditRemoveSccpLine")
+        page.lines().remove_line()
+        page.save()
+
+        self.confd.assert_request_sent(r"/lines/\d+", method="DELETE")
+        self.confd.assert_request_sent(r"/endpoints/sccp/\d+", method="DELETE")
+        self.confd.assert_request_sent(r"/lines/\d+/endpoints/sccp/\d+", method="DELETE")
+        self.confd.assert_request_sent(r"/lines/\d+/devices/[a-z0-9]+", method="DELETE")
+        self.confd.assert_request_sent(r"/users/\d+/lines/\d+", method="DELETE")
+
+    @unittest.skip("table user_line is still managed by webi")
+    def test_given_user_has_custom_line_when_removing_line_then_user_updated(self):
+        device = self.add_autoprov_device()
+        line = self.add_custom_user("UserEditRemoveCustomLine", "1500", device['id'])
+
+        self.simulate_line_remove(line, device)
+
+        page = self.browser.users.edit("UserEditRemoveCustomLine")
+        page.lines().remove_line()
+        page.save()
+
+        self.confd.assert_request_sent(r"/lines/\d+", method="DELETE")
+        self.confd.assert_request_sent(r"/endpoints/custom/\d+", method="DELETE")
+        self.confd.assert_request_sent(r"/lines/\d+/endpoints/custom/\d+", method="DELETE")
+        self.confd.assert_request_sent(r"/lines/\d+/devices/[a-z0-9]+", method="DELETE")
+        self.confd.assert_request_sent(r"/users/\d+/lines/\d+", method="DELETE")
 
 
 class TestUserDelete(TestUser):
