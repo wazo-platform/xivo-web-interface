@@ -130,8 +130,8 @@ class TestUser(TestWebi):
         with self.db.queries() as q:
             user_id = q.insert_user(firstname)
 
-        self.confd.add_response("/users/{}/voicemail".format(user_id), code=404)
-        self.confd.add_json_response("/users/{}/funckeys".format(user_id), self.FK_TEMPLATE, preserve=True)
+        self.confd.add_response(r"/users/{}/voicemail".format(user_id), code=404, preserve=True)
+        self.confd.add_json_response(r"/users/{}/funckeys".format(user_id), self.FK_TEMPLATE, preserve=True)
 
         return user_id
 
@@ -266,6 +266,39 @@ class TestUser(TestWebi):
                                          {'total': 0, 'lines': []},
                                          preserve=True)
 
+    def simulate_line_add(self, line, endpoint, device=None):
+        self.confd.add_json_response(r"/lines", line, method="POST", code=201)
+        self.confd.add_json_response(r"/endpoints/(sip|sccp|custom)", endpoint, method="POST", code=201)
+        self.confd.add_response(r"/lines/\d+/endpoints/(sip|sccp|custom)/\d+", method="PUT", code=204)
+        self.confd.add_response(r"/lines/\d+/devices", code=404)
+        self.confd.add_response(r"/users/\d+", method="PUT", code=204)
+        self.confd.add_json_response(r"/users/\d+/lines",
+                                     {'total': 1,
+                                      'items': [{
+                                          'user_id': 1,
+                                          'line_id': line['id']
+                                      }]
+                                      })
+
+        if device:
+            self.confd.add_response(r"/lines/\d+/devices/[a-z0-9]+", method="PUT", code=204)
+
+    def simulate_line_update(self):
+        self.confd.add_response(r"/lines/\d+", method="PUT", code=204)
+        self.confd.add_response(r"/users/\d+", method="PUT", code=204)
+
+    def simulate_line_remove(self):
+        self.confd.add_response(r"/lines/\d+", method="DELETE", code=204)
+        self.confd.add_response(r"/endpoints/sip/\d+", method="DELETE", code=204)
+        self.confd.add_response(r"/lines/\d+/extensions/\d+", method="DELETE", code=204)
+        self.confd.add_response(r"/lines/\d+/endpoints/sip/\d+", method="DELETE", code=204)
+        self.confd.add_response(r"/lines/\d+/devices/[a-z0-9]+", method="DELETE", code=204)
+        self.confd.add_response(r"/users/\d+/lines/\d+", method="DELETE", code=204)
+
+    def simulate_device_update(self, device=None):
+        method = "PUT" if device else "DELETE"
+        self.confd.add_response("/lines/\d+/devices/[a-z0-9]+", method=method, code=204)
+
 
 class TestUserList(TestUser):
 
@@ -312,25 +345,14 @@ class TestUserList(TestUser):
 
 class TestUserCreate(TestUser):
 
-    def simulate_line_creation(self, endpoint, protocol, device=None):
-        line = self.add_line()
-        self.confd.add_json_response("/lines", line, method="POST", code=201)
-
-        url = "/endpoints/{}".format(protocol)
-        self.confd.add_json_response(url, endpoint, method="POST", code=201)
-
-        url = r"/lines/\d+/endpoints/{}/\d+".format(protocol)
-        self.confd.add_response(url, method="PUT", code=204)
-
-        self.confd.add_response("/users/\d+", method="PUT", code=204)
-
-        self.confd.add_response(r"/lines/\d+/devices", code=404)
-        if device:
-            self.confd.add_response(r"/lines/\d+/devices/[a-z0-9]+", method="PUT", code=204)
+    def setUp(self):
+        super(TestUserCreate, self).setUp()
+        self.confd.add_json_response(r"/users/\d+/funckeys", self.FK_TEMPLATE, preserve=True)
 
     def test_when_creating_user_with_sip_line_and_extension_then_line_and_extension_created(self):
+        line = self.add_line(protocol="sip")
         sip = self.add_sip()
-        self.simulate_line_creation(sip, "sip")
+        self.simulate_line_add(line, sip)
 
         page = self.browser.users.add()
         page.fill_form(firstname="CreateLineSip")
@@ -348,8 +370,9 @@ class TestUserCreate(TestUser):
         self.confd.assert_request_sent(r"/users/\d+", method="PUT")
 
     def test_when_creating_user_with_sccp_line_and_extension_then_line_and_extension_created(self):
+        line = self.add_line(protocol="sccp")
         sccp = self.add_sccp()
-        self.simulate_line_creation(sccp, "sccp")
+        self.simulate_line_add(line, sccp)
 
         page = self.browser.users.add()
         page.fill_form(firstname="CreateLineSccp")
@@ -366,8 +389,9 @@ class TestUserCreate(TestUser):
         self.confd.assert_request_sent(r"/users/\d+", method="PUT")
 
     def test_when_creating_user_with_custom_line_and_extension_then_line_and_extension_created(self):
+        line = self.add_line(protocol="custom")
         custom = self.add_custom()
-        self.simulate_line_creation(custom, "custom")
+        self.simulate_line_add(line, custom)
 
         page = self.browser.users.add()
         page.fill_form(firstname="CreateLineCustom")
@@ -384,10 +408,11 @@ class TestUserCreate(TestUser):
         self.confd.assert_request_sent(r"/users/\d+", method="PUT")
 
     def test_when_creating_user_with_sip_line_and_device_then_device_associated(self):
-        device = self.add_autoprov_device(mac="00:08:5d:31:ef:e1")
-
+        line = self.add_line(protocol="sip")
         sip = self.add_sip()
-        self.simulate_line_creation(sip, "sip", device)
+        device = self.add_autoprov_device(mac="00:08:5d:31:ef:e1")
+        self.simulate_line_add(line, sip)
+        self.simulate_device_update(device)
 
         page = self.browser.users.add()
         page.fill_form(firstname="CreateLineDeviceSip")
@@ -407,10 +432,11 @@ class TestUserCreate(TestUser):
         self.confd.assert_request_sent(r"/users/\d+", method="PUT")
 
     def test_when_creating_user_with_sccp_line_and_device_then_device_associated(self):
-        device = self.add_autoprov_device(mac="00:08:5d:31:ef:e2")
-
+        line = self.add_line(protocol="sccp")
         sccp = self.add_sccp()
-        self.simulate_line_creation(sccp, "sccp", device)
+        device = self.add_autoprov_device(mac="00:08:5d:31:ef:e2")
+        self.simulate_line_add(line, sccp)
+        self.simulate_device_update(device)
 
         page = self.browser.users.add()
         page.fill_form(firstname="CreateLineDeviceSccp")
@@ -432,29 +458,6 @@ class TestUserCreate(TestUser):
 
 class TestUserEdit(TestUser):
 
-    def simulate_line_update(self, line, device=None):
-        self.confd.add_response(r"/lines/\d+", method="PUT", code=204)
-        self.confd.add_response(r"/users/\d+", method="PUT", code=204)
-
-    def simulate_line_add(self, line, endpoint):
-        self.confd.add_json_response(r"/lines", line, method="POST", code=201)
-        self.confd.add_json_response(r"/endpoints/(sip|sccp|custom)", endpoint, method="POST", code=201)
-        self.confd.add_response(r"/lines/\d+/endpoints/(sip|sccp|custom)/\d+", method="PUT", code=204)
-        self.confd.add_response(r"/lines/\d+/devices", code=404)
-        self.confd.add_response(r"/users/\d+", method="PUT", code=204)
-
-    def simulate_line_remove(self, line, device):
-        self.confd.add_response(r"/lines/\d+", method="DELETE", code=204)
-        self.confd.add_response(r"/endpoints/sip/\d+", method="DELETE", code=204)
-        self.confd.add_response(r"/lines/\d+/extensions/\d+", method="DELETE", code=204)
-        self.confd.add_response(r"/lines/\d+/endpoints/sip/\d+", method="DELETE", code=204)
-        self.confd.add_response(r"/lines/\d+/devices/[a-z0-9]+", method="DELETE", code=204)
-        self.confd.add_response(r"/users/\d+/lines/\d+", method="DELETE", code=204)
-
-    def simulate_device_update(self, device=None):
-        method = "PUT" if device else "DELETE"
-        self.confd.add_response("/lines/\d+/devices/[a-z0-9]+", method=method, code=204)
-
     def test_when_editing_user_then_user_updated(self):
         self.add_empty_user("UserEdit")
 
@@ -465,8 +468,8 @@ class TestUserEdit(TestUser):
         self.browser.users.get_row("UserModified")
 
     def test_given_user_has_sip_line_when_editing_exten_then_user_updated(self):
-        line = self.add_sip_user("UserEditSipExten", "1350", "132500")
-        self.simulate_line_update(line)
+        self.add_sip_user("UserEditSipExten", "1350", "132500")
+        self.simulate_line_update()
 
         page = self.browser.users.edit("UserEditSipExten")
 
@@ -478,8 +481,8 @@ class TestUserEdit(TestUser):
         self.confd.assert_request_sent("/lines/\d+", method="PUT")
 
     def test_given_user_has_sccp_line_when_editing_exten_then_user_updated(self):
-        line = self.add_sccp_user("UserEditSccpExten", "1352")
-        self.simulate_line_update(line)
+        self.add_sccp_user("UserEditSccpExten", "1352")
+        self.simulate_line_update()
 
         page = self.browser.users.edit("UserEditSccpExten")
 
@@ -491,8 +494,8 @@ class TestUserEdit(TestUser):
         self.confd.assert_request_sent("/lines/\d+", method="PUT")
 
     def test_given_user_has_custom_line_when_editing_exten_then_user_updated(self):
-        line = self.add_custom_user("UserEditCustomExten", "1360")
-        self.simulate_line_update(line)
+        self.add_custom_user("UserEditCustomExten", "1360")
+        self.simulate_line_update()
 
         page = self.browser.users.edit("UserEditCustomExten")
 
@@ -505,9 +508,9 @@ class TestUserEdit(TestUser):
 
     def test_given_user_has_sip_line_when_adding_device_then_user_updated(self):
         device = self.add_autoprov_device(mac="00:08:5d:31:ef:e1")
+        self.add_sip_user("UserEditAddSipDevice", "1354", "132502")
 
-        line = self.add_sip_user("UserEditAddSipDevice", "1354", "132502")
-        self.simulate_line_update(line)
+        self.simulate_line_update()
         self.simulate_device_update(device)
 
         page = self.browser.users.edit("UserEditAddSipDevice")
@@ -522,9 +525,9 @@ class TestUserEdit(TestUser):
 
     def test_given_user_has_sccp_line_when_adding_device_then_user_updated(self):
         device = self.add_autoprov_device(mac="00:08:5d:31:ef:e2")
+        self.add_sccp_user("UserEditAddSccpDevice", "1355")
 
-        line = self.add_sccp_user("UserEditAddSccpDevice", "1355")
-        self.simulate_line_update(line)
+        self.simulate_line_update()
         self.simulate_device_update(device)
 
         page = self.browser.users.edit("UserEditAddSccpDevice")
@@ -539,9 +542,9 @@ class TestUserEdit(TestUser):
 
     def test_given_user_has_sip_device_when_removing_device_then_user_updated(self):
         device = self.add_autoprov_device(mac="00:08:5d:31:ef:e3")
+        self.add_sip_user("UserEditRemoveSipDevice", "1356", "132506", device['id'])
 
-        line = self.add_sip_user("UserEditRemoveSipDevice", "1356", "132506", device['id'])
-        self.simulate_line_update(line)
+        self.simulate_line_update()
         self.simulate_device_update()
 
         page = self.browser.users.edit("UserEditRemoveSipDevice")
@@ -556,9 +559,9 @@ class TestUserEdit(TestUser):
 
     def test_given_user_has_sccp_device_when_removing_device_then_user_updated(self):
         device = self.add_autoprov_device(mac="00:08:5d:31:ef:e4")
+        self.add_sccp_user("UserEditRemoveSccpDevice", "1357", device['id'])
 
-        line = self.add_sccp_user("UserEditRemoveSccpDevice", "1357", device['id'])
-        self.simulate_line_update(line)
+        self.simulate_line_update()
         self.simulate_device_update()
 
         page = self.browser.users.edit("UserEditRemoveSccpDevice")
@@ -576,8 +579,9 @@ class TestUserEdit(TestUser):
         device2 = self.add_autoprov_device(makelist=False, mac="00:08:5d:31:ef:e6")
         self.confd.add_json_response("/devices", {'total': 2, 'items': [device1, device2]})
 
-        line = self.add_sip_user("UserEditChangeSipDevice", "1358", "101358", device1['id'])
-        self.simulate_line_update(line)
+        self.add_sip_user("UserEditChangeSipDevice", "1358", "101358", device1['id'])
+
+        self.simulate_line_update()
         self.simulate_device_update()
         self.simulate_device_update(device2)
 
@@ -597,8 +601,8 @@ class TestUserEdit(TestUser):
         device2 = self.add_autoprov_device(makelist=False, mac="00:08:5d:31:ef:e8")
         self.confd.add_json_response("/devices", {'total': 2, 'items': [device1, device2]})
 
-        line = self.add_sccp_user("UserEditChangeSccpDevice", "1359", device1['id'])
-        self.simulate_line_update(line)
+        self.add_sccp_user("UserEditChangeSccpDevice", "1359", device1['id'])
+        self.simulate_line_update()
         self.simulate_device_update()
         self.simulate_device_update(device2)
 
