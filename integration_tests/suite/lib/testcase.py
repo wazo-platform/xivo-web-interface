@@ -20,6 +20,7 @@ class TestWebi(unittest.TestCase):
     @classmethod
     def tearDownClass(cls):
         cls.browser.stop()
+        testsetup.cleanup_docker(cls.asset)
 
     def setUp(self):
         self.addCleanup(self.confd.clear)
