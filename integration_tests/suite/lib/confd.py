@@ -65,7 +65,6 @@ class MockConfd(object):
                 'method': method,
                 'code': code,
                 'preserve': preserve}
-        logger.info("Adding {} {} {}".format(method, path, body))
         response = requests.post(url, data=json.dumps(data))
         response.raise_for_status()
 
