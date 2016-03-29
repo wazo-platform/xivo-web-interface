@@ -40,7 +40,7 @@ class CustomResource {
 	}
 
 	function delete($id) {
-		$request = Request::json_get("/endpoints/custom/" . $id);
+		$request = Request::delete("/endpoints/custom/" . $id);
 		$response = $this->client->send($request);
 		return $response->status_ok_or_raise();
 	}

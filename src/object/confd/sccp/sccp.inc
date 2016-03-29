@@ -40,7 +40,7 @@ class SccpResource {
 	}
 
 	function delete($id) {
-		$request = Request::json_get("/endpoints/sccp/" . $id);
+		$request = Request::delete("/endpoints/sccp/" . $id);
 		$response = $this->client->send($request);
 		return $response->status_ok_or_raise();
 	}
