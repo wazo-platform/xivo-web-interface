@@ -65,10 +65,11 @@ def stop_docker(asset):
 
 
 def cleanup_docker(asset):
-    path = os.path.join(ASSET_PATH, asset)
-    os.chdir(path)
-    run_cmd(('docker-compose', 'kill'))
-    run_cmd(('docker-compose', 'rm', '-f'))
+    if os.environ.get('DOCKER', '1') == '1':
+        path = os.path.join(ASSET_PATH, asset)
+        os.chdir(path)
+        run_cmd(('docker-compose', 'kill'))
+        run_cmd(('docker-compose', 'rm', '-f'))
 
 
 def start_docker(asset):
