@@ -114,6 +114,16 @@ class TestUser(TestWebi):
 
         return line
 
+    def add_custom_user(self, firstname, exten, device=None):
+        user_id = self.add_user(firstname)
+        extension = self.add_extension(exten, "default", "user", user_id)
+        line = self.add_line(device_id=device, protocol="custom")
+        custom = self.add_custom()
+
+        self.associate_resources(user_id, line['id'], extension['id'], "custom", custom['id'], device)
+
+        return line
+
     def add_extension(self, exten, context, type_, typeval):
         with self.db.queries() as q:
             extension_id = q.insert_extension(exten, context, type_, typeval)
@@ -194,6 +204,22 @@ class TestUser(TestWebi):
         }
         sccp.update(extra)
         return sccp
+
+    def add_custom(self, **extra):
+        custom = self.build_custom(**extra)
+        url = "/endpoints/custom/{}".format(custom['id'])
+        self.confd.add_json_response(url, custom, preserve=True)
+        return custom
+
+    def build_custom(self, **extra):
+        interface = ''.join(random.choice(string.ascii_letters) for _ in range(8))
+        custom = {
+            'id': random.randint(1, 9999),
+            'interface': interface,
+            'enabled': True
+        }
+        custom.update(extra)
+        return custom
 
     def associate_resources(self, user_id, line_id, extension_id, endpoint, endpoint_id, device_id=None):
         with self.db.queries() as q:
@@ -281,6 +307,16 @@ class TestUserList(TestUser):
         assert_that(row.extract('protocol'), equal_to('sccp'))
         assert_that(row.extract('number'), equal_to('1325'))
 
+    def test_when_user_has_custom_line_then_line_fields_are_filled(self):
+        self.add_custom_user("UserCustomLine", "1326")
+
+        page = self.browser.users.go()
+        row = page.get_row("UserCustomLine")
+
+        assert_that(row.extract('provisioning_code'), equal_to('-'))
+        assert_that(row.extract('protocol'), equal_to('custom'))
+        assert_that(row.extract('number'), equal_to('1326'))
+
 
 class TestUserCreate(TestUser):
 
@@ -335,6 +371,24 @@ class TestUserCreate(TestUser):
         self.confd.assert_json_request(r"/lines", {"context": "default"}, method="POST")
         self.confd.assert_json_request(r"/endpoints/sccp", {}, method="POST")
         self.confd.assert_request_sent(r"/lines/\d+/endpoints/sccp/\d+", method="PUT")
+        self.confd.assert_request_sent(r"/users/\d+", method="PUT")
+
+    def test_when_creating_user_with_custom_line_and_extension_then_line_and_extension_created(self):
+        custom = self.add_custom()
+        self.simulate_line_creation(custom, "custom")
+
+        page = self.browser.users.add()
+        page.fill_form(firstname="CreateLineCustom")
+
+        tab = page.lines()
+        tab.add_line(protocol="Customized",
+                     context="Default",
+                     number="1002")
+        page.save()
+
+        self.confd.assert_json_request(r"/lines", {"context": "default"}, method="POST")
+        self.confd.assert_json_request(r"/endpoints/custom", {}, method="POST")
+        self.confd.assert_request_sent(r"/lines/\d+/endpoints/custom/\d+", method="PUT")
         self.confd.assert_request_sent(r"/users/\d+", method="PUT")
 
     def test_when_creating_user_with_sip_line_and_device_then_device_associated(self):
@@ -424,6 +478,19 @@ class TestUserEdit(TestUser):
 
         tab = page.lines()
         tab.edit_line(number="1353")
+
+        page.save()
+
+        self.confd.assert_request_sent("/lines/\d+", method="PUT")
+
+    def test_given_user_has_custom_line_when_editing_exten_then_user_updated(self):
+        line = self.add_custom_user("UserEditCustomExten", "1360")
+        self.simulate_line_update(line)
+
+        page = self.browser.users.edit("UserEditCustomExten")
+
+        tab = page.lines()
+        tab.edit_line(number="1361")
 
         page.save()
 
@@ -587,6 +654,20 @@ class TestUserDelete(TestUser):
         self.confd.assert_request_sent(r"/lines/\d+/extensions/\d+", method="DELETE")
         self.confd.assert_request_sent(r"/lines/\d+/endpoints/sccp/\d+", method="DELETE")
         self.confd.assert_request_sent(r"/endpoints/sccp/\d+", method="DELETE")
+        self.confd.assert_request_sent(r"/lines/\d+", method="DELETE")
+
+    def test_when_user_has_custom_line_then_user_deleted(self):
+        line = self.add_custom_user("UserDeleteCustomLine", "1450")
+        self.simulate_line_delete(line)
+
+        page = self.browser.users
+        page.delete("UserDeleteCustomLine")
+        assert_that(page.find_row("UserDeleteCustomLine"), none())
+
+        self.confd.assert_request_sent(r"/users/\d+/lines/\d+", method="DELETE")
+        self.confd.assert_request_sent(r"/lines/\d+/extensions/\d+", method="DELETE")
+        self.confd.assert_request_sent(r"/lines/\d+/endpoints/custom/\d+", method="DELETE")
+        self.confd.assert_request_sent(r"/endpoints/custom/\d+", method="DELETE")
         self.confd.assert_request_sent(r"/lines/\d+", method="DELETE")
 
     def test_when_user_has_sip_device_then_user_deleted(self):

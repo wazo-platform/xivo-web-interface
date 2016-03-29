@@ -148,7 +148,7 @@ class LineManager
 		return $endpoint;
 	}
 
-	private function generate_custom_interface()
+	private function generate_custom()
 	{
 		return array(
 			'interface' => substr(md5(microtime()), rand(0,26), 8)
