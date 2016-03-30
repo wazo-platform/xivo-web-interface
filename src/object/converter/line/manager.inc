@@ -95,7 +95,7 @@ class LineManager
 
 		foreach($lines as $form) {
 			$updated_line = $this->update_line($user_id, $form);
-			$updated_lines[] = $update_line;
+			$updated_lines[] = $updated_line;
 
 			$line_devices[] = array(
 				'line_id' => $updated_line['id'],
