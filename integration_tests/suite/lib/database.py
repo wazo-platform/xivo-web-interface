@@ -281,3 +281,17 @@ class DatabaseQueries(object):
                      "main_line": main_line,
                      "main_user": main_user}
         return self.db['user_line'].insert(user_line)
+
+    def add_context(self, name, start, end, type_="internal", rangetype="user"):
+        entity = self.db['entity'].find_one()['name']
+        self.db['context'].insert({"name": name,
+                                   "displayname": name,
+                                   "entity": entity,
+                                   "contexttype": type_,
+                                   "description": ""})
+
+        self.db['contextnumbers'].insert({"context": name,
+                                          "type": rangetype,
+                                          "numberbeg": start,
+                                          "numberend": end,
+                                          "didlength": 0})

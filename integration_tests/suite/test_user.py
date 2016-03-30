@@ -617,7 +617,7 @@ class TestUserEdit(TestUser):
         self.confd.assert_request_sent("/lines/\d+/devices/{}".format(device1['id']), method="DELETE")
         self.confd.assert_request_sent("/lines/\d+/devices/{}".format(device2['id']), method="PUT")
 
-    def test_given_user_has_no_line_when_adding_sip_line_then_user_updated(self):
+    def test_given_user_has_no_line_when_adding_sip_line_and_device_then_user_updated(self):
         self.add_empty_user("UserEditAddSipLine")
         device = self.add_autoprov_device()
         line = self.add_line(context="default")
@@ -639,7 +639,7 @@ class TestUserEdit(TestUser):
         self.confd.assert_request_sent(r"/lines/\d+/devices/[a-z0-9]+", method="PUT")
         self.confd.assert_request_sent(r"/users/\d+", method="PUT")
 
-    def test_given_user_has_no_line_when_adding_sccp_line_then_user_updated(self):
+    def test_given_user_has_no_line_when_adding_sccp_line_and_device_then_user_updated(self):
         self.add_empty_user("UserEditAddSccpLine")
         device = self.add_autoprov_device()
         line = self.add_line(context="default")
@@ -680,7 +680,7 @@ class TestUserEdit(TestUser):
         self.confd.assert_request_sent(r"/users/\d+", method="PUT")
 
     @unittest.skip("table user_line is still managed by webi")
-    def test_given_user_has_sip_line_when_removing_line_then_user_updated(self):
+    def test_given_user_has_sip_line_and_device_when_removing_line_then_user_updated(self):
         device = self.add_autoprov_device()
         line = self.add_sip_user("UserEditRemoveSipLine", "1500", device['id'])
 
@@ -700,7 +700,7 @@ class TestUserEdit(TestUser):
         self.confd.assert_request_sent(r"/users/\d+/lines/\d+", method="DELETE")
 
     @unittest.skip("table user_line is still managed by webi")
-    def test_given_user_has_sccp_line_when_removing_line_then_user_updated(self):
+    def test_given_user_has_sccp_line_and_device_when_removing_line_then_user_updated(self):
         device = self.add_autoprov_device()
         line = self.add_sccp_user("UserEditRemoveSccpLine", "1500", device['id'])
 
