@@ -1279,7 +1279,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 
 		if(($line = $this->get_result('linefeatures')) !== null
 		&& dwho_issa(0, $line) === true
-		&& ($existingline = $this->edit_linefeatures($user_id)) !== false)
+		&& ($this->edit_linefeatures($user_id)) !== false)
 		{
 			if(isset($this->_info['linefeatures'][0])
 			&& $this->_info['linefeatures'][0]['number'] !== '')
