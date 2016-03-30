@@ -821,7 +821,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		if(is_array($arr)) {
 			$lines = array();
 			foreach($arr as $key => $values) {
-				array_pop($values);
+				array_pop($values);  # remove bogus empty value
 				foreach($values as $pos => $value) {
 					if(!array_key_exists($pos, $lines)) {
 						$lines[$pos] = array();
