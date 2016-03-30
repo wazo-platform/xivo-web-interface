@@ -40,6 +40,8 @@ class TestUser(TestWebi):
         super(TestUser, self).setUp()
         self.db.recreate()
         self.browser.login()
+        with self.db.queries() as q:
+            q.add_context("internal", "1000", "9999")
 
     def build_device(self, **kwargs):
         device_id = hashlib.md5(str(random.random())).hexdigest()
@@ -467,44 +469,47 @@ class TestUserEdit(TestUser):
 
         self.browser.users.get_row("UserModified")
 
-    def test_given_user_has_sip_line_when_editing_exten_then_user_updated(self):
+    def test_given_user_has_sip_line_when_editing_then_user_updated(self):
         self.add_sip_user("UserEditSipExten", "1350", "132500")
         self.simulate_line_update()
 
         page = self.browser.users.edit("UserEditSipExten")
-
-        tab = page.lines()
-        tab.edit_line(number="1351")
-
+        page.lines().edit_line(number="1351",
+                               context="internal",
+                               configregistrar="registrar2")
         page.save()
 
-        self.confd.assert_request_sent("/lines/\d+", method="PUT")
+        expected = {"context": "internal",
+                    "registrar": "registrar2"}
+        self.confd.assert_json_request("/lines/\d+", expected, method="PUT")
 
-    def test_given_user_has_sccp_line_when_editing_exten_then_user_updated(self):
+    def test_given_user_has_sccp_line_when_editing_then_user_updated(self):
         self.add_sccp_user("UserEditSccpExten", "1352")
         self.simulate_line_update()
 
         page = self.browser.users.edit("UserEditSccpExten")
-
-        tab = page.lines()
-        tab.edit_line(number="1353")
-
+        page.lines().edit_line(number="1353",
+                               context="internal",
+                               configregistrar="registrar2")
         page.save()
 
-        self.confd.assert_request_sent("/lines/\d+", method="PUT")
+        expected = {"context": "internal",
+                    "registrar": "registrar2"}
+        self.confd.assert_json_request("/lines/\d+", expected, method="PUT")
 
-    def test_given_user_has_custom_line_when_editing_exten_then_user_updated(self):
+    def test_given_user_has_custom_line_when_editing_then_user_updated(self):
         self.add_custom_user("UserEditCustomExten", "1360")
         self.simulate_line_update()
 
         page = self.browser.users.edit("UserEditCustomExten")
-
-        tab = page.lines()
-        tab.edit_line(number="1361")
-
+        page.lines().edit_line(number="1361",
+                               context="internal",
+                               configregistrar="registrar2")
         page.save()
 
-        self.confd.assert_request_sent("/lines/\d+", method="PUT")
+        expected = {"context": "internal",
+                    "registrar": "registrar2"}
+        self.confd.assert_json_request("/lines/\d+", expected, method="PUT")
 
     def test_given_user_has_sip_line_when_adding_device_then_user_updated(self):
         device = self.add_autoprov_device(mac="00:08:5d:31:ef:e1")
