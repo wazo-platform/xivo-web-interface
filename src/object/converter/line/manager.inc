@@ -123,11 +123,11 @@ class LineManager
 	private function update_line($user_id, $form) {
 		$protocol = $form['protocol'];
 
-		$line = $this->line->get($form['id']);
+		$line_id = $form['id'];
 		$mapped_line = $this->mapper->map_form($form);
 		$this->line->update($mapped_line);
 
-		return $this->get($line['id']);
+		return $this->get($line_id);
 	}
 
 	private function create_and_associate_endpoint($line, $protocol)
