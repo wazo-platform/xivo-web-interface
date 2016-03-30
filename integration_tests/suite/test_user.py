@@ -622,8 +622,62 @@ class TestUserEdit(TestUser):
         self.confd.assert_request_sent("/lines/\d+/devices/{}".format(device1['id']), method="DELETE")
         self.confd.assert_request_sent("/lines/\d+/devices/{}".format(device2['id']), method="PUT")
 
-    def test_given_user_has_no_line_when_adding_sip_line_and_device_then_user_updated(self):
+    def test_given_user_has_no_line_when_adding_sip_line_then_user_updated(self):
         self.add_empty_user("UserEditAddSipLine")
+        line = self.add_line(context="default")
+        sip = self.add_sip()
+
+        self.simulate_line_add(line, sip)
+
+        page = self.browser.users.edit("UserEditAddSipLine")
+        page.lines().add_line(protocol="SIP",
+                              context="Default",
+                              number="1310")
+        page.save()
+
+        self.confd.assert_json_request(r"/lines", {"context": "default"}, method="POST")
+        self.confd.assert_json_request(r"/endpoints/sip", {}, method="POST")
+        self.confd.assert_request_sent(r"/lines/\d+/endpoints/sip/\d+", method="PUT")
+        self.confd.assert_request_sent(r"/users/\d+", method="PUT")
+
+    def test_given_user_has_no_line_when_adding_sccp_line_then_user_updated(self):
+        self.add_empty_user("UserEditAddSccpLine")
+        line = self.add_line(context="default")
+        sccp = self.add_sccp()
+
+        self.simulate_line_add(line, sccp)
+
+        page = self.browser.users.edit("UserEditAddSccpLine")
+        page.lines().add_line(protocol="SCCP",
+                              context="Default",
+                              number="1320")
+        page.save()
+
+        self.confd.assert_json_request(r"/lines", {"context": "default"}, method="POST")
+        self.confd.assert_json_request(r"/endpoints/sccp", {}, method="POST")
+        self.confd.assert_request_sent(r"/lines/\d+/endpoints/sccp/\d+", method="PUT")
+        self.confd.assert_request_sent(r"/users/\d+", method="PUT")
+
+    def test_given_user_has_no_line_when_adding_custom_line_then_user_updated(self):
+        self.add_empty_user("UserEditAddCustomLine")
+        line = self.add_line(context="default")
+        custom = self.add_custom()
+
+        self.simulate_line_add(line, custom)
+
+        page = self.browser.users.edit("UserEditAddCustomLine")
+        page.lines().add_line(protocol="Customized",
+                              context="Default",
+                              number="1300")
+        page.save()
+
+        self.confd.assert_json_request(r"/lines", {"context": "default"}, method="POST")
+        self.confd.assert_json_request(r"/endpoints/custom", {}, method="POST")
+        self.confd.assert_request_sent(r"/lines/\d+/endpoints/custom/\d+", method="PUT")
+        self.confd.assert_request_sent(r"/users/\d+", method="PUT")
+
+    def test_given_user_has_no_line_when_adding_sip_line_and_device_then_user_updated(self):
+        self.add_empty_user("UserEditAddSipLineDevice")
         device = self.add_autoprov_device()
         line = self.add_line(context="default")
         sip = self.add_sip()
@@ -645,7 +699,7 @@ class TestUserEdit(TestUser):
         self.confd.assert_request_sent(r"/users/\d+", method="PUT")
 
     def test_given_user_has_no_line_when_adding_sccp_line_and_device_then_user_updated(self):
-        self.add_empty_user("UserEditAddSccpLine")
+        self.add_empty_user("UserEditAddSccpLineDevice")
         device = self.add_autoprov_device()
         line = self.add_line(context="default")
         sccp = self.add_sccp()
@@ -664,24 +718,6 @@ class TestUserEdit(TestUser):
         self.confd.assert_json_request(r"/endpoints/sccp", {}, method="POST")
         self.confd.assert_request_sent(r"/lines/\d+/endpoints/sccp/\d+", method="PUT")
         self.confd.assert_request_sent(r"/lines/\d+/devices/[a-z0-9]+", method="PUT")
-        self.confd.assert_request_sent(r"/users/\d+", method="PUT")
-
-    def test_given_user_has_no_line_when_adding_custom_line_then_user_updated(self):
-        self.add_empty_user("UserEditAddCustomLine")
-        line = self.add_line(context="default")
-        custom = self.add_custom()
-
-        self.simulate_line_add(line, custom)
-
-        page = self.browser.users.edit("UserEditAddCustomLine")
-        page.lines().add_line(protocol="Customized",
-                              context="Default",
-                              number="1300")
-        page.save()
-
-        self.confd.assert_json_request(r"/lines", {"context": "default"}, method="POST")
-        self.confd.assert_json_request(r"/endpoints/custom", {}, method="POST")
-        self.confd.assert_request_sent(r"/lines/\d+/endpoints/custom/\d+", method="PUT")
         self.confd.assert_request_sent(r"/users/\d+", method="PUT")
 
     @unittest.skip("table user_line is still managed by webi")
