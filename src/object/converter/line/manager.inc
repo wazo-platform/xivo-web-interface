@@ -46,9 +46,7 @@ class LineManager
 		foreach($userlines as $userline) {
 			if ($userline['main_line'] == true) {
 				$line = $this->line->get($userline['line_id']);
-				if($this->entity_allowed($line)) {
-					return $this->get_legacy_line($line);
-				}
+				return $this->get_legacy_line($line);
 			}
 		}
 		return null;
