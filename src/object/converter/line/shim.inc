@@ -29,7 +29,7 @@ class LineShim {
 
 	public function get_user_masterline($user_id)
 	{
-		try { 
+		try {
 			return $this->manager->get_main_line($user_id);
 		} catch (ClientException $e) {
 			$e->report_errors();
@@ -66,7 +66,7 @@ class LineShim {
 
 	public function delete_linefeatures($lines)
 	{
-		try { 
+		try {
 			return $this->manager->delete($lines);
 		} catch (ClientException $e) {
 			$e->report_errors();
