@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-# Copyright (C) 2015 Avencall
+# Copyright (C) 2015-2016 Avencall
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -56,10 +56,80 @@ class UserPage(Page):
 
         return NoAnswerTab(self.driver)
 
+    def lines(self):
+        link = self.driver.find_element_by_css_selector("a[href='#lines']")
+        link.click()
+        self.wait_visible(By.ID, 'sb-part-lines')
+
+        return LineTab(self.driver)
+
     def save(self):
         btn = self.driver.find_element_by_id("it-submit")
         btn.click()
         self.wait_for(By.NAME, 'fm-users-list')
+
+
+class LineTab(Page):
+
+    def add_line(self, **form):
+        add = self.driver.find_element_by_id("lnk-add-row")
+        add.click()
+        self.wait_visible(By.CSS_SELECTOR, "tbody#linefeatures tr.fm-paragraph")
+        self.fill_form(form)
+
+    def edit_line(self, **form):
+        self.fill_form(form)
+
+    def remove_line(self):
+        selector = "tbody#linefeatures tr td:last-child a"
+        btn = self.driver.find_element_by_css_selector(selector)
+        btn.click()
+
+        condition = ec.invisibility_of_element_located((By.CSS_SELECTOR, "tbody#linefeatures tr"))
+        self.wait().until(condition)
+
+    def remove_device(self):
+        dropdown = self.driver.find_element_by_id("s2id_linefeatures-device")
+        dropdown.click()
+        self.wait_visible(By.CSS_SELECTOR, ".select2-input")
+
+        first = self.driver.find_element_by_css_selector("li.select2-result:first-child")
+        first.click()
+
+        self.wait().until(partial(self.text_appears, ""))
+
+    def fill_form(self, form):
+        for name, value in form.iteritems():
+            if name == "device":
+                self.select_device(value)
+            else:
+                name = "linefeatures[{}][]".format(name)
+                self.fill(By.NAME, name, value)
+
+    def select_device(self, value):
+        dropdown = self.driver.find_element_by_id("s2id_linefeatures-device")
+        dropdown.click()
+        self.wait_visible(By.CSS_SELECTOR, ".select2-input")
+
+        search = self.driver.find_element_by_css_selector(".select2-input")
+        search.clear()
+        search.send_keys(value)
+        self.wait().until(self.list_has_one_result)
+
+        search.send_keys(Keys.RETURN)
+        self.wait().until(partial(self.mac_appears, value))
+
+    def list_has_one_result(self, driver):
+        elements = self.driver.find_elements_by_css_selector("li.select2-result")
+        return len(elements) == 1
+
+    def mac_appears(self, value, driver):
+        return self.text_appears("MAC: {}".format(value), driver)
+
+    def text_appears(self, value, driver):
+        selector = "#s2id_linefeatures-device .select2-choice span"
+        span = self.driver.find_element_by_css_selector(selector)
+        return span.text.strip() == value
 
 
 class NoAnswerTab(Page):

@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016 Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,7 +22,6 @@ $form = &$this->get_module('form');
 $url = &$this->get_module('url');
 
 $info = $this->get_var('info');
-$element = $this->get_var('element');
 $list = $this->get_var('list');
 $list_configregistrar = $this->get_var('list_configregistrar');
 $list_device_line = $this->get_var('list_device_line');
@@ -123,7 +122,7 @@ if($list !== false):
 					     'label'	=> false,
 					     'size'		=> 5,
 					     'value'	=> $ref['number'],
-					     'default'	=> $element['linefeatures']['number']['default']),
+					     'default'	=> ''),
 			            'autocomplete="off"');?>
 			<div class="dialog-helper" id="numberpool_helper"></div>
 		</td>
@@ -134,7 +133,7 @@ if($list !== false):
 				    'label'		=> false,
 				    'key'		=> 'displayname',
 				    'altkey'	=> 'id',
-				    'default'	=> $element['linefeatures']['configregistrar']['default'],
+				    'default'	=> 'default',
 					'selected'	=> $ref['configregistrar']),
 			      $list_configregistrar);?>
 		</td>
@@ -152,7 +151,7 @@ if($list !== false):
 				    'key'		=> 'display',
 				    'altkey'	=> 'id',
 				    'empty'		=> true,
-				    'default'	=> $element['linefeatures']['device']['default'],
+				    'default'	=> '',
 					'selected'	=> $ref['device']),
 			      $list_device);?>
 		<?php endif; ?>
@@ -166,7 +165,7 @@ if($list !== false):
 				    	'key'		=> false,
 				    	'altkey'	=> false,
 						'selected'	=> $ref['num']),
-					$element['linefeatures']['num']['value']);?>
+					array(1,2,3,4,5,6,7,8,9,10,11,12));?>
 		</td>
 		<td class="td-right">
 			<?=$url->href_html($url->img_html('img/site/button/mini/blue/delete.gif',
@@ -203,8 +202,8 @@ endif;
 					'label'		=> false,
 					'key'		=> false,
 					'bbf'		=> 'line_protocol-opt',
-					'default'	=> $element['linefeatures']['protocol']['default']),
-				$element['linefeatures']['protocol']['value']);?>
+					'default'	=> 'sip'),
+				array('sip', 'sccp', 'custom'));?>
 		</td>
 		<td id="td_ex-linefeatures-name">
 			<?=$form->hidden(array('name' => 'linefeatures[name][]',
@@ -216,7 +215,7 @@ endif;
 				    'name'		=> 'linefeatures[context][]',
 				    'id'		=> 'linefeatures-context',
 				    'label'		=> false,
-				    'default'	=> $element['linefeatures']['context']['default']));?>
+				    'default'	=> 'default'));?>
 		</td>
 		<td id="td_ex-linefeatures-number">
 			<?=$form->text(array('paragraph'	=> false,
@@ -224,7 +223,7 @@ endif;
 					     'id'		=> 'linefeatures-number',
 					     'label'	=> false,
 					     'size'		=> 5,
-					     'default'	=> $element['linefeatures']['number']['default']),
+					     'default'	=> ''),
 			            'autocomplete="off"');?>
 			<div class="dialog-helper" id="numberpool_helper"></div>
 		</td>
@@ -236,7 +235,7 @@ endif;
 				    'key'		=> 'displayname',
 				    'altkey'	=> 'id',
 				    #'empty'	=> true,
-				    'default'	=> $element['linefeatures']['configregistrar']['default']),
+				    'default'	=> 'default'),
 			      $list_configregistrar);?>
 		</td>
 		<td id="td_ex-linefeatures-device">
@@ -252,7 +251,7 @@ endif;
 				    'label'		=> false,
 				    'key'		=> 'display',
 				    'altkey'	=> 'id',
-				    'default'	=> $element['linefeatures']['device']['default'],
+				    'default'	=> '',
 				    'empty'		=> true),
 			      $list_device);?>
 		<?php endif; ?>
@@ -271,8 +270,8 @@ endif;
 					    'label'		=> false,
 				    	'key'		=> false,
 				    	'altkey'	=> false,
-				   		'default'	=> $element['linefeatures']['num']['default']),
-					$element['linefeatures']['num']['value']);?>
+				   		'default'	=> 1),
+					array(1,2,3,4,5,6,7,8,9,10,11,12));?>
 		<?php endif; ?>
 		</td>
 		<td class="td-right">

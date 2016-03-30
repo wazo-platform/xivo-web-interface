@@ -7,23 +7,32 @@ app = Flask(__name__)
 LOGS = []
 
 RESPONSES = {}
+PRESERVE = {}
 
-PROFILES = [{u'id': 1,
-             u'links': [{u'href': u'https://webi:9486/1.1/cti_profiles/1',
-                         u'rel': u'cti_profiles'}],
-             u'name': u'Supervisor'},
-            {u'id': 2,
-             u'links': [{u'href': u'https://webi:9486/1.1/cti_profiles/2',
-                         u'rel': u'cti_profiles'}],
-             u'name': u'Agent'},
-            {u'id': 4,
-             u'links': [{u'href': u'https://webi:9486/1.1/cti_profiles/4',
-                         u'rel': u'cti_profiles'}],
-             u'name': u'Switchboard'},
-            {u'id': 3,
-             u'links': [{u'href': u'https://webi:9486/1.1/cti_profiles/3',
-                         u'rel': u'cti_profiles'}],
-             u'name': u'Client'}]
+DEFAULTS = {
+    '/devices': {'total': 0,
+                 'items': []},
+    '/voicemails': {'total': 0,
+                    'items': []},
+    '/cti_profiles': {'total': 4,
+                      'items': [{u'id': 1,
+                                 u'links': [{u'href': u'https://webi:9486/1.1/cti_profiles/1',
+                                             u'rel': u'cti_profiles'}],
+                                 u'name': u'Supervisor'},
+                                {u'id': 2,
+                                 u'links': [{u'href': u'https://webi:9486/1.1/cti_profiles/2',
+                                             u'rel': u'cti_profiles'}],
+                                 u'name': u'Agent'},
+                                {u'id': 4,
+                                 u'links': [{u'href': u'https://webi:9486/1.1/cti_profiles/4',
+                                             u'rel': u'cti_profiles'}],
+                                 u'name': u'Switchboard'},
+                                {u'id': 3,
+                                 u'links': [{u'href': u'https://webi:9486/1.1/cti_profiles/3',
+                                             u'rel': u'cti_profiles'}],
+                                 u'name': u'Client'}]
+                      }
+}
 
 
 @app.after_request
@@ -68,16 +77,22 @@ def delete_logs():
 @app.route('/_responses', methods=['POST'])
 def add_response():
     response = request.get_json(force=True)
-    method = RESPONSES.setdefault(response['method'], {})
-    path = method.setdefault(response['path'], [])
-    path.append((response['body'], response['code']))
+    if response.get('preserve', False):
+        method = PRESERVE.setdefault(response['method'], dict())
+        method[response['path']] = (response['body'], response['code'])
+    else:
+        method = RESPONSES.setdefault(response['method'], dict())
+        path = method.setdefault(response['path'], [])
+        path.append((response['body'], response['code']))
     return ''
 
 
 @app.route('/_responses', methods=['DELETE'])
 def delete_responses():
     global RESPONSES
+    global PRESERVE
     RESPONSES = {}
+    PRESERVE = {}
     return ''
 
 
@@ -86,26 +101,26 @@ def get_responses():
     return jsonify(responses=RESPONSES)
 
 
-@app.route('/1.1/devices')
-def devices():
-    return jsonify(total=0,
-                   items={})
-
-
-@app.route('/1.1/cti_profiles')
-def cti_profiles():
-    return jsonify(total=len(PROFILES),
-                   items=PROFILES)
-
-
 @app.route('/1.1/<path:expected>', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def respond(expected):
     expected = "/" + expected
+
     method = RESPONSES.get(request.method, {})
     for path, responses in method.iteritems():
         if len(responses) > 0 and re.match(path, expected):
             return responses.pop(0)
-    return '["Confd mock has no response prepared"]', 400
+
+    method = PRESERVE.get(request.method, {})
+    for path, response in method.iteritems():
+        if re.match(path, expected):
+            return response
+
+    for path, response in DEFAULTS.iteritems():
+        if re.match(path, expected):
+            return jsonify(response)
+
+    error_msg = '["Confd mock has no response prepared for {} {}"]'
+    return error_msg.format(request.method, expected), 400
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=9487, debug=True)

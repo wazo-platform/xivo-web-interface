@@ -70,11 +70,13 @@ class DatabaseQueries(object):
     def insert_user(self, firstname, lastname=None):
         template_id = self.insert_func_key_template(private=True)
         entity_id = self.db['entity'].find_one()['id']
+        caller_name = " ".join([firstname, lastname or ""]).strip()
         user = {'firstname': firstname,
-                'lastname': lastname,
+                'lastname': lastname or "",
                 'uuid': str(uuid.uuid4()),
                 'description': '',
                 'func_key_private_template_id': template_id,
+                'callerid': '"{}"'.format(caller_name),
                 'entityid': entity_id}
 
         user_id = self.db['userfeatures'].insert(user)
@@ -142,11 +144,11 @@ class DatabaseQueries(object):
         return conference_id
 
     def insert_extension(self, exten, context, type_, typeval):
-        extension = dict(context=context,
-                         exten=exten,
-                         type=type_,
-                         typeval=str(typeval))
-        return self.db['extension'].insert(extension)
+        extension = {"context": context,
+                     "exten": exten,
+                     "type": type_,
+                     "typeval": str(typeval)}
+        return self.db['extensions'].insert(extension)
 
     def insert_group(self, name='mygroup', number='1234', context='default'):
         group = dict(name=name,
@@ -258,3 +260,38 @@ class DatabaseQueries(object):
         line.update(params)
         return self.db['linefeatures'].insert(line)
 
+    def insert_sccp_line(self, extra_sccp, line_extra=None):
+        sccp = {"name": str(random.randint(1000, 9999)),
+                "context": "default",
+                "cid_name": "",
+                "cid_num": ""}
+        sccp.update(extra_sccp)
+        sccp_id = self.db['sccpline'].insert(sccp)
+
+        line = {'context': extra_sccp.get('context', 'default'),
+                'protocol': 'sccp',
+                'protocolid': sccp_id}
+        line.update(line_extra or {})
+        return self.insert_line(**line)
+
+    def associate_user_line_extension(self, user_id, line_id, extension_id, main_user=True, main_line=True):
+        user_line = {"user_id": user_id,
+                     "line_id": line_id,
+                     "extension_id": extension_id,
+                     "main_line": main_line,
+                     "main_user": main_user}
+        return self.db['user_line'].insert(user_line)
+
+    def add_context(self, name, start, end, type_="internal", rangetype="user"):
+        entity = self.db['entity'].find_one()['name']
+        self.db['context'].insert({"name": name,
+                                   "displayname": name,
+                                   "entity": entity,
+                                   "contexttype": type_,
+                                   "description": ""})
+
+        self.db['contextnumbers'].insert({"context": name,
+                                          "type": rangetype,
+                                          "numberbeg": start,
+                                          "numberend": end,
+                                          "didlength": 0})

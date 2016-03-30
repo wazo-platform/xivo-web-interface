@@ -27,6 +27,13 @@ class UserResource {
 		$this->client = $client;
 	}
 
+	public function update($user)
+	{
+		$request = Request::json_put("/users/" . $user['id'], $user);
+		$response = $this->client->send($request);
+		return $response->status_ok_or_raise();
+	}
+
 	public function import_csv($csvdata)
 	{
 		$request = $this->build_csv_request("POST", $csvdata);
@@ -50,6 +57,15 @@ class UserResource {
 			return false;
 		}
 		return $response->get_body();
+	}
+
+	public function list_line_associations($id)
+	{
+		$url = "/users/" . $id . "/lines";
+		$request = Request::json_get($url);
+		$response = $this->client->send($request);
+		$content = $response->decode_or_raise();
+		return $content === null ? array() : $content['items'];
 	}
 
 	private function build_csv_request($verb, $csvdata)

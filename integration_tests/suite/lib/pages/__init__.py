@@ -45,6 +45,9 @@ class Browser(object):
         self.display.start()
         self.driver = webdriver.Firefox()
         self.driver.set_window_size(1024, 768)
+        self.login()
+
+    def login(self):
         LoginPage(self.driver).login(self.username, self.password)
 
     def __getattr__(self, name):

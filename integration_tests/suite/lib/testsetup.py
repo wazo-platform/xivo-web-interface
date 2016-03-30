@@ -21,6 +21,9 @@ import logging
 
 import database
 import confd
+import provd
+
+from xivo_provd_client import new_provisioning_client
 
 from pages import Browser, Page
 
@@ -50,6 +53,14 @@ def setup_browser():
 def setup_confd():
     url = os.environ.get('CONFD_URL', 'http://localhost:19487')
     return confd.MockConfd(url)
+
+
+def setup_provd():
+    host = os.environ.get('PROVD_HOST', 'localhost')
+    port = os.environ.get('PROVD_PORT', 8666)
+    url = "http://{host}:{port}/provd".format(host=host, port=port)
+    client = new_provisioning_client(url)
+    return provd.ProvdHelper(client)
 
 
 def setup_docker(asset):

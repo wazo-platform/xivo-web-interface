@@ -12,6 +12,9 @@ class TestWebi(unittest.TestCase):
         cls.db = testsetup.setup_db()
         cls.db.recreate()
 
+        cls.provd = testsetup.setup_provd()
+        cls.provd.recreate()
+
         cls.browser = testsetup.setup_browser()
         cls.browser.start()
 

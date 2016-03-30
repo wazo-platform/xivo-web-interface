@@ -154,4 +154,51 @@ class OptionMapper {
 	}
 }
 
+class LineMapper {
+
+	function map_form($form)
+	{
+		$line = array(
+			'protocol' => $form['protocol'],
+			'context' => $form['context'],
+			'registrar' => $form['configregistrar'],
+			'position' => $form['num']
+		);
+
+		if($form['id'] != "0") {
+			$line['id'] = $form['id'];
+		}
+
+		return $line;
+	}
+
+	function map_line($line, $endpoint=null, $extension=null)
+	{
+		return array(
+			'id' => $line['id'],
+			'protocol' => $line['protocol'],
+			'protocolid' => is_null($endpoint) ? null : $endpoint['id'],
+			'device' => $line['device_id'],
+			'name' => $this->determine_line_name($line, $endpoint, $extension),
+			'number' => is_null($extension) ? null : $extension['exten'],
+			'configregistrar' => $line['registrar'],
+			'context' => $line['context'],
+			'provisioningid' => (int) $line['provisioning_code'],
+			'num' => $line['device_slot']
+		);
+	}
+
+	private function determine_line_name($line, $endpoint, $extension)
+	{
+		if($line['protocol'] == 'sip' and !is_null($endpoint)) {
+			return $endpoint['username'];
+		} else if ($line['protocol'] == 'sccp' and !is_null($extension)) {
+			return $extension['exten'];
+		} else if ($line['protocol'] == 'custom') {
+			return $endpoint['interface'];
+		}
+	}
+
+}
+
 ?>

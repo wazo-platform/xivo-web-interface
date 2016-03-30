@@ -26,8 +26,16 @@ dwho_file::required(array(XIVO_PATH_OBJECT,'application','service','ipbx','aster
 require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'converter', 'funckey', 'mapper.inc'));
 require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'converter', 'funckey', 'funckey.inc'));
 require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'converter', 'voicemail', 'mapper.inc'));
+require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'converter', 'line', 'shim.inc'));
+require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'converter', 'line', 'manager.inc'));
+require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'converter', 'line', 'mapper.inc'));
 require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'client.inc'));
 require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'user', 'user.inc'));
+require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'line', 'line.inc'));
+require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'extension', 'extension.inc'));
+require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'sip', 'sip.inc'));
+require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'sccp', 'sccp.inc'));
+require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'custom', 'custom.inc'));
 
 class xivo_application_service_asterisk_user extends xivo_application_asterisk_abstract
 {
@@ -61,6 +69,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 	protected $_vm_mapper = null;
 	protected $_voicemail = null;
 	protected $_confd_user = null;
+	protected $_line_manager = null;
 
 	public function __construct(&$service,&$dso,$param=null,$components=true)
 	{
@@ -155,7 +164,24 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		$this->_vm_mapper = new VoicemailMapper();
 
 		$client = Client::default_config();
-		$this->_confd_user = new UserResource($client);
+		$user_resource = new UserResource($client);
+		$this->_confd_user = $user_resource;
+
+		$context_dso = &$this->_service->get_module('context');
+
+		$client = Client::default_config(true);
+		$manager = new LineManager(
+			new LineResource($client),
+			new UserResource($client),
+			new SipResource($client),
+			new SccpResource($client),
+			new CustomResource($client),
+			new ExtensionResource($client),
+			new LineMapper(),
+			$context_dso
+		);
+
+		$this->_line_manager = new LineShim($manager);
 
 		return(true);
 	}
@@ -233,14 +259,15 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		$this->_info['linefeatures'] = false;
 		$this->_origin['linefeatures'] = false;
 
-		if(is_object($this->_linefeatures) === false
-		|| $this->_info['user_line'] === false
+		if($this->_info['user_line'] === false
 		|| count($this->_info['user_line']) === 0)
 			return(false);
 
-		$this->_info['linefeatures'] = array($this->_linefeatures->get($this->_info['user_line'][0]['line_id']));
-		$this->_origin['linefeatures'] = $this->_linefeatures->get_origin_list();
+		$line_id = $this->_info['user_line'][0]['line_id'];
+		$features = $this->_line_manager->get_linefeatures($line_id);
 
+		$this->_info['linefeatures'] = $features['info'];
+		$this->_origin['linefeatures'] = $features['origin'];
 		return($this->_info['linefeatures']);
 	}
 
@@ -460,7 +487,6 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		$r = array();
 
 		$r['userfeatures'] = $this->_userfeatures->get_element();
-		$r['linefeatures'] = $this->_linefeatures->get_element();
 		$r['dialaction'] = $this->_dialaction->get_element();
 
 		if(is_object($this->_queuemember) === true)
@@ -517,7 +543,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 				$r[$userfeatures['id']] = $this->_userfeatures->_prepare($userfeatures);
 				continue;
 			} else {
-				$main_line = $this->_linefeatures->get_user_masterline($userfeatures['id']);
+				$main_line = $this->_line_manager->get_user_masterline($userfeatures['id']);
 				$entity = dwho_array_startswith_key($ref,'entity.',true);
 				$r[$userfeatures['id']] = $this->_userfeatures->_prepare($userfeatures, $main_line);
 				$r[$userfeatures['id']]['entity'] = $this->_entity->_prepare($entity);
@@ -792,74 +818,29 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 
 	function set_linefeatures($arr)
 	{
-		if(is_array($arr) === false
-		|| $this->_linefeatures === false
-		|| ($userfeatures = $this->get_result('userfeatures')) === null)
-			return(false);
-
-		$reslist = $error = array();
-		$errnb = 0;
-
-		foreach($arr as $key => $list)
-		{
-			for($i = 0;$i < count($list);$i++)
-			{
-				if (isset($arr[$key][$i]) === false
-				|| $arr[$key][$i] === '')
-					$reslist[$i][$key] = '';
-				else
-					$reslist[$i][$key] = $arr[$key][$i];
+		if(is_array($arr)) {
+			$lines = array();
+			foreach($arr as $key => $values) {
+				array_pop($values);  # remove bogus empty value
+				foreach($values as $pos => $value) {
+					if(!array_key_exists($pos, $lines)) {
+						$lines[$pos] = array();
+					}
+					$lines[$pos][$key] = $value;
+				}
 			}
-		}
 
-		if(empty($reslist) === true)
-		{
-			$this->_set_result('linefeatures',false);
-			$this->_set_error('linefeatures','empty');
-			return(false);
-		}
-
-		array_pop($reslist);
-
-		if (empty($reslist) === true)
-			return(null);
-
-		for($i = 0;$i < count($reslist);$i++)
-		{
-			$ref = &$reslist[$i];
-
-			$ref['protocolid'] = 0;
-			if (isset($ref['id']) === true
-			&& (int) $ref['id'] !== 0)
-				$ref['id'] = (int) $ref['id'];
-
-			if($ref['protocol'] === XIVO_SRE_IPBX_AST_PROTO_SCCP)
-				$ref['name'] = $ref['number'];
-			elseif(dwho_has_len($ref, 'name') === false)
-				$ref['name'] = $this->gen_password(6,true);
-
-			$protocolname = $ref['protocol'];
-			$number = $ref['number'];
-
-			$ref['num'] = isset($ref['num']) ? (int) $ref['num'] : 1;
-			$ref['callerid'] = $this->_service->mk_callerid($userfeatures['callerid'],$number,$protocolname);
-
-			if($this->_linefeatures->chk_values($ref) === false)
-			{
-				$errnb++;
-				$error[$i] = $this->_linefeatures->get_filter_error();
+			if(empty($lines)) {
+				return null;
 			}
+
+			$this->_set_result('linefeatures', $lines);
+			return true;
 		}
 
-		$this->_set_result('linefeatures',$reslist);
-
-		if ($errnb >> 0)
-		{
-			$this->_set_errors('linefeatures',$error);
-			return(false);
-		}
-
-		return(true);
+		$this->_set_result('linefeatures', false);
+		$this->_set_error('linefeatures', 'empty');
+		return false;
 	}
 
 	function set_voicemail($form, $action)
@@ -1080,41 +1061,17 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		$rs['main_line'] = true;
 		$rs['main_user'] = true;
 
-		return(($this->_return['user_line'] = $this->_user_line->add($rs)));
+		$this->_return['user_line'] = $this->_user_line->add($rs);
+		$this->_line_manager->update_caller_id($user_id);
+		return $this->_return['user_line'];
 	}
 
 	function add_device_config($line_id)
 	{
-		if($this->_provddevice === false
-		|| ($rs = $this->get_result('linefeatures')) === null
-		|| $rs === false)
-			return(false);
-
-		$new_device = $rs[0];
-
-		// new device associated
-		if (empty($new_device['device']) === false)
-		{
-			$vm_number = (string) $this->get_result_var('voicemail', 'number');
-
-			if (($device = $this->_device->get($new_device['device'])) === false)
-			{
-				dwho_report::push('error', 'device doesn\'t exist');
-				return(false);
-			}
-			elseif($this->_provddevice->rebuild_device_config($new_device['device']) === false)
-			{
-				dwho_report::push('error', 'could not rebuild device config for device '.$new_device['device']);
-				return(false);
-			}
-			elseif ($new_device['protocol'] === XIVO_SRE_IPBX_AST_PROTO_SCCP
-			&& $this->_sccpdevice->init_device($device['device']['mac'],$new_device['name'],$vm_number) === false)
-			{
-				dwho_report::push('error', 'Can\'t initialize SCCP device');
-				return(false);
-			}
+		if(is_array($this->_return['line_device'])) {
+			return $this->_line_manager->add_device_config($this->_return['line_device']);
 		}
-		return(true);
+		return true;
 	}
 
 	function add_voicemail($user_id)
@@ -1293,8 +1250,9 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			$this->_func_key_manager->delete_template($this->_return['func_key_private_template_id']);
 		}
 
-		$this->_line->_status = 'add';
-		$this->_line->_reverse_add();
+		if(array_key_exists('linefeatures', $this->_return)) {
+			$this->_line_manager->reverse_add($this->_return['linefeatures']);
+		}
 
 		return(true);
 	}
@@ -1321,7 +1279,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 
 		if(($line = $this->get_result('linefeatures')) !== null
 		&& dwho_issa(0, $line) === true
-		&& ($existingline = $this->edit_linefeatures($user_id)) !== false)
+		&& ($this->edit_linefeatures($user_id)) !== false)
 		{
 			if(isset($this->_info['linefeatures'][0])
 			&& $this->_info['linefeatures'][0]['number'] !== '')
@@ -1353,8 +1311,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		&& $this->_info['linefeatures'] !== false)
 		{
 			if ($this->delete_linefeatures() === false
-			|| $this->delete_exten('exten') === false
-			|| $this->delete_device_config() === false)
+			|| $this->delete_exten('exten') === false)
 			{
 				$this->_reverse_edit();
 				$this->_status = '';
@@ -1401,151 +1358,30 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		$rs['main_line'] = true;
 		$rs['main_user'] = true;
 
-		return(($this->_return['user_line'] = $this->_user_line->edit_where($where, $rs)));
+		$this->_return['user_line'] = $this->_user_line->edit_where($where, $rs);
+
+		$this->_line_manager->update_caller_id($user_id);
+		return($this->_return['user_line']);
 	}
 
 	function edit_linefeatures($user_id)
 	{
-		if(($rs = $this->get_result('linefeatures')) === null
-		|| (($nbrs = count($rs)) === 0
-			&& $this->has_existing_line() === false))
-			return(null);
-
-		if(is_null($rs) === true)
-			$rs = array();
-
-		$res = array();
-		if (isset($this->_info['linefeatures']) === true
-		&& ($info = $this->_info['linefeatures']) !== false
-		&& ($nbinfo = count($info)) !== 0)
-		{
-			for($i = 0;$i < $nbinfo;$i++)
-			{
-				$ref = &$info[$i];
-				$res[$ref['id']] = $ref;
-			}
+		$lines = $this->get_result('linefeatures');
+		if($lines === false || count($lines) === 0) {
+			return null;
 		}
 
-		$return = $error = array();
-		$errnb = 0;
-		$linefeatures = array();
-		$linefeatures['list'] = $res;
-		$linefeatures['slt'] = dwho_array_intersect_key($rs,$linefeatures['list'],'id');
-		$linefeatures['info'] = false;
+		$result = $this->_line_manager->edit_linefeatures(
+			$user_id,
+			$lines,
+			$this->_status
+		);
 
-		if($linefeatures['slt'] !== false)
-		{
-			$linefeatures['info'] = dwho_array_copy_intersect_key($rs,$linefeatures['slt'],'id');
-			$linefeatures['list'] = dwho_array_diff_key($linefeatures['list'],$linefeatures['slt']);
+		if($result !== false) {
+			$this->_return = array_merge($this->_return, $result);
 		}
 
-		if(empty($linefeatures['list']) === false)
-		{
-			$nb = count($linefeatures['list']);
-			$linefeatures_list = array_values($linefeatures['list']);
-			for($i = 0;$i < $nb;$i++)
-			{
-				$ref = &$linefeatures_list[$i];
-				if (isset($ref['id']) === false)
-					continue;
-				if($this->_line->get($ref['id']) === false
-				|| $this->_line->delete() === false)
-				{
-					dwho_report::push('error','Can\'t remove line: '.$ref['id'],'linefeatures');
-					$this->_set_error('line',$this->_line->get_error());
-					return(false);
-				}
-			}
-		}
-
-		for($i = 0;$i < $nbrs;$i++)
-		{
-			$line = &$rs[$i];
-
-			$this->_line->_reset();
-			$protocolname = $line['protocol'];
-			$arr = array();
-
-			if (isset($line['id']) === true
-			&& (int) $line['id'] !== 0)
-			{
-				$methodset = 'set_edit';
-				$method = 'edit';
-
-				if (($existline = $this->_line->get($line['id'])) === false)
-				{
-					$errnb++;
-					$error[$i] = 'line_not_exist';
-					dwho_report::push('error',dwho_i18n::babelfish('Row '.($i+1).': line_not_exist'),'linefeatures');
-					continue;
-				}
-			}
-			else
-			{
-				$methodset = 'set_add';
-				$method = 'add';
-			}
-
-			$arr['linefeatures'] =  $this->get_result_var('linefeatures', 0);
-
-			$arr['user_id'] = $user_id;
-			$arr['protocol'] = array();
-
-			if ($protocolname === XIVO_SRE_IPBX_AST_PROTO_SIP)
-				$arr['protocol']['call-limit'] = (2 * (int) $this->get_result_var('userfeatures', 'simultcalls'));
-			$arr['protocol']['language'] = $this->get_result_var('userfeatures', 'language');
-			$arr['protocol']['name'] = $line['name'];
-			$arr['protocol']['context'] = $line['context'];
-
-			if($protocolname === XIVO_SRE_IPBX_AST_PROTO_CUSTOM)
-				$arr['protocol']['interface'] = $line['name'];
-			elseif($protocolname === XIVO_SRE_IPBX_AST_PROTO_SCCP)
-			{
-				$arr['protocol']['cid_name'] = str_replace('"','',$line['callerid']);
-				$arr['protocol']['cid_num'] = $line['number'];
-			}
-
-			if(($queue = $this->get_result('queue')) !== null
-			&& ($queue_select = $this->get_result('queue-select')) !== null)
-			{
-				$arr['queue'] = $queue;
-				$arr['queue-select'] = $queue_select;
-			}
-			if(($group = $this->get_result('group')) !== null
-			&& ($group_select = $this->get_result('group-select')) !== null)
-			{
-				$arr['group'] = $group;
-				$arr['group-select'] = $group_select;
-			}
-
-			if (isset($line['id'])) {
-				$actual_line = $this->_line->get($line['id']);
-				$arr['options'] = $actual_line['options'];
-			}
-
-			if($this->_line->$methodset($arr,$protocolname) === false
-			|| ($line_id = $this->_line->$method()) === false)
-			{
-				$errnb++;
-				$error[$i] = $this->_line->get_error();
-				$msgkey = array_shift(array_keys($this->_line->get_error()));
-				$msg = array_shift($this->_line->get_error());
-				if (empty($msgkey) === false)
-					dwho_report::push('error','Line '.($i+1).': '.$msgkey.' '.$msg,'linefeatures');
-				else
-					dwho_report::push('error','Line '.($i+1).': unknow error during '.$method,'linefeatures');
-			}
-			$line['id'] = $line_id;
-			$return[$i] = $line;
-		}
-
-		if ($errnb >> 0)
-		{
-			$this->_set_error('linefeatures',$error);
-			return(false);
-		}
-
-		return(($this->_return['linefeatures'] = $return));
+		return $this->_return['linefeatures'];
 	}
 
 	function edit_rightcall()
@@ -1645,82 +1481,9 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 
 	function edit_device_config()
 	{
-		if(dwho_issa('linefeatures',$this->_info) === false
-		|| ($rs = $this->get_result('linefeatures')) === null
-		|| $rs === false)
-			return(false);
-
-		$vm_number = (string) $this->get_result_var('voicemail', 'number');
-
-		$existing_device = $this->_info['linefeatures'][0];
-		$new_device = $rs[0];
-
-		// Device change, update it.
-		if ($existing_device['device'] !== $new_device['device'])
-		{
-			// Delete the old device associated.
-			if (empty($existing_device['device']) === false)
-			{
-				if (($device = $this->_device->get($existing_device['device'],null,true)) === false)
-				{
-					dwho_report::push('error', 'device doesn\'t exist: '.$existing_device['device']);
-					return(false);
-				}
-				elseif ($this->_provddevice->rebuild_device_config($existing_device['device']) === false)
-				{
-					dwho_report::push('error', 'could not rebuild device config for device '.$existing_device['device']);
-					return(false);
-				}
-				elseif ($existing_device['protocol'] === XIVO_SRE_IPBX_AST_PROTO_SCCP
-				&& $this->_sccpdevice->init_device($device['device']['mac'],'') === false)
-				{
-					dwho_report::push('error', 'Can\'t initialize SCCP device');
-					return(false);
-				}
-			}
-			// Add the new device associated.
-			if (empty($new_device['device']) === false)
-			{
-				if (($device = $this->_device->get($new_device['device'])) === false)
-				{
-					dwho_report::push('error', 'device doesn\'t exist: '.$new_device['device']);
-					return(false);
-				}
-				elseif ($this->_provddevice->rebuild_device_config($new_device['device']) === false)
-				{
-					dwho_report::push('error', 'could not rebuild device config for device '.$new_device['device']);
-					return(false);
-				}
-				elseif ($new_device['protocol'] === XIVO_SRE_IPBX_AST_PROTO_SCCP
-				&& $this->_sccpdevice->init_device($device['device']['mac'],$new_device['number'],$vm_number) === false)
-				{
-					dwho_report::push('error', 'Can\'t initialize SCCP device');
-					return(false);
-				}
-			}
+		if(is_array($this->_return['line_device'])) {
+			return $this->_line_manager->edit_device_config($this->_return['line_device']);
 		}
-		// Device has not changed, just update.
-		elseif (empty($new_device['device']) === false
-		&& empty($existing_device['device']) === false)
-		{
-			if (($device = $this->_device->get($existing_device['device'])) === false)
-			{
-				dwho_report::push('error', 'device doesn\'t exist: '.$existing_device['device']);
-				return(false);
-			}
-			elseif ($this->_provddevice->rebuild_device_config($existing_device['device']) === false)
-			{
-				dwho_report::push('error', 'could not rebuild device config for device '.$existing_device['device']);
-				return(false);
-			}
-			elseif ($new_device['protocol'] === XIVO_SRE_IPBX_AST_PROTO_SCCP
-			&& $this->_sccpdevice->init_device($device['device']['mac'],$new_device['number'],$vm_number) === false)
-			{
-				dwho_report::push('error', 'Can\'t initialize SCCP device');
-				return(false);
-			}
-		}
-
 		return(true);
 	}
 
@@ -1852,8 +1615,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			}
 		}
 
-		$this->_line->_status = 'edit';
-		$this->_line->_reverse_edit();
+		$this->_line_manager->reverse_edit();
 
 		return(true);
 	}
@@ -1871,7 +1633,6 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		|| $this->delete_userfeatures() === false
 		|| $this->delete_linefeatures() === false
 		|| $this->delete_exten('exten') === false
-		|| $this->delete_device_config() === false
 		|| $this->delete_rightcall() === false
 		|| $this->delete_dialaction() === false
 		|| $this->delete_callfiltermember() === false
@@ -1935,38 +1696,10 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		if(dwho_issa('linefeatures',$this->_info) === false)
 			return(null);
 
-		$r = true;
-		foreach($this->_info['linefeatures'] as $line)
-		{
-			if($this->_line->get($line['id']) === false
-			|| $this->_line->delete() === false)
-			{
-				$r = false;
-				$identity = $this->_info['userfeatures']['identity'];
-				dwho_report::push('error','Can\'t remove line (id #'.$line['id'].') for user "'.$identity.'"', 'lines');
-			}
-		}
+		$result = $this->_line_manager->delete_linefeatures($this->_info['linefeatures']);
 
 		if($this->_status === 'delete')
-			$this->_return['linefeatures'] = $r;
-
-		return($r);
-	}
-
-	function delete_device_config()
-	{
-		if(dwho_issa('linefeatures',$this->_info) === false)
-			return(null);
-		// remove device if associated
-		elseif(($device = $this->_device->get($this->_info['linefeatures'][0]['device'],null,true)) === false)
-			return(true);
-		elseif($this->_provddevice->rebuild_device_config($this->_info['linefeatures'][0]['device']) === false)
-			return(false);
-		elseif ($this->_info['linefeatures'][0]['protocol'] === XIVO_SRE_IPBX_AST_PROTO_SCCP
-		&& $this->_sccpdevice->init_device($device['device']['mac'],'') === false)
-			return(false);
-
-		return(true);
+			$this->_return['linefeatures'] = $result;
 	}
 
 	function delete_phonefunckey()
