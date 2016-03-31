@@ -20,7 +20,7 @@
 
 class xivo_service_asterisk_userfeatures_identity
 {
-	function _prepare_identity(&$data,$full=true,$main_line=null)
+	function _prepare_identity(&$data,$full=true,$summary=null)
 	{
 		$data['fullname'] = trim(trim($data['firstname']).' '.trim($data['lastname']));
 
@@ -29,13 +29,13 @@ class xivo_service_asterisk_userfeatures_identity
 
 		$data['identity'] = $data['fullname'];
 
-		if((bool) $full === true && is_array($main_line)) {
-			if((string)$main_line['number'] !== "") {
+		if((bool) $full === true && is_array($summary)) {
+			if($summary['extension'] !== "") {
 				$data['identity'] .=
 					" ("
-					. $main_line['number']
+					. $summary['extension']
 					. "@"
-					. $main_line['context']
+					. $summary['context']
 					. ")";
 			}
 		}

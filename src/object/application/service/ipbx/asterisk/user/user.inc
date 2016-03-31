@@ -532,6 +532,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			return(false);
 
 		$r = array();
+		$summaries = $this->get_summaries($search, $order, $limit);
 
 		for($i = 0;$i < $nb;$i++)
 		{
@@ -543,11 +544,11 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 				$r[$userfeatures['id']] = $this->_userfeatures->_prepare($userfeatures);
 				continue;
 			} else {
-				$main_line = $this->_linefeatures->get_user_masterline($userfeatures['id']);
+				$summary = $summaries[$userfeatures['id']];
 				$entity = dwho_array_startswith_key($ref,'entity.',true);
-				$r[$userfeatures['id']] = $this->_userfeatures->_prepare($userfeatures, $main_line);
+				$r[$userfeatures['id']] = $this->_userfeatures->_prepare($userfeatures, $summary);
 				$r[$userfeatures['id']]['entity'] = $this->_entity->_prepare($entity);
-				$r[$userfeatures['id']]['masterline'] = $main_line;
+				$r[$userfeatures['id']]['masterline'] = $this->map_line_from_summary($summary);
 			}
 		}
 
@@ -557,6 +558,33 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			return(array_values($r));
 
 		return($r);
+	}
+
+	private function get_summaries($search, $order, $limit) {
+		if($this->_components === false) {
+			return array();
+		}
+
+		$response = $this->_confd_user->search(array('view' => 'summary'));
+		if($response === false) {
+			return array();
+		}
+
+		$summaries = array();
+		foreach($response['items'] as $summary) {
+			$summaries[$summary['id']] = $summary;
+		}
+
+		return $summaries;
+	}
+
+	private function map_line_from_summary($summary) {
+		return array(
+			'number' => $summary['extension'],
+			'context' => $summary['context'],
+			'provisioningid' => $summary['provisioning_code'],
+			'protocol' => $summary['protocol']
+		);
 	}
 
 	function get_dialaction_result()
