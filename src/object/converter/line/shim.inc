@@ -27,16 +27,6 @@ class LineShim {
 		$this->manager = $manager;
 	}
 
-	public function get_user_masterline($user_id)
-	{
-		try {
-			return $this->manager->get_main_line($user_id);
-		} catch (ClientException $e) {
-			$e->report_errors();
-			return false;
-		}
-	}
-
 	public function edit_linefeatures($user_id, $lines, $action)
 	{
 		try {
