@@ -58,19 +58,20 @@ class MockConfd(object):
         response.raise_for_status()
         return response.json()['responses']
 
-    def add_response(self, path, body='', method='GET', code=200, preserve=False):
+    def add_response(self, path, body='', method='GET', code=200, query=None, preserve=False):
         url = "{}/_responses".format(self.base_url)
         data = {'path': r"^{}$".format(path),
                 'body': body,
                 'method': method,
                 'code': code,
+                'query': query,
                 'preserve': preserve}
         response = requests.post(url, data=json.dumps(data))
         response.raise_for_status()
 
-    def add_json_response(self, path, body=None, method='GET', code=200, preserve=False):
+    def add_json_response(self, path, body=None, method='GET', code=200, query=None, preserve=False):
         body = body or {}
-        self.add_response(path, json.dumps(body), method, code, preserve)
+        self.add_response(path, json.dumps(body), method, code, query, preserve)
 
     def assert_request_sent(self, url, method='GET', query=None, body=None):
         request = self.request_matching(url, method)
