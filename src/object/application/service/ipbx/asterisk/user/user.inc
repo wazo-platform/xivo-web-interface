@@ -543,7 +543,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 				$r[$userfeatures['id']] = $this->_userfeatures->_prepare($userfeatures);
 				continue;
 			} else {
-				$main_line = $this->_line_manager->get_user_masterline($userfeatures['id']);
+				$main_line = $this->_linefeatures->get_user_masterline($userfeatures['id']);
 				$entity = dwho_array_startswith_key($ref,'entity.',true);
 				$r[$userfeatures['id']] = $this->_userfeatures->_prepare($userfeatures, $main_line);
 				$r[$userfeatures['id']]['entity'] = $this->_entity->_prepare($entity);
