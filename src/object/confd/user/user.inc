@@ -27,6 +27,13 @@ class UserResource {
 		$this->client = $client;
 	}
 
+	public function search($query=null) {
+		$request = Request::json_get("/users", "", $query);
+		$response = $this->client->send($request);
+		$content = $response->decode_or_raise();
+		return $content === null ? false : $content;
+	}
+
 	public function update($user)
 	{
 		$request = Request::json_put("/users/" . $user['id'], $user);

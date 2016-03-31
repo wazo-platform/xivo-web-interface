@@ -20,6 +20,7 @@ import random
 import hashlib
 import string
 import unittest
+import uuid
 
 from lib.testcase import TestWebi
 
@@ -46,6 +47,11 @@ class TestUser(TestWebi):
         self.browser.login()
         with self.db.queries() as q:
             q.add_context("internal", "1000", "9999")
+        self.confd.add_json_response(r"/users",
+                                     {'total': 0,
+                                      'items': []},
+                                     query={'view': 'directory'},
+                                     preserve=True)
 
     def build_device(self, **kwargs):
         device_id = hashlib.md5(str(random.random())).hexdigest()
@@ -100,6 +106,22 @@ class TestUser(TestWebi):
 
         self.associate_resources(user_id, line['id'], extension['id'], "sip", sip['id'], device)
 
+        self.confd.add_json_response("/users",
+                                     {'total': 1,
+                                      'items': [{
+                                          'id': user_id,
+                                          'uuid': str(uuid.uuid4()),
+                                          'firstname': firstname,
+                                          'lastname': None,
+                                          'provisioning_code': line['provisioning_code'],
+                                          'extension': exten,
+                                          'context': line['context'],
+                                          'protocol': 'sip',
+                                          'enabled': True}]
+                                      },
+                                     query={'view': 'summary'},
+                                     preserve=True)
+
         line['user_id'] = user_id
         line['extension_id'] = extension['id']
         line['endpoint_id'] = sip['id']
@@ -114,6 +136,22 @@ class TestUser(TestWebi):
 
         self.associate_resources(user_id, line['id'], extension['id'], "sccp", sccp['id'], device)
 
+        self.confd.add_json_response("/users",
+                                     {'total': 1,
+                                      'items': [{
+                                          'id': user_id,
+                                          'uuid': str(uuid.uuid4()),
+                                          'firstname': firstname,
+                                          'lastname': None,
+                                          'provisioning_code': None,
+                                          'extension': exten,
+                                          'context': line['context'],
+                                          'protocol': 'sccp',
+                                          'enabled': True}]
+                                      },
+                                     query={'view': 'summary'},
+                                     preserve=True)
+
         line['user_id'] = user_id
         line['extension_id'] = extension['id']
         line['endpoint_id'] = sccp['id']
@@ -127,6 +165,22 @@ class TestUser(TestWebi):
         custom = self.add_custom()
 
         self.associate_resources(user_id, line['id'], extension['id'], "custom", custom['id'], device)
+
+        self.confd.add_json_response("/users",
+                                     {'total': 1,
+                                      'items': [{
+                                          'id': user_id,
+                                          'uuid': str(uuid.uuid4()),
+                                          'firstname': firstname,
+                                          'lastname': None,
+                                          'provisioning_code': None,
+                                          'extension': exten,
+                                          'context': line['context'],
+                                          'protocol': 'custom',
+                                          'enabled': True}]
+                                      },
+                                     query={'view': 'summary'},
+                                     preserve=True)
 
         line['user_id'] = user_id
         line['extension_id'] = extension['id']

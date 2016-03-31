@@ -40,29 +40,6 @@ class LineManager
 		$this->context_dso = $context_dso;
 	}
 
-	public function get_main_line($user_id)
-	{
-		$userlines = $this->user->list_line_associations($user_id);
-		foreach($userlines as $userline) {
-			if ($userline['main_line'] == true) {
-				$line = $this->line->get($userline['line_id']);
-				return $this->get_legacy_line($line);
-			}
-		}
-		return null;
-	}
-
-	private function entity_allowed($line)
-	{
-		if(defined('ENTITY_FILTER_CONTEXTS')) {
-			$contexts = explode(',', ENTITY_FILTER_CONTEXTS);
-			if(!in_array($line['context'], $contexts)) {
-				return false;
-			}
-		}
-		return true;
-	}
-
 	public function create($user_id, $lines)
 	{
 		$created_lines = array();

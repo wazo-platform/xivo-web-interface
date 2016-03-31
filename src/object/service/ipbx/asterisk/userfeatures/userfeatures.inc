@@ -43,9 +43,9 @@ class xivo_service_asterisk_userfeatures extends xivo_service_asterisk_abstract
 		$this->_identity = &$this->_sre->get_identity($this->_name);
 	}
 
-	function _prepare($data, $main_line=null)
+	function _prepare($data, $summary=null)
 	{
-		$this->_identity->_prepare_identity($data, true, $main_line);
+		$this->_identity->_prepare_identity($data, true, $summary);
 
 		$data['id'] = (int) $data['id'];
 		$data['entityid'] = (int) $data['entityid'];
