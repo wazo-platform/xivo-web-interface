@@ -54,12 +54,6 @@ $array['queueskillrule']['ipbx'] = array('module reload app_queue.so');
 $array['cti*'] = array();
 $array['cti*']['ctibus'] = array('xivo[cticonfig,update]');
 
-$array['ctidirectories'] = array();
-$array['ctidirectories']['dird'] = array('update-config');
-
-$array['ctireversedirectories'] = array();
-$array['ctireversedirectories']['dird'] = array('update-config');
-
 $array['callfilter'] = array();
 $array['callfilter']['ipbx'] = array('dialplan reload');
 
@@ -95,10 +89,6 @@ $array['extensions']['ipbx'] = array('dialplan reload', 'module reload features'
 
 $array['musiconhold'] = array();
 $array['musiconhold']['ipbx'] = array('moh reload');
-
-$array['phonebook'] = array();
-$array['phonebook']['dird'] = array('update-phonebook');
-$array['phonebook']['ctibus'] = array('xivo[phonebook,%s,%s]');
 
 $array['sccp*'] = array();
 $array['sccp*']['ipbx'] = array('module reload chan_sccp.so');

@@ -516,8 +516,6 @@ abstract class xivo_libdatastorage_abstract extends xivo_libconfig_abstract
 			$cmds['ipbx'] = array();
 		if (!isset($cmds['ctibus']))
 			$cmds['ctibus'] = array();
-		if (!isset($cmds['dird']))
-			$cmds['dird'] = array();
 		if (!isset($cmds['agentbus']))
 			$cmds['agentbus'] = array();
 		if (!isset($cmds['update_keys']))
