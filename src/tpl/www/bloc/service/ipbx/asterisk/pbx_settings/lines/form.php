@@ -29,6 +29,9 @@ $context_list = $this->get_var('context_list');
 $ipbxinfos = $this->get_var('info','ipbx');
 
 $sip_options = $this->get_var('info', 'options');
+if (empty($sip_options)) {
+	$sip_options = array();
+}
 
 $allow = array();
 if(isset($info['protocol'])):
