@@ -33,32 +33,14 @@ class LinePage(Page):
             name = 'protocol[{}]'.format(key)
             self.fill(By.NAME, name, value)
 
-    def signaling_tab(self):
-        link = self.driver.find_element_by_css_selector("a[href='#signalling']")
-        link.click()
-        self.wait_visible(By.ID, 'sb-part-signalling')
-        return self
-
-    def t38_tab(self):
-        link = self.driver.find_element_by_css_selector("a[href='#t38']")
-        link.click()
-        self.wait_visible(By.ID, 'sb-part-t38')
-        return self
-
     def advanced_tab(self):
         link = self.driver.find_element_by_css_selector("a[href='#advanced']")
         link.click()
         self.wait_visible(By.ID, 'sb-part-advanced')
-        return self
-
-    def options_tab(self):
-        link = self.driver.find_element_by_css_selector("a[href='#sip-options']")
-        link.click()
-        self.wait_visible(By.ID, 'sb-part-sip-options')
-        return OptionTab(self.driver)
+        return AdvancedTab(self.driver)
 
 
-class OptionTab(Page):
+class AdvancedTab(Page):
 
     def add_options(self, options):
         for name, value in options:
@@ -82,7 +64,7 @@ class OptionTab(Page):
         rows = self.driver.find_elements_by_css_selector(selector)
         return len(rows)
 
-    def clear(self):
+    def clear_options(self):
         for i in range(self.count_option_rows()):
             self.remove_option()
 

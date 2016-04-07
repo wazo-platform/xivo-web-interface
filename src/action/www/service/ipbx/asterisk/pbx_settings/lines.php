@@ -96,7 +96,6 @@ switch($act)
 		$dhtml = &$_TPL->get_module('dhtml');
 		$dhtml->set_js('js/dwho/submenu.js');
 		$dhtml->set_js('js/utils/codeclist.js');
-		$dhtml->set_js('js/service/ipbx/'.$ipbx->get_name().'/lines.js');
 		$dhtml->load_js_multiselect_files();
 		break;
 	case 'edit':
@@ -159,7 +158,6 @@ switch($act)
 		$dhtml = &$_TPL->get_module('dhtml');
 		$dhtml->set_js('js/dwho/submenu.js');
 		$dhtml->set_js('js/utils/codeclist.js');
-		$dhtml->set_js('js/service/ipbx/'.$ipbx->get_name().'/lines.js');
 		$dhtml->load_js_multiselect_files();
 		break;
 	case 'delete':

@@ -63,8 +63,8 @@ class TestLineCreate(TestLine):
                    ["spam", "eggs"]]
 
         line_page = self.browser.lines.add_sip()
-        options_tab = line_page.options_tab()
-        options_tab.add_options(options)
+        advanced_tab = line_page.advanced_tab()
+        advanced_tab.add_options(options)
         line_page.save()
 
         request = self.confd.request_matching(r"/endpoints/sip/\d+", method="PUT")
@@ -94,8 +94,8 @@ class TestLineEdit(TestLine):
         self.prepare_sip_response()
 
         line_page = self.browser.lines.edit("addoptions")
-        options_tab = line_page.options_tab()
-        options_tab.add_options(options)
+        advanced_tab = line_page.advanced_tab()
+        advanced_tab.add_options(options)
         line_page.save()
 
         request = self.confd.request_matching(r"/endpoints/sip/\d+", method="PUT")
@@ -119,9 +119,9 @@ class TestLineEdit(TestLine):
         self.prepare_sip_response(options=old_options)
 
         line_page = self.browser.lines.edit("changeoptions")
-        options_tab = line_page.options_tab()
-        options_tab.clear()
-        options_tab.add_options(new_options)
+        advanced_tab = line_page.advanced_tab()
+        advanced_tab.clear_options()
+        advanced_tab.add_options(new_options)
         line_page.save()
 
         request = self.confd.request_matching(r"/endpoints/sip/\d+", method="PUT")
@@ -141,8 +141,8 @@ class TestLineEdit(TestLine):
         self.prepare_sip_response(options=options)
 
         line_page = self.browser.lines.edit("rmoptions")
-        options_tab = line_page.options_tab()
-        options_tab.clear()
+        advanced_tab = line_page.advanced_tab()
+        advanced_tab.clear_options()
         line_page.save()
 
         request = self.confd.request_matching(r"/endpoints/sip/\d+", method="PUT")
