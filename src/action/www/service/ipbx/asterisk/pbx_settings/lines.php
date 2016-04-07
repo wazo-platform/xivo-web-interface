@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -25,7 +25,6 @@ $act     = isset($_QR['act']) === true ? $_QR['act'] : '';
 $page    = dwho_uint($prefs->get('page', 1));
 $search  = strval($prefs->get('search', ''));
 $context = strval($prefs->get('context', ''));
-$free 	 = strval($prefs->get('free', ''));
 $sort    = $prefs->flipflop('sort', 'name');
 
 $param = array();
@@ -35,8 +34,6 @@ if($search !== '')
 	$param['search'] = $search;
 else if($context !== '')
 	$param['context'] = $context;
-else if($free !== '')
-	$param['free'] = $free;
 
 switch($act)
 {
@@ -237,8 +234,6 @@ switch($act)
 		$limit[1] = $nbbypage;
 
 		$where = array();
-		if (dwho_has_len($free))
-			$where['free'] = $free;
 		if (dwho_has_len($context))
 			$where['context'] = $context;
 
@@ -259,12 +254,10 @@ switch($act)
 		$_TPL->set_var('list',$list);
 		$_TPL->set_var('search',$search);
 		$_TPL->set_var('context',$context);
-		$_TPL->set_var('free',$free);
 		$_TPL->set_var('sort',$sort);
 }
 
 $_TPL->set_var('act',$act);
-$_TPL->set_var('frees',array(1 => 'yes',0 => 'no'));
 $_TPL->set_var('contexts',$appline->get_context_list(null,null,null,true,'internal'));
 
 $menu = &$_TPL->get_module('menu');

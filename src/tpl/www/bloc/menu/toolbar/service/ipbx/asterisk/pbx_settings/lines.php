@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -26,7 +26,6 @@ $act = $this->get_var('act');
 
 $search = (string) $this->get_var('search');
 $context = (string) $this->get_var('context');
-$free = (string) $this->get_var('free');
 
 $toolbar_js = array();
 $toolbar_js[] = 'var xivo_toolbar_fm_search = \''.$dhtml->escape($search).'\';';
@@ -72,15 +71,7 @@ $contexts = $this->get_var('contexts');
 					    'empty'	=> $this->bbf('toolbar_fm_context'),
 					    'selected'	=> $context),
 				      dwho_array_same_key_val($contexts, 'name'),
-				      'style="margin-left: 20px;"'),
-
-			$form->select(array('name'	=> 'free',
-					    'id'		=> 'it-toolbar-free',
-					    'paragraph'	=> false,
-					    'empty'		=> $this->bbf('toolbar_fm_free'),
-					    'selected'	=> $free),
-				      $this->get_var('frees'),
-				      'style="margin-left: 10px;"');
+				      'style="margin-left: 20px;"');
 ?>
 	</div>
 </form><?php
@@ -170,15 +161,6 @@ dwho.dom.set_onload(function()
 			   {
 				if(xivo_toolbar_fm_search === ''
 				&& dwho_has_len(dwho.form.text_helper['it-toolbar-search']) === false)
-					this.form['search'].value = '';
-				this.form.submit();
-			   });
-	dwho.dom.add_event('change',
-			   dwho_eid('it-toolbar-free'),
-			   function(e)
-			   {
-				if(xivo_toolbar_fm_search === ''
-				&& dwho_has_len(dwho.form.text_helper['it-toolbar-free']) === false)
 					this.form['search'].value = '';
 				this.form.submit();
 			   });

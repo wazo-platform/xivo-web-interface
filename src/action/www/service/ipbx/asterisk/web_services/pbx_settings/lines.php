@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -112,9 +112,6 @@ switch($act)
 		if (($protocols = $_QRY->get('protocol')) !== null)
 			$where['protocols'] = array($protocols);
 
-		if (($free = $_QRY->get('free')) !== null)
-			$where['free'] = ((bool) $free);
-
 		if(($list = $appline->get_lines_search($_QRY->get('search'),$where)) === false)
 		{
 			$http_response->set_status_line(204);
@@ -133,9 +130,6 @@ switch($act)
 
 		if (($protocols = $_QRY->get('protocol')) !== null)
 			$where['protocols'] = array($protocols);
-
-		if (($free = $_QRY->get('free')) !== null)
-			$where['free'] = ((bool) $free);
 
 		if(($list = $appline->get_lines_list($where)) === false)
 		{
