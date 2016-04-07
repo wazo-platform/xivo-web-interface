@@ -69,12 +69,6 @@ def setup_docker(asset):
         start_docker(asset)
 
 
-def stop_docker(asset):
-    path = os.path.join(ASSET_PATH, asset)
-    os.chdir(path)
-    run_cmd(('docker-compose', 'kill'))
-
-
 def cleanup_docker(asset):
     if os.environ.get('DOCKER', '1') == '1':
         path = os.path.join(ASSET_PATH, asset)
