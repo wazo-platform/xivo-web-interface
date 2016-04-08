@@ -1399,7 +1399,6 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		}
 
 		$result = $this->_line_manager->edit_linefeatures(
-			$user_id,
 			$lines,
 			$this->_status
 		);

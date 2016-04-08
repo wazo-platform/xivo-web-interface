@@ -27,14 +27,14 @@ class LineShim {
 		$this->manager = $manager;
 	}
 
-	public function edit_linefeatures($user_id, $lines, $action)
+	public function edit_linefeatures($lines, $action)
 	{
 		try {
 			$action = $this->determine_action($action, $lines);
 			if($action == "add") {
-				return $this->manager->create($user_id, $lines);
+				return $this->manager->create($lines);
 			} else {
-				return $this->manager->update($user_id, $lines);
+				return $this->manager->update($lines);
 			}
 		} catch (ClientException $e) {
 			$e->report_errors();

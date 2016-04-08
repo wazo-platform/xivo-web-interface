@@ -40,13 +40,13 @@ class LineManager
 		$this->context_dso = $context_dso;
 	}
 
-	public function create($user_id, $lines)
+	public function create($lines)
 	{
 		$created_lines = array();
 		$line_devices = array();
 
 		foreach($lines as $form) {
-			$created_line = $this->create_line($user_id, $form);
+			$created_line = $this->create_line($form);
 			$created_lines[] = $created_line;
 
 			if($form['device'] !== '') {
@@ -63,13 +63,13 @@ class LineManager
 		);
 	}
 
-	public function update($user_id, $lines)
+	public function update($lines)
 	{
 		$updated_lines = array();
 		$line_devices = array();
 
 		foreach($lines as $form) {
-			$updated_line = $this->update_line($user_id, $form);
+			$updated_line = $this->update_line($form);
 			$updated_lines[] = $updated_line;
 
 			$line_devices[] = array(
@@ -84,7 +84,7 @@ class LineManager
 		);
 	}
 
-	private function create_line($user_id, $form) {
+	private function create_line($form) {
 		$protocol = $form['protocol'];
 
 		$mapped_line = $this->mapper->map_form($form);
@@ -95,7 +95,7 @@ class LineManager
 		return $this->mapper->map_line($line, $endpoint);
 	}
 
-	private function update_line($user_id, $form) {
+	private function update_line($form) {
 		$protocol = $form['protocol'];
 
 		$line_id = $form['id'];
