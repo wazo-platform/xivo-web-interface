@@ -116,8 +116,6 @@ function lnkdroprow(obj)
     $(obj).parents('tr').fadeTo(400, 0, function () {
         $(this).remove();
     });
-
-    setTimeout(update_row_infos, 420);
 }
 
 function get_entityid_val()
