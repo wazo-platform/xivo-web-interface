@@ -52,7 +52,6 @@ class Publisher {
 	private $password = null;
 	private $exchange_name = null;
 	private $exchange_type = 'topic';
-	private $msg_params = array('content_type' => 'application/json');
 
 	function __construct($host, $port, $username, $password, $exchange_name) {
 		$this->host = $host;
@@ -78,11 +77,10 @@ class Publisher {
 		return new Publisher($host, $port, $username, $password, $exchange_name);
 	}
 
-	function publish($body) {
+	function publish($msg) {
 		$connection = new AMQPConnection($this->host, $this->port, $this->username, $this->password);
 		$channel = $connection->channel();
 
-		$msg = new AMQPMessage($body, $this->msg_params);
 		$channel->exchange_declare($this->exchange_name, $this->exchange_type, false, true, false);
 		$channel->basic_publish($msg, $this->exchange_name);
 
@@ -94,13 +92,25 @@ class Publisher {
 
 class MessageFactory {
 
-	static function new_user_line_associated_msg($user_id, $line_id) {
-		return json_encode(array('name' => 'line_associated',
-                                 'origin_uuid' => getenv('XIVO_UUID'),
-                                 'data' => array('user_id' => $user_id,
-                                                 'line_id' => $line_id,
-                                                 'main_line' => true,
-                                                 'main_user' => true)));
+	private $xivo_uuid = null;
+	private $msg_params = null;
+
+	function __construct() {
+		$this->xivo_uuid = getenv('XIVO_UUID');
+		$this->msg_params = array('content_type' => 'application/json');
+	}
+
+	function new_user_line_associated_msg($user_id, $line_id) {
+		$body = json_encode(array(
+			'name' => 'line_associated',
+			'origin_uuid' => $this->xivo_uuid,
+			'data' => array(
+				'user_id' => $user_id,
+				'line_id' => $line_id,
+				'main_line' => true,
+				'main_user' => true)));
+
+		return new AMQPMessage($body, $this->msg_params);
 	}
 
 }
