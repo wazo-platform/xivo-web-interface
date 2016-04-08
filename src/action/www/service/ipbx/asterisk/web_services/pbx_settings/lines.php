@@ -38,69 +38,6 @@ switch($act)
 
 		$_TPL->set_var('info',$info);
 		break;
-	case 'add':
-		$appline = &$ipbx->get_application('line');
-
-		if($appline->add_from_json() === true)
-			$status = 200;
-		else
-			$status = 400;
-
-		dwho_error_log($appline->get_error(), $status);
-
-		$http_response->set_status_line($status);
-		$http_response->send(true);
-		break;
-	case 'edit':
-		$appline = &$ipbx->get_application('line');
-
-		if(($line = $appline->get($_QRY->get('id'))) === false)
-			$status = 404;
-		else if($appline->edit_from_json($line) === true)
-			$status = 200;
-		else
-			$status = 400;
-
-		dwho_error_log($appline->get_error(), $status);
-
-		$http_response->set_status_line($status);
-		$http_response->send(true);
-		break;
-	case 'delete':
-		$appline = &$ipbx->get_application('line');
-
-		if($appline->get($_QRY->get('id')) === false)
-			$status = 404;
-		else if($appline->delete() === true)
-			$status = 200;
-		else
-			$status = 500;
-
-		dwho_error_log($appline->get_error(), $status);
-
-		$http_response->set_status_line($status);
-		$http_response->send(true);
-		break;
-	case 'deleteall':
-		$appline = &$ipbx->get_application('line');
-
-		if(($list = $appline->get_lines_list()) === false
-		|| ($nb = count($list)) === 0)
-		{
-			$http_response->set_status_line(204);
-			$http_response->send(true);
-		}
-		for ($i=0; $i<$nb; $i++)
-		{
-			$ref = &$list[$i];
-			$appline->get($ref['id']);
-			$appline->delete();
-		}
-		$status = 200;
-
-		$http_response->set_status_line($status);
-		$http_response->send(true);
-		break;
 	case 'search':
 		$appline = &$ipbx->get_application('line',null,false);
 
