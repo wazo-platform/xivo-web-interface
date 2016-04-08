@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2015  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,6 +17,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
+
+require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'bus','publisher.inc'));
 
 class dwho_session
 {
@@ -36,6 +38,7 @@ class dwho_session
 					trigger_error('Failed to load Session Datastorage',E_USER_ERROR);
 
 				$this->_dso = new $name($dso);
+				$this->_publisher = Publisher::default_config();
 
 				session_module_name('user');
 				session_set_save_handler(
@@ -46,6 +49,7 @@ class dwho_session
 						array($this->_dso,'destroy'),
 						array($this->_dso,'gc'));
 
+				register_shutdown_function(array(&$this->_publisher, 'flush'));
 				register_shutdown_function(array(&$this->_dso,'write_close'));
 			}
 			else

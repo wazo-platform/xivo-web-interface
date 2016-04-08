@@ -37,12 +37,40 @@ spl_autoload_register(function ($class) {
     $file = $base_dir . str_replace('\\', '/', $relative_class) . '.php';
     // if the file exists, require it
     if (file_exists($file)) {
-        require $file;
+        require_once($file);
     }
 });
 
 use PhpAmqpLib\Connection\AMQPConnection;
 use PhpAmqpLib\Message\AMQPMessage;
+
+class MessageQueue {
+
+	private $key = 'bus_msg_to_send';
+
+	function add_msg($msg) {
+		if (!isset($_SESSION[$this->key])) {
+			$_SESSION[$this->key] = array();
+		}
+
+		array_push($_SESSION[$this->key], $msg);
+	}
+
+	function get_messages() {
+		if (!isset($_SESSION[$this->key])) {
+			return array();
+		}
+
+		return $_SESSION[$this->key];
+	}
+
+	function clear() {
+		if (isset($_SESSION[$this->key])) {
+			unset($_SESSION[$this->key]);
+		}
+	}
+
+}
 
 class Publisher {
 
@@ -77,18 +105,25 @@ class Publisher {
 		return new Publisher($host, $port, $username, $password, $exchange_name);
 	}
 
-	function publish($msg) {
+	function publish_messages($messages) {
 		$connection = new AMQPConnection($this->host, $this->port, $this->username, $this->password);
 		$channel = $connection->channel();
-
 		$channel->exchange_declare($this->exchange_name, $this->exchange_type, false, true, false);
-		$channel->basic_publish($msg, $this->exchange_name);
-
+		foreach ($messages as &$msg) {
+			$channel->basic_publish($msg, $this->exchange_name);
+		}
 		$channel->close();
 		$connection->close();
 	}
 
+	function flush() {
+		$queue = new MessageQueue();
+		$this->publish_messages($queue->get_messages());
+		$queue->clear();
+	}
+
 }
+
 
 class MessageFactory {
 

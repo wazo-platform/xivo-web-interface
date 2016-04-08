@@ -69,7 +69,6 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 	protected $_voicemail = null;
 	protected $_confd_user = null;
 	protected $_line_manager = null;
-	protected $_publisher = null;
 	protected $_bus_msg_factory = null;
 
 	public function __construct(&$service,&$dso,$param=null,$components=true)
@@ -93,7 +92,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			die();
 
 		$this->_conf['import']['file']['size'] = $size;
-		$this->_publisher = Publisher::default_config();
+		$this->_bus_msg_queue = new MessageQueue();
 		$this->_bus_msg_factory = new MessageFactory();
 
 		// init random generator
@@ -1091,7 +1090,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		$this->_return['user_line'] = $this->_user_line->add($rs);
 		$this->_line_manager->update_caller_id($user_id);
 		$bus_msg = $this->_bus_msg_factory->new_user_line_associated_msg($user_id, $line_id);
-		$this->_publisher->publish($bus_msg);
+		$this->_bus_msg_queue->add_msg($bus_msg);
 		return $this->_return['user_line'];
 	}
 
