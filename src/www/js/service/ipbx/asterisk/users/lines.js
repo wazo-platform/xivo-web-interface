@@ -1,6 +1,6 @@
 /*
  * XiVO Web-Interface
- * Copyright (C) 2006-2014  Avencall
+ * Copyright (C) 2006-2016  Avencall
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -81,9 +81,9 @@ function xivo_http_search_numpool(context,helper)
 //get list context available for a entity
 function xivo_http_search_context_from_entity(entityid)
 {
-	if (entityid == false)
-		return;
-	
+    if (entityid == false)
+        return;
+
     $.ajax({
         url: '/xivo/configuration/ui.php/manage/entity?act=get&id='+entityid+'&contexttype=internal',
         async: false,
@@ -108,29 +108,29 @@ function xivo_http_search_context_from_entity(entityid)
             });
             update_row_infos();
         }
-    });        
+    });
 }
 
 function lnkdroprow(obj)
-{    
+{
     $(obj).parents('tr').fadeTo(400, 0, function () {
         $(this).remove();
-    });    
-    
+    });
+
     setTimeout(update_row_infos, 420);
 }
 
 function get_entityid_val()
 {
     it_userfeatures_entityid = $('#it-userfeatures-entityid');
-    it_cache_entityid = $('#it-cache_entityid');    
-     
+    it_cache_entityid = $('#it-cache_entityid');
+
     if ((entityid_val = it_userfeatures_entityid.val()) === false)
         entityid_val = it_cache_entityid.val();
-    
+
     if (!entityid_val)
         return false;
-    
+
     return(entityid_val);
 }
 
@@ -138,11 +138,11 @@ function update_row_infos()
 {
     if ((entityid_val = get_entityid_val()) === false)
         return(false);
-    
+
     enable_disable_add_button();
-    
+
     nb_row = $('#list_linefeatures > tbody > tr').length;
-    
+
     if (nb_row == 0) {
         $('#box-entityid').text('');
         it_userfeatures_entityid.removeAttr('disabled');
@@ -154,7 +154,7 @@ function update_row_infos()
         it_userfeatures_entityid.attr('disabled','disabled');
         it_userfeatures_entityid.addClass('it-disabled');
     }
-    
+
     $('#list_linefeatures > tbody').find('tr').each(function() {
 
         context = $(this).find("#linefeatures-context");
@@ -167,7 +167,7 @@ function update_row_infos()
             devicenumline = $(context).parents('tr').find("#linefeatures-num");
             config = $(context).parents('tr').find('#linefeatures-device').val();
             xivo_http_search_line_from_provd(devicenumline,config,devicenumline.val());
-            
+
             var number = context.parents('tr').find('#linefeatures-number');
             number.focus(function(){
                 helper = $(this).parent().find('#numberpool_helper');
@@ -202,32 +202,32 @@ function update_row_infos()
 function enable_disable_add_button() {
     nb_row = $('#list_linefeatures > tbody > tr').length;
     if (nb_row > 0) {
-    	$('#lnk-add-row').hide();
-    	return false;
+        $('#lnk-add-row').hide();
+        return false;
     }
-	$('#lnk-add-row').show();
+        $('#lnk-add-row').show();
     return true;
 }
 
 
 $(document).ready(function() {
-    
+
     xivo_http_search_context_from_entity(get_entityid_val());
-    
+
     $('#it-userfeatures-entityid').change(function() {
         xivo_http_search_context_from_entity($(this).val());
     });
-    
+
     enable_disable_add_button();
-    
+
     $('#lnk-add-row').click(function() {
-    	
-    	if (!enable_disable_add_button())
-    		return false;
-        
+
+        if (!enable_disable_add_button())
+                return false;
+
         $('#no-linefeatures').hide('fast');
         row = $('#ex-linefeatures').html();
-        
+
         $('#list_linefeatures > tbody:last').fadeIn(400, function () {
             $(this).append(row);
         });
@@ -235,5 +235,5 @@ $(document).ready(function() {
         update_row_infos();
         return false;
     });
-    
+
 });
