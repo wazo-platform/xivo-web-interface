@@ -38,7 +38,10 @@ class dwho_session
 					trigger_error('Failed to load Session Datastorage',E_USER_ERROR);
 
 				$this->_dso = new $name($dso);
-				$this->_publisher = Publisher::default_config();
+				$this->_publisher = Publisher::from_config();
+				if (!$this->_publisher) {
+					trigger_error('Bus configuration missing from the configuration file', E_USER_ERROR);
+				}
 
 				session_module_name('user');
 				session_set_save_handler(

@@ -89,12 +89,16 @@ class Publisher {
 		$this->exchange_name = $exchange_name;
 	}
 
-	static function default_config() {
-		$dir = dwho_file::joinpath(XIVO_PATH_OBJECT, 'bus', 'abstract', 'config');
+	static function from_config() {
+		$config = dwho::load_init(XIVO_PATH_CONF.DWHO_SEP_DIR.'ipbx.ini');
 
-		if(($config = dwho_gat::get_file($dir)) === false) {
-			trigger_error("could not load default config for the bus publisher");
-			return(false);
+		if (!array_key_exists('bus', $config)
+			|| !array_key_exists('host', $config['bus'])
+			|| !array_key_exists('port', $config['bus'])
+			|| !array_key_exists('username', $config['bus'])
+			|| !array_key_exists('password', $config['bus'])
+			|| !array_key_exists('exchange_name', $config['bus'])) {
+			return false;
 		}
 
 		$host = $config['bus']['host'];
@@ -102,6 +106,7 @@ class Publisher {
 		$username = $config['bus']['username'];
 		$password = $config['bus']['password'];
 		$exchange_name = $config['bus']['exchange_name'];
+
 		return new Publisher($host, $port, $username, $password, $exchange_name);
 	}
 
