@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -29,8 +29,7 @@ if(isset($_QR['fm_send']) === true)
 {
 	$fm_save = false;
 	$ret = 0;
-	foreach(array('cti','ctis','webi','info','announce') as $k)
-		$_QR['cti'][$k.'_active'] = isset($_QR['cti'][$k.'_active'])?1:0;
+	$_QR['cti']['ctis_active'] = isset($_QR['cti']['ctis_active'])?1:0;
 
 	if (!isset($_QR['cti']['context_separation']))
 		$_QR['cti']['context_separation'] = 0;

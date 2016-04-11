@@ -7,83 +7,14 @@ General Settings
 ; fm_bt-save
 Save
 
-; fm_cti_list_commented
-Activated
-
-; cti-servers
-Listening ports
-
 ; cti-start-tls
 STARTTLS options
-
-; fm_cti_list_ip
-IP address
-
-; fm_cti_list_port
-Port
-
-; fm_cti_cti_ip
-CTI:
 
 ; fm_start_tls
 STARTTLS:
 
-; hlp_fm_cti_cti_ip
-IP cti help
-
-; fm_cti_cti_port
--
-
-; hlp_fm_cti_cti_port
-port cti help
-
-; fm_cti_webi_ip
-Web Interface:
-
-; hlp_fm_cti_webi_ip
-aide adresse webint
-
-; fm_cti_webi_port
--
-
-; hlp_fm_cti_webi_port
-port webint help
-
-; fm_cti_info_ip
-Info server:
-
-; hlp_fm_cti_info_ip
-address info help
-
-; fm_cti_info_port
--
-
-; hlp_fm_cti_info_port
-port info help
-
 ; fm_tlscertfile
 Certificate:
-
-; cti-intervals
-Timeouts
-
-; fm_cti_updates_period
-Update period:
-
-; hlp_fm_cti_updates_period
-Update period help
-
-; fm_cti_socket_timeout
-Socket timeout:
-
-; hlp_fm_cti_socket_timeout
-Socket timeout help
-
-; fm_cti_login_timeout
-Login timeout:
-
-; hlp_fm_cti_login_timeout
-Login timeout help
 
 ; fm_cti_context_separation
 Contexts Separation:
@@ -93,6 +24,3 @@ Private Key:
 
 ; hlp_fm_tlsprivkeyfile
 Choose the private key used to generate selected certificate
-
-; fm_cti_list_active
-Activate
