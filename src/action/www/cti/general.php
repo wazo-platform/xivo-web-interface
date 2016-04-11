@@ -29,6 +29,7 @@ if(isset($_QR['fm_send']) === true)
 {
 	$fm_save = false;
 	$ret = 0;
+    $_QR['cti']['ctis_active'] = isset($_QR['cti']['ctis_active'])?1:0;
 
 	if (!isset($_QR['cti']['context_separation']))
 		$_QR['cti']['context_separation'] = 0;
