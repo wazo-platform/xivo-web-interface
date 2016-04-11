@@ -595,17 +595,3 @@ Max number of messages allowed in «Deleted» folder:
 
 ; hlp_fm_backupdeleted
 Asterisk config: backupdeleted
-
-; smenu_exchange
-Exchange
-
-; fm_exchange_trunkid
-Exchange server trunk:
-
-; hlp_fm_exchange_trunkid
-
-; fm_exchange_exten
-Target extension: 
-
-; hlp_fm_exchange_exten
-

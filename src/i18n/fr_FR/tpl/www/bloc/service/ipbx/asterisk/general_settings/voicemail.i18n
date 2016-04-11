@@ -595,17 +595,3 @@ Nombre maximum de messages dans le répertoire <b>Deleted</b>:
 
 ; hlp_fm_backupdeleted
 Config asterisk: backupdeleted
-
-; smenu_exchange
-Exchange
-
-; fm_exchange_trunkid
-Interconnexion vers le serveur Exchange :
-
-; hlp_fm_exchange_trunkid
-
-; fm_exchange_exten
-Extension cible : 
-
-; hlp_fm_exchange_exten
-

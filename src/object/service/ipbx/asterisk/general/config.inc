@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -21,23 +21,10 @@
 $array = array();
 
 $array['element'] = array();
-
 $array['element']['timezone'] = array();
 $array['element']['timezone']['default'] = '';
 
-$array['element']['exchange_trunkid'] = array();
-$array['element']['exchange_trunkid']['default'] = '';
-$array['element']['exchange_trunkid']['null'] = true;
-
-$array['element']['exchange_exten'] = array();
-$array['element']['exchange_exten']['default'] = '';
-$array['element']['exchange_exten']['null'] = true;
-
-dwho::load_class('dwho_network');
-
 $array['filter'] = array();
-$array['filter']['timezone']         = array('set' => false, 'chk' => 2);
-$array['filter']['exchange_trunkid'] = array('set' => false, 'chk' => 2, 'cast' => 'uint');
-$array['filter']['exchange_exten']   = array('set' => false, 'chk' => 2);
+$array['filter']['timezone'] = array('set' => false, 'chk' => 2);
 
 ?>
