@@ -27,17 +27,6 @@ $act = $_QRY->get('act');
 
 switch($act)
 {
-	case 'view':
-		$appline = &$ipbx->get_application('line');
-
-		if(($info = $appline->get($_QRY->get('id'))) === false)
-		{
-			$http_response->set_status_line(404);
-			$http_response->send(true);
-		}
-
-		$_TPL->set_var('info',$info);
-		break;
 	case 'search':
 		$appline = &$ipbx->get_application('line',null,false);
 
