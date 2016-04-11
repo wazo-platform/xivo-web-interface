@@ -7,83 +7,14 @@ Options générales
 ; fm_bt-save
 Enregistrer
 
-; fm_cti_list_commented
-Activé
-
-; fm_cti_list_ip
-Adresses IP
-
-; fm_cti_list_port
-Port
-
-; cti-servers
-Ports en écoute
-
 ; cti-start-tls
 Options de STARTTLS
 
 ; fm_start_tls
 STARTTLS :
 
-; fm_cti_cti_ip
-CTI:
-
-; hlp_fm_cti_cti_ip
-aide IP cti
-
-; fm_cti_cti_port
--
-
-; hlp_fm_cti_cti_port
-aide port cti
-
-; fm_cti_webi_ip
-Interface Web:
-
-; hlp_fm_cti_webi_ip
-aide adresse webint
-
-; fm_cti_webi_port
--
-
-; hlp_fm_cti_webi_port
-aide port webint
-
-; fm_cti_info_ip
-Serveur d'information:
-
-; hlp_fm_cti_info_ip
-aide adresse info
-
-; fm_cti_info_port
--
-
-; hlp_fm_cti_info_port
-aide port info
-
 ; fm_tlscertfile
 Certificat:
-
-; cti-intervals
-Echéances
-
-; fm_cti_updates_period
-Intervalle de mise à jour:
-
-; hlp_fm_cti_updates_period
-aide intervalle màj
-
-; fm_cti_socket_timeout
-Délai d'expiration du socket:
-
-; hlp_fm_cti_socket_timeout
-aide délai exp socket
-
-; fm_cti_login_timeout
-Délai d'expiration à la connexion:
-
-; hlp_fm_cti_login_timeout
-aide délai exp login
 
 ; fm_cti_context_separation
 Séparation par contexte:
@@ -93,6 +24,3 @@ Clé privée :
 
 ; hlp_fm_tlsprivkeyfile
 Vous devez sélectionner la clé privée utilisée pour générer le certificat choisit
-
-; fm_cti_list_active
-Activer
