@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -51,5 +51,9 @@ define('XIVO_AV_FR_CORP_FAX'		,'+33 (0) 4 27 46 63 30');
 
 define('XIVO_WS_HEADER_NAME_VERSION','X-XIVO-WS-VERSION');
 define('XIVO_WS_VERSION','1.0');
+
+define('CONFD_LINE_PROTO_CUSTOM', 'custom');
+define('CONFD_LINE_PROTO_SCCP', 'sccp');
+define('CONFD_LINE_PROTO_SIP', 'sip');
 
 ?>

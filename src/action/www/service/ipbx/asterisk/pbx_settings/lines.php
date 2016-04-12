@@ -46,8 +46,7 @@ switch($act)
 
 		$result = $fm_save = $error = null;
 
-		if(isset($_QR['fm_send']) === true
-		&& dwho_issa('protocol',$_QR) === true)
+		if(isset($_QR['fm_send']) === true)
 		{
 			if($appline->set_add($_QR,$_QR['proto']) === false
 			|| $appline->add() === false)
@@ -101,28 +100,21 @@ switch($act)
 	case 'edit':
 		$appline = &$ipbx->get_application('line');
 
-		if(isset($_QR['id']) === false || ($info = $appline->get($_QR['id'],null,null,true)) === false)
+		if(isset($_QR['id']) === false || ($info = $appline->get($_QR['id'],true)) === false)
 			$_QRY->go($_TPL->url('service/ipbx/pbx_settings/lines'),$param);
 
 		$fm_save = $error = null;
 		$return = &$info;
 
-		if(isset($_QR['fm_send']) === true
-		&& dwho_issa('protocol',$_QR) === true)
+		if(isset($_QR['fm_send']) === true)
 		{
-			if ($_QR['proto'] == XIVO_SRE_IPBX_AST_PROTO_SCCP) {
-				$_QR['protocol']['cid_num'] = $info['protocol']['cid_num'];
-				$_QR['protocol']['cid_name'] = $info['protocol']['cid_name'];
-				$_QR['protocol']['name'] = $info['protocol']['name'];
-			}
-			$_QR['linefeatures'] = $return['linefeatures'];
-
-			if($appline->set_edit($_QR,$_QR['proto']) === false
+			if($appline->set_edit($_QR) === false
 			|| $appline->edit() === false)
 			{
 				$fm_save = false;
 				$result = $appline->get_result();
 				$error = $appline->get_error();
+				$return = &$result;
 			}
 			else
 				$_QRY->go($_TPL->url('service/ipbx/pbx_settings/lines'),$param);
@@ -146,9 +138,8 @@ switch($act)
 			);
 		}
 
-		$info['protocol']['allow'] = explode(',',$info['protocol']['allow']);
-
-		$_TPL->set_var('id',$info['linefeatures']['id']);
+		$_TPL->set_var('id',$info['line']['id']);
+		$_TPL->set_var('proto',$info['line']['protocol']);
 		$_TPL->set_var('info',$return);
 		$_TPL->set_var('error',$error);
 		$_TPL->set_var('fm_save',$fm_save);
@@ -197,7 +188,7 @@ switch($act)
 		if(($values = dwho_issa_val('lines',$_QR)) === false)
 			$_QRY->go($_TPL->url('service/ipbx/pbx_settings/lines'),$param);
 
-		$appline = &$ipbx->get_application('line',null,false);
+		$appline = &$ipbx->get_application('line');
 
 		$nb = count($values);
 

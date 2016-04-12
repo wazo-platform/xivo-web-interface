@@ -28,36 +28,19 @@ $element = $this->get_var('element');
 $context_list = $this->get_var('context_list');
 $ipbxinfos = $this->get_var('info','ipbx');
 
-$sip_options = $this->get_var('info', 'options');
-if (empty($sip_options)) {
-	$sip_options = array();
-}
+$protocol = $this->get_var('proto');
 
 $allow = array();
-if(isset($info['protocol'])):
-	if (isset($info['protocol']['allow']))
-		$allow =  $info['protocol']['allow'];
-	$protocol = (string) dwho_ak('protocol',$info['protocol'],true);
-	$context = (string) dwho_ak('context',$info['protocol'],true);
-	$amaflags = (string) dwho_ak('amaflags',$info['protocol'],true);
-	$qualify = (string) dwho_ak('qualify',$info['protocol'],true);
-	$host = (string) dwho_ak('host',$info['protocol'],true);
+if(empty($info)):
+	$context = '';
 else:
-	$protocol = $this->get_var('proto');
-	$context = $amaflags = $qualify = $host = '';
+	if (isset($info['extra']['allow'])) {
+		$allow = explode(',',$info['extra']['allow']);
+	}
+	$context = (string) dwho_ak('context',$info['line'],true);
 endif;
 
-if ($protocol === '')
-	$protocol = $info['linefeatures']['protocol'];
-
-if ($this->get_var('act') == 'edit')
-	echo $form->hidden(array('name' => 'protocol[context]','value' => $context));
-
-
 $codec_active = empty($allow) === false;
-$host_static = ($host !== '' && $host !== 'dynamic');
-
-echo $form->hidden(array('name' => 'proto','value' => $protocol));
 
 $filename = dirname(__FILE__).'/protocol/'.$protocol.'.php';
 if (is_readable($filename) === true):

@@ -39,4 +39,9 @@ class ExtensionResource {
 		return $response->decode_or_raise();
 	}
 
+	function delete($id) {
+		$request = Request::delete("/extensions/" . $id);
+		$response = $this->client->send($request);
+		return $response->status_ok_or_raise();
+	}
 }

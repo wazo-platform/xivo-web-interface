@@ -45,4 +45,10 @@ class CustomResource {
 		return $response->status_ok_or_raise();
 	}
 
+	function update($id, $parameters)
+	{
+		$request = Request::json_put("/endpoints/custom/" . $id, $parameters);
+		$response = $this->client->send($request);
+		return $response->status_ok_or_raise();
+	}
 }

@@ -18,6 +18,11 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+$free_options = $this->get_var('info', 'free_options');
+if ($free_options === null) {
+	$free_options = array();
+}
+
 function build_row($option, $form, $url, $helper) {
 	$row = '<tr class="fm-paragraph"><td>';
 	$row .= $form->text(
@@ -81,8 +86,7 @@ function build_row($option, $form, $url, $helper) {
 				  'readonly' => $this->get_var('element','protocol','name','readonly'),
 				  'class'    => $this->get_var('element','protocol','name','class'),
 				  'default'  => $this->get_var('element','protocol','name','default'),
-				  'value'	   => $info['protocol']['name'],
-				  'error'	   => $this->bbf_args('error',$this->get_var('error', 'protocol', 'name')) )),
+				  'value'	   => $info['endpoint']['username'])),
 
 		$form->text(array('desc'	=> $this->bbf('fm_protocol_secret'),
 				  'name'	=> 'protocol[secret]',
@@ -91,8 +95,7 @@ function build_row($option, $form, $url, $helper) {
 				  'readonly' => $this->get_var('element','protocol','secret','readonly'),
 				  'class'    => $this->get_var('element','protocol','secret','class'),
 				  'default'	=> $this->get_var('element', 'protocol', 'secret', 'default'),
-				  'value'	=> $this->get_var('info','protocol','secret'),
-				  'error'	=> $this->bbf_args('error',$this->get_var('error', 'protocol', 'secret')) ));
+				  'value'	=> $this->get_var('info','endpoint','secret')));
 
 	if($context_list !== false):
 		echo	$form->select(array('desc'	=> $this->bbf('fm_protocol_context'),
@@ -118,16 +121,15 @@ function build_row($option, $form, $url, $helper) {
 				    'empty'	=> true,
 				    'key'	=> false,
 				    'default'	=> $element['protocol']['sip']['language']['default'],
-				    'selected'	=> $this->get_var('info','protocol','language')),
+				    'selected'	=> $this->get_var('info','extra','language')),
 			      $element['protocol']['sip']['language']['value']),
 
 		$form->text(array('desc'	=> $this->bbf('fm_protocol_callerid'),
 				    'name'	=> 'protocol[callerid]',
 				    'labelid'	=> 'protocol-callerid',
-				    'value'	=> $this->get_var('info','protocol','callerid'),
+				    'value'	=> $this->get_var('info','extra','callerid'),
 				    'size'	=> 15,
-				    'notag'	=> false,
-				    'error'	=> $this->bbf_args('error', $this->get_var('error', 'protocol', 'callerid')) )),
+				    'notag'	=> false)),
 
 		$form->select(array('desc'	=> $this->bbf('fm_protocol_nat'),
 				    'name'	=> 'protocol[nat]',
@@ -137,7 +139,7 @@ function build_row($option, $form, $url, $helper) {
 				    'bbf'	=> 'fm_protocol_nat-opt',
 				    'bbfopt'	=> array('argmode' => 'paramvalue'),
 				    'default'	=> $element['protocol']['sip']['nat']['default'],
-				    'selected'	=> $this->get_var('info','protocol','nat')),
+				    'selected'	=> $this->get_var('info','extra','nat')),
 			      $element['protocol']['sip']['nat']['value']),
 
 		$form->select(array('desc'	=> $this->bbf('fm_protocol_dtmfmode'),
@@ -148,7 +150,7 @@ function build_row($option, $form, $url, $helper) {
 				    'bbf'		=> 'fm_protocol_dtmfmode-opt',
 				    'bbfopt'	=> array('argmode' => 'paramvalue'),
 				    'default'	=> $element['protocol']['sip']['dtmfmode']['default'],
-				    'selected'	=> $this->get_var('info','protocol','dtmfmode')),
+				    'selected'	=> $this->get_var('info','extra','dtmfmode')),
 			      $element['protocol']['sip']['dtmfmode']['value']),
 
 		$form->select(array('desc'	=> $this->bbf('fm_protocol_qualify'),
@@ -159,7 +161,7 @@ function build_row($option, $form, $url, $helper) {
 				    'bbf'		=> 'fm_protocol_qualify-opt',
 				    'bbfopt'	=> array('argmode' => 'paramvalue'),
 				    'default'	=> $element['protocol']['sip']['qualify']['default'],
-				    'selected'	=> $qualify),
+				    'selected'	=> $this->get_var('info','extra','qualify')),
 			      $element['protocol']['sip']['qualify']['value']);
 
 ?>
@@ -224,7 +226,7 @@ function build_row($option, $form, $url, $helper) {
 				</th>
 			</thead>
 			<tbody id="sip-options">
-				<?php foreach($sip_options as $option_row): ?>
+				<?php foreach($free_options as $option_row): ?>
 					<?= build_row($option_row, $form, $url, $this) ?>
 				<?php endforeach ?>
 			</tbody>

@@ -45,4 +45,10 @@ class SccpResource {
 		return $response->status_ok_or_raise();
 	}
 
+	function update($id, $parameters)
+	{
+		$request = Request::json_put("/endpoints/sccp/" . $id, $parameters);
+		$response = $this->client->send($request);
+		return $response->status_ok_or_raise();
+	}
 }

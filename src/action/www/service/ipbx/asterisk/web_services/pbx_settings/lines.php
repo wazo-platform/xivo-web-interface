@@ -28,7 +28,7 @@ $act = $_QRY->get('act');
 switch($act)
 {
 	case 'search':
-		$appline = &$ipbx->get_application('line',null,false);
+		$appline = &$ipbx->get_application('line');
 
 		$where = array();
 
@@ -52,7 +52,7 @@ switch($act)
 
 		$where = array();
 
-		$appline = &$ipbx->get_application('line',null,false);
+		$appline = &$ipbx->get_application('line');
 
 		if (($protocols = $_QRY->get('protocol')) !== null)
 			$where['protocols'] = array($protocols);

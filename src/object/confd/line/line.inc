@@ -79,6 +79,21 @@ class LineResource {
 		return $content === null ? null : $content['items'];
 	}
 
+	function get_endpoint_association($id, $protocol)
+	{
+		switch ($protocol) {
+			case CONFD_LINE_PROTO_CUSTOM:
+				return $this->get_custom_association($id);
+			case CONFD_LINE_PROTO_SCCP:
+				return $this->get_sccp_association($id);
+			case CONFD_LINE_PROTO_SIP:
+				return $this->get_sip_association($id);
+			default:
+				trigger_error('invalid endpoint protocol '.$protocol, E_USER_ERROR);
+				return null;
+		}
+	}
+
 	function get_sip_association($id)
 	{
 		$request = Request::json_get("/lines/" . $id . "/endpoints/sip");
@@ -114,6 +129,21 @@ class LineResource {
 		$request = Request::put("/lines/" . $line_id . "/devices/" . $device_id);
 		$response = $this->client->send($request);
 		return $response->status_ok_or_raise();
+	}
+
+	function associate_endpoint($line_id, $endpoint_id, $protocol)
+	{
+		switch ($protocol) {
+			case CONFD_LINE_PROTO_CUSTOM:
+				return $this->associate_custom($line_id, $endpoint_id);
+			case CONFD_LINE_PROTO_SCCP:
+				return $this->associate_sccp($line_id, $endpoint_id);
+			case CONFD_LINE_PROTO_SIP:
+				return $this->associate_sip($line_id, $endpoint_id);
+			default:
+				trigger_error('invalid endpoint protocol '.$protocol, E_USER_ERROR);
+				return false;
+		}
 	}
 
 	function associate_sip($line_id, $sip_id)
@@ -164,6 +194,21 @@ class LineResource {
 		$request = Request::delete("/lines/" . $line_id . "/extensions/" . $extension_id);
 		$response = $this->client->send($request);
 		return $response->status_ok_or_raise();
+	}
+
+	function dissociate_endpoint($line_id, $endpoint_id, $protocol)
+	{
+		switch ($protocol) {
+			case CONFD_LINE_PROTO_CUSTOM:
+				return $this->dissociate_custom($line_id, $endpoint_id);
+			case CONFD_LINE_PROTO_SCCP:
+				return $this->dissociate_sccp($line_id, $endpoint_id);
+			case CONFD_LINE_PROTO_SIP:
+				return $this->dissociate_sip($line_id, $endpoint_id);
+			default:
+				trigger_error('invalid endpoint protocol '.$protocol, E_USER_ERROR);
+				return false;
+		}
 	}
 
 	function dissociate_sip($line_id, $sip_id)
