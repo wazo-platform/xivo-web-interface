@@ -178,7 +178,8 @@ class LineManager
 		$this->dissociate_device($line);
 		$this->dissociate_users($line);
 		$this->dissociate_extensions($line);
-		$this->delete_endpoint($line);
+		// deleting a line via confd also delete the associated endpoint
+		$this->line->delete($line['id']);
 	}
 
 	private function dissociate_device($line)
@@ -213,27 +214,6 @@ class LineManager
 
 		foreach($internal as $extension) {
 			$this->line->dissociate_extension($line['id'], $extension['id']);
-		}
-	}
-
-	private function delete_endpoint($line)
-	{
-		$protocol = $line['protocol'];
-
-		if($protocol == 'sip') {
-			$association = $this->line->get_sip_association($line['id']);
-			$this->line->dissociate_sip($line['id'], $association['endpoint_id']);
-			return $this->sip->delete($association['endpoint_id']);
-		} else if ($protocol == 'sccp') {
-			$association = $this->line->get_sccp_association($line['id']);
-			$this->line->dissociate_sccp($line['id'], $association['endpoint_id']);
-			return $this->sccp->delete($association['endpoint_id']);
-		} else if ($protocol == 'custom') {
-			$association = $this->line->get_custom_association($line['id']);
-			$this->line->dissociate_custom($line['id'], $association['endpoint_id']);
-			return $this->custom->delete($association['endpoint_id']);
-		} else {
-			throw new ClientException(array('Unknown endpoint protocol: ' . $protocol));
 		}
 	}
 
