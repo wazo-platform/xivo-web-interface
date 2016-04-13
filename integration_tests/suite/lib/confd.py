@@ -73,8 +73,8 @@ class MockConfd(object):
         body = body or {}
         self.add_response(path, json.dumps(body), method, code, query, preserve)
 
-    def assert_request_sent(self, url, method='GET', query=None, body=None):
-        request = self.request_matching(url, method)
+    def assert_request_sent(self, path, method='GET', query=None, body=None):
+        request = self.request_matching(path, method)
         if query:
             assert_that(request['query'], equal_to(query), pformat(self.logs()))
         if body:
@@ -87,7 +87,7 @@ class MockConfd(object):
 
     def request_matching(self, path, method='GET'):
         requests = self.requests()
-        regex = re.compile(path)
+        regex = re.compile(path + '$')
         for request in requests:
             if regex.match(request['path']) and request['method'] == method:
                 return request
