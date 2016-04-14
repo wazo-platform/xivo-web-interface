@@ -31,7 +31,7 @@ class xivo_application_service_asterisk_line_sql extends xivo_application_abstra
 				'usercustom'	=> '',
 				'user_line'		=> '');
 
-	public function get_nb($arr=null,$disable=null,$initialized=null)
+	public function get_nb($arr=null,$disable=null)
 	{
 		if(is_array($arr) === false)
 			$arr = array();
@@ -79,16 +79,6 @@ class xivo_application_service_asterisk_line_sql extends xivo_application_abstra
 		$this->_dso->andjoinwhere($this->_table['usercustom'],
 					  $this->_table['linefeatures'].'.protocol = '.$this->_table['usercustom'].'.protocol');
 
-		if($initialized !== null)
-		{
-			if((bool) $initialized === false)
-				$this->_dso->andjoinwhere($this->_table['usersip'],
-							  'COALESCE('.$this->_table['usersip'].'.fullcontact,\'\') = \'\'');
-			else
-				$this->_dso->andjoinwherenot($this->_table['usersip'],
-							  'COALESCE('.$this->_table['usersip'].'.fullcontact,\'\') = \'\'');
-		}
-
 		return(dwho_ulongint($this->_dso->select_count(null,'id',$this->_table['linefeatures'])));
 	}
 
@@ -103,10 +93,6 @@ class xivo_application_service_asterisk_line_sql extends xivo_application_abstra
 		$arr = array();
 
 		$this->_dso->new_select($this->_table['linefeatures']);
-
-		$initialized = null;
-		if(isset($where['initialized']) === true)
-			$initialized = $where['initialized'];
 
 		$context = null;
 		if(isset($where['context']) === true)
@@ -148,16 +134,6 @@ class xivo_application_service_asterisk_line_sql extends xivo_application_abstra
 
 			$this->_dso->andjoinwhere($this->_table['usersip'],
 						  $this->_table['linefeatures'].'.protocol = '.$this->_table['usersip'].'.protocol');
-
-			if($initialized !== null)
-			{
-				if((bool) $initialized === false)
-					$this->_dso->andjoinwhere($this->_table['usersip'],
-								  'COALESCE('.$this->_table['usersip'].'.fullcontact,\'\') = \'\'');
-				else
-					$this->_dso->andjoinwherenot($this->_table['usersip'],
-								  'COALESCE('.$this->_table['usersip'].'.fullcontact,\'\') = \'\'');
-			}
 		}
 
 		if($use_sccp === true)

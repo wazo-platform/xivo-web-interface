@@ -66,9 +66,9 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 		return(true);
 	}
 
-	public function get_nb($arr=null,$disable=null,$initialized=null)
+	public function get_nb($arr=null,$disable=null)
 	{
-		return($this->_dso->get_nb($arr,$disable,$initialized));
+		return($this->_dso->get_nb($arr,$disable));
 	}
 
 	public function get($id,$ipbxinfos=false)
