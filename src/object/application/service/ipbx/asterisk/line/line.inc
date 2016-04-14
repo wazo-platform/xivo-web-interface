@@ -83,13 +83,13 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 
 		switch ($this->_protocolname) {
 			case CONFD_LINE_PROTO_SCCP:
-				$res = $this->_sccp_option_mapper->split_endpoint_options($this->_info['endpoint']['options']);
+				$res = $this->_sccp_option_mapper->split_endpoint_options($this->_info['endpoint']);
 				$this->_info['hidden_options'] = $res['hidden'];
 				// XXX the "extra" name is rather poor (also used elsewhere)...
 				$this->_info['extra'] = $res['nonfree'];
 				break;
 			case CONFD_LINE_PROTO_SIP:
-				$res = $this->_sip_option_mapper->split_endpoint_options($this->_info['endpoint']['options']);
+				$res = $this->_sip_option_mapper->split_endpoint_options($this->_info['endpoint']);
 				$this->_info['free_options'] = $res['free'];
 				$this->_info['hidden_options'] = $res['hidden'];
 				$this->_info['extra'] = $res['nonfree'];
@@ -348,11 +348,11 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 		// XXX adapted from the get function so that the page is redisplayed correctly on error (dirty)
 		switch ($this->_protocolname) {
 			case CONFD_LINE_PROTO_SCCP:
-				$res = $this->_sccp_option_mapper->split_endpoint_options($this->_result['endpoint']['options']);
+				$res = $this->_sccp_option_mapper->split_endpoint_options($this->_result['endpoint']);
 				$this->_set_result('extra', $res['nonfree']);
 				break;
 			case CONFD_LINE_PROTO_SIP:
-				$res = $this->_sip_option_mapper->split_endpoint_options($this->_result['endpoint']['options']);
+				$res = $this->_sip_option_mapper->split_endpoint_options($this->_result['endpoint']);
 				$this->_set_result('free_options', $res['free']);
 				$this->_set_result('extra', $res['nonfree']);
 				break;
@@ -728,12 +728,12 @@ class SCCPOptionMapper {
 			'disallow',
 	);
 
-	public function split_endpoint_options($endpoint_options)
+	public function split_endpoint_options($endpoint)
 	{
 		$nonfree = array();
 		$hidden = array();
 
-		foreach($endpoint_options as $endpoint_option) {
+		foreach($endpoint['options'] as $endpoint_option) {
 			$name = $endpoint_option[0];
 			if (in_array($name, $this->nonfree_options)) {
 				$nonfree[$name] = $endpoint_option[1];
@@ -762,13 +762,20 @@ class SIPOptionMapper {
 			'nat',
 	);
 
-	public function split_endpoint_options($endpoint_options)
+	public function split_endpoint_options($endpoint)
 	{
 		$free = array();
 		$nonfree = array();
 		$hidden = array();
 
-		foreach($endpoint_options as $endpoint_option) {
+		if (isset($endpoint['host'])) {
+			$free[] = array('host', $endpoint['host']);
+		}
+		if (isset($endpoint['type'])) {
+			$free[] = array('type', $endpoint['type']);
+		}
+
+		foreach($endpoint['options'] as $endpoint_option) {
 			$name = $endpoint_option[0];
 			if (in_array($name, $this->hidden_options)) {
 				$hidden[] = $endpoint_option;
