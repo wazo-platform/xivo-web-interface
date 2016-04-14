@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -112,20 +112,7 @@ class xivo_application_service_asterisk_line_sql extends xivo_application_abstra
 		if(isset($where['context']) === true)
 			$context = $where['context'];
 
-		if(dwho_issa('protocols', $where) === false)
-			$use_sip = $use_sccp = $use_custom = true;
-		else
-		{
-			$protocols = $where['procotol'];
-			$use_sip  = in_array(XIVO_SRE_IPBX_AST_PROTO_SIP, $protocols);
-			$use_sccp  = in_array(XIVO_SRE_IPBX_AST_PROTO_SCCP, $protocols);
-			$use_custom = in_array(XIVO_SRE_IPBX_AST_PROTO_CUSTOM, $protocols);
-			$this->_dso->wherein('protocol',$protocols,$this->_table['linefeatures']);
-		}
-
-		if($use_sip === false && $use_sccp === false && $use_custom === false)
-			return(false);
-
+		$use_sip = $use_sccp = $use_custom = true;
 		$sip = $sccp = $custom = array();
 		$sip['category'] = $custom['category'] = 'user';
 

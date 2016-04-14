@@ -35,9 +35,6 @@ switch($act)
 		if (($context = $_QRY->get('context')) !== null)
 			$where['context'] = $context;
 
-		if (($protocols = $_QRY->get('protocol')) !== null)
-			$where['protocols'] = array($protocols);
-
 		if(($list = $appline->get_lines_search($_QRY->get('search'),$where)) === false)
 		{
 			$http_response->set_status_line(204);
@@ -50,14 +47,9 @@ switch($act)
 	default:
 		$act = 'list';
 
-		$where = array();
-
 		$appline = &$ipbx->get_application('line');
 
-		if (($protocols = $_QRY->get('protocol')) !== null)
-			$where['protocols'] = array($protocols);
-
-		if(($list = $appline->get_lines_list($where)) === false)
+		if(($list = $appline->get_lines_list()) === false)
 		{
 			$http_response->set_status_line(204);
 			$http_response->send(true);
