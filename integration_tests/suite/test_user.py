@@ -22,13 +22,10 @@ import string
 import unittest
 import uuid
 
+from lib.confd import urljoin
 from lib.testcase import TestWebi
 
 from hamcrest import assert_that, equal_to, none
-
-
-def urljoin(*parts):
-    return "/" + "/".join(str(p) for p in parts)
 
 
 class TestUser(TestWebi):

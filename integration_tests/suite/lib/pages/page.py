@@ -84,6 +84,16 @@ class Page(object):
     def select_id(self, id_, value, root=None):
         self.select(By.ID, id_, value, root)
 
+    def get_value(self, id_, root=None):
+        root = root or self.driver
+        element = root.find_element_by_id(id_)
+        return element.get_attribute('value')
+
+    def get_selected_option_value(self, id_, root=None):
+        root = root or self.driver
+        element = root.find_element_by_id(id_)
+        return Select(element).first_selected_option.get_attribute('value')
+
     def extract_errors(self):
         try:
             container = self.driver.find_element_by_id("report-xivo-error")
@@ -122,8 +132,7 @@ class ListPage(Page):
         url = self.build_url(self.url)
         self.driver.get(url)
 
-        condition = ec.presence_of_element_located(self.list_selector)
-        self.wait().until(condition)
+        self.wait_for_list_form()
 
         return self
 
@@ -140,15 +149,24 @@ class ListPage(Page):
         condition = ec.presence_of_element_located(self.form_selector)
         self.wait().until(condition)
 
+    def wait_for_list_form(self):
+        condition = ec.presence_of_element_located(self.list_selector)
+        self.wait().until(condition)
+
     def edit(self, name):
         xpath = self.edit_xpath.format(name=name)
 
         button = self.driver.find_element_by_xpath(xpath)
         button.click()
 
-        condition = ec.presence_of_element_located(self.form_selector)
-        self.wait().until(condition)
+        self.wait_for_form()
 
+        return self.form_page(self.driver)
+
+    def edit_by_id(self, id_):
+        url = self.build_url(self.url, act='edit', id=str(id_))
+        self.driver.get(url)
+        self.wait_for_form()
         return self.form_page(self.driver)
 
     def delete(self, name):
@@ -163,6 +181,11 @@ class ListPage(Page):
 
         condition = ec.presence_of_element_located((By.XPATH, xpath))
         self.wait().until_not(condition)
+
+    def delete_by_id(self, id_):
+        url = self.build_url(self.url, act='delete', id=str(id_))
+        self.driver.get(url)
+        self.wait_for_list_form()
 
     def find_row(self, text):
         table = self.driver.find_element_by_id("table-main-listing")
