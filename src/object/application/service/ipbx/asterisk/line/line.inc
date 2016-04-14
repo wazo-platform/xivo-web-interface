@@ -275,22 +275,17 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 			{
 				case XIVO_SRE_IPBX_AST_PROTO_SIP:
 					$sip = dwho_array_startswith_key($ref,'usersip.',true);
-					$sip['initialized'] = dwho_has_len($sip['fullcontact']);
-					unset($sip['fullcontact']);
 					$sip['identity'] = strtoupper($sip['protocol']).'/'.$sip['name'];
 					$r[$linefeatures['id']] = array_merge($sip,$linefeatures);
 					break;
 				case XIVO_SRE_IPBX_AST_PROTO_SCCP:
 					$sccp = dwho_array_startswith_key($ref,'sccpline.',true);
 					$sccp['protocol'] = 'SCCP';
-					$sccp['initialized'] = true;
 					$sccp['identity'] = strtoupper($sccp['protocol']).'/'.$sccp['name'];
 					$r[$linefeatures['id']] = array_merge($sccp,$linefeatures);
 					break;
 				case XIVO_SRE_IPBX_AST_PROTO_CUSTOM:
 					$custom = dwho_array_startswith_key($ref,'usercustom.',true);
-					$custom['initialized'] = true;
-					#$custom['identity'] = strtoupper(XIVO_SRE_IPBX_AST_PROTO_CUSTOM).'/'.$custom['interface'];
 					$custom['identity'] = $custom['interface'];
 					$r[$linefeatures['id']] = array_merge($custom,$linefeatures);
 					break;
