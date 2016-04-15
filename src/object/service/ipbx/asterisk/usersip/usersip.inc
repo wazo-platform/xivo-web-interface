@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2015  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -100,9 +100,6 @@ class xivo_service_asterisk_usersip extends xivo_service_asterisk_abstract
 
 		if(isset($arr['name']) === true)
 			$arr['name'] = strtolower($arr['name']);
-
-		if(isset($arr['setvar'],$arr['setvar']{0}) === false)
-			unset($arr['setvar']);
 
 		if(isset($arr['secret']) === true
 		&& empty($arr['secret']) === false)
