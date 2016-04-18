@@ -1,5 +1,5 @@
 FROM debian:jessie
-MAINTAINER XiVO Team "dev@avencall.com"
+MAINTAINER XiVO Team "dev+docker@proformatique.com"
 
 ENV HOME /root
 ENV DEBIAN_FRONTEND noninteractive
@@ -7,7 +7,18 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update -qq && \
     apt-get install --yes \
         nginx \
-        php5-fpm php-apc php5-imagick php5-imap php5-mcrypt php5-curl php5-cli php5-gd php5-pgsql php5-common php5-json \
+        php5-fpm \
+        php-apc \
+        php-amqplib \
+        php5-imagick \
+        php5-imap \
+        php5-mcrypt \
+        php5-curl \
+        php5-cli \
+        php5-gd \
+        php5-pgsql \
+        php5-common \
+        php5-json \
         curl unzip && \
     apt-get clean
 
