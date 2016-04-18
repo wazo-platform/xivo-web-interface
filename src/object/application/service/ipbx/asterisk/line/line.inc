@@ -34,7 +34,6 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 	protected $_protocol		= false;
 	protected $_entity			= false;
 	protected $_conf			= array();
-	private $_context			= null;
 	private $_endpoint			= null;
 	private $_line				= null;
 	private $_extension			= null;
@@ -51,7 +50,6 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 		$this->_dso = &$dso;
 
 		if(($this->_linefeatures = &$this->_service->get_module('linefeatures')) === false
-		|| ($this->_context = &$this->_service->get_module('context')) === false
 		|| ($_XOBJ = dwho_gct::get('xivo_object')) === false
 		|| ($this->_entity = &$_XOBJ->get_module('entity')) === false)
 			return(false);
@@ -526,6 +524,8 @@ error:
 
 		// XXX the code is similar to the code found in LineManager
 		$this->_dissociate_device($line_id);
+		// dissociate the users before the extensions so that the incall extensions
+		// are not listed in the line/extensions association
 		$this->_dissociate_users($line_id);
 		$this->_dissociate_and_delete_extensions($line_id);
 		// deleting a line via confd also deletes the associated endpoint
@@ -554,23 +554,9 @@ error:
 	{
 		$associations = $this->_line->list_extension_associations($line_id);
 		foreach($associations as $association) {
-			$extension = $this->_extension->get($association['extension_id']);
-			if ($this->_is_internal_extension($extension)) {
-				$this->_line->dissociate_extension($line_id, $association['extension_id']);
-				$this->_extension->delete($association['extension_id']);
-			}
+			$this->_line->dissociate_extension($line_id, $association['extension_id']);
+			$this->_extension->delete($association['extension_id']);
 		}
-	}
-
-	private function _is_internal_extension($extension) {
-		$contexts = $this->_context->get_all(null, null, null, false, 'internal');
-		foreach ($contexts as $context) {
-			if ($context['name'] == $extension['context']) {
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 	function enable()
