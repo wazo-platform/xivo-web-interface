@@ -327,16 +327,6 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 		$this->_set_line($action, $arr);
 		$this->_set_endpoint($action, $arr);
 
-		// workaround a bug in xivo-confd that doesn't set/update the line's name
-		switch ($this->_protocolname) {
-			case CONFD_LINE_PROTO_CUSTOM:
-				$this->_result['line']['name'] = $this->_result['endpoint']['interface'];
-				break;
-			case CONFD_LINE_PROTO_SIP:
-				$this->_result['line']['name'] = $this->_result['endpoint']['username'];
-				break;
-		}
-
 		// make sure the page is redisplayed with the fields filled on error
 		switch ($this->_protocolname) {
 			case CONFD_LINE_PROTO_SCCP:
@@ -469,11 +459,6 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 			goto error;
 		}
 
-		// workaround a bug in xivo-confd that doesn't set/update the line's name
-		if ($this->_protocolname === CONFD_LINE_PROTO_SIP) {
-			$this->_force_line_name_update($line['id'], $this->_result['line']['name']);
-		}
-
 		return true;
 
 error:
@@ -499,17 +484,7 @@ error:
 			return false;
 		}
 
-		// workaround a bug in xivo-confd that doesn't set/update the line's name
-		if ($this->_result['line']['name'] !== $this->_info['line']['name']) {
-			$this->_force_line_name_update($this->_info['line']['id'], $this->_result['line']['name']);
-		}
-
 		return true;
-	}
-
-	private function _force_line_name_update($line_id, $name)
-	{
-		return $this->_line->update(array('id' => $line_id, 'name' => $name));
 	}
 
 	function delete()

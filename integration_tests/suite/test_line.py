@@ -44,8 +44,6 @@ class TestLine(TestWebi):
         self.confd.add_json_response(urljoin('endpoints', self.protocol), endpoint, method='POST', code=201)
         self.confd.add_response(urljoin('lines',self.line_id, 'endpoints', self.protocol, self.endpoint_id),
                                 method='PUT', code=204)
-        # workaround for the linefeatures name update issue
-        self.confd.add_response(urljoin('lines', self.line_id), method='PUT', code=204)
 
     def assert_line_added(self, endpoint):
         line = {'context': self.context}
@@ -65,8 +63,6 @@ class TestLine(TestWebi):
         self.confd.add_json_response(urljoin('endpoints', self.protocol, self.endpoint_id), endpoint, method='GET')
         self.confd.add_json_response(urljoin('endpoints', self.protocol, self.endpoint_id), endpoint, method='GET')
         self.confd.add_response(urljoin('endpoints', self.protocol, self.endpoint_id), method='PUT', code=204)
-        # workaround for the linefeatures name update issue
-        self.confd.add_response(urljoin('lines', self.line_id), method='PUT', code=204)
 
     def assert_line_edited(self, endpoint):
         self.confd.assert_json_request(urljoin('endpoints', self.protocol, self.endpoint_id), endpoint, method='PUT')
