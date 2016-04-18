@@ -48,12 +48,12 @@ class MessageQueue {
 
 	private $key = 'bus_msg_to_send';
 
-	function add_msg($msg) {
+	function add_msg($msg, $routing_key) {
 		if (!isset($_SESSION[$this->key])) {
 			$_SESSION[$this->key] = array();
 		}
 
-		array_push($_SESSION[$this->key], $msg);
+		array_push($_SESSION[$this->key], array($msg, $routing_key));
 	}
 
 	function get_messages() {
@@ -114,8 +114,10 @@ class Publisher {
 		$connection = new AMQPConnection($this->host, $this->port, $this->username, $this->password);
 		$channel = $connection->channel();
 		$channel->exchange_declare($this->exchange_name, $this->exchange_type, false, true, false);
-		foreach ($messages as &$msg) {
-			$channel->basic_publish($msg, $this->exchange_name);
+		foreach ($messages as &$message) {
+			$body = $message[0];
+			$routing_key = $message[1];
+			$channel->basic_publish($body, $this->exchange_name, $routing_key);
 		}
 		$channel->close();
 		$connection->close();
