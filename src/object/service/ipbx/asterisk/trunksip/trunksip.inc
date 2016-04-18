@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -63,7 +63,6 @@ class xivo_service_asterisk_trunksip extends xivo_service_asterisk_abstract
 		$arr['cid_number'] = null;
 		$arr['mohinterpret'] = null;
 		$arr['defaultip'] = null;
-		$arr['setvar'] = '';
 		$arr['regexten'] = null;
 		$arr['subscribecontext'] = null;
 		$arr['fullcontact'] = null;
@@ -89,7 +88,6 @@ class xivo_service_asterisk_trunksip extends xivo_service_asterisk_abstract
 		      $arr['cid_number'],
 		      $arr['mohinterpret'],
 		      $arr['defaultip'],
-		      $arr['setvar'],
 		      $arr['regexten'],
 		      $arr['subscribecontext'],
 		      $arr['fullcontact'],
@@ -101,7 +99,6 @@ class xivo_service_asterisk_trunksip extends xivo_service_asterisk_abstract
 		      $arr['lastms']);
 
 		$arr['subscribemwi'] = 0;
-		$arr['setvar'] = '';
 		$arr['protocol'] = XIVO_SRE_IPBX_AST_PROTO_SIP;
 		$arr['category'] = 'trunk';
 

@@ -65,7 +65,6 @@ class OptionMapper {
 		'deny',
 		'permit',
 		'defaultip',
-		'setvar',
 		'host',
 		'port',
 		'regexten',

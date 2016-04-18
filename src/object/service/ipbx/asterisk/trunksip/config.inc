@@ -227,10 +227,6 @@ $array['element']['permit']['null'] = true;
 $array['element']['defaultip'] = array();
 $array['element']['defaultip']['unset'] = true;
 
-$array['element']['setvar'] = array();
-$array['element']['setvar']['default'] = '';
-$array['element']['setvar']['forcedef'] = true;
-
 $array['element']['host'] = array();
 $array['element']['host']['value'] = array('dynamic');
 $array['element']['host']['default'] = 'dynamic';
@@ -445,7 +441,6 @@ $array['filter']['permit'] = array('set'		=> false,
 				   'chk'		=> 2,
 				   'callback'		=> 'dwho_network::valid_subnet_ipv4');
 $array['filter']['defaultip'] = array('set' => false,'chk' => 0);
-$array['filter']['setvar'] = array('set' => false,'chk' => 0);
 $array['filter']['host'] = array('set'		=> false,
 				 'chk'		=> 2,
 				 'key'		=> array('dynamic','static'),

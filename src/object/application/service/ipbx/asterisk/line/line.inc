@@ -514,9 +514,6 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 			$r = false;
 		}
 
-		if ($user_id !== 0)
-			$this->update_protocol_setvar($this->_protocolname, $protocol_id, $user_id);
-
 		if($protocol_id !== null && $this->_protocolname !== null) {
 			$success = $this->update_options($protocol_id, $this->_protocolname);
 			if($success !== true) {
@@ -633,9 +630,6 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 			$this->_status = '';
 			return(false);
 		}
-
-		if ($user_id !== 0)
-			$this->update_protocol_setvar($this->_protocolname, $protocol_id, $user_id);
 
 		if($protocol_id !== null && $this->_protocolname !== null) {
 			$success = $this->update_options($protocol_id, $this->_protocolname);
