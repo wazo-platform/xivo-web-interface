@@ -329,7 +329,7 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 		$this->_set_line($action, $arr);
 		$this->_set_endpoint($action, $arr);
 
-		// workaround a bug in xivo-confd that doesn't set/update the name
+		// workaround a bug in xivo-confd that doesn't set/update the line's name
 		switch ($this->_protocolname) {
 			case CONFD_LINE_PROTO_CUSTOM:
 				$this->_result['line']['name'] = $this->_result['endpoint']['interface'];
@@ -471,8 +471,7 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 			goto error;
 		}
 
-		// XXX for SIP line, after association, the line name is reset to null, so set it to
-		//     the "right value" -- this should be fixed in confd
+		// workaround a bug in xivo-confd that doesn't set/update the line's name
 		if ($this->_protocolname === CONFD_LINE_PROTO_SIP) {
 			$this->_force_line_name_update($line['id'], $this->_result['line']['name']);
 		}
@@ -502,7 +501,7 @@ error:
 			return false;
 		}
 
-		// XXX force line name update if it has changed -- this should be fixed in confd
+		// workaround a bug in xivo-confd that doesn't set/update the line's name
 		if ($this->_result['line']['name'] !== $this->_info['line']['name']) {
 			$this->_force_line_name_update($this->_info['line']['id'], $this->_result['line']['name']);
 		}
