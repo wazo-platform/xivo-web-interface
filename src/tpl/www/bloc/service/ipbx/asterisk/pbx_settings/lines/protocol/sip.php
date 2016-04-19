@@ -128,7 +128,7 @@ function build_row($option, $form, $url, $helper) {
 				    'name'	=> 'protocol[callerid]',
 				    'labelid'	=> 'protocol-callerid',
 				    'value'	=> $this->get_var('info','extra','callerid'),
-				    'size'	=> 15,
+				    'size'	=> 35,
 				    'notag'	=> false)),
 
 		$form->select(array('desc'	=> $this->bbf('fm_protocol_nat'),
