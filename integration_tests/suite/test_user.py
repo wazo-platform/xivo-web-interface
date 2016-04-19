@@ -907,10 +907,6 @@ class TestUserDelete(TestUser):
                                        method="DELETE")
         self.confd.assert_request_sent(urljoin("lines", line['id'], "extensions", line['extension_id']),
                                        method="DELETE")
-        self.confd.assert_request_sent(urljoin("lines", line['id'], "endpoints", "sip", line['endpoint_id']),
-                                       method="DELETE")
-        self.confd.assert_request_sent(urljoin("endpoints", "sip", line['endpoint_id']),
-                                       method="DELETE")
         self.confd.assert_request_sent(urljoin("lines", line['id']), method="DELETE")
 
     def test_when_user_has_sccp_line_then_user_deleted(self):
@@ -925,10 +921,6 @@ class TestUserDelete(TestUser):
                                        method="DELETE")
         self.confd.assert_request_sent(urljoin("lines", line['id'], "extensions", line['extension_id']),
                                        method="DELETE")
-        self.confd.assert_request_sent(urljoin("lines", line['id'], "endpoints", "sccp", line['endpoint_id']),
-                                       method="DELETE")
-        self.confd.assert_request_sent(urljoin("endpoints", "sccp", line['endpoint_id']),
-                                       method="DELETE")
         self.confd.assert_request_sent(urljoin("lines", line['id']), method="DELETE")
 
     def test_when_user_has_custom_line_then_user_deleted(self):
@@ -942,10 +934,6 @@ class TestUserDelete(TestUser):
         self.confd.assert_request_sent(urljoin("users", line['user_id'], "lines", line['id']),
                                        method="DELETE")
         self.confd.assert_request_sent(urljoin("lines", line['id'], "extensions", line['extension_id']),
-                                       method="DELETE")
-        self.confd.assert_request_sent(urljoin("lines", line['id'], "endpoints", "custom", line['endpoint_id']),
-                                       method="DELETE")
-        self.confd.assert_request_sent(urljoin("endpoints", "custom", line['endpoint_id']),
                                        method="DELETE")
         self.confd.assert_request_sent(urljoin("lines", line['id']), method="DELETE")
 
