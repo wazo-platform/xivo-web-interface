@@ -24,6 +24,10 @@ import re
 from hamcrest import assert_that, has_entries, equal_to
 
 
+def urljoin(*parts):
+    return "/" + "/".join(str(p) for p in parts)
+
+
 class MockConfd(object):
 
     def __init__(self, url):

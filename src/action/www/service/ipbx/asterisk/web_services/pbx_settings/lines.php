@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,93 +27,13 @@ $act = $_QRY->get('act');
 
 switch($act)
 {
-	case 'view':
-		$appline = &$ipbx->get_application('line');
-
-		if(($info = $appline->get($_QRY->get('id'))) === false)
-		{
-			$http_response->set_status_line(404);
-			$http_response->send(true);
-		}
-
-		$_TPL->set_var('info',$info);
-		break;
-	case 'add':
-		$appline = &$ipbx->get_application('line');
-
-		if($appline->add_from_json() === true)
-			$status = 200;
-		else
-			$status = 400;
-
-		dwho_error_log($appline->get_error(), $status);
-
-		$http_response->set_status_line($status);
-		$http_response->send(true);
-		break;
-	case 'edit':
-		$appline = &$ipbx->get_application('line');
-
-		if(($line = $appline->get($_QRY->get('id'))) === false)
-			$status = 404;
-		else if($appline->edit_from_json($line) === true)
-			$status = 200;
-		else
-			$status = 400;
-
-		dwho_error_log($appline->get_error(), $status);
-
-		$http_response->set_status_line($status);
-		$http_response->send(true);
-		break;
-	case 'delete':
-		$appline = &$ipbx->get_application('line');
-
-		if($appline->get($_QRY->get('id')) === false)
-			$status = 404;
-		else if($appline->delete() === true)
-			$status = 200;
-		else
-			$status = 500;
-
-		dwho_error_log($appline->get_error(), $status);
-
-		$http_response->set_status_line($status);
-		$http_response->send(true);
-		break;
-	case 'deleteall':
-		$appline = &$ipbx->get_application('line');
-
-		if(($list = $appline->get_lines_list()) === false
-		|| ($nb = count($list)) === 0)
-		{
-			$http_response->set_status_line(204);
-			$http_response->send(true);
-		}
-		for ($i=0; $i<$nb; $i++)
-		{
-			$ref = &$list[$i];
-			$appline->get($ref['id']);
-			$appline->delete();
-		}
-		$status = 200;
-
-		$http_response->set_status_line($status);
-		$http_response->send(true);
-		break;
 	case 'search':
-		$appline = &$ipbx->get_application('line',null,false);
+		$appline = &$ipbx->get_application('line');
 
 		$where = array();
 
 		if (($context = $_QRY->get('context')) !== null)
 			$where['context'] = $context;
-
-		if (($protocols = $_QRY->get('protocol')) !== null)
-			$where['protocols'] = array($protocols);
-
-		if (($free = $_QRY->get('free')) !== null)
-			$where['free'] = ((bool) $free);
 
 		if(($list = $appline->get_lines_search($_QRY->get('search'),$where)) === false)
 		{
@@ -127,17 +47,9 @@ switch($act)
 	default:
 		$act = 'list';
 
-		$where = array();
+		$appline = &$ipbx->get_application('line');
 
-		$appline = &$ipbx->get_application('line',null,false);
-
-		if (($protocols = $_QRY->get('protocol')) !== null)
-			$where['protocols'] = array($protocols);
-
-		if (($free = $_QRY->get('free')) !== null)
-			$where['free'] = ((bool) $free);
-
-		if(($list = $appline->get_lines_list($where)) === false)
+		if(($list = $appline->get_lines_list()) === false)
 		{
 			$http_response->set_status_line(204);
 			$http_response->send(true);

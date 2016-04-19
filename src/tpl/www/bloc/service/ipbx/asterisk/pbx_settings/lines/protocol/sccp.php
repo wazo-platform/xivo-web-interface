@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,7 +22,6 @@ $form = &$this->get_module('form');
 $url = &$this->get_module('url');
 
 $info = $this->get_var('info');
-$error = $this->get_var('error');
 $element = $this->get_var('element');
 
 ?>
@@ -37,9 +36,7 @@ $element = $this->get_var('element');
 					  'readonly' => true,
 					  'class'    => 'it-disabled',
 					  'default'	=> $element['protocol']['sccp']['name']['default'],
-					  'value'	=> $this->get_var('info','protocol','name'),
-					  'error'	=> $this->bbf_args('error',
-							   $this->get_var('error', 'sccp', 'name')) ));
+					  'value'	=> $this->get_var('info','line','name')));
 
 		if($context_list !== false):
 			echo	$form->select(array('desc'	=> $this->bbf('fm_protocol_context'),

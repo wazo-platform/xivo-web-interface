@@ -19,13 +19,11 @@
 #
 
 
-dwho::load_class('dwho_network');
-dwho::load_class('dwho_http');
-
 dwho_file::required(array(XIVO_PATH_OBJECT,'application','service','ipbx','asterisk.inc'),true);
-require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'converter', 'line', 'mapper.inc'));
 require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'client.inc'));
-require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'sip', 'sip.inc'));
+require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'line', 'line.inc'));
+require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'endpoint', 'endpoint.inc'));
+require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'extension', 'extension.inc'));
 
 class xivo_application_service_asterisk_line extends xivo_application_asterisk_abstract
 {
@@ -34,13 +32,13 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 	protected $_linefeatures 	= false;
 	protected $_protocolname	= false;
 	protected $_protocol		= false;
-	protected $_user_line		= false;
-	protected $_extensions		= false;
-	protected $_provddevice		= false;
 	protected $_entity			= false;
-	protected $_option_mapper   = false;
-	protected $_sip_confd		= false;
 	protected $_conf			= array();
+	private $_endpoint			= null;
+	private $_line				= null;
+	private $_extension			= null;
+	private $_sccp_option_mapper	= null;
+	private $_sip_option_mapper	= null;
 
 	public function __construct(&$service,&$dso,$param=null,$components=true)
 	{
@@ -53,117 +51,93 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 
 		if(($this->_linefeatures = &$this->_service->get_module('linefeatures')) === false
 		|| ($_XOBJ = dwho_gct::get('xivo_object')) === false
-		|| ($this->_entity = &$_XOBJ->get_module('entity')) === false
-		|| $this->load_init($param) === false)
+		|| ($this->_entity = &$_XOBJ->get_module('entity')) === false)
 			return(false);
-		else if((bool) $components === true)
-			$this->load_components();
 
 		$client = Client::default_config();
-		$this->_sip_confd = new SipResource($client);
-		$this->_option_mapper = new OptionMapper();
+		$this->_endpoint = new EndpointResource($client);
+		$this->_line = new LineResource($client);
+		$this->_extension = new ExtensionResource($client);
+		$this->_sccp_option_mapper = new SCCPOptionMapper();
+		$this->_sip_option_mapper = new SIPOptionMapper();
 
 		return(true);
 	}
 
-	public function load_init($param=array())
+	public function get_nb($arr=null,$disable=null)
 	{
-		$this->_reset_info();
-		$this->_reset_params();
-		$this->_reset();
-
-		return(true);
+		return($this->_dso->get_nb($arr,$disable));
 	}
 
-	public function load_components()
-	{
-		$this->_components = true;
-
-		if(($this->_user_line = &$this->_service->get_module('user_line')) === false
-		|| ($this->_extensions = &$this->_service->get_module('extensions')) === false
-		|| ($_XOBJ = dwho_gct::get('xivo_object')) === false
-		|| ($this->_entity = &$_XOBJ->get_module('entity')) === false
-		|| ($this->_provddevice = &$_XOBJ->get_module('provddevice')) === false)
-			return(false);
-
-		return(true);
-	}
-
-	public  function _reset()
-	{
-		$this->_protocolname = false;
-
-		return(parent::_reset());
-	}
-
-	public function get_nb($arr=null,$disable=null,$initialized=null)
-	{
-		return($this->_dso->get_nb($arr,$disable,$initialized));
-	}
-
-	public function get($id,$disable=null,$nocomponents=null,$ipbxinfos=false)
+	public function get($id,$ipbxinfos=false)
 	{
 		$this->_info = $this->_origin = array();
+		$this->_protocolname = false;
 
-		if(($this->_info['linefeatures'] = $this->_linefeatures->get($id)) === false)
-			return(false);
-
-		if($this->_info['linefeatures'] === false
-		|| ($this->_protocol = &$this->_service->get_protocol_module($this->_info['linefeatures']['protocol'])) === false
-		|| ($this->_info['protocol'] = $this->_protocol->get($this->_info['linefeatures']['protocolid'],$disable)) === false)
-			return(false);
-
-		$this->_origin['protocol'] = $this->_protocol->get_origin();
-		$this->_origin['linefeatures'] = $this->_linefeatures->get_origin();
-
-		$this->get_options();
-
-		if($this->_components === false)
-			return($this->_info);
-
-		if(dwho_ak('exten',$nocomponents,true) === false)
-			$this->_get_exten();
-
-		if ($ipbxinfos === true)
-			$this->_get_ipbx_infos();
-
-		return($this->_info);
-	}
-
-	private function get_options()
-	{
-		$options = array();
-		$protocol = $this->_info['linefeatures']['protocol'];
-
-		if($protocol === "sip") {
-			$protocolid = $this->_info['linefeatures']['protocolid'];
-			$sip = $this->_sip_confd->get($protocolid);
-			$options = $this->_option_mapper->extract_options($sip['options']);
+		if ($this->_get_line($id) === false
+		|| $this->_get_endpoint() === false) {
+			return false;
 		}
 
-		$this->_origin['options'] = $this->_info['options'] = $options;
+		switch ($this->_protocolname) {
+			case CONFD_LINE_PROTO_SCCP:
+				$res = $this->_sccp_option_mapper->split_endpoint_options($this->_info['endpoint']);
+				$this->_info['hidden_options'] = $res['hidden'];
+				$this->_info['extra'] = $res['extra'];
+				break;
+			case CONFD_LINE_PROTO_SIP:
+				$res = $this->_sip_option_mapper->split_endpoint_options($this->_info['endpoint']);
+				$this->_info['free_options'] = $res['free'];
+				$this->_info['hidden_options'] = $res['hidden'];
+				$this->_info['extra'] = $res['extra'];
+				break;
+		}
+
+		if ($ipbxinfos === true) {
+			$this->_get_ipbx_infos();
+		}
+
+		return $this->_info;
 	}
 
-	function _get_exten()
+	private function _get_line($line_id)
 	{
-		$this->_info['exten'] = false;
-		$this->_origin['exten'] = false;
+		$line = $this->_line->get($line_id);
+		if ($line === null || $line['protocol'] === null) {
+			return false;
+		}
 
-		if(($this->_info['exten'] = $this->_extensions->get_exten(
-										$this->_info['linefeatures']['number'],
-										$this->_info['linefeatures']['context'])) !== false)
-			$this->_origin['exten'] = $this->_extensions->get_origin();
+		$this->_info['line'] = $this->_origin['line'] = $line;
+		$this->_protocolname = $line['protocol'];
 
-		return($this->_info['exten']);
+		return true;
+	}
+
+	private function _get_endpoint()
+	{
+		$line_id = $this->_info['line']['id'];
+
+		$association = $this->_line->get_endpoint_association($line_id, $this->_protocolname);
+		if ($association === null) {
+			return false;
+		}
+
+		$endpoint = $this->_endpoint->get($association['endpoint_id'], $this->_protocolname);
+		if ($endpoint === null) {
+			return false;
+		}
+
+		$this->_info['endpoint'] = $this->_origin['endpoint'] = $endpoint;
+
+		return true;
 	}
 
 	function _get_ipbx_infos()
 	{
 		$this->_info['ipbx'] = false;
 
-		$line_protocol = $this->_info['linefeatures']['protocol'];
-		$peer_name = $this->_info['protocol']['name'];
-		if ($line_protocol === 'sip') {
+		if ($this->_protocolname === CONFD_LINE_PROTO_SIP) {
+			$peer_name = $this->_info['endpoint']['username'];
 			$ipbx_response = $this->_service->sip_show_peer($peer_name);
 		} else {
 			return false;
@@ -298,22 +272,17 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 			{
 				case XIVO_SRE_IPBX_AST_PROTO_SIP:
 					$sip = dwho_array_startswith_key($ref,'usersip.',true);
-					$sip['initialized'] = dwho_has_len($sip['fullcontact']);
-					unset($sip['fullcontact']);
 					$sip['identity'] = strtoupper($sip['protocol']).'/'.$sip['name'];
 					$r[$linefeatures['id']] = array_merge($sip,$linefeatures);
 					break;
 				case XIVO_SRE_IPBX_AST_PROTO_SCCP:
 					$sccp = dwho_array_startswith_key($ref,'sccpline.',true);
 					$sccp['protocol'] = 'SCCP';
-					$sccp['initialized'] = true;
 					$sccp['identity'] = strtoupper($sccp['protocol']).'/'.$sccp['name'];
 					$r[$linefeatures['id']] = array_merge($sccp,$linefeatures);
 					break;
 				case XIVO_SRE_IPBX_AST_PROTO_CUSTOM:
 					$custom = dwho_array_startswith_key($ref,'usercustom.',true);
-					$custom['initialized'] = true;
-					#$custom['identity'] = strtoupper(XIVO_SRE_IPBX_AST_PROTO_CUSTOM).'/'.$custom['interface'];
 					$custom['identity'] = $custom['interface'];
 					$r[$linefeatures['id']] = array_merge($custom,$linefeatures);
 					break;
@@ -333,529 +302,251 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 
 	public function set_add($arr,$protocolname)
 	{
-		return($this->_set('add',$arr,$protocolname));
+		if ($protocolname !== CONFD_LINE_PROTO_CUSTOM
+		&& $protocolname !== CONFD_LINE_PROTO_SIP) {
+			return false;
+		}
+
+		$this->_protocolname = $protocolname;
+
+		return($this->_set('add',$arr));
 	}
 
-	public function set_edit($arr,$protocolname)
+	public function set_edit($arr)
 	{
 		if(empty($this->_info) === true)
 			return(false);
 
-		return($this->_set('edit',$arr,$protocolname));
+		return($this->_set('edit',$arr));
 	}
 
-	private function _set($action,$arr,$protocolname)
+	private function _set($action,$arr)
 	{
 		$this->_reset();
 
-		if(($action !== 'add' && $action !== 'edit') === true
-		|| dwho_issa('protocol',$arr) === false)
-			return(false);
+		$this->_set_line($action, $arr);
+		$this->_set_endpoint($action, $arr);
 
-		$this->_protocolname = $protocolname;
+		// make sure the page is redisplayed with the fields filled on error
+		switch ($this->_protocolname) {
+			case CONFD_LINE_PROTO_SCCP:
+				$res = $this->_sccp_option_mapper->split_endpoint_options($this->_result['endpoint']);
+				$this->_set_result('extra', $res['extra']);
+				break;
+			case CONFD_LINE_PROTO_SIP:
+				$res = $this->_sip_option_mapper->split_endpoint_options($this->_result['endpoint']);
+				$this->_set_result('free_options', $res['free']);
+				$this->_set_result('extra', $res['extra']);
+				break;
+		}
 
-		if (isset($arr['user_id']))
-			$this->_set_result('user_id', $arr['user_id']);
-
-		if ($action === 'add'
-		&& dwho_has_len($arr['protocol'], 'secret') === false)
-			$arr['protocol']['secret'] = $this->gen_password(6);
-
-		if (dwho_has_len($arr['linefeatures'], 'secret') === true)
-			$arr['protocol']['secret'] = $arr['linefeatures']['secret'];
-
-		$callerid = '';
-		if(isset($arr['protocol']['callerid']) === true)
-			$callerid =$arr['protocol']['callerid'];
-		elseif(isset($arr['linefeatures']['callerid']) === true)
-			$callerid = $arr['linefeatures']['callerid'];
-
-		$arr['protocol']['callerid'] = $this->_service->mk_callerid($callerid, '', $protocolname);
-
-		if (isset($arr['protocol']['allow']) === true
-		&& dwho_issa('allow', $arr['protocol']) === false)
-			$arr['protocol']['allow'] = explode(',', $arr['protocol']['allow']);
-		elseif(dwho_issa('allow', $arr['protocol']) === false)
-			$arr['protocol']['allow'] = null;
-
-		$this->set_protocol($arr['protocol'],$protocolname);
-
-		if($protocolname === XIVO_SRE_IPBX_AST_PROTO_CUSTOM)
-			$name = $arr['protocol']['interface'];
-		else
-			$name = $arr['protocol']['name'];
-
-		$arr['linefeatures']['protocol'] = $protocolname;
-		$arr['linefeatures']['protocolid'] = 0;
-		$arr['linefeatures']['name'] = $name;
-		$arr['linefeatures']['context'] = (string) $arr['protocol']['context'];
-
-		$this->set_linefeatures($action,$arr['linefeatures']);
-
-		$this->set_options($arr);
-
-		if($this->get_errnb() > 0)
-			$this->_protocolname = $r = false;
-		else
-			$r = true;
-
-
-		return($r);
+		return true;
 	}
 
-	function set_protocol($arr,$protocolname)
+	private function _set_line($action, $arr)
 	{
-		if(is_array($arr) === false
-		|| ($protocol = &$this->_service->get_protocol_module($protocolname)) === false)
-		{
-			$this->_set_result('protocol',null);
-			$this->_set_error('protocol','invalid module');
-			return(false);
+		if ($action === 'add') {
+			$line = array(
+				'context' => $arr['protocol']['context'],
+			);
+		} else {
+			$line = $this->_info['line'];
 		}
 
-		if ($this->get_result('user_id') === null)
-		{
-			if(isset($arr['host-type']) === true)
-				$arr['host'] = $arr['host-type'];
-			else if(isset($arr['host']) === false)
-				$arr['host'] = '';
-
-			if(isset($arr['host-static']) === true
-			&& $arr['host'] === 'static')
-				$arr['host'] = $arr['host-static'];
-		}
-
-		if (isset($this->_info['protocol']['id']) === true
-		&& ($protocolret = $protocol->get($this->_info['protocol']['id'])) !== false)
-		{
-			if($this->get_result('user_id') !== null)
-			{
-				if($arr['allow'] === null)
-					unset($arr['allow']);
-				$arr = array_merge($protocolret, $arr);
-
-				if(empty($arr['allow']) === false
-				&& is_array($arr['allow']) === false)
-					$arr['allow'] = explode(',',$arr['allow']);
-			}
-			else
-				$arr['call-limit'] = $protocolret['call-limit'];
-		}
-
-		if(($rs = $protocol->chk_values($arr)) === false)
-		{
-			$this->_set_result('protocol',$protocol->get_filter_result());
-			$this->_set_error('protocol',$protocol->get_filter_error());
-			return(false);
-		}
-
-		if(dwho_issa('allow',$rs) === true)
-			$rs['allow'] = implode(',',$rs['allow']);
-
-		$this->_set_result('protocol',$rs);
-
-		return(true);
+		$this->_set_result('line', $line);
 	}
 
-	function set_linefeatures($action,$arr)
+	private function _set_endpoint($action, $arr)
 	{
-		if(($action !== 'add' && $action !== 'edit') === true
-		|| ($action === 'edit' && dwho_issa('linefeatures',$this->_origin) === false) === true)
-			return(false);
-		else if(is_array($arr) === false)
-		{
-			$this->_set_result('linefeatures',null);
-			$this->_set_error('linefeatures','invalid data');
-			return(false);
-		}
-		elseif(($rs = $this->_linefeatures->chk_values($arr)) === false)
-		{
-			$this->_set_result('linefeatures',$this->_linefeatures->get_filter_result());
-			$this->_set_error('linefeatures',$this->_linefeatures->get_filter_error());
-			return(false);
+		if ($action === 'add') {
+			$endpoint = array();
+		} else {
+			$endpoint = $this->_info['endpoint'];
 		}
 
-		$this->_set_result('linefeatures',$rs);
+		switch ($this->_protocolname) {
+			case CONFD_LINE_PROTO_CUSTOM:
+				$endpoint['interface'] = $arr['protocol']['interface'];
+				break;
+			case CONFD_LINE_PROTO_SCCP:
+				$options = array();
+				if (isset($this->_info['hidden_options'])) {
+					$options = $this->_info['hidden_options'];
+				} else {
+					$options = array();
+				}
+				if (isset($arr['protocol']['disallow'])) {
+					$options[] = array('disallow', $arr['protocol']['disallow']);
+				}
+				if (isset($arr['protocol']['allow'])) {
+					$options[] = array('allow', implode(',',$arr['protocol']['allow']));
+				}
 
-		return(true);
-	}
+				$endpoint['options'] = $options;
+				break;
+			case CONFD_LINE_PROTO_SIP:
+				$endpoint['username'] = $arr['protocol']['name'];
+				$endpoint['secret'] = $arr['protocol']['secret'];
 
-	private function set_options($arr)
-	{
-		if(is_array($arr) === false)
-			return(false);
+				if (isset($this->_info['hidden_options'])) {
+					$options = $this->_info['hidden_options'];
+				} else {
+					$options = array();
+				}
+				if (!empty($arr['protocol']['language'])) {
+					$options[] = array('language', $arr['protocol']['language']);
+				}
+				if (!empty($arr['protocol']['callerid'])) {
+					$options[] = array('callerid', $arr['protocol']['callerid']);
+				}
+				if (!empty($arr['protocol']['nat'])) {
+					$options[] = array('nat', $arr['protocol']['nat']);
+				}
+				if (!empty($arr['protocol']['dtmfmode'])) {
+					$options[] = array('dtmfmode', $arr['protocol']['dtmfmode']);
+				}
+				if (!empty($arr['protocol']['qualify'])) {
+					$options[] = array('qualify', $arr['protocol']['qualify']);
+				}
+				if (isset($arr['protocol']['disallow'])) {
+					$options[] = array('disallow', $arr['protocol']['disallow']);
+				}
+				if (isset($arr['protocol']['allow'])) {
+					$options[] = array('allow', implode(',',$arr['protocol']['allow']));
+				}
+				if (isset($arr['options'])) {
+					for($i = 0; $i < count($arr['options']['optionname']); $i++) {
+						$name = $arr['options']['optionname'][$i];
+						$value = $arr['options']['optionvalue'][$i];
+						if ($name === 'host') {
+							$endpoint['host'] = $value;
+						} elseif ($name === 'type') {
+							$endpoint['type'] = $value;
+						} elseif (trim($name) !== '' && trim($value) !== '') {
+							$options[] = array($name, $value);
+						}
+					}
+				}
 
-		$this->_set_result('options', null);
-
-		if(array_key_exists('options', $arr)) {
-			$mapped_options = $this->_option_mapper->map_form($arr['options']);
-			$this->_set_result('options', $mapped_options);
+				$endpoint['options'] = $options;
+				break;
 		}
 
-		return(true);
+		$this->_set_result('endpoint', $endpoint);
 	}
 
 	function add()
 	{
-		$r = true;
-
-		$this->_status = 'add';
-		$this->_return = array();
-		$line_id = null;
-		$user_id = (int) $this->get_result('user_id');
-
-		if($this->get_errnb() > 0
-		|| $this->_protocolname === false
-		|| ($protocol_id = $this->add_protocol()) === false
-		|| ($line_id = $this->add_linefeatures($protocol_id)) === false)
-		{
-			if($protocol_id !== null)
-				$this->_reverse_add();
-			$r = false;
+		if ($this->_protocolname === false) {
+			return false;
 		}
 
-		if($protocol_id !== null && $this->_protocolname !== null) {
-			$success = $this->update_options($protocol_id, $this->_protocolname);
-			if($success !== true) {
-				$this->_reverse_add();
-				return false;
-			}
+		$line = null;
+		$endpoint = null;
+
+		$line = $this->_line->create($this->_result['line']);
+		if ($line === null) {
+			goto error;
 		}
 
-		$this->_status = '';
-
-		return($line_id);
-	}
-
-	private function update_options($protocol_id, $protocol)
-	{
-		if($protocol == "sip")
-		{
-			$sip = $this->_sip_confd->get($protocol_id);
-			if($sip === null) {
-				dwho_report::push('error', 'cannot get options for endpoint sip ' . $protocol_id);
-				return(false);
-			}
-
-			$current_options = $sip['options'];
-
-			$new_options = $this->get_result('options');
-			if($new_options === null) {
-				$new_options = array();
-			}
-
-			$options = $this->_option_mapper->merge_options($current_options, $new_options);
-
-			$success = $this->_sip_confd->update($protocol_id, array('options' => $options));
-			if($success !== true) {
-				dwho_report::push('error', 'could not update options for endpoint sip ' . $protocol_id);
-				return(false);
-			}
+		$endpoint = $this->_endpoint->create($this->_result['endpoint'], $this->_protocolname);
+		if ($endpoint === null) {
+			goto error;
 		}
 
-		return(true);
-	}
-
-	function add_protocol()
-	{
-		if(($rs = $this->get_result('protocol')) === null
-		|| ($protocol = &$this->_service->get_protocol_module($this->_protocolname)) === false)
-			return(false);
-
-		return(($this->_return['protocol'] = $protocol->add($rs)));
-	}
-
-	function add_linefeatures($protocol_id)
-	{
-		if(($protocol_id = dwho_ulongint($protocol_id)) === 0
-		|| ($rs = $this->get_result('linefeatures')) === null
-		|| $rs === false)
-			return(false);
-
-		$rs['protocolid'] = (int) $protocol_id;
-
-		$this->_return['linefeatures'] = $this->_linefeatures->add($rs);
-
-		return($this->_return['linefeatures']);
-	}
-
-	function _reverse_add()
-	{
-		if($this->get_errnb() > 0
-		|| $this->_protocolname === false
-		|| $this->_status !== 'add'
-		|| is_array($this->_return) === false
-		|| empty($this->_return) === true)
-			return(false);
-
-		foreach($this->_return as $key => $val)
-		{
-			if($val === false)
-				continue;
-
-			switch($key)
-			{
-				case 'protocol':
-					$protocol = &$this->_service->get_protocol_module($this->_protocolname);
-					$protocol->delete($val);
-					break;
-				case 'linefeatures':
-					$this->_linefeatures->delete($val);
-					break;
-			}
+		$associated = $this->_line->associate_endpoint($line['id'], $endpoint['id'], $this->_protocolname);
+		if ($associated === false) {
+			goto error;
 		}
 
-		return(true);
+		return true;
+
+error:
+		if (!empty($endpoint)) {
+			$this->_endpoint->delete($endpoint['id'], $this->_protocolname);
+		}
+		if (!empty($line)) {
+			$this->_line->delete($line['id']);
+		}
+
+		return false;
 	}
 
 	function edit()
 	{
-		$this->_status = 'edit';
-		$this->_return = array();
-		$user_id = (int) $this->get_result('user_id');
-
-		if(is_array($this->_info) === false
-		|| empty($this->_info) === true
-		|| $this->get_errnb() > 0
-		|| $this->_protocolname === false
-		|| ($protocol_id = $this->edit_protocol()) === false)
-		{
-			$this->_status = '';
-			return(false);
-		}
-		elseif($this->edit_linefeatures($protocol_id) === false
-		|| $this->update_device_config() === false)
-		{
-			$this->_reverse_edit($protocol_id);
-			$this->_status = '';
-			return(false);
+		if (empty($this->_info) === true
+		|| $this->_protocolname === false) {
+			return false;
 		}
 
-		if($protocol_id !== null && $this->_protocolname !== null) {
-			$success = $this->update_options($protocol_id, $this->_protocolname);
-			if($success !== true) {
-				$this->_reverse_edit($protocol_id);
-				return false;
-			}
+		$endpoint_updated = $this->_endpoint->update($this->_info['endpoint']['id'], $this->_result['endpoint'], $this->_protocolname);
+		if ($endpoint_updated === false) {
+			return false;
 		}
 
-		$this->_status = '';
-		return($this->_info['linefeatures']['id']);
-	}
-
-	function edit_protocol()
-	{
-		if(dwho_issa('protocol',$this->_info) === false
-		|| dwho_issa('linefeatures',$this->_info) === false
-		|| ($protocol = &$this->_service->get_protocol_module($this->_protocolname)) === false)
-			return(false);
-		else if($this->_info['linefeatures']['protocol'] === $this->_protocolname)
-		{
-			if(($rs = $this->get_result('protocol')) === null)
-				return(false);
-
-			if(($ret = $protocol->edit($this->_info['protocol']['id'],$rs)) === false)
-			{
-				$this->_return['protocol'] = $ret;
-				return(false);
-			}
-
-			return(($this->_return['protocol'] = $this->_info['protocol']['id']));
-		}
-		else if(($protocol_id = $this->add_protocol()) === false)
-			return(false);
-		else if($this->delete_protocol() === false)
-		{
-			$protocol->delete($protocol_id);
-			return(false);
-		}
-		return(($this->_return['protocol'] = $protocol_id));
-	}
-
-	function edit_origin_protocol($protocol_id=0)
-	{
-		if(dwho_issa('protocol',$this->_origin) === false
-		|| dwho_issa('linefeatures',$this->_info) === false
-		|| ($protocol = &$this->_service->get_protocol_module($this->_info['linefeatures']['protocol'])) === false)
-			return(false);
-		else if($this->_info['linefeatures']['protocol'] === $this->_protocolname)
-			return($protocol->edit_origin($this->_origin['protocol']));
-		else if(($protocol_id = dwho_ulongint($protocol_id)) === 0
-		|| ($proto = &$this->_service->get_protocol_module($this->_protocolname)) === false
-		|| $proto->delete($protocol_id) === false)
-			return(false);
-
-		return($protocol->add_origin($this->_origin['protocol']));
-	}
-
-	function edit_linefeatures($protocol_id)
-	{
-		if(dwho_issa('linefeatures',$this->_info) === false
-		|| dwho_issa('protocol',$this->_info) === false
-		|| ($rs = $this->get_result('linefeatures')) === null
-		|| $rs === false)
-			return(false);
-
-		if($this->_info['linefeatures']['protocol'] === $this->_protocolname)
-		{
-			$rs['protocolid'] = $this->_info['protocol']['id'];
-			$provisioning = false;
-		}
-		else if(($protocol_id = dwho_ulongint($protocol_id)) !== 0)
-		{
-			$rs['protocolid'] = $protocol_id;
-			$provisioning = true;
-		}
-		else
-			return(false);
-
-		return(($this->_return['linefeatures'] = $this->_linefeatures->edit(
-											$this->_info['linefeatures']['id'],
-											$rs,
-											$provisioning)));
-	}
-
-	public function update_device_config()
-	{
-		if($this->get_result('user_id') === null
-		&& empty($this->_info['linefeatures']['device']) === false)
-		{
-			if($this->_provddevice->rebuild_device_config($this->_info['linefeatures']['device']) === false)
-			{
-				dwho_report::push('error', 'Can\'t rebuild config device');
-				return(false);
-			}
-		}
-		return(true);
-	}
-
-	function _reverse_edit($protocol_id=0)
-	{
-		if($this->get_errnb() > 0
-		|| $this->_protocolname === false
-		|| $this->_status !== 'edit'
-		|| is_array($this->_return) === false
-		|| empty($this->_return) === true)
-			return(false);
-
-		foreach($this->_return as $key => $val)
-		{
-			if($val === false)
-				continue;
-
-			switch($key)
-			{
-				case 'protocol':
-					$this->edit_origin_protocol($protocol_id);
-					break;
-				case 'linefeatures':
-					if(isset($this->_origin['linefeatures']) === false
-					|| $this->_origin['linefeatures'] === false)
-						$this->delete_linefeatures();
-					else
-						$this->_linefeatures->edit_origin($this->_origin['linefeatures']);
-					break;
-			}
-		}
-
-		return(true);
+		return true;
 	}
 
 	function delete()
 	{
-		$r = true;
-
-		$this->_status = 'delete';
-		$this->_return = array();
-
-		if($this->delete_protocol() === false
-		|| $this->delete_linefeatures() === false
-		|| $this->delete_exten('exten') === false
-		|| $this->update_device_config() === false)
-		{
-			$r = false;
-			$this->_reverse_delete();
+		if (empty($this->_info) === true
+		|| $this->_protocolname === false) {
+			return false;
 		}
 
-		$this->_status = '';
+		$line_id = $this->_info['line']['id'];
+		$endpoint_id = $this->_info['endpoint']['id'];
 
-		return($r);
+		// XXX the code is similar to the code found in LineManager
+		$this->_dissociate_device($line_id);
+		// dissociate the users before the extensions so that the incall extensions
+		// are not listed in the line/extensions association
+		$this->_dissociate_users($line_id);
+		$this->_dissociate_and_delete_extensions($line_id);
+		// deleting a line via confd also deletes the associated endpoint
+		$this->_line->delete($line_id);
+
+		return true;
 	}
 
-	function delete_protocol()
+	private function _dissociate_device($line_id)
 	{
-		if(dwho_issa('protocol',$this->_info) === false
-		|| dwho_issa('linefeatures',$this->_info) === false
-		|| ($protocol = &$this->_service->get_protocol_module($this->_info['linefeatures']['protocol'])) === false)
-			return(false);
-
-		$r = $protocol->delete($this->_info['protocol']['id']);
-
-		if($this->_status === 'delete')
-			$this->_return['protocol'] = $r;
-
-		return($r);
-	}
-
-	function delete_linefeatures()
-	{
-		if(dwho_issa('linefeatures',$this->_info) === false)
-			return(false);
-
-		$where = array('line_id' => $this->_info['linefeatures']['id']);
-		$this->_user_line->delete_where($where);
-		$r = $this->_linefeatures->delete($this->_info['linefeatures']['id']);
-
-		if($this->_status === 'delete')
-			$this->_return['linefeatures'] = $r;
-
-		return($r);
-	}
-
-	function _reverse_delete()
-	{
-		if($this->get_errnb() > 0
-		|| $this->_status !== 'delete'
-		|| is_array($this->_return) === false
-		|| empty($this->_return) === true)
-			return(false);
-
-		foreach($this->_return as $key => $val)
-		{
-			if($val === false)
-				continue;
-
-			switch($key)
-			{
-				case 'protocol':
-					if(isset($this->_origin['protocol']) === false
-					|| $this->_origin['protocol'] === false)
-						continue;
-
-					$protocol = &$this->_service->get_protocol_module($this->_info['linefeatures']['protocol']);
-					$protocol->add_origin($this->_origin['protocol']);
-					break;
-				case 'linefeatures':
-					if(isset($this->_origin['linefeatures']) === true
-					&& $this->_origin['linefeatures'] !== false)
-						$this->_linefeatures->add_origin($this->_origin['linefeatures']);
-					break;
-			}
+		$association = $this->_line->get_device_association($line_id);
+		if ($association !== null) {
+			$this->_line->dissociate_device($line_id, $association['device_id']);
 		}
+	}
 
-		return(true);
+	private function _dissociate_users($line_id)
+	{
+		$associations = $this->_line->list_user_associations($line_id);
+		foreach($associations as $userline) {
+			$this->_line->dissociate_user($line_id, $userline['user_id']);
+		}
+	}
+
+	private function _dissociate_and_delete_extensions($line_id)
+	{
+		$associations = $this->_line->list_extension_associations($line_id);
+		foreach($associations as $association) {
+			$this->_line->dissociate_extension($line_id, $association['extension_id']);
+			$this->_extension->delete($association['extension_id']);
+		}
 	}
 
 	function enable()
 	{
+		if ($this->_protocolname === false
+		|| ($this->_protocol = &$this->_service->get_protocol_module($this->_protocolname)) === false) {
+			return false;
+		}
+
 		$r = true;
 
 		$this->_status = 'enable';
 		$this->_return = array();
 
-		if(is_object($this->_protocol) === false)
-			$r = false;
-		else if($this->enable_protocol() === false
+		if($this->enable_protocol() === false
 		|| $this->enable_linefeatures() === false)
 		{
 			$r = false;
@@ -869,14 +560,17 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 
 	function disable()
 	{
+		if ($this->_protocolname === false
+		|| ($this->_protocol = &$this->_service->get_protocol_module($this->_protocolname)) === false) {
+			return false;
+		}
+
 		$r = true;
 
 		$this->_status = 'disable';
 		$this->_return = array();
 
-		if(is_object($this->_protocol) === false)
-			$r = false;
-		else if($this->disable_protocol() === false
+		if($this->disable_protocol() === false
 		|| $this->disable_linefeatures() === false)
 		{
 			$r = false;
@@ -900,12 +594,10 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 
 	function _enable_disable_protocol($disable=false)
 	{
-		if(dwho_issa('protocol',$this->_info) === false)
-			return(false);
-		else if((bool) $disable === false)
-			$r = $this->_protocol->enable($this->_info['protocol']['id']);
+		if((bool) $disable === false)
+			$r = $this->_protocol->enable($this->_info['endpoint']['id']);
 		else
-			$r = $this->_protocol->disable($this->_info['protocol']['id']);
+			$r = $this->_protocol->disable($this->_info['endpoint']['id']);
 
 		if($this->_status === 'enable' || $this->_status === 'disable')
 			$this->_return['protocol'] = $r;
@@ -925,12 +617,10 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 
 	function _enable_disable_linefeatures($disable=false)
 	{
-		if(dwho_issa('linefeatures',$this->_info) === false)
-			return(false);
-		else if((bool) $disable === false)
-			$r = $this->_linefeatures->enable($this->_info['linefeatures']['id']);
+		if((bool) $disable === false)
+			$r = $this->_linefeatures->enable($this->_info['line']['id']);
 		else
-			$r = $this->_linefeatures->disable($this->_info['linefeatures']['id']);
+			$r = $this->_linefeatures->disable($this->_info['line']['id']);
 
 		if($this->_status === 'enable' || $this->_status === 'disable')
 			$this->_return['linefeatures'] = $r;
@@ -968,54 +658,6 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 		return(true);
 	}
 
-	function _prepare_import($arr)
-	{
-		if(dwho_issa('protocol',$arr) === false)
-			return(false);
-
-		return($arr);
-	}
-
-	function array_merge_recursive($arr1, $arr2)
-	{
-		foreach($arr2 as $k => $v)
-		{
-			if(array_key_exists($k, $arr1) && is_array($arr1[$k]) && is_array($v))
-				$arr1[$k] = $this->array_merge_recursive($arr1[$k], $arr2[$k]);
-			else
-				$arr1[$k] = $v;
-		}
-
-		return $arr1;
-	}
-
-	function add_from_json()
-	{
-		if(($data = $this->_get_data_from_json()) === false
-		|| ($arr = $this->_prepare_import($data)) === false
-		|| $this->set_add($arr,$arr['protocol']['protocol']) === false
-		|| $this->add() === false)
-			return(false);
-
-		return(true);
-	}
-
-	function edit_from_json($mergewith=null)
-	{
-		if(($data = $this->_get_data_from_json()) === false
-		|| ($arr = $this->_prepare_import($data)) === false)
-			return false;
-
-		if(!is_null($mergewith))
-			$arr = $this->array_merge_recursive($mergewith,$arr);
-
-		if($this->set_edit($arr,$arr['protocol']['protocol']) === false
-		|| $this->edit() === false)
-			return(false);
-
-		return(true);
-	}
-
 	function gen_password($len, $lower=false)
 	{
 		$pwd = '';
@@ -1029,6 +671,76 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 			$pwd = strtolower($pwd);
 
 		return $pwd;
+	}
+}
+
+
+class SCCPOptionMapper {
+
+	private $extra_options = array(
+			'allow',
+			'disallow',
+	);
+
+	public function split_endpoint_options($endpoint)
+	{
+		$extra = array();
+		$hidden = array();
+
+		foreach($endpoint['options'] as $endpoint_option) {
+			$name = $endpoint_option[0];
+			if (in_array($name, $this->extra_options)) {
+				$extra[$name] = $endpoint_option[1];
+			} else {
+				$hidden[] = $endpoint_option;
+			}
+		}
+
+		return array('extra' => $extra, 'hidden' => $hidden);
+	}
+}
+
+
+class SIPOptionMapper {
+
+	private $hidden_options = array(
+			'call-limit',
+	);
+	private $extra_options = array(
+			'allow',
+			'callerid',
+			'disallow',
+			'dtmfmode',
+			'language',
+			'qualify',
+			'nat',
+	);
+
+	public function split_endpoint_options($endpoint)
+	{
+		$free = array();
+		$extra = array();
+		$hidden = array();
+
+		if (isset($endpoint['host'])) {
+			$free[] = array('host', $endpoint['host']);
+		}
+		if (isset($endpoint['type'])) {
+			$free[] = array('type', $endpoint['type']);
+		}
+
+		foreach($endpoint['options'] as $endpoint_option) {
+			$name = $endpoint_option[0];
+			if (in_array($name, $this->hidden_options)) {
+				$hidden[] = $endpoint_option;
+			} elseif (in_array($name, $this->extra_options)) {
+				$extra[$name] = $endpoint_option[1];
+			} else {
+				$free[] = $endpoint_option;
+			}
+		}
+
+		return array('free' => $free, 'extra' => $extra, 'hidden' => $hidden);
 	}
 }
 

@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@ class xivo_application_service_asterisk_line_sql extends xivo_application_abstra
 				'usercustom'	=> '',
 				'user_line'		=> '');
 
-	public function get_nb($arr=null,$disable=null,$initialized=null)
+	public function get_nb($arr=null,$disable=null)
 	{
 		if(is_array($arr) === false)
 			$arr = array();
@@ -79,16 +79,6 @@ class xivo_application_service_asterisk_line_sql extends xivo_application_abstra
 		$this->_dso->andjoinwhere($this->_table['usercustom'],
 					  $this->_table['linefeatures'].'.protocol = '.$this->_table['usercustom'].'.protocol');
 
-		if($initialized !== null)
-		{
-			if((bool) $initialized === false)
-				$this->_dso->andjoinwhere($this->_table['usersip'],
-							  'COALESCE('.$this->_table['usersip'].'.fullcontact,\'\') = \'\'');
-			else
-				$this->_dso->andjoinwherenot($this->_table['usersip'],
-							  'COALESCE('.$this->_table['usersip'].'.fullcontact,\'\') = \'\'');
-		}
-
 		return(dwho_ulongint($this->_dso->select_count(null,'id',$this->_table['linefeatures'])));
 	}
 
@@ -104,28 +94,11 @@ class xivo_application_service_asterisk_line_sql extends xivo_application_abstra
 
 		$this->_dso->new_select($this->_table['linefeatures']);
 
-		$initialized = null;
-		if(isset($where['initialized']) === true)
-			$initialized = $where['initialized'];
-
 		$context = null;
 		if(isset($where['context']) === true)
 			$context = $where['context'];
 
-		if(dwho_issa('protocols', $where) === false)
-			$use_sip = $use_sccp = $use_custom = true;
-		else
-		{
-			$protocols = $where['procotol'];
-			$use_sip  = in_array(XIVO_SRE_IPBX_AST_PROTO_SIP, $protocols);
-			$use_sccp  = in_array(XIVO_SRE_IPBX_AST_PROTO_SCCP, $protocols);
-			$use_custom = in_array(XIVO_SRE_IPBX_AST_PROTO_CUSTOM, $protocols);
-			$this->_dso->wherein('protocol',$protocols,$this->_table['linefeatures']);
-		}
-
-		if($use_sip === false && $use_sccp === false && $use_custom === false)
-			return(false);
-
+		$use_sip = $use_sccp = $use_custom = true;
 		$sip = $sccp = $custom = array();
 		$sip['category'] = $custom['category'] = 'user';
 
@@ -161,16 +134,6 @@ class xivo_application_service_asterisk_line_sql extends xivo_application_abstra
 
 			$this->_dso->andjoinwhere($this->_table['usersip'],
 						  $this->_table['linefeatures'].'.protocol = '.$this->_table['usersip'].'.protocol');
-
-			if($initialized !== null)
-			{
-				if((bool) $initialized === false)
-					$this->_dso->andjoinwhere($this->_table['usersip'],
-								  'COALESCE('.$this->_table['usersip'].'.fullcontact,\'\') = \'\'');
-				else
-					$this->_dso->andjoinwherenot($this->_table['usersip'],
-								  'COALESCE('.$this->_table['usersip'].'.fullcontact,\'\') = \'\'');
-			}
 		}
 
 		if($use_sccp === true)

@@ -35,27 +35,6 @@
 		</li>
 		<li id="dwsm-tab-2"
 		    class="dwsm-blur"
-		    onclick="dwho_submenu.select(this,'sb-part-signalling');"
-		    onmouseout="dwho_submenu.blur(this);"
-		    onmouseover="dwho_submenu.focus(this);">
-			<div class="tab">
-				<span class="span-center"
-					><a href="#signalling"><?=$this->bbf('smenu_signalling');?></a></span>
-			</div>
-			<span class="span-right">&nbsp;</span>
-		</li>
-		<li id="dwsm-tab-3"
-		    class="dwsm-blur"
-		    onclick="dwho_submenu.select(this,'sb-part-t38');"
-		    onmouseout="dwho_submenu.blur(this);"
-		    onmouseover="dwho_submenu.focus(this);">
-			<div class="tab">
-				<span class="span-center"><a href="#t38"><?=$this->bbf('smenu_t38');?></a></span>
-			</div>
-			<span class="span-right">&nbsp;</span>
-		</li>
-		<li id="dwsm-tab-4"
-		    class="dwsm-blur"
 		    onclick="dwho_submenu.select(this,'sb-part-advanced');"
 		    onmouseout="dwho_submenu.blur(this);"
 		    onmouseover="dwho_submenu.focus(this);">
@@ -65,18 +44,7 @@
 			</div>
 			<span class="span-right">&nbsp;</span>
 		</li>
-		<li id="dwsm-tab-5"
-		    class="dwsm-blur"
-		    onclick="dwho_submenu.select(this,'sb-part-sip-options');"
-		    onmouseout="dwho_submenu.blur(this);"
-		    onmouseover="dwho_submenu.focus(this);">
-			<div class="tab">
-				<span class="span-center">
-					<a href="#sip-options"><?=$this->bbf('smenu_sip_options');?></a></span>
-			</div>
-			<span class="span-right">&nbsp;</span>
-		</li>
-		<li id="dwsm-tab-6"
+		<li id="dwsm-tab-3"
 		    class="dwsm-blur-last"
 		    onclick="dwho_submenu.select(this,'sb-part-ipbxinfos',1);"
 		    onmouseout="dwho_submenu.blur(this,1);"

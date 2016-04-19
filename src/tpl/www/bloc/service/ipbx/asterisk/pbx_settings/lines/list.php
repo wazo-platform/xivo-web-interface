@@ -111,8 +111,6 @@ $page = $url->pager($pager['pages'],
 
 			if($ref['commented'] === true):
 				$icon = 'disable';
-			elseif($ref['initialized'] === false):
-				$icon = 'unavailable';
 			else:
 				$icon = 'enable';
 			endif;
@@ -131,7 +129,7 @@ $page = $url->pager($pager['pages'],
 		<td class="txt-left col_identity" title="<?=dwho_alttitle($ref['identity']);?>">
 			<label for="it-lines-<?=$i?>" id="lb-lines-<?=$i?>">
 <?php
-				echo $url->img_html('img/site/phone/'.$icon.'.gif',null,'class="icons-list"');
+				echo $url->img_html('img/site/flag/'.$icon.'.gif',null,'class="icons-list"');
 				echo $url->img_html('img/site/utils/phone-'.$phone.'.png',null,'class="icons-list"');
 				echo dwho_htmlen(dwho_trunc($ref['identity'],30,'...',false));
 ?>

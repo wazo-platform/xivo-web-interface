@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -25,7 +25,6 @@ $act     = isset($_QR['act']) === true ? $_QR['act'] : '';
 $page    = dwho_uint($prefs->get('page', 1));
 $search  = strval($prefs->get('search', ''));
 $context = strval($prefs->get('context', ''));
-$free 	 = strval($prefs->get('free', ''));
 $sort    = $prefs->flipflop('sort', 'name');
 
 $param = array();
@@ -35,8 +34,6 @@ if($search !== '')
 	$param['search'] = $search;
 else if($context !== '')
 	$param['context'] = $context;
-else if($free !== '')
-	$param['free'] = $free;
 
 switch($act)
 {
@@ -49,8 +46,7 @@ switch($act)
 
 		$result = $fm_save = $error = null;
 
-		if(isset($_QR['fm_send']) === true
-		&& dwho_issa('protocol',$_QR) === true)
+		if(isset($_QR['fm_send']) === true)
 		{
 			if($appline->set_add($_QR,$_QR['proto']) === false
 			|| $appline->add() === false)
@@ -99,34 +95,26 @@ switch($act)
 		$dhtml = &$_TPL->get_module('dhtml');
 		$dhtml->set_js('js/dwho/submenu.js');
 		$dhtml->set_js('js/utils/codeclist.js');
-		$dhtml->set_js('js/service/ipbx/'.$ipbx->get_name().'/lines.js');
 		$dhtml->load_js_multiselect_files();
 		break;
 	case 'edit':
 		$appline = &$ipbx->get_application('line');
 
-		if(isset($_QR['id']) === false || ($info = $appline->get($_QR['id'],null,null,true)) === false)
+		if(isset($_QR['id']) === false || ($info = $appline->get($_QR['id'],true)) === false)
 			$_QRY->go($_TPL->url('service/ipbx/pbx_settings/lines'),$param);
 
 		$fm_save = $error = null;
 		$return = &$info;
 
-		if(isset($_QR['fm_send']) === true
-		&& dwho_issa('protocol',$_QR) === true)
+		if(isset($_QR['fm_send']) === true)
 		{
-			if ($_QR['proto'] == XIVO_SRE_IPBX_AST_PROTO_SCCP) {
-				$_QR['protocol']['cid_num'] = $info['protocol']['cid_num'];
-				$_QR['protocol']['cid_name'] = $info['protocol']['cid_name'];
-				$_QR['protocol']['name'] = $info['protocol']['name'];
-			}
-			$_QR['linefeatures'] = $return['linefeatures'];
-
-			if($appline->set_edit($_QR,$_QR['proto']) === false
+			if($appline->set_edit($_QR) === false
 			|| $appline->edit() === false)
 			{
 				$fm_save = false;
 				$result = $appline->get_result();
 				$error = $appline->get_error();
+				$return = &$result;
 			}
 			else
 				$_QRY->go($_TPL->url('service/ipbx/pbx_settings/lines'),$param);
@@ -134,7 +122,6 @@ switch($act)
 
 		$element = $appline->get_elements();
 
-		// AUTOGEN name/secret
 		$config  = dwho::load_init(XIVO_PATH_CONF.DWHO_SEP_DIR.'ipbx.ini');
 		if (isset($config['user'],$config['user']['readonly-idpwd']))
 		{
@@ -150,9 +137,8 @@ switch($act)
 			);
 		}
 
-		$info['protocol']['allow'] = explode(',',$info['protocol']['allow']);
-
-		$_TPL->set_var('id',$info['linefeatures']['id']);
+		$_TPL->set_var('id',$info['line']['id']);
+		$_TPL->set_var('proto',$info['line']['protocol']);
 		$_TPL->set_var('info',$return);
 		$_TPL->set_var('error',$error);
 		$_TPL->set_var('fm_save',$fm_save);
@@ -162,7 +148,6 @@ switch($act)
 		$dhtml = &$_TPL->get_module('dhtml');
 		$dhtml->set_js('js/dwho/submenu.js');
 		$dhtml->set_js('js/utils/codeclist.js');
-		$dhtml->set_js('js/service/ipbx/'.$ipbx->get_name().'/lines.js');
 		$dhtml->load_js_multiselect_files();
 		break;
 	case 'delete':
@@ -202,7 +187,7 @@ switch($act)
 		if(($values = dwho_issa_val('lines',$_QR)) === false)
 			$_QRY->go($_TPL->url('service/ipbx/pbx_settings/lines'),$param);
 
-		$appline = &$ipbx->get_application('line',null,false);
+		$appline = &$ipbx->get_application('line');
 
 		$nb = count($values);
 
@@ -237,8 +222,6 @@ switch($act)
 		$limit[1] = $nbbypage;
 
 		$where = array();
-		if (dwho_has_len($free))
-			$where['free'] = $free;
 		if (dwho_has_len($context))
 			$where['context'] = $context;
 
@@ -259,12 +242,10 @@ switch($act)
 		$_TPL->set_var('list',$list);
 		$_TPL->set_var('search',$search);
 		$_TPL->set_var('context',$context);
-		$_TPL->set_var('free',$free);
 		$_TPL->set_var('sort',$sort);
 }
 
 $_TPL->set_var('act',$act);
-$_TPL->set_var('frees',array(1 => 'yes',0 => 'no'));
 $_TPL->set_var('contexts',$appline->get_context_list(null,null,null,true,'internal'));
 
 $menu = &$_TPL->get_module('menu');

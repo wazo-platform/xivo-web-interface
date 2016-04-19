@@ -117,7 +117,6 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		|| ($this->_extensions = &$this->_service->get_module('extensions')) === false
 		|| ($this->_rightcall = $this->get_abstract('rightcall',array('type' => 'user'))) === false
 		|| ($this->_dialaction = $this->get_abstract('dialaction',array('category' => 'user'))) === false
-		|| ($this->_line = $this->_service->get_application('line')) === false
 		|| ($this->_schedule_path = &$this->_service->get_module('schedule_path')) === false
 		|| ($this->_linefeatures = $this->_service->get_module('linefeatures')) === false
 		|| ($this->_user_line = $this->_service->get_module('user_line')) === false
@@ -1400,7 +1399,6 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		}
 
 		$result = $this->_line_manager->edit_linefeatures(
-			$user_id,
 			$lines,
 			$this->_status
 		);

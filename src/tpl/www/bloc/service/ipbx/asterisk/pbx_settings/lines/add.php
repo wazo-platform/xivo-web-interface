@@ -19,7 +19,6 @@
 #
 
 $form = &$this->get_module('form');
-$url = &$this->get_module('url');
 
 $proto = $this->get_var('proto');
 

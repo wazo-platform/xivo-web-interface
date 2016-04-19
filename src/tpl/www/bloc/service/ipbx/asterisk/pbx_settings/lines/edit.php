@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
 $form = &$this->get_module('form');
 
 $info = $this->get_var('info');
-$proto = $info['linefeatures']['protocol'];
+$proto = $info['line']['protocol'];
 
 ?>
 <div id="sr-lines" class="b-infos b-form">
@@ -38,6 +38,7 @@ $proto = $info['linefeatures']['protocol'];
 <?=$form->hidden(array('name' => DWHO_SESS_NAME,'value' => DWHO_SESS_ID))?>
 <?=$form->hidden(array('name' => 'act','value' => 'edit'))?>
 <?=$form->hidden(array('name' => 'fm_send','value' => 1))?>
+<?=$form->hidden(array('name' => 'proto','value' => $proto))?>
 <?=$form->hidden(array('name' => 'id','value' => $this->get_var('id')))?>
 <?php
 	$this->file_include('bloc/service/ipbx/asterisk/pbx_settings/lines/form');
