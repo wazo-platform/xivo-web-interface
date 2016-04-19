@@ -48,12 +48,12 @@ class MessageQueue {
 
 	private $key = 'bus_msg_to_send';
 
-	function add_msg($msg, $routing_key) {
+	function add_msg($msg) {
 		if (!isset($_SESSION[$this->key])) {
 			$_SESSION[$this->key] = array();
 		}
 
-		array_push($_SESSION[$this->key], array($msg, $routing_key));
+		array_push($_SESSION[$this->key], $msg);
 	}
 
 	function get_messages() {
@@ -114,9 +114,9 @@ class Publisher {
 		$connection = new AMQPConnection($this->host, $this->port, $this->username, $this->password);
 		$channel = $connection->channel();
 		$channel->exchange_declare($this->exchange_name, $this->exchange_type, false, true, false);
-		foreach ($messages as &$message) {
-			$body = $message[0];
-			$routing_key = $message[1];
+		foreach ($messages as &$msg) {
+			$body = $msg->get_amqp_message();
+			$routing_key = $msg->get_routing_key();;
 			$channel->basic_publish($body, $this->exchange_name, $routing_key);
 		}
 		$channel->close();
@@ -131,6 +131,25 @@ class Publisher {
 		$queue->clear();
 	}
 
+}
+
+class BusMessage {
+
+	private $routing_key = null;
+	private $amqp_message = null;
+
+	function __construct($amqp_message, $routing_key) {
+		$this->amqp_message = $amqp_message;
+		$this->routing_key = $routing_key;
+	}
+
+	function get_routing_key() {
+		return $this->routing_key;
+	}
+
+	function get_amqp_message() {
+		return $this->amqp_message;
+	}
 }
 
 
@@ -154,7 +173,10 @@ class MessageFactory {
 				'main_line' => true,
 				'main_user' => true)));
 
-		return new AMQPMessage($body, $this->msg_params);
+		$amqp_message = new AMQPMessage($body, $this->msg_params);
+		$routing_key = 'config.user_line_association.created';
+
+		return new BusMessage($amqp_message, $routing_key);
 	}
 
 }
