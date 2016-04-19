@@ -122,7 +122,6 @@ switch($act)
 
 		$element = $appline->get_elements();
 
-		// AUTOGEN name/secret
 		$config  = dwho::load_init(XIVO_PATH_CONF.DWHO_SEP_DIR.'ipbx.ini');
 		if (isset($config['user'],$config['user']['readonly-idpwd']))
 		{

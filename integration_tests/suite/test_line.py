@@ -256,7 +256,7 @@ class TestSIPLine(TestLine):
             'host': 'dynamic',
             'type': 'friend',
             'options': [
-                ['call-limit', '10'], # call-limit is a hidden option
+                ['call-limit', '10'],  # call-limit is a hidden option
                 ['language', 'fr_FR'],
                 ['callerid', 'John'],
                 ['nat', 'no'],
@@ -295,7 +295,7 @@ class TestSIPLine(TestLine):
             'host': 'dynamic',
             'type': 'friend',
             'options': [
-                ['call-limit', '10'], # call-limit is a hidden option
+                ['call-limit', '10'],  # call-limit is a hidden option
                 ['opt1', 'val1'],
             ],
         }
