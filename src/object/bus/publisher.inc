@@ -124,8 +124,8 @@ class Publisher {
 	}
 
 	function flush() {
+		$queue = new MessageQueue();
 		if (dwho_report::has('error') === false) {
-			$queue = new MessageQueue();
 			$this->publish_messages($queue->get_messages());
 		}
 		$queue->clear();
