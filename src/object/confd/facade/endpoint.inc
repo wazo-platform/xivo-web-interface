@@ -22,7 +22,7 @@ require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'custom', 'custom.inc
 require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'sccp', 'sccp.inc'));
 require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'sip', 'sip.inc'));
 
-class EndpointResource {
+class EndpointFacade {
 
 	private $custom = null;
 	private $sip = null;
