@@ -88,7 +88,6 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 			case CONFD_LINE_PROTO_SIP:
 				$res = $this->_sip_option_mapper->split_endpoint_options($this->_info['endpoint']);
 				$this->_info['free_options'] = $res['free'];
-				$this->_info['hidden_options'] = $res['hidden'];
 				$this->_info['extra'] = $res['extra'];
 				break;
 		}
@@ -388,11 +387,7 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 				$endpoint['username'] = $arr['protocol']['name'];
 				$endpoint['secret'] = $arr['protocol']['secret'];
 
-				if (isset($this->_info['hidden_options'])) {
-					$options = $this->_info['hidden_options'];
-				} else {
-					$options = array();
-				}
+				$options = array();
 				if (!empty($arr['protocol']['language'])) {
 					$options[] = array('language', $arr['protocol']['language']);
 				}
@@ -703,9 +698,6 @@ class SCCPOptionMapper {
 
 class SIPOptionMapper {
 
-	private $hidden_options = array(
-			'call-limit',
-	);
 	private $extra_options = array(
 			'allow',
 			'callerid',
@@ -720,7 +712,6 @@ class SIPOptionMapper {
 	{
 		$free = array();
 		$extra = array();
-		$hidden = array();
 
 		if (isset($endpoint['host'])) {
 			$free[] = array('host', $endpoint['host']);
@@ -731,16 +722,14 @@ class SIPOptionMapper {
 
 		foreach($endpoint['options'] as $endpoint_option) {
 			$name = $endpoint_option[0];
-			if (in_array($name, $this->hidden_options)) {
-				$hidden[] = $endpoint_option;
-			} elseif (in_array($name, $this->extra_options)) {
+			if (in_array($name, $this->extra_options)) {
 				$extra[$name] = $endpoint_option[1];
 			} else {
 				$free[] = $endpoint_option;
 			}
 		}
 
-		return array('free' => $free, 'extra' => $extra, 'hidden' => $hidden);
+		return array('free' => $free, 'extra' => $extra);
 	}
 }
 
