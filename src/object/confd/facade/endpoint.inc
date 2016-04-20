@@ -24,24 +24,24 @@ require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'sip', 'sip.inc'));
 
 class EndpointFacade {
 
-	private $custom = null;
-	private $sip = null;
-	private $sccp = null;
+	private $_custom = null;
+	private $_sip = null;
+	private $_sccp = null;
 
 	function __construct($client) {
-		$this->custom = new CustomResource($client);
-		$this->sip = new SipResource($client);
-		$this->sccp = new SccpResource($client);
+		$this->_custom = new CustomResource($client);
+		$this->_sip = new SipResource($client);
+		$this->_sccp = new SccpResource($client);
 	}
 
 	function get($id, $protocol) {
 		switch ($protocol) {
 			case CONFD_LINE_PROTO_CUSTOM:
-				return $this->custom->get($id);
+				return $this->_custom->get($id);
 			case CONFD_LINE_PROTO_SCCP:
-				return $this->sccp->get($id);
+				return $this->_sccp->get($id);
 			case CONFD_LINE_PROTO_SIP:
-				return $this->sip->get($id);
+				return $this->_sip->get($id);
 			default:
 				trigger_error('invalid endpoint protocol '.$protocol, E_USER_ERROR);
 				return null;
@@ -52,11 +52,11 @@ class EndpointFacade {
 	{
 		switch ($protocol) {
 			case CONFD_LINE_PROTO_CUSTOM:
-				return $this->custom->create($endpoint);
+				return $this->_custom->create($endpoint);
 			case CONFD_LINE_PROTO_SCCP:
-				return $this->sccp->create($endpoint);
+				return $this->_sccp->create($endpoint);
 			case CONFD_LINE_PROTO_SIP:
-				return $this->sip->create($endpoint);
+				return $this->_sip->create($endpoint);
 			default:
 				trigger_error('invalid endpoint protocol '.$protocol, E_USER_ERROR);
 				return null;
@@ -66,11 +66,11 @@ class EndpointFacade {
 	function delete($id, $protocol) {
 		switch ($protocol) {
 			case CONFD_LINE_PROTO_CUSTOM:
-				return $this->custom->delete($id);
+				return $this->_custom->delete($id);
 			case CONFD_LINE_PROTO_SCCP:
-				return $this->sccp->delete($id);
+				return $this->_sccp->delete($id);
 			case CONFD_LINE_PROTO_SIP:
-				return $this->sip->delete($id);
+				return $this->_sip->delete($id);
 			default:
 				trigger_error('invalid endpoint protocol '.$protocol, E_USER_ERROR);
 				return false;
@@ -81,11 +81,11 @@ class EndpointFacade {
 	{
 		switch ($protocol) {
 			case CONFD_LINE_PROTO_CUSTOM:
-				return $this->custom->update($id, $endpoint);
+				return $this->_custom->update($id, $endpoint);
 			case CONFD_LINE_PROTO_SCCP:
-				return $this->sccp->update($id, $endpoint);
+				return $this->_sccp->update($id, $endpoint);
 			case CONFD_LINE_PROTO_SIP:
-				return $this->sip->update($id, $endpoint);
+				return $this->_sip->update($id, $endpoint);
 			default:
 				trigger_error('invalid endpoint protocol '.$protocol, E_USER_ERROR);
 				return false;
