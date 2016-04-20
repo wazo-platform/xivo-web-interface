@@ -756,6 +756,9 @@ No internal context for this entity
 ; no_linefeatures
 No line
 
+; save_before_add_linefeatures
+Please save this user before adding a new line
+
 ; col_title_line-infos
 Infos
 

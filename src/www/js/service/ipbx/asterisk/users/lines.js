@@ -115,6 +115,7 @@ function lnkdroprow(obj)
 {
     $(obj).parents('tr').fadeTo(400, 0, function () {
         $(this).remove();
+        $('#save-before-add-linefeatures').show();
     });
 }
 

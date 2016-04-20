@@ -779,3 +779,6 @@ Aucun contexte interne pour cette entité
 
 ; no_linefeatures
 Aucune ligne
+
+; save_before_add_linefeatures
+Veuillez sauvegarder cet utilisateur avant d'ajouter une nouvelle ligne

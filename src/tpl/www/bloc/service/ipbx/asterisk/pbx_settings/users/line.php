@@ -186,6 +186,9 @@ endif;
 	<tr id="no-linefeatures"<?=($list !== false ? ' class="b-nodisplay"' : '')?>>
 		<td colspan="8" class="td-single"><?=$this->bbf('no_linefeatures');?></td>
 	</tr>
+	<tr id="save-before-add-linefeatures" class="b-nodisplay">
+		<td colspan="8" class="td-single"><?=$this->bbf('save_before_add_linefeatures');?></td>
+	</tr>
 	</tfoot>
 </table>
 
