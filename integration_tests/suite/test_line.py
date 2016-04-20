@@ -256,7 +256,7 @@ class TestSIPLine(TestLine):
             'host': 'dynamic',
             'type': 'friend',
             'options': [
-                ['call-limit', '10'],  # call-limit is a hidden option
+                ['call-limit', '10'],
                 ['language', 'fr_FR'],
                 ['callerid', 'John'],
                 ['nat', 'no'],
@@ -283,6 +283,7 @@ class TestSIPLine(TestLine):
         expected_options = [
             ('host', 'dynamic'),
             ('type', 'friend'),
+            ('call-limit', '10'),
             ('opt1', 'val1'),
         ]
         assert_that(advanced_tab.options(), equal_to(expected_options))
@@ -295,7 +296,6 @@ class TestSIPLine(TestLine):
             'host': 'dynamic',
             'type': 'friend',
             'options': [
-                ['call-limit', '10'],  # call-limit is a hidden option
                 ['opt1', 'val1'],
             ],
         }
@@ -309,7 +309,6 @@ class TestSIPLine(TestLine):
 
         expected_endpoint = {
             'options': [
-                ['call-limit', '10'],
                 ['opt2', 'val2'],
             ],
         }

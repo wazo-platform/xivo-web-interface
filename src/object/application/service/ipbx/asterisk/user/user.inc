@@ -33,9 +33,7 @@ require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'client.inc'));
 require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'user', 'user.inc'));
 require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'line', 'line.inc'));
 require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'extension', 'extension.inc'));
-require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'sip', 'sip.inc'));
-require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'sccp', 'sccp.inc'));
-require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'custom', 'custom.inc'));
+require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'facade', 'line.inc'));
 
 class xivo_application_service_asterisk_user extends xivo_application_asterisk_abstract
 {
@@ -162,19 +160,16 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		$this->_func_keys = new FuncKeyConverter($func_keys_confd, $func_key_mapper);
 		$this->_vm_mapper = new VoicemailMapper();
 
-		$client = Client::default_config();
-		$user_resource = new UserResource($client);
-		$this->_confd_user = $user_resource;
+		$nonraising_client = Client::default_config();
+		$this->_confd_user = new UserResource($nonraising_client);;
 
 		$context_dso = &$this->_service->get_module('context');
 
 		$client = Client::default_config(true);
 		$manager = new LineManager(
+			new LineFacade($nonraising_client),
 			new LineResource($client),
 			new UserResource($client),
-			new SipResource($client),
-			new SccpResource($client),
-			new CustomResource($client),
 			new ExtensionResource($client),
 			new LineMapper(),
 			$context_dso
