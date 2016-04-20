@@ -20,21 +20,17 @@
 
 class LineManager
 {
+	private $line_facade = null;
 	private $line = null;
-	private $sip = null;
-	private $sccp = null;
 	private $extension = null;
-	private $custom = null;
 	private $user = null;
 	private $mapper = null;
 	private $context_dso = null;
 
-	function __construct($line_resource, $user_resource, $sip_resource, $sccp_resource, $custom_resource, $extension_resource, $line_mapper, $context_dso) {
+	function __construct($line_facade, $line_resource, $user_resource, $extension_resource, $line_mapper, $context_dso) {
+		$this->line_facade = $line_facade;
 		$this->line = $line_resource;
 		$this->user = $user_resource;
-		$this->sip = $sip_resource;
-		$this->sccp = $sccp_resource;
-		$this->custom = $custom_resource;
 		$this->extension = $extension_resource;
 		$this->mapper = $line_mapper;
 		$this->context_dso = $context_dso;
@@ -88,11 +84,25 @@ class LineManager
 		$protocol = $form['protocol'];
 
 		$mapped_line = $this->mapper->map_form($form);
-		$line = $this->line->create($mapped_line);
-		$endpoint = $this->create_and_associate_endpoint($line, $protocol);
+		switch ($protocol) {
+			case 'sip':
+			case 'sccp':
+				$endpoint = array();
+				break;
+			case 'custom':
+				$endpoint = $this->generate_custom();
+				break;
+			default:
+				throw new ClientException(array('Unknown endpoint protocol: ' . $protocol));
+		}
 
-		$line['protocol'] = $protocol;
-		return $this->mapper->map_line($line, $endpoint);
+		$line = $this->line_facade->create($mapped_line, $endpoint, $protocol);
+		if ($line === null) {
+			throw new ClientException(array('Could not create line'));
+		}
+
+		$line['line']['protocol'] = $protocol;
+		return $this->mapper->map_line($line['line'], $line['endpoint']);
 	}
 
 	private function update_line($form) {
@@ -103,24 +113,6 @@ class LineManager
 		$this->line->update($mapped_line);
 
 		return $this->get($line_id);
-	}
-
-	private function create_and_associate_endpoint($line, $protocol)
-	{
-		if($protocol == "sip") {
-			$endpoint = $this->sip->create(array());
-			$this->line->associate_sip($line['id'], $endpoint['id']);
-		} else if ($protocol == "sccp") {
-			$endpoint = $this->sccp->create(array());
-			$this->line->associate_sccp($line['id'], $endpoint['id']);
-		} else if ($protocol == "custom") {
-			$custom = $this->generate_custom();
-			$endpoint = $this->custom->create($custom);
-			$this->line->associate_custom($line['id'], $endpoint['id']);
-		} else {
-			throw new ClientException(array('Unknown endpoint protocol: ' . $protocol));
-		}
-		return $endpoint;
 	}
 
 	private function generate_custom()
@@ -175,83 +167,22 @@ class LineManager
 
 	private function delete_line($line)
 	{
-		$this->dissociate_device($line);
-		$this->dissociate_users($line);
-		$this->dissociate_extensions($line);
-		// deleting a line via confd also delete the associated endpoint
-		$this->line->delete($line['id']);
-	}
-
-	private function dissociate_device($line)
-	{
-		$association = $this->line->get_device_association($line['id']);
-		if($association !== null) {
-			return  $this->line->dissociate_device($line['id'], $association['device_id']);
-		}
-	}
-
-	private function dissociate_users($line)
-	{
-		$associations = $this->line->list_user_associations($line['id']);
-		foreach($associations as $userline) {
-			$this->line->dissociate_user($line['id'], $userline['user_id']);
-		}
-	}
-
-	private function dissociate_extensions($line)
-	{
-		$internal = array();
-		$associations = $this->line->list_extension_associations($line['id']);
-
-		foreach($associations as $association) {
-			$extension = $this->extension->get($association['extension_id']);
-			if($this->is_internal_extension($extension)) {
-				$internal[] = $extension;
-			} else {
-				$this->line->dissociate_extension($line['id'], $extension['id']);
-			}
-		}
-
-		foreach($internal as $extension) {
-			$this->line->dissociate_extension($line['id'], $extension['id']);
-		}
+		$this->line_facade->delete($line['id']);
 	}
 
 	function get($line_id)
 	{
-		$line = $this->line->get($line_id);
-		return $this->get_legacy_line($line);
+		$line = $this->line_facade->get($line_id);
+		if ($line === null) {
+			throw new ClientException(array('Could not retrieve line'));
+		}
+		return $this->get_legacy_line($line['line'], $line['endpoint']);
 	}
 
-	private function get_legacy_line($line)
+	private function get_legacy_line($line, $endpoint)
 	{
-		$endpoint = $this->get_endpoint($line);
 		$extension = $this->get_internal_extension($line);
 		return $this->mapper->map_line($line, $endpoint, $extension);
-	}
-
-	private function get_endpoint($line) {
-		$protocol = $line['protocol'];
-
-		if($protocol == "sip") {
-			$association = $this->line->get_sip_association($line['id']);
-			if($association !== null) {
-				$sip = $this->sip->get($association['endpoint_id']);
-				return $sip;
-			}
-		} else if ($protocol == "sccp") {
-			$association = $this->line->get_sccp_association($line['id']);
-			if($association !== null) {
-				return $this->sccp->get($association['endpoint_id']);
-			}
-		} else if ($protocol == "custom") {
-			$association = $this->line->get_custom_association($line['id']);
-			if($association !== null) {
-				return $this->custom->get($association['endpoint_id']);
-			}
-		}
-
-		return null;
 	}
 
 	private function get_internal_extension($line) {

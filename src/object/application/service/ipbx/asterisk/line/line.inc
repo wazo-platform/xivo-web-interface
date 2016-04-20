@@ -21,9 +21,7 @@
 
 dwho_file::required(array(XIVO_PATH_OBJECT,'application','service','ipbx','asterisk.inc'),true);
 require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'client.inc'));
-require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'line', 'line.inc'));
-require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'endpoint', 'endpoint.inc'));
-require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'extension', 'extension.inc'));
+require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'facade', 'line.inc'));
 
 class xivo_application_service_asterisk_line extends xivo_application_asterisk_abstract
 {
@@ -34,9 +32,7 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 	protected $_protocol		= false;
 	protected $_entity			= false;
 	protected $_conf			= array();
-	private $_endpoint			= null;
-	private $_line				= null;
-	private $_extension			= null;
+	private $_line_facade		= null;
 	private $_sccp_option_mapper	= null;
 	private $_sip_option_mapper	= null;
 
@@ -55,9 +51,7 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 			return(false);
 
 		$client = Client::default_config();
-		$this->_endpoint = new EndpointResource($client);
-		$this->_line = new LineResource($client);
-		$this->_extension = new ExtensionResource($client);
+		$this->_line_facade = new LineFacade($client);
 		$this->_sccp_option_mapper = new SCCPOptionMapper();
 		$this->_sip_option_mapper = new SIPOptionMapper();
 
@@ -74,10 +68,14 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 		$this->_info = $this->_origin = array();
 		$this->_protocolname = false;
 
-		if ($this->_get_line($id) === false
-		|| $this->_get_endpoint() === false) {
+		$line = $this->_line_facade->get($id);
+		if ($line === null) {
 			return false;
 		}
+
+		$this->_info['line'] = $this->_origin['line'] = $line['line'];
+		$this->_info['endpoint'] = $this->_origin['endpoint'] = $line['endpoint'];
+		$this->_protocolname = $line['line']['protocol'];
 
 		switch ($this->_protocolname) {
 			case CONFD_LINE_PROTO_SCCP:
@@ -97,38 +95,6 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 		}
 
 		return $this->_info;
-	}
-
-	private function _get_line($line_id)
-	{
-		$line = $this->_line->get($line_id);
-		if ($line === null || $line['protocol'] === null) {
-			return false;
-		}
-
-		$this->_info['line'] = $this->_origin['line'] = $line;
-		$this->_protocolname = $line['protocol'];
-
-		return true;
-	}
-
-	private function _get_endpoint()
-	{
-		$line_id = $this->_info['line']['id'];
-
-		$association = $this->_line->get_endpoint_association($line_id, $this->_protocolname);
-		if ($association === null) {
-			return false;
-		}
-
-		$endpoint = $this->_endpoint->get($association['endpoint_id'], $this->_protocolname);
-		if ($endpoint === null) {
-			return false;
-		}
-
-		$this->_info['endpoint'] = $this->_origin['endpoint'] = $endpoint;
-
-		return true;
 	}
 
 	function _get_ipbx_infos()
@@ -436,35 +402,9 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 			return false;
 		}
 
-		$line = null;
-		$endpoint = null;
+		$line = $this->_line_facade->create($this->_result['line'], $this->_result['endpoint'], $this->_protocolname);
 
-		$line = $this->_line->create($this->_result['line']);
-		if ($line === null) {
-			goto error;
-		}
-
-		$endpoint = $this->_endpoint->create($this->_result['endpoint'], $this->_protocolname);
-		if ($endpoint === null) {
-			goto error;
-		}
-
-		$associated = $this->_line->associate_endpoint($line['id'], $endpoint['id'], $this->_protocolname);
-		if ($associated === false) {
-			goto error;
-		}
-
-		return true;
-
-error:
-		if (!empty($endpoint)) {
-			$this->_endpoint->delete($endpoint['id'], $this->_protocolname);
-		}
-		if (!empty($line)) {
-			$this->_line->delete($line['id']);
-		}
-
-		return false;
+		return $line !== null;
 	}
 
 	function edit()
@@ -474,12 +414,7 @@ error:
 			return false;
 		}
 
-		$endpoint_updated = $this->_endpoint->update($this->_info['endpoint']['id'], $this->_result['endpoint'], $this->_protocolname);
-		if ($endpoint_updated === false) {
-			return false;
-		}
-
-		return true;
+		return $this->_line_facade->update_endpoint($this->_info['endpoint']['id'], $this->_result['endpoint'], $this->_protocolname);
 	}
 
 	function delete()
@@ -489,44 +424,9 @@ error:
 			return false;
 		}
 
-		$line_id = $this->_info['line']['id'];
-		$endpoint_id = $this->_info['endpoint']['id'];
-
-		// XXX the code is similar to the code found in LineManager
-		$this->_dissociate_device($line_id);
-		// dissociate the users before the extensions so that the incall extensions
-		// are not listed in the line/extensions association
-		$this->_dissociate_users($line_id);
-		$this->_dissociate_and_delete_extensions($line_id);
-		// deleting a line via confd also deletes the associated endpoint
-		$this->_line->delete($line_id);
+		$this->_line_facade->delete($this->_info['line']['id']);
 
 		return true;
-	}
-
-	private function _dissociate_device($line_id)
-	{
-		$association = $this->_line->get_device_association($line_id);
-		if ($association !== null) {
-			$this->_line->dissociate_device($line_id, $association['device_id']);
-		}
-	}
-
-	private function _dissociate_users($line_id)
-	{
-		$associations = $this->_line->list_user_associations($line_id);
-		foreach($associations as $userline) {
-			$this->_line->dissociate_user($line_id, $userline['user_id']);
-		}
-	}
-
-	private function _dissociate_and_delete_extensions($line_id)
-	{
-		$associations = $this->_line->list_extension_associations($line_id);
-		foreach($associations as $association) {
-			$this->_line->dissociate_extension($line_id, $association['extension_id']);
-			$this->_extension->delete($association['extension_id']);
-		}
 	}
 
 	function enable()
