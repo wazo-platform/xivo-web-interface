@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -77,6 +77,7 @@ $array['filter'] = array();
 $array['filter']['number'] = array('minlen' => 1,'maxlen' => 40,'regexp' =>  '/^[0-9]+$/');
 $array['filter']['duplex'] = array('bool' => true);
 $array['filter']['ignore'] = array('bool' => true);
+$array['filter']['record'] = array('bool' => true);
 $array['filter']['quiet'] = array('bool' => true);
 $array['filter']['timeout'] = array('set'	=> false,
 								   'chk'	=> 2,
