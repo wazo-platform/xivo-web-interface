@@ -4,6 +4,12 @@ postgres:
     - "5432"
   ports:
     - "15433:5432"
+rabbitmq:
+  image: rabbitmq
+  expose:
+    - "5672"
+  ports:
+    - "5672:5672"
 confd:
   image: p0bailey/docker-flask
   expose:
@@ -45,11 +51,13 @@ webi:
     - confd
     - provd
     - sysconfd
+    - rabbitmq
 tests:
   image: n3llyb0y/wait
   links:
     - postgres
     - confd
     - webi
+    - rabbitmq
   environment:
-    PORTS: "5432 9847 80"
+    PORTS: "5432 9847 80 5672"

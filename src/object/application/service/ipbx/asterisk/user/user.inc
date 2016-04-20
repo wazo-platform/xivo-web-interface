@@ -23,6 +23,7 @@ dwho::load_class('dwho_network');
 dwho::load_class('dwho_http');
 
 dwho_file::required(array(XIVO_PATH_OBJECT,'application','service','ipbx','asterisk.inc'),true);
+require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'bus','publisher.inc'));
 require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'converter', 'funckey', 'mapper.inc'));
 require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'converter', 'funckey', 'funckey.inc'));
 require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'converter', 'voicemail', 'mapper.inc'));
@@ -68,6 +69,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 	protected $_voicemail = null;
 	protected $_confd_user = null;
 	protected $_line_manager = null;
+	protected $_bus_msg_factory = null;
 
 	public function __construct(&$service,&$dso,$param=null,$components=true)
 	{
@@ -90,6 +92,8 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			die();
 
 		$this->_conf['import']['file']['size'] = $size;
+		$this->_bus_msg_queue = new MessageQueue();
+		$this->_bus_msg_factory = new MessageFactory();
 
 		// init random generator
 		mt_srand(time()+mt_rand());
@@ -1085,6 +1089,8 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 
 		$this->_return['user_line'] = $this->_user_line->add($rs);
 		$this->_line_manager->update_caller_id($user_id);
+		$bus_msg = $this->_bus_msg_factory->new_user_line_associated_msg($user_id, $line_id);
+		$this->_bus_msg_queue->add_msg($bus_msg);
 		return $this->_return['user_line'];
 	}
 
@@ -1383,6 +1389,9 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		$this->_return['user_line'] = $this->_user_line->edit_where($where, $rs);
 
 		$this->_line_manager->update_caller_id($user_id);
+		$bus_msg = $this->_bus_msg_factory->new_user_line_associated_msg($user_id, $linefeaturesid);
+		$this->_bus_msg_queue->add_msg($bus_msg);
+
 		return($this->_return['user_line']);
 	}
 
@@ -1721,6 +1730,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 
 		if($this->_status === 'delete')
 			$this->_return['linefeatures'] = $result;
+		// publish msg UserLineDissociated msg?
 	}
 
 	function delete_phonefunckey()

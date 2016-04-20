@@ -8,3 +8,5 @@ requests<2.7  # docker-compose 1.3 refuses requests>=2.7
 sqlalchemy
 selenium
 dataset
+mock
+kombu

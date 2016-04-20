@@ -22,6 +22,8 @@ import string
 import unittest
 import uuid
 
+from mock import ANY
+
 from lib.confd import urljoin
 from lib.testcase import TestWebi
 
@@ -425,6 +427,10 @@ class TestUserCreate(TestUser):
     def setUp(self):
         super(TestUserCreate, self).setUp()
         self.confd.add_json_response(r"/users/\d+/funckeys", self.FK_TEMPLATE, preserve=True)
+        self.bus.start()
+
+    def tearDown(self):
+        self.bus.stop()
 
     def test_when_creating_user_with_sip_line_and_extension_then_line_and_extension_created(self):
         line = self.add_line(protocol="sip")
@@ -446,6 +452,10 @@ class TestUserCreate(TestUser):
         self.confd.assert_request_sent(r"/users/\d+", method="PUT")
         self.confd.assert_request_sent(urljoin("lines", line['id'], "endpoints", "sip", sip['id']),
                                        method="PUT")
+        self.bus.assert_msg_received('line_associated', {'user_id': ANY,
+                                                         'line_id': line['id'],
+                                                         'main_user': True,
+                                                         'main_line': True})
 
     def test_when_creating_user_with_sccp_line_and_extension_then_line_and_extension_created(self):
         line = self.add_line(protocol="sccp")
@@ -541,6 +551,13 @@ class TestUserCreate(TestUser):
 
 
 class TestUserEdit(TestUser):
+
+    def setUp(self):
+        super(TestUserEdit, self).setUp()
+        self.bus.start()
+
+    def tearDown(self):
+        self.bus.stop()
 
     def test_when_editing_user_then_user_updated(self):
         self.add_empty_user("UserEdit")
@@ -729,6 +746,10 @@ class TestUserEdit(TestUser):
         self.confd.assert_request_sent(urljoin("lines", line['id'], "endpoints", "sip", sip['id']),
                                        method="PUT")
         self.confd.assert_request_sent(urljoin("users", user_id), method="PUT")
+        self.bus.assert_msg_received('line_associated', {'user_id': ANY,
+                                                         'line_id': line['id'],
+                                                         'main_user': True,
+                                                         'main_line': True})
 
     def test_given_user_has_no_line_when_adding_sccp_line_then_user_updated(self):
         user_id = self.add_empty_user("UserEditAddSccpLine")

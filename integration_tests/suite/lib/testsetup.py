@@ -19,6 +19,7 @@ import os
 import subprocess
 import logging
 
+import bus
 import database
 import confd
 import provd
@@ -48,6 +49,11 @@ def setup_browser():
     password = os.environ.get('WEBI_PASSWORD', 'proformatique')
     Page.CONFIG['base_url'] = os.environ.get('WEBI_URL', 'http://localhost:10080')
     return Browser(username, password, virtual)
+
+
+def setup_bus():
+    bus_url = os.environ.get('BUS_URL', 'amqp://guest:guest@localhost:5672')
+    return bus.Bus(bus_url)
 
 
 def setup_confd():
