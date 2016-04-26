@@ -17,6 +17,7 @@
 
 from lib.pages import Page
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as ec
 
 
 class SwitchboardStatsPage(Page):
@@ -26,9 +27,20 @@ class SwitchboardStatsPage(Page):
         self.fill(By.ID, 'it-dend', end)
         self.save()
 
+    def hide_calendar(self):
+        # click somewhere else
+        non_interactive = self.driver.find_element_by_id("logo")
+        non_interactive.click()
+
+        self.wait_visible(By.ID, 'it-submit')
+        self.wait().until(ec.element_to_be_clickable((By.ID, 'it-submit')))
+
     def save(self):
+        self.hide_calendar()
+
         btn = self.driver.find_element_by_id("it-submit")
         btn.click()
+
         self.wait_for(By.ID, 'it-submit')
 
     def go(self):
