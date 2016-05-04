@@ -24,6 +24,10 @@ function xivo_wizard_onload() {
 	dwho.dom.add_event('click', dwho_eid('it-previous'), function() {
 		this.type = 'submit';
 	});
+
+	dwho.dom.add_event('click', dwho_eid('validate'), function() {
+		this.disabled = true;
+	});
 }
 
 dwho.dom.set_onload(xivo_wizard_onload);
