@@ -81,6 +81,7 @@ $array['filter']['netiface']['gateway'] = array('set'		=> false,
 						'chk'		=> 2,
 						'callback'	=> 'dwho_network::valid_host',
 						'callbackarg'	=> array(DWHO_NETWORK_HOST_IPV4_DOTDEC));
+$array['filter']['netiface']['interface'] = array('cast' => 'sgraph');
 
 $array['filter']['resolvconf'] = array();
 $array['filter']['resolvconf']['nameserver1'] = array('set'		=> 'false',

@@ -195,6 +195,22 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 		}
 	}
 
+	function get_interface_list()
+	{
+		if(isset($this->_wizsess['interface_list']) === true) {
+			return($this->_wizsess['interface_list']);
+		}
+		return(array());
+	}
+
+	function get_gateway_list()
+	{
+		if(isset($this->_wizsess['gateway_list']) === true) {
+			return($this->_wizsess['gateway_list']);
+		}
+		return(array());
+	}
+
 	function mainconfig_discover()
 	{
 		$response = $this->_confd_wizard->discover();
@@ -207,18 +223,37 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 		$resolvconf = array();
 		$resolvconf['nameserver1'] = $response['nameservers'][0];
 		$resolvconf['nameserver2'] = isset($response['nameservers'][1])?$response['nameservers'][1]:'';
-		$netiface = array();
-		$netiface['gateway'] = $response['gateways'][0]['gateway'];
-		$netiface['address'] = $response['interfaces'][0]['ip_address'];
-		$netiface['netmask'] = $response['interfaces'][0]['netmask'];
-		$netiface['name'] = $response['interfaces'][0]['interface'];
+		$netiface_id = array();
+		$netiface_id['address'] = 0;
+		$netiface_id['gateway'] = 0;
 
 		$this->_wizsess['timezone'] = $response['timezone'];
-		$this->_wizsess['interface'] = $response['interfaces'][0]['interface'];
+
+		$i = 0;
+		$this->_wizsess['interface_list'] = array();
+		foreach($response['interfaces'] as $item)
+		{
+			$display = $item['ip_address'] . ' (' . $item['interface'] . ')';
+			$this->_wizsess['interface_list'][$i] = $display;
+			$this->_wizsess['interface_items'][$i]['address'] = $item['ip_address'];
+			$this->_wizsess['interface_items'][$i]['netmask'] = $item['netmask'];
+			$this->_wizsess['interface_items'][$i]['interface'] = $item['interface'];
+			$i++;
+		}
+
+		$i = 0;
+		$this->_wizsess['gateway_list'] = array();
+		foreach($response['gateways'] as $item)
+		{
+			$display = $item['gateway'] . ' (' . $item['interface'] . ')';
+			$this->_wizsess['gateway_list'][$i] = $display;
+			$this->_wizsess['gateway_items'][$i]['gateway'] = $item['gateway'];
+			$i++;
+		}
 
 		return(array('mainconfig'	=> $mainconfig,
 					 'resolvconf'	=> $resolvconf,
-					 'netiface'		=> $netiface));
+					 'netiface_id'		=> $netiface_id));
 	}
 
 	function step_mainconfig()
@@ -230,10 +265,10 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 		else
 			$r['mainconfig'] = null;
 
-		if(dwho_issa('netiface',$this->_wizsess) === true)
-			$r['netiface'] = $this->_wizsess['netiface'];
+		if(dwho_issa('netiface_id',$this->_wizsess) === true)
+			$r['netiface_id'] = $this->_wizsess['netiface_id'];
 		else
-			$r['netiface'] = null;
+			$r['netiface_id'] = null;
 
 		if(dwho_issa('resolvconf',$this->_wizsess) === true)
 			$r['resolvconf'] = $this->_wizsess['resolvconf'];
@@ -346,11 +381,16 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 
 	function save_netiface($data)
 	{
-		if(dwho_issa('netiface',$data) === false)
+		if(dwho_issa('netiface_id',$data) === false)
 		{
 			$this->_set_error('netiface','address','missing');
 			return(false);
 		}
+
+		$interface_id = $data['netiface_id']['address'];
+		$gateway_id = $data['netiface_id']['gateway'];
+		$data['netiface'] = $this->_wizsess['interface_items'][$interface_id];
+		$data['netiface']['gateway'] = $this->_wizsess['gateway_items'][$gateway_id]['gateway'];
 
 		$this->_filter->set_validator($this->_conf['filter']['netiface']);
 
@@ -359,6 +399,7 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 
 		$resnetiface = $this->_filter->get_result();
 		$this->_set_result('netiface',$resnetiface);
+		$this->_set_result('netiface_id',$data['netiface_id']);
 
 		return($r);
 	}
@@ -396,6 +437,7 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 
 		$this->_wizsess['mainconfig'] = $this->get_result('mainconfig');
 		$this->_wizsess['netiface'] = $this->get_result('netiface');
+		$this->_wizsess['netiface_id'] = $this->get_result('netiface_id');
 		$this->_wizsess['resolvconf'] = $this->get_result('resolvconf');
 		$this->_wizsess['step'] = $this->get_next_step('mainconfig');
 
@@ -519,7 +561,7 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 					'license' => $wizsess['license']['agree'],
 					'network' => array('nameservers' => array($wizsess['resolvconf']['nameserver1']),
 									'hostname' => $wizsess['mainconfig']['hostname'],
-									'interface' => $wizsess['interface'],
+									'interface' => $wizsess['netiface']['interface'],
 									'ip_address' => $wizsess['netiface']['address'],
 									'netmask' => $wizsess['netiface']['netmask'],
 									'domain' => $wizsess['mainconfig']['domain'],

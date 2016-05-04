@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,7 +19,11 @@
 #
 
 $form = &$this->get_module('form');
+$info = $this->get_var('info');
 $element = $this->get_var('element');
+$interface_list = $this->get_var('interface_list');
+$gateway_list = $this->get_var('gateway_list');
+
 ?>
 <fieldset id="fld-mainconfig-hostname">
 	<legend><?=$this->bbf('fld-mainconfig-hostname');?></legend>
@@ -88,38 +92,31 @@ echo	$form->password(array('desc'	=> $this->bbf('fm_mainconfig_adminpasswd'),
 	<legend><?=$this->bbf('fld-mainconfig-netiface');?></legend>
 <?php
 
-echo	$form->text(array('desc'	=> $this->bbf('fm_netiface_address'),
-			  'name'	=> 'netiface[address]',
-			  'labelid'	=> 'netiface-address',
-			  'size'	=> 15,
-			  'help'	=> $this->bbf('hlp_fm_netiface_address'),
-			  'comment'	=> $this->bbf('cmt_fm_netiface_address'),
-			  'default'	=> $element['netiface']['address'],
-			  'value'	=> $this->get_var('info','netiface','address'),
-			  'error'	=> $this->bbf_args('error_generic',
-							   $this->get_var('error','netiface','address')))),
-
-	$form->text(array('desc'	=> $this->bbf('fm_netiface_netmask'),
-			  'name'	=> 'netiface[netmask]',
-			  'labelid'	=> 'netiface-netmask',
-			  'size'	=> 15,
-#			  'help'	=> $this->bbf('hlp_fm_netiface_netmask'),
-			  'comment'	=> $this->bbf('cmt_fm_netiface_netmask'),
-			  'default'	=> $element['netiface']['netmask'],
-			  'value'	=> $this->get_var('info','netiface','netmask'),
-			  'error'	=> $this->bbf_args('error_generic',
-							   $this->get_var('error','netiface','netmask')))),
-
-	$form->text(array('desc'	=> $this->bbf('fm_netiface_gateway'),
-			  'name'	=> 'netiface[gateway]',
-			  'labelid'	=> 'netiface-gateway',
-			  'size'	=> 15,
-#			  'help'	=> $this->bbf('hlp_fm_netiface_gateway'),
-			  'comment'	=> $this->bbf('cmt_fm_netiface_gateway'),
-			  'default'	=> $element['netiface']['gateway'],
-			  'value'	=> $this->get_var('info','netiface','gateway'),
-			  'error'	=> $this->bbf_args('error_generic',
-							   $this->get_var('error','netiface','gateway'))));
+	if(is_array($interface_list) === true && empty($interface_list) === false):
+		echo	$form->select(array('desc'	=> $this->bbf('fm_netiface_address'),
+						'name'	=> 'netiface_id[address]',
+						'labelid'	=> 'netiface-address',
+						'help'	=> $this->bbf('hlp_fm_netiface_address'),
+						'comment'	=> $this->bbf('cmt_fm_netiface_address'),
+						'default'	=> $element['netiface_id']['address'],
+						'empty'	=> false,
+						'selected'	=> $info['netiface_id']['address'],
+						'error'	=> $this->bbf_args('error_generic',
+											   $this->get_var('error','netiface','address'))),
+						$interface_list);
+	endif;
+	if(is_array($gateway_list) === true && empty($gateway_list) === false):
+		echo	$form->select(array('desc'	=> $this->bbf('fm_netiface_gateway'),
+						'name'	=> 'netiface_id[gateway]',
+						'labelid'	=> 'netiface-gateway',
+						'comment'	=> $this->bbf('cmt_fm_netiface_gateway'),
+						'default'	=> $element['netiface_id']['gateway'],
+						'empty'	=> false,
+						'selected'	=> $info['netiface_id']['gateway'],
+						'error'	=> $this->bbf_args('error_generic',
+											   $this->get_var('error','netiface','gateway'))),
+						$gateway_list);
+	endif;
 
 ?>
 </fieldset>

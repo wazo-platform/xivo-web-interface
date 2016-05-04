@@ -71,7 +71,7 @@ switch($step)
 		{
 			$info = array();
 			$info['mainconfig'] = $appwizard->get_result('mainconfig');
-			$info['netiface'] = $appwizard->get_result('netiface');
+			$info['netiface_id'] = $appwizard->get_result('netiface_id');
 			$info['resolvconf'] = $appwizard->get_result('resolvconf');
 		}
 
@@ -117,6 +117,8 @@ $_TPL->set_var('error',$appwizard->get_error());
 $_TPL->set_var('step',$appwizard->get_current_step());
 $_TPL->set_var('can_previous_step',$appwizard->can_previous_step());
 $_TPL->set_var('can_next_step',$appwizard->can_next_step());
+$_TPL->set_var('interface_list',$appwizard->get_interface_list());
+$_TPL->set_var('gateway_list',$appwizard->get_gateway_list());
 
 $menu = &$_TPL->get_module('menu');
 $menu->set_top('top/xivo/wizard');
