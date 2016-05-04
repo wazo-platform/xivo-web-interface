@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2015  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,8 +27,13 @@ require_once(XIVO_PATH_OBJECTCONF.DIRECTORY_SEPARATOR.'define.inc');
 
 require_once(DWHO_PATH_ROOT.DIRECTORY_SEPARATOR.'dwho.inc');
 
+require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'client.inc'));
+require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'wizard', 'wizard.inc'));
+
 class xivo extends dwho
 {
+	var $_confd_wizard = null;
+
 	public function __construct()
 	{
 		if(($this->_conf['user'] = dwho_gat::load_get('user',XIVO_PATH_OBJECTCONF)) === false)
@@ -40,6 +45,9 @@ class xivo extends dwho
 
 		if(($xivo = dwho_gat::load_get('xivo',XIVO_PATH_OBJECTCONF)) !== false)
 			$this->_conf['xivo'] = dwho_array_merge_replace_recursive($this->_conf['xivo'],$xivo);
+
+		$nonraising_client = Client::default_config();
+		$this->_confd_wizard = new WizardResource($nonraising_client);;
 
 		$this->_init_cfg();
 		$this->_set_report();
@@ -88,7 +96,7 @@ class xivo extends dwho
 		if(($xivo_ini = parent::load_init(XIVO_PATH_CONF.DWHO_SEP_DIR.'xivo.ini')) === false)
 			die('ERR: Missing file: '.XIVO_PATH_CONF.DWHO_SEP_DIR.'xivo.ini');
 
-		define('XIVO_WEBI_CONFIGURED', (bool) file_exists(XIVO_LIB.'/configured'));
+		define('XIVO_WEBI_CONFIGURED', $this->_is_xivo_configured());
 
 		if(dwho_issa('locale',$xivo_ini) === true)
 			$this->_cfg_ini_locale($xivo_ini['locale']);
@@ -147,6 +155,16 @@ class xivo extends dwho
 			define('XIVO_WEBI_CONFIGURED',true);
 
 		return(true);
+	}
+
+	protected function _is_xivo_configured()
+	{
+		$response = $this->_confd_wizard->configured();
+		if($response === false) {
+			return(false);
+		}
+		return((bool) $response['configured']);
+
 	}
 
 	protected function _init_datastorage()

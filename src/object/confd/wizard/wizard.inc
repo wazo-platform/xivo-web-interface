@@ -41,6 +41,14 @@ class WizardResource {
 		return $response->status_ok_or_raise();
 	}
 
+	public function configured()
+	{
+		$request = Request::json_get("/wizard");
+		$response = $this->client->send($request);
+		$content = $response->decode_or_raise();
+		return $content === null ? false : $content;
+	}
+
 }
 
 ?>
