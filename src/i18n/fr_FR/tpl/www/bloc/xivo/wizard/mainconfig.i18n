@@ -20,7 +20,7 @@ Mot de passe :
 Confirmation du mot de passe :
 
 ; fld-mainconfig-netiface
-Configuration de l'interface réseau
+Interface VoIP
 
 ; fm_netiface_address
 Adresse :
@@ -58,5 +58,3 @@ Serveur secondaire :
 
 ; cmt_fm_resolvconf_nameserver2
 
-; hlp_fm_netiface_address
-Vérifiez bien que cette adresse n'est pas déjà attribuée

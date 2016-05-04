@@ -20,7 +20,7 @@ Password :
 Re-enter password :
 
 ; fld-mainconfig-netiface
-Network interface
+Interface VoIP
 
 ; fm_netiface_address
 Address :
@@ -58,5 +58,3 @@ Secondary :
 
 ; cmt_fm_resolvconf_nameserver2
 
-; hlp_fm_netiface_address
-Please check address is not already set to another device!
