@@ -19,13 +19,10 @@ Invalid interval
 ; fld-context-internal
 Internal calls context
 
-; fm_context_internal-name
-Name :
-
 ; fm_context_internal-displayname
 Display name :
 
-; fm_context_internal-displayname-default(default)
+; fm_context_internal-displayname-default
 Default
 
 ; fm_context_internal-numberbeg
@@ -43,7 +40,7 @@ Name :
 ; fm_context_incall-displayname
 Display name :
 
-; fm_context_incall-displayname-default(from-extern)
+; fm_context_incall-displayname-default
 Incalls
 
 ; fm_context_incall-numberbeg
@@ -64,7 +61,7 @@ Name :
 ; fm_context_outcall-displayname
 Display name :
 
-; fm_context_outcall-displayname-default(to-extern)
+; fm_context_outcall-displayname-default
 Outcalls
 
 ; cmt_fm_entity_name

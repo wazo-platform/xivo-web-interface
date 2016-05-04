@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,12 +24,6 @@ $dhtml = &$this->get_module('dhtml');
 $step = $this->get_var('step');
 
 ?>
-
-<div id="box_installer" class="bi_bg">
-	<div class="bi_message">
-		<p><?=nl2br($this->bbf('redirect_message_waiting'));?></p>
-	</div>
-</div>
 
 <form action="#" method="post" enctype="multipart/form-data" accept-charset="utf-8">
 <div id="xivo-wizard-step-<?=$step?>" class="b-infos">

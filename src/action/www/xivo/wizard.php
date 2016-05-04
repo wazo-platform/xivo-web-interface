@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -97,8 +97,9 @@ switch($step)
 		break;
 	case 'validate':
 		if($ressave === true
-		&& $_QRY->get('step') === $step)
-			die();
+		&& $_QRY->get('step') === $step) {
+			$_QRY->go($_TPL->url('xivo'));
+		}
 
 		$_TPL->set_var('info',$appwizard->step_validate());
 		$_TPL->load_i18n_file('tpl/www/struct/page/redirect.i18n', 'global');

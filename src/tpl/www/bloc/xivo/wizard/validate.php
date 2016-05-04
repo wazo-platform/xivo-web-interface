@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -93,11 +93,6 @@ $resolvconf = $this->get_var('info','resolvconf');
 <fieldset id="fld-entity">
 	<legend><?=$this->bbf('fld-entity');?></legend>
 	<dl>
-		<dt><?= $this->bbf('entity_name'); ?></dt>
-		<dd><?=dwho_htmlen($info['entity']['name']).
-		       $dhtml->message_error(
-				nl2br($this->bbf_args('error_entity',
-					        $this->get_var('error','entity'))));?></dd>
 		<dt><?= $this->bbf('entity_displayname'); ?></dt>
 		<dd><?=dwho_htmlen($info['entity']['displayname']);?></dd>
 	</dl>
@@ -106,20 +101,17 @@ $resolvconf = $this->get_var('info','resolvconf');
 	<legend><?=$this->bbf('fld-context');?></legend>
 	<dl>
 		<dt><?= $this->bbf('internal_calls'); ?></dt>
-		<dd><?=dwho_htmlen($info['context_internal']['context']['displayname'].
-				   ' ('.$info['context_internal']['context']['name'].')').
+		<dd><?=dwho_htmlen($info['context_internal']['displayname'].' (default)').
 		       $dhtml->message_error(
 				nl2br($this->bbf_args('error_context_internal',
 					        $this->get_var('error','context_internal'))));?></dd>
 		<dt><?= $this->bbf('incoming_calls'); ?></dt>
-		<dd><?=dwho_htmlen($info['context_incall']['context']['displayname'].
-				   ' ('.$info['context_incall']['context']['name'].')').
+		<dd><?=dwho_htmlen($info['context_incall']['displayname'].' (from-extern)').
 		       $dhtml->message_error(
 				nl2br($this->bbf_args('error_context_incall',
 					        $this->get_var('error','context_incall'))));?></dd>
 		<dt><?= $this->bbf('outgoing_calls'); ?></dt>
-		<dd><?=dwho_htmlen($info['context_outcall']['context']['displayname'].
-				   ' ('.$info['context_outcall']['context']['name'].')').
+		<dd><?=dwho_htmlen($info['context_outcall']['displayname'].' (to-extern)').
 		       $dhtml->message_error(
 				nl2br($this->bbf_args('error_context_outcall',
 					        $this->get_var('error','context_outcall'))));?></dd>

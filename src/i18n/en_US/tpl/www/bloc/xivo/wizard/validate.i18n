@@ -63,9 +63,6 @@ Possible errors :
 ; fld-entity
 Entity
 
-; info_entity_name
-Name :
-
 ; info_entity_displayname
 Printed name :
 
@@ -100,10 +97,6 @@ Outcalls :
 Possible errors :
 1. Impossible configuration server
 2. A problem occured when generating configuration files
-
-
-; entity_name
-Name : 
 
 ; entity_displayname
 Display name : 

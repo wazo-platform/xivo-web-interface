@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2015  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -116,30 +116,6 @@ function dwho_logw($str,$login,$act)
 	else
 		die('ERR: can\'t create or write '.XIVO_LOG_FILE);
 }
-
-function dwho_generate_code($length=8)
-{
-	$password = "";
-	$possible = "2346789bcdfghjkmnpqrtvwxyzBCDFGHJKLMNPQRTVWXYZ";
-	$maxlength = strlen($possible);
-
-	if ($length > $maxlength)
-		$length = $maxlength;
-
-	$i = 0;
-	while ($i < $length)
-	{
-		$char = substr($possible, mt_rand(0, $maxlength-1), 1);
-		if (!strstr($password, $char))
-		{
-			$password .= $char;
-			$i++;
-		}
-	}
-
-	return($password);
-}
-
 
 function dwho_constant($name,$default=null)
 {

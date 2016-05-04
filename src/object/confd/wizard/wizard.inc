@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2015  Avencall
+# Copyright (C) 2016 Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,30 +18,29 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-define('XIVO_TPL_AREA','ui');
-define('FORCE_WIZARD',true);
 
-require_once('xivo.php');
+class WizardResource {
 
-dwho::load_class('dwho_http');
-$http_response = dwho_http::factory('response');
+	private $client = null;
 
-$action_path = $_LOC->get_action_path('xivo/ui/',3);
+	function __construct($client) {
+		$this->client = $client;
+	}
 
-if(dwho_constant('XIVO_WEBI_CONFIGURED',false) === true)
-{
-    $http_response->set_status_line(403);
-    $http_response->send(true);
+	public function discover() {
+		$request = Request::json_get("/wizard/discover");
+		$response = $this->client->send($request);
+		$content = $response->decode_or_raise();
+		return $content === null ? false : $content;
+	}
+
+	public function create($wizard)
+	{
+		$request = Request::json_post("/wizard", $wizard);
+		$response = $this->client->send($request);
+		return $response->status_ok_or_raise();
+	}
+
 }
-
-$ipbx = &$_SRE->get('ipbx');
-
-if($action_path === false)
-{
-    $http_response->set_status_line(404);
-    $http_response->send(true);
-}
-
-die(include($action_path));
 
 ?>

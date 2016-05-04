@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2015  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -31,16 +31,11 @@ $array['step']['validate'] = true;
 $array['element'] = array();
 
 $array['element']['entity'] = array();
-
-$array['element']['entity']['name'] = array();
-$array['element']['entity']['displayname'] = array();
+$array['element']['entity']['displayname'] = '';
 
 $array['element']['context'] = array();
 
 $array['element']['context']['incall'] = array();
-$array['element']['context']['incall']['name'] = array();
-$array['element']['context']['incall']['name']['default'] = 'from-extern';
-
 $array['element']['context']['incall']['displayname'] = array();
 $array['element']['context']['incall']['displayname']['default'] = '';
 
@@ -55,9 +50,6 @@ $array['element']['context']['incall']['didlength']['value'] = range(1,20);
 $array['element']['context']['incall']['didlength']['default'] = 4;
 
 $array['element']['context']['internal'] = array();
-$array['element']['context']['internal']['name'] = array();
-$array['element']['context']['internal']['name']['default'] = 'default';
-
 $array['element']['context']['internal']['displayname'] = array();
 $array['element']['context']['internal']['displayname']['default'] = '';
 
@@ -68,9 +60,6 @@ $array['element']['context']['internal']['numberend'] = array();
 $array['element']['context']['internal']['numberend']['default'] = '';
 
 $array['element']['context']['outcall'] = array();
-$array['element']['context']['outcall']['name'] = array();
-$array['element']['context']['outcall']['name']['default'] = 'to-extern';
-
 $array['element']['context']['outcall']['displayname'] = array();
 $array['element']['context']['outcall']['displayname']['default'] = '';
 
@@ -81,9 +70,7 @@ $array['filter'] = array();
 $array['filter']['mainconfig'] = array();
 $array['filter']['mainconfig']['hostname'] = array('callback'		=> 'dwho_network::valid_hostname_part');
 $array['filter']['mainconfig']['domain'] = array('callback'		=> 'dwho_network::valid_hostname');
-$array['filter']['mainconfig']['adminpasswd'] = array('minlen'	=> 4,
-						      'maxlen'	=> 64,
-						      'regexp'	=> '/^[a-zA-Z0-9-\._~\!\$&\'\(\)\*\+,;=%]+$/');
+$array['filter']['mainconfig']['adminpasswd'] = array('cast' => 'alnumpunct', 'minlen'	=> 4, 'maxlen'	=> 64);
 $array['filter']['mainconfig']['confirmadminpasswd'] = array('egal'	=> 'adminpasswd');
 
 $array['filter']['netiface'] = array();
@@ -108,4 +95,24 @@ $array['filter']['resolvconf']['nameserver2'] = array('set'		=> 'false',
 						      'callbackarg'	=> array(DWHO_NETWORK_HOST_IPV4 |
 										 DWHO_NETWORK_HOST_HOSTNAME |
 										 DWHO_NETWORK_HOST_HOSTNAME_TLD));
+
+$array['filter']['entity'] = array();
+$array['filter']['entity']['displayname'] = array('cast' => 'sgraph','minlen' => 3,'maxlen' => 128);
+
+$array['filter']['context'] = array();
+
+$array['filter']['context']['outcall'] = array();
+$array['filter']['context']['outcall']['displayname'] = array('cast' => 'sgraph','minlen' => 3,'maxlen' => 128);
+
+$array['filter']['context']['internal'] = array();
+$array['filter']['context']['internal']['displayname'] = array('cast' => 'sgraph','minlen' => 3,'maxlen' => 128);
+$array['filter']['context']['internal']['numberbeg'] = array('maxlen' => 16,'cast' => 'digit');
+$array['filter']['context']['internal']['numberend'] = array('maxlen' => 16,'cast' => 'digit');
+
+$array['filter']['context']['incall'] = array();
+$array['filter']['context']['incall']['displayname'] = array('cast' => 'sgraph','minlen' => 3,'maxlen' => 128);
+$array['filter']['context']['incall']['numberbeg'] = array('set' => false,'chk' => 2,'maxlen' => 16,'cast' => 'digit');
+$array['filter']['context']['incall']['numberend'] = array('set' => false,'chk' => 2,'maxlen' => 16,'cast' => 'digit');
+$array['filter']['context']['incall']['didlength'] = array('cast' => 'uint','between' => array(1,20));
+
 ?>

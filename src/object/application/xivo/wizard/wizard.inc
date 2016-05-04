@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2015  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -28,6 +28,9 @@ dwho_file::required(array(XIVO_PATH_OBJECT,'service','ipbx','asterisk','config',
 dwho_file::required(array(XIVO_PATH_OBJECT,'service','ipbx','asterisk.inc',),true);
 dwho_file::required(array(XIVO_PATH_OBJECT,'application','xivo.inc'),true);
 
+require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'client.inc'));
+require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'wizard', 'wizard.inc'));
+
 class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_abstract
 {
 	var $_conf             = array();
@@ -37,7 +40,7 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 	var $_http_response    = false;
 	var $_wizsess          = null;
 	var $_ipbx             = null;
-	var $_savetmpfile      = '/tmp/wizard';
+	var $_confd_wizard     = null;
 
 	public function __construct(&$xobj,$param=null,$components=true)
 	{
@@ -50,6 +53,9 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 		$this->_filter = new dwho_filter();
 		$this->_http_response = dwho_http::factory('response');
 
+		$nonraising_client = Client::default_config();
+		$this->_confd_wizard = new WizardResource($nonraising_client);;
+
 		if(dwho_issa('_wizard',$_SESSION) === false)
 			$_SESSION['_wizard'] = array();
 
@@ -57,51 +63,6 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 
 		$this->_wizsess = &$_SESSION['_wizard'];
 
-		$this->_load_datastorage();
-	}
-
-	private function _load_datastorage()
-	{
-		$var = dwho_gat::get('_CF');
-		$this->_load_ipbx_service($var['datastorage']['general']['asterisk']);
-		$this->_load_xivo_dso($var['datastorage']['general']['xivo']);
-	}
-
-	private function _load_xivo_dso($uri)
-	{
-		$_XIVO = dwho_gct::get('xivo');
-		$_XIVO->load_datastorage($uri);
-	}
-
-	private function _load_ipbx_service($uri)
-	{
-		$_SRE = dwho_gct::get('xivo_service');
-		$engines = $_SRE->get_engines('ipbx');
-
-		if(defined('XIVO_SRE_IPBX_LABEL') === false)
-			define('XIVO_SRE_IPBX_LABEL', $engines['asterisk']['label']);
-
-		$config['general'] = array();
-		$config['general']['datastorage'] = $uri;
-
-		$_SRE->set_engine_config('ipbx','asterisk',$config);
-
-		$this->_ipbx = &$_SRE->get('ipbx','asterisk',true);
-	}
-
-	private function _get_save_data_tmp()
-	{
-		if (!($data = file_get_contents($this->_savetmpfile))
-		|| !($wizsess = dwho_json::decode($data,true))) {
-			dwho_report::push('error', 'Can\'t get data for wizard');
-			return false;
-		}
-		return(($this->_wizsess = $wizsess));
-	}
-
-	function reset_wizard()
-	{
-		$_SESSION['_wizard'] = array();
 	}
 
 	function get_first_step()
@@ -225,19 +186,7 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 		switch($step)
 		{
 			case 'mainconfig':
-				exec('hostname -s', $hostname);
-				exec('hostname -d', $dnsdomainname);
-				exec('sed -e \'/^$/d\' /etc/resolv.conf | awk \'{if (tolower($1)=="nameserver") print $2}\'', $nameserver);
-
-				$mainconfig = array();
-				$mainconfig['hostname'] = $hostname[0];
-				$mainconfig['domain'] = $dnsdomainname[0];
-				$resolvconf = array();
-				$resolvconf['nameserver1'] = $nameserver[0];
-				$resolvconf['nameserver2'] = isset($nameserver[1])?$nameserver[1]:'';
-
-				return(array('mainconfig'	=> $mainconfig,
-							'resolvconf'	=> $resolvconf));
+				return $this->mainconfig_discover();
 			case 'entitycontext':
 				return(array('entity'	=> $this->_conf['element']['entity'],
 							'context'	=> $this->_conf['element']['context']));
@@ -246,53 +195,30 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 		}
 	}
 
-	function discover_finish_uri()
+	function mainconfig_discover()
 	{
-		if (($wizsess = $this->_get_save_data_tmp()) === false)
-		{
-			dwho_report::push('error', 'Can\'t get data wizard');
-			return false;
+		$response = $this->_confd_wizard->discover();
+		if($response === false) {
+			return array();
 		}
-		elseif(isset($_SERVER['SERVER_ADDR'],$_SERVER['SERVER_PORT']) === false)
-		{
-			dwho_report::push('error', 'Can\'t get SERVER_ADDR or SERVER_PORT');
-			return false;
-		}
-		else if($_SERVER['SERVER_ADDR'] !== '127.0.0.1'
-		&& $_SERVER['REMOTE_ADDR'] !== '::1'
-		&& dwho_issa('netiface',$wizsess) === true
-		&& isset($wizsess['netiface']['address']) === true)
-			$uri = $wizsess['netiface']['address'];
-		else
-			$uri = $_SERVER['SERVER_ADDR'];
+		$mainconfig = array();
+		$mainconfig['hostname'] = $response['hostname'];
+		$mainconfig['domain'] = $response['domain'];
+		$resolvconf = array();
+		$resolvconf['nameserver1'] = $response['nameservers'][0];
+		$resolvconf['nameserver2'] = isset($response['nameservers'][1])?$response['nameservers'][1]:'';
+		$netiface = array();
+		$netiface['gateway'] = $response['gateways'][0]['gateway'];
+		$netiface['address'] = $response['interfaces'][0]['ip_address'];
+		$netiface['netmask'] = $response['interfaces'][0]['netmask'];
+		$netiface['name'] = $response['interfaces'][0]['interface'];
 
-		$uri .= ':'.$_SERVER['SERVER_PORT'];
-		// append lang
-		if(isset($wizsess['welcome']['language']))
-			$uri .= '?hl='.$wizsess['welcome']['language'];
+		$this->_wizsess['timezone'] = $response['timezone'];
+		$this->_wizsess['interface'] = $response['interfaces'][0]['interface'];
 
-		$scheme = 'http';
-
-		if(isset($_SERVER['HTTPS']) === true
-		&& $_SERVER['HTTPS'] === 'on')
-			$scheme .= 's';
-
-		return($scheme.'://'.$uri);
-	}
-
-	function get_eth_iface()
-	{
-		if(($res = $this->_sysconfd->request_get('/discover_netifaces')) === false
-		|| is_array($res) === false)
-			return(false);
-
-		foreach($res as $ifname => $iface)
-		{
-			if($ifname == 'lo' || !isset($iface['gateway']))
-				continue;
-
-			return $iface;
-		}
+		return(array('mainconfig'	=> $mainconfig,
+					 'resolvconf'	=> $resolvconf,
+					 'netiface'		=> $netiface));
 	}
 
 	function step_mainconfig()
@@ -307,7 +233,7 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 		if(dwho_issa('netiface',$this->_wizsess) === true)
 			$r['netiface'] = $this->_wizsess['netiface'];
 		else
-			$r['netiface'] = $this->get_eth_iface();
+			$r['netiface'] = null;
 
 		if(dwho_issa('resolvconf',$this->_wizsess) === true)
 			$r['resolvconf'] = $this->_wizsess['resolvconf'];
@@ -346,15 +272,6 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 
 	function step_validate()
 	{
-		$data = dwho_json::encode($this->_wizsess);
-		if(($fh = fopen($this->_savetmpfile, 'w+')) !== false)
-		{
-			fputs($fh, $data, strlen($data));
-			fclose($fh);
-		}
-
-		$this->_get_save_data_tmp();
-
 		return($this->_wizsess);
 	}
 
@@ -429,9 +346,7 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 
 	function save_netiface($data)
 	{
-		if(($iface = $this->get_eth_iface()) === null)
-			return(null);
-		else if(dwho_issa('netiface',$data) === false)
+		if(dwho_issa('netiface',$data) === false)
 		{
 			$this->_set_error('netiface','address','missing');
 			return(false);
@@ -443,7 +358,6 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 			$this->_set_error('netiface',$this->_filter->get_error());
 
 		$resnetiface = $this->_filter->get_result();
-		$resnetiface['name'] = $iface['name'];
 		$this->_set_result('netiface',$resnetiface);
 
 		return($r);
@@ -463,14 +377,6 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 			$this->_set_error('resolvconf',$this->_filter->get_error());
 
 		$result = $this->_filter->get_result();
-
-		if($r === true)
-		{
-			$result = dwho_array_combine(array_keys($result),
-			explode(' ',trim(dwho_implode(' ',$result))),
-			true,
-			'');
-		}
 
 		$this->_set_result('resolvconf',$result);
 
@@ -504,35 +410,14 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 			return(false);
 		}
 
-		$appentity = &$this->_xobj->get_application('entity');
+		$this->_filter->set_validator($this->_conf['filter']['entity']);
 
-		if(($r = (bool) $appentity->set_add($data['entity'])) === false)
-			$this->_set_error('entity',$appentity->get_error('entity'));
+		if(($r = (bool) $this->_filter->chk($data['entity'])) === false) {
+			$this->_set_error('entity',$this->_filter->get_error());
+		}
 
-		$this->_set_result('entity',$appentity->get_result('entity'));
-
-		return($r);
-	}
-
-	function _prepare_context($data,$type=null,$entity=null)
-	{
-		$r = array();
-		$r['context']['name'] = dwho_ak('name',$data,true);
-		$r['context']['displayname'] = dwho_ak('displayname',$data,true);
-		$r['context']['entity'] = strval($entity);
-		$r['context']['contexttype'] = dwho_ak('contexttype',$data,true);
-
-		if($type === null)
-			return($r);
-
-		$r['contextnumbers'] = array();
-		$r['contextnumbers'][$type] = array();
-		$r['contextnumbers'][$type][0] = array();
-		$r['contextnumbers'][$type][0]['numberbeg'] = dwho_ak('numberbeg',$data,true);
-		$r['contextnumbers'][$type][0]['numberend'] = dwho_ak('numberend',$data,true);
-
-		if($type === 'incall')
-			$r['contextnumbers'][$type][0]['didlength'] = dwho_ak('didlength',$data,true);
+		$result = $this->_filter->get_result();
+		$this->_set_result('entity',$result);
 
 		return($r);
 	}
@@ -541,84 +426,53 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 	{
 		if(dwho_issa('context',$data) === false)
 		{
-			$this->_set_error('context_internal','name','missing');
-			$this->_set_error('context_incall','name','missing');
-			$this->_set_error('context_outcall','name','missing');
+			$this->_set_error('context_internal','missing');
+-			$this->_set_error('context_incall','missing');
+-			$this->_set_error('context_outcall','missing');
 			return(false);
 		}
 
-		$entity = $this->get_result_var('entity','name');
+		if(dwho_issa('outcall',$data['context']) === false ||
+			dwho_issa('internal', $data['context']) === false ||
+			dwho_issa('incall', $data['context']) === false) {
+			$this->_set_error('context','missing_context');
+			return(false);
+		}
 
-		$appcontext = &$this->_ipbx->get_application('context');
-
-		$outcall = null;
 		$resoutcall = false;
-
-		if(dwho_issa('outcall',$data['context']) === false)
-			$this->_set_error('context_outcall','missing_context');
-		else
-		{
-			$data['context']['outcall']['contexttype'] = 'outcall';
-			$outcall = $this->_prepare_context($data['context']['outcall'],null,$entity);
-
-			if(($resoutcall = (bool) $appcontext->set_add($outcall)) === false)
-			$this->_set_error('context_outcall',$appcontext->get_error());
-
-			$this->_set_result('context_outcall',$appcontext->get_result());
+		$this->_filter->set_validator($this->_conf['filter']['context']['outcall']);
+		if(($resoutcall = (bool) $this->_filter->chk($data['context']['outcall'])) === false) {
+			$this->_set_error('context_outcall',$this->_filter->get_error());
 		}
+		$outcall = $this->_filter->get_result();
+		$this->_set_result('context_outcall',$outcall);
 
-		$internal = null;
 		$resinternal = false;
-
-		if(dwho_issa('internal',$data['context']) === false)
-			$this->_set_error('context_internal','missing_context');
-		else
-		{
-			$data['context']['internal']['contexttype'] = 'internal';
-			$internal = $this->_prepare_context($data['context']['internal'],'user',$entity);
-
-			if(isset($outcall['context']['name']) === true)
-				$internal['contextinclude'] = array($outcall['context']['name']);
-
-			if(($resinternal = (bool) $appcontext->set_add($internal)) === false)
-				$this->_set_error('context_internal',$appcontext->get_error());
-			else if(dwho_has_len($data['context']['internal'],'numberbeg') === false)
-			{
-				$resinternal = false;
-				$this->_set_error('context_internal','missing_numberbeg');
-			}
-
-			$this->_set_result('context_internal',$appcontext->get_result());
+		$this->_filter->set_validator($this->_conf['filter']['context']['internal']);
+		if(($resinternal = (bool) $this->_filter->chk($data['context']['internal'])) === false) {
+			$this->_set_error('context_internal',$this->_filter->get_error());
 		}
+		$internal = $this->_filter->get_result();
+		$this->_set_result('context_internal',$internal);
 
-		$incall = null;
 		$resincall = false;
-
-		if(dwho_issa('incall',$data['context']) === false)
-			$this->_set_error('context_incall','name','missing');
-		else
-		{
-			$data['context']['incall']['contexttype'] = 'incall';
-			$incall = $this->_prepare_context($data['context']['incall'],'incall',$entity);
-
-			if(dwho_has_len($incall['contextnumbers']['incall'][0]['numberbeg']) === false
-			&& dwho_has_len($incall['contextnumbers']['incall'][0]['numberend']) === false)
-				unset($incall['contextnumbers']);
-
-			if(($resincall = (bool) $appcontext->set_add($incall)) === false)
-				$this->_set_error('context_incall',$appcontext->get_error());
-
-			$this->_set_result('context_incall',$appcontext->get_result());
+		$this->_filter->set_validator($this->_conf['filter']['context']['incall']);
+		if(($resincall = (bool) $this->_filter->chk($data['context']['incall'])) === false) {
+			$this->_set_error('context_incall',$this->_filter->get_error());
 		}
+		$incall = $this->_filter->get_result();
+		$this->_set_result('context_incall',$incall);
 
 		if($resoutcall === false
-		|| $resinternal === false
-		|| $resincall === false)
+			|| $resinternal === false
+			|| $resincall === false) {
 			return(false);
+		}
 
-		return(array('outcall'	=> $outcall,
-					'internal'	=> $internal,
-					'incall'	=> $incall));
+		$contexts = array('outcall' => $outcall,
+					'internal' => $internal,
+					'incall' => $incall);
+		return($contexts);
 	}
 
 	function save_step_entitycontext($data)
@@ -632,402 +486,65 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 			return(false);
 
 		$this->_wizsess['entity'] = $this->get_result('entity');
-		$this->_wizsess['context'] = $rescontext;
 		$this->_wizsess['context_internal'] = $this->get_result('context_internal');
-		$this->_wizsess['context_incall'] = $this->get_result('context_incall');
 		$this->_wizsess['context_outcall'] = $this->get_result('context_outcall');
+		$this->_wizsess['context_incall'] = $this->get_result('context_incall');
 
 		$this->_wizsess['step'] = $this->get_next_step('entitycontext');
 
 		return(true);
 	}
 
-	private function _commit_adminpasswd()
-	{
-		if(dwho_issa('mainconfig',$this->_wizsess) === false
-		|| isset($this->_wizsess['mainconfig']['adminpasswd']) === false)
-		return(false);
-
-		xivo::load_class('xivo_user',XIVO_PATH_OBJECT);
-		xivo::load_class('xivo_user_root',array(XIVO_PATH_OBJECT,'user'),'root');
-
-		$root = new xivo_user_root(false);
-
-		if(($info = $root->get_where(array('meta' => 'root'))) === false
-		|| $root->edit('root',
-		array('id'		=> $info['id'],
-			'passwd'	=> $this->_wizsess['mainconfig']['adminpasswd'])) === false)
-		{
-			$this->_set_error('mainconfig','adminpasswd','save');
-			return(false);
-		}
-
-		return(true);
-	}
-
-	private function _commit_hosts()
-	{
-		if(dwho_issa('mainconfig',$this->_wizsess) === false
-		|| isset($this->_wizsess['mainconfig']['hostname'],
-		$this->_wizsess['mainconfig']['domain']) === false)
-			return(false);
-
-		$hosts = array();
-		$hosts['hostname'] = $this->_wizsess['mainconfig']['hostname'];
-		$hosts['domain'] = $this->_wizsess['mainconfig']['domain'];
-
-		if($this->_sysconfd->request_post('/hosts',$hosts) === false)
-		{
-			$this->_set_error('mainconfig','hosts','save');
-			return(false);
-		}
-
-		return(true);
-	}
-
-	private function _commit_resolvconf()
-	{
-		if(dwho_issa('resolvconf',$this->_wizsess) === false)
-			return(null);
-
-		$resolvconf = array();
-		$resolvconf['nameservers'] = array_values(
-		array_filter($this->_wizsess['resolvconf'],'dwho_has_len'));
-
-		if(empty($resolvconf['nameservers']) === true)
-			return(null);
-
-		if(dwho_issa('mainconfig',$this->_wizsess) === true
-		&& isset($this->_wizsess['mainconfig']['domain']) === true)
-			$resolvconf['search'] = $this->_wizsess['mainconfig']['domain'];
-
-		if($this->_sysconfd->request_post('/resolv_conf',$resolvconf) === false)
-		{
-			$this->_set_error('resolvconf','nameservers','save');
-			return(false);
-		}
-
-		$module = &$this->_xobj->get_module('resolvconf');
-
-		$data = array(
-			'hostname'    => $this->_wizsess['mainconfig']['hostname'],
-			'domain'      => $this->_wizsess['mainconfig']['domain'],
-			'nameserver1' => $resolvconf['nameservers'][0],
-			'nameserver2' => isset($resolvconf['nameservers'][1]) ? $resolvconf['nameservers'][1] : '',
-			'nameserver3' => '',
-			'search'      => $resolvconf['search'],
-			'description' => 'wizard configuration'
-		);
-
-		if($module->save($data) === false)
-			return false;
-
-		return(true);
-	}
-
-	private function _commit_entity()
-	{
-		if(dwho_issa('entity',$this->_wizsess) === false)
-			return(false);
-
-		$name = $this->_wizsess['entity']['name'];
-
-		$appentity = &$this->_xobj->get_application('entity');
-
-		// allow to reexecute the process several times
-		$appentity->delete_all();
-
-		if($appentity->set_add($this->_wizsess['entity']) === false
-		|| $appentity->add() === false)
-		{
-			$this->_set_error('entity','save');
-			return(false);
-		}
-
-		return(true);
-	}
-
-	private function _commit_context()
-	{
-		if(dwho_issa('context',$this->_wizsess) === false
-		|| dwho_issa('internal',$this->_wizsess['context']) === false
-		|| dwho_issa('incall',$this->_wizsess['context']) === false
-		|| dwho_issa('outcall',$this->_wizsess['context']) === false)
-			return(false);
-
-		$context_internal = true;
-		$context_incall = true;
-		$context_outcall = true;
-		$context_switchboard = true;
-
-		$listcontext = $this->_wizsess['context'];
-
-		$appcontext = &$this->_ipbx->get_application('context');
-
-		// allow to reexecute the process several times
-		if (($contexts = $appcontext->get_contexts_list()) !== false)
-		{
-			foreach($contexts as $context)
-			{
-				if($appcontext->get($context['context']['name']) !== false)
-				{
-					$appcontext->_info['deletable']       = true;
-					$appcontext->_info['deletablenumber'] = true;
-					$appcontext->_info['deletablemember'] = true;
-
-					$appcontext->delete();
-				}
-			}
-		}
-
-		$switchboard_directory_context = array(
-			'context' => array(
-				'name' => '__switchboard_directory',
-				'displayname' => 'Switchboard',
-				'entity' => $this->_wizsess['entity']['name'],
-				'contexttype' => 'others'
-			)
-		);
-
-		if($appcontext->set_add($switchboard_directory_context) === false
-		|| $appcontext->add() === false)
-		{
-			$context_switchboard = false;
-			$this->_set_error('context_switchboard','save');
-		}
-
-		if($appcontext->set_add($listcontext['internal']) === false
-		|| $appcontext->add() === false)
-		{
-			$context_internal = false;
-			$this->_set_error('context_internal','save');
-		}
-
-		if($appcontext->set_add($listcontext['incall']) === false
-		|| $appcontext->add() === false)
-		{
-			$context_incall = false;
-			$this->_set_error('context_incall','save');
-		}
-
-		if($appcontext->set_add($listcontext['outcall']) === false
-		|| $appcontext->add() === false)
-		{
-			$context_outcall = false;
-			$this->_set_error('context_outcall','save');
-		}
-
-		if($context_internal === false
-		|| $context_incall === false
-		|| $context_outcall === false
-		|| $context_switchboard === false)
-			return(false);
-
-		return(true);
-	}
-
-	private function _commit_netiface()
-	{
-		$modnetiface = &$this->_xobj->get_module('netiface');
-		if (($voip_iface = $modnetiface->get_voip_iface()) === false)
-		{
-			$this->_set_error('netiface','get_voip_iface');
-			return(false);
-		}
-
-		$args = array();
-		$args['address'] = $voip_iface['address'];
-		$args['netmask'] = $voip_iface['netmask'];
-		$args['gateway'] = $voip_iface['gateway'];
-
-		if($this->_sysconfd->request_post('/modify_eth_ipv4',
-		$args,
-		array(array('ifname',$voip_iface['ifname']))) === false)
-		{
-			$this->_set_error('netiface','save');
-			return(false);
-		}
-
-		return true;
-	}
-
-	private function _prepare_netiface()
-	{
-		if(dwho_issa('netiface',$this->_wizsess) === false
-		|| isset($this->_wizsess['netiface']['name']) === false)
-		{
-			dwho_report::push('error', 'Can\'t get netiface in session');
-			return(false);
-		}
-
-		$netiface = $this->_wizsess['netiface'];
-		$name = $netiface['name'];
-
-		$module = &$this->_xobj->get_module('netiface');
-
-		//computing broadcast address
-		$ip = split('\.', $netiface['address']);
-		$nm = split('\.', $netiface['netmask']);
-
-		$bcast  = array();
-		for($i = 0; $i < 4; $i++)
-		{
-			$bcast[]  = intval($ip[$i]) | (intval($nm[$i]) ^ 255);
-		}
-
-		$bcast  = implode('.', $bcast);
-
-		$data = array(
-			'name'        => $name,
-			'ifname'      => $name,
-			'hwtypeid'    => 1,
-			'networktype' => 'voip',
-			'type'        => 'iface',
-			'method'      => 'static',
-			'address'     => $netiface['address'],
-			'netmask'     => $netiface['netmask'],
-			'broadcast'   => $bcast,
-			'gateway'     => $netiface['gateway'],
-			'mtu'         => 1500,
-			'description' => 'wizard configuration');
-
-		if(($data = $module->chk_values($data)) === false)
-		{
-			dwho_report::push('error', $module->get_filter_error());
-			return false;
-		}
-
-		if($module->save($data) === false)
-		{
-			dwho_report::push('error', 'Can\'t save network data');
-			return false;
-		}
-
-		return(true);
-	}
-
-	private function _commit_language($lang)
-	{
-		$this->_get_save_data_tmp();
-
-		if($lang == 'fr')
-			$lang = 'fr_FR';
-		else
-			$lang = 'en_US';
-
-		exec('cat /etc/timezone', $timezone);
-		$module = &$this->_ipbx->get_module('general');
-		$module->edit(1, array('timezone' => $timezone[0]));
-
-		foreach(array('sip', 'iax') as $name)
-		{
-			$app = &$this->_ipbx->get_apprealstatic($name);
-			$module = &$app->get_module('general');
-
-			if(!$module->set(array('var_name' => 'language', 'var_val' => $lang))
-			|| !$module->save())
-			{
-				dwho_report::push('error', 'Can\'t edit '.$name.' module');
-				return false;
-			}
-		}
-
-		$sccpgeneralmodule = &$this->_ipbx->get_module('sccpgeneralsettings');
-		if($sccpgeneralmodule->save_sccp_general_option('language', $lang) === false)
-		{
-			dwho_report::push('error', 'Can\'t save language in SCCP general settings');
-			return(false);
-		}
-
-		return(true);
-	}
-
 	function save_step_validate($data, $tpl)
 	{
-		return(true);
-	}
-
-	public function start_xivo_services()
-	{
-		$data = array();
-		$data['xivo-service'] = 'enable';
-		if ($this->_sysconfd->request_post('/xivoctl', $data))
-			$data['xivo-service'] = 'start';
-			return($this->_sysconfd->request_post('/xivoctl', $data));
-		return(false);
-	}
-
-	public function commit_db_data()
-	{
-		$this->_get_save_data_tmp();
-		$this->_commit_adminpasswd();
-		$this->_commit_hosts();
-		$this->_commit_resolvconf();
-		$this->_commit_entity();
-		$this->_commit_context();
-		$this->_prepare_netiface();
-		return(true);
-	}
-
-	public function commit_syslanguage()
-	{
-		$this->_commit_language($this->_wizsess['welcome']['language']);
-		return(true);
-	}
-
-	public function set_default_provisioning_values()
-	{
-		$wizsess = $this->_get_save_data_tmp();
-		$netiface = $wizsess['netiface'];
-
-		$rs = array();
-		$rs['commented'] = 0;
-		$rs['var_name'] = 'autocreate_prefix';
-		$rs['var_val'] = 'ap'.dwho_generate_code();
-
-		$appsip = &$this->_ipbx->get_apprealstatic('sip');
-		$appgeneralsip = &$appsip->get_module('general');
-
-		if($appgeneralsip->set($rs) === false
-		|| $appgeneralsip->save() === false)
-		{
-			dwho_report::push('error', 'Can\'t create autocreate_prefix in staticsip table');
+		if($this->post_confd_wizard() === false) {
 			return(false);
 		}
 
-		$provdconfig = &$this->_xobj->get_module('provdconfig');
-		if ($provdconfig->eval_required_config($netiface['address'],true) === false)
-			return(false);
-
+		session_destroy();
 		return(true);
 	}
-
-	public function commit_netinfos()
+	public function post_confd_wizard()
 	{
-		return($this->_commit_netiface());
-	}
-
-	public function commit_commonconf()
-	{
-		if(($commonconf = &$this->_xobj->get_module('commonconf')) === false)
-			trigger_error('Unable to load commonconf module',E_USER_ERROR);
-
-		$content = '';
-		if($commonconf->generate($content) !== false)
-		{
-			$content = str_replace("\n", "<br/>\n", $content);
-			$content = $commonconf->apply();
-
-			$this->_sysconfd->request_get('/dhcpd_update');
-
-			unlink($this->_savetmpfile);
-			session_destroy();
-			touch(XIVO_LIB.'/configured');
-			file_put_contents(XIVO_LIB.'/configured', date('Y-m-d H:i:s')."\n");
-			return(true);
+		$wizsess = $this->_wizsess;
+		if($wizsess['welcome']['language'] == 'fr') {
+			$language = 'fr_FR';
+		} else {
+			$language = 'en_US';
+		}
+		$body = array('admin_password' => $wizsess['mainconfig']['adminpasswd'],
+					'timezone' => $wizsess['timezone'],
+					'language' => $language,
+					'entity_name' => $wizsess['entity']['displayname'],
+					'license' => $wizsess['license']['agree'],
+					'network' => array('nameservers' => array($wizsess['resolvconf']['nameserver1']),
+									'hostname' => $wizsess['mainconfig']['hostname'],
+									'interface' => $wizsess['interface'],
+									'ip_address' => $wizsess['netiface']['address'],
+									'netmask' => $wizsess['netiface']['netmask'],
+									'domain' => $wizsess['mainconfig']['domain'],
+									'gateway' => $wizsess['netiface']['gateway']),
+					'context_incall' => array('display_name' => $wizsess['context_incall']['displayname'],
+											'did_length' => $wizsess['context_incall']['didlength']),
+					'context_internal' => array('display_name' => $wizsess['context_internal']['displayname'],
+											'number_start' => $wizsess['context_internal']['numberbeg'],
+											'number_end' => $wizsess['context_internal']['numberend']),
+					'context_outcall' => array('display_name' => $wizsess['context_outcall']['displayname'])
+				);
+		if(empty($wizsess['resolvconf']['nameserver2']) === false) {
+			array_push($body['network']['nameservers'], $wizsess['resolvconf']['nameserver2']);
 		}
 
-		dwho_report::push('error', $content);
+		if(empty($wizsess['context_incall']['numberbeg']) === false) {
+			$body['context_incall']['number_start'] = $wizsess['context_incall']['numberbeg'];
+		}
+
+		if(empty($wizsess['context_incall']['numberend']) === false) {
+			$body['context_incall']['number_end'] = $wizsess['context_incall']['numberend'];
+		}
+
+		$result = $this->_confd_wizard->create($body);
+		return($result);
 	}
 
 	function save($data, $tpl)

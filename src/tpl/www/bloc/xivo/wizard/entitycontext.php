@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2015  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,9 +27,7 @@ $element = $this->get_var('element');
 	<legend><?=$this->bbf('fld-entity');?></legend>
 <?php
 
-echo	$form->hidden(array('name'	=> 'entity[name]',
-			  'id'	=> 'it-entity-name')),
-	$form->text(array('desc'	=> $this->bbf('fm_entity_displayname'),
+echo    $form->text(array('desc'	=> $this->bbf('fm_entity_displayname'),
 			  'name'	=> 'entity[displayname]',
 			  'labelid'	=> 'entity-displayname',
 			  'size'	=> 15,
@@ -46,28 +44,16 @@ echo	$form->hidden(array('name'	=> 'entity[name]',
 	<legend><?=$this->bbf('fld-context-internal');?></legend>
 <?php
 
-echo	$form->hidden(array('name'	=> 'context[internal][name]',
-			  'id'		=> 'it-context-internal-name',
-			  'default'	=> $element['context']['internal']['name']['default'])),
-
-		$form->hidden(array('name'	=> 'context[internal][contexttype]',
-			  'id'		=> 'it-context-internal-contexttype',
-			  'value'	=> 'internal')),
-
-		$form->text(array('desc'	=> $this->bbf('fm_context_internal-displayname'),
+echo	$form->text(array('desc'	=> $this->bbf('fm_context_internal-displayname'),
 			  'name'	=> 'context[internal][displayname]',
 			  'labelid'	=> 'context-internal-displayname',
 			  'size'	=> 15,
 			  'required'=> true,
 			  'comment'	=> $this->bbf('cmt_fm_context_internal-displayname'),
-			  'default'	=> $this->bbf('fm_context_internal-displayname-default',
-						      $element['context']['internal']['name']['default']),
-			  'value'	=> $this->get_var('info','context_internal','context','displayname'),
+			  'default'	=> $this->bbf('fm_context_internal-displayname-default'),
+			  'value'	=> $this->get_var('info','context_internal','displayname'),
 			  'error'	=> $this->bbf_args('error_generic',
-							   $this->get_var('error',
-									  'context_internal',
-									  'context',
-									  'displayname')))),
+							   is_string($this->get_var('error', 'context_internal', 'displayname'))))),
 
 
 $form->text(array('desc'	=> $this->bbf('fm_context_internal-numberbeg'),
@@ -77,11 +63,9 @@ $form->text(array('desc'	=> $this->bbf('fm_context_internal-numberbeg'),
 			  'required'=> true,
 			  'comment'	=> $this->bbf('cmt_fm_context_internal-numberbeg'),
 			  'default'	=> $element['context']['internal']['numberbeg']['default'],
-			  'value'	=> $this->get_var('info','context_internal','contextnumbers','user',0,'numberbeg'),
-			  'error'	=> $this->bbf_args('error_fm_context_internal_numberbeg',
-								is_string($this->get_var('error',
-									  'context_internal',
-									  'contextnumbers'))))),
+			  'value'	=> $this->get_var('info','context_internal','numberbeg'),
+			  'error'	=> $this->bbf_args('error_generic',
+							   $this->get_var('error', 'context_internal', 'numberbeg')))),
 										    
 	$form->text(array('desc'	=> $this->bbf('fm_context_internal-numberend'),
 			  'name'	=> 'context[internal][numberend]',
@@ -90,13 +74,9 @@ $form->text(array('desc'	=> $this->bbf('fm_context_internal-numberbeg'),
 			  'required'=> true,
 			  'comment'	=> $this->bbf('cmt_fm_context_internal-numberend'),
 			  'default'	=> $element['context']['internal']['numberend']['default'],
-			  'value'	=> $this->get_var('info','context_internal','contextnumbers','user',0,'numberend'),
+			  'value'	=> $this->get_var('info','context_internal','numberend'),
 			  'error'	=> $this->bbf_args('error_fm_context_internal_numberend',
-							   is_string($this->get_var('error',
-										    'context_internal',
-										    'contextnumbers',
-										    'user',
-										    0)))));
+							   is_string($this->get_var('error', 'context_internal', 'numberend')))));
 
 ?>
 </fieldset>
@@ -105,28 +85,16 @@ $form->text(array('desc'	=> $this->bbf('fm_context_internal-numberbeg'),
 	<legend><?=$this->bbf('fld-context-incall');?></legend>
 <?php
 
-echo $form->hidden(array('name'	=> 'context[incall][name]',
-			  'id'		=> 'it-context-incall-name',
-			  'default'	=> $element['context']['incall']['name']['default'])),
-
-		$form->hidden(array('name'	=> 'context[incall][contexttype]',
-			  'id'		=> 'it-context-incall-contexttype',
-			  'value'	=> 'incall')),
-
-	$form->text(array('desc'	=> $this->bbf('fm_context_incall-displayname'),
+echo    $form->text(array('desc'	=> $this->bbf('fm_context_incall-displayname'),
 			  'name'	=> 'context[incall][displayname]',
 			  'labelid'	=> 'context-incall-displayname',
 			  'size'	=> 15,
 			  'required'=> true,
 			  'comment'	=> $this->bbf('cmt_fm_context_incall-displayname'),
-			  'default'	=> $this->bbf('fm_context_incall-displayname-default',
-						      $element['context']['incall']['name']['default']),
-			  'value'	=> $this->get_var('info','context_incall','context','displayname'),
+			  'default'	=> $this->bbf('fm_context_incall-displayname-default'),
+			  'value'	=> $this->get_var('info','context_incall','displayname'),
 			  'error'	=> $this->bbf_args('error_generic',
-							   $this->get_var('error',
-									  'context_incall',
-									  'context',
-									  'displayname')))),
+							   $this->get_var('error', 'context_incall', 'displayname')))),
 
 	$form->text(array('desc'	=> $this->bbf('fm_context_incall-numberbeg'),
 			  'name'	=> 'context[incall][numberbeg]',
@@ -134,8 +102,9 @@ echo $form->hidden(array('name'	=> 'context[incall][name]',
 			  'size'	=> 15,
 			  'comment'	=> $this->bbf('cmt_fm_context_incall-numberbeg'),
 			  'default'	=> $element['context']['incall']['numberbeg']['default'],
-			  'value'	=> $this->get_var('info','context_incall','contextnumbers','incall',0,'numberbeg'),
-			  'error'	=> $this->bbf_args('error_generic',$error_incall_numberbeg))),
+			  'value'	=> $this->get_var('info','context_incall','numberbeg'),
+			  'error'	=> $this->bbf_args('error_generic',
+							   $this->get_var('error', 'context_incall', 'numberbeg')))),
 
 	$form->text(array('desc'	=> $this->bbf('fm_context_incall-numberend'),
 			  'name'	=> 'context[incall][numberend]',
@@ -143,13 +112,9 @@ echo $form->hidden(array('name'	=> 'context[incall][name]',
 			  'size'	=> 15,
 			  'comment'	=> $this->bbf('cmt_fm_context_incall-numberend'),
 			  'default'	=> $element['context']['incall']['numberend']['default'],
-			  'value'	=> $this->get_var('info','context_incall','contextnumbers','incall',0,'numberend'),
+			  'value'	=> $this->get_var('info','context_incall','numberend'),
 			  'error'	=> $this->bbf_args('error_fm_context_incall_numberend',
-							   is_string($this->get_var('error',
-										    'context_incall',
-										    'contextnumbers',
-										    'incall',
-										    0))))),
+							   is_string($this->get_var('error', 'context_incall', 'numberend'))))),
 
 	$form->select(array('desc'	=> $this->bbf('fm_context_incall-didlength'),
 			    'name'	=> 'context[incall][didlength]',
@@ -157,7 +122,7 @@ echo $form->hidden(array('name'	=> 'context[incall][name]',
 			    'key'	=> false,
 			    'comment'	=> $this->bbf('cmt_fm_context_incall-didlength'),
 			    'default'	=> $element['context']['incall']['didlength']['default'],
-			    'selected'	=> $this->get_var('info','context_incall','contextnumbers','incall',0,'didlength')),
+			    'selected'	=> $this->get_var('info','context_incall','didlength')),
 		      $element['context']['incall']['didlength']['value']);
 
 ?>
@@ -167,27 +132,16 @@ echo $form->hidden(array('name'	=> 'context[incall][name]',
 	<legend><?=$this->bbf('fld-context-outcall');?></legend>
 <?php
 
-echo $form->hidden(array('name'	=> 'context[outcall][name]',
-			  'id'		=> 'it-context-outcall-name',
-			  'default'	=> $element['context']['outcall']['name']['default'])),
-
-		$form->hidden(array('name'	=> 'context[outcall][contexttype]',
-			  'id'		=> 'it-context-outcall-contexttype',
-			  'value'	=> 'outcall')),
-
-	$form->text(array('desc'	=> $this->bbf('fm_context_outcall-displayname'),
+echo    $form->text(array('desc'	=> $this->bbf('fm_context_outcall-displayname'),
 			  'name'	=> 'context[outcall][displayname]',
 			  'labelid'	=> 'context-outcall-displayname',
 			  'size'	=> 15,
 			  'required'=> true,
 			  'comment'	=> $this->bbf('cmt_fm_context_outcall-displayname'),
-			  'default'	=> $this->bbf('fm_context_outcall-displayname-default',$element['context']['outcall']['name']['default']),
-			  'value'	=> $this->get_var('info','context_outcall','context','displayname'),
+              'default'	=> $this->bbf('fm_context_outcall-displayname-default'),
+			  'value'	=> $this->get_var('info','context_outcall','displayname'),
 			  'error'	=> $this->bbf_args('error_generic',
-							   $this->get_var('error',
-									  'context_outcall',
-									  'context',
-									  'displayname'))));
+							   is_string($this->get_var('error', 'context_outcall', 'displayname')))));
 
 ?>
 </fieldset>

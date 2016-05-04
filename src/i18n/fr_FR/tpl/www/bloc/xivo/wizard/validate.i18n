@@ -64,9 +64,6 @@ Erreurs possibles :
 ; fld-entity
 Entité
 
-; info_entity_name
-Nom :
-
 ; info_entity_displayname
 Nom affiché :
 
@@ -101,9 +98,6 @@ Appels sortants :
 Erreurs possibles :
 1. Configuration du contexte des appels sortants invalide
 2. Bases de données inaccessibles depuis le serveur
-
-; entity_name
-Nom : 
 
 ; entity_displayname
 Nom affiché : 
