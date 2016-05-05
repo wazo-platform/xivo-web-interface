@@ -10,6 +10,7 @@ RESPONSES = {}
 PRESERVE = {}
 
 DEFAULTS = {
+    '/wizard': {'configured': True},
     '/devices': {'total': 0,
                  'items': []},
     '/voicemails': {'total': 0,

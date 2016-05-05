@@ -1,6 +1,10 @@
 Running functional tests
 ------------------------
 
+You need Xephyr.
+
+    apt-get install xserver-xephyr 
+
 1. [XiVO acceptance](https://github.com/xivo-pbx/xivo-acceptance)
 2. ```
 cd integration_tests
