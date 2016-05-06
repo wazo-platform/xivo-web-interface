@@ -77,9 +77,7 @@ $array['filter']['netiface'] = array();
 $array['filter']['netiface']['address'] = array('callback'	=> 'dwho_network::valid_ipv4_dotdec');
 $array['filter']['netiface']['netmask'] = array('callback'	=> 'dwho_network::valid_mask_ipv4',
 						'callbackarg'	=> array(DWHO_NETWORK_MASK_IPV4_DOTDEC));
-$array['filter']['netiface']['gateway'] = array('set'		=> false,
-						'chk'		=> 2,
-						'callback'	=> 'dwho_network::valid_host',
+$array['filter']['netiface']['gateway'] = array('callback'	=> 'dwho_network::valid_host',
 						'callbackarg'	=> array(DWHO_NETWORK_HOST_IPV4_DOTDEC));
 $array['filter']['netiface']['interface'] = array('cast' => 'sgraph');
 

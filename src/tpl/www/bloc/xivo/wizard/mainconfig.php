@@ -92,30 +92,26 @@ echo	$form->password(array('desc'	=> $this->bbf('fm_mainconfig_adminpasswd'),
 	<legend><?=$this->bbf('fld-mainconfig-netiface');?></legend>
 <?php
 
-	if(is_array($interface_list) === true && empty($interface_list) === false):
-		echo	$form->select(array('desc'	=> $this->bbf('fm_netiface_address'),
-						'name'	=> 'netiface_id[address]',
-						'labelid'	=> 'netiface-address',
-						'comment'	=> $this->bbf('cmt_fm_netiface_address'),
-						'default'	=> $element['netiface_id']['address'],
-						'empty'	=> false,
-						'selected'	=> $info['netiface_id']['address'],
-						'error'	=> $this->bbf_args('error_generic',
-											   $this->get_var('error','netiface','address'))),
-						$interface_list);
-	endif;
-	if(is_array($gateway_list) === true && empty($gateway_list) === false):
-		echo	$form->select(array('desc'	=> $this->bbf('fm_netiface_gateway'),
-						'name'	=> 'netiface_id[gateway]',
-						'labelid'	=> 'netiface-gateway',
-						'comment'	=> $this->bbf('cmt_fm_netiface_gateway'),
-						'default'	=> $element['netiface_id']['gateway'],
-						'empty'	=> false,
-						'selected'	=> $info['netiface_id']['gateway'],
-						'error'	=> $this->bbf_args('error_generic',
-											   $this->get_var('error','netiface','gateway'))),
-						$gateway_list);
-	endif;
+	echo	$form->select(array('desc'	=> $this->bbf('fm_netiface_address'),
+					'name'	=> 'netiface_id[address]',
+					'labelid'	=> 'netiface-address',
+					'comment'	=> $this->bbf('cmt_fm_netiface_address'),
+					'default'	=> $element['netiface_id']['address'],
+					'empty'	=> false,
+					'selected'	=> $info['netiface_id']['address'],
+					'error'	=> $this->bbf_args('error_generic',
+										   $this->get_var('error','netiface','address'))),
+					$interface_list),
+	        $form->select(array('desc'	=> $this->bbf('fm_netiface_gateway'),
+					'name'	=> 'netiface_id[gateway]',
+					'labelid'	=> 'netiface-gateway',
+					'comment'	=> $this->bbf('cmt_fm_netiface_gateway'),
+					'default'	=> $element['netiface_id']['gateway'],
+					'empty'	=> false,
+					'selected'	=> $info['netiface_id']['gateway'],
+					'error'	=> $this->bbf_args('error_generic',
+										   $this->get_var('error','netiface','gateway'))),
+					$gateway_list);
 
 ?>
 </fieldset>
