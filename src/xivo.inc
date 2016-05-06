@@ -46,8 +46,8 @@ class xivo extends dwho
 		if(($xivo = dwho_gat::load_get('xivo',XIVO_PATH_OBJECTCONF)) !== false)
 			$this->_conf['xivo'] = dwho_array_merge_replace_recursive($this->_conf['xivo'],$xivo);
 
-		$nonraising_client = Client::default_config();
-		$this->_confd_wizard = new WizardResource($nonraising_client);;
+		$raising_client = Client::default_config(true);
+		$this->_confd_wizard = new WizardResource($raising_client);;
 
 		$this->_init_cfg();
 		$this->_set_report();
@@ -159,9 +159,10 @@ class xivo extends dwho
 
 	protected function _is_xivo_configured()
 	{
-		$response = $this->_confd_wizard->configured();
-		if($response === false) {
-			return(false);
+		try {
+			$response = $this->_confd_wizard->configured();
+		} catch (ClientException $e) {
+			die("xivo-confd must be running: ".$e->getMessage());
 		}
 		return((bool) $response['configured']);
 
