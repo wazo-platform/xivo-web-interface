@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -109,7 +109,6 @@ abstract class dwho_network
 		else if($nm === -1)
 			return(32);
 		else if($nm === false
-				|| ($inv = ($nm ^ 0xFFFFFFFF)) === 0
 				|| ($inv & ($inv + 1)) !== 0)
 			return(false);
 
