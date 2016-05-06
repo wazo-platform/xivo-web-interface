@@ -104,7 +104,9 @@ abstract class dwho_network
 
 	public static function netmask_ipv4_to_bitmask($nm)
 	{
-		if(($nm = dwho_network::ipv4_long($nm)) === 0)
+		$nm = dwho_network::ipv4_long($nm);
+		$inv = $nm ^ 0xFFFFFFFF;
+		if($nm === 0)
 			return(0);
 		else if($nm === -1)
 			return(32);
