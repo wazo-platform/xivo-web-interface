@@ -27,6 +27,7 @@ function xivo_wizard_onload() {
 
 	dwho.dom.add_event('click', dwho_eid('validate'), function() {
 		this.disabled = true;
+		this.style.opacity = '0.4';
 	});
 }
 
