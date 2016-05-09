@@ -71,7 +71,6 @@ echo	$form->password(array('desc'	=> $this->bbf('fm_mainconfig_adminpasswd'),
 			      'size'	=> 15,
 #			      'help'	=> $this->bbf('hlp_fm_mainconfig_adminpasswd'),
 			      'comment'	=> $this->bbf('cmt_fm_mainconfig_adminpasswd'),
-			      'default'	=> $element['mainconfig']['adminpasswd'],
 			      'error'	=> $this->bbf_args('error_generic',
 							   $this->get_var('error','mainconfig','adminpasswd')))),
 
@@ -81,7 +80,6 @@ echo	$form->password(array('desc'	=> $this->bbf('fm_mainconfig_adminpasswd'),
 			      'size'	=> 15,
 #			      'help'	=> $this->bbf('hlp_fm_mainconfig_confirmadminpasswd'),
 			      'comment'	=> $this->bbf('cmt_fm_mainconfig_confirmadminpasswd'),
-			      'default'	=> $element['mainconfig']['confirmadminpasswd'],
 			      'error'	=> $this->bbf_args('error_generic',
 							   $this->get_var('error','mainconfig','confirmadminpasswd'))));
 

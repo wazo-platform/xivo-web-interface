@@ -31,7 +31,7 @@ if($_QRY->get('step') === $appwizard->get_current_step())
 	{
 		$previous = true;
 		$trysave = true;
-		$appwizard->save($_QR);
+		$appwizard->save($_QR, $_TPL);
 		$appwizard->set_previous_step();
 	}
 	else if((bool) $_QRY->get('previous') === true
