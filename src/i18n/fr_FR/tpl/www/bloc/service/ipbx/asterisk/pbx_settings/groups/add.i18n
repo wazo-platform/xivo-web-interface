@@ -85,6 +85,15 @@ Désactivé
 ; fm_queue_timeout-opt
 %s secondes
 
+; fm_queue_retry
+Délai d'attente avant rappel des utilisateurs:
+
+; fm_queue_retry-opt(1)
+1 seconde
+
+; fm_queue_retry-opt
+%s secondes
+
 ; fm_queue_ringinuse
 Appeler un membre déjà en communication :
 
@@ -132,3 +141,6 @@ Créer un horaire
 
 ; hlp_fm_group_timeout
 Saisissez une valeur en secondes (champ vide ou valeur 0 pour désactiver)
+
+; hlp_fm_queue-retry
+Config asterisk: retry

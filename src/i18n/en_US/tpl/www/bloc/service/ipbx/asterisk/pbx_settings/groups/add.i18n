@@ -73,6 +73,15 @@ Disabled
 ; fm_queue_timeout-opt
 %s seconds
 
+; fm_queue_retry
+Time before retrying a call to a user:
+
+; fm_queue_retry-opt(1)
+1 second
+
+; fm_queue_retry-opt
+%s seconds
+
 ; fm_queue_musicclass
 On-Hold Music:
 
@@ -153,3 +162,6 @@ Create a schedule
 
 ; hlp_fm_group_timeout
 In seconds (empty field or 0 to disable)
+
+; hlp_fm_queue-retry
+Asterisk config: retry

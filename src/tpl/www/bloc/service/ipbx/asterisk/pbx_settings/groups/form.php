@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -109,6 +109,18 @@ endif;
 				    'default'	=> $element['queue']['timeout']['default'],
 				    'selected'	=> (isset($info['queue']['timeout']) === true ? (int) $info['queue']['timeout'] : null)),
 			      $element['queue']['timeout']['value']),
+
+		$form->select(array('desc'	=> $this->bbf('fm_queue_retry'),
+				    'name'	=> 'queue[retry]',
+				    'labelid' => 'queue-retry',
+					'help' => $this->bbf('hlp_fm_queue-retry'),
+				    'key'	=> false,
+				    'bbf'	=> 'fm_queue_retry-opt',
+				    'bbfopt'	=> array('argmode' => 'paramvalue'),
+				    'error'	=> $this->get_var('error','queue','retry'),
+				    'default'	=> $element['queue']['retry']['default'],
+				    'selected'	=> $this->get_var('info','queue','retry')),
+			      $element['queue']['retry']['value']),
 
 		$form->checkbox(array('desc'	=> $this->bbf('fm_queue_ringinuse'),
 				    'name'	=> 'queue[ringinuse]',
