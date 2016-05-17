@@ -36,10 +36,12 @@ class SwitchboardStatsPage(Page):
         self.wait().until(ec.element_to_be_clickable((By.ID, 'it-submit')))
 
     def save(self):
-        self.hide_calendar()
-
-        btn = self.driver.find_element_by_id("it-submit")
-        btn.click()
+        try:
+            self.driver.find_element_by_id("it-submit").click()
+        except WebdriverException:
+            # calendar overlaps the button
+            self.hide_calendar()
+            self.driver.find_element_by_id("it-submit").click()
 
         self.wait_for(By.ID, 'it-submit')
 
