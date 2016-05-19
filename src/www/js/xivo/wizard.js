@@ -25,10 +25,11 @@ function xivo_wizard_onload() {
 		this.type = 'submit';
 	});
 
-	dwho.dom.add_event('click', dwho_eid('validate'), function() {
-		this.disabled = true;
-		this.style.opacity = '0.4';
-	});
+    $('form').submit(function(event) {
+                $('#validate').css('opacity', '0.4');
+                $('#validate').attr('disabled', true);
+    });
+
 }
 
 dwho.dom.set_onload(xivo_wizard_onload);
