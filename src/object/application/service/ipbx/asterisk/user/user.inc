@@ -1706,6 +1706,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			return(false);
 
 		$user_id = (int) $this->_info['userfeatures']['id'];
+		$user_uuid = $this->_info['userfeatures']['uuid'];
 		$func_key_private_template_id = (int) $this->_info['userfeatures']['func_key_private_template_id'];
 
 		$this->_user_line->delete_where(array('user_id' => $user_id));
@@ -1717,6 +1718,9 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 
 		if ($this->_func_key_manager->delete_template($func_key_private_template_id) === false)
 			return(false);
+
+		$bus_msg = $this->_bus_msg_factory->new_user_deleted_msg($user_id, $user_uuid);
+		$this->_bus_msg_queue->add_msg($bus_msg);
 
 		return($r);
 	}

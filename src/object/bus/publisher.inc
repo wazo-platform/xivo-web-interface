@@ -164,18 +164,27 @@ class MessageFactory {
 	}
 
 	function new_user_line_associated_msg($user_id, $line_id) {
-		$body = json_encode(array(
-			'name' => 'line_associated',
-			'origin_uuid' => $this->xivo_uuid,
-			'data' => array(
-				'user_id' => $user_id,
-				'line_id' => $line_id,
-				'main_line' => true,
-				'main_user' => true)));
-
-		$amqp_message = new AMQPMessage($body, $this->msg_params);
+		$name = 'line_associated';
 		$routing_key = 'config.user_line_association.created';
+		$data = array('user_id' => $user_id, 'line_id' => $line_id, 'main_line' => true, 'main_user' => true);
 
+		return $this->new_msg($name, $routing_key, $data);
+	}
+
+	function new_user_deleted_msg($user_id, $user_uuid) {
+		$name = 'user_deleted';
+		$routing_key = 'config.user.deleted';
+		$data = array('id' => $user_id, 'uuid' => $user_uuid);
+
+		return $this->new_msg($name, $routing_key, $data);
+	}
+
+	private function new_msg($name, $routing_key, $data) {
+		$body = json_encode(array(
+			'name' => $name,
+			'origin_uuid' => $this->xivo_uuid,
+			'data' => $data));
+		$amqp_message = new AMQPMessage($body, $this->msg_params);
 		return new BusMessage($amqp_message, $routing_key);
 	}
 
