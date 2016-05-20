@@ -1059,7 +1059,10 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		|| $rs === false)
 			return(false);
 
-		$this->_return['userfeatures'] = $this->_userfeatures->add($rs);
+		$user_id = $this->_return['userfeatures'] = $this->_userfeatures->add($rs);
+		$user_uuid = $rs['uuid'];
+		$bus_msg = $this->_bus_msg_factory->new_user_created_msg($user_id, $user_uuid);
+		$this->_bus_msg_queue->add_msg($bus_msg);
 
 		return($this->_return['userfeatures']);
 	}
@@ -1365,6 +1368,11 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			return(false);
 
 		$return = $this->_userfeatures->edit($this->_info['userfeatures']['id'],$rs);
+
+		$user_uuid = $this->_info['userfeatures']['uuid'];
+		$user_id = $this->_info['userfeatures']['id'];
+		$bus_msg = $this->_bus_msg_factory->new_user_edited_msg($user_id, $user_uuid);
+		$this->_bus_msg_queue->add_msg($bus_msg);
 
 		return(($this->_return['userfeatures'] = $return));
 	}

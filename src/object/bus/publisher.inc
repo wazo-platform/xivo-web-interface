@@ -171,13 +171,30 @@ class MessageFactory {
 		return $this->new_msg($name, $routing_key, $data);
 	}
 
-	function new_user_deleted_msg($user_id, $user_uuid) {
-		$name = 'user_deleted';
-		$routing_key = 'config.user.deleted';
-		$data = array('id' => $user_id, 'uuid' => $user_uuid);
+	function new_user_created_msg($user_id, $user_uuid) {
+		$name = 'user_created';
+		$routing_key = 'config.user.created';
+		$data = array('id' => (int) $user_id, 'uuid' => $user_uuid);
 
 		return $this->new_msg($name, $routing_key, $data);
 	}
+
+	function new_user_deleted_msg($user_id, $user_uuid) {
+		$name = 'user_deleted';
+		$routing_key = 'config.user.deleted';
+		$data = array('id' => (int) $user_id, 'uuid' => $user_uuid);
+
+		return $this->new_msg($name, $routing_key, $data);
+	}
+
+	function new_user_edited_msg($user_id, $user_uuid) {
+		$name = 'user_edited';
+		$routing_key = 'config.user.edited';
+		$data = array('id' => (int) $user_id, 'uuid' => $user_uuid);
+
+		return $this->new_msg($name, $routing_key, $data);
+	}
+
 
 	private function new_msg($name, $routing_key, $data) {
 		$body = json_encode(array(
