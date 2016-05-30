@@ -18,6 +18,7 @@
 from lib.pages import Page
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as ec
+from selenium.common.exceptions import WebDriverException
 
 
 class SwitchboardStatsPage(Page):
@@ -38,7 +39,7 @@ class SwitchboardStatsPage(Page):
     def save(self):
         try:
             self.driver.find_element_by_id("it-submit").click()
-        except WebdriverException:
+        except WebDriverException:
             # calendar overlaps the button
             self.hide_calendar()
             self.driver.find_element_by_id("it-submit").click()
