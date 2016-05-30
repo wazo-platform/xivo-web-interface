@@ -5,7 +5,7 @@ set -e
 
 case "$1" in
     purge)
-        rm -f /etc/php5/cgi/conf.d/xivo.ini
+        rm -f /etc/php5/cgi/conf.d/xivo.ini /var/log/xivo-web-interface/error.log* /var/log/xivo-web-interface/xivo.log*
     ;;
 
     remove|upgrade|failed-upgrade|abort-install|abort-upgrade|disappear)
