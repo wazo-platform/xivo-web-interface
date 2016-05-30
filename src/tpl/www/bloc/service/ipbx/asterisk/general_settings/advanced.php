@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -226,7 +226,6 @@ if(isset($error_js[0]) === true)
 				    'labelid'  => 'general-timezone',
 				    'key'      => false,
 				    //'default'  => $element['general']['timezone']['default'],
-				    'help'     => $this->bbf('hlp_fm_general_timezone'),
 				    'selected' => $this->get_var('general','timezone')),
 			      $element['general']);
 ?>

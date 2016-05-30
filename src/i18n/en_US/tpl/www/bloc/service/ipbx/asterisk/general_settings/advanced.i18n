@@ -103,6 +103,3 @@ Timezone
 
 ; fm_general_timezone
 Timezone: 
-
-; hlp_fm_general_timezone
-Phones provisioned timezone<br\>(can be overriden by user account)
