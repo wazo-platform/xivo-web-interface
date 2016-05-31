@@ -37,7 +37,6 @@ class Consumer(ConsumerMixin):
         return [Consumer(self._queue, callbacks=[self.on_message])]
 
     def on_message(self, body, message):
-        print 'Received', body
         self._received_messages.put_nowait(body)
         message.ack()
 

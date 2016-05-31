@@ -95,7 +95,7 @@ class xivo_service_asterisk_userfeatures extends xivo_service_asterisk_abstract
 		return(true);
 	}
 
-	function add($arr,$id=0)
+	function add(&$arr,$id=0)
 	{
 		if(is_array($arr) === false)
 			return(false);
