@@ -428,12 +428,6 @@ Callback extension:
 ; hlp_fm_protocol-callbackextension
 Asterisk config: callbackextension
 
-; fm_protocol-registertrying
-Send «100 Trying» when register:
-
-; hlp_fm_protocol-registertrying
-Asterisk config: registertrying
-
 ; fm_protocol-timert1
 Minimum time of the round trip (RTT) messages:
 
