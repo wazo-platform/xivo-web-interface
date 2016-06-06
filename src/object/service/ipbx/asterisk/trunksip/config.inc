@@ -336,11 +336,6 @@ $array['element']['callbackextension'] = array();
 $array['element']['callbackextension']['default'] = '';
 $array['element']['callbackextension']['null'] = true;
 
-$array['element']['registertrying'] = array();
-$array['element']['registertrying']['value'] = array(0, 1);
-$array['element']['registertrying']['default'] = '';
-$array['element']['registertrying']['null']    = true;
-
 $array['element']['timert1'] = array();
 $array['element']['timert1']['default'] = '';
 $array['element']['timert1']['null'] = true;
@@ -472,7 +467,6 @@ $array['filter']['session-expires'] = array('set' => false, 'chk' => 2, 'cast' =
 $array['filter']['session-minse'] = array('set' => false, 'chk' => 2, 'cast' => 'uint','between' => array(0,300,10));
 $array['filter']['session-refresher'] = array('set' => false, 'chk' => 2, 'key' => array('uas','uac'));
 $array['filter']['callbackextension'] = array('set' => false,'chk' => 2,'maxlen' => 25);
-$array['filter']['registertrying'] = array('set' => false, 'chk' => 2, 'bool' => true);
 $array['filter']['timert1'] = array('set' => false,'chk' => 2,'maxlen' => 5);
 $array['filter']['timerb'] = array('set' => false,'chk' => 2,'maxlen' => 5);
 $array['filter']['qualifyfreq'] = array('set' => false, 'chk' => 2, 'cast' => 'uint');

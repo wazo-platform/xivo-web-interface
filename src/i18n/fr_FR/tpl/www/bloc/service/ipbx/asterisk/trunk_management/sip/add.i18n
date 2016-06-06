@@ -374,12 +374,6 @@ Extension où aboutissent les appels entrants :
 ; hlp_fm_protocol-callbackextension
 Config asterisk: callbackextension
 
-; fm_protocol-registertrying
-Envoyer un «100 Trying» lors de l'enregistrement :
-
-; hlp_fm_protocol-registertrying
-Config asterisk: registertrying
-
 ; fm_protocol-timert1
 Délai T1 :
 

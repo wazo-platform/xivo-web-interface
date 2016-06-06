@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -440,18 +440,6 @@ endif;
             'default'  => $element['protocol']['timerb']['default'],
             'error'    => $this->bbf_args('error',
         $this->get_var('error', 'timerb')) )),
-
-     $form->select(array('desc'  => $this->bbf('fm_protocol-registertrying'),
-            'name'      => 'protocol[registertrying]',
-            'labelid'   => 'protocol-registertrying',
-            'key'       => false,
-            'empty'     => true,
-            'bbf'       => 'fm_bool-opt',
-            'bbfopt'    => array('argmode' => 'paramvalue'),
-            'help'      => $this->bbf('hlp_fm_protocol-registertrying'),
-            'selected'  => $info['protocol']['registertrying'],
-            'default'   => $element['protocol']['registertrying']['default']),
-         $element['protocol']['registertrying']['value']),
 
      $form->select(array('desc'  => $this->bbf('fm_protocol-ignoresdpversion'),
             'name'      => 'protocol[ignoresdpversion]',
