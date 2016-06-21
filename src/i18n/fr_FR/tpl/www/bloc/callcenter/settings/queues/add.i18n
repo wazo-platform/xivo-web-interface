@@ -154,6 +154,9 @@ Autorise l'appelé à enregistrer l'appel:
 ; fm_queuefeatures_write-calling
 Autorise l'appelant à enregistrer l'appel:
 
+; fm_queuefeatures_ignore-forward
+Ignore les renvois d'appels des membres:
+
 ; fm_queue_announce
 Annonce au décrochage du membre:
 

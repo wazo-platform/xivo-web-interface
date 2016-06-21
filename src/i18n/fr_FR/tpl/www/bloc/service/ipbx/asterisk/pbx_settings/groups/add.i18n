@@ -76,6 +76,9 @@ Autorise l'appelé à enregistrer l'appel :
 ; fm_groupfeatures_write-calling
 Autorise l'appelant à enregistrer l'appel :
 
+; fm_groupfeatures_ignore-forward
+Ignore les renvois d'appels des membres :
+
 ; fm_queue_timeout
 Délai d'attente pour joindre un utilisateur :
 

@@ -136,6 +136,9 @@ Allow callee to record the call:
 ; fm_queuefeatures_write-calling
 Allow caller to record the call:
 
+; fm_queuefeatures_ignore-forward
+Ignore call forward requests from members:
+
 ; fm_queue_musicclass
 On-Hold Music:
 
