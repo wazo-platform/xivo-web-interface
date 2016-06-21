@@ -567,6 +567,7 @@ endif;
 		$form->checkbox(array('desc'	=> $this->bbf('fm_queuefeatures_ignore-forward'),
 				      'name'	=> 'queuefeatures[ignore_forward]',
 				      'labelid' => 'queuefeatures-ignore-forward',
+				      'help' => $this->bbf('hlp_fm_queuefeatures_ignore-forward'),
 				      'default'	=> $element['queuefeatures']['ignore_forward']['default'],
 				      'checked'	=> $this->get_var('info','queuefeatures','ignore_forward')));
 ?>

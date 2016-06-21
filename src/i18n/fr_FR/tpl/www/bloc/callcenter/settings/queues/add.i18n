@@ -157,6 +157,9 @@ Autorise l'appelant à enregistrer l'appel:
 ; fm_queuefeatures_ignore-forward
 Ignore les renvois d'appels des membres:
 
+; hlp_fm_queuefeatures_ignore-forward
+Asterisk: option 'i' de l'application Queue
+
 ; fm_queue_announce
 Annonce au décrochage du membre:
 

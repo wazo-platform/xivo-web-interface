@@ -154,6 +154,9 @@ Allow caller to record the call :
 ; fm_groupfeatures_ignore-forward
 Ignore call forward requests from members :
 
+; hlp_fm_groupfeatures_ignore-forward
+Asterisk: 'i' option of the Queue application
+
 ; smenu_schedule
 Schedules
 
