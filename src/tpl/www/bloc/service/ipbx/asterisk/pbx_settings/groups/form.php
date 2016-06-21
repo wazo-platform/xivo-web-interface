@@ -223,7 +223,14 @@ endif;
 				    'name'	    => 'groupfeatures[write_calling]',
 				    'labelid'	=> 'groupfeatures-write-calling',
 				    'default'	=> $element['groupfeatures']['write_calling']['default'],
-					'checked'	=> $this->get_var('info','groupfeatures','write_calling')));
+					'checked'	=> $this->get_var('info','groupfeatures','write_calling'))),
+
+		$form->checkbox(array('desc'	=> $this->bbf('fm_groupfeatures_ignore-forward'),
+				    'name'	    => 'groupfeatures[ignore_forward]',
+				    'labelid'	=> 'groupfeatures-ignore-forward',
+				    'help' => $this->bbf('hlp_fm_groupfeatures_ignore-forward'),
+				    'default'	=> $element['groupfeatures']['ignore_forward']['default'],
+					'checked'	=> $this->get_var('info','groupfeatures','ignore_forward')));
 ?>
 </div>
 

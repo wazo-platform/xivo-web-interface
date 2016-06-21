@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -46,6 +46,10 @@ $array['element']['write_calling'] = array();
 $array['element']['write_calling']['value'] = array(0,1);
 $array['element']['write_calling']['default'] = 0;
 
+$array['element']['ignore_forward'] = array();
+$array['element']['ignore_forward']['value'] = array(0,1);
+$array['element']['ignore_forward']['default'] = 1;
+
 $array['element']['timeout'] = array();
 $array['element']['timeout']['default'] = '';
 $array['element']['timeout']['null'] = true;
@@ -62,6 +66,7 @@ $array['filter']['transfer_user'] = array('bool' => true);
 $array['filter']['transfer_call'] = array('bool' => true);
 $array['filter']['write_caller'] = array('bool' => true);
 $array['filter']['write_calling'] = array('bool' => true);
+$array['filter']['ignore_forward'] = array('bool' => true);
 $array['filter']['timeout'] = array('set' => false,'chk' => 2,'cast' => 'int');
 $array['filter']['preprocess_subroutine'] = array('set' => false,'chk' => 2,'callback' => 'xivo_service_asterisk::chk_context');
 

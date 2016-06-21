@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -562,7 +562,14 @@ endif;
 				      'name'	=> 'queuefeatures[write_calling]',
 				      'labelid' => 'queuefeatures-write-calling',
 				      'default'	=> $element['queuefeatures']['write_calling']['default'],
-				      'checked'	=> $this->get_var('info','queuefeatures','write_calling')));
+				      'checked'	=> $this->get_var('info','queuefeatures','write_calling'))),
+
+		$form->checkbox(array('desc'	=> $this->bbf('fm_queuefeatures_ignore-forward'),
+				      'name'	=> 'queuefeatures[ignore_forward]',
+				      'labelid' => 'queuefeatures-ignore-forward',
+				      'help' => $this->bbf('hlp_fm_queuefeatures_ignore-forward'),
+				      'default'	=> $element['queuefeatures']['ignore_forward']['default'],
+				      'checked'	=> $this->get_var('info','queuefeatures','ignore_forward')));
 ?>
 </div>
 
