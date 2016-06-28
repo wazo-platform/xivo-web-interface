@@ -55,8 +55,6 @@ Taille des icônes (xlet "Liste d'agents")
 ; pref-(xlet.queues.statsfetchperiod)
 Période de récupération des statistiques (xlet "Liste des Files")
 
-; pref-(presence.autochangestate)
-Transitions automatiques entre les états de présence
 
 
 ; xlet-(agents)
