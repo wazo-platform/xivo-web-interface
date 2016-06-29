@@ -55,9 +55,6 @@ Icons size ("Agents list" xlet)
 ; pref-(xlet.queues.statsfetchperiod)
 Statistics fetch period ("Queues list" xlet)
 
-; pref-(presence.autochangestate)
-Automatic transitions between presence states
-
 
 
 ; xlet-(agents)
