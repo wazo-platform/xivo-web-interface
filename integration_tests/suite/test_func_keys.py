@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-# Copyright (C) 2015 Avencall
+# Copyright (C) 2015-2016 Avencall
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -64,7 +64,7 @@ class TestFuncKeyEdit(TestFuncKey):
         template = mock_template()
 
         template_url = "/users/{}/funckeys".format(user_id)
-        funckey_url = "/users/{}/funckeys/1".format(user_id)
+        funckey_url = "/users/{}/funckeys".format(user_id)
 
         self.confd.add_json_response(template_url, template)
         self.confd.add_response(funckey_url, method='PUT', code=204)
@@ -74,10 +74,10 @@ class TestFuncKeyEdit(TestFuncKey):
         user.funckeys().add(type="Do not disturb")
         user.save()
 
-        expected_funckey = {'blf': True,
-                            'label': None,
-                            'destination': {'type': 'service',
-                                            'service': 'enablednd'}}
+        expected_funckey = {'keys': {'1': {'blf': True,
+                                           'label': None,
+                                           'destination': {'type': 'service',
+                                                           'service': 'enablednd'}}}}
         self.confd.assert_json_request(funckey_url, expected_funckey, 'PUT')
 
     def test_given_user_when_editing_funckey_then_updates_funckey_in_confd(self):
@@ -85,12 +85,11 @@ class TestFuncKeyEdit(TestFuncKey):
         user_id = self.create_user("Richard", "Smith")
 
         template_url = "/users/{}/funckeys".format(user_id)
-        funckey_url = "/users/{}/funckeys/1".format(user_id)
+        funckey_url = "/users/{}/funckeys".format(user_id)
 
         self.confd.add_json_response(template_url, template)
         self.confd.add_json_response(template_url, template)
         self.confd.add_json_response(template_url, template)
-        self.confd.add_response(funckey_url, method='DELETE', code=204)
         self.confd.add_response(funckey_url, method='PUT', code=204)
 
         users = self.browser.users
@@ -102,12 +101,11 @@ class TestFuncKeyEdit(TestFuncKey):
                              supervision=True)
         user.save()
 
-        expected_funckey = {'blf': True,
-                            'label': 'devil',
-                            'destination': {'type': 'custom',
-                                            'exten': '666'}}
+        expected_funckey = {'keys': {'1': {'blf': True,
+                                           'label': 'devil',
+                                           'destination': {'type': 'custom',
+                                                           'exten': '666'}}}}
 
-        self.confd.assert_request_sent(funckey_url, method="DELETE")
         self.confd.assert_json_request(funckey_url, expected_funckey, method='PUT')
 
     def test_given_user_when_removing_funckey_then_updates_funckey_in_confd(self):
@@ -116,21 +114,21 @@ class TestFuncKeyEdit(TestFuncKey):
         empty_template = mock_template()
 
         template_url = "/users/{}/funckeys".format(user_id)
-        funckey_url = "/users/{}/funckeys/1".format(user_id)
+        funckey_url = "/users/{}/funckeys".format(user_id)
 
         self.confd.add_json_response(template_url, dnd_template)
         self.confd.add_json_response(template_url, dnd_template)
         self.confd.add_json_response(template_url, dnd_template)
         self.confd.add_json_response(template_url, empty_template)
         self.confd.add_json_response(funckey_url, self.DND)
-        self.confd.add_response(funckey_url, method='DELETE', code=204)
+        self.confd.add_response(funckey_url, method='PUT', code=204)
 
         users = self.browser.users
         user = users.edit("Daffy Duck")
         user.funckeys().remove(1)
         user.save()
 
-        self.confd.assert_request_sent(funckey_url, method="DELETE")
+        self.confd.assert_request_sent(funckey_url, method="PUT")
 
     def test_given_user_with_funckey_when_editing_then_funckey_appears_on_page(self):
         user_id = self.create_user("George", "Clooney")
@@ -287,11 +285,7 @@ class TestFuncKeyCreate(TestFuncKey):
     def test_when_creating_user_with_func_key_then_creates_func_key_in_confd(self):
         template = mock_template()
         self.confd.add_json_response(r"/users/\d+/funckeys", template)
-
-        for position in self.confd_funckeys.keys():
-            self.confd.add_response(r"/users/\d+/funckeys/{}".format(position),
-                                    method='PUT',
-                                    code=204)
+        self.confd.add_response(r"/users/\d+/funckeys", method='PUT', code=204)
 
         users = self.browser.users
         user = users.add()
@@ -303,6 +297,5 @@ class TestFuncKeyCreate(TestFuncKey):
 
         user.save()
 
-        for position, funckey in self.confd_funckeys.iteritems():
-            url = r"/users/\d+/funckeys/{}".format(position)
-            self.confd.assert_json_request(url, funckey, 'PUT')
+        url = r"/users/\d+/funckeys"
+        self.confd.assert_json_request(url, {'keys': self.confd_funckeys}, 'PUT')
