@@ -501,6 +501,12 @@ if(dwho_issa('linefeatures',$info) === true
 				      'default'	=> $element['userfeatures']['enablexfer']['default'],
 				      'checked'	=> $info['userfeatures']['enablexfer'])),
 
+		$form->checkbox(array('desc'	=> $this->bbf('fm_userfeatures_dtmf_hangup'),
+				      'name'	=> 'userfeatures[dtmf_hangup]',
+				      'labelid'	=> 'userfeatures-dtmf_hangup',
+				      'default'	=> $element['userfeatures']['dtmf_hangup']['default'],
+				      'checked'	=> $info['userfeatures']['dtmf_hangup'])),
+
 		$form->checkbox(array('desc'	=> $this->bbf('fm_userfeatures_enableonlinerec'),
 				      'name'	=> 'userfeatures[enableonlinerec]',
 				      'labelid'	=> 'userfeatures-enableonlinerec',

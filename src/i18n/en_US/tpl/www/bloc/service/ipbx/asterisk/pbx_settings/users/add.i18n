@@ -127,6 +127,9 @@ Enable voicemail:
 ; fm_userfeatures_enablexfer
 Enable call transfer:
 
+; fm_userfeatures_dtmf_hangup
+Enable DTMF hangup:
+
 ; fm_userfeatures_enableonlinerec
 Enable online call recording:
 

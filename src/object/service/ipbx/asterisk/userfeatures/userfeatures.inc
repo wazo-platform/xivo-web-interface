@@ -54,6 +54,7 @@ class xivo_service_asterisk_userfeatures extends xivo_service_asterisk_abstract
 		$data['enablehint'] = (bool) $data['enablehint'];
 		$data['enablevoicemail'] = (bool) $data['enablevoicemail'];
 		$data['enablexfer'] = (bool) $data['enablexfer'];
+		$data['dtmf_hangup'] = (bool) $data['dtmf_hangup'];
 		$data['enableonlinerec'] = (bool) $data['enableonlinerec'];
 		$data['callrecord'] = (bool) $data['callrecord'];
 		$data['incallfilter'] = (bool) $data['incallfilter'];

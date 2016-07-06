@@ -166,6 +166,9 @@ Activer la messagerie vocale :
 ; fm_userfeatures_enablexfer
 Activer les transferts :
 
+; fm_userfeatures_dtmf_hangup
+Activer le racrochage par DTMF :
+
 ; fm_userfeatures_enableonlinerec
 Activer l'enregistrement à la volée :
 
