@@ -1986,6 +1986,10 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		|| dwho_has_len($arr['userfeatures']['enablexfer']) === false)
 			$arr['userfeatures']['enablexfer'] = 1;
 
+		if (isset($arr['userfeatures']['dtmf_hangup']) === false
+		|| dwho_has_len($arr['userfeatures']['dtmf_hangup']) === false)
+			$arr['userfeatures']['dtmf_hangup'] = 0;
+
 		if(dwho_has_len($arr['userfeatures'],'firstname') === true)
 			$arr['userfeatures']['callerid'] = $arr['userfeatures']['firstname'].' ';
 
