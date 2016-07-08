@@ -64,7 +64,14 @@ class FuncKeyConverter {
 	}
 
 	private function update_func_keys($user_id, $funckeys) {
-		$success = $this->confd->update_user_func_keys($user_id, array('keys' => $funckeys));
+		if (empty($funckeys)) {
+			# Create an empty dictionary. Otherwise an empty array is converted to empty list
+			$body = array('keys' => (object)null);
+		} else {
+			$body = array('keys' => $funckeys);
+		}
+
+		$success = $this->confd->update_user_func_keys($user_id, $body);
 		if ($success) {
 			return $funckeys;
 		}
