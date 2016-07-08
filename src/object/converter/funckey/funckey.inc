@@ -75,7 +75,7 @@ class FuncKeyConverter {
 		if ($success) {
 			return $funckeys;
 		}
-		return false;
+		return array();
 	}
 
 }
