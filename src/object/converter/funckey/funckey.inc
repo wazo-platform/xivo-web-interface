@@ -1,7 +1,7 @@
 <?php
 #
 # XiVO Web-Interface
-# Copyright (C) 2015  Avencall
+# Copyright (C) 2015-2016 Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -44,7 +44,6 @@ class FuncKeyConverter {
 
 	public function add_user_func_keys($user_id, $legacy_funckeys) {
 		$funckeys = $this->mapper->map_to_confd($user_id, $legacy_funckeys);
-		$this->remove_all_func_keys($user_id, $funckeys);
 		$updated_funckeys = $this->update_func_keys($user_id, $funckeys);
 		return $this->mapper->map_legacy_return($user_id, $updated_funckeys);
 	}
@@ -64,26 +63,12 @@ class FuncKeyConverter {
 		return $success;
 	}
 
-	private function remove_all_func_keys($user_id, $funckeys) {
-		$old_funckeys = $this->confd->get_user_func_keys($user_id);
-		if ($old_funckeys === null) {
-			return;
-		}
-
-		foreach(array_keys($old_funckeys) as $position) {
-			$this->confd->delete_user_func_key($user_id, $position);
-		}
-	}
-
 	private function update_func_keys($user_id, $funckeys) {
-		$updated_funckeys = array();
-		foreach($funckeys as $position => $funckey) {
-			$success = $this->confd->update_user_func_key($user_id, $position, $funckey);
-			if ($success) {
-				$updated_funckeys[] = $funckey;
-			}
+		$success = $this->confd->update_user_func_keys($user_id, array('keys' => $funckeys));
+		if ($success) {
+			return $funckeys;
 		}
-		return $updated_funckeys;
+		return false;
 	}
 
 }

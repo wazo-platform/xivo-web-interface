@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2015 Avencall
+# Copyright (C) 2015-2016 Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -77,6 +77,13 @@ class confd_ressource_user_func_keys extends xivo_confd_ressource_abstract {
 		}
 
 		return($funckeys);
+	}
+
+	public function update_user_func_keys($user_id, $funckeys) {
+		$path = array($user_id, 'funckeys');
+		$url = $this->_build_uri($path);
+		$this->request_put($url, $funckeys);
+		return($this->_status_code === 204);
 	}
 
 	public function update_user_func_key($user_id, $position, $funckey) {
