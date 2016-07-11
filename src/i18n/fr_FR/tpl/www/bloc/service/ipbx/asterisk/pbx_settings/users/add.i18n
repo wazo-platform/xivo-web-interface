@@ -164,10 +164,10 @@ Activer la supervision :
 Activer la messagerie vocale :
 
 ; fm_userfeatures_enablexfer
-Activer les transferts :
+Activer le transfert par DTMF :
 
 ; fm_userfeatures_dtmf_hangup
-Activer le raccrochage par DTMF :
+Activer le raccrocher par DTMF :
 
 ; fm_userfeatures_enableonlinerec
 Activer l'enregistrement à la volée :
