@@ -207,6 +207,10 @@ class TestUser(TestWebi):
         self.confd.add_json_response(urljoin("users", user_id, "funckeys"),
                                      self.FK_TEMPLATE,
                                      preserve=True)
+        self.confd.add_response(urljoin("users", user_id, "funckeys"),
+                                method="PUT",
+                                code=204,
+                                preserve=True)
 
         return user_id
 
@@ -340,6 +344,10 @@ class TestUser(TestWebi):
         self.confd.add_json_response(urljoin("users", user_id, "funckeys"),
                                      self.FK_TEMPLATE,
                                      preserve=True)
+        self.confd.add_response(urljoin("users", user_id, "funckeys"),
+                                method="PUT",
+                                code=204,
+                                preserve=True)
         self.confd.add_json_response(urljoin("users", user_id, "lines"),
                                      {'total': 0, 'lines': []},
                                      preserve=True)
@@ -427,6 +435,7 @@ class TestUserCreate(TestUser):
     def setUp(self):
         super(TestUserCreate, self).setUp()
         self.confd.add_json_response(r"/users/\d+/funckeys", self.FK_TEMPLATE, preserve=True)
+        self.confd.add_response(r"/users/\d+/funckeys", method="PUT", code=204, preserve=True)
         self.bus.start()
 
     def tearDown(self):
