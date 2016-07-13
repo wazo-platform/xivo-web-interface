@@ -131,10 +131,10 @@ Illimité
 Qualité des données:
 
 ; fm_queuefeatures_hitting-callee
-Activer le racrocher par DTMF par l'appelé:
+Activer le raccrocher par DTMF par l'appelé:
 
 ; fm_queuefeatures_hitting-caller
-Activer le racrocher par DTMF par l'appelant:
+Activer le raccrocher par DTMF par l'appelant:
 
 ; fm_queuefeatures_retries
 Aucun rappel pour le temps dépassé:
