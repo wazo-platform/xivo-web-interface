@@ -634,8 +634,12 @@ class xivo_object_provdconfig extends xivo_object_provd_abstract
 		else
 		{
 			unset($config['sip_srtp_mode'],
-			$config['sip_servers_root_and_intermediate_certificates'],
-			$config['sip_transport']);
+			$config['sip_servers_root_and_intermediate_certificates']);
+
+			if (isset($config['sip_transport']) === true
+			&& $config['sip_transport'] === 'tls') {
+				unset($config['sip_transport']);
+			}
 		}
 	}
 
