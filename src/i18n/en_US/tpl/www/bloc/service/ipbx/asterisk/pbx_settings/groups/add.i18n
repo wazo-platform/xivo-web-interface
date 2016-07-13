@@ -146,10 +146,10 @@ Enable DTMF transfers by callee :
 Enable DTMF transfers by caller :
 
 ; fm_groupfeatures_write-caller
-Enable DTMF records by callee :
+Enable DTMF call recording by callee :
 
 ; fm_groupfeatures_write-calling
-Enable DTMF records by caller :
+Enable DTMF call recording by caller :
 
 ; fm_groupfeatures_ignore-forward
 Ignore call forward requests from members :
