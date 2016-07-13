@@ -140,16 +140,16 @@ Random
 All
 
 ; fm_groupfeatures_transfer-user
-Allow called one to transfer the caller :
+Enable DTMF transfers by callee :
 
 ; fm_groupfeatures_transfer-call
-Allow caller to transfer the call :
+Enable DTMF transfers by caller :
 
 ; fm_groupfeatures_write-caller
-Allow called on to record the call :
+Enable DTMF records by callee :
 
 ; fm_groupfeatures_write-calling
-Allow caller to record the call :
+Enable DTMF records by caller :
 
 ; fm_groupfeatures_ignore-forward
 Ignore call forward requests from members :

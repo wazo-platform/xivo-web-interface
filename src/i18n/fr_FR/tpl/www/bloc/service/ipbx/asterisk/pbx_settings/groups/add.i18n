@@ -65,16 +65,16 @@ Illimité
 %s secondes
 
 ; fm_groupfeatures_transfer-user
-Autorise l'appelé à transférer l'appelant :
+Activer le transfert par DTMF par l'appelé :
 
 ; fm_groupfeatures_transfer-call
-Autorise l'appelant à transférer l'appel :
+Activer le transfert par DTMF par l'appelant :
 
 ; fm_groupfeatures_write-caller
-Autorise l'appelé à enregistrer l'appel :
+Activer l'enregistrement par DTMF par l'appelé :
 
 ; fm_groupfeatures_write-calling
-Autorise l'appelant à enregistrer l'appel :
+Activer l'enregistrement par DTMF par l'appelant :
 
 ; fm_groupfeatures_ignore-forward
 Ignore les renvois d'appels des membres :

@@ -131,10 +131,10 @@ Illimité
 Qualité des données:
 
 ; fm_queuefeatures_hitting-callee
-Autorise l'appelé à raccrocher l'appel:
+Activer le raccrocher par DTMF par l'appelé:
 
 ; fm_queuefeatures_hitting-caller
-Autorise l'appelant à raccrocher l'appel:
+Activer le raccrocher par DTMF par l'appelant:
 
 ; fm_queuefeatures_retries
 Aucun rappel pour le temps dépassé:
@@ -143,16 +143,16 @@ Aucun rappel pour le temps dépassé:
 Sonnerie au lieu de musique d'attente:
 
 ; fm_queuefeatures_transfer-user
-Autorise l'appelé à transférer l'appel:
+Activer le transfert par DTMF par l'appelé:
 
 ; fm_queuefeatures_transfer-call
-Autorise l'appelant à transférer l'appel:
+Activer le transfert par DTMF par l'appelant:
 
 ; fm_queuefeatures_write-caller
-Autorise l'appelé à enregistrer l'appel:
+Activer l'enregistrement par DTMF par l'appelé:
 
 ; fm_queuefeatures_write-calling
-Autorise l'appelant à enregistrer l'appel:
+Activer l'enregistrement par DTMF par l'appelant:
 
 ; fm_queuefeatures_ignore-forward
 Ignore les renvois d'appels des membres:
