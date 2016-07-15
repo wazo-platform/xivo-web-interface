@@ -17,23 +17,25 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 
-from page import Page, ListPage
-from login import LoginPage
-from user import UserListPage
-from voicemail import VoicemailListPage
-from line import LineListPage
-from switchboard_stats import SwitchboardStatsPage
-
 from selenium import webdriver
 from pyvirtualdisplay import Display
+
+from .page import Page, ListPage  # keep first
+from .call_logs import CallLogPage
+from .line import LineListPage
+from .login import LoginPage
+from .switchboard_stats import SwitchboardStatsPage
+from .user import UserListPage
+from .voicemail import VoicemailListPage
 
 
 class Browser(object):
 
-    pages = {'login': LoginPage,
+    pages = {'call_logs': CallLogPage,
+             'lines': LineListPage,
+             'login': LoginPage,
              'users': UserListPage,
              'voicemails': VoicemailListPage,
-             'lines': LineListPage,
              'switchboard_stats': SwitchboardStatsPage}
 
     def __init__(self, username, password, virtual=True):
