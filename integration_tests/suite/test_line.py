@@ -42,7 +42,7 @@ class TestLine(TestWebi):
         endpoint = {'id': self.endpoint_id}
         self.confd.add_json_response('/lines', line, method='POST', code=201)
         self.confd.add_json_response(urljoin('endpoints', self.protocol), endpoint, method='POST', code=201)
-        self.confd.add_response(urljoin('lines',self.line_id, 'endpoints', self.protocol, self.endpoint_id),
+        self.confd.add_response(urljoin('lines', self.line_id, 'endpoints', self.protocol, self.endpoint_id),
                                 method='PUT', code=204)
 
     def assert_line_added(self, endpoint):
