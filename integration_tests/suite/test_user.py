@@ -293,9 +293,6 @@ class TestUser(TestWebi):
         return custom
 
     def associate_resources(self, user_id, line_id, extension_id, endpoint, endpoint_id, device_id=None):
-        with self.db.queries() as q:
-            q.associate_user_line_extension(user_id, line_id, extension_id)
-
         user_url = urljoin("users", user_id, "lines")
         line_url = urljoin("lines", line_id, "users")
 
@@ -356,7 +353,13 @@ class TestUser(TestWebi):
         self.confd.add_json_response(r"/endpoints/(sip|sccp|custom)", endpoint, method="POST", code=201)
         self.confd.add_response(r"/lines/\d+/endpoints/(sip|sccp|custom)/\d+", method="PUT", code=204)
         self.confd.add_response(r"/lines/\d+/devices", code=404)
+        self.confd.add_response(r"/lines/\d+/extensions", method='POST', code=201)
+        self.confd.add_json_response(r"/lines/\d+/extensions",
+                                     {'total': 0,
+                                      'items': []},
+                                     code=201)
         self.confd.add_response(r"/users/\d+", method="PUT", code=204)
+        self.confd.add_response(r"/users/\d+/lines", method="POST", code=201)
         self.confd.add_json_response(r"/users/\d+/lines",
                                      {'total': 1,
                                       'items': [{
@@ -738,6 +741,9 @@ class TestUserEdit(TestUser):
         self.confd.assert_request_sent(urljoin("lines", line['id'], "endpoints", "sip", sip['id']),
                                        method="PUT")
         self.confd.assert_request_sent(urljoin("users", user_id), method="PUT")
+        self.confd.assert_json_request(urljoin("users", user_id, "lines"),
+                                       {"line_id": line['id']},
+                                       method="POST")
 
     def test_given_user_has_no_line_when_adding_sccp_line_then_user_updated(self):
         user_id = self.add_empty_user("UserEditAddSccpLine")
@@ -757,6 +763,9 @@ class TestUserEdit(TestUser):
         self.confd.assert_request_sent(urljoin("lines", line['id'], "endpoints", "sccp", sccp['id']),
                                        method="PUT")
         self.confd.assert_request_sent(urljoin("users", user_id), method="PUT")
+        self.confd.assert_json_request(urljoin("users", user_id, "lines"),
+                                       {"line_id": line['id']},
+                                       method="POST")
 
     def test_given_user_has_no_line_when_adding_custom_line_then_user_updated(self):
         user_id = self.add_empty_user("UserEditAddCustomLine")

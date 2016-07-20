@@ -274,14 +274,6 @@ class DatabaseQueries(object):
         line.update(line_extra or {})
         return self.insert_line(**line)
 
-    def associate_user_line_extension(self, user_id, line_id, extension_id, main_user=True, main_line=True):
-        user_line = {"user_id": user_id,
-                     "line_id": line_id,
-                     "extension_id": extension_id,
-                     "main_line": main_line,
-                     "main_user": main_user}
-        return self.db['user_line'].insert(user_line)
-
     def add_context(self, name, start, end, type_="internal", rangetype="user"):
         entity = self.db['entity'].find_one()['name']
         self.db['context'].insert({"name": name,
