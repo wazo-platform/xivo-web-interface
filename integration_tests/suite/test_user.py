@@ -223,6 +223,12 @@ class TestUser(TestWebi):
                                      line,
                                      preserve=True)
 
+        if line['device_id']:
+            self.confd.add_json_response(urljoin("lines", line['id'], 'devices'),
+                                         {'line_id': line['id'],
+                                          'device_id': line['device_id']},
+                                         preserve=True)
+
         return line
 
     def build_line(self, **extra):
@@ -377,10 +383,8 @@ class TestUser(TestWebi):
 
     def simulate_line_remove(self):
         self.confd.add_response(r"/lines/\d+", method="DELETE", code=204)
-        self.confd.add_response(r"/endpoints/sip/\d+", method="DELETE", code=204)
-        self.confd.add_response(r"/lines/\d+/extensions/\d+", method="DELETE", code=204)
-        self.confd.add_response(r"/lines/\d+/endpoints/sip/\d+", method="DELETE", code=204)
         self.confd.add_response(r"/lines/\d+/devices/[a-z0-9]+", method="DELETE", code=204)
+        self.confd.add_response(r"/lines/\d+/extensions/\d+", method="DELETE", code=204)
         self.confd.add_response(r"/users/\d+/lines/\d+", method="DELETE", code=204)
 
     def simulate_device_update(self, device=None):
@@ -834,12 +838,11 @@ class TestUserEdit(TestUser):
                                        method="PUT")
         self.confd.assert_request_sent(urljoin("users", user_id), method="PUT")
 
-    @unittest.skip("table user_line is still managed by webi")
     def test_given_user_has_sip_line_and_device_when_removing_line_then_user_updated(self):
         device = self.add_autoprov_device()
-        line = self.add_sip_user("UserEditRemoveSipLine", "1500", device['id'])
+        self.add_sip_user("UserEditRemoveSipLine", "1500", "12345", device['id'])
 
-        self.simulate_line_remove(line, device)
+        self.simulate_line_remove()
 
         page = self.browser.users.edit("UserEditRemoveSipLine")
 
@@ -849,43 +852,38 @@ class TestUserEdit(TestUser):
         page.save()
 
         self.confd.assert_request_sent(r"/lines/\d+", method="DELETE")
-        self.confd.assert_request_sent(r"/endpoints/sip/\d+", method="DELETE")
-        self.confd.assert_request_sent(r"/lines/\d+/endpoints/sip/\d+", method="DELETE")
         self.confd.assert_request_sent(r"/lines/\d+/devices/[a-z0-9]+", method="DELETE")
+        self.confd.assert_request_sent(r"/lines/\d+/extensions/\d+", method="DELETE")
         self.confd.assert_request_sent(r"/users/\d+/lines/\d+", method="DELETE")
 
-    @unittest.skip("table user_line is still managed by webi")
     def test_given_user_has_sccp_line_and_device_when_removing_line_then_user_updated(self):
         device = self.add_autoprov_device()
-        line = self.add_sccp_user("UserEditRemoveSccpLine", "1500", device['id'])
+        self.add_sccp_user("UserEditRemoveSccpLine", "1500", device['id'])
 
-        self.simulate_line_remove(line, device)
+        self.simulate_line_remove()
 
         page = self.browser.users.edit("UserEditRemoveSccpLine")
         page.lines().remove_line()
         page.save()
 
         self.confd.assert_request_sent(r"/lines/\d+", method="DELETE")
-        self.confd.assert_request_sent(r"/endpoints/sccp/\d+", method="DELETE")
-        self.confd.assert_request_sent(r"/lines/\d+/endpoints/sccp/\d+", method="DELETE")
         self.confd.assert_request_sent(r"/lines/\d+/devices/[a-z0-9]+", method="DELETE")
+        self.confd.assert_request_sent(r"/lines/\d+/extensions/\d+", method="DELETE")
         self.confd.assert_request_sent(r"/users/\d+/lines/\d+", method="DELETE")
 
-    @unittest.skip("table user_line is still managed by webi")
     def test_given_user_has_custom_line_when_removing_line_then_user_updated(self):
         device = self.add_autoprov_device()
-        line = self.add_custom_user("UserEditRemoveCustomLine", "1500", device['id'])
+        self.add_custom_user("UserEditRemoveCustomLine", "1500", device['id'])
 
-        self.simulate_line_remove(line, device)
+        self.simulate_line_remove()
 
         page = self.browser.users.edit("UserEditRemoveCustomLine")
         page.lines().remove_line()
         page.save()
 
         self.confd.assert_request_sent(r"/lines/\d+", method="DELETE")
-        self.confd.assert_request_sent(r"/endpoints/custom/\d+", method="DELETE")
-        self.confd.assert_request_sent(r"/lines/\d+/endpoints/custom/\d+", method="DELETE")
         self.confd.assert_request_sent(r"/lines/\d+/devices/[a-z0-9]+", method="DELETE")
+        self.confd.assert_request_sent(r"/lines/\d+/extensions/\d+", method="DELETE")
         self.confd.assert_request_sent(r"/users/\d+/lines/\d+", method="DELETE")
 
 
