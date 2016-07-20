@@ -163,14 +163,6 @@ class MessageFactory {
 		$this->msg_params = array('content_type' => 'application/json');
 	}
 
-	function new_user_line_associated_msg($user_id, $line_id) {
-		$name = 'line_associated';
-		$routing_key = 'config.user_line_association.created';
-		$data = array('user_id' => $user_id, 'line_id' => $line_id, 'main_line' => true, 'main_user' => true);
-
-		return $this->new_msg($name, $routing_key, $data);
-	}
-
 	function new_user_created_msg($user_id, $user_uuid) {
 		$name = 'user_created';
 		$routing_key = 'config.user.created';
