@@ -1639,8 +1639,8 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		if($this->delete_phonefunckey() === false
 		|| $this->delete_voicemail() === false
 		|| $this->delete_funckey_dst() === false
-		|| $this->delete_userfeatures() === false
 		|| $this->delete_linefeatures() === false
+		|| $this->delete_userfeatures() === false
 		|| $this->delete_exten('exten') === false
 		|| $this->delete_rightcall() === false
 		|| $this->delete_dialaction() === false
