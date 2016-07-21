@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,7 +27,6 @@ class xivo_service_asterisk_linefeatures extends xivo_service_asterisk_abstract
 	var $_filter	= false;
 	var $_origin	= false;
 	var $_identity	= false;
-	private $_user_line = false;
 
 	public function __construct(&$sre,&$dso)
 	{
@@ -36,8 +35,6 @@ class xivo_service_asterisk_linefeatures extends xivo_service_asterisk_abstract
 
 		if(is_object($dso) === false)
 			trigger_error('Invalid datastorage in '.__CLASS__,E_USER_ERROR);
-
-		$this->_user_line = $sre->get_module('user_line');
 
 		$this->_sre = &$sre;
 		$this->_dso = &$dso;
