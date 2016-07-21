@@ -971,7 +971,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 											$rs['exten'],
 											$rs['context'],
 											'user',
-											$user_id)) === false)
+											0)) === false)
 			return(false);
 
 		$this->_set_result('exten',$rsexten);
