@@ -22,8 +22,6 @@ import string
 import unittest
 import uuid
 
-from mock import ANY
-
 from lib.confd import urljoin
 from lib.testcase import TestWebi
 
@@ -225,6 +223,12 @@ class TestUser(TestWebi):
                                      line,
                                      preserve=True)
 
+        if line['device_id']:
+            self.confd.add_json_response(urljoin("lines", line['id'], 'devices'),
+                                         {'line_id': line['id'],
+                                          'device_id': line['device_id']},
+                                         preserve=True)
+
         return line
 
     def build_line(self, **extra):
@@ -295,9 +299,6 @@ class TestUser(TestWebi):
         return custom
 
     def associate_resources(self, user_id, line_id, extension_id, endpoint, endpoint_id, device_id=None):
-        with self.db.queries() as q:
-            q.associate_user_line_extension(user_id, line_id, extension_id)
-
         user_url = urljoin("users", user_id, "lines")
         line_url = urljoin("lines", line_id, "users")
 
@@ -358,7 +359,13 @@ class TestUser(TestWebi):
         self.confd.add_json_response(r"/endpoints/(sip|sccp|custom)", endpoint, method="POST", code=201)
         self.confd.add_response(r"/lines/\d+/endpoints/(sip|sccp|custom)/\d+", method="PUT", code=204)
         self.confd.add_response(r"/lines/\d+/devices", code=404)
+        self.confd.add_response(r"/lines/\d+/extensions", method='POST', code=201)
+        self.confd.add_json_response(r"/lines/\d+/extensions",
+                                     {'total': 0,
+                                      'items': []},
+                                     code=201)
         self.confd.add_response(r"/users/\d+", method="PUT", code=204)
+        self.confd.add_response(r"/users/\d+/lines", method="POST", code=201)
         self.confd.add_json_response(r"/users/\d+/lines",
                                      {'total': 1,
                                       'items': [{
@@ -376,10 +383,8 @@ class TestUser(TestWebi):
 
     def simulate_line_remove(self):
         self.confd.add_response(r"/lines/\d+", method="DELETE", code=204)
-        self.confd.add_response(r"/endpoints/sip/\d+", method="DELETE", code=204)
-        self.confd.add_response(r"/lines/\d+/extensions/\d+", method="DELETE", code=204)
-        self.confd.add_response(r"/lines/\d+/endpoints/sip/\d+", method="DELETE", code=204)
         self.confd.add_response(r"/lines/\d+/devices/[a-z0-9]+", method="DELETE", code=204)
+        self.confd.add_response(r"/lines/\d+/extensions/\d+", method="DELETE", code=204)
         self.confd.add_response(r"/users/\d+/lines/\d+", method="DELETE", code=204)
 
     def simulate_device_update(self, device=None):
@@ -436,10 +441,6 @@ class TestUserCreate(TestUser):
         super(TestUserCreate, self).setUp()
         self.confd.add_json_response(r"/users/\d+/funckeys", self.FK_TEMPLATE, preserve=True)
         self.confd.add_response(r"/users/\d+/funckeys", method="PUT", code=204, preserve=True)
-        self.bus.start()
-
-    def tearDown(self):
-        self.bus.stop()
 
     def test_when_creating_user_with_sip_line_and_extension_then_line_and_extension_created(self):
         line = self.add_line(protocol="sip")
@@ -461,10 +462,6 @@ class TestUserCreate(TestUser):
         self.confd.assert_request_sent(r"/users/\d+", method="PUT")
         self.confd.assert_request_sent(urljoin("lines", line['id'], "endpoints", "sip", sip['id']),
                                        method="PUT")
-        self.bus.assert_msg_received('line_associated', {'user_id': ANY,
-                                                         'line_id': line['id'],
-                                                         'main_user': True,
-                                                         'main_line': True})
 
     def test_when_creating_user_with_sccp_line_and_extension_then_line_and_extension_created(self):
         line = self.add_line(protocol="sccp")
@@ -560,13 +557,6 @@ class TestUserCreate(TestUser):
 
 
 class TestUserEdit(TestUser):
-
-    def setUp(self):
-        super(TestUserEdit, self).setUp()
-        self.bus.start()
-
-    def tearDown(self):
-        self.bus.stop()
 
     def test_when_editing_user_then_user_updated(self):
         self.add_empty_user("UserEdit")
@@ -755,10 +745,9 @@ class TestUserEdit(TestUser):
         self.confd.assert_request_sent(urljoin("lines", line['id'], "endpoints", "sip", sip['id']),
                                        method="PUT")
         self.confd.assert_request_sent(urljoin("users", user_id), method="PUT")
-        self.bus.assert_msg_received('line_associated', {'user_id': ANY,
-                                                         'line_id': line['id'],
-                                                         'main_user': True,
-                                                         'main_line': True})
+        self.confd.assert_json_request(urljoin("users", user_id, "lines"),
+                                       {"line_id": line['id']},
+                                       method="POST")
 
     def test_given_user_has_no_line_when_adding_sccp_line_then_user_updated(self):
         user_id = self.add_empty_user("UserEditAddSccpLine")
@@ -778,6 +767,9 @@ class TestUserEdit(TestUser):
         self.confd.assert_request_sent(urljoin("lines", line['id'], "endpoints", "sccp", sccp['id']),
                                        method="PUT")
         self.confd.assert_request_sent(urljoin("users", user_id), method="PUT")
+        self.confd.assert_json_request(urljoin("users", user_id, "lines"),
+                                       {"line_id": line['id']},
+                                       method="POST")
 
     def test_given_user_has_no_line_when_adding_custom_line_then_user_updated(self):
         user_id = self.add_empty_user("UserEditAddCustomLine")
@@ -846,12 +838,11 @@ class TestUserEdit(TestUser):
                                        method="PUT")
         self.confd.assert_request_sent(urljoin("users", user_id), method="PUT")
 
-    @unittest.skip("table user_line is still managed by webi")
     def test_given_user_has_sip_line_and_device_when_removing_line_then_user_updated(self):
         device = self.add_autoprov_device()
-        line = self.add_sip_user("UserEditRemoveSipLine", "1500", device['id'])
+        self.add_sip_user("UserEditRemoveSipLine", "1500", "12345", device['id'])
 
-        self.simulate_line_remove(line, device)
+        self.simulate_line_remove()
 
         page = self.browser.users.edit("UserEditRemoveSipLine")
 
@@ -861,43 +852,38 @@ class TestUserEdit(TestUser):
         page.save()
 
         self.confd.assert_request_sent(r"/lines/\d+", method="DELETE")
-        self.confd.assert_request_sent(r"/endpoints/sip/\d+", method="DELETE")
-        self.confd.assert_request_sent(r"/lines/\d+/endpoints/sip/\d+", method="DELETE")
         self.confd.assert_request_sent(r"/lines/\d+/devices/[a-z0-9]+", method="DELETE")
+        self.confd.assert_request_sent(r"/lines/\d+/extensions/\d+", method="DELETE")
         self.confd.assert_request_sent(r"/users/\d+/lines/\d+", method="DELETE")
 
-    @unittest.skip("table user_line is still managed by webi")
     def test_given_user_has_sccp_line_and_device_when_removing_line_then_user_updated(self):
         device = self.add_autoprov_device()
-        line = self.add_sccp_user("UserEditRemoveSccpLine", "1500", device['id'])
+        self.add_sccp_user("UserEditRemoveSccpLine", "1500", device['id'])
 
-        self.simulate_line_remove(line, device)
+        self.simulate_line_remove()
 
         page = self.browser.users.edit("UserEditRemoveSccpLine")
         page.lines().remove_line()
         page.save()
 
         self.confd.assert_request_sent(r"/lines/\d+", method="DELETE")
-        self.confd.assert_request_sent(r"/endpoints/sccp/\d+", method="DELETE")
-        self.confd.assert_request_sent(r"/lines/\d+/endpoints/sccp/\d+", method="DELETE")
         self.confd.assert_request_sent(r"/lines/\d+/devices/[a-z0-9]+", method="DELETE")
+        self.confd.assert_request_sent(r"/lines/\d+/extensions/\d+", method="DELETE")
         self.confd.assert_request_sent(r"/users/\d+/lines/\d+", method="DELETE")
 
-    @unittest.skip("table user_line is still managed by webi")
     def test_given_user_has_custom_line_when_removing_line_then_user_updated(self):
         device = self.add_autoprov_device()
-        line = self.add_custom_user("UserEditRemoveCustomLine", "1500", device['id'])
+        self.add_custom_user("UserEditRemoveCustomLine", "1500", device['id'])
 
-        self.simulate_line_remove(line, device)
+        self.simulate_line_remove()
 
         page = self.browser.users.edit("UserEditRemoveCustomLine")
         page.lines().remove_line()
         page.save()
 
         self.confd.assert_request_sent(r"/lines/\d+", method="DELETE")
-        self.confd.assert_request_sent(r"/endpoints/custom/\d+", method="DELETE")
-        self.confd.assert_request_sent(r"/lines/\d+/endpoints/custom/\d+", method="DELETE")
         self.confd.assert_request_sent(r"/lines/\d+/devices/[a-z0-9]+", method="DELETE")
+        self.confd.assert_request_sent(r"/lines/\d+/extensions/\d+", method="DELETE")
         self.confd.assert_request_sent(r"/users/\d+/lines/\d+", method="DELETE")
 
 

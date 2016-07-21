@@ -211,6 +211,35 @@ class LineManager
 		$this->user->update(array('id' => $user_id));
 	}
 
+	function associate_extension($line_id, $extension_id)
+	{
+		$associations = $this->line->list_extension_associations($line_id);
+
+		if(empty($associations)) {
+			$this->line->associate_extension($line_id, $extension_id);
+		} else {
+			foreach($associations as $association) {
+				if ($association['extension_id'] == $extension_id) {
+					return;
+				}
+			}
+
+			foreach($associations as $association) {
+				$this->line->dissociate_extension(
+					$association['line_id'],
+					$association['extension_id']
+				);
+			}
+			$this->line->associate_extension($line_id, $extension_id);
+		}
+	}
+
+	function associate_user($line_id, $user_id)
+	{
+		$this->line->associate_user($line_id, $user_id);
+	}
+
+
 }
 
 ?>

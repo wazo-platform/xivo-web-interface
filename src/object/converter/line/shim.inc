@@ -111,4 +111,24 @@ class LineShim {
 		}
 	}
 
+	function associate_extension($line_id, $extension_id)
+	{
+		try {
+			return $this->manager->associate_extension($line_id, $extension_id);
+		} catch (ClientException $e) {
+			$e->report_errors();
+			return false;
+		}
+	}
+
+	function associate_user($line_id, $user_id)
+	{
+		try {
+			return $this->manager->associate_user($line_id, $user_id);
+		} catch (ClientException $e) {
+			$e->report_errors();
+			return false;
+		}
+	}
+
 }
