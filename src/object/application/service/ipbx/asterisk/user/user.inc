@@ -966,12 +966,19 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		|| ($rs = $this->get_result('exten')) === null
 		|| $rs === false)
 			return($rs);
-		else if(($rsexten = $this->set_exten($action,
-											'exten',
-											$rs['exten'],
-											$rs['context'],
-											'user',
-											0)) === false)
+
+		# On add, the fixes of extension (when associate line_extension) will fix the user id
+		# But line_extension is not called when editing
+		if ($action === 'add') {
+			$user_id = 0;
+		}
+
+		if(($rsexten = $this->set_exten($action,
+										'exten',
+										$rs['exten'],
+										$rs['context'],
+										'user',
+										$user_id)) === false)
 			return(false);
 
 		$this->_set_result('exten',$rsexten);
