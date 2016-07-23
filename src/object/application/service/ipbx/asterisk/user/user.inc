@@ -1090,7 +1090,6 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			return(false);
 
 		$return = $this->_line_manager->associate_user($line_id, $user_id);
-		$this->_line_manager->update_caller_id($user_id);
 		return $return;
 	}
 
