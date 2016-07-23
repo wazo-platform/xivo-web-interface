@@ -459,7 +459,6 @@ class TestUserCreate(TestUser):
 
         self.confd.assert_json_request(r"/lines", {"context": "default"}, method="POST")
         self.confd.assert_json_request(r"/endpoints/sip", {}, method="POST")
-        self.confd.assert_request_sent(r"/users/\d+", method="PUT")
         self.confd.assert_request_sent(urljoin("lines", line['id'], "endpoints", "sip", sip['id']),
                                        method="PUT")
 
@@ -479,7 +478,6 @@ class TestUserCreate(TestUser):
 
         self.confd.assert_json_request(r"/lines", {"context": "default"}, method="POST")
         self.confd.assert_json_request(r"/endpoints/sccp", {}, method="POST")
-        self.confd.assert_request_sent(r"/users/\d+", method="PUT")
         self.confd.assert_request_sent(urljoin("lines", line['id'], "endpoints", "sccp", sccp['id']),
                                        method="PUT")
 
@@ -499,7 +497,6 @@ class TestUserCreate(TestUser):
 
         self.confd.assert_json_request(r"/lines", {"context": "default"}, method="POST")
         self.confd.assert_json_request(r"/endpoints/custom", {}, method="POST")
-        self.confd.assert_request_sent(r"/users/\d+", method="PUT")
         self.confd.assert_request_sent(urljoin("lines", line['id'], "endpoints", "custom", custom['id']),
                                        method="PUT")
 
@@ -523,7 +520,6 @@ class TestUserCreate(TestUser):
 
         self.confd.assert_json_request(r"/lines", {"context": "default"}, method="POST")
         self.confd.assert_json_request(r"/endpoints/sip", {}, method="POST")
-        self.confd.assert_request_sent(r"/users/\d+", method="PUT")
         self.confd.assert_request_sent(urljoin("lines", line['id'], "endpoints", "sip", sip['id']),
                                        method="PUT")
         self.confd.assert_request_sent(urljoin("lines", line['id'], "devices", device['id']),
@@ -549,7 +545,6 @@ class TestUserCreate(TestUser):
 
         self.confd.assert_json_request(r"/lines", {"context": "default"}, method="POST")
         self.confd.assert_json_request(r"/endpoints/sccp", {}, method="POST")
-        self.confd.assert_request_sent(r"/users/\d+", method="PUT")
         self.confd.assert_request_sent(urljoin("lines", line['id'], "endpoints", "sccp", sccp['id']),
                                        method="PUT")
         self.confd.assert_request_sent(urljoin("lines", line['id'], "devices", device['id']),
@@ -744,7 +739,6 @@ class TestUserEdit(TestUser):
         self.confd.assert_json_request(r"/endpoints/sip", {}, method="POST")
         self.confd.assert_request_sent(urljoin("lines", line['id'], "endpoints", "sip", sip['id']),
                                        method="PUT")
-        self.confd.assert_request_sent(urljoin("users", user_id), method="PUT")
         self.confd.assert_json_request(urljoin("users", user_id, "lines"),
                                        {"line_id": line['id']},
                                        method="POST")
@@ -766,13 +760,12 @@ class TestUserEdit(TestUser):
         self.confd.assert_json_request(r"/endpoints/sccp", {}, method="POST")
         self.confd.assert_request_sent(urljoin("lines", line['id'], "endpoints", "sccp", sccp['id']),
                                        method="PUT")
-        self.confd.assert_request_sent(urljoin("users", user_id), method="PUT")
         self.confd.assert_json_request(urljoin("users", user_id, "lines"),
                                        {"line_id": line['id']},
                                        method="POST")
 
     def test_given_user_has_no_line_when_adding_custom_line_then_user_updated(self):
-        user_id = self.add_empty_user("UserEditAddCustomLine")
+        self.add_empty_user("UserEditAddCustomLine")
         line = self.add_line(context="default")
         custom = self.add_custom()
 
@@ -788,10 +781,9 @@ class TestUserEdit(TestUser):
         self.confd.assert_json_request(r"/endpoints/custom", {}, method="POST")
         self.confd.assert_request_sent(urljoin("lines", line['id'], "endpoints", "custom", custom['id']),
                                        method="PUT")
-        self.confd.assert_request_sent(urljoin("users", user_id), method="PUT")
 
     def test_given_user_has_no_line_when_adding_sip_line_and_device_then_user_updated(self):
-        user_id = self.add_empty_user("UserEditAddSipLineDevice")
+        self.add_empty_user("UserEditAddSipLineDevice")
         device = self.add_autoprov_device()
         line = self.add_line(context="default")
         sip = self.add_sip()
@@ -812,10 +804,9 @@ class TestUserEdit(TestUser):
                                        method="PUT")
         self.confd.assert_request_sent(urljoin("lines", line['id'], "devices", device['id']),
                                        method="PUT")
-        self.confd.assert_request_sent(urljoin("users", user_id), method="PUT")
 
     def test_given_user_has_no_line_when_adding_sccp_line_and_device_then_user_updated(self):
-        user_id = self.add_empty_user("UserEditAddSccpLineDevice")
+        self.add_empty_user("UserEditAddSccpLineDevice")
         device = self.add_autoprov_device()
         line = self.add_line(context="default")
         sccp = self.add_sccp()
@@ -836,7 +827,6 @@ class TestUserEdit(TestUser):
                                        method="PUT")
         self.confd.assert_request_sent(urljoin("lines", line['id'], "devices", device['id']),
                                        method="PUT")
-        self.confd.assert_request_sent(urljoin("users", user_id), method="PUT")
 
     def test_given_user_has_sip_line_and_device_when_removing_line_then_user_updated(self):
         device = self.add_autoprov_device()
