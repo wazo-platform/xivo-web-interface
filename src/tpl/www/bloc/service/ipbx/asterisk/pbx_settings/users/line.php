@@ -85,6 +85,8 @@ if($list !== false):
 		if(isset($ref['encryption']) === true
 		&& $ref['encryption'] === true)
 			$secureclass = 'xivo-icon xivo-icon-secure';
+
+		$editable_row = ($i == 0);
 ?>
 	<tr class="fm-paragraph<?=$ref['errdisplay']?>">
 		<td class="td-left">
@@ -113,7 +115,10 @@ if($list !== false):
 			<?=$form->select(array('paragraph'	=> false,
 					    'name'		=> 'linefeatures[context][]',
 					    'id'		=> 'linefeatures-context',
-					    'label'		=> false));?>
+					    'label'		=> false,
+					    'class'   	=> $editable_row ? '' : 'it-disabled',
+					    'disabled'	=> $editable_row ? false : true
+			));?>
 		</td>
 		<td>
 			<?=$form->text(array('paragraph'	=> false,
@@ -122,7 +127,10 @@ if($list !== false):
 					     'label'	=> false,
 					     'size'		=> 5,
 					     'value'	=> $ref['number'],
-					     'default'	=> ''),
+					     'default'	=> '',
+					     'class'   	=> $editable_row ? '' : 'it-disabled',
+					     'disabled'	=> $editable_row ? false : true
+			),
 			            'autocomplete="off"');?>
 			<div class="dialog-helper" id="numberpool_helper"></div>
 		</td>
@@ -134,7 +142,10 @@ if($list !== false):
 				    'key'		=> 'displayname',
 				    'altkey'	=> 'id',
 				    'default'	=> 'default',
-					'selected'	=> $ref['configregistrar']),
+					'selected'	=> $ref['configregistrar'],
+					'class'   	=> $editable_row ? '' : 'it-disabled',
+					'disabled'	=> $editable_row ? false : true
+			),
 			      $list_configregistrar);?>
 		</td>
 		<td>
@@ -152,7 +163,10 @@ if($list !== false):
 				    'altkey'	=> 'id',
 				    'empty'		=> true,
 				    'default'	=> '',
-					'selected'	=> $ref['device']),
+				    'selected'	=> $ref['device'],
+				    'class'   	=> $editable_row ? '' : 'it-disabled',
+				    'disabled'	=> $editable_row ? false : true
+			),
 			      $list_device);?>
 		<?php endif; ?>
 		</td>
@@ -162,19 +176,24 @@ if($list !== false):
 					    'name'		=> 'linefeatures[num][]',
 					    'id'		=> 'linefeatures-num',
 					    'label'		=> false,
-				    	'key'		=> false,
-				    	'altkey'	=> false,
-						'selected'	=> $ref['num']),
+					    'key'		=> false,
+					    'altkey'	=> false,
+					    'selected'	=> $ref['num'],
+					    'class'   	=> $editable_row ? '' : 'it-disabled',
+					    'disabled'	=> $editable_row ? false : true
+			),
 					array(1,2,3,4,5,6,7,8,9,10,11,12));?>
 		</td>
 		<td class="td-right">
-			<?=$url->href_html($url->img_html('img/site/button/mini/blue/delete.gif',
-						       $this->bbf('opt_line-delete'),
+			<?php if($nb === 1):?>
+				<?=$url->href_html($url->img_html('img/site/button/mini/blue/delete.gif',
+						$this->bbf('opt_line-delete'),
 						       'border="0"'),
 							'#lines',
 							null,
 							'onclick="lnkdroprow(this);"',
 							$this->bbf('opt_line-delete'));?>
+			<?php endif; ?>
 		</td>
 	</tr>
 <?php

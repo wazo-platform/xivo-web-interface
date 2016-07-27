@@ -850,7 +850,13 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 					if(!array_key_exists($pos, $lines)) {
 						$lines[$pos] = array();
 					}
-					$lines[$pos][$key] = $value;
+
+					if($pos == 0) {
+						$lines[$pos][$key] = $value;
+					}
+					else {
+						$lines[$pos] = $this->_info['linefeatures'][$pos];
+					}
 				}
 			}
 
