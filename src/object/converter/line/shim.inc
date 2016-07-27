@@ -82,11 +82,10 @@ class LineShim {
 	public function get_linefeatures($line_id)
 	{
 		try { 
-			$line = $this->manager->get($line_id);
-			return array('info' => array($line), 'origin' => false);
+			return $this->manager->get($line_id);
 		} catch (ClientException $e) {
 			$e->report_errors();
-			return array('info' => false, 'origin' => false);
+			return false;
 		}
 	}
 
