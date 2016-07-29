@@ -1,7 +1,7 @@
 <?php
 #
 # XiVO Web-Interface
-# Copyright (C) 2013-2015  Avencall
+# Copyright (C) 2013-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -34,11 +34,10 @@ class confd_ressource_voicemail extends xivo_confd_helpers_abstract
 
 	public function associate_user_voicemail($user_id, $voicemail_id)
 	{
-		$uri = $this->_build_uri(array($user_id, 'voicemail'), 'users');
-		$data = array('voicemail_id' => $voicemail_id);
-		$rs = $this->request_post($uri,$data);
+		$uri = $this->_build_uri(array($user_id, 'voicemails', $voicemail_id ), 'users');
+		$rs = $this->request_put($uri, null);
 
-		if($this->_status_code !== 201)
+		if($this->_status_code !== 204)
 		{
 			$this->_build_error_message($rs);
 			return(false);
@@ -49,7 +48,7 @@ class confd_ressource_voicemail extends xivo_confd_helpers_abstract
 
 	public function dissociate_user_voicemail($user_id)
 	{
-		$uri = $this->_build_uri(array($user_id, 'voicemail'), 'users');
+		$uri = $this->_build_uri(array($user_id, 'voicemails'), 'users');
 		$rs = $this->request_delete($uri);
 
 		if($this->_status_code !== 204)
@@ -62,7 +61,7 @@ class confd_ressource_voicemail extends xivo_confd_helpers_abstract
 
 	public function get_user_voicemail($user_id)
 	{
-		$uri = $this->_build_uri(array($user_id, 'voicemail'), 'users');
+		$uri = $this->_build_uri(array($user_id, 'voicemails'), 'users');
 		$association = $this->request_get($uri);
 		if($this->_status_code !== 200)
 		{

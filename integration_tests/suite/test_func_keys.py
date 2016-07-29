@@ -53,7 +53,7 @@ class TestFuncKey(TestWebi):
         with self.db.queries() as queries:
             user_id = queries.insert_user(firstname, lastname)
 
-        self.confd.add_response("/users/{}/voicemail".format(user_id), code=404)
+        self.confd.add_response("/users/{}/voicemails".format(user_id), code=404)
         return user_id
 
 
