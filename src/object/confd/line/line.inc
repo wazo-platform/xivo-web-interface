@@ -169,11 +169,7 @@ class LineResource {
 
 	function associate_extension($line_id, $extension_id)
 	{
-		$request = Request::json_post(
-			"/lines/" . $line_id . "/extensions",
-			array('extension_id' => $extension_id)
-		);
-
+		$request = Request::put("/lines/" . $line_id . "/extensions/" . $extension_id);
 		$response = $this->client->send($request);
 		return $response->status_ok_or_raise();
 	}

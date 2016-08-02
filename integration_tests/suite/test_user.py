@@ -359,7 +359,7 @@ class TestUser(TestWebi):
         self.confd.add_json_response(r"/endpoints/(sip|sccp|custom)", endpoint, method="POST", code=201)
         self.confd.add_response(r"/lines/\d+/endpoints/(sip|sccp|custom)/\d+", method="PUT", code=204)
         self.confd.add_response(r"/lines/\d+/devices", code=404)
-        self.confd.add_response(r"/lines/\d+/extensions", method='POST', code=201)
+        self.confd.add_response(r"/lines/\d+/extensions/\d+", method='PUT', code=204)
         self.confd.add_json_response(r"/lines/\d+/extensions",
                                      {'total': 0,
                                       'items': []},
