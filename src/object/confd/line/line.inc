@@ -176,11 +176,7 @@ class LineResource {
 
 	function associate_user($line_id, $user_id)
 	{
-		$request = Request::json_post(
-			"/users/" . $user_id . "/lines",
-			array('line_id' => $line_id)
-		);
-
+		$request = Request::put("/users/" . $user_id . "/lines/" . $line_id);
 		$response = $this->client->send($request);
 		return $response->status_ok_or_raise();
 	}

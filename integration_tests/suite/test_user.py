@@ -365,7 +365,7 @@ class TestUser(TestWebi):
                                       'items': []},
                                      code=201)
         self.confd.add_response(r"/users/\d+", method="PUT", code=204)
-        self.confd.add_response(r"/users/\d+/lines", method="POST", code=201)
+        self.confd.add_response(r"/users/\d+/lines/\d+", method="PUT", code=204)
         self.confd.add_json_response(r"/users/\d+/lines",
                                      {'total': 1,
                                       'items': [{
@@ -739,9 +739,8 @@ class TestUserEdit(TestUser):
         self.confd.assert_json_request(r"/endpoints/sip", {}, method="POST")
         self.confd.assert_request_sent(urljoin("lines", line['id'], "endpoints", "sip", sip['id']),
                                        method="PUT")
-        self.confd.assert_json_request(urljoin("users", user_id, "lines"),
-                                       {"line_id": line['id']},
-                                       method="POST")
+        self.confd.assert_request_sent(urljoin("users", user_id, "lines", line['id']),
+                                       method="PUT")
 
     def test_given_user_has_no_line_when_adding_sccp_line_then_user_updated(self):
         user_id = self.add_empty_user("UserEditAddSccpLine")
@@ -760,9 +759,8 @@ class TestUserEdit(TestUser):
         self.confd.assert_json_request(r"/endpoints/sccp", {}, method="POST")
         self.confd.assert_request_sent(urljoin("lines", line['id'], "endpoints", "sccp", sccp['id']),
                                        method="PUT")
-        self.confd.assert_json_request(urljoin("users", user_id, "lines"),
-                                       {"line_id": line['id']},
-                                       method="POST")
+        self.confd.assert_request_sent(urljoin("users", user_id, "lines", line['id']),
+                                       method="PUT")
 
     def test_given_user_has_no_line_when_adding_custom_line_then_user_updated(self):
         self.add_empty_user("UserEditAddCustomLine")
