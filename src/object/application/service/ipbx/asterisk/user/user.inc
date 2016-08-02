@@ -1321,6 +1321,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			}
 			else if($this->add_exten($user_id) === false
 			|| ($line_id = $this->_return['linefeatures'][0]['id']) === 0
+			|| $this->add_line_extension($line_id) === false
 			|| $this->add_user_line($user_id, $line_id) === false
 			|| $this->add_device_config($line_id) === false
 			|| $this->add_groupmember($user_id) === false
