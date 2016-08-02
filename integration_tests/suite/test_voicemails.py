@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-# Copyright (C) 2015 Avencall
+# Copyright (C) 2015-2016 Avencall
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -300,11 +300,11 @@ class TestVoicemailDelete(TestVoicemail):
                                                      'items': [self.voicemail]})
         self.confd.add_json_response("/voicemails/1/users", {'total': 1,
                                                              'items': [association]})
-        self.confd.add_response("/users/10/voicemail", method="DELETE", code=204)
+        self.confd.add_response("/users/10/voicemails", method="DELETE", code=204)
         self.confd.add_response("/voicemails/1", method="DELETE", code=204)
 
         voicemail_page = self.browser.voicemails
         voicemail_page.delete(self.voicemail['name'])
 
         self.confd.assert_request_sent("/voicemails/1", method="DELETE")
-        self.confd.assert_request_sent("/users/10/voicemail", method="DELETE")
+        self.confd.assert_request_sent("/users/10/voicemails", method="DELETE")

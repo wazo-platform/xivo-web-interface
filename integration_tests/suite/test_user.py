@@ -199,7 +199,7 @@ class TestUser(TestWebi):
         with self.db.queries() as q:
             user_id = q.insert_user(firstname)
 
-        self.confd.add_response(urljoin("users", user_id, "voicemail"),
+        self.confd.add_response(urljoin("users", user_id, "voicemails"),
                                 code=404,
                                 preserve=True)
         self.confd.add_json_response(urljoin("users", user_id, "funckeys"),
