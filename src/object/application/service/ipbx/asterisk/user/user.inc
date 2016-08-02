@@ -236,7 +236,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		$this->_info['linefeatures'] = false;
 		$this->_origin['linefeatures'] = false;
 
-		if(($user_lines = $this->_get_user_line($this->_info['userfeatures']['id'])) === false) {
+		if(($user_lines = $this->_get_user_lines($this->_info['userfeatures']['id'])) === false) {
 			return false;
 		}
 
@@ -251,13 +251,14 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		return($this->_info['linefeatures']);
 	}
 
-	function _get_user_line($user_id)
+	function _get_user_lines($user_id)
 	{
 		$user_lines = $this->_confd_user->list_line_associations($user_id);
 		if (empty($user_lines)){
 			return false;
 		}
 
+		// put the main_line at the head of the array
 		foreach($user_lines as $position=>$user_line) {
 			if ($user_line['main_line'] === true) {
 				unset($user_lines[$position]);

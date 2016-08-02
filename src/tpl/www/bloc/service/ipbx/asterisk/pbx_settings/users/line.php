@@ -70,8 +70,8 @@ endfor;
 <?php
 if($list !== false):
 
-	$rs = array();
 	$nb = $this->get_var('count');
+	$has_multiple_lines = ($nb > 1);
 	for($i = 0;$i < $nb;$i++):
 		$ref = &$list[$i];
 
@@ -185,7 +185,8 @@ if($list !== false):
 					array(1,2,3,4,5,6,7,8,9,10,11,12));?>
 		</td>
 		<td class="td-right">
-			<?php if($nb === 1):?>
+			&nbsp;
+			<?php if(! $has_multiple_lines):?>
 				<?=$url->href_html($url->img_html('img/site/button/mini/blue/delete.gif',
 						$this->bbf('opt_line-delete'),
 						       'border="0"'),
