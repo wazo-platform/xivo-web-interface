@@ -1306,7 +1306,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		&& ($this->edit_linefeatures($user_id)) !== false)
 		{
 			if(isset($this->_info['linefeatures'][0])
-			&& $this->_info['linefeatures'][0]['number'] !== '')
+			&& $this->_info['linefeatures'][0]['number'] !== null)
 			{
 				if($this->edit_exten($user_id) === false
 				|| $this->update_caller_id($user_id) === false
