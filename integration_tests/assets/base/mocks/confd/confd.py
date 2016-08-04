@@ -1,6 +1,10 @@
+import logging
 import re
 
 from flask import Flask, request, jsonify
+
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger()
 
 app = Flask(__name__)
 
@@ -38,10 +42,12 @@ DEFAULTS = {
 
 @app.after_request
 def log_request(response):
+    req = request_log()
+    rep = response_log(response)
+    logger.debug(req)
+    logger.debug(rep)
     if not (request.path.startswith('/_logs') or
             request.path.startswith('/_responses')):
-        req = request_log()
-        rep = response_log(response)
         LOGS.append({'request': req, 'response': rep})
     return response
 
