@@ -122,7 +122,9 @@ error:
 		$associations = $this->_line->list_extension_associations($line_id);
 		foreach($associations as $association) {
 			$this->_line->dissociate_extension($line_id, $association['extension_id']);
-			$this->_extension->delete($association['extension_id']);
+			if ($this->_extension->list_line_associations($association['extension_id']) === null){
+				$this->_extension->delete($association['extension_id']);
+			}
 		}
 	}
 

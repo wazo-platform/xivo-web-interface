@@ -44,4 +44,14 @@ class ExtensionResource {
 		$response = $this->client->send($request);
 		return $response->status_ok_or_raise();
 	}
+
+	function list_line_associations($id)
+	{
+		$request = Request::json_get("/extensions/" . $id . "/line");
+		$response = $this->client->send($request);
+		if($response->get_status() == 404) {
+			return null;
+		}
+		return $response->decode_or_raise();
+	}
 }

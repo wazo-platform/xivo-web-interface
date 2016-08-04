@@ -19,7 +19,6 @@
 import random
 import hashlib
 import string
-import unittest
 import uuid
 
 from lib.confd import urljoin
@@ -358,12 +357,20 @@ class TestUser(TestWebi):
         self.confd.add_json_response(r"/lines", line, method="POST", code=201)
         self.confd.add_json_response(r"/endpoints/(sip|sccp|custom)", endpoint, method="POST", code=201)
         self.confd.add_response(r"/lines/\d+/endpoints/(sip|sccp|custom)/\d+", method="PUT", code=204)
+        self.confd.add_json_response(r"/lines/\d+/endpoints/(sip|sccp|custom)",
+                                     {
+                                         'line_id': line['id'],
+                                         'endpoint_id': endpoint['id'],
+                                         'endpoint': line['protocol'],
+                                     })
         self.confd.add_response(r"/lines/\d+/devices", code=404)
         self.confd.add_response(r"/lines/\d+/extensions/\d+", method='PUT', code=204)
         self.confd.add_json_response(r"/lines/\d+/extensions",
                                      {'total': 0,
-                                      'items': []},
-                                     code=201)
+                                      'items': []})
+        self.confd.add_json_response(r"/lines/\d+/extensions",
+                                     {'total': 0,
+                                      'items': []})
         self.confd.add_response(r"/users/\d+", method="PUT", code=204)
         self.confd.add_response(r"/users/\d+/lines/\d+", method="PUT", code=204)
         self.confd.add_json_response(r"/users/\d+/lines",
@@ -733,12 +740,12 @@ class TestUserEdit(TestUser):
         line = self.add_line(context="default")
         sip = self.add_sip()
 
-        self.simulate_line_add(line, sip)
-
         page = self.browser.users.edit("UserEditAddSipLine")
         page.lines().add_line(protocol="SIP",
                               context="Default",
                               number="1310")
+        self.simulate_line_add(line, sip)
+
         page.save()
 
         self.confd.assert_json_request(r"/lines", {"context": "default"}, method="POST")
@@ -752,15 +759,14 @@ class TestUserEdit(TestUser):
 
     def test_given_user_has_no_line_when_adding_sccp_line_then_user_updated(self):
         user_id = self.add_empty_user("UserEditAddSccpLine")
-        line = self.add_line(context="default")
+        line = self.add_line(context="default", protocol="sccp")
         sccp = self.add_sccp()
-
-        self.simulate_line_add(line, sccp)
 
         page = self.browser.users.edit("UserEditAddSccpLine")
         page.lines().add_line(protocol="SCCP",
                               context="Default",
                               number="1320")
+        self.simulate_line_add(line, sccp)
         page.save()
 
         self.confd.assert_json_request(r"/lines", {"context": "default"}, method="POST")
@@ -774,15 +780,15 @@ class TestUserEdit(TestUser):
 
     def test_given_user_has_no_line_when_adding_custom_line_then_user_updated(self):
         self.add_empty_user("UserEditAddCustomLine")
-        line = self.add_line(context="default")
+        line = self.add_line(context="default", protocol="custom")
         custom = self.add_custom()
-
-        self.simulate_line_add(line, custom)
 
         page = self.browser.users.edit("UserEditAddCustomLine")
         page.lines().add_line(protocol="Customized",
                               context="Default",
                               number="1300")
+
+        self.simulate_line_add(line, custom)
         page.save()
 
         self.confd.assert_json_request(r"/lines", {"context": "default"}, method="POST")
@@ -798,14 +804,14 @@ class TestUserEdit(TestUser):
         line = self.add_line(context="default")
         sip = self.add_sip()
 
-        self.simulate_line_add(line, sip)
-        self.simulate_device_update(device)
-
         page = self.browser.users.edit("UserEditAddSipLine")
         page.lines().add_line(protocol="SIP",
                               context="Default",
                               number="1100",
                               device=device['mac'])
+        self.simulate_line_add(line, sip)
+        self.simulate_device_update(device)
+
         page.save()
 
         self.confd.assert_json_request(r"/lines", {"context": "default"}, method="POST")
@@ -821,14 +827,14 @@ class TestUserEdit(TestUser):
         line = self.add_line(context="default")
         sccp = self.add_sccp()
 
-        self.simulate_line_add(line, sccp)
-        self.simulate_device_update(device)
-
         page = self.browser.users.edit("UserEditAddSccpLine")
         page.lines().add_line(protocol="SCCP",
                               context="Default",
                               number="1200",
                               device=device['mac'])
+        self.simulate_line_add(line, sccp)
+        self.simulate_device_update(device)
+
         page.save()
 
         self.confd.assert_json_request(r"/lines", {"context": "default"}, method="POST")
