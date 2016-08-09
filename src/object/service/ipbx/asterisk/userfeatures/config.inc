@@ -220,8 +220,8 @@ $array['filter']['enableclient'] = array('bool' => true);
 $array['filter']['loginclient'] = array('set'		=> false,
 					'chk'		=> 2,
 					'minlen'	=> 2,
-					'maxlen'	=> 64,
-					'regexp'	=> '/^[a-zA-Z0-9-\._~\!\$&\'\(\)\*\+,;=%]+$/');
+					'maxlen'	=> 254,
+					'regexp'	=> '/^[a-zA-Z0-9-\._~\!\$&\'\(\)\*\+,;=%@]+$/');
 $array['filter']['passwdclient'] = array('set'		=> false,
 					 'chk'		=> 2,
 					 'minlen'	=> 4,
@@ -253,7 +253,7 @@ $array['filter']['mobilephonenumber'] = array('set'	=> false,
 					      'chk'	=> 2,
 					      'regexp'	=> '/^\+?[0-9\*#]+$/',
 					      'maxlen'	=> 128);
-$array['filter']['email'] = array('set' => false,'chk' => 2,'maxlen' => 128);
+$array['filter']['email'] = array('set' => false,'chk' => 2,'maxlen' => 254);
 $array['filter']['preprocess_subroutine'] = array('set' => false,
 						  'chk'	=> 2,
 						  'callback' => 'xivo_service_asterisk::chk_context',
