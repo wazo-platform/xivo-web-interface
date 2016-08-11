@@ -194,7 +194,7 @@ function dwho_size_iec($size)
 	for($c = 0;$size >= 1024 && $c < 8;$c++)
 		$size /= 1024;
 
-	return(array(strval($size),$arr[$c]));
+	return(array(dwho_strfloat($size),$arr[$c]));
 }
 
 function dwho_size_si_to_byte($from,$size)
@@ -284,6 +284,14 @@ function dwho_has_len($val,$key=null)
 	$val = (string) $val;
 
 	return(isset($val{0}));
+}
+
+function dwho_strfloat($val)
+{
+	if(is_float($val) === true)
+		return(str_replace(',','.',$val));
+
+	return(strval($val));
 }
 
 function dwho_digit($val=0,$def=null,$t=false)
