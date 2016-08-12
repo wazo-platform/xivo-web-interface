@@ -46,7 +46,7 @@ class TestUser(TestWebi):
         self.confd.add_json_response(r"/users",
                                      {'total': 0,
                                       'items': []},
-                                     query={'view': 'directory'},
+                                     query={'view': 'summary'},
                                      preserve=True)
 
     def build_device(self, **kwargs):
@@ -737,7 +737,7 @@ class TestUserEdit(TestUser):
 
     def test_given_user_has_no_line_when_adding_sip_line_then_user_updated(self):
         user_id = self.add_empty_user("UserEditAddSipLine")
-        line = self.add_line(context="default")
+        line = self.add_line(context="default", protocol="sip")
         sip = self.add_sip()
 
         page = self.browser.users.edit("UserEditAddSipLine")
@@ -801,7 +801,7 @@ class TestUserEdit(TestUser):
     def test_given_user_has_no_line_when_adding_sip_line_and_device_then_user_updated(self):
         self.add_empty_user("UserEditAddSipLineDevice")
         device = self.add_autoprov_device()
-        line = self.add_line(context="default")
+        line = self.add_line(context="default", protocol="sip")
         sip = self.add_sip()
 
         page = self.browser.users.edit("UserEditAddSipLine")
@@ -824,7 +824,7 @@ class TestUserEdit(TestUser):
     def test_given_user_has_no_line_when_adding_sccp_line_and_device_then_user_updated(self):
         self.add_empty_user("UserEditAddSccpLineDevice")
         device = self.add_autoprov_device()
-        line = self.add_line(context="default")
+        line = self.add_line(context="default", protocol="sccp")
         sccp = self.add_sccp()
 
         page = self.browser.users.edit("UserEditAddSccpLine")
