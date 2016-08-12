@@ -239,6 +239,10 @@ class LineManager
 		$this->line->associate_user($line_id, $user_id);
 	}
 
+	public function list_extension_associations($line_id)
+	{
+		return $this->line->list_extension_associations($line_id);
+	}
 
 }
 

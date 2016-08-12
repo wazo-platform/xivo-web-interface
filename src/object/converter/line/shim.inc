@@ -130,4 +130,14 @@ class LineShim {
 		}
 	}
 
+	function list_extension_associations($line_id)
+	{
+		try {
+			return $this->manager->list_extension_associations($line_id);
+		} catch (ClientException $e) {
+			$e->report_errors();
+			return array();
+		}
+	}
+
 }

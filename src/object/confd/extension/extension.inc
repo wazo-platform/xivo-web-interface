@@ -34,9 +34,16 @@ class ExtensionResource {
 
 	function create($extension)
 	{
-		$request = Request::json_post("/extensions", $line);
+		$request = Request::json_post("/extensions", $extension);
 		$response = $this->client->send($request);
 		return $response->decode_or_raise();
+	}
+
+	function update($extension)
+	{
+		$request = Request::json_put("/extensions/" . $extension['id'], $extension);
+		$response = $this->client->send($request);
+		return $response->status_ok_or_raise();
 	}
 
 	function delete($id) {

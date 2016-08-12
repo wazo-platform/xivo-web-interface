@@ -184,7 +184,7 @@ class TestUser(TestWebi):
 
         return line
 
-    def add_extension(self, exten, context, type_, typeval):
+    def add_extension(self, exten, context, type_="user", typeval="0"):
         with self.db.queries() as q:
             extension_id = q.insert_extension(exten, context, type_, typeval)
 
@@ -353,8 +353,9 @@ class TestUser(TestWebi):
                                      preserve=True)
         return user_id
 
-    def simulate_line_add(self, line, endpoint, device=None):
+    def simulate_line_add(self, line, endpoint, extension, device=None):
         self.confd.add_json_response(r"/lines", line, method="POST", code=201)
+        self.confd.add_json_response(r"/extensions", extension, method="POST", code=201)
         self.confd.add_json_response(r"/endpoints/(sip|sccp|custom)", endpoint, method="POST", code=201)
         self.confd.add_response(r"/lines/\d+/endpoints/(sip|sccp|custom)/\d+", method="PUT", code=204)
         self.confd.add_json_response(r"/lines/\d+/endpoints/(sip|sccp|custom)",
@@ -367,10 +368,8 @@ class TestUser(TestWebi):
         self.confd.add_response(r"/lines/\d+/extensions/\d+", method='PUT', code=204)
         self.confd.add_json_response(r"/lines/\d+/extensions",
                                      {'total': 0,
-                                      'items': []})
-        self.confd.add_json_response(r"/lines/\d+/extensions",
-                                     {'total': 0,
-                                      'items': []})
+                                      'items': []},
+                                     preserve=True)
         self.confd.add_response(r"/users/\d+", method="PUT", code=204)
         self.confd.add_response(r"/users/\d+/lines/\d+", method="PUT", code=204)
         self.confd.add_json_response(r"/users/\d+/lines",
@@ -386,12 +385,14 @@ class TestUser(TestWebi):
 
     def simulate_line_update(self):
         self.confd.add_response(r"/lines/\d+", method="PUT", code=204)
-        self.confd.add_response(r"/users/\d+", method="PUT", code=204)
+        # self.confd.add_response(r"/users/\d+", method="PUT", code=204)
+        self.confd.add_response(r"/extensions/\d+", method="PUT", code=204)
 
     def simulate_line_remove(self):
         self.confd.add_response(r"/lines/\d+", method="DELETE", code=204)
         self.confd.add_response(r"/lines/\d+/devices/[a-z0-9]+", method="DELETE", code=204)
         self.confd.add_response(r"/lines/\d+/extensions/\d+", method="DELETE", code=204)
+        self.confd.add_response(r"/extensions/\d+", method="DELETE", code=204)
         self.confd.add_response(r"/users/\d+/lines/\d+", method="DELETE", code=204)
 
     def simulate_device_update(self, device=None):
@@ -452,7 +453,8 @@ class TestUserCreate(TestUser):
     def test_when_creating_user_with_sip_line_and_extension_then_line_and_extension_created(self):
         line = self.add_line(protocol="sip")
         sip = self.add_sip()
-        self.simulate_line_add(line, sip)
+        extension = self.add_extension("1000", "default")
+        self.simulate_line_add(line, sip, extension)
 
         page = self.browser.users.add()
         page.fill_form(firstname="CreateLineSip")
@@ -465,16 +467,20 @@ class TestUserCreate(TestUser):
         page.save()
 
         self.confd.assert_json_request(r"/lines", {"context": "default"}, method="POST")
+        self.confd.assert_json_request(r"/extensions", {"context": extension['context'],
+                                                        "exten": extension['exten']},
+                                       method="POST")
         self.confd.assert_json_request(r"/endpoints/sip", {}, method="POST")
         self.confd.assert_request_sent(urljoin("lines", line['id'], "endpoints", "sip", sip['id']),
                                        method="PUT")
-        self.confd.assert_request_sent(urljoin("lines", line['id'], "extensions", '\d+'),
+        self.confd.assert_request_sent(urljoin("lines", line['id'], "extensions", extension['id']),
                                        method="PUT")
 
     def test_when_creating_user_with_sccp_line_and_extension_then_line_and_extension_created(self):
         line = self.add_line(protocol="sccp")
         sccp = self.add_sccp()
-        self.simulate_line_add(line, sccp)
+        extension = self.add_extension("1001", "default")
+        self.simulate_line_add(line, sccp, extension)
 
         page = self.browser.users.add()
         page.fill_form(firstname="CreateLineSccp")
@@ -486,16 +492,20 @@ class TestUserCreate(TestUser):
         page.save()
 
         self.confd.assert_json_request(r"/lines", {"context": "default"}, method="POST")
+        self.confd.assert_json_request(r"/extensions", {"context": extension['context'],
+                                                        "exten": extension['exten']},
+                                       method="POST")
         self.confd.assert_json_request(r"/endpoints/sccp", {}, method="POST")
         self.confd.assert_request_sent(urljoin("lines", line['id'], "endpoints", "sccp", sccp['id']),
                                        method="PUT")
-        self.confd.assert_request_sent(urljoin("lines", line['id'], "extensions", '\d+'),
+        self.confd.assert_request_sent(urljoin("lines", line['id'], "extensions", extension['id']),
                                        method="PUT")
 
     def test_when_creating_user_with_custom_line_and_extension_then_line_and_extension_created(self):
         line = self.add_line(protocol="custom")
         custom = self.add_custom()
-        self.simulate_line_add(line, custom)
+        extension = self.add_extension("1002", "default")
+        self.simulate_line_add(line, custom, extension)
 
         page = self.browser.users.add()
         page.fill_form(firstname="CreateLineCustom")
@@ -507,17 +517,21 @@ class TestUserCreate(TestUser):
         page.save()
 
         self.confd.assert_json_request(r"/lines", {"context": "default"}, method="POST")
+        self.confd.assert_json_request(r"/extensions", {"context": extension['context'],
+                                                        "exten": extension['exten']},
+                                       method="POST")
         self.confd.assert_json_request(r"/endpoints/custom", {}, method="POST")
         self.confd.assert_request_sent(urljoin("lines", line['id'], "endpoints", "custom", custom['id']),
                                        method="PUT")
-        self.confd.assert_request_sent(urljoin("lines", line['id'], "extensions", '\d+'),
+        self.confd.assert_request_sent(urljoin("lines", line['id'], "extensions", extension['id']),
                                        method="PUT")
 
     def test_when_creating_user_with_sip_line_and_device_then_device_associated(self):
         line = self.add_line(protocol="sip")
         sip = self.add_sip()
+        extension = self.add_extension("1002", "default")
         device = self.add_autoprov_device(mac="00:08:5d:31:ef:e1")
-        self.simulate_line_add(line, sip)
+        self.simulate_line_add(line, sip, extension)
         self.simulate_device_update(device)
 
         page = self.browser.users.add()
@@ -541,8 +555,9 @@ class TestUserCreate(TestUser):
     def test_when_creating_user_with_sccp_line_and_device_then_device_associated(self):
         line = self.add_line(protocol="sccp")
         sccp = self.add_sccp()
+        extension = self.add_extension("1003", "default")
         device = self.add_autoprov_device(mac="00:08:5d:31:ef:e2")
-        self.simulate_line_add(line, sccp)
+        self.simulate_line_add(line, sccp, extension)
         self.simulate_device_update(device)
 
         page = self.browser.users.add()
@@ -585,9 +600,12 @@ class TestUserEdit(TestUser):
                                configregistrar="registrar2")
         page.save()
 
-        expected = {"context": "internal",
-                    "registrar": "registrar2"}
-        self.confd.assert_json_request("/lines/\d+", expected, method="PUT")
+        expected_line = {"context": "internal",
+                         "registrar": "registrar2"}
+        expected_extension = {"context": "internal",
+                              "exten": "1351"}
+        self.confd.assert_json_request("/lines/\d+", expected_line, method="PUT")
+        self.confd.assert_json_request("/extensions/\d+", expected_extension, method="PUT")
 
     def test_given_user_has_sccp_line_when_editing_then_user_updated(self):
         self.add_sccp_user("UserEditSccpExten", "1352")
@@ -599,9 +617,12 @@ class TestUserEdit(TestUser):
                                configregistrar="registrar2")
         page.save()
 
-        expected = {"context": "internal",
-                    "registrar": "registrar2"}
-        self.confd.assert_json_request("/lines/\d+", expected, method="PUT")
+        expected_line = {"context": "internal",
+                         "registrar": "registrar2"}
+        expected_extension = {"context": "internal",
+                              "exten": "1353"}
+        self.confd.assert_json_request("/lines/\d+", expected_line, method="PUT")
+        self.confd.assert_json_request("/extensions/\d+", expected_extension, method="PUT")
 
     def test_given_user_has_custom_line_when_editing_then_user_updated(self):
         self.add_custom_user("UserEditCustomExten", "1360")
@@ -613,9 +634,12 @@ class TestUserEdit(TestUser):
                                configregistrar="registrar2")
         page.save()
 
-        expected = {"context": "internal",
-                    "registrar": "registrar2"}
-        self.confd.assert_json_request("/lines/\d+", expected, method="PUT")
+        expected_line = {"context": "internal",
+                         "registrar": "registrar2"}
+        expected_extension = {"context": "internal",
+                              "exten": "1361"}
+        self.confd.assert_json_request("/lines/\d+", expected_line, method="PUT")
+        self.confd.assert_json_request("/extensions/\d+", expected_extension, method="PUT")
 
     def test_given_user_has_sip_line_when_adding_device_then_user_updated(self):
         device = self.add_autoprov_device(mac="00:08:5d:31:ef:e1")
@@ -739,20 +763,24 @@ class TestUserEdit(TestUser):
         user_id = self.add_empty_user("UserEditAddSipLine")
         line = self.add_line(context="default", protocol="sip")
         sip = self.add_sip()
+        extension = self.add_extension("1310", "default")
 
         page = self.browser.users.edit("UserEditAddSipLine")
         page.lines().add_line(protocol="SIP",
                               context="Default",
                               number="1310")
-        self.simulate_line_add(line, sip)
+        self.simulate_line_add(line, sip, extension)
 
         page.save()
 
         self.confd.assert_json_request(r"/lines", {"context": "default"}, method="POST")
+        self.confd.assert_json_request(r"/extensions", {"context": "default",
+                                                        "exten": "1310"},
+                                       method="POST")
         self.confd.assert_json_request(r"/endpoints/sip", {}, method="POST")
         self.confd.assert_request_sent(urljoin("lines", line['id'], "endpoints", "sip", sip['id']),
                                        method="PUT")
-        self.confd.assert_request_sent(urljoin("lines", line['id'], "extensions", '\d+'),
+        self.confd.assert_request_sent(urljoin("lines", line['id'], "extensions", extension['id']),
                                        method="PUT")
         self.confd.assert_request_sent(urljoin("users", user_id, "lines", line['id']),
                                        method="PUT")
@@ -761,19 +789,23 @@ class TestUserEdit(TestUser):
         user_id = self.add_empty_user("UserEditAddSccpLine")
         line = self.add_line(context="default", protocol="sccp")
         sccp = self.add_sccp()
+        extension = self.add_extension("1320", "default")
 
         page = self.browser.users.edit("UserEditAddSccpLine")
         page.lines().add_line(protocol="SCCP",
                               context="Default",
                               number="1320")
-        self.simulate_line_add(line, sccp)
+        self.simulate_line_add(line, sccp, extension)
         page.save()
 
         self.confd.assert_json_request(r"/lines", {"context": "default"}, method="POST")
+        self.confd.assert_json_request(r"/extensions", {"context": "default",
+                                                        "exten": "1320"},
+                                       method="POST")
         self.confd.assert_json_request(r"/endpoints/sccp", {}, method="POST")
         self.confd.assert_request_sent(urljoin("lines", line['id'], "endpoints", "sccp", sccp['id']),
                                        method="PUT")
-        self.confd.assert_request_sent(urljoin("lines", line['id'], "extensions", '\d+'),
+        self.confd.assert_request_sent(urljoin("lines", line['id'], "extensions", extension['id']),
                                        method="PUT")
         self.confd.assert_request_sent(urljoin("users", user_id, "lines", line['id']),
                                        method="PUT")
@@ -782,20 +814,24 @@ class TestUserEdit(TestUser):
         self.add_empty_user("UserEditAddCustomLine")
         line = self.add_line(context="default", protocol="custom")
         custom = self.add_custom()
+        extension = self.add_extension("1300", "default")
 
         page = self.browser.users.edit("UserEditAddCustomLine")
         page.lines().add_line(protocol="Customized",
                               context="Default",
                               number="1300")
 
-        self.simulate_line_add(line, custom)
+        self.simulate_line_add(line, custom, extension)
         page.save()
 
         self.confd.assert_json_request(r"/lines", {"context": "default"}, method="POST")
+        self.confd.assert_json_request(r"/extensions", {"context": "default",
+                                                        "exten": "1300"},
+                                       method="POST")
         self.confd.assert_json_request(r"/endpoints/custom", {}, method="POST")
         self.confd.assert_request_sent(urljoin("lines", line['id'], "endpoints", "custom", custom['id']),
                                        method="PUT")
-        self.confd.assert_request_sent(urljoin("lines", line['id'], "extensions", '\d+'),
+        self.confd.assert_request_sent(urljoin("lines", line['id'], "extensions", extension['id']),
                                        method="PUT")
 
     def test_given_user_has_no_line_when_adding_sip_line_and_device_then_user_updated(self):
@@ -803,13 +839,14 @@ class TestUserEdit(TestUser):
         device = self.add_autoprov_device()
         line = self.add_line(context="default", protocol="sip")
         sip = self.add_sip()
+        extension = self.add_extension("1100", "default")
 
         page = self.browser.users.edit("UserEditAddSipLine")
         page.lines().add_line(protocol="SIP",
                               context="Default",
                               number="1100",
                               device=device['mac'])
-        self.simulate_line_add(line, sip)
+        self.simulate_line_add(line, sip, extension)
         self.simulate_device_update(device)
 
         page.save()
@@ -826,13 +863,14 @@ class TestUserEdit(TestUser):
         device = self.add_autoprov_device()
         line = self.add_line(context="default", protocol="sccp")
         sccp = self.add_sccp()
+        extension = self.add_extension("1200", "default")
 
         page = self.browser.users.edit("UserEditAddSccpLine")
         page.lines().add_line(protocol="SCCP",
                               context="Default",
                               number="1200",
                               device=device['mac'])
-        self.simulate_line_add(line, sccp)
+        self.simulate_line_add(line, sccp, extension)
         self.simulate_device_update(device)
 
         page.save()
@@ -860,6 +898,7 @@ class TestUserEdit(TestUser):
         self.confd.assert_request_sent(r"/lines/\d+", method="DELETE")
         self.confd.assert_request_sent(r"/lines/\d+/devices/[a-z0-9]+", method="DELETE")
         self.confd.assert_request_sent(r"/lines/\d+/extensions/\d+", method="DELETE")
+        self.confd.assert_request_sent(r"/extensions/\d+", method="DELETE")
         self.confd.assert_request_sent(r"/users/\d+/lines/\d+", method="DELETE")
 
     def test_given_user_has_sccp_line_and_device_when_removing_line_then_user_updated(self):
@@ -875,6 +914,7 @@ class TestUserEdit(TestUser):
         self.confd.assert_request_sent(r"/lines/\d+", method="DELETE")
         self.confd.assert_request_sent(r"/lines/\d+/devices/[a-z0-9]+", method="DELETE")
         self.confd.assert_request_sent(r"/lines/\d+/extensions/\d+", method="DELETE")
+        self.confd.assert_request_sent(r"/extensions/\d+", method="DELETE")
         self.confd.assert_request_sent(r"/users/\d+/lines/\d+", method="DELETE")
 
     def test_given_user_has_custom_line_when_removing_line_then_user_updated(self):
@@ -890,6 +930,7 @@ class TestUserEdit(TestUser):
         self.confd.assert_request_sent(r"/lines/\d+", method="DELETE")
         self.confd.assert_request_sent(r"/lines/\d+/devices/[a-z0-9]+", method="DELETE")
         self.confd.assert_request_sent(r"/lines/\d+/extensions/\d+", method="DELETE")
+        self.confd.assert_request_sent(r"/extensions/\d+", method="DELETE")
         self.confd.assert_request_sent(r"/users/\d+/lines/\d+", method="DELETE")
 
 
@@ -902,6 +943,7 @@ class TestUserDelete(TestUser):
         self.confd.add_response(r"/lines/\d+", method="DELETE", code=204)
         self.confd.add_response(r"/users/\d+/lines/\d+", method="DELETE", code=204)
         self.confd.add_response(r"/lines/\d+/extensions/\d+", method="DELETE", code=204)
+        self.confd.add_response(r"/extensions/\d+", method="DELETE")
         self.confd.add_response(r"/endpoints/(sip|sccp|custom)/\d+", method="DELETE", code=204)
 
     def simulate_device_delete(self, line, device):
@@ -926,6 +968,7 @@ class TestUserDelete(TestUser):
                                        method="DELETE")
         self.confd.assert_request_sent(urljoin("lines", line['id'], "extensions", line['extension_id']),
                                        method="DELETE")
+        self.confd.assert_request_sent(urljoin("extensions", line['extension_id']), method="DELETE")
         self.confd.assert_request_sent(urljoin("lines", line['id']), method="DELETE")
 
     def test_when_user_has_sccp_line_then_user_deleted(self):
@@ -940,6 +983,7 @@ class TestUserDelete(TestUser):
                                        method="DELETE")
         self.confd.assert_request_sent(urljoin("lines", line['id'], "extensions", line['extension_id']),
                                        method="DELETE")
+        self.confd.assert_request_sent(urljoin("extensions", line['extension_id']), method="DELETE")
         self.confd.assert_request_sent(urljoin("lines", line['id']), method="DELETE")
 
     def test_when_user_has_custom_line_then_user_deleted(self):
@@ -954,6 +998,7 @@ class TestUserDelete(TestUser):
                                        method="DELETE")
         self.confd.assert_request_sent(urljoin("lines", line['id'], "extensions", line['extension_id']),
                                        method="DELETE")
+        self.confd.assert_request_sent(urljoin("extensions", line['extension_id']), method="DELETE")
         self.confd.assert_request_sent(urljoin("lines", line['id']), method="DELETE")
 
     def test_when_user_has_sip_device_then_user_deleted(self):

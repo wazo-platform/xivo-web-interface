@@ -30,6 +30,7 @@ require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'converter', 'voicemail', 'map
 require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'converter', 'line', 'shim.inc'));
 require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'converter', 'line', 'manager.inc'));
 require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'converter', 'line', 'mapper.inc'));
+require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'converter', 'extension', 'shim.inc'));
 require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'client.inc'));
 require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'user', 'user.inc'));
 require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'line', 'line.inc'));
@@ -115,7 +116,6 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 
 		if(($this->_sccpdevice = &$this->_service->get_module('sccpdevice')) === false
 		|| ($this->_device = &$this->_service->get_application('device')) === false
-		|| ($this->_extensions = &$this->_service->get_module('extensions')) === false
 		|| ($this->_rightcall = $this->get_abstract('rightcall',array('type' => 'user'))) === false
 		|| ($this->_dialaction = $this->get_abstract('dialaction',array('category' => 'user'))) === false
 		|| ($this->_schedule_path = &$this->_service->get_module('schedule_path')) === false
@@ -163,7 +163,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		$this->_vm_mapper = new VoicemailMapper();
 
 		$nonraising_client = Client::default_config();
-		$this->_confd_user = new UserResource($nonraising_client);;
+		$this->_confd_user = new UserResource($nonraising_client);
 
 		$context_dso = &$this->_service->get_module('context');
 
@@ -178,6 +178,9 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		);
 
 		$this->_line_manager = new LineShim($manager);
+
+		$extension_resource = New ExtensionResource($client);
+		$this->_extensions = New ExtensionShim($extension_resource);
 
 		return(true);
 	}
@@ -273,12 +276,27 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		$this->_info['exten'] = false;
 		$this->_origin['exten'] = false;
 
-		if(isset($this->_info['linefeatures'][0]) === true
-		&& ($this->_info['exten'] = $this->_extensions->get_exten($this->_info['linefeatures'][0]['number'],
-									      $this->_info['linefeatures'][0]['context'])) !== false)
-			$this->_origin['exten'] = $this->_extensions->get_origin();
+		if(dwho_issa('linefeatures', $this->_info) === false) {
+			return false;
+		}
 
-		return($this->_info['exten']);
+		$lines = $this->_info['linefeatures'];
+		$extensions = array();
+		foreach($lines as $line) {
+			$line_extensions = $this->_line_manager->list_extension_associations($line['id']);
+			if (empty($line_extensions)){
+				return false;
+			}
+
+			// When line_extension will has the attribute 'main_extension',
+			// we should use it to find the right line_extension instead to take first
+			$line_extension = $line_extensions[0];
+
+			$extensions[] = $this->_extensions->get($line_extension['extension_id']);
+		}
+		$this->_info['exten'] = $extensions;
+
+		return $this->_info['exten'];
 	}
 
 	function _get_entity()
@@ -679,6 +697,10 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		&& $this->set_linefeatures($arr['linefeatures']) !== false
 		&& isset($this->_result['linefeatures'][0]))
 		{
+			// Should be done for each linefeatures not only on the main line ([0])
+			// Only if we want support the following scenario:
+			// user1 ___ line1
+			// user2 _\_ line2
 			$protocolname = $this->_result['linefeatures'][0]['protocol'];
 			$name = $this->_result['linefeatures'][0]['name'];
 			$number = $this->_result['linefeatures'][0]['number'];
@@ -705,14 +727,10 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 							$number,
 							$protocolname);
 			}
+		}
 
-			if(($rsexten = $this->chk_exten('exten',
-											$number,
-											$context,
-											'user',
-											0)) !== false) {
-				$this->_set_result('exten',$rsexten);
-			}
+		if(dwho_issa('linefeatures', $this->_result) === true) {
+			$this->set_exten($this->_result['linefeatures']);
 		}
 
 		if(dwho_issa('dialaction',$arr) === true)
@@ -892,6 +910,19 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		return(true);
 	}
 
+	function set_exten($lines) {
+		$extensions = array();
+		foreach ($lines as $position=>$line) {
+			$extension = array('exten' => $line['number'],
+							   'context' => $line['context']);
+			if(isset($this->_info['exten'][$position]['id'])) {
+				$extension['id'] = $this->_info['exten'][$position]['id'];
+			}
+			array_push($extensions, $extension);
+		}
+		$this->_set_result('exten',$extensions);
+	}
+
 	function set_groupmember($group,$select,$name,$context='',$number='',$protocolname='')
 	{
 		return($this->_set_member_type('group',$group,$select,$name,$context,$number,$protocolname));
@@ -975,34 +1006,6 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		return(true);
 	}
 
-	function _set_exten($action,$user_id)
-	{
-		$rs = false;
-
-		if(($user_id = dwho_ulongint($user_id)) === 0
-		|| ($rs = $this->get_result('exten')) === null
-		|| $rs === false)
-			return($rs);
-
-		# On add, the fixes of extension (when associate line_extension) will fix the user id
-		# But line_extension is not called when editing
-		if ($action === 'add') {
-			$user_id = 0;
-		}
-
-		if(($rsexten = $this->set_exten($action,
-										'exten',
-										$rs['exten'],
-										$rs['context'],
-										'user',
-										$user_id)) === false)
-			return(false);
-
-		$this->_set_result('exten',$rsexten);
-
-		return(true);
-	}
-
 	function add()
 	{
 		$r = true;
@@ -1011,12 +1014,14 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		$this->_return = array();
 		$user_id = null;
 		$line_id = null;
+		$extension_id = null;
 
 		if($this->get_errnb() > 0
 		|| $this->add_func_key_private_tpl() === false
 		|| ($user_id = $this->add_userfeatures()) === false
 		|| $this->add_func_key_dest_user($user_id) === false
-		|| ($line = $this->edit_linefeatures($user_id)) === false
+		|| ($lines = $this->edit_linefeatures($user_id)) === false
+		|| ($extensions = $this->add_exten()) === false
 		|| $this->add_rightcall($user_id) === false
 		|| $this->add_dialaction($user_id) === false
 		|| $this->add_schedule_path($user_id) === false
@@ -1027,13 +1032,13 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 				$this->_reverse_add();
 		}
 
-		if($r === true && $line)
+		if($r === true && $lines && $extensions)
 		{
-			$line_id = $line[0]['id'];
+			$line_id = $lines[0]['id'];
+			$extension_id = $extensions[0]['id'];
 			if($this->add_groupmember($user_id) === false
 			|| $this->add_queuemember($user_id) === false
-			|| ($this->add_exten($user_id)) === false
-			|| $this->add_line_extension($line_id) === false
+			|| $this->add_line_extension($line_id, $extension_id) === false
 			|| $this->add_user_line($user_id, $line_id) === false)
 				$r = false;
 		}
@@ -1089,13 +1094,12 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		return(true);
 	}
 
-	function add_line_extension($line_id)
+	function add_line_extension($line_id, $extension_id)
 	{
 		if(($line_id = (int) $line_id) === 0
-		|| ($extension = $this->_extensions->get_loaded_exten($this->_return['exten'])) === false)
+		|| ($extension_id = (int) $extension_id) === 0)
 			return(false);
 
-		$extension_id = $extension[0]['id'];
 		$return = $this->_line_manager->associate_extension($line_id, $extension_id);
 		return $return;
 	}
@@ -1173,12 +1177,21 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			$user_id);
 	}
 
-	function add_exten($user_id)
+	function add_exten()
 	{
-		if(($rs = $this->_set_exten('add',$user_id)) !== true)
-			return($rs);
-
-		return(parent::add_exten('exten'));
+		$results = array();
+		$extensions = $this->get_result('exten');
+		if($extensions === false || count($extensions) === 0) {
+			return null;
+		}
+		foreach ($extensions as $extension) {
+			if(($result = $this->_extensions->add($extension)) === false) {
+				return false;
+			}
+			array_push($results, $result);
+		}
+		$this->_return['exten'] = $results;
+		return $this->_return['exten'];
 	}
 
 	function add_groupmember($user_id)
@@ -1273,9 +1286,6 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 				case 'dialaction':
 					$this->_dialaction->reverse_add();
 					break;
-				case 'exten':
-					$this->_extensions->delete_exten($val);
-					break;
 				case 'groupmember':
 				case 'queuemember':
 					if(is_array($val) === false)
@@ -1325,8 +1335,8 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			if(isset($this->_info['linefeatures'][0])
 			&& $this->_info['linefeatures'][0]['number'] !== null)
 			{
-				if($this->edit_exten($user_id) === false
-				|| $this->update_caller_id($user_id) === false
+				if($this->edit_exten() === false
+				// || $this->update_caller_id($user_id) === false
 				|| $this->edit_device_config() === false
 				|| $this->edit_groupmember($user_id) === false
 				|| $this->edit_queuemember($user_id) === false)
@@ -1336,9 +1346,10 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 					return(false);
 				}
 			}
-			else if($this->add_exten($user_id) === false
+			else if($this->add_exten() === false
 			|| ($line_id = $this->_return['linefeatures'][0]['id']) === 0
-			|| $this->add_line_extension($line_id) === false
+			|| ($extension_id = $this->_return['exten'][0]['id']) === 0
+			|| $this->add_line_extension($line_id, $extension_id) === false
 			|| $this->add_user_line($user_id, $line_id) === false
 			|| $this->add_device_config($line_id) === false
 			|| $this->add_groupmember($user_id) === false
@@ -1352,8 +1363,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		elseif($this->get_result('linefeatures') === null
 		&& $this->_info['linefeatures'] !== false)
 		{
-			if ($this->delete_linefeatures() === false
-			|| $this->delete_exten('exten') === false)
+			if ($this->delete_linefeatures() === false)
 			{
 				$this->_reverse_edit();
 				$this->_status = '';
@@ -1504,12 +1514,18 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			$this->_info['userfeatures']['id']);
 	}
 
-	function edit_exten($user_id)
+	function edit_exten()
 	{
-		if(($rs = $this->_set_exten('edit',$user_id)) !== true)
-			return($rs);
-
-		return parent::edit_exten('exten');
+		$extensions = $this->get_result('exten');
+		if($extensions === false || count($extensions) === 0) {
+			return null;
+		}
+		foreach ($extensions as $extension) {
+			if(($this->_extensions->edit($extension)) === false) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	function edit_device_config()
@@ -1627,13 +1643,6 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 				case 'dialaction':
 					$this->_dialaction->reverse_edit($this->_status);
 					break;
-				case 'exten':
-					if(isset($this->_origin['exten']) === false
-					|| $this->_origin['exten'] === false)
-						$this->delete_exten('exten');
-					else
-						$this->_extensions->edit_origin($this->_origin['exten']);
-					break;
 				case 'groupmember':
 				case 'queuemember':
 					if($key === 'groupmember')
@@ -1665,7 +1674,6 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		|| $this->delete_funckey_dst() === false
 		|| $this->delete_linefeatures() === false
 		|| $this->delete_userfeatures() === false
-		|| $this->delete_exten('exten') === false
 		|| $this->delete_rightcall() === false
 		|| $this->delete_dialaction() === false
 		|| $this->delete_callfiltermember() === false
@@ -1735,7 +1743,6 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 
 		if($this->_status === 'delete')
 			$this->_return['linefeatures'] = $result;
-		// publish msg UserLineDissociated msg?
 	}
 
 	function delete_phonefunckey()
@@ -1827,11 +1834,6 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 					if(isset($this->_origin[$key]) === true
 					&& $this->_origin[$key] !== false)
 						$this->_queuemember->add_origin_list($this->_origin[$key]);
-					break;
-				case 'exten':
-					if(isset($this->_origin[$key]) === true
-					&& $this->_origin[$key] !== false)
-						$this->_extensions->add_origin($this->_origin[$key]);
 					break;
 			}
 		}
