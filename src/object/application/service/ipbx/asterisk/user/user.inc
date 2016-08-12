@@ -1336,7 +1336,6 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			&& $this->_info['linefeatures'][0]['number'] !== null)
 			{
 				if($this->edit_exten() === false
-				// || $this->update_caller_id($user_id) === false
 				|| $this->edit_device_config() === false
 				|| $this->edit_groupmember($user_id) === false
 				|| $this->edit_queuemember($user_id) === false)
@@ -1396,16 +1395,6 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		$this->_bus_msg_queue->add_msg($bus_msg);
 
 		return(($this->_return['userfeatures'] = $return));
-	}
-
-	function update_caller_id($user_id)
-	{
-		if(($user_id = (int) $user_id) === 0)
-			return false;
-
-		$this->_line_manager->update_caller_id($user_id);
-
-		return True;
 	}
 
 	function edit_linefeatures($user_id)

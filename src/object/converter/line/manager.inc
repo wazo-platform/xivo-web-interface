@@ -206,11 +206,6 @@ class LineManager
 		return false;
 	}
 
-	function update_caller_id($user_id)
-	{
-		$this->user->update(array('id' => $user_id));
-	}
-
 	function associate_extension($line_id, $extension_id)
 	{
 		$associations = $this->line->list_extension_associations($line_id);

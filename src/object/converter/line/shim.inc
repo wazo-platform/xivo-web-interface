@@ -100,16 +100,6 @@ class LineShim {
 	{
 	}
 
-	function update_caller_id($user_id)
-	{
-		try {
-			return $this->manager->update_caller_id($user_id);
-		} catch (ClientException $e) {
-			$e->report_errors();
-			return false;
-		}
-	}
-
 	function associate_extension($line_id, $extension_id)
 	{
 		try {
