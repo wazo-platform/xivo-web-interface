@@ -55,9 +55,11 @@ webi:
 tests:
   image: n3llyb0y/wait
   links:
-    - postgres
     - confd
-    - webi
+    - postgres
+    - provd
     - rabbitmq
+    - sysconfd
+    - webi
   environment:
-    PORTS: "5432 9847 80 5672"
+    PORTS: "80 5432 5672 8666 8668 9847"
