@@ -1,7 +1,7 @@
 <?php
 #
 # XiVO Web-Interface
-# Copyright (C) 2013-2014  Avencall
+# Copyright (C) 2013-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,9 +27,6 @@ $array['element']['user_id']['default'] = 0;
 $array['element']['line_id'] = array();
 $array['element']['line_id']['default'] = 0;
 
-$array['element']['extension_id'] = array();
-$array['element']['extension_id']['default'] = 0;
-
 $array['element']['main_user'] = array();
 $array['element']['main_user']['default'] = true;
 
@@ -41,7 +38,6 @@ $array['filter'] = array();
 
 $array['filter']['user_id'] = array('set' => false, 'cast' => 'int');
 $array['filter']['line_id'] = array('set' => true, 'cast' => 'int');
-$array['filter']['extension_id'] = array('cast' => 'int');
 $array['filter']['main_user'] = array('pg_bool' => true);
 $array['filter']['main_line'] = array('pg_bool' => true);
 

@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -46,7 +46,6 @@ class xivo_service_asterisk_user_line extends xivo_service_asterisk_abstract
 		$data['id'] = (int) $data['id'];
 		$data['user_id'] = (int) $data['user_id'];
 		$data['line_id'] = (int) $data['line_id'];
-		$data['extension_id'] = (int) $data['extension_id'];
 		$data['main_user'] = (bool) $data['main_user'];
 		$data['main_line'] = (bool) $data['main_line'];
 

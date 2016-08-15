@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2015  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -71,16 +71,12 @@ class xivo_application_service_asterisk_user_sql extends xivo_application_abstra
 		if($initialized === true)
 		{
 			$this->_dso->innerjoin($this->_table['user_line'],
-							$this->_table['user_line'].'.user_id = '. $this->_table['userfeatures'].'.id',
-							null,
-							'id');
+							$this->_table['user_line'].'.user_id = '. $this->_table['userfeatures'].'.id');
 		}
 		else
 		{
 			$this->_dso->leftjoin($this->_table['user_line'],
-							$this->_table['user_line'].'.user_id = '. $this->_table['userfeatures'].'.id',
-							null,
-					 		'id');
+							$this->_table['user_line'].'.user_id = '. $this->_table['userfeatures'].'.id');
 		}
 
 		$this->_dso->leftjoin($this->_table['linefeatures'],
