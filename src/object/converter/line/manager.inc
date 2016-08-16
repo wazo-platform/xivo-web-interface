@@ -236,7 +236,15 @@ class LineManager
 
 	public function list_extension_associations($line_id)
 	{
-		return $this->line->list_extension_associations($line_id);
+		$associations = $this->line->list_extension_associations($line_id);
+		$result = array();
+		foreach($associations as $association) {
+			$extension = $this->extension->get($association['extension_id']);
+			if($this->is_internal_extension($extension)) {
+				$result[] = $association;
+			}
+		}
+		return $result;
 	}
 
 }
