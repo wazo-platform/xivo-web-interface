@@ -409,16 +409,17 @@ class xivo_service_asterisk extends xivo_service_abstract
 		|| ($info = $this->core_show_version()) === false)
 			return(false);
 
-		$info = explode(' ',$info,3);
+		// Extract server name and version
+		preg_match('/([aA-zZ]*) (\d+(?:\.\d+)+)/',$info,$info);
 
 		$r = array();
 
-		if(isset($info[0]) === true)
+		if(count($info) > 1 && isset($info[1]))
 		{
-			$r['label'] = $info[0];
+			$r['label'] = $info[1];
 
-			if(isset($info[1]) === true)
-				$r['version'] = $info[1];
+			if(isset($info[2]) === true)
+				$r['version'] = $info[2];
 		}
 
 		if(empty($r) === true)
