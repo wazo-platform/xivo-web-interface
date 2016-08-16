@@ -206,11 +206,6 @@ class LineManager
 		return false;
 	}
 
-	function update_caller_id($user_id)
-	{
-		$this->user->update(array('id' => $user_id));
-	}
-
 	function associate_extension($line_id, $extension_id)
 	{
 		$associations = $this->line->list_extension_associations($line_id);
@@ -239,6 +234,18 @@ class LineManager
 		$this->line->associate_user($line_id, $user_id);
 	}
 
+	public function list_extension_associations($line_id)
+	{
+		$associations = $this->line->list_extension_associations($line_id);
+		$result = array();
+		foreach($associations as $association) {
+			$extension = $this->extension->get($association['extension_id']);
+			if($this->is_internal_extension($extension)) {
+				$result[] = $association;
+			}
+		}
+		return $result;
+	}
 
 }
 
