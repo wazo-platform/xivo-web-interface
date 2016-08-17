@@ -410,7 +410,7 @@ class xivo_service_asterisk extends xivo_service_abstract
 			return(false);
 
 		// Extract server name and version
-		if(preg_match('/([aA-zZ]*) (\d+(?:\.\d+)+)/',$info,$info))
+		if(preg_match('/(Asterisk) (\d+(?:\.\d+)+)/',$info,$info))
 		{
 			return array(
 				'label' => $info[1],
