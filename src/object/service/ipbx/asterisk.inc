@@ -410,22 +410,15 @@ class xivo_service_asterisk extends xivo_service_abstract
 			return(false);
 
 		// Extract server name and version
-		preg_match('/([aA-zZ]*) (\d+(?:\.\d+)+)/',$info,$info);
-
-		$r = array();
-
-		if(count($info) > 1 && isset($info[1]))
+		if(preg_match('/([aA-zZ]*) (\d+(?:\.\d+)+)/',$info,$info))
 		{
-			$r['label'] = $info[1];
-
-			if(isset($info[2]) === true)
-				$r['version'] = $info[2];
+			return array(
+				'label' => $info[1],
+				'version' => $info[2]
+			);
 		}
 
-		if(empty($r) === true)
-			$r = false;
-
-		return($r);
+		return(false);
 	}
 
 	public function get_protocol()
