@@ -1,7 +1,7 @@
 <?php
 #
 # XiVO Web-Interface
-# Copyright (C) 2015  Avencall
+# Copyright (C) 2015-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -277,6 +277,7 @@ class FuncKeyMapper {
 
 	public function map_to_legacy($user_id, $funckeys) {
 		$legacy_funckeys = array();
+		ksort($funckeys);
 		foreach ($funckeys as $position => $funckey) {
 			$legacy_funckeys[] = $this->map_legacy_funckey($user_id, $position, $funckey);
 		}
