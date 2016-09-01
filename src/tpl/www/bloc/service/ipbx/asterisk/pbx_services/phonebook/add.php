@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2016  Avencall
+# Copyright (C) 2006-2014  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,6 +27,10 @@ $form = &$this->get_module('form');
 		<span class="span-center"><?=$this->bbf('title_content_name');?></span>
 		<span class="span-right">&nbsp;</span>
 	</h3>
+
+<?php
+	$this->file_include('bloc/service/ipbx/asterisk/pbx_services/phonebook/submenu');
+?>
 
 	<div class="sb-content">
 		<form action="#" method="post" accept-charset="utf-8">
