@@ -25,7 +25,6 @@ $info = $this->get_var('info');
 $element = $this->get_var('element');
 
 ?>
-<div id="sb-part-first" class="b-nodisplay">
 <?php
 	echo	$form->select(array('desc'	=> $this->bbf('fm_phonebook_title'),
 				    'name'	=> 'phonebook[title]',
@@ -87,26 +86,10 @@ $element = $this->get_var('element');
 				  'size'	=> 15,
 				  'default'	=> $element['phonebook']['url']['default'],
 				  'value'	=> $info['phonebook']['url']));
+		$this->file_include('bloc/service/ipbx/asterisk/pbx_services/phonebook/type',
+							array('type'	=> 'office'));
+		$this->file_include('bloc/service/ipbx/asterisk/pbx_services/phonebook/type',
+							array('type'	=> 'home'));
+		$this->file_include('bloc/service/ipbx/asterisk/pbx_services/phonebook/type',
+							array('type'	=> 'other'));
 ?>
-</div>
-
-<div id="sb-part-office" class="b-nodisplay">
-<?php
-	$this->file_include('bloc/service/ipbx/asterisk/pbx_services/phonebook/type',
-			    array('type'	=> 'office'));
-?>
-</div>
-
-<div id="sb-part-home" class="b-nodisplay">
-<?php
-	$this->file_include('bloc/service/ipbx/asterisk/pbx_services/phonebook/type',
-			    array('type'	=> 'home'));
-?>
-</div>
-
-<div id="sb-part-last" class="b-nodisplay">
-<?php
-	$this->file_include('bloc/service/ipbx/asterisk/pbx_services/phonebook/type',
-			    array('type'	=> 'other'));
-?>
-</div>
