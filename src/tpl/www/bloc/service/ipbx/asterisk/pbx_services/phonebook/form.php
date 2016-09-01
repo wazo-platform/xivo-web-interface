@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -88,19 +88,6 @@ $element = $this->get_var('element');
 				  'default'	=> $element['phonebook']['url']['default'],
 				  'value'	=> $info['phonebook']['url']));
 ?>
-	<div class="fm-paragraph fm-description">
-		<p>
-			<label id="lb-phonebook-description" for="it-phonebook-description"><?=$this->bbf('fm_phonebook_description');?></label>
-		</p>
-		<?=$form->textarea(array('paragraph'	=> false,
-					 'label'	=> false,
-					 'name'		=> 'phonebook[description]',
-					 'id'		=> 'it-phonebook-description',
-					 'cols'		=> 60,
-					 'rows'		=> 5,
-					 'default'	=> $element['phonebook']['description']['default']),
-				   $info['phonebook']['description']);?>
-	</div>
 </div>
 
 <div id="sb-part-office" class="b-nodisplay">
