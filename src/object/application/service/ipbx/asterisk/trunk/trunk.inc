@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -507,6 +507,7 @@ class xivo_application_service_asterisk_trunk extends xivo_application_asterisk_
 		}
 
 		$rs['protocolid'] = $protocolid;
+		$rs['context'] = $this->_result['protocol']['context'];
 
 		return(($this->_return['trunkfeatures'] = $this->_trunkfeatures->add($rs)));
 	}
@@ -614,6 +615,7 @@ class xivo_application_service_asterisk_trunk extends xivo_application_asterisk_
 
 		$rs['registerid'] = $registerid;
 		$rs['protocolid'] = $this->_info['trunkfeatures']['protocolid'];
+		$rs['context'] = $this->_result['protocol']['context'];
 
 		return(($this->_return['trunkfeatures'] = $this->_trunkfeatures->edit($this->_info['trunkfeatures']['id'],$rs)));
 	}

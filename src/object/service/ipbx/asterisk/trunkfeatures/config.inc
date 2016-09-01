@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -36,6 +36,9 @@ $array['element']['registercommented'] = array();
 $array['element']['registercommented']['value'] = array(0,1);
 $array['element']['registercommented']['default'] = 0;
 $array['element']['registercommented']['set'] = true;
+
+$array['element']['context'] = array();
+$array['element']['context']['default'] = '';
 
 $array['element']['description'] = array();
 $array['element']['description']['default'] = '';
