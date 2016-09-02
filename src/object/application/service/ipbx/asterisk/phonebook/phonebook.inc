@@ -29,11 +29,7 @@ class xivo_application_service_asterisk_phonebook extends xivo_application_aster
 	var $_phonebookaddress	= false;
 	var $_phonebooknumber	= false;
 	var $_conf		= array();
-	var $_headers = array(
-		'Content-Type: application/json',
-		'Accept: application/json',
-		'X-Auth-Token: cf758cc0-09bf-48ee-b2ae-4b89b39f44f7'
-	);
+	var $_headers = null;
 	var $_phonebook_name = '__xivo';
 
 	public function __construct(&$service,&$dso,$param=null,$components=true)
@@ -49,6 +45,10 @@ class xivo_application_service_asterisk_phonebook extends xivo_application_aster
 		|| ($this->_phonebookaddress = &$this->_service->get_module('phonebookaddress')) === false
 		|| ($this->_phonebooknumber = &$this->_service->get_module('phonebooknumber')) === false)
 			return(false);
+
+		$this->_headers = array('Content-Type: application/json',
+								'Accept: application/json',
+								'X-Auth-Token: ' . $_SESSION['_USR']->token);
 
 		$this->_tenant = 'default'; # Use the entity
 		if(($this->_phonebook_id = $this->get_phonebook_id($this->_tenant, $this->_phonebook_name)) === false) {
