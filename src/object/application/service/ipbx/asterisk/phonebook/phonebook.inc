@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -29,6 +29,12 @@ class xivo_application_service_asterisk_phonebook extends xivo_application_aster
 	var $_phonebookaddress	= false;
 	var $_phonebooknumber	= false;
 	var $_conf		= array();
+	var $_headers = array(
+		'Content-Type: application/json',
+		'Accept: application/json',
+		'X-Auth-Token: cf758cc0-09bf-48ee-b2ae-4b89b39f44f7'
+	);
+	var $_phonebook_name = '__xivo';
 
 	public function __construct(&$service,&$dso,$param=null,$components=true)
 	{
@@ -44,6 +50,11 @@ class xivo_application_service_asterisk_phonebook extends xivo_application_aster
 		|| ($this->_phonebooknumber = &$this->_service->get_module('phonebooknumber')) === false)
 			return(false);
 
+		$this->_tenant = 'default'; # Use the entity
+		if(($this->_phonebook_id = $this->get_phonebook_id($this->_tenant, $this->_phonebook_name)) === false) {
+			return(false);
+		}
+
 		$this->_load_config(dirname(__FILE__));
 
 		if(($size = $this->_verify_can_upload_file()) === false)
@@ -52,6 +63,46 @@ class xivo_application_service_asterisk_phonebook extends xivo_application_aster
 		$this->_conf['import']['file']['size'] = $size;
 
 		return(true);
+	}
+
+	private function get_phonebook_id($tenant, $phonebook_name) {
+		$curl = curl_init();
+		$url = sprintf("https://localhost:9489/0.1/tenants/%s/phonebooks", $this->_tenant);
+		curl_setopt($curl, CURLOPT_URL, $url);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($curl, CURLOPT_HTTPGET, true);
+		curl_setopt($curl, CURLOPT_HTTPHEADER, $this->_headers);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+		$response = json_decode(curl_exec($curl), $assoc=true);
+		$status_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+		$error = curl_error($curl);
+
+		if(isset($response['items'])) {
+			foreach ($response['items'] as $phonebook_config) {
+				if ($phonebook_config['name'] === $phonebook_name) {
+					curl_close($curl);
+					if(isset($phonebook_config['id'])) {
+						return($phonebook_config['id']);
+					} else {
+						return(false);
+					}
+				}
+			}
+		}
+
+		$body = json_encode(array("name" => $this->_phonebook_name));
+		curl_setopt($curl, CURLOPT_HTTPGET, false);
+		curl_setopt($curl, CURLOPT_POST, true);
+		curl_setopt($curl, CURLOPT_POSTFIELDS, $body);
+		$response = json_decode(curl_exec($curl), $assoc=true);
+		$error = curl_error($curl);
+		curl_close($curl);
+		if(isset($response['id'])) {
+			return($response['id']);
+		}
+
+		return(false);
 	}
 
 	function get($id)
