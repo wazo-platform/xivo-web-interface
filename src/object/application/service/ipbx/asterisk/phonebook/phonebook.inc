@@ -52,7 +52,7 @@ class xivo_application_service_asterisk_phonebook extends xivo_application_aster
 
 		$this->_tenant = 'default'; # Use the entity
 		if(($this->_phonebook_id = $this->get_phonebook_id($this->_tenant, $this->_phonebook_name)) === false) {
-			return(false);
+			dwho_report::push('warning', 'failed to retrieve the phonebook id');
 		}
 
 		$this->_load_config(dirname(__FILE__));
@@ -75,20 +75,19 @@ class xivo_application_service_asterisk_phonebook extends xivo_application_aster
 		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
 		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
 		$response = json_decode(curl_exec($curl), $assoc=true);
-		$status_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-		$error = curl_error($curl);
 
-		if(isset($response['items'])) {
-			foreach ($response['items'] as $phonebook_config) {
-				if ($phonebook_config['name'] === $phonebook_name) {
-					curl_close($curl);
-					if(isset($phonebook_config['id'])) {
+		switch(curl_getinfo($curl, CURLINFO_HTTP_CODE)) {
+			case 200:
+				foreach ($response['items'] as $phonebook_config) {
+					if ($phonebook_config['name'] === $phonebook_name) {
+						curl_close($curl);
 						return($phonebook_config['id']);
-					} else {
-						return(false);
 					}
 				}
-			}
+			case 401:
+				return(false);
+			default:
+				break;
 		}
 
 		$body = json_encode(array("name" => $this->_phonebook_name));
@@ -97,12 +96,14 @@ class xivo_application_service_asterisk_phonebook extends xivo_application_aster
 		curl_setopt($curl, CURLOPT_POSTFIELDS, $body);
 		$response = json_decode(curl_exec($curl), $assoc=true);
 		$error = curl_error($curl);
+		$status_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 		curl_close($curl);
-		if(isset($response['id'])) {
-			return($response['id']);
+		switch($status_code) {
+			case 200:
+				return($response['id']);
+			default:
+				return(false);
 		}
-
-		return(false);
 	}
 
 	function get($id)
