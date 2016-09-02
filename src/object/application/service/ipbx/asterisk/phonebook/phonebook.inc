@@ -31,6 +31,7 @@ class xivo_application_service_asterisk_phonebook extends xivo_application_aster
 	var $_conf		= array();
 	var $_headers = null;
 	var $_phonebook_name = '__xivo';
+	var $_tenant = 'default';
 
 	public function __construct(&$service,&$dso,$param=null,$components=true)
 	{
@@ -43,14 +44,22 @@ class xivo_application_service_asterisk_phonebook extends xivo_application_aster
 
 		if(($this->_phonebook = &$this->_service->get_module('phonebook')) === false
 		|| ($this->_phonebookaddress = &$this->_service->get_module('phonebookaddress')) === false
-		|| ($this->_phonebooknumber = &$this->_service->get_module('phonebooknumber')) === false)
+		|| ($this->_phonebooknumber = &$this->_service->get_module('phonebooknumber')) === false
+		|| ($_XOBJ = dwho_gct::get('xivo_object')) === false
+		|| ($this->_entity = &$_XOBJ->get_module('entity')) === false)
 			return(false);
 
 		$this->_headers = array('Content-Type: application/json',
 								'Accept: application/json',
 								'X-Auth-Token: ' . $_SESSION['_USR']->token);
 
-		$this->_tenant = 'default'; # Use the entity
+		$entity_id = $_SESSION['_USR']->entity_id;
+		if($entity_id !== 0) {
+			$entity = $this->_entity->get_where(array('id' => $entity_id));
+			$this->_tenant = $entity->name;
+		}
+
+		# TODO: list all available phonebooks
 		if(($this->_phonebook_id = $this->get_phonebook_id($this->_tenant, $this->_phonebook_name)) === false) {
 			dwho_report::push('warning', 'failed to retrieve the phonebook id');
 		}
