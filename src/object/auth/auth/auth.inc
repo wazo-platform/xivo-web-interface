@@ -1,7 +1,7 @@
 <?php
 #
 # XiVO Web-Interface
-# Copyright (C) 2013-2015  Avencall
+# Copyright (C) 2013-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@ class auth_ressource_auth extends xivo_auth_helpers_abstract
 	public function create_token($login, $password, $backend=null)
 	{
 		$uri = $this->_build_uri('token');
-		$data = array('backend' => $backend, 'expiration' => 3600);
+		$data = array('backend' => $backend, 'expiration' => 3600 * 24);
 		$tk = $this->request_post($login,$password,$uri,$data);
 
 		if($this->_status_code !== 200)
