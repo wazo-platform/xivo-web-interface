@@ -1,14 +1,14 @@
-; col_displayname
-Display name
+; col_entity
+Entity
 
-; col_sort_displayname
-Sort by display name
+; col_sort_entity
+Sort by entity name
 
-; col_society
-Company
+; col_phonebook
+Phonebook
 
-; col_sort_society
-Sort by company
+; col_sort_phonebook
+Sort by phonebook name
 
 ; col_office-number
 Office phone
