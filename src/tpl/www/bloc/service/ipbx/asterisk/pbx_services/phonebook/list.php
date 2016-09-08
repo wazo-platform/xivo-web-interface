@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -38,7 +38,7 @@ $page = $url->pager($pager['pages'],
 		    $pager['page'],
 		    $pager['prev'],
 		    $pager['next'],
-		    'service/ipbx/pbx_services/phonebook',
+		    'service/ipbx/pbx_services/phonebookgroup',
 		    array('act' => $act,$param));
 
 ?>
@@ -71,78 +71,38 @@ $page = $url->pager($pager['pages'],
 	<tr class="sb-top">
 		<th class="th-left xspan"><span class="span-left">&nbsp;</span></th>
 		<th class="th-center">
-			<span class="title <?= $sort[1]=='displayname'?'underline':''?>">
-				<?=$this->bbf('col_displayname');?>
+			<span class="title <?= $sort[1]=='phonebook'?'underline':''?>">
+				<?=$this->bbf('col_phonebook');?>
 			</span>
 <?php
 	echo	$url->href_html(
-					$url->img_html('img/updown.png', $this->bbf('col_sort_displayname'), 'border="0"'),
+					$url->img_html('img/updown.png', $this->bbf('col_sort_phonebook'), 'border="0"'),
 					'service/ipbx/pbx_services/phonebook',
-					array('act'	=> 'list', 'sort' => 'displayname'),
+					array('act'	=> 'list', 'sort' => 'name'),
 					null,
-					$this->bbf('col_sort_displayname'));
+					$this->bbf('col_sort_phonebook'));
 ?>
-		</th>
 		<th class="th-center">
-			<span class="title <?= $sort[1]=='society'?'underline':''?>">
-				<?=$this->bbf('col_society');?>
+			<span class="title <?= $sort[1]=='entity'?'underline':''?>">
+				<?=$this->bbf('col_entity');?>
 			</span>
 <?php
 	echo	$url->href_html(
-					$url->img_html('img/updown.png', $this->bbf('col_sort_society'), 'border="0"'),
+					$url->img_html('img/updown.png', $this->bbf('col_sort_entity'), 'border="0"'),
 					'service/ipbx/pbx_services/phonebook',
-					array('act'	=> 'list', 'sort' => 'society'),
+					array('act'	=> 'list', 'sort' => 'entity'),
 					null,
-					$this->bbf('col_sort_society'));
+					$this->bbf('col_sort_entity'));
 ?>
 		</th>
-		<th class="th-center">
-			<span class="title <?= $sort[1]=='office-number'?'underline':''?>">
-				<?=$this->bbf('col_office-number');?>
-			</span>
-<?php
-	echo	$url->href_html(
-					$url->img_html('img/updown.png', $this->bbf('col_sort_office-number'), 'border="0"'),
-					'service/ipbx/pbx_services/phonebook',
-					array('act'	=> 'list', 'sort' => 'office-number'),
-					null,
-					$this->bbf('col_sort_office-number'));
-?>
 		</th>
-		<th class="th-center">
-			<span class="title <?= $sort[1]=='mobile-number'?'underline':''?>">
-				<?=$this->bbf('col_mobile-number');?>
-			</span>
-<?php
-	echo	$url->href_html(
-					$url->img_html('img/updown.png', $this->bbf('col_sort_mobile-number'), 'border="0"'),
-					'service/ipbx/pbx_services/phonebook',
-					array('act'	=> 'list', 'sort' => 'mobile-number'),
-					null,
-					$this->bbf('col_sort_mobile-number'));
-?>
-		</th>
-		<th class="th-center">
-			<span class="title <?= $sort[1]=='email'?'underline':''?>">
-				<?=$this->bbf('col_email');?>
-			</span>
-<?php
-	echo	$url->href_html(
-					$url->img_html('img/updown.png', $this->bbf('col_sort_email'), 'border="0"'),
-					'service/ipbx/pbx_services/phonebook',
-					array('act'	=> 'list', 'sort' => 'email'),
-					null,
-					$this->bbf('col_sort_email'));
-?>
-		</th>
-		<th class="th-center col-action"><?=$this->bbf('col_action');?></th>
 		<th class="th-right xspan"><span class="span-right">&nbsp;</span></th>
 	</tr>
 <?php
 	if(($list = $this->get_var('list')) === false || ($nb = count($list)) === 0):
 ?>
 	<tr class="sb-content">
-		<td colspan="8" class="td-single"><?=$this->bbf('no_phonebook');?></td>
+		<td colspan="4" class="td-single"><?=$this->bbf('no_phonebook');?></td>
 	</tr>
 <?php
 	else:
@@ -150,64 +110,25 @@ $page = $url->pager($pager['pages'],
 
 			$ref = &$list[$i];
 
-			if(is_array($ref['phonebooknumber']) === false):
-				$ref['phonebooknumber'] = array();
-			endif;
-
-			if(isset($ref['phonebooknumber']['office']) === false
-			|| dwho_has_len($ref['phonebooknumber']['office'],'number') === false):
-				$ref['phonebooknumber']['office'] = array();
-				$ref['phonebooknumber']['office']['number'] = '-';
-			endif;
-
-			if(isset($ref['phonebooknumber']['mobile']) === false
-			|| dwho_has_len($ref['phonebooknumber']['mobile'],'number') === false):
-				$ref['phonebooknumber']['mobile'] = array();
-				$ref['phonebooknumber']['mobile']['number'] = '-';
-			endif;
 ?>
 	<tr onmouseover="this.tmp = this.className; this.className = 'sb-content l-infos-over';"
 	    onmouseout="this.className = this.tmp;"
 	    class="sb-content l-infos-<?=(($i % 2) + 1)?>on2">
 		<td class="td-left">
 			<?=$form->checkbox(array('name'		=> 'phonebook[]',
-						 'value'	=> $ref['phonebook']['id'],
+						 'value'	=> $ref['id'],
 						 'label'	=> false,
 						 'id'		=> 'it-phonebook-'.$i,
 						 'checked'	=> false,
 						 'paragraph'	=> false));?>
 		</td>
-		<td class="txt-left" title="<?=dwho_alttitle($ref['phonebook']['displayname']);?>">
+		<td class="txt-left"><?=$ref['name']?></td>
+		<td class="txt-center" title="<?=dwho_alttitle($ref['entity']);?>">
 			<label for="it-phonebook-<?=$i?>" id="lb-phonebook-<?=$i?>">
-				<?=dwho_htmlen(dwho_trunc($ref['phonebook']['displayname'],30,'...',false));?>
+				<?=dwho_htmlen(dwho_trunc($ref['entity'],30,'...',false));?>
 			</label>
 		</td>
-		<td><?=(dwho_has_len($ref['phonebook']['society']) === true ? $ref['phonebook']['society'] : '-')?></td>
-		<td><?=$ref['phonebooknumber']['office']['number']?></td>
-		<td><?=$ref['phonebooknumber']['mobile']['number']?></td>
-		<td><?=(dwho_has_len($ref['phonebook']['email']) === true ? $ref['phonebook']['email'] : '-')?></td>
-		<td class="td-right" colspan="2">
-<?php
-			echo	$url->href_html($url->img_html('img/site/button/edit.gif',
-							       $this->bbf('opt_modify'),
-							       'border="0"'),
-						'service/ipbx/pbx_services/phonebook',
-						array('act'	=> 'edit',
-						      'id'	=> $ref['phonebook']['id']),
-						null,
-						$this->bbf('opt_modify')),"\n",
-				$url->href_html($url->img_html('img/site/button/delete.gif',
-							       $this->bbf('opt_delete'),
-							       'border="0"'),
-						'service/ipbx/pbx_services/phonebook',
-						array('act'	=> 'delete',
-						      'id'	=> $ref['phonebook']['id'],
-						      'page'	=> $pager['page'],
-						      $param),
-						'onclick="return(confirm(\''.$dhtml->escape($this->bbf('opt_delete_confirm')).'\'));"',
-						$this->bbf('opt_delete'));
-?>
-		</td>
+		<td class="td-right xspan"/>
 	</tr>
 <?php
 		endfor;
@@ -215,7 +136,7 @@ $page = $url->pager($pager['pages'],
 ?>
 	<tr class="sb-foot">
 		<td class="td-left xspan b-nosize"><span class="span-left b-nosize">&nbsp;</span></td>
-		<td class="td-center" colspan="6"><span class="b-nosize">&nbsp;</span></td>
+		<td class="td-center" colspan="2"><span class="b-nosize">&nbsp;</span></td>
 		<td class="td-right xspan b-nosize"><span class="span-right b-nosize">&nbsp;</span></td>
 	</tr>
 </table>
