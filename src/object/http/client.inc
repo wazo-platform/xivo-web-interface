@@ -89,9 +89,14 @@ class Request {
 		return new Request("DELETE", $url, $body, $query, $headers);
 	}
 
-	static public function json_get($url, $body="", $query=null)
+	static public function json_get($url, $body="", $query=null, $headers=null)
 	{
-		return new Request("GET", $url, json_encode($body), $query, self::$json_headers);
+		if(is_array($headers)) {
+			$headers = array_merge($headers, self::$json_headers);
+		} else {
+			$headers = self::$json_headers;
+		}
+		return new Request("GET", $url, json_encode($body), $query, $headers);
 	}
 
 	static public function json_post($url, $content, $query=null)
