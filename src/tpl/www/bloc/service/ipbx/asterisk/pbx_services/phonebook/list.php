@@ -38,7 +38,7 @@ $page = $url->pager($pager['pages'],
 		    $pager['page'],
 		    $pager['prev'],
 		    $pager['next'],
-		    'service/ipbx/pbx_services/phonebookgroup',
+		    'service/ipbx/pbx_services/phonebook',
 		    array('act' => $act,$param));
 
 ?>
