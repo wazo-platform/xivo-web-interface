@@ -157,14 +157,14 @@ switch($act)
 		$act = 'list';
 		$prevpage = $page - 1;
 		$nbbypage = XIVO_SRE_IPBX_AST_NBBYPAGE;
-		$appphonebookgroup = &$ipbx->get_application('phonebookgroup',null,false);
+		$appdirdphonebook = &$ipbx->get_application('dirdphonebook',null,false);
 
 		$limit = array();
 		$limit[0] = $prevpage * $nbbypage;
 		$limit[1] = $nbbypage;
 
-		$list = $appphonebookgroup->get_phonebook_list(null,$sort,$limit);
-		$total = $appphonebookgroup->get_cnt();
+		$list = $appdirdphonebook->get_phonebook_list(null,$sort,$limit);
+		$total = $appdirdphonebook->get_cnt();
 
 		if($list === false && $total > 0 && $prevpage > 0)
 		{
