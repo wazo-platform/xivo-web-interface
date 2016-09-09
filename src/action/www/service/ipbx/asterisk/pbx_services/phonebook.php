@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -157,23 +157,14 @@ switch($act)
 		$act = 'list';
 		$prevpage = $page - 1;
 		$nbbypage = XIVO_SRE_IPBX_AST_NBBYPAGE;
-
-		$order = array();
-		//$order['displayname'] = SORT_ASC;
-		//$order['firstname'] = SORT_ASC;
-		//$order['lastname'] = SORT_ASC;
-		$order[$sort[1]] = $sort[0];
+		$appphonebookgroup = &$ipbx->get_application('phonebookgroup',null,false);
 
 		$limit = array();
 		$limit[0] = $prevpage * $nbbypage;
 		$limit[1] = $nbbypage;
 
-		if($search !== '')
-			$list = $appphonebook->get_phonebook_search($search,$order,$limit);
-		else
-			$list = $appphonebook->get_phonebook_list($order,$limit);
-
-		$total = $appphonebook->get_cnt();
+		$list = $appphonebookgroup->get_phonebook_list(null,$sort,$limit);
+		$total = $appphonebookgroup->get_cnt();
 
 		if($list === false && $total > 0 && $prevpage > 0)
 		{
