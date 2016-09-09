@@ -23,7 +23,7 @@ dwho_file::required(array(XIVO_PATH_OBJECT,'application','service','ipbx','aster
 require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'client.inc'));
 require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'dird', 'phonebook', 'phonebook.inc'));
 
-class xivo_application_service_asterisk_phonebookgroup extends xivo_application_asterisk_abstract
+class xivo_application_service_asterisk_dirdphonebook extends xivo_application_asterisk_abstract
 {
 	var $_phonebook_module = false;
     var $_entity_module = false;
@@ -61,20 +61,23 @@ class xivo_application_service_asterisk_phonebookgroup extends xivo_application_
 
 	function get_phonebook_list($disable=null,$order=null,$limit=null,$assoc=false)
 	{
-		if(is_array($order)) {
-			foreach($this->_phonebooks as $key => $value) {
-				if(array_key_exists($key, $value)) {
-					$sorted[$key] = $value[$order[1]];
+		if(is_array($order) && count($order > 1)) {
+			$sort_column = $order[1];
+			$sort_order = $order[0];
+			foreach($this->_phonebooks as $i => $phonebook) {
+				if(array_key_exists($sort_column, $phonebook)) {
+					$sorted[$i] = $phonebook[$sort_column];
 				}
 			}
 			if(isset($sorted) && is_array($sorted)) {
-				array_multisort($sorted, $order[0], $this->_phonebooks);
+				array_multisort($sorted, $sort_order, $this->_phonebooks);
 			}
 		}
 		if(is_array($limit)) {
 			$lower = $limit[0];
 			$upper = $lower + $limit[1];
-			return(array_slice($this->_phonebooks, $lower, $upper));
+			$subset = array_slice($this->_phonebooks, $lower, $upper);
+			return($subset);
 		}
         return($this->_phonebooks);
 	}
