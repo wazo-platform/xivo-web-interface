@@ -71,6 +71,11 @@ class xivo_application_service_asterisk_phonebookgroup extends xivo_application_
 				array_multisort($sorted, $order[0], $this->_phonebooks);
 			}
 		}
+		if(is_array($limit)) {
+			$lower = $limit[0];
+			$upper = $lower + $limit[1];
+			return(array_slice($this->_phonebooks, $lower, $upper));
+		}
         return($this->_phonebooks);
 	}
 }
