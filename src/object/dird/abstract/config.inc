@@ -26,5 +26,6 @@ $array['dird']['port'] = 9489;
 $array['dird']['protocol'] = '0.1';
 $array['dird']['connect_timeout'] = 180;
 $array['dird']['timeout'] = 90;
+$array['dird']['verify_certificate'] = false
 
 ?>
