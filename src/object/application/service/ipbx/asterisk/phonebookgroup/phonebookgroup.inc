@@ -27,6 +27,7 @@ class xivo_application_service_asterisk_phonebookgroup extends xivo_application_
 {
 	var $_phonebook_module = false;
     var $_entity_module = false;
+	var $_phonebooks = array();
 
 	public function __construct(&$service,$param=null,$components=true)
 	{
@@ -36,44 +37,38 @@ class xivo_application_service_asterisk_phonebookgroup extends xivo_application_
         || ($this->_entity_module = &$_XOBJ->get_module('entity')) === false)
             return(false);
 
-		return(true);
-	}
-
-	function get_cnt($arr=null,$disable=null)
-	{
-        return(count($this->_get_all_phonebooks()));
-	}
-
-	function get_phonebook_list($disable=null,$order=null,$limit=null,$assoc=false)
-	{
-		$phonebooks = $this->_get_all_phonebooks($order,$limit);
-		return(is_array($phonebooks) && count($phonebooks) > 0 ? $phonebooks : false);
-	}
-
-    private function _get_all_phonebooks($order=null,$limit=null)
-    {
         $dird_client = Client::dird_config(false);
         $phonebook_resource = new PhonebookResource($dird_client);
         $entities = $this->_entity_module->get_all();
         $current_entity = $_SESSION['_USR']->entity_id;
-        $phonebook_list = array();
         foreach($entities as $entity) {
             if($current_entity === 0 || $current_entity === $entity['id']) {
                 $current_phonebooks = $phonebook_resource->list_phonebooks($entity['name']);
 				foreach($current_phonebooks as &$phonebook) {
 					$phonebook['entity'] = $entity['name'];
 				}
-				$phonebook_list = array_merge($phonebook_list, $current_phonebooks);
+				$this->_phonebooks = array_merge($this->_phonebooks, $current_phonebooks);
             }
         }
+
+		return(true);
+	}
+
+	function get_cnt($arr=null,$disable=null)
+	{
+        return(count($this->_phonebooks));
+	}
+
+	function get_phonebook_list($disable=null,$order=null,$limit=null,$assoc=false)
+	{
 		if(is_array($order)) {
-			foreach($phonebook_list as $key => $value) {
+			foreach($this->_phonebooks as $key => $value) {
 				$sorted[$key] = $value[$order[1]];
 			}
-			array_multisort($sorted, $order[0], $phonebook_list);
+			array_multisort($sorted, $order[0], $this->_phonebooks);
 		}
-        return($phonebook_list);
-    }
+        return($this->_phonebooks);
+	}
 }
 
 ?>
