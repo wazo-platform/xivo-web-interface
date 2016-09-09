@@ -63,9 +63,13 @@ class xivo_application_service_asterisk_phonebookgroup extends xivo_application_
 	{
 		if(is_array($order)) {
 			foreach($this->_phonebooks as $key => $value) {
-				$sorted[$key] = $value[$order[1]];
+				if(array_key_exists($key, $value)) {
+					$sorted[$key] = $value[$order[1]];
+				}
 			}
-			array_multisort($sorted, $order[0], $this->_phonebooks);
+			if(isset($sorted) && is_array($sorted)) {
+				array_multisort($sorted, $order[0], $this->_phonebooks);
+			}
 		}
         return($this->_phonebooks);
 	}
