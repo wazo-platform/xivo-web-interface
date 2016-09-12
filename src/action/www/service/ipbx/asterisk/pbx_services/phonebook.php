@@ -127,6 +127,23 @@ switch($act)
 
 		$_QRY->go($_TPL->url('service/ipbx/pbx_services/phonebook'),$param);
 		break;
+	case 'delete_contact':
+		$param['page'] = $page;
+		if(isset($_QR['id']) === true
+		&& isset($_QR['entity']) === true
+		&& isset($_QR['phonebook']) === true) {
+			$entity = $_QR['entity'];
+			$phonebook_id = (int)$_QR['phonebook'];
+			$contact_uuid = $_QR['id'];
+			$param['act'] = 'list_contacts';
+			$param['entity'] = $entity;
+			$param['phonebook'] = $phonebook_id;
+
+			$appdirdphonebook->delete_contact($entity,$phonebook_id,$contact_uuid);
+		}
+
+		$_QRY->go($_TPL->url('service/ipbx/pbx_services/phonebook'),$param);
+		break;
 	case 'deletes':
 		$param['page'] = $page;
 
