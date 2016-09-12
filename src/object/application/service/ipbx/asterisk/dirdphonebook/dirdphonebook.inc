@@ -28,22 +28,23 @@ class xivo_application_service_asterisk_dirdphonebook extends xivo_application_a
 	var $_phonebook_module = false;
     var $_entity_module = false;
 	var $_phonebooks = array();
+	var $_phonebook_resource = null;
 
 	public function __construct(&$service,$param=null,$components=true)
 	{
 		parent::__construct($service);
 
         if(($_XOBJ = dwho_gct::get('xivo_object')) === false
-        || ($this->_entity_module = &$_XOBJ->get_module('entity')) === false)
+        || ($this->_entity_module = &$_XOBJ->get_module('entity')) === false
+		|| ($dird_client = Client::dird_config(false)) === false
+		|| ($this->_phonebook_resource = new PhonebookResource($dird_client)) === false
+		|| ($entities = $this->_entity_module->get_all()) === false
+		|| ($current_entity = $_SESSION['_USR']->entity_id) === false)
             return(false);
 
-        $dird_client = Client::dird_config(false);
-        $phonebook_resource = new PhonebookResource($dird_client);
-        $entities = $this->_entity_module->get_all();
-        $current_entity = $_SESSION['_USR']->entity_id;
         foreach($entities as $entity) {
             if($current_entity === 0 || $current_entity === $entity['id']) {
-                $current_phonebooks = $phonebook_resource->list_phonebooks($entity['name']);
+                $current_phonebooks = $this->_phonebook_resource->list_phonebooks($entity['name']);
 				foreach($current_phonebooks as &$phonebook) {
 					$phonebook['entity'] = $entity['name'];
 				}
@@ -54,12 +55,24 @@ class xivo_application_service_asterisk_dirdphonebook extends xivo_application_a
 		return(true);
 	}
 
-	function get_cnt($arr=null,$disable=null)
+	function get_contact_list($entity, $phonebook_id, $order=null, $limit=null)
+	{
+		$contacts = $this->_phonebook_resource->list_contacts($entity, $phonebook_id, $order, $limit);
+		return($contacts);
+	}
+
+	function get_contact_cnt($entity, $phonebook_id)
+	{
+		$contacts = $this->_phonebook_resource->list_contacts($entity, $phonebook_id);
+		return(count($contacts));
+	}
+
+	function get_phonebook_cnt()
 	{
         return(count($this->_phonebooks));
 	}
 
-	function get_phonebook_list($disable=null,$order=null,$limit=null,$assoc=false)
+	function get_phonebook_list($order=null,$limit=null)
 	{
 		if(is_array($order) && count($order > 1)) {
 			$sort_column = $order[1];
