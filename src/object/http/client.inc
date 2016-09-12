@@ -99,9 +99,14 @@ class Request {
 		return new Request("GET", $url, json_encode($body), $query, $headers);
 	}
 
-	static public function json_post($url, $content, $query=null)
+	static public function json_post($url, $content, $query=null, $headers=null)
 	{
-		return new Request("POST", $url, json_encode($content), $query, self::$json_headers);
+		if(is_array($headers)) {
+			$headers = array_merge($headers, self::$json_headers);
+		} else {
+			$headers = self::$json_headers;
+		}
+		return new Request("POST", $url, json_encode($content), $query, $headers);
 	}
 
 	static public function json_put($url, $body, $query=null)
