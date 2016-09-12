@@ -33,3 +33,6 @@ Résultat(s) : %s
 
 ; opt_delete_confirm
 Etes-vous certain de vouloir supprimer cette entrée du carnet d'adresses ?
+
+; no_phonebook_contacts
+Aucune entrée trouvée dans le carnet d'adresses

@@ -129,6 +129,16 @@ $page = $url->pager($pager['pages'],
 	</tr>
 
 
+<?php
+	if(($list = $this->get_var('list')) === false || ($nb = count($list)) === 0):
+?>
+	<tr class="sb-content">
+		<td colspan="8" class="td-single"><?=$this->bbf('no_phonebook_contacts');?></td>
+	</tr>
+<?php
+	endif;
+?>
+
     <tr class="sb-foot">
         <td class="td-left xspan b-nosize"><span class="span-left b-nosize">&nbsp;</span></td>
         <td class="td-center" colspan="6"><span class="b-nosize">&nbsp;</span></td>
