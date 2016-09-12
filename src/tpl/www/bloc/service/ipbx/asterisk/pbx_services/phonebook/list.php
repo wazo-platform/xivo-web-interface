@@ -122,7 +122,16 @@ $page = $url->pager($pager['pages'],
 						 'checked'	=> false,
 						 'paragraph'	=> false));?>
 		</td>
-		<td class="txt-left"><?=$ref['name']?></td>
+		<td class="txt-left">
+		<?php
+			echo $url->href_html(
+				dwho_trunc($ref['name'],40,'...',false),
+				'service/ipbx/pbx_services/phonebook',
+				array('act'	=> 'list_contacts',
+					  'phonebook' => $ref['id'],
+					  'entity' => $ref['entity']));
+		?>
+		</td>
 		<td class="txt-center" title="<?=dwho_alttitle($ref['entity']);?>">
 			<label for="it-phonebook-<?=$i?>" id="lb-phonebook-<?=$i?>">
 				<?=dwho_htmlen(dwho_trunc($ref['entity'],30,'...',false));?>
