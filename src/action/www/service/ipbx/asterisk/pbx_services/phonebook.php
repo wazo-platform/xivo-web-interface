@@ -72,6 +72,34 @@ switch($act)
 		$_TPL->set_var('element',$appphonebook->get_elements());
 		$_TPL->set_var('territory',dwho_i18n::get_territory_translated_list());
 		break;
+	case 'add_contact':
+		$result = $fm_save = $error = null;
+		$entity = $_QR['entity'];
+		$phonebook_id = (int)$_QR['phonebook'];
+
+		if(isset($_QR['fm_send']) === true && dwho_issa('phonebook',$_QR) === true) {
+			$entity = $_QRY->_orig['qstring']['entity'];
+			$phonebook_id = (int)$_QRY->_orig['qstring']['phonebook'];
+
+			$result = $appdirdphonebook->add_contact($entity, $phonebook_id, $_QR);
+
+			$param = array('act' => 'list_contacts',
+						   'entity' => $entity,
+						   'phonebook' => $phonebook_id);
+			$_QRY->go($_TPL->url('service/ipbx/pbx_services/phonebook'),$param);
+		}
+
+		$dhtml = &$_TPL->get_module('dhtml');
+		$dhtml->set_js('js/dwho/submenu.js');
+
+		$_TPL->set_var('entity', $entity);
+		$_TPL->set_var('phonebook_id', $phonebook_id);
+		$_TPL->set_var('info'   ,$result);
+		$_TPL->set_var('error'  ,$error);
+		$_TPL->set_var('fm_save',$fm_save);
+		$_TPL->set_var('element',$appphonebook->get_elements());
+		$_TPL->set_var('territory',dwho_i18n::get_territory_translated_list());
+		break;
 	case 'edit':
 		$appphonebook = &$ipbx->get_application('phonebook');
 
