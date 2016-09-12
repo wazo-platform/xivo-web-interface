@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -68,9 +68,22 @@ $dhtml->write_js($toolbar_js);
 ?>
 <div class="sb-advanced-menu">
 	<ul id="toolbar-add-menu">
-		<li><?=$url->href_html($this->bbf('toolbar_add_menu_add'),
-				       'service/ipbx/pbx_services/phonebook',
-				       'act=add');?></li>
+		<li>
+<?php
+	$add_action = $this->get_var('act') == 'list' ? 'add' : 'add_contact';
+	$param = array();
+	if($this->get_var('act') === 'list') {
+		$param['act'] = 'add';
+	} else {
+		$param['act'] = 'add_contact';
+		$param['entity'] = $this->get_var('entity');
+		$param['phonebook'] = (int)$this->get_var('phonebook_id');
+	}
+	echo $url->href_html($this->bbf('toolbar_add_menu_add'),
+						'service/ipbx/pbx_services/phonebook',
+						$param);
+?>
+		</li>
 		<li><?=$url->href_html($this->bbf('toolbar_add_menu_import-file'),
 				       'service/ipbx/pbx_services/phonebook',
 				       'act=import');?></li>
