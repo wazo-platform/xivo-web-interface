@@ -29,6 +29,13 @@ class PhonebookResource {
 		$this->_headers[] = 'X-Auth-Token: ' . $_SESSION['_USR']->token;
 	}
 
+	public function add_contact($entity, $phonebook_id, $fields)
+	{
+		$url = sprintf("/tenants/%s/phonebooks/%d/contacts", $entity, $phonebook_id);
+		$request = Request::json_post($url, $fields, null, $this->_headers);
+		$response = $this->client->send($request);
+	}
+
 	public function delete_contact($entity, $phonebook_id, $contact_uuid)
 	{
 		$url = sprintf("/tenants/%s/phonebooks/%d/contacts/%s", $entity, $phonebook_id, $contact_uuid);
