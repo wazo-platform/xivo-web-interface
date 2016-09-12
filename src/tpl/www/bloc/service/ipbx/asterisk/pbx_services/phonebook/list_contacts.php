@@ -22,6 +22,8 @@ $dhtml = &$this->get_module('dhtml');
 $pager = $this->get_var('pager');
 $act = $this->get_var('act');
 $sort = $this->get_var('sort');
+$entity = $this->get_var('entity');
+$phonebook_id = $this->get_var('phonebook_id');
 
 $param = array();
 
@@ -31,6 +33,15 @@ $page = $url->pager($pager['pages'],
 		    $pager['next'],
 		    'service/ipbx/pbx_services/phonebook',
 		    array('act' => $act,$param));
+
+function sort_params($column) {
+	global $act, $phonebook_id, $entity;
+	return(array('sort' => $column,
+				 'act' => $act,
+				 'phonebook' => $phonebook_id,
+				 'entity' => $entity));
+}
+
 ?>
 <div class="b-list">
 <?php
@@ -68,7 +79,7 @@ $page = $url->pager($pager['pages'],
 	echo	$url->href_html(
 					$url->img_html('img/updown.png', $this->bbf('col_sort_displayname'), 'border="0"'),
 					'service/ipbx/pbx_services/phonebook',
-					array('act'	=> 'list', 'sort' => 'displayname'),
+					sort_params('displayname'),
 					null,
 					$this->bbf('col_sort_displayname'));
 ?>
@@ -81,7 +92,7 @@ $page = $url->pager($pager['pages'],
 	echo	$url->href_html(
 					$url->img_html('img/updown.png', $this->bbf('col_sort_society'), 'border="0"'),
 					'service/ipbx/pbx_services/phonebook',
-					array('act'	=> 'list', 'sort' => 'society'),
+					sort_params('society'),
 					null,
 					$this->bbf('col_sort_society'));
 ?>
@@ -94,7 +105,7 @@ $page = $url->pager($pager['pages'],
 	echo	$url->href_html(
 					$url->img_html('img/updown.png', $this->bbf('col_sort_office-number'), 'border="0"'),
 					'service/ipbx/pbx_services/phonebook',
-					array('act'	=> 'list', 'sort' => 'office-number'),
+					sort_params('number_office'),
 					null,
 					$this->bbf('col_sort_office-number'));
 ?>
@@ -107,7 +118,7 @@ $page = $url->pager($pager['pages'],
 	echo	$url->href_html(
 					$url->img_html('img/updown.png', $this->bbf('col_sort_mobile-number'), 'border="0"'),
 					'service/ipbx/pbx_services/phonebook',
-					array('act'	=> 'list', 'sort' => 'mobile-number'),
+					sort_params('number_mobile'),
 					null,
 					$this->bbf('col_sort_mobile-number'));
 ?>
@@ -120,7 +131,7 @@ $page = $url->pager($pager['pages'],
 	echo	$url->href_html(
 					$url->img_html('img/updown.png', $this->bbf('col_sort_email'), 'border="0"'),
 					'service/ipbx/pbx_services/phonebook',
-					array('act'	=> 'list', 'sort' => 'email'),
+					sort_params('email'),
 					null,
 					$this->bbf('col_sort_email'));
 ?>
