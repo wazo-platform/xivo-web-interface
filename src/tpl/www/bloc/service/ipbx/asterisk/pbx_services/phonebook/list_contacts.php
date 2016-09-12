@@ -199,9 +199,11 @@ function sort_params($column) {
 							       $this->bbf('opt_delete'),
 							       'border="0"'),
 						'service/ipbx/pbx_services/phonebook',
-						array('act'	=> 'delete',
+						array('act'	=> 'delete_contact',
 						      'id'	=> $ref['id'],
 						      'page'	=> $pager['page'],
+							  'entity' => $entity,
+							  'phonebook' => $phonebook_id,
 						      $param),
 						'onclick="return(confirm(\''.$dhtml->escape($this->bbf('opt_delete_confirm')).'\'));"',
 						$this->bbf('opt_delete'));
