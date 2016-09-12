@@ -22,15 +22,38 @@
 class PhonebookResource {
 
 	private $client = null;
+	private $_headers = array();
 
 	function __construct($client) {
 		$this->client = $client;
+		$this->_headers[] = 'X-Auth-Token: ' . $_SESSION['_USR']->token;
+	}
+
+	public function list_contacts($entity, $phonebook_id, $order=null, $limit=null)
+	{
+		$url = sprintf("/tenants/%s/phonebooks/%d/contacts", $entity, $phonebook_id);
+		$query = array();
+		if(is_array($order) && count($order) > 1) {
+			$query['direction'] = $order[0] == SORT_ASC ? 'asc' : 'desc';
+			$query['order'] = $order[1];
+		}
+		if(is_array($limit) && count($limit) > 1) {
+			$query['offset'] = $limit[0];
+			$query['limit'] = $limit[1];
+		}
+		$request = Request::json_get($url,"",$query,$this->_headers);
+		$response = $this->client->send($request);
+		$body = $response->status_ok() ? $response->decode_or_raise() : null;
+		if(is_array($body) && array_key_exists('items', $body) && is_array($body['items'])) {
+			return $body['items'];
+		} else {
+			return array();
+		}
 	}
 
 	public function list_phonebooks($entity) {
         $url = sprintf("/tenants/%s/phonebooks", $entity);
-        $headers = array('X-Auth-Token: ' . $_SESSION['_USR']->token);
-		$request = Request::json_get($url,"",null,$headers);
+		$request = Request::json_get($url,"",null,$this->_headers);
 		$response = $this->client->send($request);
         $body = $response->status_ok() ? $response->decode_or_raise() : null;
 		if(is_array($body) && array_key_exists('items', $body) && is_array($body['items'])) {

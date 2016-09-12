@@ -34,6 +34,7 @@ if($search !== '')
 	$param['search'] = $search;
 
 $appphonebook = &$ipbx->get_application('phonebook');
+$appdirdphonebook = &$ipbx->get_application('dirdphonebook');
 
 switch($act)
 {
@@ -151,20 +152,37 @@ switch($act)
 
 		$_TPL->set_var('import_file',$appphonebook->get_config_import_file());
 		break;
-
-	case 'list':
-	default:
-		$act = 'list';
+	case 'list_contacts':
 		$prevpage = $page - 1;
 		$nbbypage = XIVO_SRE_IPBX_AST_NBBYPAGE;
-		$appdirdphonebook = &$ipbx->get_application('dirdphonebook',null,false);
+		$entity = $_QR['entity'];
+		$phonebook_id = (int)$_QR['phonebook'];
 
 		$limit = array();
 		$limit[0] = $prevpage * $nbbypage;
 		$limit[1] = $nbbypage;
 
-		$list = $appdirdphonebook->get_phonebook_list(null,$sort,$limit);
-		$total = $appdirdphonebook->get_cnt();
+		$list = $appdirdphonebook->get_contact_list($entity, $phonebook_id, $sort, $limit);
+		$total = $appdirdphonebook->get_contact_cnt($entity, $phonebook_id);
+
+		$_TPL->set_var('total',$total);
+		$_TPL->set_var('pager',dwho_calc_page($page,$nbbypage,$total));
+		$_TPL->set_var('list',$list);
+		$_TPL->set_var('search',$search);
+		$_TPL->set_var('sort',$sort);
+		break;
+	case 'list':
+	default:
+		$act = 'list';
+		$prevpage = $page - 1;
+		$nbbypage = XIVO_SRE_IPBX_AST_NBBYPAGE;
+
+		$limit = array();
+		$limit[0] = $prevpage * $nbbypage;
+		$limit[1] = $nbbypage;
+
+		$list = $appdirdphonebook->get_phonebook_list($sort,$limit);
+		$total = $appdirdphonebook->get_phonebook_cnt();
 
 		if($list === false && $total > 0 && $prevpage > 0)
 		{
