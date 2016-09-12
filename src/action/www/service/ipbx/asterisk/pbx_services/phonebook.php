@@ -165,6 +165,8 @@ switch($act)
 		$list = $appdirdphonebook->get_contact_list($entity, $phonebook_id, $sort, $limit);
 		$total = $appdirdphonebook->get_contact_cnt($entity, $phonebook_id);
 
+		$_TPL->set_var('entity', $entity);
+		$_TPL->set_var('phonebook_id', $phonebook_id);
 		$_TPL->set_var('total',$total);
 		$_TPL->set_var('pager',dwho_calc_page($page,$nbbypage,$total));
 		$_TPL->set_var('list',$list);
