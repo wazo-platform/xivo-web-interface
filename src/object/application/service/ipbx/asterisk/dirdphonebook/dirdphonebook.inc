@@ -55,6 +55,37 @@ class xivo_application_service_asterisk_dirdphonebook extends xivo_application_a
 		return(true);
 	}
 
+	function add_contact($entity, $phonebook_id, $query)
+	{
+		$normal_fields = $query['phonebook'];
+		$number_fields = $query['phonebooknumber'];
+		$address_fields = $query['phonebookaddress'];
+
+		$dird_fields = array();
+
+		foreach($normal_fields as $key => $value) {
+			if(!empty($value)) {
+				$dird_fields[$key] = $value;
+			}
+		}
+
+		foreach($number_fields as $key => $value) {
+			if(!empty($value)) {
+				$dird_fields['number_'.$key] = $value;
+			}
+		}
+
+		foreach($address_fields as $location => $fields) {
+			foreach($fields as $key => $value) {
+				if(!empty($value)) {
+					$dird_fields['address_'.$location.'_'.$key] = $value;
+				}
+			}
+		}
+
+		$this->_phonebook_resource->add_contact($entity, $phonebook_id, $dird_fields);
+	}
+
 	function delete_contact($entity, $phonebook_id, $contact_uuid)
 	{
 		return($this->_phonebook_resource->delete_contact($entity, $phonebook_id, $contact_uuid));
