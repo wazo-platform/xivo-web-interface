@@ -27,60 +27,40 @@ $element = $this->get_var('element');
 ?>
 <div id="sb-part-first" class="b-nodisplay">
 <?php
-	function get($array, $key, $default=null)
-	{
-		return(isset($array[$key]) ? $array[$key] : $default);
+	function format_text($tpl, $form, $info, $field) {
+		$value = isset($info['phonebook'][$field]) ? $info['phonebook'][$field] : '';
+		$params = array('desc' => $tpl->bbf('fm_phonebook_'.$field),
+						'name' => 'phonebook['.$field.']',
+						'labelid' => 'phonebook-'.$field,
+						'size' => 15,
+						'value' => $value);
+		return($form->text($params));
 	}
 
-	echo  $form->text(array('desc' => $this->bbf('fm_phonebook_title'),
-							'name' => 'phonebook[title]',
-							'labelid' => 'phonebook-title',
-							'size' => 15,
-							'value' => get($info['phonebook'],'title',''))),
+	function format_number_text($tpl, $form, $type) {
+		$params = array('desc' => $tpl->bbf('fm_phonebooknumber_'.$type),
+						'name' => 'phonebooknumber['.$type.']',
+						'labelid' => 'phonebooknumber-'.$type,
+						'size' => 15,
+						'value' => $tpl->get_var('phonebooknumber',$type));
+		return($form->text($params));
+	}
 
-		  $form->text(array('desc' => $this->bbf('fm_phonebook_firstname'),
-							'name' => 'phonebook[firstname]',
-							'labelid' => 'phonebook-firstname',
-							'size' => 15,
-							'value' => get($info['phonebook'],'firstname',''))),
+	function format_address_text($tpl, $form, $type, $field) {
+		$params = array('desc' => $tpl->bbf('fm_phonebookaddress_'.$field),
+						'name' => 'phonebookaddress['.$type.']['.$field.']',
+						'labelid' => 'phonebookaddress-'.$type.'-'.$field,
+						'size' => 15,
+						'value' => $tpl->get_var('phonebookaddress',$type,$field));
+		return($form->text($params));
+	}
 
-		  $form->text(array('desc' => $this->bbf('fm_phonebook_lastname'),
-							'name' => 'phonebook[lastname]',
-							'labelid' => 'phonebook-lastname',
-							'size' => 15,
-							'value' => get($info['phonebook'],'lastname',''))),
+	$predefined_fields = array('title', 'firstname', 'lastname', 'displayname', 'society', 'email', 'url');
+	foreach($predefined_fields as $field) {
+		echo format_text($this, $form, $info, $field);
+	}
+	echo format_number_text($this, $form, 'mobile');
 
-		  $form->text(array('desc' => $this->bbf('fm_phonebook_displayname'),
-							'name' => 'phonebook[displayname]',
-							'labelid' => 'phonebook-displayname',
-							'size' => 15,
-							'error' => $this->bbf_args('error',
-							$this->get_var('error', 'phonebook', 'displayname')),
-							'value' => get($info['phonebook'],'displayname',''))),
-
-		  $form->text(array('desc' => $this->bbf('fm_phonebook_society'),
-							'name' => 'phonebook[society]',
-							'labelid' => 'phonebook-society',
-							'size' => 15,
-							'value' => get($info['phonebook'],'society',''))),
-
-		  $form->text(array('desc' => $this->bbf('fm_phonebooknumber_mobile'),
-							'name' => 'phonebooknumber[mobile]',
-							'labelid' => 'phonebooknumber-mobile',
-							'size' => 15,
-							'value' => $this->get_var('phonebooknumber','mobile'))),
-
-		  $form->text(array('desc' => $this->bbf('fm_phonebook_email'),
-							'name' => 'phonebook[email]',
-							'labelid' => 'phonebook-email',
-							'size' => 15,
-							'value' => get($info['phonebook'],'email',''))),
-
-		  $form->text(array('desc' => $this->bbf('fm_phonebook_url'),
-							'name' => 'phonebook[url]',
-							'labelid' => 'phonebook-url',
-							'size' => 15,
-							'value' => get($info['phonebook'],'url','')));
 ?>
 </div>
 
