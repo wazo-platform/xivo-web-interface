@@ -61,31 +61,24 @@ $dhtml->write_js($toolbar_js);
 	</div>
 </form>
 <?php
-	echo	$url->img_html('img/menu/top/toolbar/bt-add.gif',
-			       $this->bbf('toolbar_opt_add'),
-			       'id="toolbar-bt-add"
-				border="0"');
-?>
-<div class="sb-advanced-menu">
-	<ul id="toolbar-add-menu">
-		<li>
-<?php
-	$add_action = $this->get_var('act') == 'list' ? 'add' : 'add_contact';
-	$param = array();
-	if($this->get_var('act') === 'list') {
-		$param['act'] = 'add';
-	} else {
-		$param['act'] = 'add_contact';
-		$param['entity'] = $this->get_var('entity');
-		$param['phonebook'] = (int)$this->get_var('phonebook_id');
+	if($this->get_var('act') === 'list_contacts') {
+		$add_action = $this->get_var('act') == 'list' ? 'add' : 'add_contact';
+		$param = array();
+		if($this->get_var('act') === 'list') {
+			$param['act'] = 'add';
+		} else {
+			$param['act'] = 'add_contact';
+			$param['entity'] = $this->get_var('entity');
+			$param['phonebook'] = (int)$this->get_var('phonebook_id');
+		}
+		echo	$url->href_html($url->img_html('img/menu/top/toolbar/bt-add.gif',
+								$this->bbf('toolbar_opt_add'),
+								'id="toolbar-bt-add"
+								border="0"'),
+								'service/ipbx/pbx_services/phonebook',
+								$param,
+								$this->bbf('toolbar_opt_add'));
 	}
-	echo $url->href_html($this->bbf('toolbar_add_menu_add'),
-						'service/ipbx/pbx_services/phonebook',
-						$param);
-?>
-		</li>
-	</ul>
-</div><?php
 
 if($this->get_var('act') === 'list'):
 	echo	$url->img_html('img/menu/top/toolbar/bt-more.gif',
@@ -97,9 +90,6 @@ if($this->get_var('act') === 'list'):
 	<ul id="toolbar-advanced-menu">
 		<li>
 			<a href="#" id="toolbar-advanced-menu-select-all"><?=$this->bbf('toolbar_adv_menu_select-all');?></a>
-		</li>
-		<li>
-			<a href="#" id="toolbar-advanced-menu-delete"><?=$this->bbf('toolbar_adv_menu_delete');?></a>
 		</li>
 	</ul>
 </div>
