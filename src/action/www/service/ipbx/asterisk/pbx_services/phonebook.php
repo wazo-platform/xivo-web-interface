@@ -114,8 +114,8 @@ switch($act)
 	case 'delete_contact':
 		$param['page'] = $page;
 		if(isset($_QR['id']) === true
-		&& isset($_QR['entity']) === true
-		&& isset($_QR['phonebook']) === true) {
+			&& isset($_QR['entity']) === true
+			&& isset($_QR['phonebook']) === true) {
 			$entity = $_QR['entity'];
 			$phonebook_id = (int)$_QR['phonebook'];
 			$contact_uuid = $_QR['id'];

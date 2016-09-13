@@ -36,22 +36,22 @@ $form = &$this->get_module('form');
 		<form action="#" method="post" accept-charset="utf-8">
 <?php
 		echo	$form->hidden(array('name'	=> DWHO_SESS_NAME,
-					    'value'	=> DWHO_SESS_ID)),
+									'value'	=> DWHO_SESS_ID)),
 
-			$form->hidden(array('name'	=> 'fm_send',
-					    'value'	=> 1)),
+				$form->hidden(array('name'	=> 'fm_send',
+									'value'	=> 1)),
 
-			$form->hidden(array('name'	=> 'act',
-					    'value'	=> 'edit_contact')),
+				$form->hidden(array('name'	=> 'act',
+									'value'	=> 'edit_contact')),
 
-			$form->hidden(array('name'	=> 'id',
-					    'value'	=> $this->get_var('id')));
+				$form->hidden(array('name'	=> 'id',
+									'value'	=> $this->get_var('id')));
 
 		$this->file_include('bloc/service/ipbx/asterisk/pbx_services/phonebook/form');
 
 		echo	$form->submit(array('name'	=> 'submit',
-					    'id'	=> 'it-submit',
-					    'value'	=> $this->bbf('fm_bt-save')));
+									'id'	=> 'it-submit',
+									'value'	=> $this->bbf('fm_bt-save')));
 ?>
 		</form>
 	</div>
