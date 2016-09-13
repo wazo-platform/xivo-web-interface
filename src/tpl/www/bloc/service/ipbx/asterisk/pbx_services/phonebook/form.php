@@ -36,21 +36,18 @@ $element = $this->get_var('element');
 				    'name'	=> 'phonebook[title]',
 				    'labelid'	=> 'phonebook-title',
 					'size' => 15,
-				    'value'	=> $info['phonebook']['title'],
-					'default' => '')),
+				    'value'	=> get($info['phonebook'],'title',''))),
 
 		$form->text(array('desc'	=> $this->bbf('fm_phonebook_firstname'),
 				  'name'	=> 'phonebook[firstname]',
 				  'labelid'	=> 'phonebook-firstname',
 				  'size'	=> 15,
-				  'default'	=> '',
 				  'value'	=> get($info['phonebook'],'firstname',''))),
 
 		$form->text(array('desc'	=> $this->bbf('fm_phonebook_lastname'),
 				  'name'	=> 'phonebook[lastname]',
 				  'labelid'	=> 'phonebook-lastname',
 				  'size'	=> 15,
-				  'default'	=> '',
 				  'value'	=> get($info['phonebook'],'lastname',''))),
 
 		$form->text(array('desc'	=> $this->bbf('fm_phonebook_displayname'),
@@ -59,35 +56,30 @@ $element = $this->get_var('element');
 				  'size'	=> 15,
 				  'error'	=> $this->bbf_args('error',
 						   $this->get_var('error', 'phonebook', 'displayname')),
-				  'default'	=> '',
 				  'value'	=> get($info['phonebook'],'displayname',''))),
 
 		$form->text(array('desc'	=> $this->bbf('fm_phonebook_society'),
 				  'name'	=> 'phonebook[society]',
 				  'labelid'	=> 'phonebook-society',
 				  'size'	=> 15,
-				  'default'	=> $element['phonebook']['society']['default'],
 				  'value'	=> get($info['phonebook'],'society',''))),
 
 		$form->text(array('desc'	=> $this->bbf('fm_phonebooknumber_mobile'),
 				  'name'	=> 'phonebooknumber[mobile]',
 				  'labelid'	=> 'phonebooknumber-mobile',
 				  'size'	=> 15,
-				  'default'	=> '',
 				  'value'	=> $this->get_var('phonebooknumber','mobile'))),
 
 		$form->text(array('desc'	=> $this->bbf('fm_phonebook_email'),
 				  'name'	=> 'phonebook[email]',
 				  'labelid'	=> 'phonebook-email',
 				  'size'	=> 15,
-				  'default'	=> '',
 				  'value'	=> get($info['phonebook'],'email',''))),
 
 		$form->text(array('desc'	=> $this->bbf('fm_phonebook_url'),
 				  'name'	=> 'phonebook[url]',
 				  'labelid'	=> 'phonebook-url',
 				  'size'	=> 15,
-				  'default'	=> '',
 				  'value'	=> get($info['phonebook'],'url','')));
 ?>
 </div>
