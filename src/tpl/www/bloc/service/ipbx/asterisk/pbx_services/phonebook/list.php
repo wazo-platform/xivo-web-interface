@@ -35,37 +35,37 @@ else:
 endif;
 
 $page = $url->pager($pager['pages'],
-		    $pager['page'],
-		    $pager['prev'],
-		    $pager['next'],
-		    'service/ipbx/pbx_services/phonebook',
-		    array('act' => $act,$param));
+					$pager['page'],
+					$pager['prev'],
+					$pager['next'],
+					'service/ipbx/pbx_services/phonebook',
+					array('act' => $act,$param));
 
 ?>
 <div class="b-list">
 <?php
 	if($page !== ''):
 		echo	'<div class="b-total">',
-			$this->bbf('number_phonebook-result',
-				   '<b>'.$this->get_var('total').'</b>'),
-			'</div><div class="b-page">',
-			$page,
-			'</div><div class="clearboth"></div>';
+				$this->bbf('number_phonebook-result',
+				'<b>'.$this->get_var('total').'</b>'),
+				'</div><div class="b-page">',
+				$page,
+				'</div><div class="clearboth"></div>';
 	endif;
 ?>
 <form action="#" name="fm-phonebook-list" method="post" accept-charset="utf-8">
 <?php
 	echo	$form->hidden(array('name'	=> DWHO_SESS_NAME,
-				    'value'	=> DWHO_SESS_ID)),
+								'value'	=> DWHO_SESS_ID)),
 
-		$form->hidden(array('name'	=> 'act',
-				    'value'	=> $act)),
+			$form->hidden(array('name'	=> 'act',
+								'value'	=> $act)),
 
-		$form->hidden(array('name'	=> 'page',
-				    'value'	=> $pager['page'])),
+			$form->hidden(array('name'	=> 'page',
+								'value'	=> $pager['page'])),
 
-		$form->hidden(array('name'	=> 'search',
-				    'value'	=> ''));
+			$form->hidden(array('name'	=> 'search',
+								'value'	=> ''));
 ?>
 <table id="table-main-listing">
 	<tr class="sb-top">
@@ -95,7 +95,6 @@ $page = $url->pager($pager['pages'],
 					$this->bbf('col_sort_entity'));
 ?>
 		</th>
-		</th>
 		<th class="th-right xspan"><span class="span-right">&nbsp;</span></th>
 	</tr>
 <?php
@@ -107,30 +106,29 @@ $page = $url->pager($pager['pages'],
 <?php
 	else:
 		for($i = 0;$i < $nb;$i++):
-
 			$ref = &$list[$i];
 
 ?>
 	<tr onmouseover="this.tmp = this.className; this.className = 'sb-content l-infos-over';"
-	    onmouseout="this.className = this.tmp;"
-	    class="sb-content l-infos-<?=(($i % 2) + 1)?>on2">
+		onmouseout="this.className = this.tmp;"
+		class="sb-content l-infos-<?=(($i % 2) + 1)?>on2">
 		<td class="td-left">
-			<?=$form->checkbox(array('name'		=> 'phonebook[]',
-						 'value'	=> $ref['id'],
-						 'label'	=> false,
-						 'id'		=> 'it-phonebook-'.$i,
-						 'checked'	=> false,
-						 'paragraph'	=> false));?>
+			<?=   $form->checkbox(array('name' => 'phonebook[]',
+										'value' => $ref['id'],
+										'label' => false,
+										'id' => 'it-phonebook-'.$i,
+										'checked' => false,
+										'paragraph' => false));?>
 		</td>
 		<td class="txt-left">
-		<?php
+<?php
 			echo $url->href_html(
 				dwho_trunc($ref['name'],40,'...',false),
 				'service/ipbx/pbx_services/phonebook',
 				array('act'	=> 'list_contacts',
 					  'phonebook' => $ref['id'],
 					  'entity' => $ref['entity']));
-		?>
+?>
 		</td>
 		<td class="txt-center" title="<?=dwho_alttitle($ref['entity']);?>">
 			<label for="it-phonebook-<?=$i?>" id="lb-phonebook-<?=$i?>">
@@ -153,11 +151,11 @@ $page = $url->pager($pager['pages'],
 <?php
 	if($page !== ''):
 		echo	'<div class="b-total">',
-			$this->bbf('number_phonebook-result',
-				   '<b>'.$this->get_var('total').'</b>'),
-			'</div><div class="b-page">',
-			$page,
-			'</div><div class="clearboth"></div>';
+				$this->bbf('number_phonebook-result',
+				'<b>'.$this->get_var('total').'</b>'),
+				'</div><div class="b-page">',
+				$page,
+				'</div><div class="clearboth"></div>';
 	endif;
 ?>
 </div>

@@ -39,19 +39,19 @@ $form = &$this->get_module('form');
 		$entity = $this->get_var('entity');
 
 		echo	$form->hidden(array('name'	=> DWHO_SESS_NAME,
-					    'value'	=> DWHO_SESS_ID)),
+									'value'	=> DWHO_SESS_ID)),
 
-			$form->hidden(array('name'	=> 'fm_send',
-					    'value'	=> 1)),
+				$form->hidden(array('name'	=> 'fm_send',
+									'value'	=> 1)),
 
-			$form->hidden(array('name'	=> 'act',
-					    'value'	=> 'add_contact'));
+				$form->hidden(array('name'	=> 'act',
+									'value'	=> 'add_contact'));
 
 		$this->file_include('bloc/service/ipbx/asterisk/pbx_services/phonebook/form');
 
 		echo	$form->submit(array('name'	=> 'submit',
-					    'id'	=> 'it-submit',
-					    'value'	=> $this->bbf('fm_bt-save')));
+									'id'	=> 'it-submit',
+									'value'	=> $this->bbf('fm_bt-save')));
 ?>
 		</form>
 	</div>

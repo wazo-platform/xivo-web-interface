@@ -89,10 +89,10 @@ class PhonebookResource {
 	}
 
 	public function list_phonebooks($entity) {
-        $url = sprintf("/tenants/%s/phonebooks", $entity);
+		$url = sprintf("/tenants/%s/phonebooks", $entity);
 		$request = Request::json_get($url,"",null,$this->_headers);
 		$response = $this->client->send($request);
-        $body = $response->status_ok() ? $response->decode_or_raise() : null;
+		$body = $response->status_ok() ? $response->decode_or_raise() : null;
 		if(is_array($body) && array_key_exists('items', $body) && is_array($body['items'])) {
 			return $body['items'];
 		} else {
