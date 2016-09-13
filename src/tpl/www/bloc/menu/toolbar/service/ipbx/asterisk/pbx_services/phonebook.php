@@ -84,9 +84,6 @@ $dhtml->write_js($toolbar_js);
 						$param);
 ?>
 		</li>
-		<li><?=$url->href_html($this->bbf('toolbar_add_menu_import-file'),
-				       'service/ipbx/pbx_services/phonebook',
-				       'act=import');?></li>
 	</ul>
 </div><?php
 

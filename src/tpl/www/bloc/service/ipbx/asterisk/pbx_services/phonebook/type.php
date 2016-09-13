@@ -21,7 +21,6 @@
 $form = &$this->get_module('form');
 $url = &$this->get_module('url');
 
-$element = $this->get_var('element');
 $list = $this->get_var('list');
 $type = $this->get_var('type');
 
@@ -29,7 +28,7 @@ echo	$form->text(array('desc'	=> $this->bbf('fm_phonebooknumber_'.$type),
 			  'name'	=> 'phonebooknumber['.$type.']',
 			  'labelid'	=> 'phonebooknumber-'.$type,
 			  'size'	=> 15,
-			  'default'	=> $element['phonebooknumber']['number']['default'],
+			  'default'	=> '',
 			  'value'	=> $this->get_var('phonebooknumber',$type)));
 
 if($type === 'office'):
@@ -37,7 +36,7 @@ if($type === 'office'):
 				  'name'	=> 'phonebooknumber[fax]',
 				  'labelid'	=> 'phonebooknumber-fax',
 				  'size'	=> 15,
-				  'default'	=> $element['phonebooknumber']['number']['default'],
+				  'default'	=> '',
 				  'value'	=> $this->get_var('phonebooknumber','fax')));
 endif;
 
@@ -45,35 +44,35 @@ echo	$form->text(array('desc'	=> $this->bbf('fm_phonebookaddress_address1'),
 			  'name'	=> 'phonebookaddress['.$type.'][address1]',
 			  'labelid'	=> 'phonebookaddress-'.$type.'-address1',
 			  'size'	=> 15,
-			  'default'	=> $element['phonebookaddress']['address1']['default'],
+			  'default'	=> '',
 			  'value'	=> $this->get_var('phonebookaddress',$type,'address1'))),
 
 	$form->text(array('desc'	=> $this->bbf('fm_phonebookaddress_address2'),
 			  'name'	=> 'phonebookaddress['.$type.'][address2]',
 			  'labelid'	=> 'phonebookaddress-'.$type.'-address2',
 			  'size'	=> 15,
-			  'default'	=> $element['phonebookaddress']['address2']['default'],
+			  'default'	=> '',
 			  'value'	=> $this->get_var('phonebookaddress',$type,'address2'))),
 
 	$form->text(array('desc'	=> $this->bbf('fm_phonebookaddress_city'),
 			  'name'	=> 'phonebookaddress['.$type.'][city]',
 			  'labelid'	=> 'phonebookaddress-'.$type.'-city',
 			  'size'	=> 15,
-			  'default'	=> $element['phonebookaddress']['city']['default'],
+			  'default'	=> '',
 			  'value'	=> $this->get_var('phonebookaddress',$type,'city'))),
 
 	$form->text(array('desc'	=> $this->bbf('fm_phonebookaddress_state'),
 			  'name'	=> 'phonebookaddress['.$type.'][state]',
 			  'labelid'	=> 'phonebookaddress-'.$type.'-state',
 			  'size'	=> 15,
-			  'default'	=> $element['phonebookaddress']['state']['default'],
+			  'default'	=> '',
 			  'value'	=> $this->get_var('phonebookaddress',$type,'state'))),
 
 	$form->text(array('desc'	=> $this->bbf('fm_phonebookaddress_zipcode'),
 			  'name'	=> 'phonebookaddress['.$type.'][zipcode]',
 			  'labelid'	=> 'phonebookaddress-'.$type.'-zipcode',
 			  'size'	=> 15,
-			  'default'	=> $element['phonebookaddress']['zipcode']['default'],
+			  'default'	=> '',
 			  'value'	=> $this->get_var('phonebookaddress',$type,'zipcode'))),
 
 	$form->select(array('desc'	=> $this->bbf('fm_phonebookaddress_country'),
@@ -81,7 +80,7 @@ echo	$form->text(array('desc'	=> $this->bbf('fm_phonebookaddress_address1'),
 			    'labelid'	=> 'phonebookaddress-'.$type.'-country',
 			    'empty'	=> true,
 			    'size'	=> 15,
-			    'default'	=> $element['phonebookaddress']['country']['default'],
+			    'default'	=> '',
 			    'selected'	=> $this->get_var('phonebookaddress',$type,'country')),
 		      $this->get_var('territory'));
 ?>
