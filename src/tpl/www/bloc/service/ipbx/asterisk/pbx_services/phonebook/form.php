@@ -32,7 +32,6 @@ $element = $this->get_var('element');
 		return(isset($array[$key]) ? $array[$key] : $default);
 	}
 
-	# TODO don't limit the title to the text box
 	echo	$form->text(array('desc'	=> $this->bbf('fm_phonebook_title'),
 				    'name'	=> 'phonebook[title]',
 				    'labelid'	=> 'phonebook-title',
