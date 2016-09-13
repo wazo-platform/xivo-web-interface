@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@ echo	$form->text(array('desc'	=> $this->bbf('fm_phonebooknumber_'.$type),
 			  'labelid'	=> 'phonebooknumber-'.$type,
 			  'size'	=> 15,
 			  'default'	=> $element['phonebooknumber']['number']['default'],
-			  'value'	=> $this->get_var('phonebooknumber',$type,'number')));
+			  'value'	=> $this->get_var('phonebooknumber',$type)));
 
 if($type === 'office'):
 	echo	$form->text(array('desc'	=> $this->bbf('fm_phonebooknumber_fax'),
@@ -38,7 +38,7 @@ if($type === 'office'):
 				  'labelid'	=> 'phonebooknumber-fax',
 				  'size'	=> 15,
 				  'default'	=> $element['phonebooknumber']['number']['default'],
-				  'value'	=> $this->get_var('phonebooknumber','fax','number')));
+				  'value'	=> $this->get_var('phonebooknumber','fax')));
 endif;
 
 echo	$form->text(array('desc'	=> $this->bbf('fm_phonebookaddress_address1'),

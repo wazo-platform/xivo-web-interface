@@ -57,6 +57,18 @@ class xivo_application_service_asterisk_dirdphonebook extends xivo_application_a
 
 	function add_contact($entity, $phonebook_id, $query)
 	{
+		$dird_fields = $this->_webi_to_dird($query);
+		$this->_phonebook_resource->add_contact($entity, $phonebook_id, $dird_fields);
+	}
+
+	function edit_contact($entity, $phonebook_id, $contact_uuid, $query)
+	{
+		$dird_fields = $this->_webi_to_dird($query);
+		$this->_phonebook_resource->edit_contact($entity, $phonebook_id, $contact_uuid, $dird_fields);
+	}
+
+	private function _webi_to_dird($query)
+	{
 		$normal_fields = $query['phonebook'];
 		$number_fields = $query['phonebooknumber'];
 		$address_fields = $query['phonebookaddress'];
@@ -83,7 +95,42 @@ class xivo_application_service_asterisk_dirdphonebook extends xivo_application_a
 			}
 		}
 
-		$this->_phonebook_resource->add_contact($entity, $phonebook_id, $dird_fields);
+		return($dird_fields);
+	}
+
+	function get_contact($entity, $phonebook_id, $contact_uuid)
+	{
+		if(($dird_fields = $this->_phonebook_resource->get_contact($entity, $phonebook_id, $contact_uuid)) === false) {
+			return(false);
+		}
+
+		$normal_fields = array();
+		$number_fields = array();
+		$address_fields = array();
+
+		foreach($dird_fields as $key => $value) {
+			if(empty($value) === true
+				|| (($pieces = explode("_", $key)) && empty($pieces))) {
+				continue;
+			}
+
+			if($pieces[0] === 'number'
+				&& count($pieces) === 2) {
+				$number_fields[$pieces[1]] = $value;
+			} else if($pieces[0] === 'address'
+				&& count($pieces) === 3) {
+				if(isset($address_fields[$pieces[1]]) === false) {
+					$address_fields[$pieces[1]] = array();
+				}
+				$address_fields[$pieces[1]][$pieces[2]] = $value;
+			} else {
+				$normal_fields[$key] = $value;
+			}
+		}
+
+		return(array('phonebook' => empty($normal_fields) ? false : $normal_fields,
+                     'phonebooknumber' => empty($number_fields) ? false : $number_fields,
+                     'phonebookaddress' => empty($address_fields) ? false : $address_fields));
 	}
 
 	function delete_contact($entity, $phonebook_id, $contact_uuid)

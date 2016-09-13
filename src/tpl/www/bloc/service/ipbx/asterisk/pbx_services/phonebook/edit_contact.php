@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -42,7 +42,7 @@ $form = &$this->get_module('form');
 					    'value'	=> 1)),
 
 			$form->hidden(array('name'	=> 'act',
-					    'value'	=> 'edit')),
+					    'value'	=> 'edit_contact')),
 
 			$form->hidden(array('name'	=> 'id',
 					    'value'	=> $this->get_var('id')));
