@@ -33,28 +33,25 @@ $element = $this->get_var('element');
 	}
 
 	# TODO don't limit the title to the text box
-	echo	$form->select(array('desc'	=> $this->bbf('fm_phonebook_title'),
+	echo	$form->text(array('desc'	=> $this->bbf('fm_phonebook_title'),
 				    'name'	=> 'phonebook[title]',
 				    'labelid'	=> 'phonebook-title',
-				    'key'	=> false,
-				    'bbf'	=> 'fm_phonebook_title-opt',
-				    'bbfopt'	=> array('argmode' => 'paramvalue'),
-				    'selected'	=> $info['phonebook']['title'],
-				    'default'	=> $element['phonebook']['title']['default']),
-			      $element['phonebook']['title']['value']),
+					'size' => 15,
+				    'value'	=> $info['phonebook']['title'],
+					'default' => '')),
 
 		$form->text(array('desc'	=> $this->bbf('fm_phonebook_firstname'),
 				  'name'	=> 'phonebook[firstname]',
 				  'labelid'	=> 'phonebook-firstname',
 				  'size'	=> 15,
-				  'default'	=> $element['phonebook']['firstname']['default'],
+				  'default'	=> '',
 				  'value'	=> get($info['phonebook'],'firstname',''))),
 
 		$form->text(array('desc'	=> $this->bbf('fm_phonebook_lastname'),
 				  'name'	=> 'phonebook[lastname]',
 				  'labelid'	=> 'phonebook-lastname',
 				  'size'	=> 15,
-				  'default'	=> $element['phonebook']['lastname']['default'],
+				  'default'	=> '',
 				  'value'	=> get($info['phonebook'],'lastname',''))),
 
 		$form->text(array('desc'	=> $this->bbf('fm_phonebook_displayname'),
@@ -63,7 +60,7 @@ $element = $this->get_var('element');
 				  'size'	=> 15,
 				  'error'	=> $this->bbf_args('error',
 						   $this->get_var('error', 'phonebook', 'displayname')),
-				  'default'	=> $element['phonebook']['displayname']['default'],
+				  'default'	=> '',
 				  'value'	=> get($info['phonebook'],'displayname',''))),
 
 		$form->text(array('desc'	=> $this->bbf('fm_phonebook_society'),
@@ -77,21 +74,21 @@ $element = $this->get_var('element');
 				  'name'	=> 'phonebooknumber[mobile]',
 				  'labelid'	=> 'phonebooknumber-mobile',
 				  'size'	=> 15,
-				  'default'	=> $element['phonebooknumber']['number']['default'],
+				  'default'	=> '',
 				  'value'	=> $this->get_var('phonebooknumber','mobile'))),
 
 		$form->text(array('desc'	=> $this->bbf('fm_phonebook_email'),
 				  'name'	=> 'phonebook[email]',
 				  'labelid'	=> 'phonebook-email',
 				  'size'	=> 15,
-				  'default'	=> $element['phonebook']['email']['default'],
+				  'default'	=> '',
 				  'value'	=> get($info['phonebook'],'email',''))),
 
 		$form->text(array('desc'	=> $this->bbf('fm_phonebook_url'),
 				  'name'	=> 'phonebook[url]',
 				  'labelid'	=> 'phonebook-url',
 				  'size'	=> 15,
-				  'default'	=> $element['phonebook']['url']['default'],
+				  'default'	=> '',
 				  'value'	=> get($info['phonebook'],'url','')));
 ?>
 </div>
