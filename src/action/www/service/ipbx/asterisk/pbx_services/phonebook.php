@@ -145,6 +145,54 @@ switch($act)
 		$_TPL->set_var('element',$appphonebook->get_elements());
 		$_TPL->set_var('territory',dwho_i18n::get_territory_translated_list());
 		break;
+	case 'edit_contact':
+		if(is_array($_QRY->_orig) === false
+			|| isset($_QRY->_orig['qstring']) === false
+			|| isset($_QRY->_orig['qstring']['entity']) === false
+			|| isset($_QRY->_orig['qstring']['phonebook']) === false
+			|| isset($_QRY->_orig['qstring']['id']) === false) {
+			$_QRY->go($_TPL->url('service/ipbx/pbx_services/phonebook'),$param);
+		}
+
+		$entity = $_QRY->_orig['qstring']['entity'];
+		$phonebook_id = (int)$_QRY->_orig['qstring']['phonebook'];
+		$contact_uuid = $_QRY->_orig['qstring']['id'];
+
+		if(isset($_QR['fm_send']) === false
+			&& ($info = $appdirdphonebook->get_contact($entity, $phonebook_id, $contact_uuid)) === false) {
+			$param = array('act' => 'list_contacts', 'entity' => $entity, 'phonebook' => $phonebook_id);
+			$_QRY->go($_TPL->url('service/ipbx/pbx_services/phonebook'),$param);
+		}
+
+		$result = $fm_save = $error = null;
+		$return = &$info;
+
+		if(isset($_QR['fm_send']) === true && dwho_issa('phonebook',$_QR) === true)
+		{
+			$result = $appdirdphonebook->edit_contact($entity, $phonebook_id, $contact_uuid, $_QR);
+
+			$param = array('act' => 'list_contacts',
+						   'entity' => $entity,
+						   'phonebook' => $phonebook_id);
+			$_QRY->go($_TPL->url('service/ipbx/pbx_services/phonebook'),$param);
+			$return = &$result;
+		}
+
+
+		$dhtml = &$_TPL->get_module('dhtml');
+		$dhtml->set_js('js/dwho/submenu.js');
+
+		$_TPL->set_var('entity'          , $entity);
+		$_TPL->set_var('phonebook_id'	 , $phonebook_id);
+		$_TPL->set_var('id'              , $info['phonebook']['id']);
+		$_TPL->set_var('info'            , $return);
+		$_TPL->set_var('error'           , $error);
+		$_TPL->set_var('phonebookaddress', $return['phonebookaddress']);
+		$_TPL->set_var('phonebooknumber' , $return['phonebooknumber']);
+		$_TPL->set_var('fm_save'         , $fm_save);
+		$_TPL->set_var('element'         , $appphonebook->get_elements());
+		$_TPL->set_var('territory'       , dwho_i18n::get_territory_translated_list());
+		break;
 	case 'delete':
 		$param['page'] = $page;
 

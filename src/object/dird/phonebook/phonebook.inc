@@ -36,6 +36,28 @@ class PhonebookResource {
 		$response = $this->client->send($request);
 	}
 
+	public function edit_contact($entity, $phonebook_id, $contact_uuid, $fields)
+	{
+		$url = sprintf("/tenants/%s/phonebooks/%d/contacts/%s", $entity, $phonebook_id, $contact_uuid);
+		$request = Request::json_put($url,$fields,null,$this->_headers);
+		$response = $this->client->send($request);
+	}
+
+	public function get_contact($entity, $phonebook_id, $contact_uuid)
+	{
+		$url = sprintf("/tenants/%s/phonebooks/%d/contacts/%s", $entity, $phonebook_id, $contact_uuid);
+		$request = Request::json_get($url,"",null,$this->_headers);
+		$response = $this->client->send($request);
+
+		if($response->status_ok()
+		&& ($body = $response->decode_or_raise())
+		&& empty($body) === false) {
+			return($body);
+		}
+
+		return(false);
+	}
+
 	public function delete_contact($entity, $phonebook_id, $contact_uuid)
 	{
 		$url = sprintf("/tenants/%s/phonebooks/%d/contacts/%s", $entity, $phonebook_id, $contact_uuid);
