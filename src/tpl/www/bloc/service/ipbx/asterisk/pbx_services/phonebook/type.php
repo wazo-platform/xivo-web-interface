@@ -24,55 +24,21 @@ $url = &$this->get_module('url');
 $list = $this->get_var('list');
 $type = $this->get_var('type');
 
-echo  $form->text(array('desc' => $this->bbf('fm_phonebooknumber_'.$type),
-						'name' => 'phonebooknumber['.$type.']',
-						'labelid' => 'phonebooknumber-'.$type,
-						'size' => 15,
-						'value' => $this->get_var('phonebooknumber',$type)));
-
+echo format_number_text($this, $form, $type);
 if($type === 'office'):
-	echo  $form->text(array('desc' => $this->bbf('fm_phonebooknumber_fax'),
-							'name' => 'phonebooknumber[fax]',
-							'labelid' => 'phonebooknumber-fax',
-							'size' => 15,
-							'value' => $this->get_var('phonebooknumber','fax')));
+	echo format_number_text($this, $form, 'fax');
 endif;
 
-echo  $form->text(array('desc' => $this->bbf('fm_phonebookaddress_address1'),
-						'name' => 'phonebookaddress['.$type.'][address1]',
-						'labelid' => 'phonebookaddress-'.$type.'-address1',
-						'size' => 15,
-						'value' => $this->get_var('phonebookaddress',$type,'address1'))),
+$predefined_address_fields = array('address1', 'address2', 'city', 'state', 'zipcode');
+foreach($predefined_address_fields as $field){
+	echo format_address_text($this, $form, $type, $field);
+}
 
-	  $form->text(array('desc' => $this->bbf('fm_phonebookaddress_address2'),
-						'name' => 'phonebookaddress['.$type.'][address2]',
-						'labelid' => 'phonebookaddress-'.$type.'-address2',
-						'size' => 15,
-						'value' => $this->get_var('phonebookaddress',$type,'address2'))),
-
-	  $form->text(array('desc' => $this->bbf('fm_phonebookaddress_city'),
-						'name' => 'phonebookaddress['.$type.'][city]',
-						'labelid' => 'phonebookaddress-'.$type.'-city',
-						'size' => 15,
-						'value' => $this->get_var('phonebookaddress',$type,'city'))),
-
-	  $form->text(array('desc' => $this->bbf('fm_phonebookaddress_state'),
-						'name' => 'phonebookaddress['.$type.'][state]',
-						'labelid' => 'phonebookaddress-'.$type.'-state',
-						'size' => 15,
-						'value' => $this->get_var('phonebookaddress',$type,'state'))),
-
-	  $form->text(array('desc' => $this->bbf('fm_phonebookaddress_zipcode'),
-						'name' => 'phonebookaddress['.$type.'][zipcode]',
-						'labelid' => 'phonebookaddress-'.$type.'-zipcode',
-						'size' => 15,
-						'value' => $this->get_var('phonebookaddress',$type,'zipcode'))),
-
-	$form->select(array('desc' => $this->bbf('fm_phonebookaddress_country'),
-						'name' => 'phonebookaddress['.$type.'][country]',
-						'labelid' => 'phonebookaddress-'.$type.'-country',
-						'empty' => true,
-						'size' => 15,
-						'selected' => $this->get_var('phonebookaddress',$type,'country')),
-					$this->get_var('territory'));
+echo	$form->select(array('desc' => $this->bbf('fm_phonebookaddress_country'),
+							'name' => 'phonebookaddress['.$type.'][country]',
+							'labelid' => 'phonebookaddress-'.$type.'-country',
+							'empty' => true,
+							'size' => 15,
+							'selected' => $this->get_var('phonebookaddress',$type,'country')),
+						$this->get_var('territory'));
 ?>
