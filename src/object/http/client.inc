@@ -91,27 +91,20 @@ class Request {
 
 	static public function json_get($url, $body="", $query=null, $headers=null)
 	{
-		if(is_array($headers)) {
-			$headers = array_merge($headers, self::$json_headers);
-		} else {
-			$headers = self::$json_headers;
-		}
+		$headers = self::_new_headers($headers);
 		return new Request("GET", $url, json_encode($body), $query, $headers);
 	}
 
 	static public function json_post($url, $content, $query=null, $headers=null)
 	{
-		if(is_array($headers)) {
-			$headers = array_merge($headers, self::$json_headers);
-		} else {
-			$headers = self::$json_headers;
-		}
+		$headers = self::_new_headers($headers);
 		return new Request("POST", $url, json_encode($content), $query, $headers);
 	}
 
-	static public function json_put($url, $body, $query=null)
+	static public function json_put($url, $body, $query=null, $headers=null)
 	{
-		return new Request("PUT", $url, json_encode($body), $query, self::$json_headers);
+		$headers = self::_new_headers($headers);
+		return new Request("PUT", $url, json_encode($body), $query, $headers);
 	}
 
 	public function get_verb()
@@ -160,6 +153,11 @@ class Request {
 		}
 
 		return $this->username.':'.$this->password;
+	}
+
+	private static function _new_headers($headers) {
+		$headers = $headers === null ? array() : $headers;
+		return(array_merge($headers, self::$json_headers));
 	}
 }
 
