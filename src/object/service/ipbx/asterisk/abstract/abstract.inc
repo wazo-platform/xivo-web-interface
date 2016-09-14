@@ -171,9 +171,6 @@ abstract class xivo_service_asterisk_abstract extends xivo_libdatastorage_abstra
 		if(strpos($actionarg2,'noanswer') !== false)
 			$r['actionarg2'] .= 'noanswer';
 
-		if(strpos($actionarg2,'j') !== false)
-			$r['actionarg2'] .= 'j';
-
 		return($r);
 	}
 
@@ -325,9 +322,6 @@ abstract class xivo_service_asterisk_abstract extends xivo_libdatastorage_abstra
 
 		if(strpos($actionarg2,'u') !== false)
 			$r['actionarg2'] .= 'u';
-
-		if(strpos($actionarg2,'j') !== false)
-			$r['actionarg2'] .= 'j';
 
 		return($r);
 	}

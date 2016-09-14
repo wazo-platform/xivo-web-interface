@@ -85,9 +85,6 @@ Do not play introduction message :
 ; fm_dialaction_voicemail-actionarg2-u
 Do not play unavailable message :
 
-; fm_dialaction_voicemail-actionarg2-j
-Use n+101 method :
-
 ; fm_dialaction_actiontype-opt(schedule)
 Schedule
 
@@ -131,13 +128,10 @@ Application:
 Filename: 
 
 ; fm_dialaction_sound-actionarg2-skip
-Play file is channel is answered: 
+Play file if channel is answered: 
 
 ; fm_dialaction_sound-actionarg2-noanswer
 Do not answer channel before playing file: 
-
-; fm_dialaction_sound-actionarg2-j
-Use n+101 method: 
 
 ; fm_dialaction_custom-actionarg1
 Command: 

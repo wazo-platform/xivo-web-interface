@@ -224,9 +224,6 @@ class xivo_application_service_asterisk_dialaction_abstract extends xivo_applica
 
 			if(strpos($this->_result[$event]['actionarg2'],'noanswer') !== false)
 				$r['sound']['actionarg2']['noanswer'] = true;
-
-			if(strpos($this->_result[$event]['actionarg2'],'j') !== false)
-				$r['sound']['actionarg2']['j'] = true;
 		}
 
 		return($r);

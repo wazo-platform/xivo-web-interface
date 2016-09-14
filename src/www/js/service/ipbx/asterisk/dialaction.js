@@ -43,8 +43,7 @@ var xivo_dialaction_actiontype = {
                      'actionarg1',
                      'actionarg2-b',
                      'actionarg2-s',
-                     'actionarg2-u',
-                     'actionarg2-j'],
+                     'actionarg2-u'],
             //'schedule':    ['actiontype','actionarg1'],
             'trunk':        ['actiontype','actionarg1','actionarg2'],
             'outcall':        ['actiontype','actionarg1','actionarg2'],
@@ -63,8 +62,7 @@ var xivo_dialaction_actiontype = {
             'sound':    ['actiontype',
                      'actionarg1',
                      'actionarg2-skip',
-                     'actionarg2-noanswer',
-                     'actionarg2-j']};
+                     'actionarg2-noanswer']};
 
 var xivo_dialaction_actionarg = {};
 xivo_dialaction_actionarg['endcall'] = {};

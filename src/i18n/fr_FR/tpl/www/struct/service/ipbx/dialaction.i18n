@@ -76,9 +76,6 @@ Ne pas jouer le message d'introduction :
 ; fm_dialaction_voicemail-actionarg2-u
 Ne pas jouer le message d'indisponibilité :
 
-; fm_dialaction_voicemail-actionarg2-j
-Utiliser la méthode n+101 :
-
 ; fm_dialaction_actiontype-opt(schedule)
 Horaire
 
@@ -126,9 +123,6 @@ Jouer le fichier si le canal est décroché :
 
 ; fm_dialaction_sound-actionarg2-noanswer
 Ne pas décrocher le canal avant la lecture du fichier :
-
-; fm_dialaction_sound-actionarg2-j
-Utiliser la méthode n+101 :
 
 ; fm_dialaction_custom-actionarg1
 Commande :

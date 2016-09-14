@@ -57,13 +57,7 @@ if(empty($list) === false):
 				      'name'	=> 'dialaction['.$event.'][actionarg2][u]',
 				      'labelid'	=> 'dialaction-'.$event.'-voicemail-actionarg2-u',
 				      'checked'	=> $this->get_var('dialaction',$event,'voicemail','actionarg2','u'),
-				      'value'	=> 'u')),
-
-		$form->checkbox(array('desc'	=> $this->bbf('fm_dialaction_voicemail-actionarg2-j'),
-				      'name'	=> 'dialaction['.$event.'][actionarg2][j]',
-				      'labelid'	=> 'dialaction-'.$event.'-voicemail-actionarg2-j',
-				      'checked'	=> $this->get_var('dialaction',$event,'voicemail','actionarg2','j'),
-				      'value'	=> 'j'));
+				      'value'	=> 'u'));
 	echo	'</div>';
 else:
 	echo	'<div id="fd-dialaction-'.$event.'-voicemail-actiontype" class="txt-center b-nodisplay">',
