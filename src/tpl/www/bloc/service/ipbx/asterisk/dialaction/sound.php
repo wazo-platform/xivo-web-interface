@@ -49,13 +49,7 @@ if(empty($list) === false):
 				      'name'	=> 'dialaction['.$event.'][actionarg2][noanswer]',
 				      'labelid'	=> 'dialaction-'.$event.'-sound-actionarg2-noanswer',
 				      'checked'	=> $this->get_var('dialaction',$event,'sound','actionarg2','noanswer'),
-				      'value'	=> 'noanswer')),
-
-		$form->checkbox(array('desc'	=> $this->bbf('fm_dialaction_sound-actionarg2-j'),
-				      'name'	=> 'dialaction['.$event.'][actionarg2][j]',
-				      'labelid'	=> 'dialaction-'.$event.'-sound-actionarg2-j',
-				      'checked'	=> $this->get_var('dialaction',$event,'sound','actionarg2','j'),
-				      'value'	=> 'j'));
+				      'value'	=> 'noanswer'));
 	echo	'</div>';
 else:
 	echo	'<div id="fd-dialaction-'.$event.'-sound-actiontype" class="txt-center b-nodisplay">',

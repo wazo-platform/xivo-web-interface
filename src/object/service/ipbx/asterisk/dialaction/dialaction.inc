@@ -94,9 +94,6 @@ class xivo_service_asterisk_dialaction extends xivo_service_asterisk_abstract
 
 					if(strpos($data['actionarg2'],'noanswer') !== false)
 						$data['sound']['actionarg2']['noanswer'] = true;
-
-					if(strpos($data['actionarg2'],'j') !== false)
-						$data['sound']['actionarg2']['j'] = true;
 					break;
 				case 'voicemail':
 					$data['voicemail']['actionarg2'] = array();
@@ -109,9 +106,6 @@ class xivo_service_asterisk_dialaction extends xivo_service_asterisk_abstract
 
 					if(strpos($data['actionarg2'],'u') !== false)
 						$data['voicemail']['actionarg2']['u'] = true;
-
-					if(strpos($data['actionarg2'],'j') !== false)
-						$data['voicemail']['actionarg2']['j'] = true;
 					break;
 			}
 		}
