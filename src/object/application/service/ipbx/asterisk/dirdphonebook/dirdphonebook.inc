@@ -72,12 +72,23 @@ class xivo_application_service_asterisk_dirdphonebook extends xivo_application_a
 		$normal_fields = $query['phonebook'];
 		$number_fields = $query['phonebooknumber'];
 		$address_fields = $query['phonebookaddress'];
+		$extra_field_columns = $query['extrafields']['name'];
+		$extra_field_values = $query['extrafields']['value'];
 
 		$dird_fields = array();
 
 		foreach($normal_fields as $key => $value) {
 			if(!empty($value)) {
 				$dird_fields[$key] = $value;
+			}
+		}
+
+		foreach($extra_field_columns as $i => $name) {
+			if(empty($name) === false
+				&& isset($extra_field_values[$i]) === true
+				&& ($value = $extra_field_values[$i]) !== ''
+				&& empty($value) === false) {
+				$dird_fields[$name] = $value;
 			}
 		}
 
