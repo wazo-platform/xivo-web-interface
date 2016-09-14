@@ -8,9 +8,9 @@ Le fichier à importer doit être encodé en UTF-8 et composé de lignes au form
 Exemple du contenu du fichier :
 
 ; fm_example-content
-firstname,lastname,line_protocol,exten,context
-John,Doe,sip,1001,default
-John,Doe,sccp,1002,default
+entity_id,firstname,lastname,line_protocol,exten,context
+1,John,Doe,sip,1001,default
+1,John,Doe,sccp,1002,default
 
 ; fm_import
 Fichier :

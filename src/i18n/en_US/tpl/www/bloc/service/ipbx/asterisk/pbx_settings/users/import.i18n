@@ -8,9 +8,9 @@ File to be imported must be encoded in UTF-8 and contain CSV data.
 Example :
 
 ; fm_example-content
-firstname,lastname,line_protocol,exten,context
-John,Doe,sip,1001,default
-John,Doe,sccp,1002,default
+entity_id,firstname,lastname,line_protocol,exten,context
+1,John,Doe,sip,1001,default
+1,John,Doe,sccp,1002,default
 
 ; fm_import
 File:
