@@ -26,7 +26,7 @@ require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'dird', 'phonebook', 'phoneboo
 class xivo_application_service_asterisk_dirdphonebook extends xivo_application_asterisk_abstract
 {
 	var $_phonebook_module = false;
-    var $_entity_module = false;
+	var $_entity_module = false;
 	var $_phonebooks = array();
 	var $_phonebook_resource = null;
 
@@ -34,23 +34,24 @@ class xivo_application_service_asterisk_dirdphonebook extends xivo_application_a
 	{
 		parent::__construct($service);
 
-        if(($_XOBJ = dwho_gct::get('xivo_object')) === false
-        || ($this->_entity_module = &$_XOBJ->get_module('entity')) === false
-		|| ($dird_client = Client::dird_config(false)) === false
-		|| ($this->_phonebook_resource = new PhonebookResource($dird_client)) === false
-		|| ($entities = $this->_entity_module->get_all()) === false
-		|| ($current_entity = $_SESSION['_USR']->entity_id) === false)
-            return(false);
+		if(($_XOBJ = dwho_gct::get('xivo_object')) === false
+			|| ($this->_entity_module = &$_XOBJ->get_module('entity')) === false
+			|| ($dird_client = Client::dird_config(false)) === false
+			|| ($this->_phonebook_resource = new PhonebookResource($dird_client)) === false
+			|| ($entities = $this->_entity_module->get_all()) === false
+			|| ($current_entity = $_SESSION['_USR']->entity_id) === false) {
+			return(false);
+		}
 
-        foreach($entities as $entity) {
-            if($current_entity === 0 || $current_entity === $entity['id']) {
-                $current_phonebooks = $this->_phonebook_resource->list_phonebooks($entity['name']);
+		foreach($entities as $entity) {
+			if($current_entity === 0 || $current_entity === $entity['id']) {
+				$current_phonebooks = $this->_phonebook_resource->list_phonebooks($entity['name']);
 				foreach($current_phonebooks as &$phonebook) {
 					$phonebook['entity'] = $entity['name'];
 				}
 				$this->_phonebooks = array_merge($this->_phonebooks, $current_phonebooks);
-            }
-        }
+			}
+		}
 
 		return(true);
 	}
@@ -139,9 +140,10 @@ class xivo_application_service_asterisk_dirdphonebook extends xivo_application_a
 			}
 		}
 
-		return(array('phonebook' => empty($normal_fields) ? false : $normal_fields,
-                     'phonebooknumber' => empty($number_fields) ? false : $number_fields,
-                     'phonebookaddress' => empty($address_fields) ? false : $address_fields));
+		return(array(
+			'phonebook' => empty($normal_fields) ? false : $normal_fields,
+			'phonebooknumber' => empty($number_fields) ? false : $number_fields,
+			'phonebookaddress' => empty($address_fields) ? false : $address_fields));
 	}
 
 	function delete_contact($entity, $phonebook_id, $contact_uuid)
@@ -163,7 +165,7 @@ class xivo_application_service_asterisk_dirdphonebook extends xivo_application_a
 
 	function get_phonebook_cnt()
 	{
-        return(count($this->_phonebooks));
+		return(count($this->_phonebooks));
 	}
 
 	function get_phonebook_list($order=null,$limit=null)
@@ -186,7 +188,7 @@ class xivo_application_service_asterisk_dirdphonebook extends xivo_application_a
 			$subset = array_slice($this->_phonebooks, $lower, $upper);
 			return($subset);
 		}
-        return($this->_phonebooks);
+		return($this->_phonebooks);
 	}
 }
 
