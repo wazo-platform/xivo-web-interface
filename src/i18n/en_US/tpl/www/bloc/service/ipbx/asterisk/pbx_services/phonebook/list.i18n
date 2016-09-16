@@ -16,3 +16,5 @@ Result(s): %s
 ; no_phonebook
 Could not find any phonebooks
 
+; opt_delete_confirm
+Are you sure you want to delete this phonebook?

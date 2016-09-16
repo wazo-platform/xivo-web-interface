@@ -156,6 +156,11 @@ class xivo_application_service_asterisk_dirdphonebook extends xivo_application_a
 		return($this->_phonebook_resource->delete_contact($entity, $phonebook_id, $contact_uuid));
 	}
 
+	function delete_phonebook($entity, $phonebook_id)
+	{
+		$this->_phonebook_resource->delete_phonebook($entity, $phonebook_id);
+	}
+
 	function get_contact_list($entity, $phonebook_id, $order=null, $limit=null)
 	{
 		$contacts = $this->_phonebook_resource->list_contacts($entity, $phonebook_id, $order, $limit);

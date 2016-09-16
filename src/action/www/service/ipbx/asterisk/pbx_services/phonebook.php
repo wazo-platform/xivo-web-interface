@@ -132,6 +132,15 @@ switch($act)
 		$_TPL->set_var('fm_save'         , $fm_save);
 		$_TPL->set_var('territory'       , dwho_i18n::get_territory_translated_list());
 		break;
+	case 'delete':
+		$param['page'] = $page;
+		$param['act'] = 'list';
+
+		if(isset($_QR['entity']) && isset($_QR['id'])) {
+			$appdirdphonebook->delete_phonebook($_QR['entity'], (int)$_QR['id']);
+		}
+		$_QRY->go($_TPL->url('service/ipbx/pbx_services/phonebook'),$param);
+		break;
 	case 'delete_contact':
 		$param['page'] = $page;
 		if(isset($_QR['id']) === true
@@ -172,7 +181,6 @@ switch($act)
 		break;
 	case 'edit':
 	case 'list':
-	case 'delete':
 	case 'deletes':
 	default:
 		$act = 'list';
