@@ -75,3 +75,15 @@ Téléphone :
 
 ; fm_phonebooknumber_other
 Téléphone :
+
+; col_phonebook-name
+Champ
+
+; col_phonebook-value
+Valeur
+
+; col_phonebook-option-add
+Ajouter
+
+; opt_phonebook-option-delete
+Supprimer

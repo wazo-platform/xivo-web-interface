@@ -84,12 +84,14 @@ function build_row($name, $value, $form, $url, $helper) {
 $predefined_fields = array('title', 'firstname', 'lastname', 'displayname', 'society', 'email', 'url');
 $hidden_fields = array('id');
 $extra_fields = array();
-foreach($info['phonebook'] as $name => $value) {
-	if(empty($name) === false
-		&& in_array($name, $predefined_fields) === false
-		&& in_array($name, $hidden_fields) === false
-		&& empty($value) === false) {
-			$extra_fields[$name] = $value;
+if(isset($info['phonebook']) === true) {
+	foreach($info['phonebook'] as $name => $value) {
+		if(empty($name) === false
+			&& in_array($name, $predefined_fields) === false
+			&& in_array($name, $hidden_fields) === false
+			&& empty($value) === false) {
+				$extra_fields[$name] = $value;
+		}
 	}
 }
 ?>
