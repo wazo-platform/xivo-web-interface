@@ -75,3 +75,15 @@ Phone:
 
 ; fm_phonebooknumber_other
 Phone:
+
+; col_phonebook-name
+Column
+
+; col_phonebook-value
+Value
+
+; col_phonebook-option-add
+Add
+
+; opt_phonebook-option-delete
+Delete

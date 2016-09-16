@@ -1,16 +1,4 @@
-; load ./add
+; load ./add_contact
 
 ; title_content_name
 Phonebook > Edit
-
-; col_phonebook-name
-Column
-
-; col_phonebook-value
-Value
-
-; col_phonebook-option-add
-Add
-
-; opt_phonebook-option-delete
-Delete

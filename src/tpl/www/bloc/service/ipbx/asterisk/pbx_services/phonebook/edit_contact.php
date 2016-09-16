@@ -47,7 +47,7 @@ $form = &$this->get_module('form');
 				$form->hidden(array('name'	=> 'id',
 									'value'	=> $this->get_var('id')));
 
-		$this->file_include('bloc/service/ipbx/asterisk/pbx_services/phonebook/form');
+		$this->file_include('bloc/service/ipbx/asterisk/pbx_services/phonebook/form_contact');
 
 		echo	$form->submit(array('name'	=> 'submit',
 									'id'	=> 'it-submit',
