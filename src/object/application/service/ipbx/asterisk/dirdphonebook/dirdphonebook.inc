@@ -44,7 +44,7 @@ class xivo_application_service_asterisk_dirdphonebook extends xivo_application_a
 		}
 
 		foreach($entities as $entity) {
-			if($current_entity === 0 || $current_entity === $entity['id']) {
+			if($current_entity === 0 || $current_entity === (int)$entity['id']) {
 				$current_phonebooks = $this->_phonebook_resource->list_phonebooks($entity['name']);
 				foreach($current_phonebooks as &$phonebook) {
 					$phonebook['entity'] = $entity['name'];
