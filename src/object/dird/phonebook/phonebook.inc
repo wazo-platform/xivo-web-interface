@@ -36,6 +36,17 @@ class PhonebookResource {
 		$response = $this->client->send($request);
 	}
 
+	public function add_phonebook($entity, $name, $description)
+	{
+		$url = sprintf("/tenants/%s/phonebooks", $entity);
+		$fields = array('name' => $name);
+		if(empty($description === false)) {
+			$fields['description'] = $description;
+		}
+		$request = Request::json_post($url, $fields, null, $this->_headers);
+		$response = $this->client->send($request);
+	}
+
 	public function edit_contact($entity, $phonebook_id, $contact_uuid, $fields)
 	{
 		$url = sprintf("/tenants/%s/phonebooks/%d/contacts/%s", $entity, $phonebook_id, $contact_uuid);

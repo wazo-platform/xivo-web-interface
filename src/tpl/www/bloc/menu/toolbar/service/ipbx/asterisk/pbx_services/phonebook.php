@@ -81,6 +81,13 @@ $dhtml->write_js($toolbar_js);
 	}
 
 if($this->get_var('act') === 'list'):
+	echo    $url->href_html($url->img_html('img/menu/top/toolbar/bt-add.gif',
+							$this->bbf('toolbar_opt_add'),
+							'id="toolbar-bt-add"
+							border="0"'),
+							'service/ipbx/pbx_services/phonebook',
+							array('act' => 'add'),
+							$this->bbf('toolbar_opt_add'));
 	echo	$url->img_html('img/menu/top/toolbar/bt-more.gif',
 			       $this->bbf('toolbar_opt_advanced'),
 			       'id="toolbar-bt-advanced"

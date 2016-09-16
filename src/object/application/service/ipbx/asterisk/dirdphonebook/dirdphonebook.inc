@@ -62,6 +62,11 @@ class xivo_application_service_asterisk_dirdphonebook extends xivo_application_a
 		$this->_phonebook_resource->add_contact($entity, $phonebook_id, $dird_fields);
 	}
 
+	function add_phonebook($entity, $name, $description)
+	{
+		$this->_phonebook_resource->add_phonebook($entity, $name, $description);
+	}
+
 	function edit_contact($entity, $phonebook_id, $contact_uuid, $query)
 	{
 		$dird_fields = $this->_webi_to_dird($query);
