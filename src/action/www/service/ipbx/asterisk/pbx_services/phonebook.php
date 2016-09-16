@@ -33,10 +33,31 @@ $param['act'] = 'list';
 if($search !== '')
 	$param['search'] = $search;
 
+
+$modentity = &$_XOBJ->get_module('entity');
 $appdirdphonebook = &$ipbx->get_application('dirdphonebook');
 
 switch($act)
 {
+	case 'add':
+		$result = $fm_save = $error = null;
+		if(isset($_QR['fm_send']) === true) {
+			$entity = $_QR['phonebook']['entity'];
+			$name = $_QR['phonebook']['name'];
+			$description = $_QR['phonebook']['description'];
+
+			$appdirdphonebook->add_phonebook($entity, $name, $description);
+
+			$_QRY->go($_TPL->url('service/ipbx/pbx_services/phonebook'),'act=list');
+		}
+
+		$dhtml = &$_TPL->get_module('dhtml');
+		$dhtml->set_js('js/dwho/submenu.js');
+
+		$_TPL->set_var('info'   ,$result);
+		$_TPL->set_var('error'  ,$error);
+		$_TPL->set_var('fm_save',$fm_save);
+		break;
 	case 'add_contact':
 		$result = $fm_save = $error = null;
 		$entity = $_QR['entity'];
@@ -149,7 +170,6 @@ switch($act)
 		$_TPL->set_var('search',$search);
 		$_TPL->set_var('sort',$sort);
 		break;
-	case 'add':
 	case 'edit':
 	case 'list':
 	case 'delete':
@@ -179,6 +199,7 @@ switch($act)
 		$_TPL->set_var('sort',$sort);
 }
 
+$_TPL->set_var('entities',$modentity->get_all());
 $_TPL->set_var('act',$act);
 
 $menu = &$_TPL->get_module('menu');
