@@ -77,6 +77,14 @@ class PhonebookResource {
 		return(true);
 	}
 
+	public function delete_phonebook($entity, $phonebook_id)
+	{
+		$url = sprintf("/tenants/%s/phonebooks/%d", $entity, $phonebook_id);
+		$request = Request::delete($url,"",null,$this->_headers);
+		$response = $this->client->send($request);
+		return(true);
+	}
+
 	public function list_contacts($entity, $phonebook_id, $order=null, $limit=null)
 	{
 		$url = sprintf("/tenants/%s/phonebooks/%d/contacts", $entity, $phonebook_id);

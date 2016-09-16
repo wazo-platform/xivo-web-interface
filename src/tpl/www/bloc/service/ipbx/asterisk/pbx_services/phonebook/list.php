@@ -95,13 +95,14 @@ $page = $url->pager($pager['pages'],
 					$this->bbf('col_sort_entity'));
 ?>
 		</th>
+		<th class="th-center col-action"><?=$this->bbf('col_action');?></th>
 		<th class="th-right xspan"><span class="span-right">&nbsp;</span></th>
 	</tr>
 <?php
 	if(($list = $this->get_var('list')) === false || ($nb = count($list)) === 0):
 ?>
 	<tr class="sb-content">
-		<td colspan="4" class="td-single"><?=$this->bbf('no_phonebook');?></td>
+		<td colspan="6" class="td-single"><?=$this->bbf('no_phonebook');?></td>
 	</tr>
 <?php
 	else:
@@ -135,6 +136,20 @@ $page = $url->pager($pager['pages'],
 				<?=dwho_htmlen(dwho_trunc($ref['entity'],30,'...',false));?>
 			</label>
 		</td>
+		<td class="txt-right">
+<?php
+	echo $url->href_html($url->img_html('img/site/button/delete.gif',
+										$this->bbf('opt_delete'),
+										'border="0"'),
+										'service/ipbx/pbx_services/phonebook',
+										array(  'act'	=> 'delete',
+												'id'	=> $ref['id'],
+												'page'	=> $pager['page'],
+												'entity' => $ref['entity']),
+										'onclick="return(confirm(\''.$dhtml->escape($this->bbf('opt_delete_confirm')).'\'));"',
+										$this->bbf('opt_delete'));
+?>
+		</td>
 		<td class="td-right xspan"/>
 	</tr>
 <?php
@@ -143,7 +158,7 @@ $page = $url->pager($pager['pages'],
 ?>
 	<tr class="sb-foot">
 		<td class="td-left xspan b-nosize"><span class="span-left b-nosize">&nbsp;</span></td>
-		<td class="td-center" colspan="2"><span class="b-nosize">&nbsp;</span></td>
+		<td class="td-center" colspan="3"><span class="b-nosize">&nbsp;</span></td>
 		<td class="td-right xspan b-nosize"><span class="span-right b-nosize">&nbsp;</span></td>
 	</tr>
 </table>
