@@ -42,9 +42,9 @@ switch($act)
 	case 'add':
 		$result = $fm_save = $error = null;
 		if(isset($_QR['fm_send']) === true) {
-			$entity = $_QR['phonebook']['entity'];
-			$name = $_QR['phonebook']['name'];
-			$description = $_QR['phonebook']['description'];
+			$entity = $_QR['entity'];
+			$name = $_QR['name'];
+			$description = $_QR['description'];
 
 			$appdirdphonebook->add_phonebook($entity, $name, $description);
 
@@ -84,6 +84,25 @@ switch($act)
 		$_TPL->set_var('error'  ,$error);
 		$_TPL->set_var('fm_save',$fm_save);
 		$_TPL->set_var('territory',dwho_i18n::get_territory_translated_list());
+		break;
+	case 'edit':
+		$result = $fm_save = $error = null;
+		if(isset($_QR['fm_send']) === false
+			&& isset($_QR['entity']) === true
+			&& isset($_QR['id']) === true
+			&& ($entity = $_QR['entity'])) {
+			$_TPL->set_var('entity', $entity);
+			$info = $appdirdphonebook->get_phonebook($entity, $_QR['id']);
+			$return = &$info;
+		} else if(isset($_QR['fm_send']) === true) {
+			$result = $appdirdphonebook->edit_phonebook($_QR['entity'], $_QRY->_orig['qstring']['id'], $_QR);
+			$param = array('act' => 'list', 'entity' => $entity);
+			$_QRY->go($_TPL->url('service/ipbx/pbx_services/phonebook'),$param);
+		}
+		$_TPL->set_var('id'              , $info['id']);
+		$_TPL->set_var('info'            , $return);
+		$_TPL->set_var('error'           , $error);
+		$_TPL->set_var('fm_save'         , $fm_save);
 		break;
 	case 'edit_contact':
 		if(is_array($_QRY->_orig) === false
@@ -179,7 +198,6 @@ switch($act)
 		$_TPL->set_var('search',$search);
 		$_TPL->set_var('sort',$sort);
 		break;
-	case 'edit':
 	case 'list':
 	case 'deletes':
 	default:

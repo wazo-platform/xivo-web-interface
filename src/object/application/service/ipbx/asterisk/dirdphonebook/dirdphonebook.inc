@@ -73,6 +73,11 @@ class xivo_application_service_asterisk_dirdphonebook extends xivo_application_a
 		$this->_phonebook_resource->edit_contact($entity, $phonebook_id, $contact_uuid, $dird_fields);
 	}
 
+	function edit_phonebook($entity, $phonebook_id, $body)
+	{
+		return($this->_phonebook_resource->edit_phonebook($entity, $phonebook_id, $body));
+	}
+
 	private function _webi_to_dird($query)
 	{
 		$normal_fields = $query['phonebook'];
@@ -171,6 +176,11 @@ class xivo_application_service_asterisk_dirdphonebook extends xivo_application_a
 	{
 		$contacts = $this->_phonebook_resource->list_contacts($entity, $phonebook_id);
 		return(count($contacts));
+	}
+
+	function get_phonebook($entity, $phonebook_id)
+	{
+		return($this->_phonebook_resource->get_phonebook($entity, $phonebook_id));
 	}
 
 	function get_phonebook_cnt()

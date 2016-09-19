@@ -138,6 +138,16 @@ $page = $url->pager($pager['pages'],
 		</td>
 		<td class="txt-right">
 <?php
+	echo $url->href_html($url->img_html('img/site/button/edit.gif',
+										$this->bbf('opt_edit'),
+										'border="0"'),
+										'service/ipbx/pbx_services/phonebook',
+										array(  'act'	=> 'edit',
+												'id'	=> $ref['id'],
+												'page'	=> $pager['page'],
+												'entity' => $ref['entity']),
+										null,
+										$this->bbf('opt_edit'));
 	echo $url->href_html($url->img_html('img/site/button/delete.gif',
 										$this->bbf('opt_delete'),
 										'border="0"'),
