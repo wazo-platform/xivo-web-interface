@@ -54,6 +54,14 @@ class PhonebookResource {
 		$response = $this->client->send($request);
 	}
 
+	public function edit_phonebook($entity, $phonebook_id, $fields)
+	{
+		$url = sprintf("/tenants/%s/phonebooks/%d", $entity, $phonebook_id);
+		$request = Request::json_put($url,$fields,null,$this->_headers);
+		$response = $this->client->send($request);
+		return($response->decode_or_raise());
+	}
+
 	public function get_contact($entity, $phonebook_id, $contact_uuid)
 	{
 		$url = sprintf("/tenants/%s/phonebooks/%d/contacts/%s", $entity, $phonebook_id, $contact_uuid);
@@ -63,6 +71,21 @@ class PhonebookResource {
 		if($response->status_ok()
 		&& ($body = $response->decode_or_raise())
 		&& empty($body) === false) {
+			return($body);
+		}
+
+		return(false);
+	}
+
+	public function get_phonebook($entity, $phonebook_id)
+	{
+		$url = sprintf("/tenants/%s/phonebooks/%d", $entity, $phonebook_id);
+		$request = Request::json_get($url,"",null,$this->_headers);
+
+		if(($response = $this->client->send($request))
+			&& $response->status_ok()
+			&& ($body = $response->decode_or_raise())
+			&& empty($body) === false) {
 			return($body);
 		}
 

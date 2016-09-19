@@ -28,21 +28,21 @@ if ($this->get_var('entity_list') === false) {
 		echo $this->bbf('no_internal_context_for_this_entity');
 } else {
 		echo	$form->select(array('desc'	=> $this->bbf('fm_phonebook_entity'),
-									'name'		=> 'phonebook[entity]',
-									'labelid'	=> 'callfilter-entity',
+									'name'		=> 'entity',
+									'labelid'	=> 'phonebook-entity',
 									'key'		=> 'displayname',
 									'altkey'	=> 'name',
-									'selected'  => $info['phonebook']['entity'],
+									'selected'  => $this->get_var('entity'),
 									'error'	=> $this->bbf_args('error',
 								$this->get_var('error', 'phonebook', 'entity'))),
 						$this->get_var('entities'));
 }
 
 $params = array('desc' => $this->bbf('fm_phonebook_name'),
-				'name' => 'phonebook[name]',
+				'name' => 'name',
 				'labelid' => 'phonebook-name',
 				'size' => 15,
-				'value' => '');
+				'value' => $info['name']);
 echo $form->text($params);
 ?>
 
@@ -55,7 +55,7 @@ echo $form->text($params);
 <?php
 	echo  $form->textarea(array('paragraph'	=> false,
 								'label'	=> false,
-								'name' => 'phonebook[description]',
+								'name' => 'description',
 								'id' => 'it-phonebook-description',
 								'cols' => 60,
 								'rows' => 5,
