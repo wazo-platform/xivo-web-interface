@@ -23,7 +23,7 @@ dwho_file::required(array(XIVO_PATH_OBJECT,'application','service','ipbx','aster
 require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'client.inc'));
 require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'dird', 'phonebook', 'phonebook.inc'));
 
-class xivo_application_service_asterisk_dirdphonebook extends xivo_application_asterisk_abstract
+class xivo_application_service_asterisk_phonebook extends xivo_application_asterisk_abstract
 {
 	var $_phonebook_module = false;
 	var $_entity_module = false;

@@ -35,7 +35,7 @@ if($search !== '')
 
 
 $modentity = &$_XOBJ->get_module('entity');
-$appdirdphonebook = &$ipbx->get_application('dirdphonebook');
+$appphonebook = &$ipbx->get_application('phonebook');
 
 switch($act)
 {
@@ -46,7 +46,7 @@ switch($act)
 			$name = $_QR['name'];
 			$description = $_QR['description'];
 
-			$appdirdphonebook->add_phonebook($entity, $name, $description);
+			$appphonebook->add_phonebook($entity, $name, $description);
 
 			$_QRY->go($_TPL->url('service/ipbx/pbx_services/phonebook'),'act=list');
 		}
@@ -67,7 +67,7 @@ switch($act)
 			$entity = $_QRY->_orig['qstring']['entity'];
 			$phonebook_id = (int)$_QRY->_orig['qstring']['phonebook'];
 
-			$result = $appdirdphonebook->add_contact($entity, $phonebook_id, $_QR);
+			$result = $appphonebook->add_contact($entity, $phonebook_id, $_QR);
 
 			$param = array('act' => 'list_contacts',
 						   'entity' => $entity,
@@ -92,10 +92,10 @@ switch($act)
 			&& isset($_QR['id']) === true
 			&& ($entity = $_QR['entity'])) {
 			$_TPL->set_var('entity', $entity);
-			$info = $appdirdphonebook->get_phonebook($entity, $_QR['id']);
+			$info = $appphonebook->get_phonebook($entity, $_QR['id']);
 			$return = &$info;
 		} else if(isset($_QR['fm_send']) === true) {
-			$result = $appdirdphonebook->edit_phonebook($_QR['entity'], $_QRY->_orig['qstring']['id'], $_QR);
+			$result = $appphonebook->edit_phonebook($_QR['entity'], $_QRY->_orig['qstring']['id'], $_QR);
 			$param = array('act' => 'list', 'entity' => $entity);
 			$_QRY->go($_TPL->url('service/ipbx/pbx_services/phonebook'),$param);
 		}
@@ -118,7 +118,7 @@ switch($act)
 		$contact_uuid = $_QRY->_orig['qstring']['id'];
 
 		if(isset($_QR['fm_send']) === false
-			&& ($info = $appdirdphonebook->get_contact($entity, $phonebook_id, $contact_uuid)) === false) {
+			&& ($info = $appphonebook->get_contact($entity, $phonebook_id, $contact_uuid)) === false) {
 			$param = array('act' => 'list_contacts', 'entity' => $entity, 'phonebook' => $phonebook_id);
 			$_QRY->go($_TPL->url('service/ipbx/pbx_services/phonebook'),$param);
 		}
@@ -128,7 +128,7 @@ switch($act)
 
 		if(isset($_QR['fm_send']) === true && dwho_issa('phonebook',$_QR) === true)
 		{
-			$result = $appdirdphonebook->edit_contact($entity, $phonebook_id, $contact_uuid, $_QR);
+			$result = $appphonebook->edit_contact($entity, $phonebook_id, $contact_uuid, $_QR);
 
 			$param = array('act' => 'list_contacts',
 						   'entity' => $entity,
@@ -156,7 +156,7 @@ switch($act)
 		$param['act'] = 'list';
 
 		if(isset($_QR['entity']) && isset($_QR['id'])) {
-			$appdirdphonebook->delete_phonebook($_QR['entity'], (int)$_QR['id']);
+			$appphonebook->delete_phonebook($_QR['entity'], (int)$_QR['id']);
 		}
 		$_QRY->go($_TPL->url('service/ipbx/pbx_services/phonebook'),$param);
 		break;
@@ -172,7 +172,7 @@ switch($act)
 			$param['entity'] = $entity;
 			$param['phonebook'] = $phonebook_id;
 
-			$appdirdphonebook->delete_contact($entity,$phonebook_id,$contact_uuid);
+			$appphonebook->delete_contact($entity,$phonebook_id,$contact_uuid);
 		}
 
 		$_QRY->go($_TPL->url('service/ipbx/pbx_services/phonebook'),$param);
@@ -187,8 +187,8 @@ switch($act)
 		$limit[0] = $prevpage * $nbbypage;
 		$limit[1] = $nbbypage;
 
-		$list = $appdirdphonebook->get_contact_list($entity, $phonebook_id, $sort, $limit);
-		$total = $appdirdphonebook->get_contact_cnt($entity, $phonebook_id);
+		$list = $appphonebook->get_contact_list($entity, $phonebook_id, $sort, $limit);
+		$total = $appphonebook->get_contact_cnt($entity, $phonebook_id);
 
 		$_TPL->set_var('entity', $entity);
 		$_TPL->set_var('phonebook_id', $phonebook_id);
@@ -209,8 +209,8 @@ switch($act)
 		$limit[0] = $prevpage * $nbbypage;
 		$limit[1] = $nbbypage;
 
-		$list = $appdirdphonebook->get_phonebook_list($sort,$limit);
-		$total = $appdirdphonebook->get_phonebook_cnt();
+		$list = $appphonebook->get_phonebook_list($sort,$limit);
+		$total = $appphonebook->get_phonebook_cnt();
 
 		if($list === false && $total > 0 && $prevpage > 0)
 		{
