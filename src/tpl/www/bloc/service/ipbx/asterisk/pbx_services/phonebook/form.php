@@ -27,7 +27,7 @@ $element = $this->get_var('element');
 if ($this->get_var('entity_list') === false) {
 		echo $this->bbf('no_internal_context_for_this_entity');
 } else {
-	    echo	$form->select(array('desc'	=> $this->bbf('fm_phonebook_entity'),
+		echo	$form->select(array('desc'	=> $this->bbf('fm_phonebook_entity'),
 									'name'		=> 'phonebook[entity]',
 									'labelid'	=> 'callfilter-entity',
 									'key'		=> 'displayname',
