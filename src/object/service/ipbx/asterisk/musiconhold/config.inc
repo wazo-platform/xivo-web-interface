@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -56,10 +56,10 @@ $array['element']['application'] = array();
 $array['element']['application']['default'] = '/usr/bin/madplay --mono -a -10 -R 8000 --output=raw:-';
 $array['element']['application']['null'] = true;
 
-$array['element']['random'] = array();
-$array['element']['random']['value'] = array('no','yes');
-$array['element']['random']['default'] = 'no';
-$array['element']['random']['set'] = true;
+$array['element']['sort'] = array();
+$array['element']['sort']['value'] = array('alpha', 'random');
+$array['element']['sort']['default'] = '';
+$array['element']['sort']['null'] = true;
 
 $array['element']['filename'] = array();
 $array['element']['filename']['unset'] = true;
@@ -68,7 +68,7 @@ $array['filter'] = array();
 $array['filter']['category'] = array('nokey' => array('general'),'regexp' => '/^[a-z0-9_-]+$/','minlen' => 1,'maxlen' => 20);
 $array['filter']['mode'] = array('key' => array('files','custom','quietmp3','mp3','mp3nb','quietmp3nb'));
 $array['filter']['application'] = array('set' => false,'chk' => 2,'maxlen' => 128);
-$array['filter']['random'] = array('bool' => true);
+$array['filter']['sort'] = array('set' => false, 'chk' => 2, 'key' => array('alpha', 'random'));
 $array['filter']['filename'] = array('set' => false,'regexp' => '/^['.XIVO_SRE_IPBX_AST_REGEXP_AUDIO_FILE_PATTERN.']'.
 								XIVO_SRE_IPBX_AST_REGEXP_AUDIO_FILE_LENGTH.'\.[a-zA-Z0-9]{2,5}$/');
 
