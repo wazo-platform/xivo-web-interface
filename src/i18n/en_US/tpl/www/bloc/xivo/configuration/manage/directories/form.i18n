@@ -37,6 +37,18 @@ Custom
 ; fm_xivo_custom_ca_path
 Custom CA certificate:
 
+; fm_dird_tenant
+Tenant:
+
+; hlp_dird_tenant
+The phonebook's tenant
+
+; fm_dird_phonebook
+Phonebook:
+
+; hlp_dird_phonebook
+The phonebook's name
+
 ; hlp_xivo_custom_ca_path
 Path to a file of concatenated CA certificates in PEM format
 

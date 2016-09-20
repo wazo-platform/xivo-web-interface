@@ -99,18 +99,18 @@ $element = $this->get_var('element');
 	</fieldset>
 	<fieldset id='fld-dird-form'>
 <?php
-	echo  $form->text(array('desc' => 'Tenant:',
+	echo  $form->text(array('desc' => $this->bbf('fm_dird_tenant'),
 							'name' => 'dird_tenant',
 							'labelid' => 'dird-tenant',
 							'size' => 20,
-							'help' => 'The phonebook\'s tenant',
+							'help' => $this->bbf('hlp_dird_tenant'),
 							'default' => $element['dird_tenant']['default'],
 							'value' => $info['dird_tenant'])),
-		  $form->text(array('desc' => 'Phonebook:',
+		  $form->text(array('desc' => $this->bbf('fm_dird_phonebook'),
 							'name' => 'dird_phonebook',
 							'labelid' => 'dird-phonebook',
 							'size' => 20,
-							'help' => 'The phonebook\'s name',
+							'help' => $this->bbf('hlp_dird_phonebook'),
 							'default' => $element['dird_phonebook']['default'],
 							'value' => $info['dird_phonebook']));
 ?>
