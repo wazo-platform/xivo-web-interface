@@ -1,6 +1,6 @@
 /*
  * XiVO Web-Interface
- * Copyright (C) 2015  Avencall
+ * Copyright (C) 2015-2016  Avencall
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,9 +19,14 @@
 function update_directory_type_info() {
 	var directory_type = $('#it-type').val();
 	if (directory_type == '2') {
+		$('#fld-dird-form').hide();
 		$('#fld-xivo-form').show();
+	} else if (directory_type == '4') {
+		$('#fld-xivo-form').hide();
+		$('#fld-dird-form').show();
 	} else {
 		$('#fld-xivo-form').hide();
+		$('#fld-dird-form').hide();
 	}
 }
 

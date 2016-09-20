@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2015  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -35,6 +35,7 @@ define('XIVO_PHONEBOOK_TYPE_CSV_FILE', 0);
 define('XIVO_PHONEBOOK_TYPE_WEBSERVICES', 1);
 define('XIVO_PHONEBOOK_TYPE_XIVO', 2);
 define('XIVO_PHONEBOOK_TYPE_PHONEBOOK', 3);
+define('XIVO_PHONEBOOK_TYPE_DIRD_PHONEBOOK', 4);
 
 $types = array(
 	XIVO_PHONEBOOK_TYPE_CSV_FILE => array(
@@ -48,7 +49,11 @@ $types = array(
 		'name' => 'XiVO'),
 	XIVO_PHONEBOOK_TYPE_PHONEBOOK => array(
 		'type' => 'phonebook',
-		'name' => 'Phonebook'));
+		'name' => 'Phonebook'),
+	XIVO_PHONEBOOK_TYPE_DIRD_PHONEBOOK => array(
+		'type' => 'local_dird_phonebook',
+		'name' => 'Local dird phonebook'),
+	);
 
 function set_xivo_verify_certificate(&$data)
 {

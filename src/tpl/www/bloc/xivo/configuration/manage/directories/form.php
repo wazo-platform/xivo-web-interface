@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2015  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -95,6 +95,24 @@ $element = $this->get_var('element');
 			'value'		=> $info['xivo_custom_ca_path'],
 			'error'		=> $this->bbf_args('error',
 					$this->get_var('error', 'xivo_custom_ca_path')) ));
+?>
+	</fieldset>
+	<fieldset id='fld-dird-form'>
+<?php
+	echo  $form->text(array('desc' => 'Tenant:',
+							'name' => 'dird_tenant',
+							'labelid' => 'dird-tenant',
+							'size' => 20,
+							'help' => 'The phonebook\'s tenant',
+							'default' => '',
+							'value' => '')),
+		  $form->text(array('desc' => 'Phonebook:',
+							'name' => 'dird_phonebook',
+							'labelid' => 'dird-phonebook',
+							'size' => 20,
+							'help' => 'The phonebook\'s name',
+							'default' => '',
+							'value' => ''));
 ?>
 	</fieldset>
 	<div class="fm-paragraph fm-description">
