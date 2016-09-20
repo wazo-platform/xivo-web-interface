@@ -51,7 +51,7 @@ $types = array(
 		'type' => 'phonebook',
 		'name' => 'Phonebook'),
 	XIVO_PHONEBOOK_TYPE_DIRD_PHONEBOOK => array(
-		'type' => 'local_dird_phonebook',
+		'type' => 'dird_phonebook',
 		'name' => 'Local dird phonebook'),
 	);
 
