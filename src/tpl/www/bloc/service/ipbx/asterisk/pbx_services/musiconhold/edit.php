@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -73,11 +73,14 @@ $info = $this->get_var('info');
 				  'default'	=> $element['application']['default'],
 				  'value'	=> $info['application'])),
 
-		$form->checkbox(array('desc'	=> $this->bbf('fm_random'),
-				      'name'	=> 'random',
-				      'labelid'	=> 'random',
-				      'default'	=> $element['random']['default'],
-				      'checked'	=> $info['random'])),
+		$form->select(array('desc'	=> $this->bbf('fm_sort'),
+				    'name'	=> 'sort',
+				    'labelid'	=> 'sort',
+				    'empty'	=> true,
+				    'key'	=> false,
+				    'default'	=> $element['sort']['default'],
+				    'selected' => $info['sort']),
+				$element['sort']['value']),
 
 		$form->submit(array('name'	=> 'submit',
 				    'id'	=> 'it-submit',
