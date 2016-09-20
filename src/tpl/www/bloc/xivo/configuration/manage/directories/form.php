@@ -104,15 +104,15 @@ $element = $this->get_var('element');
 							'labelid' => 'dird-tenant',
 							'size' => 20,
 							'help' => 'The phonebook\'s tenant',
-							'default' => '',
-							'value' => '')),
+							'default' => $element['dird_tenant']['default'],
+							'value' => $info['dird_tenant'])),
 		  $form->text(array('desc' => 'Phonebook:',
 							'name' => 'dird_phonebook',
 							'labelid' => 'dird-phonebook',
 							'size' => 20,
 							'help' => 'The phonebook\'s name',
-							'default' => '',
-							'value' => ''));
+							'default' => $element['dird_phonebook']['default'],
+							'value' => $info['dird_phonebook']));
 ?>
 	</fieldset>
 	<div class="fm-paragraph fm-description">

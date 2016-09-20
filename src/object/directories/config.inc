@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2015  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -54,6 +54,14 @@ $array['element']['xivo_custom_ca_path'] = array();
 $array['element']['xivo_custom_ca_path']['default'] = '';
 $array['element']['xivo_custom_ca_path']['null'] = true;
 
+$array['element']['dird_tenant'] = array();
+$array['element']['dird_tenant']['default'] = '';
+$array['element']['dird_tenant']['null'] = true;
+
+$array['element']['dird_phonebook'] = array();
+$array['element']['dird_phonebook']['default'] = '';
+$array['element']['dird_phonebook']['null'] = true;
+
 
 dwho::load_class('dwho_network');
 
@@ -66,5 +74,7 @@ $array['filter']['xivo_username'] = array('set' => false, 'chk' => 2, 'maxlen' =
 $array['filter']['xivo_password'] = array('set' => false, 'chk' => 2, 'maxlen' => 64, 'cast' => 'alnumpunct');
 $array['filter']['xivo_verify_certificate'] = array('pg_bool' => true);
 $array['filter']['xivo_custom_ca_path'] = array('set' => false, 'chk' => 2, 'maxlen' => 200, 'cast' => 'alnumpunct');
+$array['filter']['dird_tenant'] = array('set' => false, 'chk' => 2, 'maxlen' => 64, 'cast' => 'alnumpunct');
+$array['filter']['dird_phonebook'] = array('set' => false, 'chk' => 2, 'maxlen' => 64, 'cast' => 'alnumpunct');
 
 ?>

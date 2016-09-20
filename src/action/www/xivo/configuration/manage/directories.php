@@ -88,6 +88,8 @@ switch($act)
 			$data['dirtype']     = $types[$_QR['type']]['type'];
 			$data['xivo_username'] = $_QR['xivo_username'];
 			$data['xivo_password'] = $_QR['xivo_password'];
+			$data['dird_tenant']   = $_QR['dird_tenant'];
+			$data['dird_phonebook'] = $_QR['dird_phonebook'];
 			set_xivo_verify_certificate($data);
 
 			if($_QR['type'] == XIVO_PHONEBOOK_TYPE_CSV_FILE)
@@ -145,6 +147,8 @@ switch($act)
 			$data['dirtype'] = $types[$_QR['type']]['type'];
 			$data['xivo_username'] = $_QR['xivo_username'];
 			$data['xivo_password'] = $_QR['xivo_password'];
+			$data['dird_tenant']   = $_QR['dird_tenant'];
+			$data['dird_phonebook'] = $_QR['dird_phonebook'];
 			set_xivo_verify_certificate($data);
 
 			if($_QR['type'] == XIVO_PHONEBOOK_TYPE_CSV_FILE)
