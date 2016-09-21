@@ -373,24 +373,6 @@ abstract class xivo_user_abstract extends xivo_libdatastorage_abstract
 		return($this->_acl);
 	}
 
-	function load_authent()
-	{
-		$type = 'xivo';
-
-		$dso = dwho_gct::get('DWHO_DSO');
-		$type = $dso->get_type();
-		$name = 'xivo_authent_'.$type;
-		$dir = dwho_file::joinpath(XIVO_PATH_OBJECT,'user','authent');
-
-		if(xivo::load_class($name,$dir,$type,false) === false)
-		{
-			trigger_error('Failed to load user authentication',E_USER_ERROR);
-			return(false);
-		}
-
-		return(new $name($dso,$authent));
-	}
-
 	function call_auth($func,$args=null)
 	{
 		$func = (string) $func;

@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -63,10 +63,10 @@ class xivo_user_visitor extends xivo_user_abstract
 
 	function auth_chk($login,$pass)
 	{
-		if($this->_ini['authent']['type'] !== 'internal' && $this->_authent->chk($login,$pass) === true)
+		if($this->_authent->chk($login,$pass) === true)
 			return(XIVO_USER__USER);
 
-		$this->_authent = $this->load_authent('internal');
+		$this->_authent = $this->load_authent();
 
 		if(($type = xivo_user::meta_to_type($this->_authent->chk($login,$pass,true))) > 0)
 			return($type);
