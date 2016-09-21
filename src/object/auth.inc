@@ -1,7 +1,7 @@
 <?php
 #
 # XiVO Web-Interface
-# Copyright (C) 2013-2014  Avencall
+# Copyright (C) 2013-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@ class xivo_auth
 		if($this->load_ressource($name,$param) === true)
 			$r = &$this->_ressource[$name];
 
-		return(($ref = &$r));
+		return($r);
 	}
 
 	public function load_ressource($name,$param=null)
