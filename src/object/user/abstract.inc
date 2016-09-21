@@ -375,20 +375,7 @@ abstract class xivo_user_abstract extends xivo_libdatastorage_abstract
 
 	function load_authent()
 	{
-		$ini = xivo_user::load_get_init();
-
-		if(dwho_issa('authent',$ini) === false)
-			return(false);
-
-		$authent = &$ini['authent'];
-
-		if(isset($authent['type']) === false)
-		{
-			trigger_error('Missing type user authentication in user init file',E_USER_ERROR);
-			return(false);
-		}
-
-		$type = $authent['type'];
+		$type = 'xivo';
 
 		$dso = dwho_gct::get('DWHO_DSO');
 		$type = $dso->get_type();
