@@ -37,6 +37,18 @@ Personnalisé
 ; fm_xivo_custom_ca_path
 Certificat CA personnalisé :
 
+; fm_dird_tenant
+Locataire :
+
+; hlp_dird_tenant
+Nom du locataire du carnet d'addresse
+
+; fm_dird_phonebook
+Carnet d'addresse :
+
+; hlp_dird_phonebook
+Nom du carnet d'addresse
+
 ; hlp_xivo_custom_ca_path
 Chemin vers un fichier contenant la concaténation de certificats CA en format PEM
 
