@@ -28,7 +28,7 @@ dwho_file::required(array(XIVO_PATH_OBJECT,'service','ipbx','asterisk','config',
 dwho_file::required(array(XIVO_PATH_OBJECT,'service','ipbx','asterisk.inc',),true);
 dwho_file::required(array(XIVO_PATH_OBJECT,'application','xivo.inc'),true);
 
-require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'http', 'client.inc'));
+require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'client.inc'));
 require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'wizard', 'wizard.inc'));
 
 class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_abstract
@@ -53,7 +53,7 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 		$this->_filter = new dwho_filter();
 		$this->_http_response = dwho_http::factory('response');
 
-		$nonraising_client = Client::default_config();
+		$nonraising_client = ConfdClient::default_config();
 		$this->_confd_wizard = new WizardResource($nonraising_client);;
 
 		if(dwho_issa('_wizard',$_SESSION) === false)

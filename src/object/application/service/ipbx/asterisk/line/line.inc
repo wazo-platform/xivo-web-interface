@@ -20,7 +20,7 @@
 
 
 dwho_file::required(array(XIVO_PATH_OBJECT,'application','service','ipbx','asterisk.inc'),true);
-require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'http', 'client.inc'));
+require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'client.inc'));
 require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'facade', 'line.inc'));
 
 class xivo_application_service_asterisk_line extends xivo_application_asterisk_abstract
@@ -50,7 +50,7 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 		|| ($this->_entity = &$_XOBJ->get_module('entity')) === false)
 			return(false);
 
-		$client = Client::default_config();
+		$client = ConfdClient::default_config();
 		$this->_line_facade = new LineFacade($client);
 		$this->_sccp_option_mapper = new SCCPOptionMapper();
 		$this->_sip_option_mapper = new SIPOptionMapper();

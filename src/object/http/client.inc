@@ -244,22 +244,6 @@ class Client {
 		$this->raise = $raise;
 	}
 
-	static function default_config($raise=false) {
-		$dir = dwho_file::joinpath(XIVO_PATH_OBJECT, 'confd', 'abstract', 'config');
-
-		if(($config = dwho_gat::get_file($dir)) === false) {
-			trigger_error("could not load default config for confd");
-			return(false);
-		}
-
-		$confd_config = $config['confd'];
-		$url = "http://" . $confd_config['host']
-			. ":" . (string)$confd_config['port']
-			. "/" . $confd_config['protocol'];
-
-		return new Client($url, $confd_config['connect_timeout'], $confd_config['timeout'], $raise);
-	}
-
 	function send($request)
 	{
 		$curl = $this->prepare_curl($request);
