@@ -28,7 +28,7 @@ dwho_file::required(array(XIVO_PATH_OBJECT,'service','ipbx','asterisk','config',
 dwho_file::required(array(XIVO_PATH_OBJECT,'service','ipbx','asterisk.inc',),true);
 dwho_file::required(array(XIVO_PATH_OBJECT,'application','xivo.inc'),true);
 
-require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'client.inc'));
+require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'http', 'client.inc'));
 require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'wizard', 'wizard.inc'));
 
 class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_abstract

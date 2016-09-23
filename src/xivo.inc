@@ -27,7 +27,7 @@ require_once(XIVO_PATH_OBJECTCONF.DIRECTORY_SEPARATOR.'define.inc');
 
 require_once(DWHO_PATH_ROOT.DIRECTORY_SEPARATOR.'dwho.inc');
 
-require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'client.inc'));
+require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'http', 'client.inc'));
 require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'wizard', 'wizard.inc'));
 
 class xivo extends dwho
