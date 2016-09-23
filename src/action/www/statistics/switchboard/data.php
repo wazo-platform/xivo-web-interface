@@ -26,7 +26,7 @@ if(xivo_user::chk_acl('switchboard', 'data') === false)
 
 $_I18N->load_file('tpl/www/bloc/statistics/switchboard');
 
-$client = Client::default_config();
+$client = ConfdClient::default_config();
 $switchboards_api = new SwitchboardResource($client);
 
 $result = false;

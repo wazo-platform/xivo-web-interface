@@ -46,7 +46,7 @@ class xivo extends dwho
 		if(($xivo = dwho_gat::load_get('xivo',XIVO_PATH_OBJECTCONF)) !== false)
 			$this->_conf['xivo'] = dwho_array_merge_replace_recursive($this->_conf['xivo'],$xivo);
 
-		$raising_client = Client::default_config(true);
+		$raising_client = ConfdClient::default_config(true);
 		$this->_confd_wizard = new WizardResource($raising_client);;
 
 		$this->_init_cfg();

@@ -53,7 +53,7 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 		$this->_filter = new dwho_filter();
 		$this->_http_response = dwho_http::factory('response');
 
-		$nonraising_client = Client::default_config();
+		$nonraising_client = ConfdClient::default_config();
 		$this->_confd_wizard = new WizardResource($nonraising_client);;
 
 		if(dwho_issa('_wizard',$_SESSION) === false)

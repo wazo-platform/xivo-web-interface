@@ -50,7 +50,7 @@ class xivo_application_service_asterisk_line extends xivo_application_asterisk_a
 		|| ($this->_entity = &$_XOBJ->get_module('entity')) === false)
 			return(false);
 
-		$client = Client::default_config();
+		$client = ConfdClient::default_config();
 		$this->_line_facade = new LineFacade($client);
 		$this->_sccp_option_mapper = new SCCPOptionMapper();
 		$this->_sip_option_mapper = new SIPOptionMapper();
