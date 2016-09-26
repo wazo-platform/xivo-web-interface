@@ -2,7 +2,8 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016  Avencall
+# Copyright (C) 2016  Proformatique Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,7 +28,13 @@ $context_list = $this->get_var('context_list');
 $outcalltrunk = $this->get_var('outcalltrunk');
 $rightcall    = $this->get_var('rightcall');
 $schedules    = $this->get_var('schedules');
+$info         = $this->get_var('info');
 
+if ($info['outcall']['hangupringtime'] === null) {
+	$info['outcall']['hangupringtime'] = $element['userfeatures']['ringseconds']['default'];
+} elseif ($info['outcall']['hangupringtime'] === '0') {
+	$info['outcall']['hangupringtime'] = '';
+}
 ?>
 
 <div id="sb-part-first" class="b-nodisplay">
@@ -80,18 +87,14 @@ endif;
 				  'error'	=> $this->bbf_args('error',
 						   $this->get_var('error', 'outcall', 'preprocess_subroutine')) )),
 
-		$form->select(array('desc'	=> $this->bbf('fm_outcall_hangupringtime'),
-				    'name'	    => 'outcall[hangupringtime]',
-				    'labelid'	=> 'outcall-hangupringtime',
-				    'key'	    => false,
-				    'bbf'	    => 'fm_outcall_hangupringtime-opt',
-				    'bbfopt'	=> array('argmode'	=> 'paramvalue',
-							 'time'		=> array(
-									'from'		=> 'second',
-									'format'	=> '%M%s')),
-				    'default'	=> $element['outcall']['hangupringtime']['default'],
-				    'selected'	=> $this->get_var('info','outcall','hangupringtime')),
-			      $element['outcall']['hangupringtime']['value']);
+		$form->text(array('desc' => $this->bbf('fm_outcall_hangupringtime'),
+				    'name'    => 'outcall[hangupringtime]',
+				    'labelid' => 'outcall-hangupringtime',
+				    'size'    => 15,
+				    'help'    => $this->bbf('hlp_fm_outcall_hangupringtime'),
+				    'value'   => $info['outcall']['hangupringtime'],
+				    'error'   => $this->bbf_args('error',
+						    $this->get_var('error', 'outcall', 'hangupringtime')) ));
 
 if($outcalltrunk['list'] !== false):
 ?>

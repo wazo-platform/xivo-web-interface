@@ -2,7 +2,8 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016  Avencall
+# Copyright (C) 2016  Proformatique Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -45,11 +46,7 @@ $array['element']['description'] = array();
 $array['element']['description']['default'] = '';
 
 $array['element']['hangupringtime'] = array();
-$array['element']['hangupringtime']['value'] = array(0,15,30,45,60,75,90,
-						     105,120,135,150,165,180,195,
-						     210,225,240,255,270,285,300);
 $array['element']['hangupringtime']['default'] = 0;
-$array['element']['hangupringtime']['setdef'] = true;
 
 $array['element']['commented'] = array();
 $array['element']['commented']['value'] = array(0,1);
@@ -63,11 +60,7 @@ $array['filter']['useenum'] = array('bool' => true);
 $array['filter']['internal'] = array('bool' => true);
 $array['filter']['preprocess_subroutine'] = array('set' => false,'chk' => 2,'callback' => 'xivo_service_asterisk::chk_context');
 $array['filter']['description'] = array('set' => false,'chk' => 2,'maxlen' => 1000,'cast' => 'sgraph_crlf_tab','eol' => true);
-$array['filter']['hangupringtime'] = array('set'	=> false,
-					   'chk'	=> 2,
-					   'key' => array(0,15,30,45,60,75,90,
-							  105,120,135,150,165,180,
-							  210,225,240,255,270,285,300));
+$array['filter']['hangupringtime'] = array('set' => false,'chk' => 2,'cast' => 'uint','between' => array(0,300));
 $array['filter']['commented'] = array('bool' => true);
 
 ?>

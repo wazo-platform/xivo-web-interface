@@ -237,6 +237,10 @@ class xivo_application_service_asterisk_outcall extends xivo_application_asteris
 
 		$arr['commented'] = false;
 
+		if($arr['hangupringtime'] === '') {
+			$arr['hangupringtime'] = 0;
+		}
+
 		if(($rs = $this->_outcall->chk_values($arr)) === false)
 		{
 			$this->_set_result('outcall',$this->_outcall->get_filter_result());
