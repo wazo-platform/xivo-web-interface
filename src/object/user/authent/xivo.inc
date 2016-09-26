@@ -18,24 +18,23 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'auth', 'abstract.inc'));
-dwho_file::required(array(XIVO_PATH_OBJECT,'user','authent','abstract','auth.inc'),true);
+require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'auth','client.inc'));
+require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'auth','token','token.inc'));
 
 class xivo_authent_xivo
 {
-	var $_auth = null;
+	private $client = null;
+	private $token_resource = null;
 
 	public function __construct($param=array())
 	{
-		$_RAPI = &dwho_gct::get('xivo_auth');
-		if($_RAPI === false) {
+		if(($this->client = AuthClient::default_config()) === false) {
 			trigger_error('Invalid AUTH object',E_USER_ERROR);
 			return(false);
 		}
 
-		$this->_auth = $_RAPI->get_ressource('auth');
-		if($this->_auth === false) {
-			trigger_error('Cannot load auth resource',E_USER_ERROR);
+		if(($this->token_resource = new TokenResource($this->client)) === false) {
+			trigger_error('Invalid TokenResource',E_USER_ERROR);
 			return(false);
 		}
 	}
@@ -43,9 +42,13 @@ class xivo_authent_xivo
 	function chk($login,$pass,$meta=false)
 	{
 		if(isset($_SESSION['_USR']->token)) {
-			$tk = $this->_auth->get_token($_SESSION['_USR']->token);
+			$tk = $this->token_resource->get($_SESSION['_USR']->token);
 		} else {
-			$tk = $this->_auth->create_token($login, $pass, 'xivo_admin');
+			$tk = $this->token_resource->create($login, $pass, 'xivo_admin');
+		}
+
+		if(!$tk) {
+			return(false);
 		}
 
 		$token = $tk['data']['token'];
@@ -59,7 +62,7 @@ class xivo_authent_xivo
 
 	function logoff()
 	{
-		$this->_auth->delete_token($_SESSION['_USR']->token);
+		$this->token_resource->delete($_SESSION['_USR']->token);
 	}
 }
 

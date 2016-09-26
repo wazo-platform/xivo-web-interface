@@ -20,23 +20,27 @@
 
 require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'http', 'client.inc'));
 
-class ConfdClient extends Client
+class AuthClient extends Client
 {
 	static function default_config($raise=false) {
-		$dir = dwho_file::joinpath(XIVO_PATH_OBJECT, 'confd', 'abstract', 'config');
+		$dir = dwho_file::joinpath(XIVO_PATH_OBJECT, 'auth', 'abstract', 'config');
 
 		if(($config = dwho_gat::get_file($dir)) === false) {
-			trigger_error("could not load default config for confd");
+			trigger_error("could not load default config for xivo-auth");
 			return(false);
 		}
 
-		$confd_config = $config['confd'];
-		$url = "http://" . $confd_config['host']
-			. ":" . (string)$confd_config['port']
-			. "/" . $confd_config['protocol'];
-		$verify = true;
+		$auth_config = $config['auth'];
+		$url = $auth_config['scheme']. "://" . $auth_config['host']
+			. ":" . (string)$auth_config['port']
+			. "/" . $auth_config['protocol'];
 
-		return new Client($url, $confd_config['connect_timeout'], $confd_config['timeout'], $verify, $raise);
+		return new Client(
+			$url,
+			$auth_config['connect_timeout'],
+			$auth_config['timeout'],
+			$auth_config['verify_certificate'],
+			$raise);
 	}
 }
 

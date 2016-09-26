@@ -45,6 +45,9 @@ class Request {
 	private $url = null;
 	private $body = null;
 	private $headers = null;
+	private $username = null;
+	private $password = null;
+	private $auth = null;
 
 	static private $json_headers = array(
 		'Content-Type: application/json',
@@ -131,6 +134,23 @@ class Request {
 		return $this->body;
 	}
 
+	public function set_basic_auth($username, $password)
+	{
+		$this->auth = 'basic';
+		$this->username = $username;
+		$this->password = $password;
+	}
+
+	public function get_basic_auth()
+	{
+		if($this->auth !== 'basic'
+			|| $this->username === null
+			|| $this->password === null) {
+			return(false);
+		}
+
+		return $this->username.':'.$this->password;
+	}
 }
 
 
@@ -237,11 +257,12 @@ class Client {
 	private $connect_timeout = null;
 	private $timeout = null;
 
-	function __construct($rooturl, $connect_timeout=10, $timeout=10, $raise=false) {
+	function __construct($rooturl, $connect_timeout=10, $timeout=10, $verify=false, $raise=false) {
 		$this->rooturl = $rooturl;
 		$this->connect_timeout = $connect_timeout;
 		$this->timeout = $timeout;
 		$this->raise = $raise;
+		$this->verify = $verify;
 	}
 
 	function send($request)
@@ -260,6 +281,11 @@ class Client {
 		curl_setopt($curl, CURLOPT_URL, $request->build_url($this->rooturl));
 		curl_setopt($curl, CURLOPT_HTTPHEADER, $request->get_headers());
 
+		if($this->verify === false) {
+			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+			curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+		}
+
 		$verb = $request->get_verb();
 		if($verb == "GET") {
 			curl_setopt($curl, CURLOPT_HTTPGET, true);
@@ -271,6 +297,10 @@ class Client {
 			curl_setopt($curl, CURLOPT_POSTFIELDS, $request->get_body());
 		} else if ($verb == "DELETE") {
 			curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'DELETE');
+		}
+
+		if(($auth_string = $request->get_basic_auth()) !== false) {
+			curl_setopt($curl, CURLOPT_USERPWD, $auth_string);
 		}
 
 		return $curl;

@@ -61,7 +61,6 @@ class xivo extends dwho
 		$this->_set_service();
 		$this->_set_stats();
 		$this->_set_confd();
-		$this->_set_auth();
 		$this->_set_manager();
 
 		if(dwho_constant('XIVO_WEBI_CONFIGURED',false) === true)

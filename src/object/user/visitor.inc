@@ -61,6 +61,11 @@ class xivo_user_visitor extends xivo_user_abstract
 		return(parent::call_auth($func,$args));
 	}
 
+	function load_authent()
+	{
+		return(new xivo_authent_xivo());
+	}
+
 	function auth_chk($login,$pass)
 	{
 		if($this->_authent->chk($login,$pass) === true)
