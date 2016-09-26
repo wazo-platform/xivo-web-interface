@@ -22,6 +22,19 @@ require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'http', 'client.inc'));
 
 class AuthClient extends Client
 {
+	private $auth_backend = null;
+
+	function __construct($url, $connect_timeout, $timeout, $verify, $raise, $backend)
+	{
+		parent::__construct($url, $connect_timeout, $timeout, $verify, $raise);
+		$this->auth_backend = $backend;
+	}
+
+	public function get_backend()
+	{
+		return $this->auth_backend;
+	}
+
 	static function default_config($raise=false) {
 		$dir = dwho_file::joinpath(XIVO_PATH_OBJECT, 'auth', 'abstract', 'config');
 
@@ -30,17 +43,27 @@ class AuthClient extends Client
 			return(false);
 		}
 
-		$auth_config = $config['auth'];
+		$default_auth_config = $config['auth'];
+		$ipbx_ini_config = dwho::load_init(XIVO_PATH_CONF.DWHO_SEP_DIR.'ipbx.ini');
+		if(isset($ipbx_ini_config['xivoauth']) === false) {
+			$auth_config = $default_auth_config;
+		} else {
+			$auth_config = array_merge(
+				$default_auth_config,
+				$ipbx_ini_config['xivoauth']);
+		}
+
 		$url = $auth_config['scheme']. "://" . $auth_config['host']
 			. ":" . (string)$auth_config['port']
 			. "/" . $auth_config['protocol'];
 
-		return new Client(
+		return new AuthClient(
 			$url,
 			$auth_config['connect_timeout'],
 			$auth_config['timeout'],
 			$auth_config['verify_certificate'],
-			$raise);
+			$raise,
+			$auth_config['backend']);
 	}
 }
 

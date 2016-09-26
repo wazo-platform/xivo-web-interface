@@ -1,7 +1,7 @@
 <?php
 #
 # XiVO Web-Interface
-# Copyright (C) 2013-2014  Avencall
+# Copyright (C) 2015-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,5 +27,6 @@ $array['auth']['verify_certificate'] = false;
 $array['auth']['protocol'] = '0.1';
 $array['auth']['connect_timeout'] = 180;
 $array['auth']['timeout'] = 90;
+$array['auth']['backend'] = 'xivo_admin';
 
 ?>

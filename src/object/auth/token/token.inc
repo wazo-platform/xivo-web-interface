@@ -21,17 +21,18 @@
 class TokenResource {
 
 	private $client = null;
+	private $backend = null;
 
 	function __construct($client) {
 		$this->client = $client;
+		$this->backend = $client->get_backend();
 	}
 
-	public function create($login, $password, $backend=null, $expiration=null)
+	public function create($login, $password, $expiration=null)
 	{
-		$backend = $backend === null ? 'xivo_admin' : $backend;
 		$expiration = $expiration === null ? 3600 * 24 : $expiration;
 
-		$body = array('backend' => $backend, 'expiration' => $expiration);
+		$body = array('backend' => $this->backend, 'expiration' => $expiration);
 
 		$request = Request::json_post('/token', $body);
 		$request->set_basic_auth($login, $password);

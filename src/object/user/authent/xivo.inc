@@ -44,7 +44,7 @@ class xivo_authent_xivo
 		if(isset($_SESSION['_USR']->token)) {
 			$tk = $this->token_resource->get($_SESSION['_USR']->token);
 		} else {
-			$tk = $this->token_resource->create($login, $pass, 'xivo_admin');
+			$tk = $this->token_resource->create($login, $pass);
 		}
 
 		if(!$tk) {

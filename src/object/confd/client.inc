@@ -36,7 +36,7 @@ class ConfdClient extends Client
 			. "/" . $confd_config['protocol'];
 		$verify = true;
 
-		return new Client($url, $confd_config['connect_timeout'], $confd_config['timeout'], $verify, $raise);
+		return new ConfdClient($url, $confd_config['connect_timeout'], $confd_config['timeout'], $verify, $raise);
 	}
 }
 
