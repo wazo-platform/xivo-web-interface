@@ -26,7 +26,7 @@ if (isset($_USR->_info['login']) === true)
 
 dwho_logw('logoff',$login,'logoff');
 
-xivo_user::logoff();
+$_USR->auth_logoff();
 
 $_QRY->go($_TPL->url('index'), array_key_exists('go', $_GET)?array('go' => $_GET['go']):null);
 

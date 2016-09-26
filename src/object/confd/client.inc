@@ -34,8 +34,9 @@ class ConfdClient extends Client
 		$url = "http://" . $confd_config['host']
 			. ":" . (string)$confd_config['port']
 			. "/" . $confd_config['protocol'];
+		$verify = true;
 
-		return new Client($url, $confd_config['connect_timeout'], $confd_config['timeout'], $raise);
+		return new ConfdClient($url, $confd_config['connect_timeout'], $confd_config['timeout'], $verify, $raise);
 	}
 }
 

@@ -19,6 +19,15 @@ confd:
   volumes:
     - "./mocks/confd/:/tmp/confd"
   command: "python /tmp/confd/confd.py"
+auth:
+  image: p0bailey/docker-flask
+  expose:
+    - "9497"
+  ports:
+    - "19497:9497"
+  volumes:
+    - "./mocks/auth/:/tmp/auth"
+  command: "python /tmp/auth/auth.py"
 provd:
   image: xivo/xivo-provd
   ports:
@@ -52,6 +61,7 @@ webi:
     - provd
     - sysconfd
     - rabbitmq
+    - auth
 tests:
   image: n3llyb0y/wait
   links:
@@ -61,5 +71,6 @@ tests:
     - rabbitmq
     - sysconfd
     - webi
+    - auth
   environment:
-    PORTS: "80 5432 5672 8666 8668 9847"
+    PORTS: "80 5432 5672 8666 8668 9847 9497"

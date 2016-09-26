@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2015  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -373,40 +373,6 @@ abstract class xivo_user_abstract extends xivo_libdatastorage_abstract
 		return($this->_acl);
 	}
 
-	function load_authent()
-	{
-		$ini = xivo_user::load_get_init();
-
-		if(dwho_issa('authent',$ini) === false)
-			return(false);
-
-		$authent = &$ini['authent'];
-
-		if(isset($authent['type']) === false)
-		{
-			trigger_error('Missing type user authentication in user init file',E_USER_ERROR);
-			return(false);
-		}
-
-		$type = $authent['type'];
-
-		if($type !== 'internal')
-			return(false);
-
-		$dso = dwho_gct::get('DWHO_DSO');
-		$type = $dso->get_type();
-		$name = 'xivo_authent_'.$type;
-		$dir = dwho_file::joinpath(XIVO_PATH_OBJECT,'user','authent');
-
-		if(xivo::load_class($name,$dir,$type,false) === false)
-		{
-			trigger_error('Failed to load user authentication',E_USER_ERROR);
-			return(false);
-		}
-
-		return(new $name($dso,$authent));
-	}
-
 	function call_auth($func,$args=null)
 	{
 		$func = (string) $func;
@@ -453,6 +419,14 @@ abstract class xivo_user_abstract extends xivo_libdatastorage_abstract
 			return($type);
 
 		return(false);
+	}
+
+	function auth_logoff()
+	{
+		if(method_exists($this->_authent,'logoff')) {
+			$this->_authent->logoff();
+		}
+		xivo_user::logoff();
 	}
 }
 

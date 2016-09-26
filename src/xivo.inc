@@ -225,6 +225,12 @@ class xivo extends dwho
 		dwho_gct::set(new xivo_confd());
 	}
 
+	function _set_auth()
+	{
+		xivo::load_class('xivo_auth',XIVO_PATH_OBJECT,'auth',false);
+		dwho_gct::set(new xivo_auth());
+	}
+
 	function _set_manager()
 	{
 		xivo::load_class('xivo_manager',XIVO_PATH_OBJECT,'manager',false);
