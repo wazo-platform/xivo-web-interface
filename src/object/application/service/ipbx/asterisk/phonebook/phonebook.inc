@@ -20,7 +20,7 @@
 
 dwho_file::required(array(XIVO_PATH_OBJECT,'application','service','ipbx','asterisk.inc'),true);
 
-require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'client.inc'));
+require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'dird', 'client.inc'));
 require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'dird', 'phonebook', 'phonebook.inc'));
 
 class xivo_application_service_asterisk_phonebook extends xivo_application_asterisk_abstract
@@ -36,7 +36,7 @@ class xivo_application_service_asterisk_phonebook extends xivo_application_aster
 
 		if(($_XOBJ = dwho_gct::get('xivo_object')) === false
 			|| ($this->_entity_module = &$_XOBJ->get_module('entity')) === false
-			|| ($dird_client = Client::dird_config(false)) === false
+			|| ($dird_client = DirdClient::default_config()) === false
 			|| ($this->_phonebook_resource = new PhonebookResource($dird_client)) === false
 			|| ($entities = $this->_entity_module->get_all()) === false
 			|| ($current_entity = $_SESSION['_USR']->entity_id) === false) {
