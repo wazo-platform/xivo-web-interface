@@ -182,7 +182,7 @@ if($list !== false):
 					    'class'   	=> $editable_row ? '' : 'it-disabled',
 					    'disabled'	=> $editable_row ? false : true
 			),
-					array(1,2,3,4,5,6,7,8,9,10,11,12));?>
+					range(1,32));?>
 		</td>
 		<td class="td-right">
 			&nbsp;
