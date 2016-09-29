@@ -81,6 +81,16 @@ function set_xivo_verify_certificate(&$data)
 	}
 }
 
+function get_ldap_filters($app) {
+	$ldapfilter_list = array();
+	if(($ldapfilters = $app->get_ldapfilters_list()) !== false) {
+		foreach($ldapfilters as $ldapfilter) {
+			$ldapfilter_list[] = $ldapfilter['ldapfilter'];
+		}
+	}
+	return($ldapfilter_list);
+}
+
 switch($act)
 {
 	case 'add':
@@ -124,14 +134,8 @@ switch($act)
 		$dhtml = &$_TPL->get_module('dhtml');
 		$dhtml->set_js('js/dwho/submenu.js');
 		$dhtml->set_js('js/xivo/configuration/manage/directories.js');
-		$ldapfilter_list = array();
-		if(($ldapfilters = $appldapfilter->get_ldapfilters_list()) !== false) {
-			foreach($ldapfilters as $ldapfilter) {
-				$ldapfilter_list[] = $ldapfilter['ldapfilter'];
-			}
-		}
 
-		$_TPL->set_var('ldap_filters', $ldapfilter_list);
+		$_TPL->set_var('ldap_filters', get_ldap_filters($appldapfilter));
 		$_TPL->set_var('info',$info);
 		$_TPL->set_var('element',$element);
 		break;
@@ -204,14 +208,7 @@ switch($act)
 		$dhtml->set_js('js/dwho/submenu.js');
 		$dhtml->set_js('js/xivo/configuration/manage/directories.js');
 
-		$ldapfilter_list = array();
-		if(($ldapfilters = $appldapfilter->get_ldapfilters_list()) !== false) {
-			foreach($ldapfilters as $ldapfilter) {
-				$ldapfilter_list[] = $ldapfilter['ldapfilter'];
-			}
-		}
-
-		$_TPL->set_var('ldap_filters', $ldapfilter_list);
+		$_TPL->set_var('ldap_filters', get_ldap_filters($appldapfilter));
 		$_TPL->set_var('id',$info['id']);
 		$_TPL->set_var('info',$return);
 		$_TPL->set_var('element',$element);
