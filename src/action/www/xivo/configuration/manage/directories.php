@@ -23,6 +23,10 @@ $page = isset($_QR['page']) === true ? dwho_uint($_QR['page'],1) : 1;
 
 xivo::load_class('xivo_directories',XIVO_PATH_OBJECT,null,false);
 dwho::load_class('dwho_uri');
+
+$ipbx = &$_SRE->get('ipbx');
+$appldapfilter = &$ipbx->get_application('ldapfilter');
+
 $uriobject = new dwho_uri();
 $_DIR = new xivo_directories();
 
@@ -36,6 +40,7 @@ define('XIVO_PHONEBOOK_TYPE_WEBSERVICES', 1);
 define('XIVO_PHONEBOOK_TYPE_XIVO', 2);
 define('XIVO_PHONEBOOK_TYPE_PHONEBOOK', 3);
 define('XIVO_PHONEBOOK_TYPE_DIRD_PHONEBOOK', 4);
+define('XIVO_PHONEBOOK_TYPE_LDAP_FILTER', 5);
 
 $types = array(
 	XIVO_PHONEBOOK_TYPE_CSV_FILE => array(
@@ -53,6 +58,9 @@ $types = array(
 	XIVO_PHONEBOOK_TYPE_DIRD_PHONEBOOK => array(
 		'type' => 'dird_phonebook',
 		'name' => 'Local dird phonebook'),
+	XIVO_PHONEBOOK_TYPE_LDAP_FILTER => array(
+		'type' => 'ldapfilter',
+		'name' => 'LDAP Filter'),
 	);
 
 function set_xivo_verify_certificate(&$data)
@@ -90,12 +98,12 @@ switch($act)
 			$data['xivo_password'] = $_QR['xivo_password'];
 			$data['dird_tenant']   = $_QR['dird_tenant'];
 			$data['dird_phonebook'] = $_QR['dird_phonebook'];
+			$data['ldapfilter_id'] = $_QR['ldapfilter_id'];
 			set_xivo_verify_certificate($data);
 
 			if($_QR['type'] == XIVO_PHONEBOOK_TYPE_CSV_FILE)
 				$data['uri'] = 'file://' . $_QR['uri'];
 
-			$result = $_DIR->chk_values($data);
 			if(($result = $_DIR->chk_values($data)) === false
 			|| $_DIR->add($result)                  === false)
 			{
@@ -116,7 +124,14 @@ switch($act)
 		$dhtml = &$_TPL->get_module('dhtml');
 		$dhtml->set_js('js/dwho/submenu.js');
 		$dhtml->set_js('js/xivo/configuration/manage/directories.js');
+		$ldapfilter_list = array();
+		if(($ldapfilters = $appldapfilter->get_ldapfilters_list()) !== false) {
+			foreach($ldapfilters as $ldapfilter) {
+				$ldapfilter_list[] = $ldapfilter['ldapfilter'];
+			}
+		}
 
+		$_TPL->set_var('ldap_filters', $ldapfilter_list);
 		$_TPL->set_var('info',$info);
 		$_TPL->set_var('element',$element);
 		break;
@@ -149,6 +164,7 @@ switch($act)
 			$data['xivo_password'] = $_QR['xivo_password'];
 			$data['dird_tenant']   = $_QR['dird_tenant'];
 			$data['dird_phonebook'] = $_QR['dird_phonebook'];
+			$data['ldapfilter_id'] = $_QR['ldapfilter_id'];
 			set_xivo_verify_certificate($data);
 
 			if($_QR['type'] == XIVO_PHONEBOOK_TYPE_CSV_FILE)
@@ -188,6 +204,14 @@ switch($act)
 		$dhtml->set_js('js/dwho/submenu.js');
 		$dhtml->set_js('js/xivo/configuration/manage/directories.js');
 
+		$ldapfilter_list = array();
+		if(($ldapfilters = $appldapfilter->get_ldapfilters_list()) !== false) {
+			foreach($ldapfilters as $ldapfilter) {
+				$ldapfilter_list[] = $ldapfilter['ldapfilter'];
+			}
+		}
+
+		$_TPL->set_var('ldap_filters', $ldapfilter_list);
 		$_TPL->set_var('id',$info['id']);
 		$_TPL->set_var('info',$return);
 		$_TPL->set_var('element',$element);

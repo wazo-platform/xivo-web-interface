@@ -10,5 +10,8 @@ Type:
 ; fm_uri
 Uri:
 
+; fm_ldapfilter_name
+LDAP filter name:
+
 ; fm_description
 Description:

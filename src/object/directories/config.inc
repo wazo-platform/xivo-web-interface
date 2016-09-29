@@ -62,6 +62,10 @@ $array['element']['dird_phonebook'] = array();
 $array['element']['dird_phonebook']['default'] = '';
 $array['element']['dird_phonebook']['null'] = true;
 
+$array['element']['ldapfilter_id'] = array();
+$array['element']['ldapfilter_id']['default'] = '';
+$array['element']['ldapfilter_id']['null'] = true;
+
 
 dwho::load_class('dwho_network');
 
@@ -76,5 +80,6 @@ $array['filter']['xivo_verify_certificate'] = array('pg_bool' => true);
 $array['filter']['xivo_custom_ca_path'] = array('set' => false, 'chk' => 2, 'maxlen' => 200, 'cast' => 'alnumpunct');
 $array['filter']['dird_tenant'] = array('set' => false, 'chk' => 2, 'maxlen' => 64, 'cast' => 'alnumpunct');
 $array['filter']['dird_phonebook'] = array('set' => false, 'chk' => 2, 'maxlen' => 64, 'cast' => 'alnumpunct');
+$array['filter']['ldapfilter_id'] = array('set' => false, 'chk' => 2);
 
 ?>
