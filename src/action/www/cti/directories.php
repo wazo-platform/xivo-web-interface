@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,40 +18,13 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-/********************************************************** WARNING ********************************************************/
-/*
-	In this code, we assume that only
-	'field_phone', 'field_fullname', 'field_firstname', 'field_lastname', 'field_company' and 'field_mail'
-	are used. These correspond to
-	'{db-phone}', '{db-fullname}', '{db-firstname}', '{db-lastname}', '{db-company}' and '{db-mail}'
-	in "displays" form.
-	If you want to add fields you need to
-	1/ Add fields in asterisk database (table ctidirectories)
-	2/ Add support for these fields below in add and edit sections
-	3/ Add corresponding entries and filters in the config file :
-		/usr/share/xivo-web-interface/object/service/ipbx/asterisk/ctidirectories/config.inc
-	4/ Add corresponding widgets in template file :
-		/usr/share/xivo-web-interface/tpl/www/bloc/cti/directories/form.php
-	5/ Add JSON generation for these fields in
-		/usr/share/xivo-web-interface/application/www/service/ipbx/asterisk/web_services/ctiserver/configuration.php
-*/
-/***************************************************************************************************************************/
-
 $act = isset($_QR['act']) === true ? $_QR['act'] : '';
 $iddirectories = isset($_QR['iddirectories']) === true ? dwho_uint($_QR['iddirectories'],1) : 1;
 $page = isset($_QR['page']) === true ? dwho_uint($_QR['page'],1) : 1;
-$urilist = array();
 
 xivo::load_class('xivo_directories',XIVO_PATH_OBJECT,null,false);
 $dir = new xivo_directories();
-foreach($dir->get_all(null,true) as $directory)
-	$urilist[] = $directory['uri'];
-
-$appldapfilter = &$ipbx->get_application('ldapfilter');
-if(($ldapfilters = $appldapfilter->get_ldapfilters_list()) !== false)
-	foreach($ldapfilters as $ldapfilter)
-		$urilist[] = "ldapfilter://".$ldapfilter['ldapfilter']['name'];
-
+$directories = $dir->get_all(null, true);
 
 $param = array();
 $param['act'] = 'list';
@@ -93,7 +66,7 @@ switch($act)
 
 		dwho::load_class('dwho_sort');
 
-		$_TPL->set_var('urilist',$urilist);
+		$_TPL->set_var('directories',$directories);
 		$_TPL->set_var('info',$result);
 		$_TPL->set_var('fm_save',$fm_save);
 
@@ -153,7 +126,7 @@ switch($act)
 			}
 		}
 
-		$_TPL->set_var('urilist',$urilist);
+		$_TPL->set_var('directories',$directories);
 		$_TPL->set_var('iddirectories',$info['directories']['id']);
 		$_TPL->set_var('info',$return);
 		$_TPL->set_var('fm_save',$fm_save);

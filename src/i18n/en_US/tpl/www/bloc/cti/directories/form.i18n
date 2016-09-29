@@ -1,8 +1,8 @@
-; fm_directories_name
+; fm_directories_source
 Name:
 
-; fm_directories_uri
-URI:
+; fm_directories_directory
+Directory:
 
 ; fm_directories_delimiter
 Delimiter:
