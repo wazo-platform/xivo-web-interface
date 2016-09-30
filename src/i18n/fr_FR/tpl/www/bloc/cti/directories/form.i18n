@@ -1,8 +1,8 @@
-; fm_directories_name
-Nom du répertoire :
+; fm_directories_source
+Nom de la source :
 
-; fm_directories_uri
-URI :
+; fm_directories_directory
+Répertoire :
 
 ; fm_directories_delimiter
 Séparateur :

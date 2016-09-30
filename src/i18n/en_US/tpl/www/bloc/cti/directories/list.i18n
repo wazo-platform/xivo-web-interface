@@ -1,11 +1,9 @@
-; col_name
-Name
+; col_source
+Source
 
 ; col_description
 Description
 
-; col_uri
-URI
 
 ; no_directories
 No directory

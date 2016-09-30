@@ -26,33 +26,45 @@ $element = $this->get_var('element');
 ?>
 
 <?php
-	echo	$form->text(array('desc'	=> $this->bbf('fm_name'),
-				'name'	=> 'name',
-				'labelid'	=> 'name',
-				'size'	=> 15,
-				'default'	=> $element['name']['default'],
-				'value' => $info['name'],
-				'error'	=> $this->bbf_args('error',
-					$this->get_var('error', 'name')) )),
-
-		$form->select(array('desc'	=> $this->bbf('fm_type'),
-				'name'	=> 'type',
-				'labelid'	=> 'type',
-				'key' => 'name',
-				'altkey' => false,
-				'default'	=> $element['type']['default'],
-				'selected'	=> $info['type']),
-				$this->get_var('types')),
-
-		$form->text(array('desc'	=> $this->bbf('fm_uri'),
-				  'name'	=> 'uri',
-				  'labelid'	=> 'uri',
-				  'size'	=> 30,
-				  'default'	=> $element['uri']['default'],
-				  'value'	=> $info['uri'],
-		          'error'	=> $this->bbf_args('error',
-					   $this->get_var('error', 'uri')) ));
+	echo  $form->text(array('desc' 		=> $this->bbf('fm_name'),
+							'name' 		=> 'name',
+							'labelid'	=> 'name',
+							'size' 		=> 15,
+							'default' 	=> $element['name']['default'],
+							'value' 	=> $info['name'],
+							'error' 	=> $this->bbf_args('error', $this->get_var('error', 'name')))),
+		$form->select(array('desc' 		=> $this->bbf('fm_type'),
+							'name' 		=> 'type',
+							'labelid'	=> 'type',
+							'key' 		=> 'name',
+							'altkey' 	=> false,
+							'default' 	=> $element['type']['default'],
+							'selected' 	=> $info['type']),
+						$this->get_var('types'));
 ?>
+	<div id='div-free-uri'>
+<?php
+	echo  $form->text(array('desc' 		=> $this->bbf('fm_uri'),
+							'name' 		=> 'uri',
+							'labelid'	=> 'uri',
+							'size' 		=> 30,
+							'default' 	=> $element['uri']['default'],
+							'value' 	=> $info['uri'],
+							'error' 	=> $this->bbf_args('error', $this->get_var('error', 'uri'))));
+?>
+	</div>
+	<div id='div-ldap-uri'>
+<?php
+	echo    $form->select(array('desc' 		=> $this->bbf('fm_ldapfilter_name'),
+								'name' 		=> 'ldapfilter_id',
+								'labelid'	=> 'id',
+								'key' 		=> 'name',
+								'altkey' 	=> 'id',
+								'default'	=> '',
+								'selected' 	=> $info['ldapfilter_id']),
+							$this->get_var('ldap_filters'));
+?>
+	</div>
 	<fieldset id='fld-xivo-form'>
 	<legend><?= $this->bbf('fm_xivo_form') ?></legend>
 <?php

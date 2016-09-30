@@ -21,12 +21,23 @@ function update_directory_type_info() {
 	if (directory_type == '2') {
 		$('#fld-dird-form').hide();
 		$('#fld-xivo-form').show();
+		$('#div-ldap-uri').hide();
+		$('#div-free-uri').show();
 	} else if (directory_type == '4') {
 		$('#fld-xivo-form').hide();
 		$('#fld-dird-form').show();
+		$('#div-ldap-uri').hide();
+		$('#div-free-uri').show();
+	} else if (directory_type == '5') {
+		$('#fld-xivo-form').hide();
+		$('#fld-dird-form').hide();
+		$('#div-ldap-uri').show();
+		$('#div-free-uri').hide();
 	} else {
 		$('#fld-xivo-form').hide();
 		$('#fld-dird-form').hide();
+		$('#div-ldap-uri').hide();
+		$('#div-free-uri').show();
 	}
 }
 

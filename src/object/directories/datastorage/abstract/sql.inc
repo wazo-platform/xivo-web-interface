@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -25,7 +25,6 @@ abstract class xivo_directories_abstract_sql extends dwho_datastorage_helper_tab
 	var $_table	= 'directories';
 	var $_primary	= array('id' => 0);
 	var $_disable	= 'disable';
-	var $_unique	= 'uri';
 
 	public function __construct(&$dso,$param=array())
 	{

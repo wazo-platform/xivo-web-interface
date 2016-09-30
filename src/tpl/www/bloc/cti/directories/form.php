@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,27 +24,27 @@ $url = &$this->get_module('url');
 $element = $this->get_var('element');
 $info = $this->get_var('info');
 
-$urilist = $this->get_var('urilist');
-$presence = $this->get_var('directories');
+$directories = $this->get_var('directories');
 
 ?>
 
 <div id="sb-part-first">
 <?php
-	echo	$form->text(array('desc'	=> $this->bbf('fm_directories_name'),
+	echo	$form->text(array('desc'	=> $this->bbf('fm_directories_source'),
 				  'name'	=> 'directories[name]',
 				  'labelid'	=> 'directories-name',
 				  'size'	=> 15,
 				  'default'	=> $element['directories']['name']['default'],
 				  'value'	=> $info['directories']['name']));
 
-	echo	$form->select(array('desc'	=> $this->bbf('fm_directories_uri'),
-				  'name'	=> 'directories-uri',
-				  'labelid'	=> 'directories-uri',
-				  'default'	=> $element['directories']['uri']['default'],
-				  'key'	=> false,
-				  'selected'	=> $info['directories']['uri']),
-				  $urilist);
+	echo	$form->select(array('desc'	=> $this->bbf('fm_directories_directory'),
+				  'name'	=> 'directories[directory_id]',
+				  'labelid'	=> 'name',
+				  'key'		=> 'name',
+				  'altkey'  => 'id',
+				  'default' => '',
+				  'selected'=> $info['directories']['directory_id']),
+				  $directories);
 
 	echo	$form->text(array('desc'	=> $this->bbf('fm_directories_delimiter'),
 				  'name'	=> 'directories[delimiter]',
