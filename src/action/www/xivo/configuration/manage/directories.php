@@ -60,7 +60,7 @@ $types = array(
 		'name' => 'Local dird phonebook'),
 	XIVO_PHONEBOOK_TYPE_LDAP_FILTER => array(
 		'type' => 'ldapfilter',
-		'name' => 'LDAP Filter'),
+		'name' => 'LDAP filter'),
 	);
 
 function set_xivo_verify_certificate(&$data)
