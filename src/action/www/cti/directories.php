@@ -51,7 +51,6 @@ switch($act)
 				);
 			}
 
-			$_QR['directories']['uri'] = $_QR['directories-uri'];
 			$_QR['directories']['deletable'] = 1;
 
 			if($app->set_add($_QR) === false
@@ -100,7 +99,6 @@ switch($act)
 			}
 
 			$_QR['directories']['deletable'] = 1;
-			$_QR['directories']['uri'] = $_QR['directories-uri'];
 			if($app->set_edit($_QR) === false
 			|| $app->edit() === false)
 			{
