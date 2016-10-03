@@ -60,7 +60,7 @@ class xivo_user
 
 	}
 
-	function &load_get_init()
+	public static function &load_get_init()
 	{
 		static $ini = null;
 
@@ -72,7 +72,7 @@ class xivo_user
 		return $ini;
 	}
 
-	function get_info($name)
+	public static function get_info($name)
 	{
 		$name = (string) $name;
 
@@ -82,7 +82,7 @@ class xivo_user
 		return(null);
 	}
 
-	function is_valid()
+	public static function is_valid()
 	{
 		if(isset($_SESSION['_USR'],$_SESSION['_USR']->_valid) === true
 		&& $_SESSION['_USR']->_valid === true)
@@ -91,7 +91,7 @@ class xivo_user
 		return(false);
 	}
 
-	function chk_active()
+	public static function chk_active()
 	{
 		$cfg = dwho_gat::get('user');
 
@@ -104,7 +104,7 @@ class xivo_user
 		return(null);
 	}
 
-	function chk_type($type,$real=false)
+	public static function chk_type($type,$real=false)
 	{
 		$cfg = dwho_gat::get('user');
 
@@ -115,7 +115,7 @@ class xivo_user
 		return($r);
 	}
 
-	function chk_meta($meta,$real=false)
+	public static function chk_meta($meta,$real=false)
 	{
 		if(($type = xivo_user::meta_to_type($meta)) !== false
 		&& ($meta = xivo_user::type_to_meta($type,$real)) !== false)
@@ -124,7 +124,7 @@ class xivo_user
 		return(false);
 	}
 
-	function type_to_meta($type,$real=false)
+	public static function type_to_meta($type,$real=false)
 	{
 		$cfg = dwho_gat::get('user');
 
@@ -135,7 +135,7 @@ class xivo_user
 		return(false);
 	}
 
-	function meta_to_type($meta)
+	public static function meta_to_type($meta)
 	{
 		$meta = strtoupper($meta);
 
@@ -145,7 +145,7 @@ class xivo_user
 		return(false);
 	}
 
-	function chk_authorize($users,$meta='',$real=false)
+	public static function chk_authorize($users,$meta='',$real=false)
 	{
 		$users = (array) $users;
 
@@ -169,7 +169,7 @@ class xivo_user
 		return(false);
 	}
 
-	function chk_acl($category='',$subcategory='',$section='')
+	public static function chk_acl($category='',$subcategory='',$section='')
 	{
 		xivo::load_class('xivo_user_acl',XIVO_PATH_OBJECT.DWHO_SEP_DIR.'user','acl',false);
 
@@ -178,7 +178,7 @@ class xivo_user
 		return(xivo_user::chk_acl_section($section));
 	}
 
-	function chk_acl_section($section)
+	public static function chk_acl_section($section)
 	{
 		if(isset($_SESSION['_ACL']) === false
 		|| xivo_user::is_valid() === false
@@ -234,12 +234,12 @@ class xivo_user
 		return($r);
 	}
 
-	function logoff()
+	public static function logoff()
 	{
 		session_unset();
 	}
 
-	function &factory($meta)
+	public static function &factory($meta)
 	{
 		if(($meta = xivo_user::chk_meta($meta)) === false)
 			return(false);
@@ -253,7 +253,7 @@ class xivo_user
 		return($ref);
 	}
 
-	function load_class($meta)
+	public static function load_class($meta)
 	{
 		if(($meta = xivo_user::chk_meta($meta)) === false)
 			return(false);
@@ -267,7 +267,7 @@ class xivo_user
 		return($class);
 	}
 
-	function set($name,$obj)
+	public static function set($name,$obj)
 	{
 		if($name === '' || is_object($obj) === false)
 			return false;
@@ -275,12 +275,12 @@ class xivo_user
 		return dwho_gct::set($obj,XIVO_USER_CLASS_PRE.$name);
 	}
 
-	function get($name)
+	public static function get($name)
 	{
 		return dwho_gct::get(XIVO_USER_CLASS_PRE.$name);
 	}
 
-	function set_get($name,$obj)
+	public static function set_get($name,$obj)
 	{
 		$r = false;
 
