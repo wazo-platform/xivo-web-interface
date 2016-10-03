@@ -19,6 +19,7 @@
 #
 
 require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'abstract','libdatastorage.inc'));
+require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'user','authent','xivo.inc'));
 
 abstract class xivo_user_abstract extends xivo_libdatastorage_abstract
 {
@@ -27,9 +28,15 @@ abstract class xivo_user_abstract extends xivo_libdatastorage_abstract
 	var $_ini	= array();
 	var $_info	= array();
 	var $_acl	= null;
+	var $_authent	= null;
 	var $_error		= null;
 	var $_errornb	= 0;
 	var $_name	= 'xivo_user';
+
+	function __construct()
+	{
+		$this->_authent = new xivo_authent_xivo();
+	}
 
 	function get_info($name)
 	{
@@ -133,8 +140,7 @@ abstract class xivo_user_abstract extends xivo_libdatastorage_abstract
 
 		if(($active = xivo_user::chk_active()) !== null)
 			return($active);
-		else if($this->call_auth('chk',array($_SESSION['_USR']->_login,
-						     $_SESSION['_USR']->_pass)) === false)
+		else if($this->auth_chk($_SESSION['_USR']->_login, $_SESSION['_USR']->_pass) === false)
 			return(false);
 
 		$_SESSION['_USR']->_time = gmstrftime('%s');
@@ -181,29 +187,14 @@ abstract class xivo_user_abstract extends xivo_libdatastorage_abstract
 
 		$infos = array();
 
-		if(($type = $this->call_auth('chk',array($login,$passwd))) !== false
-		&& xivo_user::chk_type($type,true) === true)
+		if($this->auth_chk($login, $passwd) === true)
 		{
-			if(($data = $this->get_by_login_pass($login,$passwd)) === false)
+			if(($data = $this->get_by_login_pass($login,$passwd)) !== false)
 			{
-				if(($r = $this->_add_by_login_pass($login,$passwd,$type)) !== false)
-				{
-					$this->_info = array();
-					$this->_info['id'] = $r;
-					$r = true;
-				}
-			}
-			else
-			{
-				$this->_info = &$data;
 				$r = true;
-			}
-
-			if($r === true)
-			{
+				$this->_info = &$data;
 				$this->_info['login'] = $login;
 				$this->_info['passwd'] = $passwd;
-				$this->_info['type'] = $type;
 				$infos = $this->_info;
 				dwho_logw('logon',$login,'logon');
 			}
@@ -273,21 +264,6 @@ abstract class xivo_user_abstract extends xivo_libdatastorage_abstract
 			if(defined('DWHO_USER_I18N_LOCALE') === false)
 				define('DWHO_USER_I18N_LOCALE',$this->_info['locale']);
 		}
-	}
-
-	function _add_by_login_pass($login,$passwd,$type,$valid=true)
-	{
-		if(($meta = xivo_user::type_to_meta($type)) === false)
-			return(false);
-
-		$arr = array();
-		$arr['login'] = $login;
-		$arr['passwd'] = $passwd;
-		$arr['meta'] = $meta;
-		$arr['time'] = gmstrftime('%s');
-		$arr['valid'] = (bool) $valid;
-
-		return($this->add($arr));
 	}
 
 	function get_by_login_pass($login,$passwd)
@@ -373,59 +349,14 @@ abstract class xivo_user_abstract extends xivo_libdatastorage_abstract
 		return($this->_acl);
 	}
 
-	function call_auth($func,$args=null)
-	{
-		$func = (string) $func;
-		$auth_func = 'auth_'.$func;
-
-		if($this->_param['factory'] === true)
-		{
-			trigger_error('Unable to call authentication with factory',E_USER_ERROR);
-			return(false);
-		}
-		else if(is_object($this->_authent) === false
-		&& ($this->_authent = $this->load_authent()) === false)
-		{
-			trigger_error('Failed to load user authentication in '.__CLASS__,E_USER_ERROR);
-			return(false);
-		}
-		else if(is_object($this->_authent) === false)
-		{
-			trigger_error('Invalid user authentication object',E_USER_ERROR);
-			return(false);
-		}
-		else if(is_callable(array($this->_authent,$func)) === false)
-		{
-			trigger_error('Invalid user authentication method',E_USER_ERROR);
-			return(false);
-		}
-		else if(method_exists($this,$auth_func) === false)
-			$auth = &$this->_authent;
-		else
-		{
-			$auth = &$this;
-			$func = $auth_func;
-		}
-
-		if($args === null)
-			return(call_user_func(array($auth,$func)));
-
-		return(call_user_func_array(array($auth,$func),(array) $args));
-	}
-
 	function auth_chk($login,$passwd)
 	{
-		if(($type = xivo_user::meta_to_type($this->_authent->chk($login,$passwd,true))) > 0)
-			return($type);
-
-		return(false);
+		return $this->_authent->chk($login,$passwd);
 	}
 
 	function auth_logoff()
 	{
-		if(method_exists($this->_authent,'logoff')) {
-			$this->_authent->logoff();
-		}
+		$this->_authent->logoff();
 		xivo_user::logoff();
 	}
 }

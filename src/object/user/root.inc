@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,10 +23,11 @@ require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'user','abstract.inc'));
 class xivo_user_root extends xivo_user_abstract
 {
 	var $_param		= array('factory' => true);
-	var $_authent	= null;
 
 	public function __construct($factory=true)
 	{
+		parent::__construct();
+
 		$this->_ini = xivo_user::load_get_init();
 
 		$this->_load_config(XIVO_PATH_OBJECT.DWHO_SEP_DIR.'user');

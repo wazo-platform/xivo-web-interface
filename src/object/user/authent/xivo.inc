@@ -26,7 +26,7 @@ class xivo_authent_xivo
 	private $client = null;
 	private $token_resource = null;
 
-	public function __construct($param=array())
+	public function __construct()
 	{
 		if(($this->client = AuthClient::default_config()) === false) {
 			trigger_error('Invalid AUTH object',E_USER_ERROR);
@@ -39,7 +39,7 @@ class xivo_authent_xivo
 		}
 	}
 
-	function chk($login,$pass,$meta=false)
+	function chk($login,$pass)
 	{
 		if(isset($_SESSION['_USR']->token)) {
 			$tk = $this->token_resource->get($_SESSION['_USR']->token);

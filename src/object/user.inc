@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2015  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -239,20 +239,6 @@ class xivo_user
 		session_unset();
 	}
 
-	public static function &factory($meta)
-	{
-		if(($meta = xivo_user::chk_meta($meta)) === false)
-			return(false);
-		else if(xivo_user::is_valid($meta) === true)
-			return(xivo_user::get($meta));
-		else if(($class = xivo_user::load_class($meta)) === false)
-			return(false);
-
-		$ref = &xivo_user::set_get($meta,new $class());
-
-		return($ref);
-	}
-
 	public static function load_class($meta)
 	{
 		if(($meta = xivo_user::chk_meta($meta)) === false)
@@ -265,29 +251,6 @@ class xivo_user
 			trigger_error('Failed to load user class type: '.$meta,E_USER_ERROR);
 
 		return($class);
-	}
-
-	public static function set($name,$obj)
-	{
-		if($name === '' || is_object($obj) === false)
-			return false;
-
-		return dwho_gct::set($obj,XIVO_USER_CLASS_PRE.$name);
-	}
-
-	public static function get($name)
-	{
-		return dwho_gct::get(XIVO_USER_CLASS_PRE.$name);
-	}
-
-	public static function set_get($name,$obj)
-	{
-		$r = false;
-
-		if($name !== '')
-			$r = dwho_gct::set_get($obj,XIVO_USER_CLASS_PRE.$name);
-
-		return $r;
 	}
 }
 
