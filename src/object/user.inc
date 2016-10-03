@@ -98,7 +98,7 @@ class xivo_user
 		if(xivo_user::is_valid() === false)
 			return(false);
 		else if($cfg['option']['time_cache'] <= 0
-		|| ($cfg['option']['time_cache'] + $_SESSION['_USR']->_time) < gmstrftime('%s'))
+		|| ($cfg['option']['time_cache'] + $_SESSION['_USR']->_time) > gmstrftime('%s'))
 			return(true);
 
 		return(null);
