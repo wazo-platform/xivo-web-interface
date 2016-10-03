@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -59,8 +59,6 @@ class xivo_service_asterisk_outcall extends xivo_service_asterisk_abstract
 	{
 		if(is_array($arr) === false)
 			return(false);
-		else if(isset($arr['name']) === true)
-			$arr['name'] = strtolower($arr['name']);
 
 		return(parent::add($arr,$id));
 	}
@@ -69,8 +67,6 @@ class xivo_service_asterisk_outcall extends xivo_service_asterisk_abstract
 	{
 		if(is_array($arr) === false)
 			return(false);
-		else if(isset($arr['name']) === true)
-			$arr['name'] = strtolower($arr['name']);
 
 		return(parent::edit($id,$arr,$disable));
 	}
