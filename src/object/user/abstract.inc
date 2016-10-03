@@ -25,7 +25,6 @@ abstract class xivo_user_abstract extends xivo_libdatastorage_abstract
 {
 	var $_conf	= array();
 	var $_dso	= null;
-	var $_ini	= array();
 	var $_info	= array();
 	var $_acl	= null;
 	var $_authent	= null;
