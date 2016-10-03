@@ -22,9 +22,7 @@ require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'user','abstract.inc'));
 
 class xivo_user_root extends xivo_user_abstract
 {
-	var $_param		= array('factory' => true);
-
-	public function __construct($factory=true)
+	public function __construct()
 	{
 		parent::__construct();
 
@@ -36,11 +34,7 @@ class xivo_user_root extends xivo_user_abstract
 		if(is_object($this->_dso) === false)
 			trigger_error('Invalid datastorage in '.__CLASS__,E_USER_ERROR);
 
-		$this->_param['factory'] = (bool) $factory;
-
-		if($this->_param['factory'] === false)
-			$this->load_by_session();
-
+		$this->load_by_session();
 		$this->_load_acl();
 		$this->reset_error();
 	}

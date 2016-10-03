@@ -339,7 +339,7 @@ abstract class xivo_user_abstract extends xivo_libdatastorage_abstract
 					 false) === false)
 			trigger_error('Failed to load user ACL',E_USER_ERROR);
 
-		$this->_acl = new xivo_user_acl($this->_dso,$this->_param['factory']);
+		$this->_acl = new xivo_user_acl($this->_dso,false);
 	}
 
 	function get_acl()

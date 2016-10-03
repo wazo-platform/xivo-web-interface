@@ -48,7 +48,7 @@ class xivo_user
 		if(($class = $this->load_class($meta)) === false)
 			trigger_error('Failed to load user class',E_USER_ERROR);
 
-		dwho_gct::set(new $class(false),'_USR');
+		dwho_gct::set(new $class(),'_USR');
 	}
 
 	function _chk_ini_general()
