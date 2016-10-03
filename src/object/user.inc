@@ -55,9 +55,6 @@ class xivo_user
 	{
 		$cfg_gen = &$this->_ini['general'];
 
-		if(isset($cfg_gen['ip_check']) === true)
-			$this->_conf['option']['ip_check'] = (bool) $cfg_gen['ip_check'];
-
 		if(isset($cfg_gen['time_cache']) === true)
 			$this->_conf['option']['time_cache'] = dwho_uint($cfg_gen['time_cache']);
 

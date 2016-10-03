@@ -39,8 +39,6 @@ $array['type'] = array(
 
 // $array['admin'] = 'admin';
 
-$array['option'] = array(
-	'time_cache'		=> 60,
-	'ip_check'		=> false);
+$array['option'] = array('time_cache' => 60);
 
 ?>
