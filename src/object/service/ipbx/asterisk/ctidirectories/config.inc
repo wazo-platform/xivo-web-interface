@@ -46,7 +46,7 @@ $array['element']['directory_id']['null'] = true;
 
 
 $array['filter'] = array();
-$array['filter']['name'] 	= array('set' => false, 'chk' => 2, 'regexp' => '/^[[:alnum:]]+$/');
+$array['filter']['name'] 	= array('set' => false, 'chk' => 2, 'regexp' => '/^[a-z0-9_\.-]+$/');
 $array['filter']['delimiter'] 	= array('set' => false, 'chk' => 2, 'regexp' => '/^.$/');
 $array['filter']['match_direct'] 	= array('set' => false, 'chk' => 2, 'regexp' => '/^.*$/');
 $array['filter']['match_reverse'] 	= array('set' => false, 'chk' => 2, 'regexp' => '/^.*$/');
