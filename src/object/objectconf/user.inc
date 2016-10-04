@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,8 +23,6 @@ define('XIVO_USER__USER',1);
 define('XIVO_USER__ADMIN',2);
 define('XIVO_USER__ROOT',4);
 
-define('XIVO_USER_CLASS_PRE','_usr_');
-
 $array = array();
 
 $array['type'] = array(
@@ -39,8 +37,6 @@ $array['type'] = array(
 
 // $array['admin'] = 'admin';
 
-$array['option'] = array(
-	'time_cache'		=> 60,
-	'ip_check'		=> false);
+$array['option'] = array('time_cache' => 60);
 
 ?>

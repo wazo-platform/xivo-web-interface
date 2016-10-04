@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,12 +22,9 @@ require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'user','abstract.inc'));
 
 class xivo_user_root extends xivo_user_abstract
 {
-	var $_param		= array('factory' => true);
-	var $_authent	= null;
-
-	public function __construct($factory=true)
+	public function __construct()
 	{
-		$this->_ini = xivo_user::load_get_init();
+		parent::__construct();
 
 		$this->_load_config(XIVO_PATH_OBJECT.DWHO_SEP_DIR.'user');
 		$this->_load_dso();
@@ -35,11 +32,7 @@ class xivo_user_root extends xivo_user_abstract
 		if(is_object($this->_dso) === false)
 			trigger_error('Invalid datastorage in '.__CLASS__,E_USER_ERROR);
 
-		$this->_param['factory'] = (bool) $factory;
-
-		if($this->_param['factory'] === false)
-			$this->load_by_session();
-
+		$this->load_by_session();
 		$this->_load_acl();
 		$this->reset_error();
 	}

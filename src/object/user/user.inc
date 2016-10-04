@@ -19,17 +19,12 @@
 #
 
 require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'user','abstract.inc'));
-require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'user','authent','xivo.inc'));
-
 
 class xivo_user_user extends xivo_user_abstract
 {
-	var $_param	= array('factory' => true);
-	var $_authent	= null;
-
-	public function __construct($factory=true)
+	public function __construct()
 	{
-		$this->_ini = xivo_user::load_get_init();
+		parent::__construct();
 
 		$this->_load_config(XIVO_PATH_OBJECT.DWHO_SEP_DIR.'user');
 		$this->_load_dso();
@@ -37,30 +32,8 @@ class xivo_user_user extends xivo_user_abstract
 		if(is_object($this->_dso) === false)
 			trigger_error('Invalid datastorage in '.__CLASS__,E_USER_ERROR);
 
-		$this->_param['factory'] = (bool) $factory;
-
-		if($this->_param['factory'] === false)
-			$this->load_by_session();
-
+		$this->load_by_session();
 		$this->_load_acl();
-	}
-
-	function load_authent()
-	{
-		return(new xivo_authent_xivo());
-	}
-
-	function auth_chk($login,$pass)
-	{
-		if($this->_authent->chk($login,$pass) === true)
-			return(XIVO_USER__USER);
-
-		$this->_authent = $this->load_authent();
-
-		if(($type = xivo_user::meta_to_type($this->_authent->chk($login,$pass,true))) > 0)
-			return($type);
-
-		return(false);
 	}
 }
 

@@ -26,7 +26,7 @@ class xivo_authent_xivo
 	private $client = null;
 	private $token_resource = null;
 
-	public function __construct($param=array())
+	public function __construct()
 	{
 		if(($this->client = AuthClient::default_config()) === false) {
 			trigger_error('Invalid AUTH object',E_USER_ERROR);
@@ -39,10 +39,10 @@ class xivo_authent_xivo
 		}
 	}
 
-	function chk($login,$pass,$meta=false)
+	function chk($login,$pass)
 	{
-		if(isset($_SESSION['_USR']->token)) {
-			$tk = $this->token_resource->get($_SESSION['_USR']->token);
+		if(isset($_SESSION['token'])) {
+			$tk = $this->token_resource->get($_SESSION['token']);
 		} else {
 			$tk = $this->token_resource->create($login, $pass);
 		}
@@ -53,7 +53,7 @@ class xivo_authent_xivo
 
 		$token = $tk['data']['token'];
 		if ($token) {
-			$_SESSION['_USR']->token = $token;
+			$_SESSION['token'] = $token;
 			return(true);
 		}
 
@@ -62,7 +62,10 @@ class xivo_authent_xivo
 
 	function logoff()
 	{
-		$this->token_resource->delete($_SESSION['_USR']->token);
+		if(isset($_SESSION['token'])) {
+			$this->token_resource->delete($_SESSION['token']);
+			unset($_SESSION['token']);
+		}
 	}
 }
 
