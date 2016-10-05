@@ -61,7 +61,13 @@ case "$1" in
 		# the right place during the wheezy to jessie upgrade
 		ln -sf /etc/xivo/web-interface/php.ini /etc/php5/cgi/conf.d/xivo.ini
 
-		invoke-rc.d nginx reload
+		if dpkg --compare-versions "$2" le '16.13~20161004.141420.044d600'; then
+			ln -s /etc/nginx/locations/http-available/xivo-web-interface \
+			      /etc/nginx/locations/http-enabled/xivo-web-interface
+			ln -s /etc/nginx/locations/https-available/xivo-web-interface \
+			      /etc/nginx/locations/https-enabled/xivo-web-interface
+		fi
+
 		if [ -x /etc/init.d/spawn-fcgi ]; then
 			invoke-rc.d spawn-fcgi restart
 		fi

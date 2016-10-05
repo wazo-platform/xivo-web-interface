@@ -1,7 +1,8 @@
 location / {
     rewrite ^/backup/(.*) /backup.php?path=$1 last;
+    root /usr/share/xivo-web-interface/www;
     index index.php;
-    include /etc/nginx/xivo_params;
+    include /etc/nginx/xivo-web-interface-params;
 }
 
 location /dlbackup/ {
@@ -43,13 +44,14 @@ location /service/ipbx/web_services.php/phonebook/search {
 
 #location ~ ^/pgadmin/(.*\.php?)$ {
 #    alias /usr/share/phppgadmin/$1;
-#    include /etc/nginx/xivo_params; 
+#    include /etc/xivo/web-interface/nginx-params;
 #}
 #location ~ ^/pgadmin/((?:themes|images|xloadtree)/.*)$ {
 #    alias /usr/share/phppgadmin/$1;
 #}
 
 location ~* \.(?:ico|css|js|gif|jpe?g|png)$ {
+    root /usr/share/xivo-web-interface/www;
     expires max;
     add_header Pragma public;
     add_header Cache-Control "public, must-revalidate, proxy-revalidate";
