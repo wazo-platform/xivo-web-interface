@@ -61,7 +61,6 @@ case "$1" in
 		# the right place during the wheezy to jessie upgrade
 		ln -sf /etc/xivo/web-interface/php.ini /etc/php5/cgi/conf.d/xivo.ini
 
-		invoke-rc.d nginx reload
 		if [ -x /etc/init.d/spawn-fcgi ]; then
 			invoke-rc.d spawn-fcgi restart
 		fi
