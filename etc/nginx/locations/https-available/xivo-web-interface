@@ -44,7 +44,7 @@ location /service/ipbx/web_services.php/phonebook/search {
 
 #location ~ ^/pgadmin/(.*\.php?)$ {
 #    alias /usr/share/phppgadmin/$1;
-#    include /etc/xivo/web-interface/nginx-params;
+#    include /etc/nginx/xivo-web-interface-params;
 #}
 #location ~ ^/pgadmin/((?:themes|images|xloadtree)/.*)$ {
 #    alias /usr/share/phppgadmin/$1;
