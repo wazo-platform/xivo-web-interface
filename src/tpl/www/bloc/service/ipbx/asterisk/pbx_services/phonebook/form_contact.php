@@ -2,7 +2,8 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2016  Avencall
+# Copyright (C) 2006-2016 Avencall
+# Copyright (C) 2016 Proformatique
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -130,6 +131,8 @@ $(function() {
 ?>
 
 	<div class="sb-list">
+	<fieldset>
+	<legend><?= $this->bbf('phonebook-extra-fields') ?></legend>
 		<table>
 			<thead>
 				<th class="th-left">
@@ -160,6 +163,7 @@ $(function() {
 ?>
 			</tbody>
 		</table>
+		</fieldset>
 	</div>
 </div>
 
