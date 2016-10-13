@@ -109,7 +109,9 @@ class xivo_application_service_asterisk_outcall extends xivo_application_asteris
 		$where = array();
 		$where['outcallid'] = $this->_info['outcall']['id'];
 
-		if(($this->_info['outcalltrunk'] = $this->_outcalltrunk->get_all_where($where)) !== false)
+		$order = array('priority' => SORT_ASC);
+
+		if(($this->_info['outcalltrunk'] = $this->_outcalltrunk->get_all_where($where,null,true,$order)) !== false)
 			$this->_origin['outcalltrunk'] = $this->_outcalltrunk->get_origin_list();
 
 		return($this->_info['outcalltrunk']);
