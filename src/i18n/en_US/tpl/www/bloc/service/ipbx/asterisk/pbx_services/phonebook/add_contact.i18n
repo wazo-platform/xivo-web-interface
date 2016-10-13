@@ -77,7 +77,7 @@ Phone:
 Phone:
 
 ; col_phonebook-name
-Column
+Attribute
 
 ; col_phonebook-value
 Value
@@ -87,3 +87,6 @@ Add
 
 ; opt_phonebook-option-delete
 Delete
+
+; phonebook-extra-fields
+Additional attributes
