@@ -2,7 +2,8 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2016  Avencall
+# Copyright (C) 2016 Avencall
+# Copyright (C) 2016 Proformatique
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -48,6 +49,7 @@ class xivo_application_service_asterisk_phonebook extends xivo_application_aster
 				$current_phonebooks = $this->_phonebook_resource->list_phonebooks($entity['name']);
 				foreach($current_phonebooks as &$phonebook) {
 					$phonebook['entity'] = $entity['name'];
+					$phonebook['display'] = $phonebook['name'].' ('.$entity['name'].')';
 				}
 				$this->_phonebooks = array_merge($this->_phonebooks, $current_phonebooks);
 			}
