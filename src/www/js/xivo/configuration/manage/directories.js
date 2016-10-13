@@ -1,6 +1,7 @@
 /*
  * XiVO Web-Interface
- * Copyright (C) 2015-2016  Avencall
+ * Copyright (C) 2015-2016 Avencall
+ * Copyright (C) 2016 Proformatique
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,6 +19,8 @@
 
 function update_directory_type_info() {
 	var directory_type = $('#it-type').val();
+	var uri = $('#it-uri').val();
+	const default_phonebook_uri = 'postgresql://asterisk:proformatique@localhost/asterisk';
 	if (directory_type == '2') {
 		$('#fld-dird-form').hide();
 		$('#fld-xivo-form').show();
@@ -28,6 +31,7 @@ function update_directory_type_info() {
 		$('#fld-dird-form').show();
 		$('#div-ldap-uri').hide();
 		$('#div-free-uri').show();
+		$('#it-uri').val(uri || default_phonebook_uri);
 	} else if (directory_type == '5') {
 		$('#fld-xivo-form').hide();
 		$('#fld-dird-form').hide();
