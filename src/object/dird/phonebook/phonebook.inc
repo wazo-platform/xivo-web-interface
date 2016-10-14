@@ -26,7 +26,7 @@ class PhonebookResource {
 
 	function __construct($client) {
 		$this->client = $client;
-		$this->_headers[] = 'X-Auth-Token: ' . $_SESSION['_USR']->token;
+		$this->_headers[] = 'X-Auth-Token: ' . $_SESSION['token'];
 	}
 
 	public function add_contact($entity, $phonebook_id, $fields)
