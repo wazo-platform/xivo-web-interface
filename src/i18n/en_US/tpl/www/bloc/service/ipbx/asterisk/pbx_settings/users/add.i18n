@@ -103,11 +103,8 @@ Call Forward
 ; fm_userfeatures_ringseconds
 Ringing time:
 
-; fm_userfeatures_ringseconds-opt(0)
-Unlimited
-
-; fm_userfeatures_ringseconds-opt
-%s seconds
+; hlp_fm_userfeatures_ringseconds
+In seconds (empty field or 0 to disable)
 
 ; fm_userfeatures_simultcalls
 Simultaneous calls:

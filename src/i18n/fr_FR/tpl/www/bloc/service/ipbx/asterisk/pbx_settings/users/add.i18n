@@ -49,11 +49,8 @@ Langue :
 ; fm_userfeatures_ringseconds
 Temps de sonnerie :
 
-; fm_userfeatures_ringseconds-opt(0)
-Illimité
-
-; fm_userfeatures_ringseconds-opt
-%s secondes
+; hlp_fm_userfeatures_ringseconds
+Saisissez une valeur en secondes (champ vide ou valeur 0 pour désactiver)
 
 ; fm_userfeatures_timezone
 Fuseau horaire :

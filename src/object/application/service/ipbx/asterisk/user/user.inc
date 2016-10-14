@@ -3,6 +3,7 @@
 #
 # XiVO Web-Interface
 # Copyright (C) 2006-2016 Avencall
+# Copyright (C) 2016 Proformatique Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -815,6 +816,9 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		if(isset($arr['outcallerid-custom']) === true
 		&& $arr['outcallerid'] === 'custom')
 			$arr['outcallerid'] = $arr['outcallerid-custom'];
+
+		if($arr['ringseconds'] === '')
+			$arr['ringseconds'] = 0;
 
 		if($action === 'add')
 		{

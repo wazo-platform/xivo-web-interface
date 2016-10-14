@@ -2,7 +2,8 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2016  Avencall
+# Copyright (C) 2006-2016 Avencall
+# Copyright (C) 2016 Proformatique Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -47,6 +48,11 @@ if(dwho_issa('linefeatures',$info) === true
 &&($line_nb = count($info['linefeatures'])) > 0)
 	$line_list = $info['linefeatures'];
 
+if ($info['userfeatures']['ringseconds'] === null){
+	$info['userfeatures']['ringseconds'] = $element['userfeatures']['ringseconds']['default'];
+} elseif ($info['userfeatures']['ringseconds'] === '0') {
+	$info['userfeatures']['ringseconds'] = '';
+}
 ?>
 
 <div id="sb-part-first" class="b-nodisplay">
@@ -106,15 +112,14 @@ if(dwho_issa('linefeatures',$info) === true
 	endif;
 
 
-		echo	$form->select(array('desc'	=> $this->bbf('fm_userfeatures_ringseconds'),
+		echo	$form->text(array('desc'	=> $this->bbf('fm_userfeatures_ringseconds'),
 				    'name'	=> 'userfeatures[ringseconds]',
 				    'labelid'	=> 'userfeatures-ringseconds',
-				    'key'	=> false,
-				    'bbf'	=> 'fm_userfeatures_ringseconds-opt',
-				    'bbfopt'	=> array('argmode' => 'paramvalue'),
-				    'default'	=> $element['userfeatures']['ringseconds']['default'],
-				    'selected'	=> $info['userfeatures']['ringseconds']),
-			      $element['userfeatures']['ringseconds']['value']),
+					'size'		=> 15,
+					'help'		=> $this->bbf('hlp_fm_userfeatures_ringseconds'),
+					'value'		=> $info['userfeatures']['ringseconds'],
+					'error'		=> $this->bbf_args('error',
+							$this->get_var('error', 'userfeatures', 'ringseconds')) ));
 
 		$form->select(array('desc'	=> $this->bbf('fm_userfeatures_simultcalls'),
 				    'name'	=> 'userfeatures[simultcalls]',
