@@ -1,0 +1,38 @@
+; col_displayname
+Name
+
+; col_sort_displayname
+Sort by name
+
+; col_society
+Society
+
+; col_sort_society
+Sort by society
+
+; col_office-number
+Office phone
+
+; col_sort_office-number
+Sort by office phone
+
+; col_mobile-number
+Mobile phone
+
+; col_sort_mobile-number
+Sort by mobile phone
+
+; col_email
+E-mail
+
+; col_sort_email
+Sort by e-mail
+
+; number_contact-result
+Result(s): %s
+
+; opt_delete_confirm
+Are you sure you want to delete this entry from the phonebook?
+
+; no_phonebook_contacts
+Could not find any entries in the phonebook

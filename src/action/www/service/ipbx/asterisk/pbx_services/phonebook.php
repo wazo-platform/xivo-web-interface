@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -33,34 +33,23 @@ $param['act'] = 'list';
 if($search !== '')
 	$param['search'] = $search;
 
+
+$modentity = &$_XOBJ->get_module('entity');
 $appphonebook = &$ipbx->get_application('phonebook');
 
 switch($act)
 {
 	case 'add':
 		$result = $fm_save = $error = null;
+		if(isset($_QR['fm_send']) === true) {
+			$entity = $_QR['entity'];
+			$name = $_QR['name'];
+			$description = $_QR['description'];
 
-		if(isset($_QR['fm_send']) === true && dwho_issa('phonebook',$_QR) === true)
-		{
-			if($appphonebook->set_add($_QR) === false
-			|| $appphonebook->add() === false)
-			{
-				$fm_save = false;
-				$result = $appphonebook->get_result();
-				$error  = $appphonebook->get_error();
-			}
-			else
-				$_QRY->go($_TPL->url('service/ipbx/pbx_services/phonebook'),$param);
+			$appphonebook->add_phonebook($entity, $name, $description);
+
+			$_QRY->go($_TPL->url('service/ipbx/pbx_services/phonebook'),'act=list');
 		}
-
-		if(dwho_issa('phonebook',$result) === false || empty($result['phonebook']) === true)
-			$result['phonebook'] = null;
-
-		if(dwho_issa('phonebookaddress',$result) === false || empty($result['phonebookaddress']) === true)
-			$result['phonebookaddress'] = null;
-
-		if(dwho_issa('phonebooknumber',$result) === false || empty($result['phonebooknumber']) === true)
-			$result['phonebooknumber'] = null;
 
 		$dhtml = &$_TPL->get_module('dhtml');
 		$dhtml->set_js('js/dwho/submenu.js');
@@ -68,112 +57,160 @@ switch($act)
 		$_TPL->set_var('info'   ,$result);
 		$_TPL->set_var('error'  ,$error);
 		$_TPL->set_var('fm_save',$fm_save);
-		$_TPL->set_var('element',$appphonebook->get_elements());
+		break;
+	case 'add_contact':
+		$result = $fm_save = $error = null;
+		$entity = $_QR['entity'];
+		$phonebook_id = (int)$_QR['phonebook'];
+
+		if(isset($_QR['fm_send']) === true && dwho_issa('phonebook',$_QR) === true) {
+			$entity = $_QRY->_orig['qstring']['entity'];
+			$phonebook_id = (int)$_QRY->_orig['qstring']['phonebook'];
+
+			$result = $appphonebook->add_contact($entity, $phonebook_id, $_QR);
+
+			$param = array('act' => 'list_contacts',
+						   'entity' => $entity,
+						   'phonebook' => $phonebook_id);
+			$_QRY->go($_TPL->url('service/ipbx/pbx_services/phonebook'),$param);
+		}
+
+		$dhtml = &$_TPL->get_module('dhtml');
+		$dhtml->set_js('js/dwho/submenu.js');
+
+		$_TPL->set_var('entity', $entity);
+		$_TPL->set_var('phonebook_id', $phonebook_id);
+		$_TPL->set_var('info'   ,$result);
+		$_TPL->set_var('error'  ,$error);
+		$_TPL->set_var('fm_save',$fm_save);
 		$_TPL->set_var('territory',dwho_i18n::get_territory_translated_list());
 		break;
 	case 'edit':
-		$appphonebook = &$ipbx->get_application('phonebook');
-
-		if(isset($_QR['id']) === false || ($info = $appphonebook->get($_QR['id'])) === false)
+		$result = $fm_save = $error = null;
+		if(isset($_QR['fm_send']) === false
+			&& isset($_QR['entity']) === true
+			&& isset($_QR['id']) === true
+			&& ($entity = $_QR['entity'])) {
+			$_TPL->set_var('entity', $entity);
+			$info = $appphonebook->get_phonebook($entity, $_QR['id']);
+			$return = &$info;
+		} else if(isset($_QR['fm_send']) === true) {
+			$result = $appphonebook->edit_phonebook($_QR['entity'], $_QRY->_orig['qstring']['id'], $_QR);
+			$param = array('act' => 'list', 'entity' => $entity);
 			$_QRY->go($_TPL->url('service/ipbx/pbx_services/phonebook'),$param);
+		}
+		$_TPL->set_var('id'              , $info['id']);
+		$_TPL->set_var('info'            , $return);
+		$_TPL->set_var('error'           , $error);
+		$_TPL->set_var('fm_save'         , $fm_save);
+		break;
+	case 'edit_contact':
+		if(is_array($_QRY->_orig) === false
+			|| isset($_QRY->_orig['qstring']) === false
+			|| isset($_QRY->_orig['qstring']['entity']) === false
+			|| isset($_QRY->_orig['qstring']['phonebook']) === false
+			|| isset($_QRY->_orig['qstring']['id']) === false) {
+			$_QRY->go($_TPL->url('service/ipbx/pbx_services/phonebook'),$param);
+		}
+
+		$entity = $_QRY->_orig['qstring']['entity'];
+		$phonebook_id = (int)$_QRY->_orig['qstring']['phonebook'];
+		$contact_uuid = $_QRY->_orig['qstring']['id'];
+
+		if(isset($_QR['fm_send']) === false
+			&& ($info = $appphonebook->get_contact($entity, $phonebook_id, $contact_uuid)) === false) {
+			$param = array('act' => 'list_contacts', 'entity' => $entity, 'phonebook' => $phonebook_id);
+			$_QRY->go($_TPL->url('service/ipbx/pbx_services/phonebook'),$param);
+		}
 
 		$result = $fm_save = $error = null;
 		$return = &$info;
 
 		if(isset($_QR['fm_send']) === true && dwho_issa('phonebook',$_QR) === true)
 		{
-			$return = &$result;
+			$result = $appphonebook->edit_contact($entity, $phonebook_id, $contact_uuid, $_QR);
 
-			if($appphonebook->set_edit($_QR) === false
-			|| $appphonebook->edit() === false)
-			{
-				$fm_save = false;
-				$result = $appphonebook->get_result();
-				$error  = $appphonebook->get_error();
-			}
-			else
-				$_QRY->go($_TPL->url('service/ipbx/pbx_services/phonebook'),$param);
+			$param = array('act' => 'list_contacts',
+						   'entity' => $entity,
+						   'phonebook' => $phonebook_id);
+			$_QRY->go($_TPL->url('service/ipbx/pbx_services/phonebook'),$param);
+			$return = &$result;
 		}
 
-		if(dwho_issa('phonebook',$return) === false || empty($return['phonebook']) === true)
-			$return['phonebook'] = null;
-
-		if(dwho_issa('phonebookaddress',$return) === false || empty($return['phonebookaddress']) === true)
-			$return['phonebookaddress'] = null;
-
-		if(dwho_issa('phonebooknumber',$return) === false || empty($return['phonebooknumber']) === true)
-			$return['phonebooknumber'] = null;
 
 		$dhtml = &$_TPL->get_module('dhtml');
 		$dhtml->set_js('js/dwho/submenu.js');
 
+		$_TPL->set_var('entity'          , $entity);
+		$_TPL->set_var('phonebook_id'	 , $phonebook_id);
 		$_TPL->set_var('id'              , $info['phonebook']['id']);
 		$_TPL->set_var('info'            , $return);
 		$_TPL->set_var('error'           , $error);
 		$_TPL->set_var('phonebookaddress', $return['phonebookaddress']);
 		$_TPL->set_var('phonebooknumber' , $return['phonebooknumber']);
-		$_TPL->set_var('fm_save',$fm_save);
-		$_TPL->set_var('element',$appphonebook->get_elements());
-		$_TPL->set_var('territory',dwho_i18n::get_territory_translated_list());
+		$_TPL->set_var('fm_save'         , $fm_save);
+		$_TPL->set_var('territory'       , dwho_i18n::get_territory_translated_list());
 		break;
 	case 'delete':
 		$param['page'] = $page;
+		$param['act'] = 'list';
 
-		if(isset($_QR['id']) === false || $appphonebook->get($_QR['id']) === false)
-			$_QRY->go($_TPL->url('service/ipbx/pbx_services/phonebook'),$param);
-
-		$appphonebook->delete();
-
+		if(isset($_QR['entity']) && isset($_QR['id'])) {
+			$appphonebook->delete_phonebook($_QR['entity'], (int)$_QR['id']);
+		}
 		$_QRY->go($_TPL->url('service/ipbx/pbx_services/phonebook'),$param);
 		break;
-	case 'deletes':
+	case 'delete_contact':
 		$param['page'] = $page;
+		if(isset($_QR['id']) === true
+			&& isset($_QR['entity']) === true
+			&& isset($_QR['phonebook']) === true) {
+			$entity = $_QR['entity'];
+			$phonebook_id = (int)$_QR['phonebook'];
+			$contact_uuid = $_QR['id'];
+			$param['act'] = 'list_contacts';
+			$param['entity'] = $entity;
+			$param['phonebook'] = $phonebook_id;
 
-		if(($values = dwho_issa_val('phonebook',$_QR)) === false)
-			$_QRY->go($_TPL->url('service/ipbx/pbx_services/phonebook'),$param);
-
-		$nb = count($values);
-
-		for($i = 0;$i < $nb;$i++)
-		{
-			if($appphonebook->get($values[$i]) !== false)
-				$appphonebook->delete();
+			$appphonebook->delete_contact($entity,$phonebook_id,$contact_uuid);
 		}
 
 		$_QRY->go($_TPL->url('service/ipbx/pbx_services/phonebook'),$param);
 		break;
-	case 'import':
-		if(isset($_QR['fm_send']) === true)
-		{
-			$appphonebook->import_csv();
-			$_QRY->go($_TPL->url('service/ipbx/pbx_services/phonebook'),$param);
-		}
-
-		$_TPL->set_var('import_file',$appphonebook->get_config_import_file());
-		break;
-
-	case 'list':
-	default:
-		$act = 'list';
+	case 'list_contacts':
 		$prevpage = $page - 1;
 		$nbbypage = XIVO_SRE_IPBX_AST_NBBYPAGE;
-
-		$order = array();
-		//$order['displayname'] = SORT_ASC;
-		//$order['firstname'] = SORT_ASC;
-		//$order['lastname'] = SORT_ASC;
-		$order[$sort[1]] = $sort[0];
+		$entity = $_QR['entity'];
+		$phonebook_id = (int)$_QR['phonebook'];
 
 		$limit = array();
 		$limit[0] = $prevpage * $nbbypage;
 		$limit[1] = $nbbypage;
 
-		if($search !== '')
-			$list = $appphonebook->get_phonebook_search($search,$order,$limit);
-		else
-			$list = $appphonebook->get_phonebook_list($order,$limit);
+		$list = $appphonebook->get_contact_list($entity, $phonebook_id, $sort, $limit);
+		$total = $appphonebook->get_contact_cnt($entity, $phonebook_id);
 
-		$total = $appphonebook->get_cnt();
+		$_TPL->set_var('entity', $entity);
+		$_TPL->set_var('phonebook_id', $phonebook_id);
+		$_TPL->set_var('total',$total);
+		$_TPL->set_var('pager',dwho_calc_page($page,$nbbypage,$total));
+		$_TPL->set_var('list',$list);
+		$_TPL->set_var('search',$search);
+		$_TPL->set_var('sort',$sort);
+		break;
+	case 'list':
+	case 'deletes':
+	default:
+		$act = 'list';
+		$prevpage = $page - 1;
+		$nbbypage = XIVO_SRE_IPBX_AST_NBBYPAGE;
+
+		$limit = array();
+		$limit[0] = $prevpage * $nbbypage;
+		$limit[1] = $nbbypage;
+
+		$list = $appphonebook->get_phonebook_list($sort,$limit);
+		$total = $appphonebook->get_phonebook_cnt();
 
 		if($list === false && $total > 0 && $prevpage > 0)
 		{
@@ -188,6 +225,7 @@ switch($act)
 		$_TPL->set_var('sort',$sort);
 }
 
+$_TPL->set_var('entities',$modentity->get_all());
 $_TPL->set_var('act',$act);
 
 $menu = &$_TPL->get_module('menu');

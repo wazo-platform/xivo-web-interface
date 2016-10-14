@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,7 +19,6 @@
 #
 
 $form = &$this->get_module('form');
-$import_file = $this->get_var('import_file');
 
 ?>
 <div class="b-infos b-form">
@@ -28,29 +27,31 @@ $import_file = $this->get_var('import_file');
 		<span class="span-center"><?=$this->bbf('title_content_name');?></span>
 		<span class="span-right">&nbsp;</span>
 	</h3>
-	<div class="sb-content">
-		<form action="#" enctype="multipart/form-data" method="post" accept-charset="utf-8">
+
 <?php
-	echo	$form->hidden(array('name'	=> 'max_file_size',
-				    'value'	=> $import_file['size'])),
+	$this->file_include('bloc/service/ipbx/asterisk/pbx_services/phonebook/submenu');
+?>
 
-		$form->hidden(array('name'	=> DWHO_SESS_NAME,
-				    'value'	=> DWHO_SESS_ID)),
+	<div class="sb-content">
+		<form action="#" method="post" accept-charset="utf-8">
+<?php
+		echo	$form->hidden(array('name'	=> DWHO_SESS_NAME,
+									'value'	=> DWHO_SESS_ID)),
 
-		$form->hidden(array('name'	=> 'fm_send',
-				    'value'	=> 1)),
+				$form->hidden(array('name'	=> 'fm_send',
+									'value'	=> 1)),
 
-		$form->hidden(array('name'	=> 'act',
-				    'value'	=> 'import')),
+				$form->hidden(array('name'	=> 'act',
+									'value'	=> 'edit_contact')),
 
-		$form->file(array('desc'	=> $this->bbf('fm_import'),
-				  'name'	=> 'import',
-				  'labelid'	=> 'import',
-				  'size'	=> 15)),
+				$form->hidden(array('name'	=> 'id',
+									'value'	=> $this->get_var('id')));
 
-		$form->submit(array('name'	=> 'submit',
-				    'id'	=> 'it-submit',
-				    'value'	=> $this->bbf('fm_bt-save')));
+		$this->file_include('bloc/service/ipbx/asterisk/pbx_services/phonebook/form_contact');
+
+		echo	$form->submit(array('name'	=> 'submit',
+									'id'	=> 'it-submit',
+									'value'	=> $this->bbf('fm_bt-save')));
 ?>
 		</form>
 	</div>

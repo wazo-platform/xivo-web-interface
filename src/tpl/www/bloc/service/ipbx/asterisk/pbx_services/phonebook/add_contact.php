@@ -19,8 +19,8 @@
 #
 
 $form = &$this->get_module('form');
-?>
 
+?>
 <div class="b-infos b-form">
 	<h3 class="sb-top xspan">
 		<span class="span-left">&nbsp;</span>
@@ -28,9 +28,16 @@ $form = &$this->get_module('form');
 		<span class="span-right">&nbsp;</span>
 	</h3>
 
+<?php
+	$this->file_include('bloc/service/ipbx/asterisk/pbx_services/phonebook/submenu');
+?>
+
 	<div class="sb-content">
 		<form action="#" method="post" accept-charset="utf-8">
 <?php
+		$phonebook_id = $this->get_var('phonebook_id');
+		$entity = $this->get_var('entity');
+
 		echo	$form->hidden(array('name'	=> DWHO_SESS_NAME,
 									'value'	=> DWHO_SESS_ID)),
 
@@ -38,9 +45,9 @@ $form = &$this->get_module('form');
 									'value'	=> 1)),
 
 				$form->hidden(array('name'	=> 'act',
-									'value'	=> 'edit'));
+									'value'	=> 'add_contact'));
 
-		$this->file_include('bloc/service/ipbx/asterisk/pbx_services/phonebook/form');
+		$this->file_include('bloc/service/ipbx/asterisk/pbx_services/phonebook/form_contact');
 
 		echo	$form->submit(array('name'	=> 'submit',
 									'id'	=> 'it-submit',

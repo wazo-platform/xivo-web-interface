@@ -1,8 +1,7 @@
 <?php
-
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2016  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,12 +17,15 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-xivo_service_asterisk::required(array('abstract','datastorage','abstract','sql.inc'),true);
+$array = array();
 
-class xivo_service_asterisk_phonebookaddress_sql extends xivo_service_asterisk_abstract_sql
-{
-	var $_unique	= array(array('phonebookid','type'));
-	var $_disable	= null;
-}
+$array['dird'] = array();
+$array['dird']['scheme'] = 'https';
+$array['dird']['host'] = '127.0.0.1';
+$array['dird']['port'] = 9489;
+$array['dird']['protocol'] = '0.1';
+$array['dird']['connect_timeout'] = 180;
+$array['dird']['timeout'] = 90;
+$array['dird']['verify_certificate'] = false
 
 ?>

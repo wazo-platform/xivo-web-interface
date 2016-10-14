@@ -3,6 +3,7 @@
 #
 # XiVO Web-Interface
 # Copyright (C) 2006-2016  Avencall
+# Copyright (C) 2016 Proformatique
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -111,20 +112,13 @@ $element = $this->get_var('element');
 	</fieldset>
 	<fieldset id='fld-dird-form'>
 <?php
-	echo  $form->text(array('desc' => $this->bbf('fm_dird_tenant'),
-							'name' => 'dird_tenant',
-							'labelid' => 'dird-tenant',
-							'size' => 20,
-							'help' => $this->bbf('hlp_dird_tenant'),
-							'default' => $element['dird_tenant']['default'],
-							'value' => $info['dird_tenant'])),
-		  $form->text(array('desc' => $this->bbf('fm_dird_phonebook'),
-							'name' => 'dird_phonebook',
-							'labelid' => 'dird-phonebook',
-							'size' => 20,
-							'help' => $this->bbf('hlp_dird_phonebook'),
-							'default' => $element['dird_phonebook']['default'],
-							'value' => $info['dird_phonebook']));
+	echo    $form->select(array('desc' => 'Phonebook: ',
+								'name' => 'phonebook_id',
+								'labelid' => 'display',
+								'key' => 'display',
+								'altkey' => 'id',
+								'selected' => $info['phonebook_id']),
+							$this->get_var('dird_phonebooks'));
 ?>
 	</fieldset>
 	<div class="fm-paragraph fm-description">

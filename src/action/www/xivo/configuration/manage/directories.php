@@ -3,6 +3,7 @@
 #
 # XiVO Web-Interface
 # Copyright (C) 2006-2016  Avencall
+# Copyright (C) 2016 Proformatique
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -26,6 +27,7 @@ dwho::load_class('dwho_uri');
 
 $ipbx = &$_SRE->get('ipbx');
 $appldapfilter = &$ipbx->get_application('ldapfilter');
+$appphonebook = &$ipbx->get_application('phonebook');
 
 $uriobject = new dwho_uri();
 $_DIR = new xivo_directories();
@@ -91,11 +93,21 @@ function get_ldap_filters($app) {
 	return($ldapfilter_list);
 }
 
+function get_matching_phonebook($phonebooks, $query) {
+	$id = (int)$query['phonebook_id'];
+	foreach($phonebooks as $phonebook) {
+		if($phonebook['id'] === $id) {
+			return $phonebook;
+		}
+	}
+	return false;
+}
+
 switch($act)
 {
 	case 'add':
 		$result = null;
-
+		$phonebooks = $appphonebook->get_phonebook_list();
 		if(isset($_QR['fm_send']) === true)
 		{
 			$data = array();
@@ -106,13 +118,20 @@ switch($act)
 			$data['dirtype']     = $types[$_QR['type']]['type'];
 			$data['xivo_username'] = $_QR['xivo_username'];
 			$data['xivo_password'] = $_QR['xivo_password'];
-			$data['dird_tenant']   = $_QR['dird_tenant'];
-			$data['dird_phonebook'] = $_QR['dird_phonebook'];
 			$data['ldapfilter_id'] = $_QR['ldapfilter_id'];
 			set_xivo_verify_certificate($data);
 
-			if($_QR['type'] == XIVO_PHONEBOOK_TYPE_CSV_FILE)
+			switch($_QR['type']) {
+			case XIVO_PHONEBOOK_TYPE_CSV_FILE:
 				$data['uri'] = 'file://' . $_QR['uri'];
+				break;
+			case XIVO_PHONEBOOK_TYPE_DIRD_PHONEBOOK:
+				if(($phonebook = get_matching_phonebook($phonebooks, $_QR)) !== false) {
+					$data['dird_tenant'] = $phonebook['entity'];
+					$data['dird_phonebook'] = $phonebook['name'];
+				}
+				break;
+			}
 
 			if(($result = $_DIR->chk_values($data)) === false
 			|| $_DIR->add($result)                  === false)
@@ -136,6 +155,7 @@ switch($act)
 		$dhtml->set_js('js/xivo/configuration/manage/directories.js');
 
 		$_TPL->set_var('ldap_filters', get_ldap_filters($appldapfilter));
+		$_TPL->set_var('dird_phonebooks', $phonebooks);
 		$_TPL->set_var('info',$info);
 		$_TPL->set_var('element',$element);
 		break;
@@ -154,6 +174,17 @@ switch($act)
 			$info['xivo_verify_certificate_select'] = 'no';
 		}
 
+		$phonebooks = $appphonebook->get_phonebook_list();
+		if(isset($info['dird_tenant']) === true
+		&& isset($info['dird_phonebook']) === true) {
+			foreach($phonebooks as $phonebook) {
+				if($phonebook['entity'] === $info['dird_tenant']
+				&& $phonebook['name'] === $info['dird_phonebook']) {
+					$info['phonebook_id'] = $phonebook['id'];
+				}
+			}
+		}
+
 		$return = &$info;
 
 		if(isset($_QR['fm_send']) === true)
@@ -166,13 +197,20 @@ switch($act)
 			$data['dirtype'] = $types[$_QR['type']]['type'];
 			$data['xivo_username'] = $_QR['xivo_username'];
 			$data['xivo_password'] = $_QR['xivo_password'];
-			$data['dird_tenant']   = $_QR['dird_tenant'];
-			$data['dird_phonebook'] = $_QR['dird_phonebook'];
 			$data['ldapfilter_id'] = $_QR['ldapfilter_id'];
 			set_xivo_verify_certificate($data);
 
-			if($_QR['type'] == XIVO_PHONEBOOK_TYPE_CSV_FILE)
+			switch($_QR['type']) {
+			case XIVO_PHONEBOOK_TYPE_CSV_FILE:
 				$data['uri'] = 'file://' . $_QR['uri'];
+				break;
+			case XIVO_PHONEBOOK_TYPE_DIRD_PHONEBOOK:
+				if(($phonebook = get_matching_phonebook($phonebooks, $_QR)) !== false) {
+					$data['dird_tenant'] = $phonebook['entity'];
+					$data['dird_phonebook'] = $phonebook['name'];
+				}
+				break;
+			}
 
 			if(($result = $_DIR->chk_values($data)) === false
 			|| $_DIR->edit($info['id'], $result)    === false)
@@ -209,6 +247,7 @@ switch($act)
 		$dhtml->set_js('js/xivo/configuration/manage/directories.js');
 
 		$_TPL->set_var('ldap_filters', get_ldap_filters($appldapfilter));
+		$_TPL->set_var('dird_phonebooks', $phonebooks);
 		$_TPL->set_var('id',$info['id']);
 		$_TPL->set_var('info',$return);
 		$_TPL->set_var('element',$element);

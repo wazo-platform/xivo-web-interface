@@ -2,7 +2,8 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2016 Avencall
+# Copyright (C) 2016 Proformatique
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,779 +19,198 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-dwho::load_class('dwho_http');
-
 dwho_file::required(array(XIVO_PATH_OBJECT,'application','service','ipbx','asterisk.inc'),true);
+
+require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'dird', 'client.inc'));
+require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'dird', 'phonebook', 'phonebook.inc'));
 
 class xivo_application_service_asterisk_phonebook extends xivo_application_asterisk_abstract
 {
-	var $_dso		= null;
-	var $_phonebook		= false;
-	var $_phonebookaddress	= false;
-	var $_phonebooknumber	= false;
-	var $_conf		= array();
+	var $_phonebook_module = false;
+	var $_entity_module = false;
+	var $_phonebooks = array();
+	var $_phonebook_resource = null;
 
-	public function __construct(&$service,&$dso,$param=null,$components=true)
+	public function __construct(&$service,$param=null,$components=true)
 	{
 		parent::__construct($service);
 
-		if(is_object($dso) === false)
-			trigger_error('Invalid Datastorage object',E_USER_ERROR);
-
-		$this->_dso = &$dso;
-
-		if(($this->_phonebook = &$this->_service->get_module('phonebook')) === false
-		|| ($this->_phonebookaddress = &$this->_service->get_module('phonebookaddress')) === false
-		|| ($this->_phonebooknumber = &$this->_service->get_module('phonebooknumber')) === false)
+		if(($_XOBJ = dwho_gct::get('xivo_object')) === false
+			|| ($this->_entity_module = &$_XOBJ->get_module('entity')) === false
+			|| ($dird_client = DirdClient::default_config()) === false
+			|| ($this->_phonebook_resource = new PhonebookResource($dird_client)) === false
+			|| ($entities = $this->_entity_module->get_all()) === false
+			|| ($current_entity = $_SESSION['_USR']->entity_id) === false) {
 			return(false);
+		}
 
-		$this->_load_config(dirname(__FILE__));
-
-		if(($size = $this->_verify_can_upload_file()) === false)
-			die();
-
-		$this->_conf['import']['file']['size'] = $size;
+		foreach($entities as $entity) {
+			if($current_entity === 0 || $current_entity === (int)$entity['id']) {
+				$current_phonebooks = $this->_phonebook_resource->list_phonebooks($entity['name']);
+				foreach($current_phonebooks as &$phonebook) {
+					$phonebook['entity'] = $entity['name'];
+					$phonebook['display'] = $phonebook['name'].' ('.$entity['name'].')';
+				}
+				$this->_phonebooks = array_merge($this->_phonebooks, $current_phonebooks);
+			}
+		}
 
 		return(true);
 	}
 
-	function get($id)
+	function add_contact($entity, $phonebook_id, $query)
 	{
-		$this->_info = $this->_origin = array();
-
-		if(($this->_info['phonebook'] = $this->_phonebook->get($id)) === false)
-			return(false);
-
-		$this->_origin['phonebook'] = $this->_phonebook->get_origin();
-
-		$this->_get_phonebookaddress();
-		$this->_get_phonebooknumber();
-
-		return($this->_info);
+		$dird_fields = $this->_webi_to_dird($query);
+		$this->_phonebook_resource->add_contact($entity, $phonebook_id, $dird_fields);
 	}
 
-	function _get_phonebookaddress()
+	function add_phonebook($entity, $name, $description)
 	{
-		$this->_info['phonebookaddress'] = false;
-		$this->_origin['phonebookaddress'] = false;
-
-		$where = array();
-		$where['phonebookid'] = $this->_info['phonebook']['id'];
-
-		if(($info = $this->_phonebookaddress->get_all_where($where)) === false
-		|| ($nb = count($info)) === 0)
-			return(false);
-
-		$this->_info['phonebookaddress'] = array();
-
-		for($i = 0;$i < $nb;$i++)
-		{
-			if(isset($this->_info['phonebookaddress'][$info[$i]['type']]) === false)
-				$this->_info['phonebookaddress'][$info[$i]['type']] = $info[$i];
-		}
-
-		$this->_origin['phonebookaddress'] = $this->_phonebookaddress->get_origin_list();
-
-		return($this->_info['phonebookaddress']);
+		$this->_phonebook_resource->add_phonebook($entity, $name, $description);
 	}
 
-	function _get_phonebooknumber()
+	function edit_contact($entity, $phonebook_id, $contact_uuid, $query)
 	{
-		$this->_info['phonebooknumber'] = false;
-		$this->_origin['phonebooknumber'] = false;
-
-		$where = array();
-		$where['phonebookid'] = $this->_info['phonebook']['id'];
-
-		if(($info = $this->_phonebooknumber->get_all_where($where)) === false
-		|| ($nb = count($info)) === 0)
-			return(false);
-
-		$this->_info['phonebooknumber'] = array();
-
-		for($i = 0;$i < $nb;$i++)
-		{
-			if(isset($this->_info['phonebooknumber'][$info[$i]['type']]) === false)
-				$this->_info['phonebooknumber'][$info[$i]['type']] = $info[$i];
-		}
-
-		$this->_origin['phonebooknumber'] = $this->_phonebooknumber->get_origin_list();
-
-		return($this->_info['phonebooknumber']);
+		$dird_fields = $this->_webi_to_dird($query);
+		$this->_phonebook_resource->edit_contact($entity, $phonebook_id, $contact_uuid, $dird_fields);
 	}
 
-	function get_phonebook_search($search,$order=null,$limit=null,$assoc=false)
+	function edit_phonebook($entity, $phonebook_id, $body)
 	{
-		return($this->_get_phonebook('search',$search,$order,$limit,$assoc));
+		return($this->_phonebook_resource->edit_phonebook($entity, $phonebook_id, $body));
 	}
 
-	function get_phonebook_list($order=null,$limit=null,$assoc=false)
+	private function _webi_to_dird($query)
 	{
-		return($this->_get_phonebook('list',null,$order,$limit,$assoc));
-	}
+		$normal_fields = $query['phonebook'];
+		$number_fields = $query['phonebooknumber'];
+		$address_fields = $query['phonebookaddress'];
+		$extra_field_columns = $query['extrafields']['name'];
+		$extra_field_values = $query['extrafields']['value'];
 
-	function _get_phonebook($action,$search=null,$order=null,$limit=null,$assoc=false)
-	{
-		$search = strval($search);
+		$dird_fields = array();
 
-		$subsort = false;
-		if ($order !== null) {
-			foreach(array('office-number', 'mobile-number') as $fld)
-			{
-				if(array_key_exists($fld, $order))
-				{ $subsort = array($fld, $order[$fld]); unset($order[$fld]); }
+		foreach($normal_fields as $key => $value) {
+			if(!empty($value)) {
+				$dird_fields[$key] = $value;
 			}
 		}
 
-		switch($action)
-		{
-			case 'search':
-				$rs = $this->_dso->search($search,$order,$limit);
-				$this->_cnt = $this->_dso->get_cnt();
-				break;
-			case 'list':
-			default:
-				$rs = $this->_phonebook->get_all(null,true,$order,$limit);
-				$this->_cnt = $this->_phonebook->get_cnt();
-		}
-
-		if($rs === false || ($nb = count($rs)) === 0)
-			return(false);
-
-		$r = $info = array();
-
-		for($i = 0;$i < $nb;$i++)
-		{
-			if($action === 'search')
-				$info['phonebook'] = $this->_phonebook->_prepare($rs[$i]);
-			else
-				$info['phonebook'] = $rs[$i];
-
-			$info['phonebookaddress'] = $this->_phonebookaddress->get_all_type_by_phonebook($info['phonebook']['id']);
-			$info['phonebooknumber'] = $this->_phonebooknumber->get_all_type_by_phonebook($info['phonebook']['id']);
-			$r[$info['phonebook']['id']] = $info;
-		}
-
-		// here we can sort by phonebook number
-		if($subsort !== false)
-		{
-			function f_sortby_office_number($a, $b)
-			{
-				return strcmp(
-					$a['phonebooknumber']['office']['number'],
-					$b['phonebooknumber']['office']['number']);
+		foreach($extra_field_columns as $i => $name) {
+			if(empty($name) === false
+				&& isset($extra_field_values[$i]) === true
+				&& ($value = $extra_field_values[$i]) !== ''
+				&& empty($value) === false) {
+				$dird_fields[$name] = $value;
 			}
-			function f_sortby_mobile_number($a, $b)
-			{
-				return strcmp(
-					$a['phonebooknumber']['mobile']['number'],
-					$b['phonebooknumber']['mobile']['number']);
+		}
+
+		foreach($number_fields as $key => $value) {
+			if(!empty($value)) {
+				$dird_fields['number_'.$key] = $value;
 			}
-
-			usort($r, "f_sortby_".str_replace('-', '_', $subsort[0]));
-
-			if($subsort[1] === SORT_DESC)
-				$r = array_reverse($r);
 		}
 
-		if(empty($r) === true)
-			return(false);
-		else if((bool) $assoc === false)
-			return(array_values($r));
-
-		return($r);
-	}
-
-	function get_config_import_file()
-	{
-		return($this->_chk_exists_cfg('import','file',true));
-	}
-
-	function _get_config_file_maxsize()
-	{
-		$r = false;
-
-		if(($import_file = $this->_chk_exists_cfg('import','file',true)) !== false
-		&& isset($import_file['size']) === true)
-			$r = dwho_get_memory($import_file['size'],false);
-
-		return($r);
-	}
-
-	function get_elements()
-	{
-		$r = array();
-
-		$r['phonebook'] = $this->_phonebook->get_element();
-		$r['phonebookaddress'] = $this->_phonebookaddress->get_element();
-		$r['phonebooknumber'] = $this->_phonebooknumber->get_element();
-
-		return($r);
-	}
-
-	function set_add($arr)
-	{
-		return($this->_set('add',$arr));
-	}
-
-	function set_edit($arr)
-	{
-		if(empty($this->_info) === true)
-			return(false);
-
-		return($this->_set('edit',$arr));
-	}
-
-	function _set($action,$arr)
-	{
-		$this->_reset();
-
-		if(($action !== 'add' && $action !== 'edit') === true
-		|| dwho_issa('phonebook',$arr) === false)
-			return(false);
-
-		$this->set_phonebook($arr['phonebook']);
-
-		if(dwho_issa('phonebookaddress',$arr) === true)
-			$this->set_phonebookaddress($arr['phonebookaddress']);
-
-		if(dwho_issa('phonebooknumber',$arr) === true)
-			$this->set_phonebooknumber($arr['phonebooknumber']);
-
-		return(($this->get_errnb() < 1));
-	}
-
-	function set_phonebook($arr)
-	{
-		if(is_array($arr) === false)
-		{
-			$this->_set_result('phonebook',null);
-			$this->_set_error('phonebook','invalid data');
-			return(false);
+		foreach($address_fields as $location => $fields) {
+			foreach($fields as $key => $value) {
+				if(!empty($value)) {
+					$dird_fields['address_'.$location.'_'.$key] = $value;
+				}
+			}
 		}
-		else if(($rs = $this->_phonebook->chk_values($arr)) === false)
-		{
-			$this->_set_result('phonebook',$this->_phonebook->get_filter_result());
-			$this->_set_error('phonebook',$this->_phonebook->get_filter_error());
+
+		return($dird_fields);
+	}
+
+	function get_contact($entity, $phonebook_id, $contact_uuid)
+	{
+		if(($dird_fields = $this->_phonebook_resource->get_contact($entity, $phonebook_id, $contact_uuid)) === false) {
 			return(false);
 		}
 
-		$this->_set_result('phonebook',$rs);
+		$normal_fields = array();
+		$number_fields = array();
+		$address_fields = array();
 
-		return(true);
-	}
-
-	function set_phonebookaddress($list)
-	{
-		return($this->_set_phonebook_type('address',$list));
-	}
-
-	function set_phonebooknumber($list)
-	{
-		return($this->_set_phonebook_type('number',$list));
-	}
-
-	function _set_phonebook_type($type,$list)
-	{
-		if(($type !== 'address' && $type !== 'number') === true
-		|| is_array($list) === false)
-			return(false);
-		else if($type === 'address')
-		{
-			$typename = 'phonebookaddress';
-			$module = &$this->_phonebookaddress;
-		}
-		else
-		{
-			$typename = 'phonebooknumber';
-			$module = &$this->_phonebooknumber;
-		}
-
-		if(empty($list) === true)
-			return(null);
-
-		$info = $infotmp = array();
-		$info['phonebookid'] = 0;
-
-		$reslist = array();
-
-		foreach($list as $key => $val)
-		{
-			if(($type === 'address'
-			   && is_array($val) === false) === true
-			|| ($type === 'number'
-			   && is_scalar($val) === false) === true)
-				continue;
-			else if($type === 'number' && dwho_has_len($val) === false)
-			{
-				unset($list[$key]);
+		foreach($dird_fields as $key => $value) {
+			if(empty($value) === true
+				|| (($pieces = explode("_", $key)) && empty($pieces))) {
 				continue;
 			}
 
-			if($type === 'address')
-				$infotmp = array_merge($info,$val);
-			else
-			{
-				$infotmp = $info;
-				$infotmp['number'] = $val;
-			}
-
-			$infotmp['type'] = $key;
-
-			if(($rs = $module->chk_values($infotmp)) !== false
-			&& isset($reslist[$rs['type']]) === false)
-				$reslist[$rs['type']] = $rs;
-			else {
-				$this->_set_result($type,$module->get_filter_result());
-				$this->_set_error($type,$module->get_filter_error());
+			if($pieces[0] === 'number'
+				&& count($pieces) === 2) {
+				$number_fields[$pieces[1]] = $value;
+			} else if($pieces[0] === 'address'
+				&& count($pieces) === 3) {
+				if(isset($address_fields[$pieces[1]]) === false) {
+					$address_fields[$pieces[1]] = array();
+				}
+				$address_fields[$pieces[1]][$pieces[2]] = $value;
+			} else {
+				$normal_fields[$key] = $value;
 			}
 		}
 
-		if($this->get_errnb() > 1) {
-			return(false);
-		}
-		if($type === 'number' && empty($list) === true)
-			return(null);
-		else if(empty($reslist) === true)
-		{
-			$this->_set_result($typename,false);
-			return(false);
-		}
-
-		$this->_set_result($typename,$reslist);
-
-		return(true);
+		return(array(
+			'phonebook' => empty($normal_fields) ? false : $normal_fields,
+			'phonebooknumber' => empty($number_fields) ? false : $number_fields,
+			'phonebookaddress' => empty($address_fields) ? false : $address_fields));
 	}
 
-	function add()
+	function delete_contact($entity, $phonebook_id, $contact_uuid)
 	{
-		$r = true;
-		$this->_status = 'add';
-		$this->_return = array();
-		$phonebookid = null;
-
-		if($this->get_errnb() > 0
-		|| ($phonebookid = $this->add_phonebook()) === false
-		|| $this->add_phonebookaddress($phonebookid) === false
-		|| $this->add_phonebooknumber($phonebookid) === false)
-		{
-			$r = false;
-			if($phonebookid !== null)
-				$this->_reverse_add();
-		}
-
-		$this->_status = '';
-
-		return($r);
+		return($this->_phonebook_resource->delete_contact($entity, $phonebook_id, $contact_uuid));
 	}
 
-	function add_phonebook()
+	function delete_phonebook($entity, $phonebook_id)
 	{
-		if(($rs = $this->get_result('phonebook')) === null
-		|| $rs === false)
-			return($rs);
-
-		$this->_return['phonebook'] = $this->_phonebook->add($rs);
-
-		return($this->_return['phonebook']);
+		$this->_phonebook_resource->delete_phonebook($entity, $phonebook_id);
 	}
 
-	function add_phonebookaddress($id)
+	function get_contact_list($entity, $phonebook_id, $order=null, $limit=null)
 	{
-		return($this->_add_phonebook_type('address',$id));
+		$contacts = $this->_phonebook_resource->list_contacts($entity, $phonebook_id, $order, $limit);
+		return($contacts);
 	}
 
-	function add_phonebooknumber($id)
+	function get_contact_cnt($entity, $phonebook_id)
 	{
-		return($this->_add_phonebook_type('number',$id));
+		$contacts = $this->_phonebook_resource->list_contacts($entity, $phonebook_id);
+		return(count($contacts));
 	}
 
-	function _add_phonebook_type($type,$id)
+	function get_phonebook($entity, $phonebook_id)
 	{
-		if(($type !== 'address' && $type !== 'number') === true
-		|| ($id = dwho_ulongint($id)) === 0)
-			return(false);
-		else if($type === 'address')
-		{
-			$typename = 'phonebookaddress';
-			$module = &$this->_phonebookaddress;
-		}
-		else
-		{
-			$typename = 'phonebooknumber';
-			$module = &$this->_phonebooknumber;
-		}
-
-		if(($rs = $this->get_result($typename)) === null)
-			return($rs);
-		else if(is_array($rs) === false || empty($rs) === true)
-			return(false);
-
-		$this->_return[$typename] = array();
-
-		foreach($rs as $val)
-		{
-			$val['phonebookid'] = $id;
-
-			if(($this->_return[$typename][$val['type']] = $module->add($val)) === false)
-				return(false);
-		}
-
-		if(empty($this->_return[$typename]) === true)
-			$this->_return[$typename] = false;
-
-		return(true);
+		return($this->_phonebook_resource->get_phonebook($entity, $phonebook_id));
 	}
 
-	function _reverse_add()
+	function get_phonebook_cnt()
 	{
-		if($this->get_errnb() > 0
-		|| $this->_status !== 'add'
-		|| is_array($this->_return) === false
-		|| empty($this->_return) === true)
-			return(false);
+		return(count($this->_phonebooks));
+	}
 
-		foreach($this->_return as $key => $val)
-		{
-			if($val === false)
-				continue;
-
-			$module = null;
-
-			switch($key)
-			{
-				case 'phonebook':
-					$this->_phonebook->delete($val);
-					break;
-				case 'phonebookaddress':
-					$module = &$this->_phonebookaddress;
-				case 'phonebooknumber':
-					if($module === null)
-						$module = &$this->_phonebooknumber;
-
-					if(is_array($val) === false)
-						continue;
-
-					foreach($val as $phoneval)
-					{
-						if($phoneval !== false)
-							$module->delete($phoneval);
-					}
-					break;
+	function get_phonebook_list($order=null,$limit=null)
+	{
+		if(is_array($order) && count($order > 1)) {
+			$sort_column = $order[1];
+			$sort_order = $order[0];
+			foreach($this->_phonebooks as $i => $phonebook) {
+				if(array_key_exists($sort_column, $phonebook)) {
+					$sorted[$i] = $phonebook[$sort_column];
+				}
+			}
+			if(isset($sorted) && is_array($sorted)) {
+				array_multisort($sorted, $sort_order, $this->_phonebooks);
 			}
 		}
-
-		return(true);
-	}
-
-	function edit()
-	{
-		$r = true;
-		$this->_status = 'edit';
-		$this->_return = array();
-
-		if($this->get_errnb() > 0
-		|| $this->edit_phonebook() === false
-		|| $this->edit_phonebookaddress() === false
-		|| $this->edit_phonebooknumber() === false)
-		{
-			$r = false;
-			$this->_reverse_edit();
+		if(is_array($limit)) {
+			$lower = $limit[0];
+			$upper = $lower + $limit[1];
+			$subset = array_slice($this->_phonebooks, $lower, $upper);
+			return($subset);
 		}
-
-		$this->_status = '';
-
-		return($r);
-	}
-
-	function edit_phonebook()
-	{
-		if(dwho_issa('phonebook',$this->_info) === false
-		|| ($rs = $this->get_result('phonebook')) === null
-		|| $rs === false)
-			return(false);
-
-		$this->_return['phonebook'] = $this->_phonebook->edit($this->_info['phonebook']['id'],$rs);
-
-		return($this->_return['phonebook']);
-	}
-
-	function edit_phonebookaddress()
-	{
-		return($this->_edit_phonebook_type('address'));
-	}
-
-	function edit_phonebooknumber()
-	{
-		return($this->_edit_phonebook_type('number'));
-	}
-
-	function _edit_phonebook_type($type)
-	{
-		if(($type !== 'address' && $type !== 'number') === true
-		|| dwho_issa('phonebook',$this->_info) === false)
-			return(false);
-		else if($type === 'address')
-		{
-			$typename = 'phonebookaddress';
-			$module = &$this->_phonebookaddress;
-		}
-		else
-		{
-			$typename = 'phonebooknumber';
-			$module = &$this->_phonebooknumber;
-		}
-
-		$id = $this->_info['phonebook']['id'];
-
-		if(dwho_issa($typename,$this->_info) === false)
-			return($this->_add_phonebook_type($type,$id));
-
-		$this->_return[$typename] = $this->_delete_phonebook_type($type);
-
-		if(($rs = $this->get_result($typename)) === null)
-			return($this->_return[$typename]);
-		else if(is_array($rs) === false || empty($rs) === true)
-			return(false);
-
-		$this->_return[$typename] = array();
-
-		$list = array_keys($this->_info[$typename]);
-
-		$i = 0;
-
-		foreach($rs as $val)
-		{
-			if(isset($list[$i]) === true)
-				$pid = $this->_info[$typename][$list[$i++]]['id'];
-			else
-				$pid = 0;
-
-			$val['phonebookid'] = $id;
-
-			if(($this->_return[$typename][$val['type']] = $module->add($val,$pid)) === false)
-				return(false);
-		}
-
-		if(empty($this->_return[$typename]) === true)
-			$this->_return[$typename] = false;
-
-		return(true);
-	}
-
-	function _reverse_edit()
-	{
-		if($this->get_errnb() > 0
-		|| $this->_status !== 'edit'
-		|| is_array($this->_return) === false
-		|| empty($this->_return) === true)
-			return(false);
-
-		foreach($this->_return as $key => $val)
-		{
-			if($val === false)
-				continue;
-
-			$module = null;
-
-			switch($key)
-			{
-				case 'phonebook':
-					if(isset($this->_origin['phonebook']) === false
-					|| $this->_origin['phonebook'] === false)
-						$this->delete_phonebook();
-					else
-						$this->_phonebook->edit_origin($this->_origin['phonebook']);
-					break;
-				case 'phonebookaddress':
-					$type = 'address';
-					$module = &$this->_phonebookaddress;
-				case 'phonebooknumber':
-					if($module === null)
-					{
-						$type = 'number';
-						$module = &$this->_phonebooknumber;
-					}
-
-					$this->_delete_phonebook_type($type);
-
-					if(isset($this->_origin[$key]) === true
-					&& $this->_origin[$key] !== false)
-						$module->add_origin_list($this->_origin[$key]);
-					break;
-			}
-		}
-
-		return(true);
-	}
-
-	function delete()
-	{
-		$r = true;
-		$this->_status = 'delete';
-		$this->_return = array();
-
-		if($this->delete_phonebook() === false
-		|| $this->delete_phonebookaddress() === false
-		|| $this->delete_phonebooknumber() === false)
-		{
-			$r = false;
-			$this->_reverse_delete();
-		}
-
-		$this->_status = '';
-
-		return($r);
-	}
-
-	function delete_phonebook()
-	{
-		if(dwho_issa('phonebook',$this->_info) === false)
-			return(false);
-
-		$r = $this->_phonebook->delete($this->_info['phonebook']['id']);
-
-		if($this->_status === 'delete')
-			$this->_return['phonebook'] = $r;
-
-		return($r);
-	}
-
-	function delete_phonebookaddress()
-	{
-		return($this->_delete_phonebook_type('address'));
-	}
-
-	function delete_phonebooknumber()
-	{
-		return($this->_delete_phonebook_type('number'));
-	}
-
-	function _delete_phonebook_type($type)
-	{
-		if(($type !== 'address' && $type !== 'number') === true)
-			return(false);
-		else if($type === 'address')
-		{
-			$typename = 'phonebookaddress';
-			$module = &$this->_phonebookaddress;
-		}
-		else
-		{
-			$typename = 'phonebooknumber';
-			$module = &$this->_phonebooknumber;
-		}
-
-		if(dwho_issa($typename,$this->_info) === false)
-			return(null);
-		else if(dwho_issa('phonebook',$this->_info) === false)
-			return(false);
-
-		$where = array();
-		$where['phonebookid'] = $this->_info['phonebook']['id'];
-
-		$r = $module->delete_where($where);
-
-		if($this->_status === 'delete')
-			$this->_return[$typename] = $r;
-
-		return($r);
-	}
-
-	function _reverse_delete()
-	{
-		if($this->_status !== 'delete'
-		|| is_array($this->_return) === false
-		|| empty($this->_return) === true)
-			return(false);
-
-		foreach($this->_return as $key => $val)
-		{
-			if($val === false)
-				continue;
-
-			$module = null;
-
-			switch($key)
-			{
-				case 'phonebook':
-					if(isset($this->_origin['phonebook']) === true
-					&& $this->_origin['phonebook'] !== false)
-						$this->_phonebook->add_origin($this->_origin['phonebook']);
-					break;
-				case 'phonebookaddress':
-					$type = 'address';
-					$module = &$this->_phonebookaddress;
-				case 'phonebooknumber':
-					if($module === null)
-					{
-						$type = 'number';
-						$module = &$this->_phonebooknumber;
-					}
-
-					if(isset($this->_origin[$key]) === true
-					&& $this->_origin[$key] !== false)
-						$module->add_origin_list($this->_origin[$key]);
-					break;
-			}
-		}
-
-		return(true);
-	}
-
-	function import_csv()
-	{
-		if(dwho::load_class('dwho::file::csv') === false
-		|| ($http_response = dwho_http::factory('response')) === false
-		|| ($fileinfo = $http_response->upload_file('import',$this->_conf['import']['file'])) === false)
-			return(false);
-
-		$filecsv = new dwho_file_csv();
-
-		if(($data = $filecsv->parse($fileinfo['tmp_name'],
-					    0,
-					    '|',
-					    null,
-					    true,
-					    $this->_conf['import']['field'])) === false
-		|| ($nb = count($data)) === 0)
-		{
-			dwho_file::rm($fileinfo['tmp_name']);
-			return(false);
-		}
-
-		$r = true;
-
-		for($i = 0;$i < $nb;$i++)
-		{
-			if($this->set_add($data[$i]) === false
-			|| $this->add() === false)
-				$r = false;
-		}
-
-		dwho_file::rm($fileinfo['tmp_name']);
-
-		return($r);
-	}
-
-	function add_from_json()
-	{
-		if(($data = $this->_get_data_from_json()) === false
-		|| $this->set_add($data) === false
-		|| $this->add() === false)
-			return(false);
-
-		return(true);
-	}
-
-	function edit_from_json()
-	{
-		if(($data = $this->_get_data_from_json()) === false
-		|| $this->set_edit($data) === false
-		|| $this->edit() === false)
-			return(false);
-
-		return(true);
+		return($this->_phonebooks);
 	}
 }
 
