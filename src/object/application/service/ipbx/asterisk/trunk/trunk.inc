@@ -3,6 +3,7 @@
 #
 # XiVO Web-Interface
 # Copyright (C) 2006-2016  Avencall
+# Copyright (C) 2016  Proformatique Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,6 +23,7 @@ dwho_file::required(array(XIVO_PATH_OBJECT,'application','service','ipbx','aster
 
 class xivo_application_service_asterisk_trunk extends xivo_application_asterisk_abstract
 {
+	var $_outcalltrunk	= false;
 	var $_protocol		= false;
 	var $_trunkfeatures	= false;
 	var $_register		= false;
@@ -40,6 +42,7 @@ class xivo_application_service_asterisk_trunk extends xivo_application_asterisk_
 		$this->_dso = &$dso;
 
 		if(($this->_trunkfeatures = &$this->_service->get_module('trunkfeatures')) === false
+		|| ($this->_outcalltrunk = &$this->_service->get_module('outcalltrunk')) === false
 		|| $this->load_init($param) === false)
 			return(false);
 		else if((bool) $components === true)
@@ -720,6 +723,7 @@ class xivo_application_service_asterisk_trunk extends xivo_application_asterisk_
 
 		if($this->delete_protocol() === false
 		|| $this->delete_register() === false
+		|| $this->delete_outcalltrunk() === false
 		|| $this->delete_trunkfeatures() === false
 		|| $this->delete_contextmember() === false)
 		{
@@ -730,6 +734,14 @@ class xivo_application_service_asterisk_trunk extends xivo_application_asterisk_
 		$this->_status = '';
 
 		return($r);
+	}
+
+	function delete_outcalltrunk()
+	{
+		if(dwho_issa('trunkfeatures',$this->_info) === false)
+			return(false);
+
+		return $this->_outcalltrunk->delete_where(array('trunkfeaturesid' => $this->_info['trunkfeatures']['id']));;
 	}
 
 	function delete_trunkfeatures()
