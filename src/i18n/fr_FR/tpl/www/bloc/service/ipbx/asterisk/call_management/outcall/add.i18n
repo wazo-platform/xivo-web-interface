@@ -85,23 +85,8 @@ Sous-routine de prétraitement :
 ; fm_outcall_hangupringtime
 Temps de sonnerie avant de raccrocher :
 
-; fm_outcall_hangupringtime-opt(0)
-Illimité
-
-; fm_outcall_hangupringtime-opt-seconds
-%s secondes
-
-; fm_outcall_hangupringtime-opt-minute
-1 minute
-
-; fm_outcall_hangupringtime-opt-minute-seconds
-%s min. %s sec.
-
-; fm_outcall_hangupringtime-opt-minutes
-%s minutes
-
-; fm_outcall_hangupringtime-opt-minutes-seconds
-%s min. %s sec.
+; hlp_fm_outcall_hangupringtime
+Saisissez une valeur en secondes (champ vide ou valeur 0 pour désactiver)
 
 ; bt_inrightcall
 Ajouter un ou plusieurs droits d'appels ->
