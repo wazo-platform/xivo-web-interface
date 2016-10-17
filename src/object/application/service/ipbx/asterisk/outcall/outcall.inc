@@ -3,6 +3,7 @@
 #
 # XiVO Web-Interface
 # Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2016  Proformatique Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -705,8 +706,8 @@ class xivo_application_service_asterisk_outcall extends xivo_application_asteris
 		$this->_return = array();
 
 		if($this->_delete_dialpattern($this->_info['dialpattern'], $this->_info['outcall']['context']) === false
-		|| $this->delete_outcall() === false
 		|| $this->delete_outcalltrunk() === false
+		|| $this->delete_outcall() === false
 		|| $this->delete_rightcall() === false
 		|| $this->delete_contextmember() === false
 		|| $this->delete_schedule_path() === false)
