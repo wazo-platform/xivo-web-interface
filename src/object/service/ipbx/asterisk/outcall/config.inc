@@ -47,6 +47,7 @@ $array['element']['description']['default'] = '';
 
 $array['element']['hangupringtime'] = array();
 $array['element']['hangupringtime']['default'] = 0;
+$array['element']['hangupringtime']['setdef'] = true;
 
 $array['element']['commented'] = array();
 $array['element']['commented']['value'] = array(0,1);

@@ -45,6 +45,7 @@ $array['element']['agentid']['null'] = true;
 
 $array['element']['ringseconds'] = array();
 $array['element']['ringseconds']['default'] = 30;
+$array['element']['ringseconds']['setdef'] = true;
 
 $array['element']['simultcalls'] = array();
 $array['element']['simultcalls']['value'] = array(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20);
