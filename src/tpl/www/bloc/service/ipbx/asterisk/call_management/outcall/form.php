@@ -31,9 +31,12 @@ $schedules    = $this->get_var('schedules');
 $info         = $this->get_var('info');
 
 if ($info['outcall']['hangupringtime'] === null) {
-	$info['outcall']['hangupringtime'] = $element['userfeatures']['ringseconds']['default'];
-} elseif ($info['outcall']['hangupringtime'] === '0') {
-	$info['outcall']['hangupringtime'] = '';
+	$hangupringtime = $element['outcall']['hangupringtime']['default'];
+} else {
+	$hangupringtime = $info['outcall']['hangupringtime'];
+}
+if ($hangupringtime == 0) {
+	$hangupringtime = '';
 }
 ?>
 
@@ -92,7 +95,7 @@ endif;
 				    'labelid' => 'outcall-hangupringtime',
 				    'size'    => 15,
 				    'help'    => $this->bbf('hlp_fm_outcall_hangupringtime'),
-				    'value'   => $info['outcall']['hangupringtime'],
+				    'value'   => $hangupringtime,
 				    'error'   => $this->bbf_args('error',
 						    $this->get_var('error', 'outcall', 'hangupringtime')) ));
 

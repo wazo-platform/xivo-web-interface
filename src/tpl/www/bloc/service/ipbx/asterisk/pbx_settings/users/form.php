@@ -48,10 +48,13 @@ if(dwho_issa('linefeatures',$info) === true
 &&($line_nb = count($info['linefeatures'])) > 0)
 	$line_list = $info['linefeatures'];
 
-if ($info['userfeatures']['ringseconds'] === null){
-	$info['userfeatures']['ringseconds'] = $element['userfeatures']['ringseconds']['default'];
-} elseif ($info['userfeatures']['ringseconds'] === '0') {
-	$info['userfeatures']['ringseconds'] = '';
+if ($info['userfeatures']['ringseconds'] === null) {
+	$ringseconds = $element['userfeatures']['ringseconds']['default'];
+} else {
+	$ringseconds = $info['userfeatures']['ringseconds'];
+}
+if ($ringseconds == 0) {
+	$ringseconds = '';
 }
 ?>
 
@@ -115,11 +118,11 @@ if ($info['userfeatures']['ringseconds'] === null){
 		echo	$form->text(array('desc'	=> $this->bbf('fm_userfeatures_ringseconds'),
 				    'name'	=> 'userfeatures[ringseconds]',
 				    'labelid'	=> 'userfeatures-ringseconds',
-					'size'		=> 15,
-					'help'		=> $this->bbf('hlp_fm_userfeatures_ringseconds'),
-					'value'		=> $info['userfeatures']['ringseconds'],
-					'error'		=> $this->bbf_args('error',
-							$this->get_var('error', 'userfeatures', 'ringseconds')) ));
+				    'size'		=> 15,
+				    'help'		=> $this->bbf('hlp_fm_userfeatures_ringseconds'),
+				    'value'		=> $ringseconds,
+				    'error'		=> $this->bbf_args('error',
+						$this->get_var('error', 'userfeatures', 'ringseconds')) ));
 
 		$form->select(array('desc'	=> $this->bbf('fm_userfeatures_simultcalls'),
 				    'name'	=> 'userfeatures[simultcalls]',
