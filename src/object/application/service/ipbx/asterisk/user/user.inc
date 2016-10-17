@@ -817,7 +817,8 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		&& $arr['outcallerid'] === 'custom')
 			$arr['outcallerid'] = $arr['outcallerid-custom'];
 
-		if($arr['ringseconds'] === '')
+		if(isset($arr['ringseconds']) === true
+		&& $arr['ringseconds'] === '')
 			$arr['ringseconds'] = 0;
 
 		if($action === 'add')

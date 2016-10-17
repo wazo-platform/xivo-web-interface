@@ -237,7 +237,8 @@ class xivo_application_service_asterisk_outcall extends xivo_application_asteris
 
 		$arr['commented'] = false;
 
-		if($arr['hangupringtime'] === '') {
+		if(isset($arr['hangupringtime']) === true
+		&& $arr['hangupringtime'] === '') {
 			$arr['hangupringtime'] = 0;
 		}
 
