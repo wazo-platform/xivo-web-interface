@@ -40,6 +40,9 @@ Personnalisé
 ; fm_xivo_custom_ca_path
 Certificat CA personnalisé :
 
+; fm_dird_form
+Répertoire Dird
+
 ; fm_dird_tenant
 Locataire :
 

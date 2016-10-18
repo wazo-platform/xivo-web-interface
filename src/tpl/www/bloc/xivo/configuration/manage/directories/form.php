@@ -111,8 +111,9 @@ $element = $this->get_var('element');
 ?>
 	</fieldset>
 	<fieldset id='fld-dird-form'>
+	<legend><?= $this->bbf('fm_dird_form') ?></legend>
 <?php
-	echo    $form->select(array('desc' => 'Phonebook: ',
+	echo    $form->select(array('desc' => $this->bbf('fm_dird_phonebook'),
 								'name' => 'phonebook_id',
 								'labelid' => 'display',
 								'key' => 'display',

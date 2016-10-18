@@ -37,6 +37,9 @@ Custom
 ; fm_xivo_custom_ca_path
 Custom CA certificate:
 
+; fm_dird_form
+Dird directory
+
 ; fm_dird_tenant
 Tenant:
 
