@@ -300,18 +300,6 @@ $array['paginguser'] = array();
 $array['paginguser']['table'] = 'paginguser';
 $array['paginguser']['primary'] = array('pagingid' => '','userfeaturesid' => '');
 
-$array['phonebook'] = array();
-$array['phonebook']['table'] = 'phonebook';
-$array['phonebook']['primary'] = array('id' => '');
-
-$array['phonebookaddress'] = array();
-$array['phonebookaddress']['table'] = 'phonebookaddress';
-$array['phonebookaddress']['primary'] = array('id' => '');
-
-$array['phonebooknumber'] = array();
-$array['phonebooknumber']['table'] = 'phonebooknumber';
-$array['phonebooknumber']['primary'] = array('id' => '');
-
 $array['phonefunckey'] = array();
 $array['phonefunckey']['table'] = 'phonefunckey';
 $array['phonefunckey']['primary'] = array('iduserfeatures' => '','fknum' => '');

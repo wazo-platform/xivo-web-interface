@@ -265,15 +265,6 @@ $array['module']['paging']['datastorage'] = true;
 $array['module']['paginguser'] = array();
 $array['module']['paginguser']['datastorage'] = true;
 
-$array['module']['phonebook'] = array();
-$array['module']['phonebook']['datastorage'] = true;
-
-$array['module']['phonebookaddress'] = array();
-$array['module']['phonebookaddress']['datastorage'] = true;
-
-$array['module']['phonebooknumber'] = array();
-$array['module']['phonebooknumber']['datastorage'] = true;
-
 $array['module']['phonefunckey'] = array();
 $array['module']['phonefunckey']['datastorage'] = true;
 
