@@ -26,13 +26,13 @@ function update_directory_type_info() {
 		$('#fld-xivo-form').show();
 		$('#div-ldap-uri').hide();
 		$('#div-free-uri').show();
-	} else if (directory_type == '4') {
+	} else if (directory_type == '3') {
 		$('#fld-xivo-form').hide();
 		$('#fld-dird-form').show();
 		$('#div-ldap-uri').hide();
 		$('#div-free-uri').show();
 		$('#it-uri').val(uri || default_phonebook_uri);
-	} else if (directory_type == '5') {
+	} else if (directory_type == '4') {
 		$('#fld-xivo-form').hide();
 		$('#fld-dird-form').hide();
 		$('#div-ldap-uri').show();

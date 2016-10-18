@@ -37,12 +37,12 @@ $param['act'] = 'list';
 
 $result = $fm_save = $error = null;
 
+# When modifying these values make sure that directories.js is modified accordingly
 define('XIVO_PHONEBOOK_TYPE_CSV_FILE', 0);
 define('XIVO_PHONEBOOK_TYPE_WEBSERVICES', 1);
 define('XIVO_PHONEBOOK_TYPE_XIVO', 2);
-define('XIVO_PHONEBOOK_TYPE_PHONEBOOK', 3);
-define('XIVO_PHONEBOOK_TYPE_DIRD_PHONEBOOK', 4);
-define('XIVO_PHONEBOOK_TYPE_LDAP_FILTER', 5);
+define('XIVO_PHONEBOOK_TYPE_DIRD_PHONEBOOK', 3);
+define('XIVO_PHONEBOOK_TYPE_LDAP_FILTER', 4);
 
 $types = array(
 	XIVO_PHONEBOOK_TYPE_CSV_FILE => array(
@@ -54,9 +54,6 @@ $types = array(
 	XIVO_PHONEBOOK_TYPE_XIVO => array(
 		'type' => 'xivo',
 		'name' => 'XiVO'),
-	XIVO_PHONEBOOK_TYPE_PHONEBOOK => array(
-		'type' => 'phonebook',
-		'name' => 'Phonebook'),
 	XIVO_PHONEBOOK_TYPE_DIRD_PHONEBOOK => array(
 		'type' => 'dird_phonebook',
 		'name' => 'Local dird phonebook'),

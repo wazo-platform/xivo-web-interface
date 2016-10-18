@@ -2,7 +2,8 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2014 Avencall
+# Copyright (C) 2016 Proformatique
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -330,15 +331,9 @@ $array['service/ipbx/asterisk/web_services/private/trunk_management/custom'] = a
 	'define'	=> array('XIVO_LOC_WEBSERVICES_MODE'	=> 'private'));
 
 # pbx_services
-$array['service/ipbx/asterisk/web_services/restricted/pbx_services/phonebook'] = array(
-	'path'		=> 'service/ipbx/asterisk/web_services/pbx_services/phonebook',
-	'define'	=> array('XIVO_LOC_WEBSERVICES_MODE'	=> 'restricted'));
 $array['service/ipbx/asterisk/web_services/restricted/pbx_services/extenfeatures'] = array(
 	'path'		=> 'service/ipbx/asterisk/web_services/pbx_services/extenfeatures',
 	'define'	=> array('XIVO_LOC_WEBSERVICES_MODE'	=> 'restricted'));
-$array['service/ipbx/asterisk/web_services/private/pbx_services/phonebook'] = array(
-	'path'		=> 'service/ipbx/asterisk/web_services/pbx_services/phonebook',
-	'define'	=> array('XIVO_LOC_WEBSERVICES_MODE'	=> 'private'));
 $array['service/ipbx/asterisk/web_services/private/pbx_services/extenfeatures'] = array(
 	'path'		=> 'service/ipbx/asterisk/web_services/pbx_services/extenfeatures',
 	'define'	=> array('XIVO_LOC_WEBSERVICES_MODE'	=> 'private'));
