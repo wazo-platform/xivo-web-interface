@@ -2,7 +2,8 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2016  Avencall
+# Copyright (C) 2016 Avencall
+# Copyright (C) 2016 Proformatique
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -25,17 +26,20 @@ $info = $this->get_var('info');
 $element = $this->get_var('element');
 
 if ($this->get_var('entity_list') === false) {
-		echo $this->bbf('no_internal_context_for_this_entity');
+	echo $this->bbf('no_internal_context_for_this_entity');
 } else {
-		echo	$form->select(array('desc'	=> $this->bbf('fm_phonebook_entity'),
-									'name'		=> 'entity',
-									'labelid'	=> 'phonebook-entity',
-									'key'		=> 'displayname',
-									'altkey'	=> 'name',
-									'selected'  => $this->get_var('entity'),
-									'error'	=> $this->bbf_args('error',
-								$this->get_var('error', 'phonebook', 'entity'))),
-						$this->get_var('entities'));
+	$params = array('desc'	=> $this->bbf('fm_phonebook_entity'),
+					'name'		=> 'entity',
+					'labelid'	=> 'phonebook-entity',
+					'key'		=> 'displayname',
+					'altkey'	=> 'name',
+					'selected'  => $this->get_var('entity'),
+					'error'	=> $this->bbf_args('error', $this->get_var('error', 'phonebook', 'entity')));
+	if ($this->get_var('act') !== 'add') {
+		$params['disabled'] = true;
+		$params['class'] = 'it-disabled';
+	}
+	echo $form->select($params, $this->get_var('entities'));
 }
 
 $params = array('desc' => $this->bbf('fm_phonebook_name'),
