@@ -28,10 +28,7 @@ $dhtml->load_js('foot');
 			$this->bbf('info_version'),' ',
 			XIVO_SOFT_VERSION,' "',XIVO_SOFT_CODENAME,'" | ',
 			$this->bbf('visit_for_information',
-				   '<a href="http://'.XIVO_SOFT_URL.'" title="'.XIVO_SOFT_LABEL.'" target="_blank">'.XIVO_SOFT_URL.'</a>'),' | ',
-			$this->bbf('info_copyright',
-				   array(2006,dwho_i18n::strftime_l('%Y',null),
-				   '<a href="http://'.XIVO_CORP_URL.'" title="'.XIVO_CORP_LABEL.'" target="_blank">'.XIVO_CORP_LABEL.'</a>'));
+				   '<a href="http://'.XIVO_SOFT_URL.'" title="'.XIVO_SOFT_LABEL.'" target="_blank">'.XIVO_SOFT_URL.'</a>');
 ?>
 		</h6>
 		<span id="page_loaded"></span>

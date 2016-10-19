@@ -35,19 +35,6 @@ define('XIVO_DOWNLOAD_URL','mirror.xivo.io/iso/archives/xivo-'.XIVO_SOFT_VERSION
 define('XIVO_DOC_URL','documentation.xivo.io');
 define('XIVO_DOC_API_URL','api.xivo.io');
 define('XIVO_BLOG_URL','blog.xivo.io');
-define('XIVO_CORP_LABEL','Avencall');
-define('XIVO_PF_FR_CORP_LABEL','Avencall');
-define('XIVO_CORP_URL','avencall.com');
-
-define('XIVO_AV_FR_CORP_NAME'		,'Avencall');
-define('XIVO_AV_FR_CORP_EMAIL'		,'contact@avencall.com');
-define('XIVO_AV_FR_CORP_URL'		,'avencall.com');
-define('XIVO_AV_FR_CORP_ADDRESS'	,'3 allée des Séquoïas <br> Le Chinook');
-define('XIVO_AV_FR_CORP_ZIPCODE'	,'69760');
-define('XIVO_AV_FR_CORP_CITY'		,'Limonest');
-define('XIVO_AV_FR_CORP_COUNTRY'	,'France');
-define('XIVO_AV_FR_CORP_PHONE'		,'+33 (0) 4 37 49 78 10');
-define('XIVO_AV_FR_CORP_FAX'		,'+33 (0) 4 27 46 63 30');
 
 define('XIVO_WS_HEADER_NAME_VERSION','X-XIVO-WS-VERSION');
 define('XIVO_WS_VERSION','1.0');
