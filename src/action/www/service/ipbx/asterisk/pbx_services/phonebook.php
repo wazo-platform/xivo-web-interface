@@ -2,7 +2,8 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2016  Avencall
+# Copyright (C) 2006-2016 Avencall
+# Copyright (C) 2016 Proformatique
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -187,7 +188,7 @@ switch($act)
 		$limit[0] = $prevpage * $nbbypage;
 		$limit[1] = $nbbypage;
 
-		$list = $appphonebook->get_contact_list($entity, $phonebook_id, $sort, $limit);
+		$list = $appphonebook->get_contact_list($entity, $phonebook_id, $sort, $limit, $search);
 		$total = $appphonebook->get_contact_cnt($entity, $phonebook_id);
 
 		$_TPL->set_var('entity', $entity);

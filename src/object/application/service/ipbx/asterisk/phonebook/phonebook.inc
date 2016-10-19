@@ -168,9 +168,9 @@ class xivo_application_service_asterisk_phonebook extends xivo_application_aster
 		$this->_phonebook_resource->delete_phonebook($entity, $phonebook_id);
 	}
 
-	function get_contact_list($entity, $phonebook_id, $order=null, $limit=null)
+	function get_contact_list($entity, $phonebook_id, $order=null, $limit=null, $search=null)
 	{
-		$contacts = $this->_phonebook_resource->list_contacts($entity, $phonebook_id, $order, $limit);
+		$contacts = $this->_phonebook_resource->list_contacts($entity, $phonebook_id, $order, $limit, $search);
 		return($contacts);
 	}
 

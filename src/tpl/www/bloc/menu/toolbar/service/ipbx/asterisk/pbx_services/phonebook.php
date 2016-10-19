@@ -2,7 +2,8 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2016  Avencall
+# Copyright (C) 2006-2016 Avencall
+# Copyright (C) 2016 Proformatique
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -37,11 +38,19 @@ $dhtml->write_js($toolbar_js);
 
 <form action="#" method="post" accept-charset="utf-8">
 <?php
-	echo	$form->hidden(array('name'	=> DWHO_SESS_NAME,
-				    'value'	=> DWHO_SESS_ID)),
-
-		$form->hidden(array('name'	=> 'act',
-				    'value'	=> 'list'));
+	if($this->get_var('act') === 'list_contacts'
+	&& ($entity = $this->get_var('entity'))
+	&& ($phonebook_id = (int)$this->get_var('phonebook_id'))) {
+		echo $form->hidden(array('name' => 'entity', 'value' => $entity));
+		echo $form->hidden(array('name' => 'phonebook', 'value' => $phonebook_id));
+		$list_action = 'list_contacts';
+		$add_params = array('act' => 'add_contact', 'entity' => $entity, 'phonebook' => $phonebook_id);
+	} else {
+		$list_action = 'list';
+		$add_params = array('act' => 'add');
+	}
+	echo 	$form->hidden(array('name'	=> DWHO_SESS_NAME, 'value' => DWHO_SESS_ID)),
+			$form->hidden(array('name' => 'act', 'value' => $list_action));
 ?>
 	<div class="fm-paragraph">
 <?php
@@ -61,32 +70,12 @@ $dhtml->write_js($toolbar_js);
 	</div>
 </form>
 <?php
-	if($this->get_var('act') === 'list_contacts') {
-		$add_action = $this->get_var('act') == 'list' ? 'add' : 'add_contact';
-		$param = array();
-		if($this->get_var('act') === 'list') {
-			$param['act'] = 'add';
-		} else {
-			$param['act'] = 'add_contact';
-			$param['entity'] = $this->get_var('entity');
-			$param['phonebook'] = (int)$this->get_var('phonebook_id');
-		}
-		echo	$url->href_html($url->img_html('img/menu/top/toolbar/bt-add.gif',
-								$this->bbf('toolbar_opt_add'),
-								'id="toolbar-bt-add"
-								border="0"'),
-								'service/ipbx/pbx_services/phonebook',
-								$param,
-								$this->bbf('toolbar_opt_add'));
-	}
-
-if($this->get_var('act') === 'list'):
 	echo    $url->href_html($url->img_html('img/menu/top/toolbar/bt-add.gif',
 							$this->bbf('toolbar_opt_add'),
 							'id="toolbar-bt-add"
 							border="0"'),
 							'service/ipbx/pbx_services/phonebook',
-							array('act' => 'add'),
+							$add_params,
 							$this->bbf('toolbar_opt_add'));
 	echo	$url->img_html('img/menu/top/toolbar/bt-more.gif',
 			       $this->bbf('toolbar_opt_advanced'),
@@ -100,8 +89,3 @@ if($this->get_var('act') === 'list'):
 		</li>
 	</ul>
 </div>
-<?php
-
-endif;
-
-?>
