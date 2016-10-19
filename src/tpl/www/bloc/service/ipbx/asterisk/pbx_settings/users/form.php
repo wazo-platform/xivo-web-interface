@@ -122,7 +122,7 @@ if ($ringseconds == 0) {
 				    'help'		=> $this->bbf('hlp_fm_userfeatures_ringseconds'),
 				    'value'		=> $ringseconds,
 				    'error'		=> $this->bbf_args('error',
-						$this->get_var('error', 'userfeatures', 'ringseconds')) ));
+						$this->get_var('error', 'userfeatures', 'ringseconds')) )),
 
 		$form->select(array('desc'	=> $this->bbf('fm_userfeatures_simultcalls'),
 				    'name'	=> 'userfeatures[simultcalls]',
