@@ -450,6 +450,7 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		//$r['schedule'] = $this->get_destination_schedule($scheduleid);
 		$r['outcalls']  = $this->get_destination_outcall();
 		$r['trunk']  = $this->get_destination_trunk();
+		$r['ivr'] = $this->get_destination_ivr();
 
 		return($r);
 	}
@@ -504,6 +505,18 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 
 		if(($meetmefeatures = &$this->_service->get_module('meetmefeatures')) !== false
 		&& ($r = $meetmefeatures->get_all_except($id,$number,$order)) !== false)
+			return($r);
+
+		return(false);
+	}
+
+	public function get_destination_ivr()
+	{
+		$order = array();
+		$order['name'] = SORT_ASC;
+
+		if(($ivr = &$this->_service->get_module('ivr')) !== false
+		&& ($r = $ivr->get_all(null, true, $order)) !== false)
 			return($r);
 
 		return(false);

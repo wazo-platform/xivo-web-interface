@@ -26,6 +26,8 @@ $array['categoryevent']['group'] = array('noanswer','congestion','busy','chanuna
 $array['categoryevent']['incall'] = array('answer');
 $array['categoryevent']['queue'] = array('noanswer','congestion','busy','chanunavail','qwaittime','qwaitratio');
 $array['categoryevent']['user'] = array('noanswer','congestion','busy','chanunavail');
+$array['categoryevent']['ivr'] = array('press1', 'press2', 'press3', 'press4', 'press5', 'press6', 'press7', 'press8', 'press9', 'press0',
+									   'pressstar', 'presspound', 'abort', 'timeout');
 //$array['categoryevent']['trunk'] = array('noanswer','congestion','busy','chanunavail');
 //$array['categoryevent']['schedule'] = array('inschedule','outschedule');
 
@@ -41,11 +43,25 @@ $array['element']['event']['value'] = array('answer',
 						'inschedule',
 						'outschedule',
 						'qwaittime',
-						'qwaitratio');
+						'qwaitratio',
+						'press1',
+						'press2',
+						'press3',
+						'press4',
+						'press5',
+						'press6',
+						'press7',
+						'press8',
+						'press9',
+						'press0',
+						'pressstar',
+						'presspound',
+						'abort',
+						'timeout');
 $array['element']['event']['default'] = '';
 
 $array['element']['category'] = array();
-$array['element']['category']['value'] = array('callfilter','group','incall','queue','schedule','user','outcall');
+$array['element']['category']['value'] = array('callfilter','group','incall','queue','schedule','user','outcall','ivr');
 $array['element']['category']['default'] = '';
 
 $array['element']['categoryval'] = array();
@@ -72,7 +88,8 @@ $array['element']['action']['value'] = array('none',
 					     'application:voicemailmain',
 					     'application:password',
 					     'sound',
-					     'custom');
+					     'custom',
+					     'ivr');
 $array['element']['action']['default'] = 'none';
 
 $array['element']['actionarg1'] = array();
@@ -97,7 +114,8 @@ $array['element']['actiontype']['value'] = array('none',
 						 'outcall',
 						 'application',
 						 'sound',
-						 'custom');
+						 'custom',
+						 'ivr');
 $array['element']['actiontype']['default'] = 'none';
 $array['element']['actiontype']['unset'] = true;
 
@@ -118,38 +136,10 @@ $array['element']['linked']['set'] = true;
 
 
 $array['filter'] = array();
-$array['filter']['event'] = array('key' => array('answer',
-						'noanswer',
-						'congestion',
-						'busy',
-						'chanunavail',
-						'inschedule',
-						'outschedule',
-					   	'qwaittime',
-					   	'qwaitratio'));
-$array['filter']['category'] = array('key' => array('callfilter','group','incall','queue','schedule','user'));
+$array['filter']['event'] = array('key' => $array['element']['event']['value']);
+$array['filter']['category'] = array('key' => array('callfilter','group','incall','queue','schedule','user','ivr'));
 $array['filter']['categoryval'] = array('maxlen' => 128,'cast' => 'sgraph');
-$array['filter']['action'] = array('key' => array('none',
-						'endcall:busy',
-						'endcall:congestion',
-						'endcall:hangup',
-						'user',
-						'group',
-						'queue',
-						'meetme',
-						'voicemail',
-						//'trunk',
-						//'schedule',
-						'extension',
-						'outcall',
-						'application:callbackdisa',
-						'application:disa',
-						'application:directory',
-						'application:faxtomail',
-						'application:voicemailmain',
-						'application:password',
-						'sound',
-						'custom'));
+$array['filter']['action'] = array('key' => $array['element']['action']['value']);
 $array['filter']['actionarg1'] = array('set' => false,'chk' => 2,'maxlen' => 255,'cast' => 'sgraph');
 $array['filter']['actionarg2'] = array('set' => false,'chk' => 2,'maxlen' => 255,'cast' => 'sgraph');
 $array['filter']['linked'] = array('bool' => true);

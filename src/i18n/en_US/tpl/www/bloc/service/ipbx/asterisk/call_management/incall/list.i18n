@@ -97,6 +97,9 @@ Queue
 ; incall_destination-meetme
 Conference room
 
+; incall_destination-ivr
+IVR
+
 ; incall_destination-voicemail
 Voicemail
 

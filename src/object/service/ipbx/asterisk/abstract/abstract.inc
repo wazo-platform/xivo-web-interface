@@ -238,6 +238,11 @@ abstract class xivo_service_asterisk_abstract extends xivo_libdatastorage_abstra
 						    $context));
 	}
 
+	public function chk_dest_ivr($actionarg1)
+	{
+		return($this->_chk_dest('ivr', 'ivr', $actionarg1));
+	}
+
 	public function _chk_dest_group_queue($action,$actionarg1,$actionarg2='',$id=null,$disable=null,$chknumber=false,$chkcontext=false,$context=null)
 	{
 		$actionarg1 = intval($actionarg1);

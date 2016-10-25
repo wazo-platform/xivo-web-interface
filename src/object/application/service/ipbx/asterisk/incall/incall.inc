@@ -211,6 +211,10 @@ class xivo_application_service_asterisk_incall extends xivo_application_asterisk
 					$arr['context'] = $ref['meetmecontext'];
 					$ref['destidentity'] = $this->_service->identity('meetmefeatures',$arr);
 					break;
+				case 'ivr':
+					$arr['name'] = $ref['ivrname'];
+					$ref['destidentity'] = $this->_service->identity('ivr',$arr);
+					break;
 				case 'voicemail':
 					$arr['fullname'] = $ref['voicemailfullname'];
 					$arr['mailbox'] = $ref['voicemailmailbox'];

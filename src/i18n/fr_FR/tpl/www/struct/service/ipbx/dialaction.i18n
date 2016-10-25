@@ -61,6 +61,12 @@ Chambre de conférence
 ; fm_dialaction_meetme-actionarg1
 Renvoyez vers :
 
+; fm_dialaction_actiontype-opt(ivr)
+SVI
+
+; fm_dialaction_ivr-actionarg1
+Renvoyez vers :
+
 ; fm_dialaction_actiontype-opt(voicemail)
 Messagerie vocale
 
@@ -204,6 +210,9 @@ Aucune file d'attente trouvée
 
 ; dialaction_no-schedule
 Aucune horaire trouvé
+
+; dialaction_no-ivr
+Aucun SVI trouvé
 
 ; create_user
 Créer un utilisateur
