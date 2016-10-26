@@ -638,6 +638,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		$r['outcalls']  = $this->get_destination_outcall();
 		$r['voicemail'] = $this->get_destination_voicemail();
 		//$r['trunk'] = $this->get_destination_trunk();
+		$r['ivr'] = $this->get_destination_ivr();
 
 		return($r);
 	}

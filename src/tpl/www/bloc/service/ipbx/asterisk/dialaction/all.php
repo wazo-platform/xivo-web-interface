@@ -35,5 +35,6 @@ $this->file_include('bloc/service/ipbx/asterisk/dialaction/extension');
 $this->file_include('bloc/service/ipbx/asterisk/dialaction/application');
 $this->file_include('bloc/service/ipbx/asterisk/dialaction/sound');
 $this->file_include('bloc/service/ipbx/asterisk/dialaction/custom');
+$this->file_include('bloc/service/ipbx/asterisk/dialaction/ivr');
 
 ?>

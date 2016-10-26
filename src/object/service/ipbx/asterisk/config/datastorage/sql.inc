@@ -264,6 +264,10 @@ $array['incall'] = array();
 $array['incall']['table'] = 'incall';
 $array['incall']['primary'] = array('id' => '');
 
+$array['ivr'] = array();
+$array['ivr']['table'] = 'ivr';
+$array['ivr']['primary'] = array('id' => '');
+
 $array['linefeatures'] = array();
 $array['linefeatures']['table'] = 'linefeatures';
 $array['linefeatures']['primary'] = array('id' => '');

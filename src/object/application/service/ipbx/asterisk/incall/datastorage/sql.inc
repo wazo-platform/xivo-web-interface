@@ -31,6 +31,7 @@ class xivo_application_service_asterisk_incall_sql extends xivo_application_abst
 				'groupfeatures'		=> '',
 				'queuefeatures'		=> '',
 				'meetmefeatures'	=> '',
+				'ivr'				=> '',
 				'voicemail'			=> '',
 				'schedule'			=> '');
 
@@ -88,6 +89,15 @@ class xivo_application_service_asterisk_incall_sql extends xivo_application_abst
 		$this->_dso->joinwhere($this->_table['meetmefeatures'],
 				       $this->_table['dialaction'].'.action = %s',
 				       'meetme');
+
+		$this->_dso->leftjoin($this->_table['ivr'],
+				      $this->_table['dialaction'].'.actionarg1 = '.$this->_dso->cast($this->_table['ivr'].'.id','varchar'),
+				      null,
+				      array('ivrname'	=> 'name'));
+
+		$this->_dso->joinwhere($this->_table['ivr'],
+				       $this->_table['dialaction'].'.action = %s',
+				       'ivr');
 
 		$this->_dso->leftjoin($this->_table['voicemail'],
 				      $this->_table['dialaction'].'.actionarg1 = '.$this->_dso->cast($this->_table['voicemail'].'.uniqueid','varchar'),

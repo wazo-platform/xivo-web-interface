@@ -46,6 +46,9 @@ File d'attente
 ; incall_destination-meetme
 Chambre de conférence
 
+; incall_destination-ivr
+SVI
+
 ; incall_destination-voicemail
 Messagerie vocale
 

@@ -70,6 +70,12 @@ Meetme room
 ; fm_dialaction_meetme-actionarg1
 Redirect to :
 
+; fm_dialaction_actiontype-opt(ivr)
+IVR
+
+; fm_dialaction_ivr-actionarg1
+Redirect to :
+
 ; fm_dialaction_actiontype-opt(voicemail)
 Voicemail
 
@@ -213,6 +219,9 @@ No queue
 
 ; dialaction_no-schedule
 No schedule
+
+; dialaction_no-ivr
+No IVR
 
 ; create_user
 Create user

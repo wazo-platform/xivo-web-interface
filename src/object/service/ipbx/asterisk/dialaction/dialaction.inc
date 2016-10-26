@@ -62,6 +62,7 @@ class xivo_service_asterisk_dialaction extends xivo_service_asterisk_abstract
 		$data['application'] = $arr;
 		$data['sound'] = $arr;
 		$data['custom'] = $arr;
+		$data['ivr'] = $arr;
 
 		$exp = explode(':',$data['action'],2);
 
@@ -243,6 +244,8 @@ class xivo_service_asterisk_dialaction extends xivo_service_asterisk_abstract
 				return($this->chk_dest_sound('playback',$actionarg1,$actionarg2));
 			case 'custom':
 				return($this->chk_dest_custom($actionarg1));
+			case 'ivr':
+				return($this->chk_dest_ivr($actionarg1));
 		}
 
 		return(false);

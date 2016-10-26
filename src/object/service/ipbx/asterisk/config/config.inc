@@ -235,6 +235,9 @@ $array['module']['iaxcallnumberlimits']['datastorage'] = true;
 $array['module']['incall'] = array();
 $array['module']['incall']['datastorage'] = true;
 
+$array['module']['ivr'] = array();
+$array['module']['ivr']['datastorage'] = true;
+
 $array['module']['ldapfilter'] = array();
 $array['module']['ldapfilter']['datastorage'] = true;
 
