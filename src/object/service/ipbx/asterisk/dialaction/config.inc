@@ -3,6 +3,7 @@
 #
 # XiVO Web-Interface
 # Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2016 Proformatique Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -26,8 +27,8 @@ $array['categoryevent']['group'] = array('noanswer','congestion','busy','chanuna
 $array['categoryevent']['incall'] = array('answer');
 $array['categoryevent']['queue'] = array('noanswer','congestion','busy','chanunavail','qwaittime','qwaitratio');
 $array['categoryevent']['user'] = array('noanswer','congestion','busy','chanunavail');
-$array['categoryevent']['ivr'] = array('press1', 'press2', 'press3', 'press4', 'press5', 'press6', 'press7', 'press8', 'press9', 'press0',
-									   'pressstar', 'presspound', 'abort', 'timeout');
+$array['categoryevent']['ivr'] = array('abort', 'invalid', 'timeout');
+$array['categoryevent']['ivr_choice'] = array('ivr_choice');
 //$array['categoryevent']['trunk'] = array('noanswer','congestion','busy','chanunavail');
 //$array['categoryevent']['schedule'] = array('inschedule','outschedule');
 
@@ -44,19 +45,9 @@ $array['element']['event']['value'] = array('answer',
 						'outschedule',
 						'qwaittime',
 						'qwaitratio',
-						'press1',
-						'press2',
-						'press3',
-						'press4',
-						'press5',
-						'press6',
-						'press7',
-						'press8',
-						'press9',
-						'press0',
-						'pressstar',
-						'presspound',
+						'ivr_choice',
 						'abort',
+						'invalid',
 						'timeout');
 $array['element']['event']['default'] = '';
 
