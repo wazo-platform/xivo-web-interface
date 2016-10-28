@@ -3,7 +3,7 @@
 #
 # XiVO Web-Interface
 # Copyright (C) 2006-2016 Avencall
-# Copyright (C) 2016 Proformatique
+# Copyright (C) 2016 Proformatique, Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -85,25 +85,6 @@ switch($act)
 		$_TPL->set_var('error'  ,$error);
 		$_TPL->set_var('fm_save',$fm_save);
 		$_TPL->set_var('territory',dwho_i18n::get_territory_translated_list());
-		break;
-	case 'edit':
-		$result = $fm_save = $error = null;
-		if(isset($_QR['fm_send']) === false
-			&& isset($_QR['entity']) === true
-			&& isset($_QR['id']) === true
-			&& ($entity = $_QR['entity'])) {
-			$_TPL->set_var('entity', $entity);
-			$info = $appphonebook->get_phonebook($entity, $_QR['id']);
-			$return = &$info;
-		} else if(isset($_QR['fm_send']) === true) {
-			$result = $appphonebook->edit_phonebook($_QR['entity'], $_QRY->_orig['qstring']['id'], $_QR);
-			$param = array('act' => 'list', 'entity' => $entity);
-			$_QRY->go($_TPL->url('service/ipbx/pbx_services/phonebook'),$param);
-		}
-		$_TPL->set_var('id'              , $info['id']);
-		$_TPL->set_var('info'            , $return);
-		$_TPL->set_var('error'           , $error);
-		$_TPL->set_var('fm_save'         , $fm_save);
 		break;
 	case 'edit_contact':
 		if(is_array($_QRY->_orig) === false
