@@ -73,9 +73,6 @@ Enable the Caller ID:
 ; fm_outcall_stripnum
 Number of digits removed from the beginning:
 
-; fm_outcall_useenum
-Use ENUM:
-
 ; fm_outcall_internal
 Internal:
 

@@ -48,7 +48,6 @@ class xivo_service_asterisk_outcall extends xivo_service_asterisk_abstract
 		$this->_identity->_prepare_identity($data);
 
 		$data['id'] = (int) $data['id'];
-		$data['useenum'] = (bool) $data['useenum'];
 		$data['internal'] = (bool) $data['internal'];
 		$data['commented'] = (bool) $data['commented'];
 
