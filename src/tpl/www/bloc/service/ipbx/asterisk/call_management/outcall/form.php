@@ -68,13 +68,6 @@ else:
 		'</div>';
 endif;
 
-	echo	$form->checkbox(array('desc'	=> $this->bbf('fm_outcall_useenum'),
-				      'name'	=> 'outcall[useenum]',
-				      'labelid'	=> 'useenum',
-				      'checked'	=> $this->get_var('info','outcall','useenum'),
-				      'default'	=> $element['outcall']['useenum']['default']));
-?>
-<?php
 	echo	$form->checkbox(array('desc'	=> $this->bbf('fm_outcall_internal'),
 				      'name'	=> 'outcall[internal]',
 				      'labelid'	=> 'internal',
