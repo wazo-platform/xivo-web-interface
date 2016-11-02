@@ -66,7 +66,7 @@ $array['cel']['primary'] = array('id' => '');
 
 $array['context'] = array();
 $array['context']['table'] = 'context';
-$array['context']['primary'] = array('name' => '');
+$array['context']['primary'] = array('id' => '');
 
 $array['contextinclude'] = array();
 $array['contextinclude']['table'] = 'contextinclude';
