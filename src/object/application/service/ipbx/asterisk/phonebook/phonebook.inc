@@ -3,7 +3,7 @@
 #
 # XiVO Web-Interface
 # Copyright (C) 2016 Avencall
-# Copyright (C) 2016 Proformatique
+# Copyright (C) 2016 Proformatique, Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -73,11 +73,6 @@ class xivo_application_service_asterisk_phonebook extends xivo_application_aster
 	{
 		$dird_fields = $this->_webi_to_dird($query);
 		$this->_phonebook_resource->edit_contact($entity, $phonebook_id, $contact_uuid, $dird_fields);
-	}
-
-	function edit_phonebook($entity, $phonebook_id, $body)
-	{
-		return($this->_phonebook_resource->edit_phonebook($entity, $phonebook_id, $body));
 	}
 
 	private function _webi_to_dird($query)

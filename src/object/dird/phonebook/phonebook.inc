@@ -3,7 +3,7 @@
 #
 # XiVO Web-Interface
 # Copyright (C) 2016 Avencall
-# Copyright (C) 2016 Proformatique
+# Copyright (C) 2016 Proformatique, Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -53,14 +53,6 @@ class PhonebookResource {
 		$url = sprintf("/tenants/%s/phonebooks/%d/contacts/%s", $entity, $phonebook_id, $contact_uuid);
 		$request = Request::json_put($url,$fields,null,$this->_headers);
 		$response = $this->client->send($request);
-	}
-
-	public function edit_phonebook($entity, $phonebook_id, $fields)
-	{
-		$url = sprintf("/tenants/%s/phonebooks/%d", $entity, $phonebook_id);
-		$request = Request::json_put($url,$fields,null,$this->_headers);
-		$response = $this->client->send($request);
-		return($response->decode_or_raise());
 	}
 
 	public function get_contact($entity, $phonebook_id, $contact_uuid)

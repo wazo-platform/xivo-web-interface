@@ -2,7 +2,8 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2016  Avencall
+# Copyright (C) 2006-2016 Avencall
+# Copyright (C) 2016 Proformatique, Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -138,16 +139,6 @@ $page = $url->pager($pager['pages'],
 		</td>
 		<td class="txt-right">
 <?php
-	echo $url->href_html($url->img_html('img/site/button/edit.gif',
-										$this->bbf('opt_edit'),
-										'border="0"'),
-										'service/ipbx/pbx_services/phonebook',
-										array(  'act'	=> 'edit',
-												'id'	=> $ref['id'],
-												'page'	=> $pager['page'],
-												'entity' => $ref['entity']),
-										null,
-										$this->bbf('opt_edit'));
 	echo $url->href_html($url->img_html('img/site/button/delete.gif',
 										$this->bbf('opt_delete'),
 										'border="0"'),
