@@ -3,19 +3,19 @@ postgres:
   expose:
     - "5432"
   ports:
-    - "15433:5432"
+    - "5432"
 rabbitmq:
   image: rabbitmq
   expose:
     - "5672"
   ports:
-    - "5672:5672"
+    - "5672"
 confd:
   image: p0bailey/docker-flask
   expose:
     - "9487"
   ports:
-    - "19487:9487"
+    - "9487"
   volumes:
     - "./mocks/confd/:/tmp/confd"
   command: "python /tmp/confd/confd.py"
@@ -24,14 +24,14 @@ auth:
   expose:
     - "9497"
   ports:
-    - "19497:9497"
+    - "9497"
   volumes:
     - "./mocks/auth/:/tmp/auth"
   command: "python /tmp/auth/auth.py"
 provd:
   image: xivo/xivo-provd
   ports:
-    - "8666:8666"
+    - "8666"
   expose:
     - "8666"
   volumes:
@@ -48,7 +48,7 @@ sysconfd:
 webi:
   image: xivo-webi-test
   ports:
-    - "10080:80"
+    - "80"
   volumes:
     - "../../../src:/usr/share/xivo-web-interface"
     - "./etc/xivo/datastorage.conf:/etc/xivo/datastorage.conf"

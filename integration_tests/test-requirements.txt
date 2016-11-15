@@ -1,4 +1,5 @@
 git+https://github.com/xivo-pbx/xivo-provd-client.git
+git+https://github.com/xivo-pbx/xivo-test-helpers.git
 docker-compose
 nose
 psycopg2  # sqlalchemy engine
