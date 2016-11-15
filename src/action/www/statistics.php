@@ -27,8 +27,6 @@ if(xivo_user::chk_acl('settings', 'configuration', 'statistics/call_center') ===
 		//$_QRY->go($_TPL->url('statistics/call_center/data/stats3'));
 	} else if(xivo_user::chk_acl('data', 'stats4', 'statistics/call_center') === true) {
 		$_QRY->go($_TPL->url('statistics/call_center/data/stats4'));
-	} else if(xivo_user::chk_acl('data', null, 'statistics/switchboard') === true) {
-		$_QRY->go($_TPL->url('statistics/switchboard/data'));
 	} else {
 		$_QRY->go($_TPL->url('xivo'), array('go' => urlencode($_SERVER['REQUEST_URI'])));
 	}

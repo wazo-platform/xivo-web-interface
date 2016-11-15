@@ -24,7 +24,6 @@ from .page import Page, ListPage  # keep first
 from .call_logs import CallLogPage
 from .line import LineListPage
 from .login import LoginPage
-from .switchboard_stats import SwitchboardStatsPage
 from .user import UserListPage
 from .voicemail import VoicemailListPage
 
@@ -35,8 +34,7 @@ class Browser(object):
              'lines': LineListPage,
              'login': LoginPage,
              'users': UserListPage,
-             'voicemails': VoicemailListPage,
-             'switchboard_stats': SwitchboardStatsPage}
+             'voicemails': VoicemailListPage}
 
     def __init__(self, username, password, virtual=True):
         self.username = username

@@ -113,8 +113,6 @@ $array['tree']['statistics']['call_center']['data']['stats1'] = true;
 $array['tree']['statistics']['call_center']['data']['stats2'] = true;
 #$array['tree']['statistics']['call_center']['data']['stats3'] = true;
 $array['tree']['statistics']['call_center']['data']['stats4'] = true;
-$array['tree']['statistics']['switchboard'] = array();
-$array['tree']['statistics']['switchboard']['data'] = true;
 
 // callcenter
 $array['tree']['service']['callcenter'] = array();
