@@ -65,13 +65,8 @@ class xivo_service_asterisk_trunksip extends xivo_service_asterisk_abstract
 		$arr['defaultip'] = null;
 		$arr['regexten'] = null;
 		$arr['subscribecontext'] = null;
-		$arr['fullcontact'] = null;
 		$arr['vmexten'] = null;
 		$arr['callingpres'] = null;
-		$arr['ipaddr'] = '';
-		$arr['regseconds'] = 0;
-		$arr['regserver'] = null;
-		$arr['lastms'] = '';
 		$arr['protocol'] = XIVO_SRE_IPBX_AST_PROTO_SIP;
 		$arr['category'] = 'trunk';
 
@@ -90,13 +85,8 @@ class xivo_service_asterisk_trunksip extends xivo_service_asterisk_abstract
 		      $arr['defaultip'],
 		      $arr['regexten'],
 		      $arr['subscribecontext'],
-		      $arr['fullcontact'],
 		      $arr['vmexten'],
-		      $arr['callingpres'],
-		      $arr['ipaddr'],
-		      $arr['regseconds'],
-		      $arr['regserver'],
-		      $arr['lastms']);
+		      $arr['callingpres']);
 
 		$arr['subscribemwi'] = 0;
 		$arr['protocol'] = XIVO_SRE_IPBX_AST_PROTO_SIP;
