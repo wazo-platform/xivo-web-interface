@@ -44,22 +44,10 @@ class xivo_service_asterisk_usersip extends xivo_service_asterisk_abstract
 	function _prepare($data)
 	{
 		$data['id'] = (int) $data['id'];
-		$data['initialized'] = false;
 		$data['commented'] = (bool) $data['commented'];
 		$data['identity'] = strtoupper($data['protocol']).'/'.$data['name'];
 
 		return($data);
-	}
-
-	function get_nb($arr=null,$disable=null,$initialized=null)
-	{
-		if($arr !== null && is_array($arr) === false)
-			return(false);
-		else if(is_array($arr) === true
-		&& ($arr = $this->get_element_where($arr)) === false)
-			return(false);
-
-		return($this->_dso->get_nb($arr,$disable,$initialized));
 	}
 
 	function add($arr,$id=0)
