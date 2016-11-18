@@ -3,6 +3,7 @@
 #
 # XiVO Web-Interface
 # Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2016 Proformatique Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -38,14 +39,6 @@ class xivo_service_asterisk_usersip_sql extends xivo_service_asterisk_abstract_s
 			$arr[$this->_disable] = intval((bool) $disable);
 
 		$this->_dso->where($arr);
-
-		if($initialized !== null)
-		{
-			if((bool) $initialized === false)
-				$this->_dso->andwhere('IFNULL(fullcontact,\'\') = \'\'');
-			else
-				$this->_dso->andwherenot('IFNULL(fullcontact,\'\') = \'\'');
-		}
 
 		return(dwho_ulongint($this->_dso->select_count()));
 	}

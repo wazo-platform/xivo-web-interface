@@ -3,6 +3,7 @@
 #
 # XiVO Web-Interface
 # Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2016 Proformatique Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -232,12 +233,6 @@ $array['element']['regexten']['null'] = true;
 $array['element']['peercontext'] = array();
 $array['element']['peercontext']['unset'] = true;
 
-$array['element']['ipaddr'] = array();
-$array['element']['ipaddr']['unset'] = true;
-
-$array['element']['regseconds'] = array();
-$array['element']['regseconds']['unset'] = true;
-
 $array['element']['protocol'] = array();
 $array['element']['protocol']['default'] = XIVO_SRE_IPBX_AST_PROTO_IAX;
 $array['element']['protocol']['forcedef'] = true;
@@ -368,8 +363,6 @@ $array['filter']['mask'] = array('set'		=> false,
 				 'callbackarg'	=> array(DWHO_NETWORK_MASK_IPV4_DOTDEC));
 $array['filter']['regexten'] = array('set' => false,'chk' => 0);
 $array['filter']['peercontext'] = array('set' => false,'chk' => 0);
-$array['filter']['ipaddr'] = array('set' => false,'chk' => 0);
-$array['filter']['regseconds'] = array('set' => false,'chk' => 0);
 $array['filter']['protocol'] = array('set' => false);
 $array['filter']['category'] = array('set' => false);
 $array['filter']['requirecalltoken'] = array('set' => true,

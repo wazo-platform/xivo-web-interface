@@ -44,7 +44,7 @@ class xivo_service_asterisk_usersip extends xivo_service_asterisk_abstract
 	function _prepare($data)
 	{
 		$data['id'] = (int) $data['id'];
-		$data['initialized'] = dwho_has_len($data['fullcontact']);
+		$data['initialized'] = false;
 		$data['commented'] = (bool) $data['commented'];
 		$data['identity'] = strtoupper($data['protocol']).'/'.$data['name'];
 
@@ -80,13 +80,8 @@ class xivo_service_asterisk_usersip extends xivo_service_asterisk_abstract
 		$arr['port'] = null;
 		$arr['regexten'] = null;
 		$arr['subscribecontext'] = null;
-		$arr['fullcontact'] = null;
 		$arr['vmexten'] = null;
 		$arr['callingpres'] = null;
-		$arr['ipaddr'] = '';
-		$arr['regseconds'] = 0;
-		$arr['regserver'] = null;
-		$arr['lastms'] = '';
 		$arr['protocol'] = XIVO_SRE_IPBX_AST_PROTO_SIP;
 		$arr['category'] = 'user';
 
@@ -122,13 +117,8 @@ class xivo_service_asterisk_usersip extends xivo_service_asterisk_abstract
 		      $arr['port'],
 		      $arr['regexten'],
 		      $arr['subscribecontext'],
-		      $arr['fullcontact'],
 		      $arr['vmexten'],
-		      $arr['callingpres'],
-		      $arr['ipaddr'],
-		      $arr['regseconds'],
-		      $arr['regserver'],
-		      $arr['lastms']);
+		      $arr['callingpres']);
 
 		$arr['type'] = 'friend';
 		$arr['subscribecontext'] = null;

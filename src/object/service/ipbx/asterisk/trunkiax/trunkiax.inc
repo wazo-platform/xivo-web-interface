@@ -3,6 +3,7 @@
 #
 # XiVO Web-Interface
 # Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2016 Proformatique Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -67,8 +68,6 @@ class xivo_service_asterisk_trunkiax extends xivo_service_asterisk_abstract
 		$arr['sourceaddress'] = null;
 		$arr['regexten'] = null;
 		$arr['peercontext'] = null;
-		$arr['ipaddr'] = '';
-		$arr['regseconds'] = 0;
 		$arr['protocol'] = XIVO_SRE_IPBX_AST_PROTO_IAX;
 		$arr['category'] = 'trunk';
 
@@ -88,9 +87,7 @@ class xivo_service_asterisk_trunkiax extends xivo_service_asterisk_abstract
 		      $arr['defaultip'],
 		      $arr['sourceaddress'],
 		      $arr['regexten'],
-		      $arr['peercontext'],
-		      $arr['ipaddr'],
-		      $arr['regseconds']);
+		      $arr['peercontext']);
 
 		$arr['dbsecret'] = '';
 		$arr['setvar'] = '';
