@@ -26,7 +26,7 @@ from lib.testcase import TestWebi
 
 class TestLine(TestWebi):
 
-    asset = 'lines'
+    asset = 'webi_base'
 
     def setUp(self):
         super(TestLine, self).setUp()

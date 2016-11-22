@@ -23,7 +23,7 @@ from lib.testcase import TestWebi
 
 class TestUserVoicemail(TestWebi):
 
-    asset = 'user_voicemail'
+    asset = 'webi_base'
 
 
 class TestUserVoicemailNoAnswer(TestUserVoicemail):

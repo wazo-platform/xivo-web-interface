@@ -30,7 +30,7 @@ SUITE_PATH = os.path.join(
 
 class TestUserImport(TestWebi):
 
-    asset = 'user_import'
+    asset = 'webi_base'
 
     def upload_csv(self, page):
         filepath = os.path.join(SUITE_PATH, "import_users.csv")

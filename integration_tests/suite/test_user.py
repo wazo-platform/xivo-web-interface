@@ -29,7 +29,7 @@ from hamcrest import assert_that, equal_to, none
 
 class TestUser(TestWebi):
 
-    asset = 'users'
+    asset = 'webi_base'
 
     FK_TEMPLATE = {'id': 1,
                    'name': None,

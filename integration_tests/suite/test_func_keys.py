@@ -47,7 +47,7 @@ class TestFuncKey(TestWebi):
                               u'href': None,
                               u'type': u'custom'}}
 
-    asset = 'funckeys'
+    asset = 'webi_base'
 
     def create_user(self, firstname, lastname):
         with self.db.queries() as queries:

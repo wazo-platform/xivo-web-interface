@@ -25,7 +25,7 @@ from lib.testcase import TestWebi
 
 class TestVoicemail(TestWebi):
 
-    asset = 'voicemails'
+    asset = 'webi_base'
 
 
 class TestVoicemailCreate(TestVoicemail):

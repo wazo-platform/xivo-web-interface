@@ -32,7 +32,7 @@ class SomeDate(object):
 
 class TestCallLogs(TestWebi):
 
-    asset = 'base'
+    asset = 'webi_base'
 
     def test_list_call_logs_with_no_end_date(self):
         call_log_page = self.browser.call_logs.go()
