@@ -262,12 +262,6 @@ Configuration
 ; acl(statistics-call_center-settings-genercache)
 Generate cache
 
-; acl(statistics-switchboard)
-Switchboard Statistics
-
-; acl(statistics-switchboard-data)
-Data
-
 ; acl(xivo-configuration)
 Configuration
 
