@@ -676,7 +676,7 @@ endif;
 				    'bbf'	=> 'ast_amaflag_name_info',
 				    'bbfopt'	=> array('argmode' => 'paramvalue'),
 				    'default'	=> $element['protocol']['amaflags']['default'],
-				    'selected'	=> $info['protocol']['amaflags']['default']),
+				    'selected'	=> $info['protocol']['amaflags']),
 			      $element['protocol']['amaflags']['value']),
 
 		$form->text(array('desc'	=> $this->bbf('fm_protocol_accountcode'),
