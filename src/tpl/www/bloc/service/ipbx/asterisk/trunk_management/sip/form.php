@@ -3,6 +3,7 @@
 #
 # XiVO Web-Interface
 # Copyright (C) 2006-2016  Avencall
+# Copyright (C) 2016  Proformatique Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -773,7 +774,12 @@ endif;
             'value'    => $info['protocol']['contactdeny'],
             'default'  => $element['protocol']['contactdeny']['default'],
             'error'    => $this->bbf_args('error',
-        $this->get_var('error', 'contactdeny')) ));
+        $this->get_var('error', 'contactdeny')) )),
+
+	$form->checkbox(array('desc' => $this->bbf('fm_trunkfeatures_twilio_incoming'),
+            'name'     => 'trunkfeatures[twilio_incoming]',
+            'labelid'  => 'trunkfeatures-twilio_incoming',
+            'checked'  => $this->get_var('info', 'trunkfeatures', 'twilio_incoming')));
 
 ?>
 	<div class="fm-paragraph fm-description">
