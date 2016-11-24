@@ -89,7 +89,7 @@ $this->file_include('bloc/menu/top/user/loginbox');
 								   'graphs');?>
 					</li>
 					<?php endif; ?>
-					<?php if(xivo_user::chk_acl_section('statistics/call_center') === true: ?>
+					<?php if(xivo_user::chk_acl_section('statistics/call_center') === true): ?>
 					<li>
 						<?=$url->href_html($this->bbf('mn_sub_top_services_statistiques'),
 								   'statistics');?>
