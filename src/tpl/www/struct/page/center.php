@@ -18,39 +18,14 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-$menu = &$this->get_module('menu');
-$this->file_include('bloc/head');
+$this->file_include('bloc/head_login');
 
 ?>
-<div id="bpc-center">
-<div id="bc-body">
-
-<div id="bc-head">
-	<div id="b-tmenu">
-<?php
-	$menu->mk_top();
-?>
-	</div>
+<div class="login-box">
+  <div class="login-box-body">
+    <?php $this->mk_struct(); ?>
+  </div>
+  <div class="box-footer text-center">
+    <?php $this->file_include('bloc/foot'); ?>
+  </div>
 </div>
-<div id="bc-main">
-	<div id="bc-content">
-		<div id="b-content">
-<?php
-	$this->mk_struct();
-?>
-		</div>
-	</div>
-</div>
-
-<div id="bc-foot">
-	<div id="b-bmenu">
-<?php
-	$menu->mk_bottom();
-?>
-	</div>
-</div>
-</div>
-</div>
-<?php
-	$this->file_include('bloc/foot');
-?>

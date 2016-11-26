@@ -22,52 +22,50 @@ $form = &$this->get_module('form');
 $dhtml = &$this->get_module('dhtml');
 
 ?>
-<div class="b-infos b-form">
-	<h3 class="sb-top xspan">
-		<span class="span-left">&nbsp;</span>
-		<span class="span-center"><?=$this->bbf('title_content_name');?></span>
-		<span class="span-right">&nbsp;</span>
-	</h3>
-	<div class="sb-content">
-		<form action="#" method="post" accept-charset="utf-8">
-			<div class="b-field">
-<?php
-	echo	$form->hidden(array('name'	=> DWHO_SESS_NAME,
-				    'value'	=> DWHO_SESS_ID)),
+    <h3 class="login-box-msg">
+      <?php echo $this->bbf('title_content_name'); ?>
+    </h3>
+    <hr>
+    <form action="#" method="post" accept-charset="utf-8">
+    <?php echo $form->hidden(array('name'=> DWHO_SESS_NAME, 'value'=> DWHO_SESS_ID)); ?>
+      <div class="form-group">
+        <div class="form-group has-feedback">
+          <span class="form-control-feedback glyphicon glyphicon-envelope"></span>
+          <input class=" form-control" id="it-login" size="20" name="login" type="text" value="<?php echo $this->bbf('fm_login'); ?>">
+        </div>
+      </div>
+    
+      <div class="form-group">
+        <div class="form-group has-feedback">
+          <span class="form-control-feedback glyphicon glyphicon-lock"></span>
+          <input class=" form-control" id="it-password" size="20" name="password" type="password" value="<?php echo $this->bbf('fm_password'); ?>">
+        </div>
+      </div>
 
-		$form->text(array('name'	=> 'login',
-				  'id'		=> 'it-login',
-				  'size'	=> 20,
-				  'value'	=> $this->bbf('fm_login'))),
+      <div class="form-group">
+        <select class="form-control" id="it-language" name="language">
+        <?php
+          foreach($this->get_var('language') as $key => $lang) {
+            $selected = '';
+            if (DWHO_I18N_BABELFISH_LANGUAGE == $key) { $selected = "selected='selected'"; }
+              echo "<option value=$key $selected>$lang</option>";
+           }
+        ?>
+        </select>
+      </div>
 
-		$form->password(array('name'	=> 'password',
-				      'id'	=> 'it-password',
-				      'size'	=> 20,
-				      'value'	=> $this->bbf('fm_password'))),
+      <div class="row">
+        <div class="col-sm-12 col-sm-offset-4">
+          <div>
+            <input class="btn btn-primary" id="it-submit" name="submit" type="submit" value="<?php echo $this->bbf('fm_bt-connection'); ?>">
+          </div>
+        </div>
+      </div>
+    </form>
 
-		$form->select(array('desc'	=> $this->bbf('fm_language'),
-				    'name'	=> 'language',
-				    'id'	=> 'it-language',
-				    'selected'	=> DWHO_I18N_BABELFISH_LANGUAGE),
-			      $this->get_var('language')),
-
-		$form->submit(array('name'	=> 'submit',
-				    'id'	=> 'it-submit',
-				    'value'	=> $this->bbf('fm_bt-connection')));
-?>
-			</div>
-		</form>
-	</div>
-	<div class="sb-foot xspan">
-		<span class="span-left">&nbsp;</span>
-		<span class="span-center">&nbsp;</span>
-		<span class="span-right">&nbsp;</span>
-	</div>
-</div>
 <script type="text/javascript">
-dwho.dom.set_onload(function ()
-{
-	dwho.form.set_events_text_helper('it-login');
-	dwho.form.set_events_text_helper('it-password');
+dwho.dom.set_onload(function () {
+    dwho.form.set_events_text_helper('it-login');
+    dwho.form.set_events_text_helper('it-password');
 });
 </script>

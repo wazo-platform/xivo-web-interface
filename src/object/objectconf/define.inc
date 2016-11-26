@@ -26,15 +26,15 @@ if (file_exists($file_version))
 
 define('DWHO_LABEL_CUSTOM','XIVO-WEBI');
 
-define('XIVO_SOFT_NAME','xivo');
-define('XIVO_SOFT_LABEL','XIVO');
+define('XIVO_SOFT_NAME','wazo');
+define('XIVO_SOFT_LABEL','WAZO');
 define('XIVO_SOFT_VERSION',trim($xivo_version));
-define('XIVO_SOFT_CODENAME','Five');
-define('XIVO_SOFT_URL','xivo.io');
-define('XIVO_DOWNLOAD_URL','mirror.xivo.io/iso/archives/xivo-'.XIVO_SOFT_VERSION);
-define('XIVO_DOC_URL','documentation.xivo.io');
-define('XIVO_DOC_API_URL','api.xivo.io');
-define('XIVO_BLOG_URL','blog.xivo.io');
+define('XIVO_SOFT_CODENAME','Phoenix');
+define('XIVO_SOFT_URL','wazo.community');
+define('XIVO_DOWNLOAD_URL','mirror.wazo.community/iso/archives/xivo-'.XIVO_SOFT_VERSION);
+define('XIVO_DOC_URL','documentation.wazo.community');
+define('XIVO_DOC_API_URL','api.wazo.community');
+define('XIVO_BLOG_URL','blog.wazo.community');
 
 define('XIVO_WS_HEADER_NAME_VERSION','X-XIVO-WS-VERSION');
 define('XIVO_WS_VERSION','1.0');

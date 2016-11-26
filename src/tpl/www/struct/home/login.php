@@ -18,9 +18,5 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-?>
-<div id="r-login">
-<?php
 	$this->file_include('bloc/home/login');
 ?>
-</div>

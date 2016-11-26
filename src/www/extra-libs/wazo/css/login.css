@@ -1,0 +1,6 @@
+body {
+  background: grey;
+  background: linear-gradient(to left, grey, #797575);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;      
+}
