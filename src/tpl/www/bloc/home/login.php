@@ -23,12 +23,12 @@ $dhtml = &$this->get_module('dhtml');
 
 ?>
 <div class="login-box">
-  <div class="login-box-body">
-    <h3 class="login-box-msg">
-      <?php echo $this->bbf('title_content_name'); ?>
-    </h3>
-    <hr>
-    <form action="#" method="post" accept-charset="utf-8">
+  <form action="#" method="post" accept-charset="utf-8">
+    <div class="login-box-body">
+      <h3 class="login-box-msg">
+        <?php echo $this->bbf('title_content_name'); ?>
+      </h3>
+      <hr>
       <?php echo $form->hidden(array('name'=> DWHO_SESS_NAME, 'value'=> DWHO_SESS_ID)); ?>
       <div class="form-group">
         <div class="form-group has-feedback">
@@ -55,10 +55,13 @@ $dhtml = &$this->get_module('dhtml');
         ?>
         </select>
       </div>
+
     </div>
+
     <div class="box-footer text-center">
       <input class="btn btn-primary" id="it-submit" name="submit" type="submit" value="<?php echo $this->bbf('fm_bt-connection'); ?>">
     </div>
+
   </form>
 </div>
 
