@@ -22,19 +22,21 @@ $form = &$this->get_module('form');
 $dhtml = &$this->get_module('dhtml');
 
 ?>
+<div class="login-box">
+  <div class="login-box-body">
     <h3 class="login-box-msg">
       <?php echo $this->bbf('title_content_name'); ?>
     </h3>
     <hr>
     <form action="#" method="post" accept-charset="utf-8">
-    <?php echo $form->hidden(array('name'=> DWHO_SESS_NAME, 'value'=> DWHO_SESS_ID)); ?>
+      <?php echo $form->hidden(array('name'=> DWHO_SESS_NAME, 'value'=> DWHO_SESS_ID)); ?>
       <div class="form-group">
         <div class="form-group has-feedback">
           <span class="form-control-feedback glyphicon glyphicon-envelope"></span>
           <input class=" form-control" id="it-login" size="20" name="login" type="text" value="<?php echo $this->bbf('fm_login'); ?>">
         </div>
       </div>
-    
+  
       <div class="form-group">
         <div class="form-group has-feedback">
           <span class="form-control-feedback glyphicon glyphicon-lock"></span>
@@ -53,15 +55,12 @@ $dhtml = &$this->get_module('dhtml');
         ?>
         </select>
       </div>
-
-      <div class="row">
-        <div class="col-sm-12 col-sm-offset-4">
-          <div>
-            <input class="btn btn-primary" id="it-submit" name="submit" type="submit" value="<?php echo $this->bbf('fm_bt-connection'); ?>">
-          </div>
-        </div>
-      </div>
-    </form>
+    </div>
+    <div class="box-footer text-center">
+      <input class="btn btn-primary" id="it-submit" name="submit" type="submit" value="<?php echo $this->bbf('fm_bt-connection'); ?>">
+    </div>
+  </form>
+</div>
 
 <script type="text/javascript">
 dwho.dom.set_onload(function () {

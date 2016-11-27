@@ -18,8 +18,21 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-$this->file_include('bloc/head_login');
-$this->mk_struct();
-$this->file_include('bloc/foot_login');
+$dhtml = &$this->get_module('dhtml');
+$dhtml->load_js('foot');
 
 ?>
+
+<footer class="text-center">
+  <div class="text-white">
+<?php
+		echo	XIVO_SOFT_LABEL,' - ',
+			$this->bbf('info_version'),' ',
+			XIVO_SOFT_VERSION,' "',XIVO_SOFT_CODENAME,'" | ',
+			$this->bbf('visit_for_information',
+				   '<a href="http://'.XIVO_SOFT_URL.'" title="'.XIVO_SOFT_LABEL.'" target="_blank">'.XIVO_SOFT_URL.'</a>');
+?>
+  </div>
+</footer>
+	</body>
+</html>
