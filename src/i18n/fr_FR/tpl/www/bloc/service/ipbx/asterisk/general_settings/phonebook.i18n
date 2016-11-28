@@ -8,7 +8,7 @@ Hôtes :
 Ajouter un hôte :
 
 ; hlp_accessfeatures
-Adresses IP ou sous-réseaux qui sont autorisés à accéder au carnet d'adresse XiVO
+Adresses IP ou sous-réseaux qui sont autorisés à accéder au carnet d'adresse WAZO
 
 ; bt_addaccess
 Ajouter un hôte

@@ -11,19 +11,19 @@ URI :
 Nom du filtre LDAP :
 
 ; fm_xivo_form
-Répertoire XiVO
+Répertoire WAZO
 
 ; fm_xivo_username
 Identifiant :
 
 ; hlp_xivo_username
-Identifiant "service web". S'applique uniquement pour un répertoire XiVO distant.
+Identifiant "service web". S'applique uniquement pour un répertoire WAZO distant.
 
 ; fm_xivo_password
 Mot de passe :
 
 ; hlp_xivo_password
-Mot de passe "service web". S'applique uniquement pour un répertoire XiVO distant.
+Mot de passe "service web". S'applique uniquement pour un répertoire WAZO distant.
 
 ; fm_xivo_verify_certificate_select
 Verifier le certificat:

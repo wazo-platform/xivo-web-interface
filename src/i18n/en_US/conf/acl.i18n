@@ -284,7 +284,7 @@ Entities
 LDAP servers
 
 ; acl(xivo-configuration-manage-server)
-XiVO servers
+WAZO servers
 
 ; acl(xivo-configuration-manage-user)
 Users
@@ -338,7 +338,7 @@ Alerts
 Limits
 
 ; acl(xivo-configuration-support-xivo)
-XiVO
+WAZO
 
 ; acl(xivo-configuration-controlsystem)
 Control System

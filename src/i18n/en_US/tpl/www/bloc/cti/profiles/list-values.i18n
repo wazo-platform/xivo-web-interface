@@ -38,7 +38,7 @@ Url to send once connected
 No action on queues by agents ("Agent details" xlet)
 
 ; pref-(xlet.agentdetails.hideastid)
-Hide the XiVO name ("Agent details" xlet)
+Hide the WAZO name ("Agent details" xlet)
 
 ; pref-(xlet.agentdetails.hidecontext)
 Hide the context name ("Agent details" xlet)

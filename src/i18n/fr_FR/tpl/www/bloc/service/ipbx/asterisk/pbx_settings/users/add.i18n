@@ -137,10 +137,10 @@ Contexte :
 Droits d'appels
 
 ; fld-client
-XiVO Client
+WAZO Client
 
 ; fm_userfeatures_enableclient
-Activer XiVO Client:
+Activer WAZO Client:
 
 ; fm_userfeatures_loginclient
 Identifiant :

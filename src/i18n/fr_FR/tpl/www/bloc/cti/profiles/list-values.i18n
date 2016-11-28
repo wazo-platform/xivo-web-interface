@@ -38,7 +38,7 @@ Url à émettre une fois le login effectué
 Pas d'action sur les files par les agents (xlet "Détails des agents")
 
 ; pref-(xlet.agentdetails.hideastid)
-Cacher le nom du XiVO (xlet "Détails des agents")
+Cacher le nom du WAZO (xlet "Détails des agents")
 
 ; pref-(xlet.agentdetails.hidecontext)
 Cacher le nom du contexte (xlet "Détails des agents")

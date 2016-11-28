@@ -37,7 +37,7 @@ Timezone:
 Interval:
 
 ; xivo_user
-XiVO User authorized
+WAZO User authorized
 
 ; hlp_fm_default_delta
 Sets the time interval for the default view type. <br>
