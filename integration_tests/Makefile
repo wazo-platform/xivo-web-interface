@@ -6,7 +6,7 @@ POSTGRES_DOCKER=$(MANAGE_DB_DIR)/contribs/postgres-test/Dockerfile
 
 test-setup: build-webi
 	docker pull n3llyb0y/wait
-	docker pull xivo/postgres-test
+	docker pull wazopbx/postgres-test
 
 update-db:
 	docker build -t xivo/postgres-test -f $(POSTGRES_DOCKER) $(MANAGE_DB_DIR)
