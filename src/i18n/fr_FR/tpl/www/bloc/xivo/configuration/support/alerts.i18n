@@ -8,7 +8,7 @@ Adresses email :
 Ports DAHDI monitorés : 
  
 ; fm_help-alert_emails
-Une adresse par ligne.<br/>NE PAS AJOUTER les adresses de maintenance support niveau 3, elles le seront automatiquement si le support WAZO est activé
+Une adresse par ligne.<br/>NE PAS AJOUTER les adresses de maintenance support niveau 3, elles le seront automatiquement si le support Wazo est activé
 
 ; fm_help-dahdi_monitor_ports
 Liste des ports, chacuns séparés par un espace

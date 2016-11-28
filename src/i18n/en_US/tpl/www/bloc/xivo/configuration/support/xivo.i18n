@@ -1,8 +1,8 @@
 ; title_content_name
-WAZO Support
+Wazo Support
 
 ; fm_maintenance
-WAZO maintenance :
+Wazo maintenance :
 
 ; fm_help-maintenance
 If checked, level 3 support receive the report, and other alerts from your server. <br/>

@@ -27,7 +27,7 @@ if (file_exists($file_version))
 define('DWHO_LABEL_CUSTOM','XIVO-WEBI');
 
 define('XIVO_SOFT_NAME','wazo');
-define('XIVO_SOFT_LABEL','WAZO');
+define('XIVO_SOFT_LABEL','Wazo');
 define('XIVO_SOFT_VERSION',trim($xivo_version));
 define('XIVO_SOFT_CODENAME','Phoenix');
 define('XIVO_SOFT_URL','wazo.community');

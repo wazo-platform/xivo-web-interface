@@ -287,7 +287,7 @@ Entités
 Serveurs LDAP
 
 ; acl(xivo-configuration-manage-server)
-Serveurs WAZO
+Serveurs Wazo
 
 ; acl(xivo-configuration-manage-user)
 Utilisateurs
@@ -341,7 +341,7 @@ Gestion des alertes
 Limitations
 
 ; acl(xivo-configuration-support-xivo)
-Maintenance WAZO
+Maintenance Wazo
 
 ; acl(xivo-configuration-controlsystem)
 Système de contrôle

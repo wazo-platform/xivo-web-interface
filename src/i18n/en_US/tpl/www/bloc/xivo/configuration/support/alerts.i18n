@@ -8,7 +8,7 @@ Emails address :
 DAHDI monitored ports :
 
 ; fm_help-alert_emails
-An address per line. <br/> DO NOT ADD level 3 support addresses maintenance, they will automatically if the device is activated WAZO
+An address per line. <br/> DO NOT ADD level 3 support addresses maintenance, they will automatically if the device is activated Wazo
 
 ; fm_help-dahdi_monitor_ports
 List of ports, each separated by a space

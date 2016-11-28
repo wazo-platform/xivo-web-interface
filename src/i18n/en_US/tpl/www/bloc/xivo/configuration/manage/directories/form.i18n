@@ -8,19 +8,19 @@ Type:
 URI:
 
 ; fm_xivo_form
-WAZO directory
+Wazo directory
 
 ; fm_xivo_username
 Username:
 
 ; hlp_xivo_username
-"Web service" username. Only applies to a remote WAZO directory.
+"Web service" username. Only applies to a remote Wazo directory.
 
 ; fm_xivo_password
 Password:
 
 ; hlp_xivo_password
-"Web service" password. Only applies to a remote WAZO directory.
+"Web service" password. Only applies to a remote Wazo directory.
 
 ; fm_xivo_verify_certificate_select
 Verify certificate:

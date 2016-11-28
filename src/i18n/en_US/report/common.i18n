@@ -18,7 +18,7 @@ Error during getting params
 Error during edit params
 
 ; cant_activate_xivoclient_without_login_and_password
-Can't activate WAZO client without login and password
+Can't activate Wazo client without login and password
 
 ; voip_interface_successfully_updated
 VoIP interface successfully updated

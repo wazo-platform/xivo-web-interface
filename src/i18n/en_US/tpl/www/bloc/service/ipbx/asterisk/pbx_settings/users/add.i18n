@@ -92,7 +92,7 @@ Ring forward:
 Rightcall
 
 ; fld-client
-WAZO Client
+Wazo Client
 
 ; fm_userfeatures_rightcallcode
 Rightcall Code:
@@ -113,7 +113,7 @@ Simultaneous calls:
 On-Hold Music:
 
 ; fm_userfeatures_enableclient
-Enable WAZO Client:
+Enable Wazo Client:
 
 ; fm_userfeatures_enablehint
 Enable supervision:
