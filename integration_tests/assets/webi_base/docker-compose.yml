@@ -1,5 +1,5 @@
 postgres:
-  image: xivo/postgres-test
+  image: wazopbx/postgres-test
   expose:
     - "5432"
   ports:
@@ -29,7 +29,7 @@ auth:
     - "./mocks/auth/:/tmp/auth"
   command: "python /tmp/auth/auth.py"
 provd:
-  image: xivo/xivo-provd
+  image: wazopbx/xivo-provd
   ports:
     - "8666"
   expose:
