@@ -22,8 +22,8 @@ $form = &$this->get_module('form');
 $dhtml = &$this->get_module('dhtml');
 
 ?>
-<div class="login-box">
-  <form action="#" method="post" accept-charset="utf-8">
+<form action="#" method="post" accept-charset="utf-8">
+  <div class="login-box">
     <div class="login-box-body">
       <h3 class="login-box-msg">
         <?php echo $this->bbf('title_content_name'); ?>
@@ -61,9 +61,8 @@ $dhtml = &$this->get_module('dhtml');
     <div class="box-footer text-center">
       <input class="btn btn-primary" id="it-submit" name="submit" type="submit" value="<?php echo $this->bbf('fm_bt-connection'); ?>">
     </div>
-
-  </form>
-</div>
+  </div>
+</form>
 
 <script type="text/javascript">
 dwho.dom.set_onload(function () {
