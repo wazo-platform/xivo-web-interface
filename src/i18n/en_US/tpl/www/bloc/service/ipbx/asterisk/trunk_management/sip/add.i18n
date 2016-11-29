@@ -327,6 +327,8 @@ Client code :
 ; fm_trunkfeatures_description
 Description :
 
+; fm_trunkfeatures_twilio_incoming
+Handle incoming calls from Twilio :
 
 ;;; 1.8 fields
 ; fm_protocol-transport

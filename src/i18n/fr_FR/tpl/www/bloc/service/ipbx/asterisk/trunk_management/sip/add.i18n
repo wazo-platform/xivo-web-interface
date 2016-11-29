@@ -274,6 +274,9 @@ Code client :
 ; fm_trunkfeatures_description
 Description :
 
+; fm_trunkfeatures_twilio_incoming
+Gérer les appels entrants de Twilio :
+
 ;;; 1.8 fields
 ; fm_protocol-transport
 Protocoles réseau :

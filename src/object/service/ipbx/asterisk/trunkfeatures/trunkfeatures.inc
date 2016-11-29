@@ -3,6 +3,7 @@
 #
 # XiVO Web-Interface
 # Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2016  Proformatique Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -47,6 +48,7 @@ class xivo_service_asterisk_trunkfeatures extends xivo_service_asterisk_abstract
 		$data['protocolid'] = dwho_ulongint($data['protocolid']);
 		$data['registerid'] = dwho_ulongint($data['registerid']);
 		$data['registercommented'] = (bool) $data['registercommented'];
+		$data['twilio_incoming'] = dwho_bool($data['twilio_incoming']);
 
 		return($data);
 	}

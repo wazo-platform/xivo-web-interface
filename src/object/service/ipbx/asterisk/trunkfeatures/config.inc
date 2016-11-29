@@ -3,6 +3,7 @@
 #
 # XiVO Web-Interface
 # Copyright (C) 2006-2016  Avencall
+# Copyright (C) 2016  Proformatique Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -40,6 +41,9 @@ $array['element']['registercommented']['set'] = true;
 $array['element']['context'] = array();
 $array['element']['context']['default'] = '';
 
+$array['element']['twilio_incoming'] = array();
+$array['element']['twilio_incoming']['default'] = false;
+
 $array['element']['description'] = array();
 $array['element']['description']['default'] = '';
 
@@ -51,6 +55,7 @@ $array['filter']['protocol'] = array('key' => array(
 $array['filter']['protocolid'] = array('cast' => 'ulongint');
 $array['filter']['registerid'] = array('set' => false,'chk' => 2,'cast' => 'ulongint');
 $array['filter']['registercommented'] = array('bool' => true);
+$array['filter']['twilio_incoming'] = array('pg_bool' => true);
 $array['filter']['description'] = array('set' => false,'chk' => 2,'maxlen' => 1000,'cast' => 'sgraph_crlf_tab','eol' => true);
 
 ?>
