@@ -1,4 +1,4 @@
-FROM xivo/xivo-web-interface
+FROM wazopbx/xivo-web-interface
 
 ADD ./src/ /usr/share/xivo-web-interface/
 

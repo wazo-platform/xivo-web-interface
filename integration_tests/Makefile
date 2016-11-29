@@ -28,5 +28,5 @@ start:
 	docker-compose run --service-ports --rm tests
 
 distclean:
-	docker rmi xivo/postgres-test
+	docker rmi wazopbx/postgres-test
 	docker rmi xivo-confd-test
