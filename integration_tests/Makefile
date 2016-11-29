@@ -9,10 +9,10 @@ test-setup: build-webi
 	docker pull wazopbx/postgres-test
 
 update-db:
-	docker build -t xivo/postgres-test -f $(POSTGRES_DOCKER) $(MANAGE_DB_DIR)
+	docker build -t wazopbx/postgres-test -f $(POSTGRES_DOCKER) $(MANAGE_DB_DIR)
 
 build-webi:
-	docker build -t xivo/xivo-web-interface ..
+	docker build -t wazopbx/xivo-web-interface ..
 	docker build --no-cache -t xivo-webi-test -f Dockerfile ..
 
 test:
