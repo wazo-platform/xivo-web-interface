@@ -14,7 +14,7 @@ Général
 Entités
 
 ; mn_left_manage-server
-Serveurs XiVO
+Serveurs Wazo
 
 ; mn_left_manage-ldapserver
 Serveurs LDAP
@@ -53,7 +53,7 @@ Haute-Disponibilité
 Monitoring
 
 ; mn_left_support-xivo
-Maintenance XiVO
+Maintenance Wazo
 
 ; mn_left_support-alerts
 Gestion des alertes

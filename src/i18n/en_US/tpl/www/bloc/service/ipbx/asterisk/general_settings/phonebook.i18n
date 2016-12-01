@@ -8,7 +8,7 @@ Hosts:
 Add an host:
 
 ; hlp_accessfeatures
-IP adresses or subnets authorized to access XiVO phonebook
+IP adresses or subnets authorized to access Wazo phonebook
 
 ; bt_addaccess
 Add an host

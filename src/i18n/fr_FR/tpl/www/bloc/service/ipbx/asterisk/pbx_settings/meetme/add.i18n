@@ -215,7 +215,7 @@ Expéditeur :
 Sujet :
 
 ; meetmefeatures_emailsubject
-[XiVO] Invitation à la chambre de conférence
+[Wazo] Invitation à la chambre de conférence
 
 ; fm_meetmefeatures_emailbody
 Corps :
@@ -231,4 +231,4 @@ Vous avez été invité à rejoindre la chambre de conférence : %{CONFNAME}$s.
 
 Merci.
 
--- Chambre de conférence XiVO --
+-- Chambre de conférence Wazo --

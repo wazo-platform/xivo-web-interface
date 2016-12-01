@@ -1,0 +1,10 @@
+body {
+  background: #7f99b1;
+  background: linear-gradient(to left, #7f99b1, #7f99b1);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;      
+}
+
+.text-white {
+  color: white;
+}

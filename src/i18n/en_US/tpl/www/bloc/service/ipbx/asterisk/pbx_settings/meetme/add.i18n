@@ -282,7 +282,7 @@ Sender :
 Subject :
 
 ; meetmefeatures_emailsubject
-[XiVO] Invitation to join a conference room
+[Wazo] Invitation to join a conference room
 
 ; fm_meetmefeatures_emailbody
 Body :
@@ -298,5 +298,5 @@ You have been invited to join %{CONFNAME}$s conference room.
 
 Thanks.
 
--- XiVO Conference Room --
+-- Wazo Conference Room --
 

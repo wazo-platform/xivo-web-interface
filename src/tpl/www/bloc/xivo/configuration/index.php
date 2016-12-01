@@ -70,7 +70,6 @@ $ldapserverstat = $this->get_var('ldapserverstat');
 			</table>
 		</div>
 		<div id="xivo-logo">
-			<?=$url->img_html('img/site/xivo.gif',XIVO_SOFT_LABEL);?>
 			<ul>
 				<li><b><?=$this->bbf('info_soft_label');?></b> <?=XIVO_SOFT_LABEL?></li>
 				<li><b><?=$this->bbf('info_soft_version');?></b> <?=XIVO_SOFT_VERSION.' "'.XIVO_SOFT_CODENAME.'"'?></li>

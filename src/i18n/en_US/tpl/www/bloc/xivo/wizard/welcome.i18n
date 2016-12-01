@@ -1,11 +1,11 @@
 ; welcome_description
-Welcome into the XiVO installer.
+Welcome into the Wazo installer.
 
-Thanks for choosing XiVO. This installer will help you to configure a fully functional XiVO.
+Thanks for choosing Wazo. This installer will help you to configure a fully functional Wazo.
 
-Let yourself be guided and don't forget to note informations you will set (i.e root password for XiVO administration interface login).
+Let yourself be guided and don't forget to note informations you will set (i.e root password for Wazo administration interface login).
 
-You can also get online help at <a href="http://documentation.xivo.io">http://documentation.xivo.io</a>.
+You can also get online help at <a href="http://documentation.wazo.community">http://documentation.wazo.community</a>.
 
 Have fun!
 
