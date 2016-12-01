@@ -1,10 +1,9 @@
 Source: xivo-web-interface
 Section: web
 Priority: extra
-Maintainer: XiVO Dev Team <dev@avencall.com>
-Uploaders: XiVO Builder Team <release@xivo.io>
+Maintainer: Wazo Maintainers <dev.wazo@gmail.com>
 Build-Depends: debhelper (>= 9)
-Standards-Version: 3.7.2.2
+Standards-Version: 3.9.6
 
 Package: xivo-web-interface
 Pre-depends: xivo-config (>= 14.17~20140902.163641.dc5c476-1)
@@ -27,10 +26,9 @@ Provides: pf-xivo-web-interface
 Conflicts: pf-xivo-web-interface
 Replaces: pf-xivo-web-interface
 Description: XIVO web interface
- XIVO is a system based on a powerful IPBX, to bring an easy to
+ Wazo is a system based on a powerful IPBX, to bring an easy to
  install solution for telephony and related services.
  .
  This package contains a comprehensive web interface to
- configure the XIVO solution.
+ configure the Wazo solution.
  .
-  Homepage: http://xivo.io/

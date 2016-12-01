@@ -14,22 +14,22 @@ To install docker on Linux :
 
 To build the image, simply invoke
 
-    docker build -t xivo-webi github.com/xivo-pbx/xivo-web-interface
+    docker build -t wazo-webi github.com/wazo-pbx/xivo-web-interface
 
 Or directly in the sources
 
-    docker build -t xivo-webi .
+    docker build -t wazo-webi .
 
 ## Usage
 
 To run the container, do the following:
 
-    docker run -d -p 80:80 -p 443:443 -v /conf/nginx:/etc/nginx/sites-enabled -v /conf/ssl:/usr/share/xivo-certs -v /conf/etc:/etc/xivo/web-interface -t xivo-webi
+    docker run -d -p 80:80 -p 443:443 -v /conf/nginx:/etc/nginx/sites-enabled -v /conf/ssl:/usr/share/xivo-certs -v /conf/etc:/etc/xivo/web-interface -t wazo-webi
 
 
 On interactive mode :
 
-    docker run -p 80:80 -p 443:443 -v /conf/nginx:/etc/nginx/sites-enabled -v /conf/ssl:/usr/share/xivo-certs -v /conf/etc:/etc/xivo/web-interface -it xivo-webi bash
+    docker run -p 80:80 -p 443:443 -v /conf/nginx:/etc/nginx/sites-enabled -v /conf/ssl:/usr/share/xivo-certs -v /conf/etc:/etc/xivo/web-interface -it wazo-webi bash
 
 To launch.
 
