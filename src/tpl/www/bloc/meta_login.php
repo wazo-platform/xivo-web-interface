@@ -34,7 +34,7 @@
 <link rel="stylesheet" type="text/css" href="<?=$this->file_time($this->url('/extra-libs/adminlte/css/adminlte.min.css'));?>">
 <link rel="stylesheet" type="text/css" href="<?=$this->file_time($this->url('/extra-libs/wazo/css/login.css'));?>">
 
-<script type="text/javascript" src="<?=$this->file_time($this->url('extra-libs/jquery/jquery.min.js'));?>"></script>
+<script type="text/javascript" src="<?=$this->file_time($this->url('extra-libs/jquery/jquery-1.9.1.min.js'));?>"></script>
 <script type="text/javascript" src="<?=$this->file_time($this->url('extra-libs/bootstrap/js/bootstrap.min.js'));?>"></script>
 <script type="text/javascript" src="<?=$this->file_time($this->url('extra-libs/adminlte/js/adminlte.min.js'));?>"></script>
 
