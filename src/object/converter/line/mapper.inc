@@ -1,7 +1,7 @@
 <?php
 #
 # XiVO Web-Interface
-# Copyright (C) 2016 Avencall
+# Copyright 2016 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,6 +27,14 @@ class LineMapper {
 			'registrar' => $form['configregistrar'],
 			'position' => $form['num']
 		);
+		if ($form['protocol'] === 'sip' || $form['protocol'] === 'sccp') {
+			if (isset($form['caller_id_name'])) {
+				$line['caller_id_name'] = $form['caller_id_name'];
+			}
+			if (isset($form['caller_id_num'])) {
+				$line['caller_id_num'] = $form['caller_id_num'];
+			}
+		}
 
 		if($form['id'] != "0") {
 			$line['id'] = $form['id'];

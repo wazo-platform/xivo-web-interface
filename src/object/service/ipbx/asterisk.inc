@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2015  Avencall
+# Copyright 2006-2016 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -896,6 +896,28 @@ class xivo_service_asterisk extends xivo_service_abstract
 			$calleridname .= ' <'.$calleridnum.'>';
 
 		return(trim($calleridname));
+	}
+
+	public function parse_callerid($str)
+	{
+		if (preg_match('/^'.XIVO_SRE_IPBX_AST_REGEXP_CALLERID.'$/u', $str, $matches) === 1) {
+			$res = array();
+			if (!empty($matches[1])) {
+				$res['caller_id_name'] = $matches[1];
+			} else {
+				$res['caller_id_name'] = $matches[2];
+			}
+
+			if (!empty($matches[3])) {
+				$res['caller_id_num'] = $matches[3];
+			} else {
+				$res['caller_id_num'] = null;
+			}
+		} else {
+			$res = null;
+		}
+
+		return $res;
 	}
 
 	public function get_contexts_list($arr=null)

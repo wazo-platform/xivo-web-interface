@@ -2,8 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2016 Avencall
-# Copyright (C) 2016 Proformatique Inc.
+# Copyright 2006-2016 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -1409,6 +1408,16 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		if($lines === false || count($lines) === 0) {
 			return null;
 		}
+
+		$user = $this->get_result('userfeatures');
+		if (isset($user['callerid'])
+		&& ($res = $this->_service->parse_callerid($user['callerid'])) !== null) {
+			for($i = 0; $i < count($lines); ++$i) {
+				$lines[$i]['caller_id_name'] = $res['caller_id_name'];
+				$lines[$i]['caller_id_num'] = $res['caller_id_num'];
+			}
+		}
+
 
 		$result = $this->_line_manager->edit_linefeatures(
 			$lines,

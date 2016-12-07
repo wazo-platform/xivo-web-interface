@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2016  Avencall
+# Copyright 2006-2016 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -99,10 +99,10 @@ define('XIVO_SRE_IPBX_AST_REGEXP_AUDIO_FILE_LENGTH','{1,194}');
 define('XIVO_SRE_IPBX_AST_REGEXP_AIDIO_FILE_EXTENSION','wav|WAV|wav49|ogg|ul|ulaw|um|pcm|al|alaw|au|vox|sln|raw');
 
 define('XIVO_SRE_IPBX_AST_REGEXP_CONTEXT','(?!(?i:xivo)-)[a-zA-Z0-9_-]{1,39}');
-define('XIVO_SRE_IPBX_AST_REGEXP_CALLERID','(?:"(?:[^\x00-\x08\x0A-\x1F\x22\x5C]'.
-					   '|\\\[\x00-\x09\x0B-\x0C\x0E-\x7F])+"'.
-					   '|[a-zA-Z0-9\-\.\!%\*_\+`\'\~]+)'.
-					   '(?: ?\<\+?[0-9\*#]{1,40}\>)?');
+define('XIVO_SRE_IPBX_AST_REGEXP_CALLERID','(?:"((?:[^\x00-\x08\x0A-\x1F\x22\x5C]'.
+					   '|\\\[\x00-\x09\x0B-\x0C\x0E-\x7F])+)"'.
+					   '|([a-zA-Z0-9\-\.\!%\*_\+`\'\~]+))'.
+					   '(?: ?\<(\+?[0-9\*#]{1,40})\>)?');
 define('XIVO_SRE_IPBX_AST_REGEXP_DIALPLAN','(?:\$\{[\(\)a-zA-Z0-9_\-\$\{\}\:]+\})');
 define('XIVO_SRE_IPBX_AST_REGEXP_DIALPLAN_EXTEN','(?:[0-9\*#]{1,40}'.
 						 '|(?:[0-9\*#]*'.

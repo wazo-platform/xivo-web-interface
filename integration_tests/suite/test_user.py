@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-# Copyright (C) 2016 Avencall
+# Copyright 2010-2016 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -595,13 +595,16 @@ class TestUserEdit(TestUser):
         self.simulate_line_update()
 
         page = self.browser.users.edit("UserEditSipExten")
+        page.fill_form(callerid='"Jimmy" <333>')
         page.lines().edit_line(number="1351",
                                context="internal",
                                configregistrar="registrar2")
         page.save()
 
         expected_line = {"context": "internal",
-                         "registrar": "registrar2"}
+                         "registrar": "registrar2",
+                         "caller_id_name": "Jimmy",
+                         "caller_id_num": "333"}
         expected_extension = {"context": "internal",
                               "exten": "1351"}
         self.confd.assert_json_request("/lines/\d+", expected_line, method="PUT")
@@ -612,13 +615,16 @@ class TestUserEdit(TestUser):
         self.simulate_line_update()
 
         page = self.browser.users.edit("UserEditSccpExten")
+        page.fill_form(callerid='"Jimmy" <333>')
         page.lines().edit_line(number="1353",
                                context="internal",
                                configregistrar="registrar2")
         page.save()
 
         expected_line = {"context": "internal",
-                         "registrar": "registrar2"}
+                         "registrar": "registrar2",
+                         "caller_id_name": "Jimmy",
+                         "caller_id_num": "333"}
         expected_extension = {"context": "internal",
                               "exten": "1353"}
         self.confd.assert_json_request("/lines/\d+", expected_line, method="PUT")
