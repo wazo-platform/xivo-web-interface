@@ -62,6 +62,9 @@ class LineFacade
 		$line = null;
 		$endpoint = null;
 
+		# caller_id_name and caller_id_num can't be passed during line creation
+		unset($line_args['caller_id_name']);
+		unset($line_args['caller_id_num']);
 		$line = $this->_line->create($line_args);
 		if ($line === null) {
 			goto error;
