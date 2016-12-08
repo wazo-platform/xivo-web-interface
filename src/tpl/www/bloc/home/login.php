@@ -32,7 +32,7 @@ $dhtml = &$this->get_module('dhtml');
       <?php echo $form->hidden(array('name'=> DWHO_SESS_NAME, 'value'=> DWHO_SESS_ID)); ?>
       <div class="form-group">
         <div class="form-group has-feedback">
-          <span class="form-control-feedback glyphicon glyphicon-envelope"></span>
+          <span class="form-control-feedback glyphicon glyphicon-user"></span>
           <input class=" form-control" id="it-login" size="20" name="login" type="text" value="<?php echo $this->bbf('fm_login'); ?>">
         </div>
       </div>
