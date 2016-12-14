@@ -27,9 +27,6 @@
 <meta name="distribution" content="iu">
 <meta name="title" content="<?=dwho_htmlsc($this->bbf('page_title',php_uname('n')));?>">
 
-<link rel="icon" href="<?=$this->file_time($this->url('favicon.ico'));?>">
-<link rel="shortcut icon" href="<?=$this->file_time($this->url('favicon.ico'));?>">
-
 <link rel="stylesheet" type="text/css" href="<?=$this->file_time($this->url('/extra-libs/bootstrap/css/bootstrap.min.css'));?>">
 <link rel="stylesheet" type="text/css" href="<?=$this->file_time($this->url('/extra-libs/adminlte/css/adminlte.min.css'));?>">
 <link rel="stylesheet" type="text/css" href="<?=$this->file_time($this->url('/extra-libs/wazo/css/login.css'));?>">

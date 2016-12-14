@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2015  Avencall
+# Copyright 2006-2016 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -26,9 +26,6 @@
 <meta name="robots" content="none">
 <meta name="distribution" content="iu">
 <meta name="title" content="<?=dwho_htmlsc($this->bbf('page_title',php_uname('n')));?>">
-
-<link rel="icon" href="<?=$this->file_time($this->url('favicon.ico'));?>">
-<link rel="shortcut icon" href="<?=$this->file_time($this->url('favicon.ico'));?>">
 
 <link rel="stylesheet" type="text/css" href="<?=$this->file_time($this->url('css/xivo.css'));?>">
 <script type="text/javascript" src="<?=$this->file_time($this->url('js/dwho.js'));?>"></script>
