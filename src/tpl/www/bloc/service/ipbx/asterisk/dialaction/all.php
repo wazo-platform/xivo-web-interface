@@ -27,7 +27,6 @@ $this->file_include('bloc/service/ipbx/asterisk/dialaction/queue');
 $this->file_include('bloc/service/ipbx/asterisk/dialaction/queueskill');
 $this->file_include('bloc/service/ipbx/asterisk/dialaction/queueskillrule');
 $this->file_include('bloc/service/ipbx/asterisk/dialaction/meetme');
-$this->file_include('bloc/service/ipbx/asterisk/dialaction/conference');
 $this->file_include('bloc/service/ipbx/asterisk/dialaction/voicemail');
 //$this->file_include('bloc/service/ipbx/asterisk/dialaction/trunk');
 //$this->file_include('bloc/service/ipbx/asterisk/dialaction/schedule');
@@ -35,7 +34,8 @@ $this->file_include('bloc/service/ipbx/asterisk/dialaction/outcall');
 $this->file_include('bloc/service/ipbx/asterisk/dialaction/extension');
 $this->file_include('bloc/service/ipbx/asterisk/dialaction/application');
 $this->file_include('bloc/service/ipbx/asterisk/dialaction/sound');
-$this->file_include('bloc/service/ipbx/asterisk/dialaction/custom');
+$this->file_include('bloc/service/ipbx/asterisk/dialaction/conference');
 $this->file_include('bloc/service/ipbx/asterisk/dialaction/ivr');
+$this->file_include('bloc/service/ipbx/asterisk/dialaction/custom');
 
 ?>

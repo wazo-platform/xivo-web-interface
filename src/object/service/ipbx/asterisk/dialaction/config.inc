@@ -66,7 +66,6 @@ $array['element']['action']['value'] = array('none',
 					     'group',
 					     'queue',
 					     'meetme',
-					     'conference',
 					     'voicemail',
 					     'trunk',
 					     'schedule',
@@ -79,8 +78,9 @@ $array['element']['action']['value'] = array('none',
 					     'application:voicemailmain',
 					     'application:password',
 					     'sound',
-					     'custom',
-					     'ivr');
+					     'conference',
+					     'ivr',
+					     'custom');
 $array['element']['action']['default'] = 'none';
 
 $array['element']['actionarg1'] = array();
@@ -98,7 +98,6 @@ $array['element']['actiontype']['value'] = array('none',
 						 'group',
 						 'queue',
 						 'meetme',
-						 'conference',
 						 'voicemail',
 						 //'trunk',
 						 //'schedule',
@@ -106,8 +105,9 @@ $array['element']['actiontype']['value'] = array('none',
 						 'outcall',
 						 'application',
 						 'sound',
-						 'custom',
-						 'ivr');
+						 'conference',
+						 'ivr',
+						 'custom');
 $array['element']['actiontype']['default'] = 'none';
 $array['element']['actiontype']['unset'] = true;
 
