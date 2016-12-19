@@ -1,7 +1,6 @@
 /*
  * XiVO Web-Interface
- * Copyright (C) 2006-2014  Avencall
- * Copyright (C) 2016  Proformatique Inc.
+ * Copyright 2010-2016 The Wazo Authors  (see the AUTHORS file)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,6 +39,7 @@ var xivo_dialaction_actiontype = {
             'queueskill':    ['actiontype','skill','varname'],
             'queueskillrule':['actiontype','name'],
             'meetme':    ['actiontype','actionarg1'],
+            'conference': ['actiontype','actionarg1'],
             'ivr': ['actiontype','actionarg1'],
             'voicemail':    ['actiontype',
                      'actionarg1',

@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright 2006-2016 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -81,6 +81,9 @@ $array['module']['callfiltermember']['datastorage'] = true;
 
 $array['module']['cel'] = array();
 $array['module']['cel']['datastorage'] = true;
+
+$array['module']['conference'] = array();
+$array['module']['conference']['datastorage'] = true;
 
 $array['module']['configfiles'] = array();
 $array['module']['configfiles']['datastorage'] = false;

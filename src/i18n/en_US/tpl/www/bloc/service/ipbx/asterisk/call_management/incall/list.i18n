@@ -97,6 +97,9 @@ Queue
 ; incall_destination-meetme
 Conference room
 
+; incall_destination-conference
+Confbridge
+
 ; incall_destination-ivr
 IVR
 

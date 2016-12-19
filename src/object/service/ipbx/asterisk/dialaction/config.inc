@@ -2,8 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
-# Copyright (C) 2016 Proformatique Inc.
+# Copyright 2006-2016 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -79,8 +78,9 @@ $array['element']['action']['value'] = array('none',
 					     'application:voicemailmain',
 					     'application:password',
 					     'sound',
-					     'custom',
-					     'ivr');
+					     'conference',
+					     'ivr',
+					     'custom');
 $array['element']['action']['default'] = 'none';
 
 $array['element']['actionarg1'] = array();
@@ -105,8 +105,9 @@ $array['element']['actiontype']['value'] = array('none',
 						 'outcall',
 						 'application',
 						 'sound',
-						 'custom',
-						 'ivr');
+						 'conference',
+						 'ivr',
+						 'custom');
 $array['element']['actiontype']['default'] = 'none';
 $array['element']['actiontype']['unset'] = true;
 
