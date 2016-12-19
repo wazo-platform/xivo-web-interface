@@ -2,8 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
-# Copyright (C) 2016 Proformatique Inc.
+# Copyright 2006-2016 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -67,6 +66,7 @@ $array['element']['action']['value'] = array('none',
 					     'group',
 					     'queue',
 					     'meetme',
+					     'conference',
 					     'voicemail',
 					     'trunk',
 					     'schedule',
@@ -98,6 +98,7 @@ $array['element']['actiontype']['value'] = array('none',
 						 'group',
 						 'queue',
 						 'meetme',
+						 'conference',
 						 'voicemail',
 						 //'trunk',
 						 //'schedule',

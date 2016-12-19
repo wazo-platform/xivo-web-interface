@@ -61,6 +61,12 @@ Chambre de conférence
 ; fm_dialaction_meetme-actionarg1
 Renvoyez vers :
 
+; fm_dialaction_actiontype-opt(conference)
+Confbridge
+
+; fm_dialaction_conference-actionarg1
+Renvoyez vers :
+
 ; fm_dialaction_actiontype-opt(ivr)
 SVI
 
@@ -209,7 +215,10 @@ Aucun groupe trouvé
 Aucune file d'attente trouvée
 
 ; dialaction_no-schedule
-Aucune horaire trouvé
+Aucun horaire trouvé
+
+; dialaction_no-conference
+Aucun confbridge trouvé
 
 ; dialaction_no-ivr
 Aucun SVI trouvé

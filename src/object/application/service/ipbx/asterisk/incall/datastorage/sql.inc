@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright 2006-2016 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -31,6 +31,7 @@ class xivo_application_service_asterisk_incall_sql extends xivo_application_abst
 				'groupfeatures'		=> '',
 				'queuefeatures'		=> '',
 				'meetmefeatures'	=> '',
+				'conference'		=> '',
 				'ivr'				=> '',
 				'voicemail'			=> '',
 				'schedule'			=> '');
@@ -89,6 +90,15 @@ class xivo_application_service_asterisk_incall_sql extends xivo_application_abst
 		$this->_dso->joinwhere($this->_table['meetmefeatures'],
 				       $this->_table['dialaction'].'.action = %s',
 				       'meetme');
+
+		$this->_dso->leftjoin($this->_table['conference'],
+				      $this->_table['dialaction'].'.actionarg1 = '.$this->_dso->cast($this->_table['conference'].'.id','varchar'),
+				      null,
+				      array('conferencename'	=> 'name'));
+
+		$this->_dso->joinwhere($this->_table['conference'],
+				       $this->_table['dialaction'].'.action = %s',
+				       'conference');
 
 		$this->_dso->leftjoin($this->_table['ivr'],
 				      $this->_table['dialaction'].'.actionarg1 = '.$this->_dso->cast($this->_table['ivr'].'.id','varchar'),

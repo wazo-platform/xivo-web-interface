@@ -632,6 +632,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		$r['groups'] = $this->get_destination_groups();
 		$r['queues'] = $this->get_destination_queues();
 		$r['meetme'] = $this->get_destination_meetme();
+		$r['conference'] = $this->get_destination_conference();
 		$r['schedule'] = $this->get_destination_schedule();
 		$r['sounds'] = $this->_dialaction->get_sound();
 		$r['outcalls']  = $this->get_destination_outcall();

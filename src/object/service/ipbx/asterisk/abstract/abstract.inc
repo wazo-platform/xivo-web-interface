@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2015  Avencall
+# Copyright 2006-2016 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -285,6 +285,11 @@ abstract class xivo_service_asterisk_abstract extends xivo_libdatastorage_abstra
 					$chknumber,
 					$chkcontext,
 					$context));
+	}
+
+	public function chk_dest_conference($actionarg1)
+	{
+		return($this->_chk_dest('conference', 'conference', $actionarg1));
 	}
 
 	public function chk_dest_voicemail($actionarg1,$actionarg2='',$id=null,$disable=null)

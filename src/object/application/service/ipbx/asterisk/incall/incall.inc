@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2016 Avencall
+# Copyright 2006-2016 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -210,6 +210,10 @@ class xivo_application_service_asterisk_incall extends xivo_application_asterisk
 					$arr['number'] = $ref['meetmenumber'];
 					$arr['context'] = $ref['meetmecontext'];
 					$ref['destidentity'] = $this->_service->identity('meetmefeatures',$arr);
+					break;
+				case 'conference':
+					$arr['name'] = $ref['conferencename'];
+					$ref['destidentity'] = $this->_service->identity('conference',$arr);
 					break;
 				case 'ivr':
 					$arr['name'] = $ref['ivrname'];

@@ -2,8 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
-# Copyright (C) 2016  Proformatique Inc.
+# Copyright 2006-2016 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -28,6 +27,7 @@ $this->file_include('service/ipbx/asterisk/call_management/schedule/dialaction/q
 $this->file_include('service/ipbx/asterisk/call_management/schedule/dialaction/queueskill');
 $this->file_include('service/ipbx/asterisk/call_management/schedule/dialaction/queueskillrule');
 $this->file_include('service/ipbx/asterisk/call_management/schedule/dialaction/meetme');
+$this->file_include('service/ipbx/asterisk/call_management/schedule/dialaction/conference');
 $this->file_include('service/ipbx/asterisk/call_management/schedule/dialaction/voicemail');
 //$this->file_include('service/ipbx/asterisk/call_management/schedule/dialaction/schedule');
 $this->file_include('service/ipbx/asterisk/call_management/schedule/dialaction/extension');

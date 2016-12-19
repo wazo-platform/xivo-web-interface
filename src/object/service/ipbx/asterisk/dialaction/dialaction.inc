@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright 2006-2016 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -55,6 +55,7 @@ class xivo_service_asterisk_dialaction extends xivo_service_asterisk_abstract
 		$data['group'] = $arr;
 		$data['queue'] = $arr;
 		$data['meetme'] = $arr;
+		$data['conference'] = $arr;
 		$data['voicemail'] = $arr;
 		$data['schedule'] = $arr;
 		$data['outcall'] = $arr;
@@ -216,6 +217,8 @@ class xivo_service_asterisk_dialaction extends xivo_service_asterisk_abstract
 				return($this->chk_dest_queue($actionarg1,$actionarg2,$id,$disable));
 			case 'meetme':
 				return($this->chk_dest_meetme($actionarg1,null,$disable));
+			case 'conference':
+				return($this->chk_dest_conference($actionarg1));
 			case 'voicemail':
 				return($this->chk_dest_voicemail($actionarg1,$actionarg2,null,$disable));
 			case 'schedule':

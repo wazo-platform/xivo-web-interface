@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2016  Avencall
+# Copyright 2006-2016 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -445,6 +445,7 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 		$r['groups'] = $this->get_destination_groups($groupid,$number);
 		$r['queues'] = $this->get_destination_queues($queueid,$number);
 		$r['meetme'] = $this->get_destination_meetme(0,$number);
+		$r['conference'] = $this->get_destination_conference();
 		$r['voicemail'] = $this->get_destination_voicemail();
 		//NEW SCHEDULE MODE
 		//$r['schedule'] = $this->get_destination_schedule($scheduleid);
@@ -505,6 +506,18 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 
 		if(($meetmefeatures = &$this->_service->get_module('meetmefeatures')) !== false
 		&& ($r = $meetmefeatures->get_all_except($id,$number,$order)) !== false)
+			return($r);
+
+		return(false);
+	}
+
+	public function get_destination_conference()
+	{
+		$order = array();
+		$order['name'] = SORT_ASC;
+
+		if(($conference = &$this->_service->get_module('conference')) !== false
+		&& ($r = $conference->get_all(null, true, $order)) !== false)
 			return($r);
 
 		return(false);
