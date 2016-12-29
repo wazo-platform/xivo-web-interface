@@ -25,7 +25,7 @@ Depends:
 Provides: pf-xivo-web-interface
 Conflicts: pf-xivo-web-interface
 Replaces: pf-xivo-web-interface
-Description: XIVO web interface
+Description: Wazo web interface
  Wazo is a system based on a powerful IPBX, to bring an easy to
  install solution for telephony and related services.
  .
