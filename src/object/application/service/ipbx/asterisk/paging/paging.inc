@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright 2006-2016 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -79,7 +79,12 @@ class xivo_application_service_asterisk_paging extends xivo_application_asterisk
 		$this->_info['paginguser'] = false;
 		$this->_origin['paginguser'] = false;
 
-		if(($this->_info['paginguser'] = $this->_paginguser->get_list_paginguser($this->_info['paging']['id'])) !== false)
+		$where = array(
+			'pagingid' => $this->_info['paging']['id'],
+			'caller' => 0,
+		);
+
+		if(($this->_info['paginguser'] = $this->_paginguser->get_all_where($where)) !== false)
 			$this->_origin['paginguser'] = $this->_paginguser->get_origin_list();
 
 		return($this->_info['paginguser']);
@@ -90,7 +95,12 @@ class xivo_application_service_asterisk_paging extends xivo_application_asterisk
 		$this->_info['pagingcaller'] = false;
 		$this->_origin['pagingcaller'] = false;
 
-		if(($this->_info['pagingcaller'] = $this->_paginguser->get_list_paginguser($this->_info['paging']['id'],true)) !== false)
+		$where = array(
+			'pagingid' => $this->_info['paging']['id'],
+			'caller' => 1,
+		);
+
+		if(($this->_info['pagingcaller'] = $this->_paginguser->get_all_where($where)) !== false)
 			$this->_origin['pagingcaller'] = $this->_paginguser->get_origin_list();
 
 		return($this->_info['pagingcaller']);
@@ -523,9 +533,9 @@ class xivo_application_service_asterisk_paging extends xivo_application_asterisk
 		$this->_status = 'delete';
 		$this->_return = array();
 
-		if($this->delete_paging() === false
-		|| $this->delete_paginguser() === false
-		|| $this->delete_pagingcaller() === false)
+		if($this->delete_paginguser() === false
+		|| $this->delete_pagingcaller() === false
+		|| $this->delete_paging() === false)
 		{
 			$r = false;
 			$this->_reverse_delete();
@@ -570,7 +580,7 @@ class xivo_application_service_asterisk_paging extends xivo_application_asterisk
 
 	function delete_pagingcaller()
 	{
-		if(dwho_issa('paginguser',$this->_info) === false)
+		if(dwho_issa('pagingcaller',$this->_info) === false)
 			return(null);
 		else if(dwho_issa('paging',$this->_info) === false)
 			return(false);
@@ -582,7 +592,7 @@ class xivo_application_service_asterisk_paging extends xivo_application_asterisk
 		$r = $this->_paginguser->delete_where($w);
 
 		if($this->_status === 'delete')
-			$this->_return['paginguser'] = $r;
+			$this->_return['pagingcaller'] = $r;
 
 		return($r);
 	}
@@ -610,6 +620,11 @@ class xivo_application_service_asterisk_paging extends xivo_application_asterisk
 					if(isset($this->_origin['paginguser']) === true
 					&& $this->_origin['paginguser'] !== false)
 						$this->_paginguser->add_origin_list($this->_origin['paginguser']);
+					break;
+				case 'pagingcaller':
+					if(isset($this->_origin['pagingcaller']) === true
+					&& $this->_origin['pagingcaller'] !== false)
+						$this->_paginguser->add_origin_list($this->_origin['pagingcaller']);
 					break;
 			}
 		}

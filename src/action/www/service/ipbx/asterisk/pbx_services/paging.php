@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2016 Avencall
+# Copyright 2006-2017 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@ $error = false;
 switch($act)
 {
 	case 'add':
-		$fm_save = true;
+		$fm_save = null;
 		
 		$files = array();
 		$sounds = &$ipbx->get_module('sounds');
@@ -90,7 +90,7 @@ switch($act)
 		break;
 
 	case 'edit':
-		$fm_save  = true;
+		$fm_save  = null;
 
 		if(isset($_QR['id']) === false || ($info = $apppaging->get($_QR['id'])) === false)
 			$_QRY->go($_TPL->url('service/ipbx/pbx_services/paging'), $param);

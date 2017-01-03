@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright 2006-2016 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -26,6 +26,7 @@ class xivo_service_asterisk_paginguser extends xivo_service_asterisk_abstract
 	var $_name		= 'paginguser';
 	var $_filter	= false;
 	var $_origin	= false;
+	var $_origin_list	= false;
 	var $_identity	= false;
 
 	public function __construct(&$sre,&$dso)
@@ -49,22 +50,6 @@ class xivo_service_asterisk_paginguser extends xivo_service_asterisk_abstract
 		$data['caller'] = (bool) $data['caller'];
 
 		return($data);
-	}
-	
-	function get_list_paginguser($pagingid,$caller=false,$order=null,$limit=null)
-	{
-		if (($list = $this->_dso->get_list_paginguser($pagingid,$caller,$order,$limit)) === false
-		|| ($nb = count($list)) === 0)
-			return(false);
-		
-		$r = array();
-		for($i = 0;$i < $nb;$i++)
-			$r[] = $this->_prepare($list[$i]);
-
-		if(isset($r[0]) === false)
-			$r = false;
-			
-		return($r);
 	}
 
 	function add($arr,$id=0)

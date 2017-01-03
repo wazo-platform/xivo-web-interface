@@ -46,6 +46,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 	protected $_queuemember		= null;
 	protected $_agentfeatures	= null;
 	protected $_linefeatures	= false;
+	protected $_paginguser		= false;
 	protected $_line			= false;
 	protected $_cti_profile     = false;
 	protected $_appentity		= false;
@@ -120,6 +121,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		|| ($this->_dialaction = $this->get_abstract('dialaction',array('category' => 'user'))) === false
 		|| ($this->_schedule_path = &$this->_service->get_module('schedule_path')) === false
 		|| ($this->_linefeatures = $this->_service->get_module('linefeatures')) === false
+		|| ($this->_paginguser = $this->_service->get_module('paginguser')) === false
 		|| ($_XOBJ = dwho_gct::get('xivo_object')) === false
 		|| ($this->_appentity = &$_XOBJ->get_application('entity')) === false
 		|| ($this->_entity = &$_XOBJ->get_module('entity')) === false
@@ -1678,6 +1680,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		|| $this->delete_voicemail() === false
 		|| $this->delete_funckey_dst() === false
 		|| $this->delete_linefeatures() === false
+		|| $this->delete_paginguser() === false
 		|| $this->delete_userfeatures() === false
 		|| $this->delete_rightcall() === false
 		|| $this->delete_dialaction() === false
@@ -1806,6 +1809,11 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			$this->_return[$key] = $r;
 
 		return($r);
+	}
+
+	function delete_paginguser()
+	{
+		return $this->_paginguser->delete_where(array('userfeaturesid' => $this->_info['userfeatures']['id']));
 	}
 
 	function _reverse_delete()
