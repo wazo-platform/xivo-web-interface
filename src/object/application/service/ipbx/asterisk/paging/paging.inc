@@ -570,7 +570,7 @@ class xivo_application_service_asterisk_paging extends xivo_application_asterisk
 
 	function delete_pagingcaller()
 	{
-		if(dwho_issa('paginguser',$this->_info) === false)
+		if(dwho_issa('pagingcaller',$this->_info) === false)
 			return(null);
 		else if(dwho_issa('paging',$this->_info) === false)
 			return(false);
@@ -582,7 +582,7 @@ class xivo_application_service_asterisk_paging extends xivo_application_asterisk
 		$r = $this->_paginguser->delete_where($w);
 
 		if($this->_status === 'delete')
-			$this->_return['paginguser'] = $r;
+			$this->_return['pagingcaller'] = $r;
 
 		return($r);
 	}
@@ -610,6 +610,11 @@ class xivo_application_service_asterisk_paging extends xivo_application_asterisk
 					if(isset($this->_origin['paginguser']) === true
 					&& $this->_origin['paginguser'] !== false)
 						$this->_paginguser->add_origin_list($this->_origin['paginguser']);
+					break;
+				case 'pagingcaller':
+					if(isset($this->_origin['pagingcaller']) === true
+					&& $this->_origin['pagingcaller'] !== false)
+						$this->_paginguser->add_origin_list($this->_origin['pagingcaller']);
 					break;
 			}
 		}
