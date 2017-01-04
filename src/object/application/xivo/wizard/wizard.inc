@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2016  Avencall
+# Copyright (C) 2006-2017 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -245,7 +245,10 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 		$this->_wizsess['gateway_list'] = array();
 		foreach($response['gateways'] as $item)
 		{
-			$display = $item['gateway'] . ' (' . $item['interface'] . ')';
+			$display = $item['gateway'];
+			if ($item['interface']) {
+				$display .= ' (' . $item['interface'] . ')';
+			}
 			$this->_wizsess['gateway_list'][$i] = $display;
 			$this->_wizsess['gateway_items'][$i]['gateway'] = $item['gateway'];
 			$i++;
