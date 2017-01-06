@@ -62,9 +62,16 @@ $info = $this->get_var('info');
                                'default' => true));
 ?>
 		</div>
-		<?=$form->submit(array('name'	=> 'submit',
-				       'id'	=> 'it-submit',
-				       'value'	=> $this->bbf('fm_bt-save')));?>
+		<p class ="fm-paragraph txt-center width-auto">
+			<?=$form->submit(array('name'	=> 'submit',
+					       'id'	=> 'it-submit',
+					       'paragraph' => false,
+					       'value'	=> $this->bbf('fm_bt-save')));?>
+			<?=$form->submit(array('name'	=> 'apply',
+					       'id'	=> 'it-apply',
+					       'paragraph' => false,
+					       'value'	=> $this->bbf('fm_bt-apply')));?>
+		</p>
 		</form>
 	</div>
 	<div class="sb-foot xspan">

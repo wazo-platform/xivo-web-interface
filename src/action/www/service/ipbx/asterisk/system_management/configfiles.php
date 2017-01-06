@@ -58,8 +58,11 @@ switch($act)
 
 		if(isset($_QR['fm_send'],$_QR['content']) === true)
 		{
-			if($configfiles->edit($info['name'],$_QRY->get_uqr('content'), $reload_dialplan) !== false)
-				$_QRY->go($_TPL->url('service/ipbx/system_management/configfiles'),$param);
+			if($configfiles->edit($info['name'],$_QRY->get_uqr('content'), $reload_dialplan) !== false) {
+				if (isset($_QR['apply']) === false) {
+					$_QRY->go($_TPL->url('service/ipbx/system_management/configfiles'),$params);
+				}
+			}
 
 			$info['content'] = $_QR['content'];
 		}
