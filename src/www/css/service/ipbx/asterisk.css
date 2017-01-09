@@ -1,6 +1,6 @@
 /*
  * XiVO Web-Interface
- * Copyright (C) 2006-2014  Avencall
+ * Copyright (C) 2006-2017 The Wazo Authors  (see the AUTHORS file)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -46,6 +46,7 @@
 #s-asterisk #sr-schedule .sb-list {width: auto;}
 #s-asterisk #sr-schedule .sb-list table {margin: 5px auto;width: 450px;}
 #s-asterisk #sr-users #phonefunckey .fm-paragraph select {max-width: 200px;}
+#s-asterisk #sr-configfiles .sb-content textarea {font-family: monospace;}
 
 .title {
     margin-right: 5px;

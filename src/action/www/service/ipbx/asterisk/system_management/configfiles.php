@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2017 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ $configfiles = &$ipbx->get_module('configfiles');
 
 switch($act)
 {
-	case 'add':	
+	case 'add':
 		$info = array('configfile' => null);
 
 		if(isset($_QR['fm_send'], $_QR['configfile']['content']) === true)
@@ -58,8 +58,11 @@ switch($act)
 
 		if(isset($_QR['fm_send'],$_QR['content']) === true)
 		{
-			if($configfiles->edit($info['name'],$_QRY->get_uqr('content'), $reload_dialplan) !== false)
-				$_QRY->go($_TPL->url('service/ipbx/system_management/configfiles'),$param);
+			if($configfiles->edit($info['name'],$_QRY->get_uqr('content'), $reload_dialplan) !== false) {
+				if (isset($_QR['apply']) === false) {
+					$_QRY->go($_TPL->url('service/ipbx/system_management/configfiles'),$params);
+				}
+			}
 
 			$info['content'] = $_QR['content'];
 		}

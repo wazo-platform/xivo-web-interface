@@ -136,6 +136,9 @@ Add
 ; fm_bt-save
 Save
 
+; fm_bt-apply
+Apply
+
 ; fm_bt-select
 Select
 
