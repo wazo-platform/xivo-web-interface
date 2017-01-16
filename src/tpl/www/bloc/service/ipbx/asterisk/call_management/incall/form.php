@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright 2006-2017 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -149,7 +149,7 @@ endif;
 		echo $form->select(array('desc'	=> $this->bbf('fm_incall_schedule'),
 				    'name'	    => 'schedule_id',
 				    'labelid'	  => 'schedule_id',
-						'key'	      => 'name',
+						'key'	      => 'identity',
 						'altkey'    => 'id',
 						'empty'     => true,
 				    //'default'  	=> $element['schedule_id']['default'],

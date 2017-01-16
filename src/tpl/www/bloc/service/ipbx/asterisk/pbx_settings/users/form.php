@@ -2,8 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2016 Avencall
-# Copyright (C) 2016 Proformatique Inc.
+# Copyright 2006-2017 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -107,7 +106,7 @@ if ($ringseconds == 0) {
 		echo $form->select(array('desc'	=> $this->bbf('fm_user_schedule'),
 				    'name'	    => 'schedule_id',
 				    'labelid'	  => 'schedule_id',
-						'key'	      => 'name',
+						'key'	      => 'identity',
 						'altkey'    => 'id',
 						'empty'     => true,
 				    'selected'	=> $this->get_var('schedule_id')),
