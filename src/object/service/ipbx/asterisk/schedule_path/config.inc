@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright 2006-2017 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -31,13 +31,9 @@ $array['element']['path']['default'] = '';
 $array['element']['pathid'] = array();
 $array['element']['pathid']['default'] = '';
 
-$array['element']['order'] = array();
-$array['element']['order']['default'] = 0;
-
 $array['filter'] = array();
 $array['filter']['schedule_id'] = array('set' => false, 'chk' => 2);
 $array['filter']['path']        = array('set' => false, 'chk' => 2);
 $array['filter']['pathid']      = array('set' => false, 'chk' => 2, 'cast' => 'uint');
-$array['filter']['order']       = array('set' => false, 'chk' => 2, 'cast' => 'uint');
 
 ?>

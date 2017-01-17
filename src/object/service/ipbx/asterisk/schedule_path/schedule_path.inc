@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright 2006-2017 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -46,7 +46,6 @@ class xivo_service_asterisk_schedule_path extends xivo_service_asterisk_abstract
 	{
 		$data['schedule_id'] = (int) $data['schedule_id'];
 		$data['pathid'] = (bool) $data['pathid'];
-		$data['order'] = (bool) $data['order'];
 
 		return($data);
 	}
@@ -61,7 +60,6 @@ class xivo_service_asterisk_schedule_path extends xivo_service_asterisk_abstract
 			'schedule_id' => $schedule_id,
 			'path'        => $path,
 			'pathid'      => intval($pathid),
-			'order'       => 0
 		);
 
 		return(parent::add($arr));
