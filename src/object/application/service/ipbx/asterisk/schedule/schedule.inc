@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2015  Avencall
+# Copyright 2006-2017 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -572,9 +572,9 @@ class xivo_application_service_asterisk_schedule extends xivo_application_asteri
 		$this->_status = 'delete';
 		$this->_return = array();
 
-		if($this->delete_schedule() === false
-		|| $this->delete_schedule_time() === false
-		|| $this->delete_schedule_path() === false)
+		if($this->delete_schedule_path() === false
+		|| $this->delete_schedule() === false
+		|| $this->delete_schedule_time() === false)
 		{
 			$r = false;
 			$this->_reverse_delete();
