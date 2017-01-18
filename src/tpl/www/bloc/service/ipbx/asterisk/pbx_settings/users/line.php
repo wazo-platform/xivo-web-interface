@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2016 Avencall
+# Copyright 2006-2017 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -226,7 +226,7 @@ endif;
 					'key'		=> false,
 					'bbf'		=> 'line_protocol-opt',
 					'default'	=> 'sip'),
-				array('sip', 'sccp', 'custom'));?>
+				array('sip', 'sccp', 'custom', 'webrtc'));?>
 		</td>
 		<td id="td_ex-linefeatures-name">
 			<?=$form->hidden(array('name' => 'linefeatures[name][]',

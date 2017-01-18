@@ -751,6 +751,12 @@ Personnalisé
 ; line_protocol-custom
 Personnalisé
 
+; line_protocol-webrtc
+SIP (WebRTC)
+
+; line_protocol-opt(webrtc)
+SIP (WebRTC)
+
 ; fm_type-opt(simul)
 Simultané
 

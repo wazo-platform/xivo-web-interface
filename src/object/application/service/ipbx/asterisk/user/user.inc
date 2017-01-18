@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright 2006-2016 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2006-2017 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -706,6 +706,9 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			// user1 ___ line1
 			// user2 _\_ line2
 			$protocolname = $this->_result['linefeatures'][0]['protocol'];
+			if ($protocolname === 'webrtc') {
+				$protocolname = 'sip';
+			}
 			$name = $this->_result['linefeatures'][0]['name'];
 			$number = $this->_result['linefeatures'][0]['number'];
 			$context = $this->_result['linefeatures'][0]['context'];
