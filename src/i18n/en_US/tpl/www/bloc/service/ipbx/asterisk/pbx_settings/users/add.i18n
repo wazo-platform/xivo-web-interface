@@ -73,6 +73,12 @@ Customized
 ; line_protocol-opt(custom)
 Customized
 
+; line_protocol-webrtc
+SIP (WebRTC)
+
+; line_protocol-opt(webrtc)
+SIP (WebRTC)
+
 ; fld-services
 Services
 

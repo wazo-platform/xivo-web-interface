@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2016 Avencall
+# Copyright 2016-2017 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -89,6 +89,10 @@ class LineManager
 			case 'sccp':
 				$endpoint = array();
 				break;
+			case 'webrtc':
+				$protocol = 'sip';
+				$endpoint = $this->generate_webrtc();
+				break;
 			case 'custom':
 				$endpoint = $this->generate_custom();
 				break;
@@ -119,6 +123,25 @@ class LineManager
 	{
 		return array(
 			'interface' => substr(md5(microtime()), rand(0,26), 8)
+		);
+	}
+
+	private function generate_webrtc()
+	{
+		return array(
+			'options' => array(
+					array('dtlsenable', 'yes'),
+					array('dtlsverify', 'no'),
+					array('dtlscertfile', '/usr/share/xivo-certs/server.crt'),
+					array('dtlsprivatekey', '/usr/share/xivo-certs/server.key'),
+					array('dtlssetup', 'actpass'),
+					array('force_avp', 'yes'),
+					array('avpf', 'yes'),
+					array('icesupport', 'yes'),
+					array('transport', 'wss'),
+					array('directmedia', 'no'),
+					array('encrypt', 'yes')
+			)
 		);
 	}
 
