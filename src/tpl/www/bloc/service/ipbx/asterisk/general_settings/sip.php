@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright 2006-2017 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -117,7 +117,7 @@ $codec_active = empty($allow) === false;
 			<span class="span-right">&nbsp;</span>
 		</li>
 		<li id="dwsm-tab-7"
-		    class="dwsm-blur"
+		    class="dwsm-blur-last"
 		    onclick="dwho_submenu.select(this,'sb-part-default');"
 		    onmouseout="dwho_submenu.blur(this);"
 		    onmouseover="dwho_submenu.focus(this);">
@@ -570,6 +570,13 @@ endif;
 				      'checked'		=> $this->get_var('info','matchexterniplocally','var_val'),
 				      'default'		=> $element['matchexterniplocally']['default'])),
 
+		$form->checkbox(array('desc'	=> $this->bbf('fm_websocket_enabled'),
+				      'name'		=> 'websocket_enabled',
+				      'labelid'		=> 'websocket_enabled',
+				      'help'		=> $this->bbf('hlp_fm_websocket_enabled'),
+				      'checked'		=> $this->get_var('info','websocket_enabled','var_val'),
+				      'default'		=> $element['websocket_enabled']['default'])),
+
 		$form->checkbox(array('desc'	=> $this->bbf('fm_dynamic_exclude_static'),
 				      'name'		=> 'dynamic_exclude_static',
 				      'labelid'		=> 'dynamic_exclude_static',
@@ -606,13 +613,6 @@ endif;
 				  'default'		=> $element['outboundproxy']['default'],
 				  'error'		=> $this->bbf_args('error',
 						   $this->get_var('error', 'outboundproxy')) ));
-
-		$form->checkbox(array('desc'	=> $this->bbf('fm_websocket_enabled'),
-				      'name'		=> 'websocket_enabled',
-				      'labelid'		=> 'websocket_enabled',
-				      'help'		=> $this->bbf('hlp_fm_websocket_enabled'),
-				      'checked'		=> $this->get_var('info','websocket_enabled','var_val'),
-				      'default'		=> $element['websocket_enabled']['default'])),
 
 ?>
 
