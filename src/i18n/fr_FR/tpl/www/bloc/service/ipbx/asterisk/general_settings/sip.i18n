@@ -749,7 +749,7 @@ Force la désactivation de l'extension regexten :
 Config asterisk: regextenonqualify
 
 ; fm_authfailureevents
-Génère des évènement "peerstatus" en cas d'échec d'authentification :
+Génère des évènements "peerstatus" en cas d'échec d'authentification :
 
 ; hlp_fm_authfailureevents
 Config asterisk: authfailureevents
