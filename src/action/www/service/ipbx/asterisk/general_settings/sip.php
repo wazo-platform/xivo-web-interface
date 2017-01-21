@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright 2006-2017 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,12 +22,10 @@ $config = dwho::load_init(XIVO_PATH_CONF.DWHO_SEP_DIR.'ipbx.ini');
 
 $appsip = &$ipbx->get_apprealstatic('sip');
 $appgeneralsip = &$appsip->get_module('general');
-$modauth = &$ipbx->get_module('sipauthentication');
 
 $fm_save = $error = null;
 
 $info = $appgeneralsip->get_all_val_by_category(false);
-$auth = $modauth->get_all_where(array('usersip_id' => null));
 $modcert = &$_XOBJ->get_module('certificate');
 
 if(isset($_QR['fm_send']) === true)
@@ -36,36 +34,10 @@ if(isset($_QR['fm_send']) === true)
 
 	$_QR['tlscadir'] = $config['tls']['cadir'];
 
-	// replace authentications
-	$auth   = array();
-	$error  = array('auth' => array());
-
-	for($i = 0; $i < count($_QR['auth']['user'])-1; $i++)
-	{
-		$auth[] = array(
-			'usersip_id' => null,
-			'user'       => $_QR['auth']['user'][$i],
-			'secretmode' => $_QR['auth']['secretmode'][$i],
-			'secret'     => $_QR['auth']['secret'][$i],
-			'realm'      => $_QR['auth']['realm'][$i]
-		);
-
-		if($modauth->chk_values($auth[count($auth)-1]) === false)
-		{ $error['auth'][$i] = $modauth->get_filter_error(); continue; }
-	}
-
-	// error on outbound authentications
 	if(count($error['auth']) > 0)
 	{
 		$fm_save = false;
 	} else {
-		$modauth->delete_where(array('usersip_id' => null));
-
-		foreach($auth as $_auth)
-			$modauth->add($_auth);
-
-		unset($_QR['auth']);
-
 		if (isset($_QR['codec-active']) === false)
 			$_QR['allow'] = array();
 
@@ -79,7 +51,6 @@ if(isset($_QR['fm_send']) === true)
 }
 
 $element = $appgeneralsip->get_element();
-$element['auth'] = $modauth->get_element();
 
 if(dwho_issa('allow',$element) === true
 && dwho_issa('value',$element['allow']) === true
@@ -107,7 +78,6 @@ $dhtml->load_js_multiselect_files();
 
 $_TPL->set_var('fm_save',$fm_save);
 $_TPL->set_var('info',$info);
-$_TPL->set_var('auth',$auth);
 $_TPL->set_var('error',$error);
 $_TPL->set_var('element',$element);
 $_TPL->set_var('moh_list',$appgeneralsip->get_musiconhold());
