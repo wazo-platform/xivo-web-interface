@@ -274,6 +274,15 @@ Asterisk config: matchexterniplocally
 ; hlp_fm_matchexterniplocally
 Asterisk config: matchexterniplocally
 
+; fm_websocket_enabled
+Activate websocket service
+
+; cmt_fm_websocket_enabled
+Asterisk config: websocket_enabled
+
+; hlp_fm_websocket_enabled
+Asterisk config: websocket_enabled
+
 ; fm_outboundproxy
 Outbound proxy:
 
@@ -877,75 +886,6 @@ Invite
 ; fm_insecure-opt(all)
 All
 
-; fm_rtcachefriends
-Cache accounts:
-
-; cmt_fm_rtcachefriends
-Asterisk config: rtcachefriends
-
-; hlp_fm_rtcachefriends
-Asterisk config: rtcachefriends
-
-; fm_rtupdate
-Cache update:
-
-; cmt_fm_rtupdate
-Asterisk config: rtupdate
-
-; hlp_fm_rtupdate
-Asterisk config: rtupdate
-
-; fm_ignoreregexpire
-Ignore registration expiration:
-
-; cmt_fm_ignoreregexpire
-Asterisk config: ignoreregexpire
-
-; hlp_fm_ignoreregexpire
-Asterisk config: ignoreregexpire
-
-; fm_rtsavesysname
-Save the system name when recording:
-
-; cmt_fm_rtsavesysname
-Asterisk config: rtsavesysname
-
-; hlp_fm_rtsavesysname
-Asterisk config: rtsavesysname
-
-; fm_rtautoclear
-Automatic cache clearing:
-
-; cmt_fm_rtautoclear
-Asterisk config: rtautoclear
-
-; hlp_fm_rtautoclear
-Asterisk config: rtautoclear
-
-; fm_rtautoclear-opt(no)
-No
-
-; fm_rtautoclear-opt(yes)
-Yes
-
-; fm_rtautoclear-opt-second
-1 second
-
-; fm_rtautoclear-opt-seconds
-%s seconds
-
-; fm_rtautoclear-opt-minute
-1 minute
-
-; fm_rtautoclear-opt-minute-seconds
-%s min. %s sec.
-
-; fm_rtautoclear-opt-minutes
-%s minutes
-
-; fm_rtautoclear-opt-minutes-seconds
-%s min. %s sec.
-
 ; fm_success-save
 SIP Protocol properties successfully saved
 
@@ -963,10 +903,6 @@ CA certificate:
 ; hlp_fm_tlscafile
 Asterisk config: tlscafile
 
-
-
-;; asterisk 1.8
-;;; general
 
 ; fm_udpbindaddr
 UDP address:
@@ -1248,24 +1184,6 @@ Outgoing
 ; smenu_internals
 Internals
 
-; fm_hash_users
-Users hash size:
-
-; hlp_fm_hash_users
-Asterisk config: hash_users
-
-; fm_hash_peers
-Peers hash size:
-
-; hlp_fm_hash_peers
-Asterisk config: hash_peers
-
-; fm_hash_dialogs
-Dialogs hash size:
-
-; hlp_fm_hash_dialogs
-Asterisk config: hash_dialogs
-
 ; fm_encryption
 Encryption:
 
@@ -1295,29 +1213,6 @@ Authentify OPTIONS requests:
 
 ; hlp_fm_auth_options_requests
 Asterisk config: auth_options_requests
-
-
-
-; smenu_authentication
-Auth. credentials
-
-; fm_col_user
-Username
-
-; fm_col_secretmode
-Password type
-
-; fm_auth_secretmode(md5)
-MD5
-
-; fm_auth_secretmode(clear)
-Clear
-
-; fm_col_secret
-Password
-
-; fm_col_realm
-Realm
 
 ; no_disp
 No credentials
@@ -1378,9 +1273,3 @@ Use domain as realm:
 
 ; hlp_fm_domainsasrealm
 Asterisk config: domainsasrealm
-
-; col_add
-Add
-
-; opt_disp-delete
-Delete

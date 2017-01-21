@@ -244,6 +244,15 @@ Remplacer l'IP ou l'hôte externe s'il correspond au réseau local :
 ; hlp_fm_matchexterniplocally
 Config asterisk: matchexterniplocally
 
+; fm_websocket_enabled
+Activer le service websocket
+
+; cmt_fm_websocket_enabled
+Config asterisk: websocket_enabled
+
+; hlp_fm_websocket_enabled
+Config asterisk: websocket_enabled
+
 ; fm_outboundproxy
 Proxy Outbound :
 
@@ -706,65 +715,8 @@ Invite
 ; fm_insecure-opt(all)
 Tout
 
-; fm_rtcachefriends
-Mise en cache des comptes :
-
-; hlp_fm_rtcachefriends
-Config asterisk: rtcachefriends
-
-; fm_rtupdate
-Mise à jour du cache :
-
-; hlp_fm_rtupdate
-Config asterisk: rtupdate
-
-; fm_ignoreregexpire
-Ignorer l'expiration :
-
-; hlp_fm_ignoreregexpire
-Config asterisk: ignoreregexpire
-
-; fm_rtsavesysname
-Sauvegarder le nom du système lors d'un enregistrement :
-
-; hlp_fm_rtsavesysname
-Config asterisk: rtsavesysname
-
-; fm_rtautoclear
-Suppression automatique du cache :
-
-; hlp_fm_rtautoclear
-Config asterisk: rtautoclear
-
-; fm_rtautoclear-opt(no)
-Non
-
-; fm_rtautoclear-opt(yes)
-Oui
-
-; fm_rtautoclear-opt-second
-1 seconde
-
-; fm_rtautoclear-opt-seconds
-%s secondes
-
-; fm_rtautoclear-opt-minute
-1 minute
-
-; fm_rtautoclear-opt-minute-seconds
-%s min. %s sec.
-
-; fm_rtautoclear-opt-minutes
-%s minutes
-
-; fm_rtautoclear-opt-minutes-seconds
-%s min. %s sec.
-
 ; fm_success-save
 Propriétés du protocole SIP sauvegardées avec succès
-
-;; asterisk 1.8
-;;; general
 
 ; fm_udpbindaddr
 Adresse UDP en écoute :
@@ -1044,24 +996,6 @@ Sortant
 ; smenu_internals
 Interne
 
-; fm_hash_users
-Taille de la table des utilisateurs :
-
-; hlp_fm_hash_users
-Config Asterisk: hash_users
-
-; fm_hash_peers
-Taille de la table des postes :
-
-; hlp_fm_hash_peers
-Config Asterisk: hash_peers
-
-; fm_hash_dialogs
-Taille de la table dialogs :
-
-; hlp_fm_hash_dialogs
-Config Asterisk: hash_dialogs
-
 ; fm_tlscertfile
 Certificat serveur :
 
@@ -1161,27 +1095,6 @@ Authentifie les requêtes OPTIONS :
 ; hlp_fm_auth_options_requests
 Config asterisk: auth_options_requests
 
-; smenu_authentication
-Auth.
-
-; fm_col_user
-Identifiant
-
-; fm_col_secretmode
-Type de mot de passe
-
-; fm_auth_secretmode(md5)
-MD5
-
-; fm_auth_secretmode(clear)
-En clair
-
-; fm_col_secret
-Mot de passe
-
-; fm_col_realm
-Nom de domaine
-
 ; no_disp
 Aucunes autorisations
 
@@ -1190,9 +1103,3 @@ Protocoles réseau :
 
 ; hlp_fm_transport
 Config asterisk: transport
-
-; col_add
-Ajouter
-
-; opt_disp-delete
-Supprimer
