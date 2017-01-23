@@ -165,6 +165,11 @@ $array['element']['matchexterniplocally']['value'] = array('no','yes');
 $array['element']['matchexterniplocally']['default'] = 'no';
 $array['element']['matchexterniplocally']['set'] = true;
 
+$array['element']['websocket_enabled'] = array();
+$array['element']['websocket_enabled']['value'] = array('no','yes');
+$array['element']['websocket_enabled']['default'] = 'yes';
+$array['element']['websocket_enabled']['set'] = true;
+
 $array['element']['outboundproxy'] = array();
 $array['element']['outboundproxy']['default'] = '';
 $array['element']['outboundproxy']['null'] = true;
@@ -378,38 +383,11 @@ $array['element']['insecure']['value'] = array('no'		=> 'no',
 					       'port,invite'	=> 'all');
 $array['element']['insecure']['default'] = 'no';
 
-$array['element']['rtcachefriends'] = array();
-$array['element']['rtcachefriends']['value'] = array('no','yes');
-$array['element']['rtcachefriends']['default'] = 'yes';
-$array['element']['rtcachefriends']['set'] = true;
-
-$array['element']['rtupdate'] = array();
-$array['element']['rtupdate']['value'] = array('no','yes');
-$array['element']['rtupdate']['default'] = 'yes';
-$array['element']['rtupdate']['set'] = true;
-
-$array['element']['ignoreregexpire'] = array();
-$array['element']['ignoreregexpire']['value'] = array('no','yes');
-$array['element']['ignoreregexpire']['default'] = 'no';
-$array['element']['ignoreregexpire']['set'] = true;
-
-$array['element']['rtsavesysname'] = array();
-$array['element']['rtsavesysname']['value'] = array('no','yes');
-$array['element']['rtsavesysname']['default'] = 'no';
-$array['element']['rtsavesysname']['set'] = true;
-
-$array['element']['rtautoclear'] = array();
-$array['element']['rtautoclear']['value'] = array('no','yes',1,10,20,30,40,50,60,70,80,90,
-						  100,110,120,130,140,150,160,170,180,190,
-						  200,210,220,230,240);
-$array['element']['rtautoclear']['default'] = 'no';
-
 $array['element']['subscribecontext'] = array();
 $array['element']['subscribecontext']['default'] = '';
 $array['element']['subscribecontext']['forcedef'] = true;
 $array['element']['subscribecontext']['null'] = true;
 
-// new asterisk 1.8 options
 $array['element']['match_auth_username'] = array();
 $array['element']['match_auth_username']['value'] = array('no', 'yes');
 $array['element']['match_auth_username']['default'] = 'no';
@@ -580,22 +558,6 @@ $array['element']['session-refresher']['value' ] = array('uas', 'uac');
 $array['element']['session-refresher']['default'] = 'uas';
 $array['element']['session-refresher']['null'] = false;
 
-$array['element']['hash_users'] = array();
-//$array['element']['hash_users']['default'] = '563';
-$array['element']['hash_users']['default'] = null;
-$array['element']['hash_users']['null'] = true;
-
-$array['element']['hash_peers'] = array();
-//$array['element']['hash_peers']['default'] = '563';
-$array['element']['hash_peers']['default'] = null;
-$array['element']['hash_peers']['null'] = true;
-
-$array['element']['hash_dialogs'] = array();
-//$array['element']['hash_dialogs']['default'] = '563';
-$array['element']['hash_dialogs']['default'] = null;
-$array['element']['hash_dialogs']['null'] = true;
-
-
 $array['element']['notifycid'] = array();
 $array['element']['notifycid']['value' ] = array('no', 'yes');
 $array['element']['notifycid']['default'] = 'no';
@@ -761,6 +723,7 @@ $array['filter']['externhost'] = array('set'		=> false,
 				       'maxlen'		=> 64);
 $array['filter']['externrefresh'] = array('key' => array(1,10,20,30,40,50,60,70,80,90,100,110,120,180,240,300,600,900,1200,1800));
 $array['filter']['matchexterniplocally'] = array('bool' => true);
+$array['filter']['websocket_enabled'] = array('bool' => true);
 $array['filter']['outboundproxy'] = array('set'		=> false,
 					  'chk'		=> 2,
 					  'callback'	=> 'dwho_network::valid_host',
@@ -835,13 +798,6 @@ $array['filter']['trustrpid'] = array('bool' => true);
 $array['filter']['sendrpid'] = array('key' => array('yes','no','rpid','pai'));
 $array['filter']['directmedia'] = array('key' => array('no','yes','update','nonat','update,nonat','outgoing'));
 $array['filter']['insecure'] = array('key' => array('no','port','invite','port,invite'));
-$array['filter']['rtcachefriends'] = array('bool' => true);
-$array['filter']['rtupdate'] = array('bool' => true);
-$array['filter']['ignoreregexpire'] = array('bool' => true);
-$array['filter']['rtsavesysname'] = array('bool' => true);
-$array['filter']['rtautoclear'] = array('key' => array('yes','no',1,10,20,30,40,50,60,70,80,90,
-						       100,110,120,130,140,150,160,170,180,
-						       190,200,210,220,230,240));
 $array['filter']['subscribecontext'] = array('set' => false,'chk' => 0);
 $array['filter']['match_auth_username'] = array('bool' => true);
 $array['filter']['udpbindaddr'] = array('set' => false,'chk' => 2);
