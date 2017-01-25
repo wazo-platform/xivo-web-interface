@@ -121,7 +121,7 @@ $defaultconf = $this->get_var('info','$defaultconf');
 <fieldset id="fld-defaultconfig">
 	<legend><?=$this->bbf('fld-defaultconfig');?></legend>
 	<dl>
-		<dt><?= $this->bbf('defaultconfig'); ?></dt>
+		<dt><?= $this->bbf('fm_defaultconfig'); ?></dt>
 		<dd><?=($info['default_configuration']['apply']) ? $this->bbf('answer_true') : $this->bbf('answer_false');
 		       $dhtml->message_error(
 				nl2br($this->bbf_args('error_context_outcall',
