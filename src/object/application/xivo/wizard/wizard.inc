@@ -563,6 +563,7 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 					'language' => $language,
 					'entity_name' => $wizsess['entity']['displayname'],
 					'license' => $wizsess['license']['agree'],
+					'default_french_configuration' => $wizsess['default_configuration']['apply'],
 					'network' => array('nameservers' => array($wizsess['resolvconf']['nameserver1']),
 									'hostname' => $wizsess['mainconfig']['hostname'],
 									'interface' => $wizsess['netiface']['interface'],
