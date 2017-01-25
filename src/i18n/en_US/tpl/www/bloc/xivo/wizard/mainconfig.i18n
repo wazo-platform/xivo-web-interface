@@ -41,10 +41,10 @@ Primary :
 Secondary :
 
 ; fld-mainconfig-defaultconfig
-Default configuration
+Default configuration :
 
 ; fm_mainconfig-defaultconfigbox
-Apply default configuration :
+Apply default configuration for France :
 
 ; cmt_fm_mainconfig_hostname
 
