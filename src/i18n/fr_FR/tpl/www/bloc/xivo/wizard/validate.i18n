@@ -64,6 +64,12 @@ Erreurs possibles :
 ; fld-entity
 Entité
 
+; fld-defaultconfig
+La configuration par défault :
+
+; fm_defaultconfig
+Appliquer la configuration par défault pour la France :
+
 ; info_entity_displayname
 Nom affiché :
 
