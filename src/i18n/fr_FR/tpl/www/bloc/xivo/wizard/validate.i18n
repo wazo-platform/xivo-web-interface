@@ -109,4 +109,10 @@ Appels internes :
 Appels entrants : 
 
 ; outgoing_calls
-Appels sortants : 
+Appels sortants :
+
+; answer_false
+Non
+
+; answer_true
+Oui
