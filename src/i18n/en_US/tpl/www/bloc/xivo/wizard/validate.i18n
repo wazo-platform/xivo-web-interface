@@ -80,9 +80,6 @@ Default configuration
 ; fm_defaultconfig
 Apply default configuration for France :
 
-; fm_defaultconfig
-Apply default configuration
-
 ; info_context_internal
 Internal calls :
 

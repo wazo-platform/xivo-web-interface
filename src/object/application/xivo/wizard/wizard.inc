@@ -431,7 +431,6 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 		$this->save_mainconfig($data);
 		$this->save_netiface($data);
 		$this->save_resolvconf($data);
-		$this->save_resolvconf($data);
 
 		if($this->get_errnb() > 0)
 			return(false);
