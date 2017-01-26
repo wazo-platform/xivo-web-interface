@@ -435,6 +435,9 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 		if($this->get_errnb() > 0)
 			return(false);
 
+		$this->_wizsess['default_configuration'] = array();
+		$this->_wizsess['default_configuration']['apply'] = (bool) $data['default_configuration'];
+
 		$this->_wizsess['mainconfig'] = $this->get_result('mainconfig');
 		$this->_wizsess['netiface'] = $this->get_result('netiface');
 		$this->_wizsess['netiface_id'] = $this->get_result('netiface_id');
@@ -559,6 +562,7 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 					'language' => $language,
 					'entity_name' => $wizsess['entity']['displayname'],
 					'license' => $wizsess['license']['agree'],
+					'default_french_configuration' => $wizsess['default_configuration']['apply'],
 					'network' => array('nameservers' => array($wizsess['resolvconf']['nameserver1']),
 									'hostname' => $wizsess['mainconfig']['hostname'],
 									'interface' => $wizsess['netiface']['interface'],

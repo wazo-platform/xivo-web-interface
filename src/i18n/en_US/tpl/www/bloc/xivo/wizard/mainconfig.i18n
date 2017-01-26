@@ -40,6 +40,12 @@ Primary :
 ; fm_resolvconf_nameserver2
 Secondary :
 
+; fld-mainconfig-defaultconfig
+Default configuration :
+
+; fm_mainconfig-defaultconfigbox
+Apply default configuration for France :
+
 ; cmt_fm_mainconfig_hostname
 
 ; cmt_fm_mainconfig_domain

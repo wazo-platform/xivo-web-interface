@@ -40,6 +40,12 @@ Serveur primaire :
 ; fm_resolvconf_nameserver2
 Serveur secondaire :
 
+; fld-mainconfig-defaultconfig
+La configuration par défaut :
+
+; fm_mainconfig-defaultconfigbox
+Appliquer la configuration par défaut pour la France :
+
 ; cmt_fm_mainconfig_hostname
 
 ; cmt_fm_mainconfig_domain

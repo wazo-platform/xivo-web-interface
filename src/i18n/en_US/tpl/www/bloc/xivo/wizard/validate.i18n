@@ -74,6 +74,12 @@ Possible errors :
 ; fld-context
 Contexts
 
+; fld-defaultconfig
+Default configuration
+
+; fm_defaultconfig
+Apply default configuration for France :
+
 ; info_context_internal
 Internal calls :
 
@@ -109,3 +115,9 @@ Incoming calls :
 
 ; outgoing_calls
 Outgoing calls : 
+
+; answer_false
+No
+
+; answer_true
+Yes

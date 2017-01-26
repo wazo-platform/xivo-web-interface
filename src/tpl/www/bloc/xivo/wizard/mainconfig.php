@@ -142,3 +142,19 @@ echo	$form->text(array('desc'	=> $this->bbf('fm_resolvconf_nameserver1'),
 
 ?>
 </fieldset>
+
+<fieldset id="fld-mainconfig-defaultconfig">
+<legend><?=$this->bbf('fld-mainconfig-defaultconfig');?></legend>
+    <div class="fm-desc-inline fm-paragraph">
+
+<?php
+
+echo	$form->checkbox(array('paragraph'	=> false,
+			      'desc'		=> $this->bbf('fm_mainconfig-defaultconfigbox'),
+			      'name'		=> 'default_configuration',
+			      'labelid'		=> 'default_configuration',
+			      'checked'		=> true,));
+
+?>
+    </div>
+</fieldset>
