@@ -227,6 +227,16 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 		$netiface_id['address'] = 0;
 		$netiface_id['gateway'] = 0;
 
+		if (!isset($this->_wizsess['default_configuration']))
+			$mainconfig['default_configuration'] = true;
+		else
+		{
+			if ($this->_wizsess['prevstep'] == 'mainconfig')
+				$mainconfig['default_configuration'] = $_POST['default_configuration'];
+			else
+				$mainconfig['default_configuration'] = $this->_wizsess['default_configuration'];
+		}
+
 		$this->_wizsess['timezone'] = $response['timezone'];
 
 		$i = 0;
@@ -436,7 +446,7 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 			return(false);
 
 		$this->_wizsess['default_configuration'] = array();
-		$this->_wizsess['default_configuration']['apply'] = (bool) $data['default_configuration'];
+		$this->_wizsess['default_configuration'] = (bool) $data['default_configuration'];
 
 		$this->_wizsess['mainconfig'] = $this->get_result('mainconfig');
 		$this->_wizsess['netiface'] = $this->get_result('netiface');
@@ -562,7 +572,7 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 					'language' => $language,
 					'entity_name' => $wizsess['entity']['displayname'],
 					'license' => $wizsess['license']['agree'],
-					'default_french_configuration' => $wizsess['default_configuration']['apply'],
+					'default_french_configuration' => $wizsess['default_configuration'],
 					'network' => array('nameservers' => array($wizsess['resolvconf']['nameserver1']),
 									'hostname' => $wizsess['mainconfig']['hostname'],
 									'interface' => $wizsess['netiface']['interface'],

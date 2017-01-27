@@ -121,7 +121,7 @@ $resolvconf = $this->get_var('info','resolvconf');
 	<legend><?=$this->bbf('fld-defaultconfig');?></legend>
 	<dl>
 		<dt><?= $this->bbf('fm_defaultconfig'); ?></dt>
-		<dd><?=($info['default_configuration']['apply']) ? $this->bbf('answer_true') : $this->bbf('answer_false');?></dd>
+		<dd><?=($info['default_configuration']) ? $this->bbf('answer_true') : $this->bbf('answer_false');?></dd>
 	</dl>
 </fieldset>
 
