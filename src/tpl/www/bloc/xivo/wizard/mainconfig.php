@@ -153,7 +153,7 @@ echo	$form->checkbox(array('paragraph'	=> false,
 			      'name'		=> 'default_configuration',
 			      'labelid'		=> 'default_configuration',
 			      'help'		=> $this->bbf('fm_mainconfig-defaultconfighelptext'),
-			      'checked'		=> ($element['mainconfig']['default_configuration']) ? true : false  ,,));
+			      'checked'		=> ($element['mainconfig']['default_configuration']) ? true : false  ,));
 
 ?>
     </div>
