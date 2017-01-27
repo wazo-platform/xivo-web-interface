@@ -82,6 +82,9 @@ Fichier son
 ; incall_destination-custom
 Personnalisée
 
+; incall_destination-switchboard
+Standard
+
 ; no_incall
 Aucun appel entrant trouvé
 

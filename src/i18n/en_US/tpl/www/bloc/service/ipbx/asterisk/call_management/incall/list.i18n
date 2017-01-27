@@ -135,3 +135,6 @@ Custom
 
 ; incall_destination-outcall
 Outgoing call
+
+; incall_destination-switchboard
+Switchboard
