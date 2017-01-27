@@ -46,6 +46,9 @@ La configuration par défaut :
 ; fm_mainconfig-defaultconfigbox
 Appliquer la configuration par défaut pour la France :
 
+; fm_mainconfig-defaultconfighelptext
+Appliquer la configuration par défaut pour la France. Voir la documentation pour les détails.
+
 ; cmt_fm_mainconfig_hostname
 
 ; cmt_fm_mainconfig_domain

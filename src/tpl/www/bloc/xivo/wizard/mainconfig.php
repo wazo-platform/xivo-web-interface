@@ -148,13 +148,14 @@ echo	$form->text(array('desc'	=> $this->bbf('fm_resolvconf_nameserver1'),
     <div class="fm-desc-inline fm-paragraph">
 
 <?php
-
 echo	$form->checkbox(array('paragraph'	=> false,
 			      'desc'		=> $this->bbf('fm_mainconfig-defaultconfigbox'),
 			      'name'		=> 'default_configuration',
 			      'labelid'		=> 'default_configuration',
-			      'checked'		=> true,));
+			      'help'		=> $this->bbf('fm_mainconfig-defaultconfighelptext'),
+			      'checked'		=> ($element['mainconfig']['default_configuration']) ? true : false  ,));
 
 ?>
     </div>
 </fieldset>
+

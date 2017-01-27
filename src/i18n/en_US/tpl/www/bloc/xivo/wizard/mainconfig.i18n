@@ -46,6 +46,9 @@ Default configuration :
 ; fm_mainconfig-defaultconfigbox
 Apply default configuration for France :
 
+; fm_mainconfig-defaultconfighelptext
+Apply default configuration for France. See documentation for details
+
 ; cmt_fm_mainconfig_hostname
 
 ; cmt_fm_mainconfig_domain
