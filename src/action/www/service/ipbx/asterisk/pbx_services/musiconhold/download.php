@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright 2006-2017 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,15 +20,29 @@
 
 $param['page'] = $page;
 
-if(($infos = $musiconhold->get_category($cat)) === false)
+if(isset($_QR['uuid']) === false || $appmoh->get($_QR['uuid']) === false)
 	$_QRY->go($_TPL->url('service/ipbx/pbx_services/musiconhold'),'act=list');
 
-dwho::load_class('dwho_http');
-
-if(isset($_QR['id']) === false
-|| ($info = $musiconhold->get_file($_QR['id'],$infos['cat']['category'])) === false
-|| ($http_response = dwho_http::factory('response')) === false
-|| $http_response->send_file_download($info['path']) === false)
+if(isset($_QR['filename']) === false
+|| ($data = $appmoh->download_file($_QR['filename'])) === false)
 	$_QRY->go($_TPL->url('service/ipbx/pbx_services/musiconhold'),$param);
+
+$currenttime = mktime();
+
+header('Pragma: no-cache');
+header('Cache-Control: private, must-revalidate');
+header('Last-Modified: '.
+	date('D, d M Y H:i:s',$currenttime).' '.
+	dwho_i18n::strftime_l('%Z',null));
+header('Content-Disposition: attachment; filename='.$_QR['filename']);
+header('Content-Type: application/octet-stream');
+
+ob_start();
+
+echo $data;
+
+header('Content-Length: '.ob_get_length());
+ob_end_flush();
+die();
 
 ?>

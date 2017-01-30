@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright 2006-2017 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@ $element = $this->get_var('element');
 $error = $this->get_var('error');
 
 $sound_list = $this->get_var('sound_list');
-$musicclass = $this->get_var('musicclass');
+$moh_list = $this->get_var('moh_list');
 
 $invalid = array();
 $invalid['extenfeatures'] = array();
@@ -1020,11 +1020,10 @@ if(isset($error_js[0]) === true)
 		$form->select(array('desc'	=> $this->bbf('fm_generalfeatures_parkedmusicclass'),
 				    'name'	=> 'generalfeatures[parkedmusicclass]',
 				    'labelid'	=> 'generalfeatures-parkedmusicclass',
-				    'key'		=> 'category',
-				    'altkey'	=> 'category',
+				    'key'		=> 'name',
 				    'selected'	=> $this->get_var('generalfeatures','parkedmusicclass','var_val'),
 				    'default'	=> $element['generalfeatures']['parkedmusicclass']['default']),
-		$musicclass);
+		$moh_list);
 ?>
 	</div>
 

@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright 2006-2017 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -21,7 +21,6 @@
 $form = &$this->get_module('form');
 
 $element = $this->get_var('element');
-$option = $this->get_var('option');
 $info = $this->get_var('info');
 
 ?>
@@ -34,10 +33,7 @@ $info = $this->get_var('info');
 	<div class="sb-content">
 		<form action="#" enctype="multipart/form-data" method="post" accept-charset="utf-8">
 <?php
-	echo	$form->hidden(array('name'	=> 'max_file_size',
-				    'value'	=> $option['file']['size'])),
-
-		$form->hidden(array('name'	=> DWHO_SESS_NAME,
+	echo	$form->hidden(array('name'	=> DWHO_SESS_NAME,
 				    'value'	=> DWHO_SESS_ID)),
 
 		$form->hidden(array('name'	=> 'fm_send',
@@ -54,11 +50,11 @@ $info = $this->get_var('info');
 				  'value'	=> $info['filename'])),
 
 		$form->select(array('desc'	=> $this->bbf('fm_category'),
-				    'name'	=> 'category',
-				    'labelid'	=> 'it-category',
-				    'key'	=> true,
-				    'altkey'	=> 'category',
-				    'selected'	=> $info['category']),
+				    'name'	=> 'uuid',
+				    'labelid'	=> 'it-name',
+				    'key'	=> 'name',
+				    'altkey'	=> 'uuid',
+				    'selected'	=> $info['uuid']),
 			      $this->get_var('list_cats')),
 
 		$form->submit(array('name'	=> 'submit',

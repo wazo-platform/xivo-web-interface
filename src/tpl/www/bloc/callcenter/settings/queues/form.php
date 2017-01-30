@@ -111,7 +111,7 @@ if($moh_list !== false):
 				    'labelid' => 'queue-musicclass',
 						'help' => $this->bbf('hlp_fm_queue-musicclass'),
 				    'empty'	=> true,
-				    'key'	=> 'category',
+				    'key'	=> 'name',
 				    'invalid'	=> ($this->get_var('act') === 'edit'),
 				    'default'	=> ($this->get_var('act') === 'add' ? $element['queue']['musicclass']['default'] : null),
 				    'selected'	=> $this->get_var('info','queue','musicclass')),

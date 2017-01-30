@@ -86,9 +86,6 @@ $array['trunkiax']['ipbx'] = array('dialplan reload', 'iax2 reload');
 $array['extensions'] = array();
 $array['extensions']['ipbx'] = array('dialplan reload', 'module reload features');
 
-$array['musiconhold'] = array();
-$array['musiconhold']['ipbx'] = array('moh reload');
-
 $array['sccp*'] = array();
 $array['sccp*']['ipbx'] = array('module reload chan_sccp.so');
 

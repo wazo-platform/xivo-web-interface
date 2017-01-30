@@ -133,7 +133,7 @@ if($moh_list !== false):
 				    'name'	=> 'queue[musicclass]',
 				    'labelid'	=> 'queue-musicclass',
 				    'empty'	=> true,
-				    'key'	=> 'category',
+				    'key'	=> 'name',
 				    'invalid'	=> ($this->get_var('act') === 'edit'),
 				    'default'	=> ($this->get_var('act') === 'add' ? $element['queue']['musicclass']['default'] : null),
 				  	'selected'	=> $this->get_var('info','queue','musicclass')),

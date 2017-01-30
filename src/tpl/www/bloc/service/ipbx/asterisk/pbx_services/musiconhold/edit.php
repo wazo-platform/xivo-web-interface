@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2016  Avencall
+# Copyright 2006-2017 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -42,25 +42,25 @@ $info = $this->get_var('info');
 		$form->hidden(array('name'	=> 'act',
 				    'value'	=> 'edit')),
 
-		$form->hidden(array('name'	=> 'id',
-				    'value'	=> $this->get_var('id'))),
+		$form->hidden(array('name'	=> 'uuid',
+				    'value'	=> $this->get_var('uuid'))),
 
 		$form->text(array('desc'	=> $this->bbf('fm_category'),
-				  'name'	=> 'category',
-				  'labelid'	=> 'category',
+				  'name'	=> 'name',
+				  'labelid'	=> 'name',
 				  'help'		=> $this->bbf('hlp_fm_category'),
+				  'class'	=> 'it-disabled',
+				  'readonly'	=> true,
 				  'size'	=> 15,
-				  'default'	=> $element['category']['default'],
-				  'value'	=> $info['category'])),
+				  'default'	=> $element['name']['default'],
+				  'value'	=> $info['moh']['name'])),
 
 		$form->select(array('desc'	=> $this->bbf('fm_mode'),
 				    'name'	=> 'mode',
 				    'labelid'	=> 'mode',
 				    'key'	=> false,
-				    'class' => 'it-disabled',
-				    'readonly' => true,
 				    'default'	=> $element['mode']['default'],
-				    'selected'	=> $info['mode']),
+				    'selected'	=> $info['moh']['mode']),
 			      $element['mode']['value'],
 			      'onchange="xivo_chg_attrib(\'fm_musiconhold\',
 							 \'fd-application\',
@@ -71,7 +71,7 @@ $info = $this->get_var('info');
 				  'labelid'	=> 'application',
 				  'size'	=> 15,
 				  'default'	=> $element['application']['default'],
-				  'value'	=> $info['application'])),
+				  'value'	=> $info['moh']['application'])),
 
 		$form->select(array('desc'	=> $this->bbf('fm_sort'),
 				    'name'	=> 'sort',
@@ -79,7 +79,7 @@ $info = $this->get_var('info');
 				    'empty'	=> true,
 				    'key'	=> false,
 				    'default'	=> $element['sort']['default'],
-				    'selected' => $info['sort']),
+				    'selected' => $info['moh']['sort']),
 				$element['sort']['value']),
 
 		$form->submit(array('name'	=> 'submit',

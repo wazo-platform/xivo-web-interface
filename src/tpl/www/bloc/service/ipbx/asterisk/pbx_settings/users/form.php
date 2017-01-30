@@ -136,7 +136,7 @@ if ($ringseconds == 0) {
 					    'name'	=> 'userfeatures[musiconhold]',
 					    'labelid'	=> 'userfeatures-musiconhold',
 					    'empty'	=> true,
-					    'key'	=> 'category',
+					    'key'	=> 'name',
 					    'invalid'	=> ($this->get_var('act') === 'edit'),
 					    'default'	=> ($this->get_var('act') === 'add' ? $element['userfeatures']['musiconhold']['default'] : null),
 					    'selected'	=> $info['userfeatures']['musiconhold']),

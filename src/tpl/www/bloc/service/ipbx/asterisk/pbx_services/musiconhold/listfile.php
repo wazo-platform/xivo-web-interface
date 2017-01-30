@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright 2006-2017 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,14 +24,14 @@ $dhtml = &$this->get_module('dhtml');
 
 $pager = $this->get_var('pager');
 $act = $this->get_var('act');
-$cat = $this->get_var('cat');
+$uuid = $this->get_var('uuid');
 
 $page = $url->pager($pager['pages'],
 		    $pager['page'],
 		    $pager['prev'],
 		    $pager['next'],
 		    'service/ipbx/pbx_services/musiconhold',
-		    array('act' => $act,'cat' => $cat));
+		    array('act' => $act,'uuid' => $uuid));
 
 ?>
 <div class="b-list">
@@ -68,28 +68,19 @@ $page = $url->pager($pager['pages'],
 			<?=$url->href_html($ref,
 					   'service/ipbx/pbx_services/musiconhold',
 					   array('act'	=> 'download',
-						 'cat'	=> $cat,
-						 'id'	=> $ref,
+						 'uuid'	=> $uuid,
+						 'filename'	=> $ref,
 						 'page'	=> $pager['page']));?>
 		</td>
 		<td class="td-right" colspan="2">
 <?php
-			echo	$url->href_html($url->img_html('img/site/button/edit.gif',
-							       $this->bbf('opt_modify'),
-							       'border="0"'),
-						'service/ipbx/pbx_services/musiconhold',
-						array('act'	=> 'editfile',
-						      'cat'	=> $cat,
-						      'id'	=> $ref),
-						null,
-						$this->bbf('opt_modify')),"\n",
-				$url->href_html($url->img_html('img/site/button/delete.gif',
+			echo	$url->href_html($url->img_html('img/site/button/delete.gif',
 							       $this->bbf('opt_delete'),
 							       'border="0"'),
 						'service/ipbx/pbx_services/musiconhold',
 						array('act'	=> 'deletefile',
-						      'cat'	=> $cat,
-						      'id'	=> $ref,
+						      'uuid'	=> $uuid,
+						      'filename'	=> $ref,
 						      'page'	=> $pager['page']),
 						'onclick="return(confirm(\''.$dhtml->escape($this->bbf('opt_delete_confirm')).'\'));"',
 						$this->bbf('opt_delete'));

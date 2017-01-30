@@ -230,7 +230,7 @@ if($moh_list !== false):
 				    'name'	=> 'meetmefeatures[admin_musiconhold]',
 				    'labelid'	=> 'meetmefeatures-admin-musiconhold',
 				    'empty'	=> true,
-				    'key'	=> 'category',
+				    'key'	=> 'name',
 				    'invalid'	=> ($this->get_var('act') === 'edit'),
 				    'default'	=> ($this->get_var('act') === 'add' ?
 				    		    $element['meetmefeatures']['admin_musiconhold']['default'] :
@@ -321,7 +321,7 @@ if($moh_list !== false):
 				    'name'	=> 'meetmefeatures[user_musiconhold]',
 				    'labelid'	=> 'meetmefeatures-user-musiconhold',
 				    'empty'	=> true,
-				    'key'	=> 'category',
+				    'key'	=> 'name',
 				    'invalid'	=> ($this->get_var('act') === 'edit'),
 				    'default'	=> ($this->get_var('act') === 'add' ?
 				    		    $element['meetmefeatures']['user_musiconhold']['default'] :

@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright 2006-2017 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,14 +22,14 @@ $form = &$this->get_module('form');
 $url = &$this->get_module('url');
 
 $act = $this->get_var('act');
-$cat = $this->get_var('cat');
+$uuid = $this->get_var('uuid');
 
 $param = array('act' => 'addfile');
 
 if($act !== 'list' && $act !== 'add'):
-	$param['cat'] = $cat;
+	$param['uuid'] = $uuid;
 else:
-	$cat = '';
+	$uuid = '';
 endif;
 
 ?>
@@ -45,13 +45,13 @@ endif;
 ?>
 	<div class="fm-paragraph">
 <?php
-		echo	$form->select(array('name'	=> 'cat',
+		echo	$form->select(array('name'	=> 'uuid',
 					    'id'	=> 'it-toolbar-category',
 					    'empty'	=> $this->bbf('toolbar_fm_category'),
-					    'key'	=> true,
-					    'altkey'	=> 'category',
+					    'key'	=> 'name',
+					    'altkey'	=> 'uuid',
 					    'paragraph'	=> false,
-					    'selected'	=> $cat),
+					    'selected'	=> $uuid),
 				      $this->get_var('list_cats'),
 				      'onchange="this.form[\'act\'].value = this.value === \'\'
 									    ? \'list\'

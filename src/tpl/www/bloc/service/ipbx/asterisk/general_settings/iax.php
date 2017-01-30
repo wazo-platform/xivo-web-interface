@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright 2006-2017 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -408,7 +408,7 @@ if($moh_list !== false):
 	echo	$form->select(array('desc'	=> $this->bbf('fm_mohinterpret'),
 				    'name'		=> 'mohinterpret',
 				    'labelid'	=> 'mohinterpret',
-				    'key'		=> 'category',
+				    'key'		=> 'name',
 				    'help'		=> $this->bbf('hlp_fm_language'),
 				    'selected'	=> $this->get_var('info','mohinterpret','var_val'),
 				    'default'	=> $element['mohinterpret']['default']),
@@ -418,7 +418,7 @@ if($moh_list !== false):
 				    'name'		=> 'mohsuggest',
 				    'labelid'	=> 'mohsuggest',
 				    'empty'		=> true,
-				    'key'		=> 'category',
+				    'key'		=> 'name',
 				    'help'		=> $this->bbf('hlp_fm_language'),
 				    'selected'	=> $this->get_var('info','mohsuggest','var_val'),
 				    'default'	=> $element['mohsuggest']['default']),

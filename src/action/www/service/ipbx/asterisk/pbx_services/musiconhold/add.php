@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright 2006-2017 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,30 +20,21 @@
 
 $fm_save = null;
 
-do
+if(isset($_QR['fm_send']) === true)
 {
-	if(isset($_QR['fm_send']) === false)
-		break;
-
-	unset($_QR['filename']);
-
-	if(($result = $musiconhold->chk_values($_QR)) === false
-	|| ($result['mode'] === 'custom' && (string) $result['application'] === '') === true)
+	if($appmoh->set_add($_QR) === false
+	|| $appmoh->add() === false)
 	{
 		$fm_save = false;
-		$info = $musiconhold->get_filter_result();
-		break;
 	}
-
-	if($musiconhold->add_category($result) !== false)
-		$_QRY->go($_TPL->url('service/ipbx/pbx_services/musiconhold'),$param);
 	else
-		$fm_save = false;
+	{
+		$_QRY->go($_TPL->url('service/ipbx/pbx_services/musiconhold'),$param);
+	}
 }
-while(false);
 
 $_TPL->set_var('fm_save',$fm_save);
 
-$element = $musiconhold->get_element();
+$element = $appmoh->get_elements();
 
 ?>

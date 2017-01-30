@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright 2006-2017 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,40 +19,26 @@
 #
 
 $info['filename'] = '';
-$info['category'] = $cat;
+$info['uuid'] = $uuid;
 
-$fm_save = $error = null;
+$fm_save = null;
 
-if(isset($_QR['fm_send'],$_QR['category']) === false
-|| ($infos = $musiconhold->get_category($_QR['category'])) === false
-|| ($fileuploaded = $musiconhold->uploaded_fileinfo('filename')) === false
-|| ($info['category'] = $musiconhold->chk_value('category',$infos['cat']['category'])) === false
-|| ($info['filename'] = $musiconhold->chk_value('filename',$fileuploaded['name'])) === false)
+if(isset($_QR['fm_send']) === true)
 {
-	if(isset($fileuploaded) === true)
+	if(isset($_QR['uuid']) === false
+	|| $appmoh->get($_QR['uuid']) === false
+	|| $appmoh->upload_file() === false)
 	{
 		$fm_save = false;
-
-		if(is_array($fileuploaded) === true)
-			dwho_file::rm($fileuploaded['tmp_name']);
-	}
-}
-else
-{
-	$filename = dwho_file::joinpath($info['category'],$fileuploaded['name']);
-
-	if($musiconhold->add_file($filename,$fileuploaded['tmp_name']) === true)
-	{
-		$param['cat'] = $info['category'];
-		$_QRY->go($_TPL->url('service/ipbx/pbx_services/musiconhold'),$param);
 	}
 	else
-		$fm_save = false;
+	{
+		$_QRY->go($_TPL->url('service/ipbx/pbx_services/musiconhold'),$param);
+	}
+
 }
 
 $_TPL->set_var('info',$info);
-$_TPL->set_var('error',$error);
 $_TPL->set_var('fm_save',$fm_save);
-$_TPL->set_var('option',$musiconhold->get_option());
 
 ?>
