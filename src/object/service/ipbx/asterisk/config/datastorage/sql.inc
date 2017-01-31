@@ -288,10 +288,6 @@ $array['meetmeguest'] = array();
 $array['meetmeguest']['table'] = 'meetmeguest';
 $array['meetmeguest']['primary'] = array('id' => '');
 
-$array['musiconhold'] = array();
-$array['musiconhold']['table'] = 'musiconhold';
-$array['musiconhold']['primary'] = array('id' => '');
-
 $array['outcall'] = array();
 $array['outcall']['table'] = 'outcall';
 $array['outcall']['primary'] = array('id' => '');

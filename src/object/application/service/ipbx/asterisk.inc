@@ -129,9 +129,9 @@ abstract class xivo_application_asterisk_abstract extends xivo_application_servi
 			return(false);
 		else if(empty($this->_musiconhold) === false)
 			return($this->_musiconhold);
-		else if(($musiconhold = &$this->_service->get_module('musiconhold')) === false)
+		else if(($moh = &$this->_service->get_application('moh')) === false)
 			return(false);
-		else if(($this->_musiconhold = $musiconhold->get_all_category(null,false)) !== false)
+		else if(($this->_musiconhold = $moh->get_all_category()) !== false)
 			ksort($this->_musiconhold);
 
 		return($this->_musiconhold);

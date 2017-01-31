@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright 2006-2017 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,20 +19,20 @@
 #
 
 $act = isset($_QR['act']) === true ? $_QR['act'] : '';
-$cat = isset($_QR['cat']) === true ? strval($_QR['cat']) : '';
+$uuid = isset($_QR['uuid']) === true ? strval($_QR['uuid']) : '';
 $page = isset($_QR['page']) === true ? dwho_uint($_QR['page'],1) : 1;
 
-$element = $info = $result = array();
+$element = $info = array();
 
 $param = array();
 $param['act'] = 'list';
 
-$musiconhold = &$ipbx->get_module('musiconhold');
+$appmoh = &$ipbx->get_application('moh');
 
-if(($list_cats = $musiconhold->get_all_by_category()) !== false)
+if(($list_cats = $appmoh->get_all_by_category()) !== false)
 {
 	dwho::load_class('dwho_sort');
-	$sort = new dwho_sort(array('key' => 'category'));
+	$sort = new dwho_sort(array('key' => 'name'));
 	usort($list_cats,array($sort,'strnat_usort'));
 }
 
@@ -45,8 +45,6 @@ switch($act)
 		$dhtml = &$_TPL->get_module('dhtml');
 		$dhtml->set_js('js/service/ipbx/'.$ipbx->get_name().'/musiconhold.js');
 	case 'delete':
-	case 'deletes':
-		$param['doreload'] = true;
 	case 'list':
 		$action = $act;
 		break;
@@ -56,19 +54,12 @@ switch($act)
 			$action = $act = 'list';
 			break;
 		}
-	case 'editfile':
 	case 'deletefile':
-		$param['doreload'] = true;
 	case 'listfile':
 	case 'download':
 		$action = $act;
 		$param['act'] = 'listfile';
-		$param['cat'] = $cat;
-		break;
-	case 'enables':
-	case 'disables':
-		$action = 'enables';
-		$param['doreload'] = true;
+		$param['uuid'] = $uuid;
 		break;
 	default:
 		$_QRY->go($_TPL->url('service/ipbx'));
@@ -76,11 +67,8 @@ switch($act)
 
 include(dirname(__FILE__).'/musiconhold/'.$action.'.php');
 
-if (isset($_QR['doreload']))
-	$ipbx->discuss_ipbx('moh reload');
-
 $_TPL->set_var('act',$act);
-$_TPL->set_var('cat',$cat);
+$_TPL->set_var('uuid',$uuid);
 $_TPL->set_var('element',$element);
 $_TPL->set_var('info',$info);
 

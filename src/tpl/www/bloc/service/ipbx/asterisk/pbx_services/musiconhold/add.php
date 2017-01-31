@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2016  Avencall
+# Copyright 2006-2017 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -41,19 +41,19 @@ $element = $this->get_var('element');
 				    'value'	=> 'add')),
 
 		$form->text(array('desc'	=> $this->bbf('fm_category'),
-				  'name'	=> 'category',
-				  'labelid'	=> 'category',
+				  'name'	=> 'name',
+				  'labelid'	=> 'name',
 				  'help'		=> $this->bbf('hlp_fm_category'),
 				  'size'	=> 15,
-				  'default'	=> $element['category']['default'],
-				  'value'	=> $this->get_var('info','category'))),
+				  'default'	=> $element['name']['default'],
+				  'value'	=> $this->get_var('info','moh','name'))),
 
 		$form->select(array('desc'	=> $this->bbf('fm_mode'),
 				    'name'	=> 'mode',
 				    'labelid'	=> 'mode',
 				    'key'	=> false,
 				    'default'	=> $element['mode']['default'],
-				    'selected'	=> $this->get_var('info','mode')),
+				    'selected'	=> $this->get_var('info','moh','mode')),
 			      $element['mode']['value'],
 			      'onchange="xivo_chg_attrib(\'fm_musiconhold\',
 							 \'fd-application\',
@@ -64,7 +64,7 @@ $element = $this->get_var('element');
 				  'labelid'	=> 'application',
 				  'size'	=> 15,
 				  'default'	=> $element['application']['default'],
-				  'value'	=> $this->get_var('info','application'))),
+				  'value'	=> $this->get_var('info','moh','application'))),
 
 		$form->select(array('desc'	=> $this->bbf('fm_sort'),
 				    'name'	=> 'sort',
@@ -72,7 +72,7 @@ $element = $this->get_var('element');
 				    'empty'	=> true,
 				    'key'	=> false,
 				    'default'	=> $element['sort']['default'],
-				    'selected' => $this->get_var('info', 'sort')),
+				    'selected' => $this->get_var('info','moh','sort')),
 				$element['sort']['value']),
 
 		$form->submit(array('name'	=> 'submit',

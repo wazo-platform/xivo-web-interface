@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright 2006-2017 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,15 +20,13 @@
 
 $param['page'] = $page;
 
-if(($infos = $musiconhold->get_category($cat)) === false)
+if(isset($_QR['uuid']) === false || $appmoh->get($_QR['uuid']) === false)
 	$_QRY->go($_TPL->url('service/ipbx/pbx_services/musiconhold'),'act=list');
 
-if(isset($_QR['id']) === false || ($info = $musiconhold->get_file($_QR['id'],$infos['cat']['category'])) === false)
+if(isset($_QR['filename']) === false)
 	$_QRY->go($_TPL->url('service/ipbx/pbx_services/musiconhold'),$param);
 
-$file = dwho_file::joinpath($infos['cat']['category'],$info['filename']);
-
-$musiconhold->delete_file($file);
+$appmoh->delete_file($_QR['filename']);
 
 $_QRY->go($_TPL->url('service/ipbx/pbx_services/musiconhold'),$param);
 
