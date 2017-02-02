@@ -138,7 +138,7 @@ $page = $url->pager($pager['pages'],
 		<td class="col_protocol"><?=$this->bbf('line_protocol-'.$ref['protocol']);?></td>
 		<td class="col_entity"><?=$ref['entity']['displayname']?></td>
 		<td class="txt-center col_provisioningid">
-			<?=(empty($ref['provisioningid']) || ($ref['useridentity'] === '-') || ($ref['protocol'] !== XIVO_SRE_IPBX_AST_PROTO_SIP)) ? '-' : $ref['provisioningid']?>
+			<?=(empty($ref['provisioningid']) || ($ref['useridentity'] === '-') || ($ref['protocol'] === XIVO_SRE_IPBX_AST_PROTO_CUSTOM)) ? '-' : $ref['provisioningid']?>
 		</td>
 		<td class="txt-center col_user">
 			<?=dwho_htmlen(dwho_trunc($ref['useridentity'],25,'...',false))?>
