@@ -83,7 +83,27 @@ $codec_active = empty($allow) === false;
 				'key'       => false,
 				'default'   => $element['sccpgeneralsettings']['language']['default'],
 				'selected'  => $info['sccpgeneralsettings']['language']),
-				$this->get_var('language_list'));
+				$this->get_var('language_list')),
+
+			$form->checkbox(array(
+				'desc'      => $this->bbf('fm_sccpgeneralsettings_guest'),
+				'name'      => 'sccpgeneralsettings[guest]',
+				'labelid'   => 'sccpgeneralsettings-guest',
+				'help'      => $this->bbf('hlp_fm_sccpgeneralsettings_guest'),
+				'checked'   => $info['sccpgeneralsettings']['guest'],
+				'error'		=> $this->bbf_args('error',
+							$this->get_var('error', 'sccpgeneralsettings', 'guest')) )),
+
+			$form->text(array(
+				'desc'      => $this->bbf('fm_sccpgeneralsettings_max_guests'),
+				'name'      => 'sccpgeneralsettings[max_guests]',
+				'help'      => $this->bbf('hlp_fm_sccpgeneralsettings_max_guests'),
+				'labelid'   => 'sccpgeneralsettings-max_guests',
+				'size'      => 4,
+				'default'   => $element['sccpgeneralsettings']['max_guests']['default'],
+				'value'     => $info['sccpgeneralsettings']['max_guests'],
+				'error'		=> $this->bbf_args('error',
+							$this->get_var('error', 'sccpgeneralsettings', 'max_guests'))));
 
 		?>
 

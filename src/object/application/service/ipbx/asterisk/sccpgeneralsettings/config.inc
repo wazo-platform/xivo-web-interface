@@ -27,6 +27,15 @@ $array['element']['directmedia']['value'] = array('no', 'yes');
 $array['element']['directmedia']['default'] = 'no';
 $array['element']['directmedia']['set'] = true;
 
+$array['element']['guest'] = array();
+$array['element']['guest']['value'] = array('no', 'yes');
+$array['element']['guest']['default'] = 'no';
+$array['element']['guest']['set'] = true;
+
+$array['element']['max_guests'] = array();
+$array['element']['max_guests']['default'] = 100;
+$array['element']['max_guests']['setdef'] = true;
+
 $array['element']['dialtimeout'] = array();
 $array['element']['dialtimeout']['default'] = 5;
 $array['element']['dialtimeout']['setdef'] = true;
@@ -52,6 +61,14 @@ $array['element']['allow']['null'] = true;
 $array['filter'] = array();
 
 $array['filter']['directmedia'] = array('bool' => true);
+
+$array['filter']['guest'] = array('bool' => true);
+
+$array['filter']['max_guests'] = array(
+	'set' => false,
+	'cast' => 'uint',
+	'chk' => 1,
+	'between' => array(1,10000));
 
 $array['filter']['dialtimeout'] = array(
 	'set' => false,
