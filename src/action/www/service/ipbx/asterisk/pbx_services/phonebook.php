@@ -1,9 +1,7 @@
 <?php
 
 #
-# XiVO Web-Interface
-# Copyright (C) 2006-2016 Avencall
-# Copyright (C) 2016 Proformatique, Inc.
+# Copyright 2006-2017 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -85,6 +83,38 @@ switch($act)
 		$_TPL->set_var('error'  ,$error);
 		$_TPL->set_var('fm_save',$fm_save);
 		$_TPL->set_var('territory',dwho_i18n::get_territory_translated_list());
+		break;
+	case 'import':
+		$result = $fm_save = $error = null;
+		$entity = $_QR['entity'];
+		$phonebook_id = (int)$_QR['phonebook'];
+
+		if(isset($_QR['fm_send']) === true)
+		{
+			dwho::load_class('dwho_http');
+			dwho::load_class('dwho::file::csv');
+			$http_response = dwho_http::factory('response');
+			$fileinfo = $http_response->upload_file('import');
+			$payload = file_get_contents($fileinfo['tmp_name']);
+			if ($payload !== false) {
+				$result = $appphonebook->import_csv($entity, $phonebook_id, $payload);
+
+				$param = array('act' => 'list_contacts',
+					'entity' => $entity,
+					'phonebook' => $phonebook_id);
+				$_QRY->go($_TPL->url('service/ipbx/pbx_services/phonebook'),$param);
+			}
+		}
+
+		$dhtml = &$_TPL->get_module('dhtml');
+		$dhtml->set_js('js/dwho/submenu.js');
+
+		$_TPL->set_var('entity', $entity);
+		$_TPL->set_var('phonebook_id', $phonebook_id);
+		$_TPL->set_var('info', $result);
+		$_TPL->set_var('error', $error);
+		$_TPL->set_var('fm_save' ,$fm_save);
+		$_TPL->set_var('territory', dwho_i18n::get_territory_translated_list());
 		break;
 	case 'edit_contact':
 		if(is_array($_QRY->_orig) === false

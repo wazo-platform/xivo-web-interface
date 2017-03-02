@@ -1,9 +1,7 @@
 <?php
 
 #
-# XiVO Web-Interface
-# Copyright (C) 2016 Avencall
-# Copyright (C) 2016 Proformatique, Inc.
+# Copyright 2006-2017 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -206,6 +204,11 @@ class xivo_application_service_asterisk_phonebook extends xivo_application_aster
 			return($subset);
 		}
 		return($this->_phonebooks);
+	}
+
+	function import_csv($entity, $phonebook_id, $payload)
+	{
+		return($this->_phonebook_resource->import_csv_contacts($entity, $phonebook_id, $payload));
 	}
 }
 
