@@ -110,6 +110,16 @@ class PhonebookResource {
 
 		$request = Request::post($url, $payload, null, $headers);
 		$response = $this->client->send($request);
+		$body = $response->decode_or_raise();
+		$failed = $body['failed'];
+		if(is_array($failed) === true && count($failed) > 0) {
+			foreach($failed as $contact) {
+				dwho_report::push('error', implode(",", $contact));
+			}
+			dwho_report::push('error', 'Some contacts were not imported:');
+			return(false);
+		}
+		return(true);
 	}
 
 	public function list_contacts($entity, $phonebook_id, $order=null, $limit=null, $search=null)
