@@ -78,17 +78,12 @@ $dhtml->write_js($toolbar_js);
 							$add_params,
 							$this->bbf('toolbar_opt_add'));
 	if ($act === 'list_contacts') {
-		echo	$url->img_html('img/menu/top/toolbar/bt-more.gif',
-				       $this->bbf('toolbar_opt_advanced'),
-				       'id="toolbar-bt-advanced"
-					border="0"');
 ?>
 <div class="sb-advanced-menu">
-	<ul id="toolbar-advanced-menu">
-		<li><?=$url->href_html(
-			$this->bbf('toolbar_add_menu_import-file'),
-			'service/ipbx/pbx_services/phonebook',
-			$import_params)?></li>
+	<ul id="toolbar-add-menu">
+		<li><?=$url->href_html($this->bbf('toolbar_add_menu_import-file'),
+		                       'service/ipbx/pbx_services/phonebook',
+		                       $import_params)?></li>
 	</ul>
 </div>
 <?php
