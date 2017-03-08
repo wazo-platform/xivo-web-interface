@@ -77,23 +77,20 @@ $dhtml->write_js($toolbar_js);
 							'service/ipbx/pbx_services/phonebook',
 							$add_params,
 							$this->bbf('toolbar_opt_add'));
-	echo	$url->img_html('img/menu/top/toolbar/bt-more.gif',
-			       $this->bbf('toolbar_opt_advanced'),
-			       'id="toolbar-bt-advanced"
-				border="0"');
+	if ($act === 'list_contacts') {
+		echo	$url->img_html('img/menu/top/toolbar/bt-more.gif',
+				       $this->bbf('toolbar_opt_advanced'),
+				       'id="toolbar-bt-advanced"
+					border="0"');
 ?>
 <div class="sb-advanced-menu">
 	<ul id="toolbar-advanced-menu">
-		<li>
-			<a href="#" id="toolbar-advanced-menu-select-all"><?=$this->bbf('toolbar_adv_menu_select-all');?></a>
-		</li>
-<?php
-	if ($act === 'list_contacts') {
-		echo '<li>'.$url->href_html(
+		<li><?=$url->href_html(
 			$this->bbf('toolbar_add_menu_import-file'),
 			'service/ipbx/pbx_services/phonebook',
-			$import_params).'</li>';
-	}
-?>
+			$import_params)?></li>
 	</ul>
 </div>
+<?php
+	}
+?>
