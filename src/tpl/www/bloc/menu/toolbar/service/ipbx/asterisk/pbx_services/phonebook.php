@@ -1,9 +1,7 @@
 <?php
 
 #
-# XiVO Web-Interface
-# Copyright (C) 2006-2016 Avencall
-# Copyright (C) 2016 Proformatique
+# Copyright 2006-2017 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,6 +22,7 @@ $url = &$this->get_module('url');
 $dhtml = &$this->get_module('dhtml');
 
 $search = (string) $this->get_var('search');
+$act = $this->get_var('act');
 
 $toolbar_js = array();
 $toolbar_js[] = 'var xivo_toolbar_fm_search = \''.$dhtml->escape($search).'\';';
@@ -38,13 +37,14 @@ $dhtml->write_js($toolbar_js);
 
 <form action="#" method="post" accept-charset="utf-8">
 <?php
-	if($this->get_var('act') === 'list_contacts'
+	if($act === 'list_contacts'
 	&& ($entity = $this->get_var('entity'))
 	&& ($phonebook_id = (int)$this->get_var('phonebook_id'))) {
 		echo $form->hidden(array('name' => 'entity', 'value' => $entity));
 		echo $form->hidden(array('name' => 'phonebook', 'value' => $phonebook_id));
 		$list_action = 'list_contacts';
 		$add_params = array('act' => 'add_contact', 'entity' => $entity, 'phonebook' => $phonebook_id);
+		$import_params = array('act' => 'import', 'entity' => $entity, 'phonebook' => $phonebook_id);
 	} else {
 		$list_action = 'list';
 		$add_params = array('act' => 'add');
@@ -87,5 +87,13 @@ $dhtml->write_js($toolbar_js);
 		<li>
 			<a href="#" id="toolbar-advanced-menu-select-all"><?=$this->bbf('toolbar_adv_menu_select-all');?></a>
 		</li>
+<?php
+	if ($act === 'list_contacts') {
+		echo '<li>'.$url->href_html(
+			$this->bbf('toolbar_add_menu_import-file'),
+			'service/ipbx/pbx_services/phonebook',
+			$import_params).'</li>';
+	}
+?>
 	</ul>
 </div>

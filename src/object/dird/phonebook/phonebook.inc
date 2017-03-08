@@ -1,9 +1,7 @@
 <?php
 
 #
-# XiVO Web-Interface
-# Copyright (C) 2016 Avencall
-# Copyright (C) 2016 Proformatique, Inc.
+# Copyright 2016-2017 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -98,6 +96,29 @@ class PhonebookResource {
 		$url = sprintf("/tenants/%s/phonebooks/%d", $entity, $phonebook_id);
 		$request = Request::delete($url,"",null,$this->_headers);
 		$response = $this->client->send($request);
+		return(true);
+	}
+
+	public function import_csv_contacts($entity, $phonebook_id, $payload)
+	{
+		$url = sprintf("/tenants/%s/phonebooks/%d/contacts/import", $entity, $phonebook_id);
+		$headers = array(
+			'Content-Type: text/csv;charset=utf-8',
+			'X-Auth-Token: '.$_SESSION['token'],
+			'Accept: application/json',
+		);
+
+		$request = Request::post($url, $payload, null, $headers);
+		$response = $this->client->send($request);
+		$body = $response->decode_or_raise();
+		$failed = $body['failed'];
+		if(is_array($failed) === true && count($failed) > 0) {
+			foreach($failed as $contact) {
+				dwho_report::push('error', implode(",", $contact));
+			}
+			dwho_report::push('error', 'Some contacts were not imported:');
+			return(false);
+		}
 		return(true);
 	}
 
