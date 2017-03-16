@@ -37,7 +37,8 @@ class dwho_i18n
 			'fr_FR',
 			'fr_CA',
 			'it_IT',
-			'nl_NL');
+			'nl_NL',
+			'pl_PL');
 
 	public function __construct()
 	{
