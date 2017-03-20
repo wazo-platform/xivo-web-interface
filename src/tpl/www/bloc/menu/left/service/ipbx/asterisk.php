@@ -264,7 +264,7 @@ $dhtml = &$this->get_module('dhtml');
 			echo	'<dd id="mn-pbx-services--phonebook">',
 				$url->href_html($this->bbf('mn_left_pbx_services-phonebook'),
 						'service/ipbx/pbx_services/phonebook',
-						'act=list'),
+						'act=list&amp;page=1'),
 				'</dd>';
 		endif;
 

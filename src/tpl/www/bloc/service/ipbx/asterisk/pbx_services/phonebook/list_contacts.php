@@ -25,7 +25,10 @@ $sort = $this->get_var('sort');
 $entity = $this->get_var('entity');
 $phonebook_id = $this->get_var('phonebook_id');
 
-$param = array();
+$param = array(
+    'phonebook' => $phonebook_id,
+    'entity' => $entity,
+);
 
 $page = $url->pager($pager['pages'],
 					$pager['page'],
