@@ -1,4 +1,4 @@
-git+https://github.com/xivo-pbx/xivo-provd-client.git
+git+https://gitlab.com/xivo.solutions/xivo-provd-client.git
 docker-compose
 nose
 psycopg2  # sqlalchemy engine
@@ -10,3 +10,4 @@ selenium
 dataset
 mock
 kombu
+docker-compose=1.9.0

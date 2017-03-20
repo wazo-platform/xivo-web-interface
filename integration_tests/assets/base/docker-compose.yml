@@ -1,5 +1,5 @@
 postgres:
-  image: xivo/postgres-test
+  image: xivoxc/postgres-test
   expose:
     - "5432"
   ports:
@@ -20,7 +20,7 @@ confd:
     - "./mocks/confd/:/tmp/confd"
   command: "python /tmp/confd/confd.py"
 provd:
-  image: xivo/xivo-provd
+  image: xivoxc/xivo-provd
   ports:
     - "8666:8666"
   expose:
