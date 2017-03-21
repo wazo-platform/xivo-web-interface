@@ -20,18 +20,28 @@
 
 
 $file_version = '/usr/share/xivo/XIVO-VERSION';
+$file_version_lts = '/usr/share/xivo/XIVO-VERSION-LTS';
 $xivo_version = 'Unknown';
+
 if (file_exists($file_version))
-	$xivo_version = file_get_contents($file_version);
+	$xivo_version = trim(file_get_contents($file_version));
+
+$xivo_version_num = $xivo_version;
+
+if (file_exists($file_version_lts)) {
+	$xivo_version_lts = trim(file_get_contents($file_version_lts));
+	if (!empty($xivo_version_lts))
+		$xivo_version = $xivo_version_lts." (".$xivo_version.")";
+}
 
 define('DWHO_LABEL_CUSTOM','XIVO-WEBI');
 
 define('XIVO_SOFT_NAME','xivo');
 define('XIVO_SOFT_LABEL','XIVO');
-define('XIVO_SOFT_VERSION',trim($xivo_version));
+define('XIVO_SOFT_VERSION',$xivo_version);
 define('XIVO_SOFT_CODENAME','Five');
 define('XIVO_SOFT_URL','www.xivo.solutions');
-define('XIVO_DOWNLOAD_URL','mirror.xivo.solutions/iso/archives/xivo-'.XIVO_SOFT_VERSION);
+define('XIVO_DOWNLOAD_URL','mirror.xivo.solutions/iso/archives/xivo-'.$xivo_version_num);
 define('XIVO_DOC_URL','documentation.xivo.solutions');
 define('XIVO_DOC_API_URL','documentation.xivo.solutions');
 define('XIVO_BLOG_URL','www.xivo.solutions');
