@@ -10,7 +10,6 @@ LIST_DIR_TOCLEAN="/var/lib/pf-xivo-web-interface
 LIST_FILE_TOCLEAN="/etc/pf-xivo/web-interface/location.ini
 					/etc/pf-xivo/web-interface/report.ini
 					/etc/pf-xivo/web-interface/template.ini
-					/etc/cron.d/pf-xivo-web-interface
 					/etc/cron.d/xivo-web-interface
 					/etc/default/xivo-agent
 					/etc/xivo/web-interface/cti.ini
