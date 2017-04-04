@@ -191,7 +191,7 @@ class dwho_asterisk_uri extends dwho_uri
 			$uri    = substr($uri, 0, $i);
 		}
 
-		if(($uri = $this->uri_split($uri)) === false)
+		if(($uri = $this->uri_split($uri, true)) === false)
 			return(false);
 		else if(isset($uri['authority']) === true
 				&& ($uri['authority'] = $this->split_authority($uri['authority'])) === false)
@@ -217,7 +217,7 @@ class dwho_asterisk_uri extends dwho_uri
 
 			if(isset($authority['passwd']) === true)
 			{
-				if($this->valid_passwd($authority['passwd']) === false)
+				if($this->valid_passwd($authority['passwd'], true) === false)
 					return(false);
 				else if($decode === true)
 					$authority['passwd'] = urldecode($authority['passwd']);
