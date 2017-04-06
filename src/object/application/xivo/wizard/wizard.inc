@@ -232,7 +232,7 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 		else
 		{
 			if ($this->_wizsess['prevstep'] == 'mainconfig')
-				$mainconfig['default_configuration'] = $_POST['default_configuration'];
+				$mainconfig['default_configuration'] = $_POST['default_configuration'] ?: $this->_wizsess['default_configuration'];
 			else
 				$mainconfig['default_configuration'] = $this->_wizsess['default_configuration'];
 		}
