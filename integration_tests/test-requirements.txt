@@ -1,5 +1,5 @@
 git+https://gitlab.com/xivo.solutions/xivo-provd-client.git
-docker-compose
+docker-compose==1.9.0
 nose
 psycopg2  # sqlalchemy engine
 pyhamcrest
@@ -10,4 +10,3 @@ selenium
 dataset
 mock
 kombu
-docker-compose=1.9.0
