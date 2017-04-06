@@ -1,3 +1,9 @@
+xivo-web-interface (2017.03) xivo-2017.03; urgency=medium
+
+  * Allow special characters in trunk registration password
+
+ -- Tomas Taraba <ttaraba@avencall.com>  Thu, 06 Mar 2017 10:28:55 +0100
+
 xivo-web-interface (2017.01~20170127.135110) xivo-2017.01; urgency=medium
 
   * Add apply default configuration for France
