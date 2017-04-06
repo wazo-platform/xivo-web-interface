@@ -1,4 +1,4 @@
-xivo-web-interface (2017.03) xivo-2017.03; urgency=medium
+xivo-web-interface (2017.03.02) xivo-2017.03; urgency=medium
 
   * Allow special characters in trunk registration password
 
