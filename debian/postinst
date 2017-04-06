@@ -10,7 +10,6 @@ LIST_DIR_TOCLEAN="/var/lib/pf-xivo-web-interface
 LIST_FILE_TOCLEAN="/etc/pf-xivo/web-interface/location.ini
 					/etc/pf-xivo/web-interface/report.ini
 					/etc/pf-xivo/web-interface/template.ini
-					/etc/cron.d/pf-xivo-web-interface
 					/etc/cron.d/xivo-web-interface
 					/etc/default/xivo-agent
 					/etc/xivo/web-interface/cti.ini
@@ -20,16 +19,6 @@ case "$1" in
 	configure)
 		chown -R www-data:www-data ${WEBI_LOG}
 
-		old_xivo_webi_config_file="/etc/pf-xivo/web-interface/xivo.ini"
-		if [ -f "$old_xivo_webi_config_file" ]; then
-			sed -i -e 's/^language = fr/language = en/' -e 's/^territory = FR/territory = US/' "$old_xivo_webi_config_file"
-		fi
-
-		old_ipbx_webi_config_file="/etc/pf-xivo/web-interface/ipbx.ini"
-		if [ -f "$old_ipbx_webi_config_file" ]; then
-			sed -i 's#/var/backups/pf-xivo#/var/backups/xivo#' $old_ipbx_webi_config_file
-		fi
-
 		old_webi_config_dir="/etc/pf-xivo/web-interface"
 		for file in xivo ipbx cti; do
 			ini_file="${old_webi_config_dir}/${file}.ini"
@@ -37,13 +26,6 @@ case "$1" in
 				mv ${ini_file}.xivo-upgrade-old ${ini_file}
 			fi
 		done
-
-		if [ -d /tmp/web-interface ]; then
-			if [ -d /etc/pf-xivo/web-interface ]; then
-				rsync -av /tmp/web-interface/ /etc/pf-xivo/web-interface/ > /dev/null
-			fi
-			rm -rf /tmp/web-interface > /dev/null
-		fi
 
 		for DIR in ${LIST_DIR_TOCLEAN}; do
 			if [ -d "${DIR}" ]; then
