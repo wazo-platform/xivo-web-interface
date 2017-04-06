@@ -136,13 +136,19 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 			return($this->get_previous_step($step));
 		else if(isset($this->_conf['step'][$prevstep]) === false)
 			return(false);
-
 		return($prevstep);
+	}
+
+	function set_previous_sess_step($step=null)
+	{
+		if (!empty($step))
+			$this->_wizsess['sess_prevstep'] = $step;
 	}
 
 	function set_previous_step()
 	{
 		$step = $this->get_current_step();
+		$this->set_previous_sess_step($step);
 
 		if(($step = $this->can_previous_step($step)) === false)
 			return(false);
@@ -231,10 +237,13 @@ class xivo_application_xivo_object_wizard extends xivo_application_xivo_object_a
 			$mainconfig['default_configuration'] = true;
 		else
 		{
-			if ($this->_wizsess['prevstep'] == 'mainconfig')
-				$mainconfig['default_configuration'] = $_POST['default_configuration'] ?: $this->_wizsess['default_configuration'];
+			if ($this->_wizsess['sess_prevstep'] == 'entitycontext')
+				$mainconfig['default_configuration'] = $this->_wizsess['default_configuration'];
+			else if ($this->_wizsess['prevstep'] == 'mainconfig')
+				$mainconfig['default_configuration'] = $_POST['default_configuration'];
 			else
 				$mainconfig['default_configuration'] = $this->_wizsess['default_configuration'];
+			$this->_wizsess['sess_prevstep'] = null;
 		}
 
 		$this->_wizsess['timezone'] = $response['timezone'];
