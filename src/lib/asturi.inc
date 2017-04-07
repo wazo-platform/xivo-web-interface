@@ -29,7 +29,7 @@ class dwho_asterisk_uri extends dwho_uri
 		$sub_delims    = '\!\$&\'\(\)\*\+,;=';
 		$unreserved    = 'a-zA-Z0-9-\._~';
 		$this->_regexp['user'] = '/^['.$unreserved.$sub_delims.'@:+%]+$/';
-		$this->_regexp['non_rfc3986']    = '@^(([^:/?#]+):)?(//([^/?]*))?([^?#]*)(\?([^#]*))?(#(.*))?$@';
+		$this->_regexp['non_rfc3986']    = '@^(([^:/?#]+):)?(//([^/]*))?([^?#]*)(\?([^#]*))?(#(.*))?$@';
 
 		$this->_password_min		= 0;
 		$this->_password_max		= 80;
