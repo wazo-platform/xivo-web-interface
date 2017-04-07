@@ -1,3 +1,9 @@
+xivo-web-interface (2017.03.02) xivo-2017.03; urgency=medium
+
+  * Fix wizard 4th to 3rd step
+
+ -- Tomas Taraba <ttaraba@avencall.com>  Thu, 06 Apr 2017 13:29:27 +0100
+
 xivo-web-interface (2017.01~20170127.135110) xivo-2017.01; urgency=medium
 
   * Add apply default configuration for France
