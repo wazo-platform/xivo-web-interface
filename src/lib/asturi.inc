@@ -195,7 +195,7 @@ class dwho_asterisk_uri extends dwho_uri
 			$uri    = substr($uri, 0, $i);
 		}
 
-		if(($uri = $this->uri_split($uri, true)) === false)
+		if(($uri = $this->uri_split($uri)) === false)
 			return(false);
 		else if(isset($uri['authority']) === true
 				&& ($uri['authority'] = $this->split_authority($uri['authority'])) === false)
@@ -221,7 +221,7 @@ class dwho_asterisk_uri extends dwho_uri
 
 			if(isset($authority['passwd']) === true)
 			{
-				if($this->valid_passwd($authority['passwd'], true) === false)
+				if($this->valid_passwd($authority['passwd']) === false)
 					return(false);
 				else if($decode === true)
 					$authority['passwd'] = urldecode($authority['passwd']);
@@ -351,7 +351,6 @@ class dwho_asterisk_uri extends dwho_uri
 
 	function uri_split($uri)
 	{
-		{
 		if(preg_match($this->_regexp['non_rfc3986'],$uri,$match) !== 1)
 			return(false);
 
@@ -373,7 +372,6 @@ class dwho_asterisk_uri extends dwho_uri
 			$r['fragment'] = $match[9];
 
 		return($r);
-		}
 	}
 
 	function valid_passwd($passwd)
