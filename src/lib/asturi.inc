@@ -29,6 +29,10 @@ class dwho_asterisk_uri extends dwho_uri
 		$sub_delims    = '\!\$&\'\(\)\*\+,;=';
 		$unreserved    = 'a-zA-Z0-9-\._~';
 		$this->_regexp['user'] = '/^['.$unreserved.$sub_delims.'@:+%]+$/';
+		$this->_regexp['non_rfc3986']    = '@^(([^:/?#]+):)?(//([^/]*))?([^?#]*)(\?([^#]*))?(#(.*))?$@';
+
+		$this->_password_min		= 0;
+		$this->_password_max		= 80;
 	}
 
 	function build_uri($arr,$encode=true,$type_host=null,$query_sep=null)
@@ -344,6 +348,44 @@ class dwho_asterisk_uri extends dwho_uri
 
 		return($r);
 	}
+
+	function uri_split($uri)
+	{
+		if(preg_match($this->_regexp['non_rfc3986'],$uri,$match) !== 1)
+			return(false);
+
+		$r = array();
+
+		if(dwho_has_len($match,2) === true)
+			$r['scheme'] = $match[2];
+
+		if(dwho_has_len($match,4) === true)
+			$r['authority'] = $match[4];
+
+		if(dwho_has_len($match,5) === true)
+			$r['path'] = $match[5];
+
+		if(dwho_has_len($match,7) === true)
+			$r['query'] = $match[7];
+
+		if(dwho_has_len($match,9) === true)
+			$r['fragment'] = $match[9];
+
+		return($r);
+	}
+
+	function valid_passwd($passwd)
+	{
+		$password_len = strlen($passwd);
+		if($password_len < $this->_password_min){
+			return(false);
+		}
+		else if($password_len > $this->_password_max){
+			return(false);
+		}
+		return(true);
+	}
+
 }
 
 ?>

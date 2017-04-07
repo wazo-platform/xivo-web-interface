@@ -1,5 +1,11 @@
 xivo-web-interface (2017.03.02) xivo-2017.03; urgency=medium
 
+  * Allow special characters # and ? in trunk registration password
+
+ -- Tomas Taraba <ttaraba@avencall.com>  Thu, 06 Mar 2017 10:28:55 +0100
+
+xivo-web-interface (2017.03.02) xivo-2017.03; urgency=medium
+
   * Fix wizard 4th to 3rd step
 
  -- Tomas Taraba <ttaraba@avencall.com>  Thu, 06 Apr 2017 13:29:27 +0100

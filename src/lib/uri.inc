@@ -54,6 +54,7 @@ class dwho_uri
 		$this->_regexp['port']        = '/^'.$port.'$/';
 		$this->_regexp['path']        = '/^['.$unreserved.$sub_delims.'%:@\/]+$/';
 		$this->_regexp['query']        = '/^['.$unreserved.$sub_delims.'%:@\/\?]+$/';
+
 	}
 
 	function build_uri($arr,$encode=true,$type_host=null,$query_sep=null)
@@ -603,7 +604,6 @@ class dwho_uri
 		if(is_scalar($passwd) === true
 				&& preg_match($this->_regexp['passwd'],$passwd) === 1)
 			return(true);
-
 		return(false);
 	}
 
