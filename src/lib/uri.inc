@@ -47,7 +47,6 @@ class dwho_uri
 
 		$this->_regexp = array();
 		$this->_regexp['rfc3986']    = '@^(([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\?([^#]*))?(#(.*))?$@';
-		$this->_regexp['non_rfc3986']    = '@^(([^:/?#]+):)?(//([^/?]*))?([^?#]*)(\?([^#]*))?(#(.*))?$@';
 		$this->_regexp['scheme']    = '/^[a-zA-Z][a-zA-Z0-9\+\-\.]*$/';
 		$this->_regexp['user']        = '/^['.$unreserved.$sub_delims.'%]+$/';
 		$this->_regexp['host']        = $this->_regexp['user'];
@@ -56,8 +55,6 @@ class dwho_uri
 		$this->_regexp['path']        = '/^['.$unreserved.$sub_delims.'%:@\/]+$/';
 		$this->_regexp['query']        = '/^['.$unreserved.$sub_delims.'%:@\/\?]+$/';
 
-		$this->_password_min		= 0;
-		$this->_password_max		= 80;
 	}
 
 	function build_uri($arr,$encode=true,$type_host=null,$query_sep=null)
@@ -306,13 +303,9 @@ class dwho_uri
 		return($uri);
 	}
 
-	function uri_split($uri, $ast_uri=false)
+	function uri_split($uri)
 	{
-		if ($ast_uri === true)
-			$split_type = "non_rfc3986";
-		else
-			$split_type = "rfc3986";
-		if(preg_match($this->_regexp[$split_type],$uri,$match) !== 1)
+		if(preg_match($this->_regexp['rfc3986'],$uri,$match) !== 1)
 			return(false);
 
 		$r = array();
@@ -606,26 +599,11 @@ class dwho_uri
 		return(false);
 	}
 
-	function valid_passwd($passwd, $ast_uri=false)
+	function valid_passwd($passwd)
 	{
-		if ($ast_uri === true)
-		{
-			$password_len = strlen($passwd);
-			if($password_len < $this->_password_min){
-				return(false);
-			}
-			elseif($password_len > $this->_password_max){
-				return(false);
-			}
-			return(true);
-		}
-		else
-		{
-			if(is_scalar($passwd) === true
+		if(is_scalar($passwd) === true
 				&& preg_match($this->_regexp['passwd'],$passwd) === 1)
 			return(true);
-		}
-
 		return(false);
 	}
 
