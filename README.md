@@ -1,5 +1,4 @@
-Running functional tests
-------------------------
+# Running functional tests
 
 You need Xephyr.
 
@@ -28,3 +27,23 @@ CONFD_URL (default: http://localhost:19487)
 DOCKER (default: 1) enables the starting/stopping of docker containers for each
     test. May be useful when developing.
 ```
+
+
+# To develop
+
+Here's the process one can use to develop:
+1. Clone projet
+1. Boot xivo VM
+1. One xivo VM, 'load' the git sources :
+```
+cd /usr/share
+# save real files
+mv xivo-web-interface/ xivo-web-interface.ori
+# create dir
+mkdir xivo-web-interface
+# mount GIT
+sshfs -o allow_other <MY_USER>@<MY_LAPTOP>:/path/to/GIT/xivo.solutions/xivo-web-interface/src xivo-web-interface
+```
+
+Then all changes made in git are on the xivo (you need to install sshfs on your laptop and the xivo).
+
