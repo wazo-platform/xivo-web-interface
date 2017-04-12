@@ -473,6 +473,11 @@ switch($act)
 		$_QRY->go($_TPL->url('callcenter/settings/agents'),$param);
 		break;
 	case 'listagent':
+		if(isset($_QR['page']) === true)
+			$page = $_QR['page'];
+		else
+			$page = 1;
+
 		$prevpage = $page - 1;
 		$nbbypage = XIVO_SRE_IPBX_AST_NBBYPAGE;
 
