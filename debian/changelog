@@ -1,3 +1,9 @@
+xivo-web-interface (2017.03.03) xivo-2017.03; urgency=medium
+
+  * Fix select of voicemails in new Closed hours schedule
+
+ -- Stepan Kabele <skabele@avencall.com>  Tue, 25 Apr 2017 15:48:39 +0200
+
 xivo-web-interface (2017.03.02) xivo-2017.03; urgency=medium
 
   * List agents on second page
