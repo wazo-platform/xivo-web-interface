@@ -35,7 +35,7 @@ if(empty($list) === false):
 				    'name'	=> 'dialaction['.$event.'][actionarg1]',
 				    'labelid'	=> 'dialaction-'.$event.'-voicemail-actionarg1',
 				    'key'	=> 'identity',
-				    'altkey'	=> 'uniqueid',
+				    'altkey'	=> 'id',
 				    'invalid'	=> ($linked === false && $action === 'voicemail'),
 				    'default'	=> $element['dialaction']['actionarg1']['default'],
 				    'selected'	=> $this->get_var('dialaction',$event,'voicemail','actionarg1')),
