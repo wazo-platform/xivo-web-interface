@@ -1,3 +1,9 @@
+xivo-web-interface (2017.05) xivo-dev; urgency=medium
+
+  * Add WebRTC to option list
+
+ -- Vojtech Sodoma <vsodoma@avencall.com>  Tue, 23 May 2017 09:10:05 +0200
+
 xivo-web-interface (2017.03.03) xivo-2017.03; urgency=medium
 
   * Fix select of voicemails in new Closed hours schedule
