@@ -371,7 +371,8 @@ function build_row($option, $form, $url, $helper) {
 			"useclientcode",
 			"usereqphone",
 			"videosupport",
-			"vmexten"
+			"vmexten",
+			"webrtc"
 		];
 
 		function attachEvents(row) {
