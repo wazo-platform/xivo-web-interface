@@ -1,5 +1,11 @@
 xivo-web-interface (2017.05) xivo-dev; urgency=medium
 
+  * Remove autopause 'yes' option
+
+ -- Vojtech Sodoma <vsodoma@avencall.com>  Wed, 24 May 2017 17:52:14 +0200
+
+xivo-web-interface (2017.05) xivo-dev; urgency=medium
+
   * Add WebRTC to option list
 
  -- Vojtech Sodoma <vsodoma@avencall.com>  Tue, 23 May 2017 09:10:05 +0200
