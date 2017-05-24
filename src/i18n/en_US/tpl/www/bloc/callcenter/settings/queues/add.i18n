@@ -473,9 +473,6 @@ Autofill system:
 ; fm_queue_autopause
 Autopause agents:
 
-; fm_queue_autopause-opt(yes)
-Yes
-
 ; fm_queue_autopause-opt(no)
 No
 

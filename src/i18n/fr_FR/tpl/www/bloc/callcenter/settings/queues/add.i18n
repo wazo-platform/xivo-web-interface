@@ -387,9 +387,6 @@ Activer le nouveau système de distribution des appels:
 ; fm_queue_autopause
 Mettre en pause le membre s'il n'a pas répondu au dernier appel:
 
-; fm_queue_autopause-opt(yes)
-Oui
-
 ; fm_queue_autopause-opt(no)
 Non
 
