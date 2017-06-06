@@ -1,8 +1,13 @@
+xivo-web-interface (2017.06.00) xivo-dev; urgency=medium
+
+  * Remove autopause 'yes' option
+
+ -- Vojtech Sodoma <vsodoma@avencall.com>  Tue, 06 Jun 2017 10:52:32 +0200
+
 xivo-web-interface (2017.05.00) xivo-dev; urgency=medium
 
   * From defines replace Five by empty and don't display quotes in footer
   * Add WebRTC to option list
-  * Remove autopause 'yes' option
 
  -- Tomas Taraba <ttaraba@avencall.com>  Mon, 29 May 2017 10:56:12 +0200
 
