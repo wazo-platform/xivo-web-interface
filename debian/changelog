@@ -1,3 +1,9 @@
+xivo-web-interface (2017.03.07) xivo-2017.03; urgency=medium
+
+  * Notify ctid even if live-reload is disabled
+
+ -- Vojtech Sodoma <vsodoma@avencall.com>  Tue, 06 Jun 2017 16:18:10 +0200
+
 xivo-web-interface (2017.03.03) xivo-2017.03; urgency=medium
 
   * Fix select of voicemails in new Closed hours schedule
