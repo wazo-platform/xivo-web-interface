@@ -1,8 +1,16 @@
-xivo-web-interface (2017.03.07) xivo-2017.03; urgency=medium
+xivo-web-interface (2017.06.00) xivo-dev; urgency=medium
 
+  * Remove autopause 'yes' option
   * Notify ctid even if live-reload is disabled
 
  -- Vojtech Sodoma <vsodoma@avencall.com>  Tue, 06 Jun 2017 16:18:10 +0200
+
+xivo-web-interface (2017.05.00) xivo-dev; urgency=medium
+
+  * From defines replace Five by empty and don't display quotes in footer
+  * Add WebRTC to option list
+
+ -- Tomas Taraba <ttaraba@avencall.com>  Mon, 29 May 2017 10:56:12 +0200
 
 xivo-web-interface (2017.03.03) xivo-2017.03; urgency=medium
 
