@@ -72,11 +72,21 @@ function dwho_clean_cmd_list_to_process()
 
 	if (isset($_SESSION['cmd_list_to_process']) === false
 	|| empty($_SESSION['cmd_list_to_process']) === true
-	|| ($cti_data = $ctimain->get(1)) === false
-	|| (bool) $cti_data['live_reload_conf'] === false)
+	|| ($cti_data = $ctimain->get(1)) === false)
 	{
 		$_SESSION['cmd_list_to_process'] = array();
 		return(false);
+	}
+
+	if ((bool) $cti_data['live_reload_conf'] === false)
+	{
+		$cmds = $_SESSION['cmd_list_to_process'];
+		$_SESSION['cmd_list_to_process'] = array();
+
+		if (isset($cmds['ctibus']))
+			$_SESSION['cmd_list_to_process']['ctibus'] = $cmds['ctibus'];
+		else
+			return(false);
 	}
 
 	$request_handlers->exec_cmd($_SESSION['cmd_list_to_process']);

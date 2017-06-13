@@ -1,8 +1,9 @@
 xivo-web-interface (2017.06.00) xivo-dev; urgency=medium
 
   * Remove autopause 'yes' option
+  * Notify ctid even if live-reload is disabled
 
- -- Vojtech Sodoma <vsodoma@avencall.com>  Tue, 06 Jun 2017 10:52:32 +0200
+ -- Vojtech Sodoma <vsodoma@avencall.com>  Tue, 06 Jun 2017 16:18:10 +0200
 
 xivo-web-interface (2017.05.00) xivo-dev; urgency=medium
 
