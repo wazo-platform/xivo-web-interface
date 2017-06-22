@@ -1,3 +1,9 @@
+xivo-web-interface (2017.07.00) xivo-dev; urgency=medium
+
+  * Do not allow special characters in template line ID
+
+ -- Vojtech Sodoma <vsodoma@avencall.com>  Thu, 22 Jun 2017 11:48:21 +0200
+
 xivo-web-interface (2017.06.00) xivo-dev; urgency=medium
 
   * Remove autopause 'yes' option
