@@ -820,6 +820,16 @@ class xivo_object_provdconfig extends xivo_object_provd_abstract
 
 		return($arr);
 	}
+
+	public function chk_confregistrar_id($val)
+	{
+		if(preg_match('/^'.XIVO_CONF_PROVD_REGEXP_CONFIG_ID.'$/',$val) !== 1)
+		{
+			dwho_report::push('error', 'ID must not contain any special characters');
+			return(false);
+		}
+		return(true);
+	}
 }
 
 ?>

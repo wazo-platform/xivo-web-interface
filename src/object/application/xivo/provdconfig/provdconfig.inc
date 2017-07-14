@@ -181,7 +181,8 @@ class xivo_application_xivo_object_provdconfig extends xivo_application_xivo_obj
 	public function add_config()
 	{
 		if(($rs = $this->get_result('config')) === null
-		|| $rs === false)
+		|| $rs === false
+		|| $this->_provdconfig->chk_confregistrar_id($rs['id']) === false)
 			return(false);
 
 		$this->_return['config'] = $this->_provdconfig->add($rs);
