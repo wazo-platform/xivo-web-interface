@@ -1,9 +1,10 @@
-xivo-web-interface (2017.03.07) xivo-2017.03; urgency=medium
+xivo-web-interface (2017.03.08) xivo-2017.03; urgency=medium
 
-  * Notify ctid even if live-reload is disabled
+  * Bump version to 2017.03.08
   * Do not allow special characters in template line ID
+  * Notify ctid even if live-reload is disabled
 
- -- Vojtech Sodoma <vsodoma@avencall.com>  Tue, 06 Jun 2017 16:18:10 +0200
+ -- Vojtech Sodoma <vsodoma@avencall.com>  Fri, 14 Jul 2017 11:24:09 +0200
 
 xivo-web-interface (2017.03.03) xivo-2017.03; urgency=medium
 
