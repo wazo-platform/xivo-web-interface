@@ -125,7 +125,17 @@ switch($act)
 				$end = min($end, ($filter+1) * (pow(10, $lend - $lfilter)) - 1);
 			}
 
-			$numbers = array_merge($numbers, range($start, $end));
+			$len = strLen($str_start);
+			$number = '';
+			for($int_number = $start; $int_number <= $end; $int_number += 1)
+			{
+				$number = $int_number;
+				while(strLen($number) < $len)
+				{
+					$number = '0' . $int_number;
+				}
+				array_push($numbers, $number);
+			}
 		}
 
 		if ($has_getnumpull)
