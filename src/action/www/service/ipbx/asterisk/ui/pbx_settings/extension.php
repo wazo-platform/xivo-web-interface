@@ -98,14 +98,16 @@ switch($act)
 		$list_pool_free = array();
 		foreach($contextnumbers_obj as $numb)
 		{
-			$start = intval($numb['numberbeg']);
-			$end = intval($numb['numberend']);
+			$str_start = $numb['numberbeg'];
+			$str_end = $numb['numberend'];
+			$start = intval($str_start);
+			$end = intval($str_end);
 			$lstart = floor(log10($start)) + 1;
 			$lend = floor(log10($end)) + 1;
 
 			if($has_getnumpull)
 			{
-				array_push($list_pool_free, array('numberbeg' => $start, 'numberend' => $end));
+				array_push($list_pool_free, array('numberbeg' => $str_start, 'numberend' => $str_end));
 				continue;
 			}
 
