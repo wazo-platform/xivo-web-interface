@@ -1,3 +1,9 @@
+xivo-web-interface (2017.03.12) xivo-2017.03; urgency=medium
+
+  * Fix adding template device
+
+ -- Vojtech Sodoma <vsodoma@avencall.com>  Tue, 08 Aug 2017 13:53:05 +0200
+
 xivo-web-interface (2017.03.08) xivo-2017.03; urgency=medium
 
   * Bump version to 2017.03.08
