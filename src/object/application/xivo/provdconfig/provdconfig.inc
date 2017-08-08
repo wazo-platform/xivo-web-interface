@@ -98,12 +98,12 @@ class xivo_application_xivo_object_provdconfig extends xivo_application_xivo_obj
 		|| dwho_issa('config',$arr) === false)
 			return(false);
 
-		$this->set_config($arr['config'],$type);
+		$this->set_config($action,$arr['config'],$type);
 
 		return(($this->get_errnb() < 1));
 	}
 
-	public function set_config($arr,$type='')
+	public function set_config($action,$arr,$type='')
 	{
 		if(is_array($arr) === false)
 		{
@@ -116,7 +116,8 @@ class xivo_application_xivo_object_provdconfig extends xivo_application_xivo_obj
 		switch ($type)
 		{
 			case 'registrar':
-				if(($rs = $this->_provdconfig->chk_confregistrar($arr)) === false)
+				if(($rs = $this->_provdconfig->chk_confregistrar($arr)) === false
+				|| ($action == 'add' && $this->_provdconfig->chk_confregistrar_id($rs['id']) === false))
 				{
 					$this->_set_result('config',$this->_provdconfig->get_filter_result());
 					$this->_set_error('config',$this->_provdconfig->get_filter_error());
@@ -181,8 +182,7 @@ class xivo_application_xivo_object_provdconfig extends xivo_application_xivo_obj
 	public function add_config()
 	{
 		if(($rs = $this->get_result('config')) === null
-		|| $rs === false
-		|| $this->_provdconfig->chk_confregistrar_id($rs['id']) === false)
+		|| $rs === false)
 			return(false);
 
 		$this->_return['config'] = $this->_provdconfig->add($rs);
