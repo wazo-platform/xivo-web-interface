@@ -1,3 +1,9 @@
+xivo-web-interface (2017.09.00) xivo-dev; urgency=medium
+
+  * Fix adding template device
+
+ -- Vojtech Sodoma <vsodoma@avencall.com>  Tue, 08 Aug 2017 13:53:05 +0200
+
 xivo-web-interface (2017.08.00) xivo-dev; urgency=medium
 
   * Fix tooltips for context ranges beginning with zero
