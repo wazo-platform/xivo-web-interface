@@ -1,0 +1,17 @@
+{
+  "version": "1.0",
+  "operator_config": {
+    "trunk": {
+      "name": "Purple",
+      "callerID": "PURPLE"
+    },
+    "sip": {
+      "jbforce": "true"
+    }
+  },
+  "user_config": {
+    "trunk": {
+      "password": "54321"
+    }
+  }
+}
