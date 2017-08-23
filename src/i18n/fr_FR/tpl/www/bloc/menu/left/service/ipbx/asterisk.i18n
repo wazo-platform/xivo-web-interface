@@ -82,6 +82,9 @@ Protocole IAX
 ; mn_left_trunkmanagement-custom
 Personnalisée
 
+; mn_left_trunkmanagement-operator
+Opérateur
+
 ; mn_left_ti_pbxservices
 Services IPBX
 

@@ -83,6 +83,9 @@ class xivo_user_acl extends xivo_acl_abstract
 			{
 				$_SESSION['_ACL']['user_section'] = array();
 				$_SESSION['_ACL']['user_hash'] = $user_hash;
+
+				print_r($_SESSION['_ACL']['user_section']);
+				die;
 			}
 		}
 

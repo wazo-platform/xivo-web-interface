@@ -159,6 +159,7 @@ $array['service/ipbx/json/restricted/call_management/outcall'] = 'service/ipbx/j
 $array['service/ipbx/json/restricted/trunk_management/sip'] = 'service/ipbx/json.php/restricted/trunk_management/sip/';
 $array['service/ipbx/json/restricted/trunk_management/iax'] = 'service/ipbx/json.php/restricted/trunk_management/iax/';
 $array['service/ipbx/json/restricted/trunk_management/custom'] = 'service/ipbx/json.php/restricted/trunk_management/custom/';
+$array['service/ipbx/json/restricted/trunk_management/operator'] = 'service/ipbx/json.php/restricted/trunk_management/operator/';
 $array['service/ipbx/json/restricted/pbx_services/phonebook'] = 'service/ipbx/json.php/restricted/pbx_services/phonebook/';
 
 $array['service/ipbx/json/private/pbx_settings/users'] = 'service/ipbx/json.php/private/pbx_settings/users/';
@@ -215,10 +216,12 @@ $array['service/ipbx/ui/call_management/schedule'] = 'service/ipbx/ui.php/call_m
 $array['service/ipbx/trunk_management/sip'] = 'service/ipbx/index.php/trunk_management/sip/';
 $array['service/ipbx/trunk_management/iax'] = 'service/ipbx/index.php/trunk_management/iax/';
 $array['service/ipbx/trunk_management/custom'] = 'service/ipbx/index.php/trunk_management/custom/';
+$array['service/ipbx/trunk_management/operator'] = 'service/ipbx/index.php/trunk_management/operator/';
 
 $array['service/ipbx/json/restricted/trunk_management/sip'] = 'service/ipbx/json.php/restricted/trunk_management/sip/';
 $array['service/ipbx/json/restricted/trunk_management/iax'] = 'service/ipbx/json.php/restricted/trunk_management/iax/';
 $array['service/ipbx/json/restricted/trunk_management/custom'] = 'service/ipbx/json.php/restricted/trunk_management/custom/';
+$array['service/ipbx/json/restricted/trunk_management/operator'] = 'service/ipbx/json.php/restricted/trunk_management/operator/';
 
 
 // pbx_services
