@@ -35,12 +35,16 @@ $sort = $this->get_var('sort');
 	</h3>
 	<div class="sb-content">
         <?php
-            if(true):
+            if(($list = $this->get_var('list')) === false || ($nb = count($list)) === 0):
         ?>
             <td colspan="7" class="td-single"><?=$this->bbf('no_trunk');?></td>
         <?php
             else:
-                ;
+                for($i = 0;$i < $nb;$i++):
+                    $ref = &$list[$i];
+                    echo $ref;
+                    echo "<br>";
+                endfor;
             endif;
         ?>
 	</div>
