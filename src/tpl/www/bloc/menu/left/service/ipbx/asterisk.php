@@ -20,7 +20,7 @@
 
 $url = &$this->get_module('url');
 $dhtml = &$this->get_module('dhtml');
-$trunk_config_dir = '/var/lib/xivo-trunk-config/configs';
+$trunk_config_dir = '/usr/share/xivo-web-interface/trunk-configs'; //'/var/lib/xivo-trunk-config/configs';
 
 ?>
 <dl>
@@ -209,6 +209,15 @@ $trunk_config_dir = '/var/lib/xivo-trunk-config/configs';
 				'</dd>';
 		endif;
 
+		if(xivo_user::chk_acl('trunk_management','operator') === true
+		&& xivo_user::chk_dir_not_empty($trunk_config_dir)):
+			echo	'<dd id="mn-trunk-management--operator">',
+				$url->href_html($this->bbf('mn_left_trunkmanagement-operator'),
+						'service/ipbx/trunk_management/operator',
+						'act=list'),
+				'</dd>';
+		endif;
+
 		if(xivo_user::chk_acl('trunk_management','iax') === true):
 			echo	'<dd id="mn-trunk-management--iax">',
 				$url->href_html($this->bbf('mn_left_trunkmanagement-iax'),
@@ -221,15 +230,6 @@ $trunk_config_dir = '/var/lib/xivo-trunk-config/configs';
 			echo	'<dd id="mn-trunk-management--custom">',
 				$url->href_html($this->bbf('mn_left_trunkmanagement-custom'),
 						'service/ipbx/trunk_management/custom',
-						'act=list'),
-				'</dd>';
-		endif;
-
-		if(xivo_user::chk_acl('trunk_management','operator') === true
-		&& xivo_user::chk_dir_not_empty($trunk_config_dir)):
-			echo	'<dd id="mn-trunk-management--operator">',
-				$url->href_html($this->bbf('mn_left_trunkmanagement-operator'),
-						'service/ipbx/trunk_management/operator',
 						'act=list'),
 				'</dd>';
 		endif;

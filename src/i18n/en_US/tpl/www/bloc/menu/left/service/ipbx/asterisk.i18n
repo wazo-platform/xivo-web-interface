@@ -89,7 +89,7 @@ IAX Protocol
 Customized
 
 ; mn_left_trunkmanagement-operator
-Operator
+SIP Operator
 
 ; mn_left_ti_pbxservices
 IPBX services
