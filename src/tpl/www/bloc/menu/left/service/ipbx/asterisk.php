@@ -20,6 +20,7 @@
 
 $url = &$this->get_module('url');
 $dhtml = &$this->get_module('dhtml');
+$trunk_config_dir = '/var/lib/xivo-trunk-config/configs';
 
 ?>
 <dl>
@@ -224,7 +225,8 @@ $dhtml = &$this->get_module('dhtml');
 				'</dd>';
 		endif;
 
-		if(xivo_user::chk_acl('trunk_management','operator') === true):
+		if(xivo_user::chk_acl('trunk_management','operator') === true
+		&& xivo_user::chk_dir_not_empty($trunk_config_dir)):
 			echo	'<dd id="mn-trunk-management--operator">',
 				$url->href_html($this->bbf('mn_left_trunkmanagement-operator'),
 						'service/ipbx/trunk_management/operator',
