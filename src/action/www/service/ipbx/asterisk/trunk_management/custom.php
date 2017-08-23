@@ -50,7 +50,7 @@ switch($act)
 				$error = $apptrunk->get_error();
 			}
 			else
-				$_QRY->go($_TPL->url('service/ipbx/trunk_management/custom'),$param);
+				$_QRY->go($_TPL->url('service/ipbx/trunk_management/operator'),$param);
 		}
 
 		$_TPL->set_var('info',$result);
@@ -65,7 +65,7 @@ switch($act)
 
 		if(isset($_QR['id']) === false
 		|| ($info = $apptrunk->get($_QR['id'])) === false)
-			$_QRY->go($_TPL->url('service/ipbx/trunk_management/custom'),$param);
+			$_QRY->go($_TPL->url('service/ipbx/trunk_management/operator'),$param);
 
 		$result = $fm_save = $error = null;
 		$return = &$info;
@@ -82,7 +82,7 @@ switch($act)
 				$error = $apptrunk->get_error();
 			}
 			else
-				$_QRY->go($_TPL->url('service/ipbx/trunk_management/custom'),$param);
+				$_QRY->go($_TPL->url('service/ipbx/trunk_management/operator'),$param);
 		}
 
 		$_TPL->set_var('id',$info['trunkfeatures']['id']);
@@ -99,17 +99,17 @@ switch($act)
 						    array('protocol' => XIVO_SRE_IPBX_AST_PROTO_CUSTOM));
 
 		if(isset($_QR['id']) === false || $apptrunk->get($_QR['id']) === false)
-			$_QRY->go($_TPL->url('service/ipbx/trunk_management/custom'),$param);
+			$_QRY->go($_TPL->url('service/ipbx/trunk_management/operator'),$param);
 
 		$apptrunk->delete();
 
-		$_QRY->go($_TPL->url('service/ipbx/trunk_management/custom'),$param);
+		$_QRY->go($_TPL->url('service/ipbx/trunk_management/operator'),$param);
 		break;
 	case 'deletes':
 		$param['page'] = $page;
 
 		if(($values = dwho_issa_val('trunks',$_QR)) === false)
-			$_QRY->go($_TPL->url('service/ipbx/trunk_management/custom'),$param);
+			$_QRY->go($_TPL->url('service/ipbx/trunk_management/operator'),$param);
 
 		$apptrunk = &$ipbx->get_application('trunk',
 						    array('protocol' => XIVO_SRE_IPBX_AST_PROTO_CUSTOM));
@@ -122,14 +122,14 @@ switch($act)
 				$apptrunk->delete();
 		}
 
-		$_QRY->go($_TPL->url('service/ipbx/trunk_management/custom'),$param);
+		$_QRY->go($_TPL->url('service/ipbx/trunk_management/operator'),$param);
 		break;
 	case 'enables':
 	case 'disables':
 		$param['page'] = $page;
 
 		if(($values = dwho_issa_val('trunks',$_QR)) === false)
-			$_QRY->go($_TPL->url('service/ipbx/trunk_management/custom'),$param);
+			$_QRY->go($_TPL->url('service/ipbx/trunk_management/operator'),$param);
 
 		$apptrunk = &$ipbx->get_application('trunk',
 						    array('protocol' => XIVO_SRE_IPBX_AST_PROTO_CUSTOM));
@@ -146,7 +146,7 @@ switch($act)
 				$apptrunk->enable();
 		}
 
-		$_QRY->go($_TPL->url('service/ipbx/trunk_management/custom'),$param);
+		$_QRY->go($_TPL->url('service/ipbx/trunk_management/operator'),$param);
 		break;
 	default:
 		$act = 'list';
@@ -170,7 +170,7 @@ switch($act)
 		if($list === false && $total > 0 && $prevpage > 0)
 		{
 			$param['page'] = $prevpage;
-			$_QRY->go($_TPL->url('service/ipbx/trunk_management/custom'),$param);
+			$_QRY->go($_TPL->url('service/ipbx/trunk_management/operator'),$param);
 		}
 
 		$_TPL->set_var('pager',dwho_calc_page($page,$nbbypage,$total));
@@ -183,9 +183,9 @@ $_TPL->set_var('act',$act);
 $menu = &$_TPL->get_module('menu');
 $menu->set_top('top/user/'.$_USR->get_info('meta'));
 $menu->set_left('left/service/ipbx/'.$ipbx->get_name());
-$menu->set_toolbar('toolbar/service/ipbx/'.$ipbx->get_name().'/trunk_management/custom');
+$menu->set_toolbar('toolbar/service/ipbx/'.$ipbx->get_name().'/trunk_management/operator');
 
-$_TPL->set_bloc('main','service/ipbx/'.$ipbx->get_name().'/trunk_management/custom/'.$act);
+$_TPL->set_bloc('main','service/ipbx/'.$ipbx->get_name().'/trunk_management/operator/'.$act);
 $_TPL->set_struct('service/ipbx/'.$ipbx->get_name());
 $_TPL->display('index');
 

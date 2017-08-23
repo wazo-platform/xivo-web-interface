@@ -30,7 +30,7 @@ $page = $url->pager($pager['pages'],
 		    $pager['page'],
 		    $pager['prev'],
 		    $pager['next'],
-		    'service/ipbx/trunk_management/custom',
+		    'service/ipbx/trunk_management/operator',
 		    array('act' => $act));
 
 ?>
@@ -61,7 +61,7 @@ $page = $url->pager($pager['pages'],
 <?php
 	echo	$url->href_html(
 					$url->img_html('img/updown.png', $this->bbf('col_sort_name'), 'border="0"'),
-					'service/ipbx/trunk_management/custom',
+					'service/ipbx/trunk_management/operator',
 					array('act'	=> 'list', 'sort' => 'name'),
 					null,
 					$this->bbf('col_sort_name'));
@@ -74,7 +74,7 @@ $page = $url->pager($pager['pages'],
 <?php
 	echo	$url->href_html(
 					$url->img_html('img/updown.png', $this->bbf('col_sort_interface'), 'border="0"'),
-					'service/ipbx/trunk_management/custom',
+					'service/ipbx/trunk_management/operator',
 					array('act'	=> 'list', 'sort' => 'interface'),
 					null,
 					$this->bbf('col_sort_interface'));
@@ -87,7 +87,7 @@ $page = $url->pager($pager['pages'],
 <?php
 	echo	$url->href_html(
 					$url->img_html('img/updown.png', $this->bbf('col_sort_intfsuffix'), 'border="0"'),
-					'service/ipbx/trunk_management/custom',
+					'service/ipbx/trunk_management/operator',
 					array('act'	=> 'list', 'sort' => 'intfsuffix'),
 					null,
 					$this->bbf('col_sort_intfsuffix'));
@@ -142,7 +142,7 @@ $page = $url->pager($pager['pages'],
 			echo	$url->href_html($url->img_html('img/site/button/edit.gif',
 							       $this->bbf('opt_modify'),
 							       'border="0"'),
-						'service/ipbx/trunk_management/custom',
+						'service/ipbx/trunk_management/operator',
 						array('act'	=> 'edit',
 						      'id'	=> $ref['id']),
 						null,
@@ -150,7 +150,7 @@ $page = $url->pager($pager['pages'],
 				$url->href_html($url->img_html('img/site/button/delete.gif',
 							       $this->bbf('opt_delete'),
 							       'border="0"'),
-						'service/ipbx/trunk_management/custom',
+						'service/ipbx/trunk_management/operator',
 						array('act'	=> 'delete',
 						      'id'	=> $ref['id'],
 						      'page'	=> $pager['page']),

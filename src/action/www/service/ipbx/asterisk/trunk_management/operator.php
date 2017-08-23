@@ -63,7 +63,7 @@ switch($act)
 					$result['register'] = $result['register']['arr'];
 			}
 			else
-				$_QRY->go($_TPL->url('service/ipbx/trunk_management/iax'),$param);
+				$_QRY->go($_TPL->url('service/ipbx/trunk_management/operator'),$param);
 		}
 
 		$element = $apptrunk->get_elements();
@@ -86,7 +86,7 @@ switch($act)
 			$result['protocol']['allow'] = $allow;
 
 		$dhtml = &$_TPL->get_module('dhtml');
-		$dhtml->set_js('js/service/ipbx/'.$ipbx->get_name().'/trunks/iax.js');
+		$dhtml->set_js('js/service/ipbx/'.$ipbx->get_name().'/trunks/operator.js');
 		$dhtml->set_js('js/service/ipbx/'.$ipbx->get_name().'/trunks.js');
 		$dhtml->set_js('js/dwho/submenu.js');
 		$dhtml->set_js('js/utils/codeclist.js');
@@ -115,7 +115,7 @@ switch($act)
 
 		if(isset($_QR['id']) === false
 		|| ($info = $apptrunk->get($_QR['id'])) === false)
-			$_QRY->go($_TPL->url('service/ipbx/trunk_management/iax'),$param);
+			$_QRY->go($_TPL->url('service/ipbx/trunk_management/operator'),$param);
 
 		$result = $fm_save = $error = null;
 		$return = &$info;
@@ -145,7 +145,7 @@ switch($act)
 					$result['register'] = $result['register']['arr'];
 			}
 			else
-				$_QRY->go($_TPL->url('service/ipbx/trunk_management/iax'),$param);
+				$_QRY->go($_TPL->url('service/ipbx/trunk_management/operator'),$param);
 		}
 
 		$element = $apptrunk->get_elements();
@@ -168,7 +168,7 @@ switch($act)
 			$return['protocol']['allow'] = $allow;
 
 		$dhtml = &$_TPL->get_module('dhtml');
-		$dhtml->set_js('js/service/ipbx/'.$ipbx->get_name().'/trunks/iax.js');
+		$dhtml->set_js('js/service/ipbx/'.$ipbx->get_name().'/trunks/operator.js');
 		$dhtml->set_js('js/service/ipbx/'.$ipbx->get_name().'/trunks.js');
 		$dhtml->set_js('js/dwho/submenu.js');
 		$dhtml->set_js('js/utils/codeclist.js');
@@ -210,17 +210,17 @@ switch($act)
 						    array('protocol' => XIVO_SRE_IPBX_AST_PROTO_IAX));
 
 		if(isset($_QR['id']) === false || $apptrunk->get($_QR['id']) === false)
-			$_QRY->go($_TPL->url('service/ipbx/trunk_management/iax'),$param);
+			$_QRY->go($_TPL->url('service/ipbx/trunk_management/operator'),$param);
 
 		$apptrunk->delete();
 
-		$_QRY->go($_TPL->url('service/ipbx/trunk_management/iax'),$param);
+		$_QRY->go($_TPL->url('service/ipbx/trunk_management/operator'),$param);
 		break;
 	case 'deletes':
 		$param['page'] = $page;
 
 		if(($values = dwho_issa_val('trunks',$_QR)) === false)
-			$_QRY->go($_TPL->url('service/ipbx/trunk_management/iax'),$param);
+			$_QRY->go($_TPL->url('service/ipbx/trunk_management/operator'),$param);
 
 		$apptrunk = &$ipbx->get_application('trunk',
 						    array('protocol' => XIVO_SRE_IPBX_AST_PROTO_IAX));
@@ -233,14 +233,14 @@ switch($act)
 				$apptrunk->delete();
 		}
 
-		$_QRY->go($_TPL->url('service/ipbx/trunk_management/iax'),$param);
+		$_QRY->go($_TPL->url('service/ipbx/trunk_management/operator'),$param);
 		break;
 	case 'enables':
 	case 'disables':
 		$param['page'] = $page;
 
 		if(($values = dwho_issa_val('trunks',$_QR)) === false)
-			$_QRY->go($_TPL->url('service/ipbx/trunk_management/iax'),$param);
+			$_QRY->go($_TPL->url('service/ipbx/trunk_management/operator'),$param);
 
 		$apptrunk = &$ipbx->get_application('trunk',
 						    array('protocol' => XIVO_SRE_IPBX_AST_PROTO_IAX));
@@ -257,7 +257,7 @@ switch($act)
 				$apptrunk->enable();
 		}
 
-		$_QRY->go($_TPL->url('service/ipbx/trunk_management/iax'),$param);
+		$_QRY->go($_TPL->url('service/ipbx/trunk_management/operator'),$param);
 		break;
 	default:
 		$act = 'list';
@@ -281,7 +281,7 @@ switch($act)
 		if($list === false && $total > 0 && $prevpage > 0)
 		{
 			$param['page'] = $prevpage;
-			$_QRY->go($_TPL->url('service/ipbx/trunk_management/iax'),$param);
+			$_QRY->go($_TPL->url('service/ipbx/trunk_management/operator'),$param);
 		}
 
 		$_TPL->set_var('pager',dwho_calc_page($page,$nbbypage,$total));
@@ -294,9 +294,9 @@ $_TPL->set_var('act',$act);
 $menu = &$_TPL->get_module('menu');
 $menu->set_top('top/user/'.$_USR->get_info('meta'));
 $menu->set_left('left/service/ipbx/'.$ipbx->get_name());
-$menu->set_toolbar('toolbar/service/ipbx/'.$ipbx->get_name().'/trunk_management/iax');
+$menu->set_toolbar('toolbar/service/ipbx/'.$ipbx->get_name().'/trunk_management/operator');
 
-$_TPL->set_bloc('main','service/ipbx/'.$ipbx->get_name().'/trunk_management/iax/'.$act);
+$_TPL->set_bloc('main','service/ipbx/'.$ipbx->get_name().'/trunk_management/operator/'.$act);
 $_TPL->set_struct('service/ipbx/'.$ipbx->get_name());
 $_TPL->display('index');
 
