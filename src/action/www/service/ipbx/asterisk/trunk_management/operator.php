@@ -52,12 +52,24 @@ switch($act)
 		//$total = $appoperator->get_cnt();
 		$list = glob(XIVO_OPERATOR_SIP_CONFIG_DIR.'/*.json');
         $total = count($list);
+        $configurations = array();
+        $operators = array();
 
-//		if(dwho::load_class('dwho_json') === false
-//		|| ($data = dwho_json::decode($_QRY->get_input(),true)) === false
-//		|| is_array($data) === false
-//		|| isset($data['ip'],$data['code']) === false)
-//		{
+        if(dwho::load_class('dwho_json') === true)
+        {
+            for($i = 0; $i < $total; $i++):
+                $ref = &$list[$i];
+                $fh = fopen($ref,'r');
+                $json = fread($fh, XIVO_OPERATOR_SIP_CONFIG_MAX_BYTES);
+                fclose($fh);
+
+                if(($data = dwho_json::decode($json,true)) !== false)
+                {
+                    $configurations[] = $data;
+                    $operators[] = $data['operator_config']['trunk']['name'];
+                }
+            endfor;
+        }
 
 		if($list === false && $total > 0 && $prevpage > 0)
 		{
@@ -66,7 +78,8 @@ switch($act)
 		}
 
 		$_TPL->set_var('pager',dwho_calc_page($page,$nbbypage,$total));
-		$_TPL->set_var('list',$list);
+		$_TPL->set_var('configurations',$configurations);
+		$_TPL->set_var('operators',$operators);
 		$_TPL->set_var('sort',$sort);
 }
 
