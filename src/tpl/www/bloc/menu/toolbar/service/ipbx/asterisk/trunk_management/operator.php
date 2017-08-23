@@ -18,53 +18,46 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+$form = &$this->get_module('form');
 $url = &$this->get_module('url');
 $dhtml = &$this->get_module('dhtml');
 
+$search = (string) $this->get_var('search');
+
 $toolbar_js = array();
-$toolbar_js[] = 'var xivo_toolbar_form_name = \'fm-trunk-list\';';
-$toolbar_js[] = 'var xivo_toolbar_form_list = \'trunks[]\';';
-$toolbar_js[] = 'var xivo_toolbar_adv_menu_delete_confirm = \''.$dhtml->escape($this->bbf('toolbar_adv_menu_delete_confirm')).'\';';
+$toolbar_js[] = 'var xivo_toolbar_fm_search = \''.$dhtml->escape($search).'\';';
 
 $dhtml->write_js($toolbar_js);
 
 ?>
 <script type="text/javascript" src="<?=$this->file_time($this->url('js/xivo_toolbar.js'));?>"></script>
+
+<form action="#" method="post" accept-charset="utf-8">
+<?=$form->hidden(array('name' => DWHO_SESS_NAME,'value' => DWHO_SESS_ID));?>
+<?=$form->hidden(array('name' => 'act','value' => 'list'));?>
+	<div class="fm-paragraph">
 <?php
+		echo	$form->text(array('name'	=> 'search',
+					  'id'		=> 'it-toolbar-search',
+					  'size'	=> 20,
+					  'paragraph'	=> false,
+					  'value'	=> $search,
+					  'default'	=> $this->bbf('toolbar_fm_search'))),
 
-echo	$url->href_html($url->img_html('img/menu/top/toolbar/bt-add.gif',
-				       $this->bbf('toolbar_opt_add'),
-				       'id="toolbar-bt-add"
-					border="0"'),
-			'service/ipbx/trunk_management/operator',
-			'act=add',
-			null,
-			$this->bbf('toolbar_opt_add'));
-
-if($this->get_var('act') === 'list'):
-	echo	$url->img_html('img/menu/top/toolbar/bt-more.gif',
-			       $this->bbf('toolbar_opt_advanced'),
-			       'id="toolbar-bt-advanced"
-				border="0"');
+			$form->image(array('name'	=> 'submit',
+					   'id'		=> 'it-toolbar-subsearch',
+					   'src'	=> $url->img('img/menu/top/toolbar/bt-search.gif'),
+					   'paragraph'	=> false,
+					   'alt'	=> $this->bbf('toolbar_fm_search')));
 ?>
-<div class="sb-advanced-menu">
-	<ul id="toolbar-advanced-menu">
-		<li>
-			<a href="#" id="toolbar-advanced-menu-enable"><?=$this->bbf('toolbar_adv_menu_enable');?></a>
-		</li>
-		<li>
-			<a href="#" id="toolbar-advanced-menu-disable"><?=$this->bbf('toolbar_adv_menu_disable');?></a>
-		</li>
-		<li>
-			<a href="#" id="toolbar-advanced-menu-select-all"><?=$this->bbf('toolbar_adv_menu_select-all');?></a>
-		</li>
-		<li>
-			<a href="#" id="toolbar-advanced-menu-delete"><?=$this->bbf('toolbar_adv_menu_delete');?></a>
-		</li>
-	</ul>
-</div>
-<?php
-
-endif;
-
+	</div>
+</form><?php
+echo	$url->href_html($url->img_html('img/site/utils/update-manager.png',
+						$this->bbf('toolbar_opt_update'),
+						'id="toolbar-bt-update"
+						border="0"'),
+			'#',
+			null,
+			'onclick="init_update_plugin();return(false);"',
+			$this->bbf('toolbar_opt_update'));
 ?>
