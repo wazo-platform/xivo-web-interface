@@ -18,5 +18,8 @@
 
 function xivo_ast_chg_operator(operator)
 {
-    alert();
+    var it_false = {property: {disabled: true, className: 'it-disabled'}};
+
+    document.getElementById("it-" + operator).style.visibility = "hidden";
+
 }

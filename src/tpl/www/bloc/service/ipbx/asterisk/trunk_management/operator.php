@@ -22,9 +22,8 @@ $url = &$this->get_module('url');
 $form = &$this->get_module('form');
 $dhtml = &$this->get_module('dhtml');
 
-$pager = $this->get_var('pager');
-$act = $this->get_var('act');
-$sort = $this->get_var('sort');
+$operator = $this->get_var('operator');
+$configuration = $this->get_var('configuration');
 
 ?>
 <div class="b-infos">
@@ -35,7 +34,7 @@ $sort = $this->get_var('sort');
 	</h3>
 	<div class="sb-content">
         <?php
-            if(($list = $this->get_var('operator')) === false || ($nb = count($list)) === 0):
+            if(($list = $operator) === false || ($nb = count($list)) === 0):
         ?>
             <td colspan="7" class="td-single"><?=$this->bbf('no_trunk');?></td>
         <?php
@@ -45,19 +44,19 @@ $sort = $this->get_var('sort');
                             'labelid'	=> 'operator',
                             'key'	=> false,
                             'help'	=> $this->bbf('hlp_fm_operator'),
-                            'selected'	=> $this->get_var('operator',''),
+                            'selected'	=> $operator[''],
                             'default'	=> ''),
-                        $this->get_var('operator'),
-                        	 'onchange="xivo_ast_chg_operator();"'),
+                        $operator,
+                        	 'onchange="xivo_ast_chg_operator(\'operator-name\');"'),
 
                         $form->text(array('desc'	=> '&nbsp;',
-                          'name'	=> 'protocol[host-static]',
-                          'labelid'	=> 'protocol-host-static',
+                          'name'	=> 'operator[name]',
+                          'labelid'	=> 'operator-name',
                           'size'	=> 15,
-                          'default'	=> $element['protocol']['host-static']['default'],
+                          'default'	=> '',
                           'value'	=> ($host_static === true ? $host : ''),
                           'error'	=> $this->bbf_args('error',
-                        $this->get_var('error', 'protocol', 'host-static')) ));
+                        $this->get_var('configuration', 'operator_config', 'name')) ));
             endif;
         ?>
 	</div>
