@@ -88,7 +88,6 @@ $_TPL->set_var('act',$act);
 $menu = &$_TPL->get_module('menu');
 $menu->set_top('top/user/'.$_USR->get_info('meta'));
 $menu->set_left('left/service/ipbx/'.$ipbx->get_name());
-$menu->set_toolbar('toolbar/service/ipbx/'.$ipbx->get_name().'/trunk_management/operator');
 
 $_TPL->set_bloc('main','service/ipbx/'.$ipbx->get_name().'/trunk_management/operator');
 $_TPL->set_struct('service/ipbx/'.$ipbx->get_name());
