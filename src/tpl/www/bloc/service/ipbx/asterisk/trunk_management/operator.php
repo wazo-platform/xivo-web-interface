@@ -48,7 +48,7 @@ $configuration = $this->get_var('configuration');
                             'selected'	=> $operator[''],
                             'default'	=> ''),
                         $operator,
-                        	 'onchange="xivo_ast_chg_operator(\''.$configuration['0']['operator_config']['trunk']['name'].'\');"'),
+                        	 'onchange="window.location = window.location + \'?id=\' + this.selectedIndex"'),
 
                         $form->text(array('desc'	=> $this->bbf('fm_protocol_name'),
                           'name'	=> 'protocol[name]',
