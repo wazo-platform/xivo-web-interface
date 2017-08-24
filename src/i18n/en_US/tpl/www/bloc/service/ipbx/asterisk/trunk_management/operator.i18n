@@ -2,7 +2,19 @@
 SIP Operator properties
 
 ; operator
-Operator
+Operator:
 
 ; no_trunk
 Could not find any operator configuration file
+
+; fm_protocol_name
+Name:
+
+; fm_protocol_username
+Authentication username:
+
+; fm_protocol_secret
+Password:
+
+; fm_protocol_callerid
+Caller ID:

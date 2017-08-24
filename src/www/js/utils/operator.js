@@ -16,10 +16,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-function xivo_ast_chg_operator(operator)
+function xivo_ast_chg_operator(configuration)
 {
     var it_false = {property: {disabled: true, className: 'it-disabled'}};
 
-    document.getElementById("it-" + operator).style.visibility = "hidden";
+    document.getElementById("fd-" + 'protocol-name').style.visibility = "hidden";
 
+    alert(configuration);
 }
