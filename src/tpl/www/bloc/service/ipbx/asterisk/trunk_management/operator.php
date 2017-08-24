@@ -48,7 +48,7 @@ $sort = $this->get_var('sort');
                             'selected'	=> $this->get_var('operator',''),
                             'default'	=> ''),
                         $this->get_var('operator'),
-                        	 'onchange="alert();"'),
+                        	 'onchange="xivo_ast_chg_operator();"'),
 
                         $form->text(array('desc'	=> '&nbsp;',
                           'name'	=> 'protocol[host-static]',

@@ -42,6 +42,8 @@ if(dwho::load_class('dwho_json') === true)
     endfor;
 }
 
+$dhtml->set_js('js/utils/operator.js');
+
 $_TPL->set_var('configuration',$configuration);
 $_TPL->set_var('operator',$operator);
 
