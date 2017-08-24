@@ -18,72 +18,32 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-dwho::load_class('dwho_prefs');
-$prefs = new dwho_prefs('operators');
+// TODO: replace with $appoperator
+//$list = $appoperator->get_operator_list($search,$limit);
+//$total = $appoperator->get_cnt();
+$list = glob(XIVO_OPERATOR_SIP_CONFIG_DIR.'/*.json');
+$total = count($list);
+$configuration = array();
+$operator = array('');
 
-$act     = isset($_QR['act']) === true ? $_QR['act'] : '';
-$page    = dwho_uint($prefs->get('page', 1));
-$search  = strval($prefs->get('search', ''));
-$context = strval($prefs->get('context', ''));
-$sort    = $prefs->flipflop('sort', 'name');
-
-$info = $result = $error = array();
-
-$param = array();
-$param['act'] = 'list';
-
-switch($act)
+if(dwho::load_class('dwho_json') === true)
 {
-    case 'list':
-	default:
-		$act = 'list';
-		$prevpage = $page - 1;
-		$nbbypage = 20;
+    for($i = 0; $i < $total; $i++):
+        $ref = &$list[$i];
+        $fh = fopen($ref,'r');
+        $json = fread($fh, XIVO_OPERATOR_SIP_CONFIG_MAX_BYTES);
+        fclose($fh);
 
-		$order = array();
-		$order['name'] = SORT_ASC;
-
-		$limit = array();
-		$limit[0] = $prevpage * $nbbypage;
-		$limit[1] = $nbbypage;
-
-        // TODO: replace with $appoperator
-		//$list = $appoperator->get_operator_list($search,$limit);
-		//$total = $appoperator->get_cnt();
-		$list = glob(XIVO_OPERATOR_SIP_CONFIG_DIR.'/*.json');
-        $total = count($list);
-        $configurations = array();
-        $operators = array();
-
-        if(dwho::load_class('dwho_json') === true)
+        if(($data = dwho_json::decode($json,true)) !== false)
         {
-            for($i = 0; $i < $total; $i++):
-                $ref = &$list[$i];
-                $fh = fopen($ref,'r');
-                $json = fread($fh, XIVO_OPERATOR_SIP_CONFIG_MAX_BYTES);
-                fclose($fh);
-
-                if(($data = dwho_json::decode($json,true)) !== false)
-                {
-                    $configurations[] = $data;
-                    $operators[] = $data['operator_config']['trunk']['name'];
-                }
-            endfor;
+            $configuration[] = $data;
+            $operator[] = $data['operator_config']['trunk']['name'];
         }
-
-		if($list === false && $total > 0 && $prevpage > 0)
-		{
-			$param['page'] = $prevpage;
-			$_QRY->go($_TPL->url('service/ipbx/trunk_management/operator'),$param);
-		}
-
-		$_TPL->set_var('pager',dwho_calc_page($page,$nbbypage,$total));
-		$_TPL->set_var('configurations',$configurations);
-		$_TPL->set_var('operators',$operators);
-		$_TPL->set_var('sort',$sort);
+    endfor;
 }
 
-$_TPL->set_var('act',$act);
+$_TPL->set_var('configuration',$configuration);
+$_TPL->set_var('operator',$operator);
 
 $menu = &$_TPL->get_module('menu');
 $menu->set_top('top/user/'.$_USR->get_info('meta'));

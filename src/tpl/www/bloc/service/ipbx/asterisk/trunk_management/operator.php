@@ -35,19 +35,19 @@ $sort = $this->get_var('sort');
 	</h3>
 	<div class="sb-content">
         <?php
-            if(($list = $this->get_var('operators')) === false || ($nb = count($list)) === 0):
+            if(($list = $this->get_var('operator')) === false || ($nb = count($list)) === 0):
         ?>
             <td colspan="7" class="td-single"><?=$this->bbf('no_trunk');?></td>
         <?php
             else:
-                echo    $form->select(array('desc'	=> $this->bbf('operators'),
-                            'name'	=> 'voicemail[maxmsg]',
-                            'labelid'	=> 'voicemail-maxmsg',
+                echo    $form->select(array('desc'	=> $this->bbf('operator'),
+                            'name'	=> 'operator',
+                            'labelid'	=> 'operator',
                             'key'	=> false,
-                            'help'	=> $this->bbf('hlp_fm_operators'),
-                            'selected'	=> $this->get_var('voicemail','maxmsg','var_val'),
-                            'default'	=> $element['voicemail']['maxmsg']['default']),
-                        $this->get_var('operators'));
+                            'help'	=> $this->bbf('hlp_fm_operator'),
+                            'selected'	=> $this->get_var('operator',''),
+                            'default'	=> ''),
+                        $this->get_var('operator'));
             endif;
         ?>
 	</div>
