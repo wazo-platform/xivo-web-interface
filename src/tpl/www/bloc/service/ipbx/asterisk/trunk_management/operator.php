@@ -47,7 +47,17 @@ $sort = $this->get_var('sort');
                             'help'	=> $this->bbf('hlp_fm_operator'),
                             'selected'	=> $this->get_var('operator',''),
                             'default'	=> ''),
-                        $this->get_var('operator'));
+                        $this->get_var('operator'),
+                        	 'onchange="alert();"'),
+
+                        $form->text(array('desc'	=> '&nbsp;',
+                          'name'	=> 'protocol[host-static]',
+                          'labelid'	=> 'protocol-host-static',
+                          'size'	=> 15,
+                          'default'	=> $element['protocol']['host-static']['default'],
+                          'value'	=> ($host_static === true ? $host : ''),
+                          'error'	=> $this->bbf_args('error',
+                        $this->get_var('error', 'protocol', 'host-static')) ));
             endif;
         ?>
 	</div>
