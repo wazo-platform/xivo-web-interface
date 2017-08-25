@@ -24,6 +24,7 @@ $dhtml = &$this->get_module('dhtml');
 
 $operator = $this->get_var('operator');
 $configuration = $this->get_var('configuration');
+$operator_id = $_GET['id'];
 
 ?>
 <div class="b-infos">
@@ -39,54 +40,58 @@ $configuration = $this->get_var('configuration');
             <td colspan="7" class="td-single"><?=$this->bbf('no_trunk');?></td>
         <?php
             else:
-//                print_r($configuration);
                 echo    $form->select(array('desc'	=> $this->bbf('operator'),
                             'name'	=> 'operator',
                             'labelid'	=> 'operator',
                             'key'	=> false,
                             'help'	=> $this->bbf('hlp_fm_operator'),
-                            'selected'	=> $operator[''],
+                            'selected'	=> $operator[$operator_id],
                             'default'	=> ''),
                         $operator,
-                        	 'onchange="window.location = window.location + \'?id=\' + this.selectedIndex"'),
-
-                        $form->text(array('desc'	=> $this->bbf('fm_protocol_name'),
-                          'name'	=> 'protocol[name]',
-                          'labelid'	=> 'protocol-name',
-                          'size'	=> 15,
-                          'default'	=> $element['protocol']['name']['default'],
-                          'value'	=> $info['protocol']['name'],
-                          'error'	=> $this->bbf_args('error',
-                                   $this->get_var('error', 'protocol', 'name')) )),
-
-                        $form->text(array('desc'	=> $this->bbf('fm_protocol_username'),
-                          'name'	=> 'protocol[username]',
-                          'labelid'	=> 'protocol-username',
-                          'size'	=> 15,
-                          'default'	=> $element['protocol']['username']['default'],
-                          'value'	=> $info['protocol']['username'],
-                          'error'	=> $this->bbf_args('error',
-                                   $this->get_var('error', 'protocol', 'username')) )),
-
-                        $form->text(array('desc'	=> $this->bbf('fm_protocol_secret'),
-                          'name'	=> 'protocol[secret]',
-                          'labelid'	=> 'protocol-secret',
-                          'size'	=> 15,
-                          'default'	=> $element['protocol']['secret']['default'],
-                          'value'	=> $info['protocol']['secret'],
-                          'error'	=> $this->bbf_args('error',
-                                   $this->get_var('error', 'protocol', 'secret')) )),
-
-                        $form->text(array('desc'	=> $this->bbf('fm_protocol_callerid'),
-                          'name'	=> 'protocol[callerid]',
-                          'labelid'	=> 'protocol-callerid',
-                          'size'	=> 15,
-                          'notag'	=> false,
-                          'default'	=> $element['protocol']['callerid']['default'],
-                          'value'	=> $info['protocol']['callerid'],
-                          'error'	=> $this->bbf_args('error',
-                                   $this->get_var('error', 'protocol', 'callerid')) ));
-
+                        	 'onchange="window.location = window.location + \'?id=\' + this.selectedIndex"');
+                if($operator_id > 0):
+                    if($configuration[$operator_id - 1]['user_config']['trunk']['name']):
+                        echo       $form->text(array('desc'	=> $this->bbf('fm_protocol_name'),
+                              'name'	=> 'protocol[name]',
+                              'labelid'	=> 'protocol-name',
+                              'size'	=> 15,
+                              'default'	=> $element['protocol']['name']['default'],
+                              'value'	=> $info['protocol']['name'],
+                              'error'	=> $this->bbf_args('error',
+                                       $this->get_var('error', 'protocol', 'name')) ));
+                    endif;
+                    if($configuration[$operator_id - 1]['user_config']['trunk']['username']):
+                        echo       $form->text(array('desc'	=> $this->bbf('fm_protocol_username'),
+                              'name'	=> 'protocol[username]',
+                              'labelid'	=> 'protocol-username',
+                              'size'	=> 15,
+                              'default'	=> $element['protocol']['username']['default'],
+                              'value'	=> $info['protocol']['username'],
+                              'error'	=> $this->bbf_args('error',
+                                       $this->get_var('error', 'protocol', 'username')) ));
+                    endif;
+                    if($configuration[$operator_id - 1]['user_config']['trunk']['secret']):
+                        echo       $form->text(array('desc'	=> $this->bbf('fm_protocol_secret'),
+                              'name'	=> 'protocol[secret]',
+                              'labelid'	=> 'protocol-secret',
+                              'size'	=> 15,
+                              'default'	=> $element['protocol']['secret']['default'],
+                              'value'	=> $info['protocol']['secret'],
+                              'error'	=> $this->bbf_args('error',
+                                       $this->get_var('error', 'protocol', 'secret')) ));
+                    endif;
+                    if($configuration[$operator_id - 1]['user_config']['trunk']['callerid']):
+                        echo       $form->text(array('desc'	=> $this->bbf('fm_protocol_callerid'),
+                              'name'	=> 'protocol[callerid]',
+                              'labelid'	=> 'protocol-callerid',
+                              'size'	=> 15,
+                              'notag'	=> false,
+                              'default'	=> $element['protocol']['callerid']['default'],
+                              'value'	=> $info['protocol']['callerid'],
+                              'error'	=> $this->bbf_args('error',
+                                       $this->get_var('error', 'protocol', 'callerid')) ));
+                     endif;
+                endif;
             endif;
         ?>
 	</div>
