@@ -94,6 +94,8 @@ $configuration = $this->get_var('configuration');
                               'error'	=> $this->bbf_args('error',
                                        $this->get_var('error', 'protocol', 'callerid')) ));
                      endif;
+                echo    $form->hidden(array('name'	=> 'fm_send',
+                              'value'	=> 1));
                 endif;
                 echo	$form->submit(array('name'	=> 'submit',
                             'id'	=> 'it-submit',

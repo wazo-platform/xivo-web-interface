@@ -29,6 +29,20 @@ $operator_id = 0;
 
 if(dwho::load_class('dwho_json') === true)
 {
+    $apptrunk = &$ipbx->get_application('trunk',
+                        array('protocol' => XIVO_SRE_IPBX_AST_PROTO_SIP));
+
+    if(isset($_QR['fm_send']) === true && dwho_issa('protocol',$_QR) === true)
+    {
+        if($apptrunk->set_add($_QR) === false
+        || $apptrunk->add() === false)
+        {
+//        }
+//        else
+//        {
+            $_QRY->go($_TPL->url('service/ipbx/trunk_management/sip'),$param);
+        }
+    }
     for($i = 0; $i < $total; $i++):
         $ref = &$list[$i];
         $fh = fopen($ref,'r');
