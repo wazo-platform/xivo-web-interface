@@ -53,6 +53,7 @@ $dhtml->set_js('js/utils/operator.js');
 $_TPL->set_var('configuration',$configuration);
 $_TPL->set_var('operator',$operator);
 $_TPL->set_var('operator_id',$operator_id);
+$_TPL->set_var('fm_save',$fm_save);
 
 $menu = &$_TPL->get_module('menu');
 $menu->set_top('top/user/'.$_USR->get_info('meta'));

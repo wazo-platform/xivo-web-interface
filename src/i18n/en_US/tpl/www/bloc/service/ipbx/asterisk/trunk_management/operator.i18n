@@ -7,6 +7,12 @@ Operator:
 ; no_trunk
 Could not find any operator configuration file
 
+; hlp_fm_form
+This form will create a new SIP trunk and permanently modify general SIP protocol settings if required by the operator
+
+; hlp_fm_operator
+Load configuration file from
+
 ; fm_protocol_name
 Name:
 

@@ -40,11 +40,14 @@ $configuration = $this->get_var('configuration');
             <td colspan="7" class="td-single"><?=$this->bbf('no_trunk');?></td>
         <?php
             else:
+        ?>
+                <form action="#" method="post" accept-charset="utf-8" onsubmit="">
+        <?php
                 echo    $form->select(array('desc'	=> $this->bbf('operator'),
                             'name'	=> 'operator',
                             'labelid'	=> 'operator',
                             'key'	=> false,
-                            'help'	=> $this->bbf('hlp_fm_operator'),
+                            'help'	=> $this->bbf('hlp_fm_operator').'<br>'.XIVO_OPERATOR_SIP_CONFIG_DIR,
                             'selected'	=> $operator[$operator_id],
                             'default'	=> ''),
                         $operator,
@@ -92,7 +95,14 @@ $configuration = $this->get_var('configuration');
                                        $this->get_var('error', 'protocol', 'callerid')) ));
                      endif;
                 endif;
+                echo	$form->submit(array('name'	=> 'submit',
+                            'id'	=> 'it-submit',
+                            'help'	=> $this->bbf('hlp_fm_form'),
+                            'value'	=> $this->bbf('fm_bt-save')));
             endif;
+        ?>
+                </form>
+        <?php
         ?>
 	</div>
 	<div class="sb-foot xspan">
