@@ -14,7 +14,7 @@ This form will create a new SIP trunk and permanently modify general SIP protoco
 Load configuration file from
 
 ; fm_protocol_name
-Name:
+Trunk name:
 
 ; fm_protocol_username
 Authentication username:

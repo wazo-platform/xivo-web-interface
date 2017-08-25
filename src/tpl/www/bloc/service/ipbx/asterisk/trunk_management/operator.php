@@ -25,6 +25,7 @@ $dhtml = &$this->get_module('dhtml');
 $operator = $this->get_var('operator');
 $operator_id = $this->get_var('operator_id');
 $configuration = $this->get_var('configuration');
+$info = $this->get_var('info');
 
 ?>
 <div class="b-infos">
@@ -53,8 +54,7 @@ $configuration = $this->get_var('configuration');
                         $operator,
                         	 'onchange="location.href = \''.$_SERVER[PHP_SELF].'\' + \'?id=\' + this.selectedIndex"');
                 if($operator_id > 0):
-                    if($configuration['user_config']['trunk']['name']):
-                        echo       $form->text(array('desc'	=> $this->bbf('fm_protocol_name'),
+                    echo       $form->text(array('desc'	=> $this->bbf('fm_protocol_name'),
                               'name'	=> 'protocol[name]',
                               'labelid'	=> 'protocol-name',
                               'size'	=> 15,
@@ -62,7 +62,6 @@ $configuration = $this->get_var('configuration');
                               'value'	=> $info['protocol']['name'],
                               'error'	=> $this->bbf_args('error',
                                        $this->get_var('error', 'protocol', 'name')) ));
-                    endif;
                     if($configuration['user_config']['trunk']['username']):
                         echo       $form->text(array('desc'	=> $this->bbf('fm_protocol_username'),
                               'name'	=> 'protocol[username]',
