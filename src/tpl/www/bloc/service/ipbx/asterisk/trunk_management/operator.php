@@ -48,7 +48,7 @@ $configuration = $this->get_var('configuration');
                             'selected'	=> $operator[$operator_id],
                             'default'	=> ''),
                         $operator,
-                        	 'onchange="window.location = window.location + \'?id=\' + this.selectedIndex"');
+                        	 'onchange="location.href = \''.$_SERVER[PHP_SELF].'\' + \'?id=\' + this.selectedIndex"');
                 if($operator_id > 0):
                     if($configuration['user_config']['trunk']['name']):
                         echo       $form->text(array('desc'	=> $this->bbf('fm_protocol_name'),
