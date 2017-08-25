@@ -25,6 +25,7 @@ $list = glob(XIVO_OPERATOR_SIP_CONFIG_DIR.'/*.json');
 $total = count($list);
 $configuration = array();
 $operator = array('');
+$operator_id = 0;
 
 if(dwho::load_class('dwho_json') === true)
 {
@@ -36,7 +37,12 @@ if(dwho::load_class('dwho_json') === true)
 
         if(($data = dwho_json::decode($json,true)) !== false)
         {
-            $configuration[] = $data;
+            if(isset($_QR['id']) === true
+            && $_QR['id'] == $i + 1)
+            {
+                $operator_id = $i + 1;
+                $configuration = $data;
+            }
             $operator[] = $data['operator_config']['trunk']['name'];
         }
     endfor;
@@ -46,6 +52,7 @@ $dhtml->set_js('js/utils/operator.js');
 
 $_TPL->set_var('configuration',$configuration);
 $_TPL->set_var('operator',$operator);
+$_TPL->set_var('operator_id',$operator_id);
 
 $menu = &$_TPL->get_module('menu');
 $menu->set_top('top/user/'.$_USR->get_info('meta'));
