@@ -33,6 +33,8 @@ if(dwho::load_class('dwho_json') === true)
     $apptrunk = &$ipbx->get_application('trunk',
                         array('protocol' => XIVO_SRE_IPBX_AST_PROTO_SIP));
 
+    $result = $fm_save = $error = null;
+
     if(isset($_QR['fm_send']) === true && dwho_issa('protocol',$_QR) === true)
     {
         if(isset($_QR['protocol']['transport']) === false)
@@ -53,22 +55,31 @@ if(dwho::load_class('dwho_json') === true)
             $_QRY->go($_TPL->url('service/ipbx/trunk_management/sip'),$param);
         }
     }
-    for($i = 0; $i < $total; $i++):
+    for($i = $id = 0; $i < $total; $i++):
         $ref = &$list[$i];
-        $fh = fopen($ref,'r');
-        $json = fread($fh, XIVO_OPERATOR_SIP_CONFIG_MAX_BYTES);
-        fclose($fh);
-
-        if(($data = dwho_json::decode($json,true)) !== false)
+        $filesize = filesize($ref);
+        if($filesize < XIVO_OPERATOR_SIP_CONFIG_MAX_BYTES)
         {
-            if(isset($_QR['id']) === true
-            && $_QR['id'] == $i + 1)
+            $fh = fopen($ref,'r');
+            $json = fread($fh, $filesize);
+            fclose($fh);
+            if(($data = dwho_json::decode($json,true)) !== false
+            && count($data) > 0)
             {
-                $operator_id = $i + 1;
-                $configuration = $data;
+                $id += 1;
+                if(isset($_QR['id']) === true
+                && $_QR['id'] == $id)
+                {
+                    $operator_id = $id;
+                    $configuration = $data;
+                }
+                $operator[] = $data['operator_name'];
             }
-            $operator[] = $data['operator_name'];
+            else
+                dwho_report::push('error', 'Error loading one or more configuration files. No data after decoding.');
         }
+        else
+            dwho_report::push('error', 'Error loading one or more configuration files. File size exceeds limit.');
     endfor;
 }
 
