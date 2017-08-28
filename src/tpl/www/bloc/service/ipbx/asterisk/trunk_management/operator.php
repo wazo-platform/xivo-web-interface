@@ -24,6 +24,7 @@ $dhtml = &$this->get_module('dhtml');
 $operator = $this->get_var('operator');
 $operator_id = $this->get_var('operator_id');
 $configuration = $this->get_var('configuration');
+$protocol = $this->get_var('protocol');
 
 ?>
 <div class="b-infos">
@@ -42,6 +43,11 @@ $configuration = $this->get_var('configuration');
         ?>
             <form action="#" method="post" accept-charset="utf-8" onsubmit="">
         <?php
+                foreach($protocol as $key => $value)
+                {
+                    echo   $form->hidden(array('name'	=> 'protocol['.$key.']',
+                                'value'	=> $value));
+                }
                 echo    $form->select(array('desc'	=> $this->bbf('operator'),
                             'name'	=> 'operator',
                             'labelid'	=> 'operator',
@@ -56,7 +62,7 @@ $configuration = $this->get_var('configuration');
                               'name'	=> 'protocol[name]',
                               'labelid'	=> 'protocol-name',
                               'size'	=> 15,
-                              'value'	=> $configuration['operator_config']['trunk']['name'],
+                              'value'	=> $configuration['user_config']['trunk']['name'],
                               'error'	=> $this->bbf_args('error',
                                        $this->get_var('error', 'protocol', 'name')) ));
                     if($configuration['user_config']['trunk']['username']):

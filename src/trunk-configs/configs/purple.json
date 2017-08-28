@@ -3,8 +3,7 @@
   "operator_name": "Purple",
   "operator_config": {
     "trunk": {
-      "name": "trunk-purple",
-      "callerID": "PURPLE"
+      "callerid": "PURPLE"
     },
     "sip": {
       "jbforce": "true"
@@ -12,6 +11,7 @@
   },
   "user_config": {
     "trunk": {
+      "name": "trunk-purple",
       "username": "Avencall",
       "secret": "54321"
     }
