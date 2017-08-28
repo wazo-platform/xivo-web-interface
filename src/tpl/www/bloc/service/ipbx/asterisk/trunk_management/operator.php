@@ -42,7 +42,7 @@ $info = $this->get_var('info');
         <?php
             else:
         ?>
-                <form action="#" method="post" accept-charset="utf-8" onsubmit="">
+            <form action="#" method="post" accept-charset="utf-8" onsubmit="">
         <?php
                 echo    $form->select(array('desc'	=> $this->bbf('operator'),
                             'name'	=> 'operator',
@@ -94,7 +94,9 @@ $info = $this->get_var('info');
                                        $this->get_var('error', 'protocol', 'callerid')) ));
                      endif;
                 echo    $form->hidden(array('name'	=> 'fm_send',
-                              'value'	=> 1));
+                            'value'	=> 1)),
+                        $form->hidden(array('name'	=> 'act',
+                            'value'	=> 'add'));
                 endif;
                 echo	$form->submit(array('name'	=> 'submit',
                             'id'	=> 'it-submit',
@@ -102,9 +104,7 @@ $info = $this->get_var('info');
                             'value'	=> $this->bbf('fm_bt-save')));
             endif;
         ?>
-                </form>
-        <?php
-        ?>
+            </form>
 	</div>
 	<div class="sb-foot xspan">
 		<span class="span-left">&nbsp;</span>

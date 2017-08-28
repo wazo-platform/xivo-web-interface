@@ -27,63 +27,6 @@ $configuration = array();
 $operator = array('');
 $operator_id = 0;
 
-$trunk_options = [
-    "name",
-    "username",
-    "secret",
-    "callerid",
-    "call-limit",
-    "type",
-    "host-type",
-    "context",
-    "language",
-    "nat",
-    "progressinband",
-    "dtmfmode",
-    "rfc2833compensate",
-    "qualify",
-    "qualifyfreq",
-    "rtptimeout",
-    "rtpholdtimeout",
-    "rtpkeepalive",
-    "allowtransfer",
-    "autoframing",
-    "videosupport",
-    "outboundproxy",
-    "maxcallbitrate",
-    "g726nonstandard",
-    "timert1",
-    "timerb",
-    "ignoresdpversion",
-    "session-timers",
-    "session-expires",
-    "session-minse",
-    "session-refresher",
-    "insecure",
-    "port",
-    "permit",
-    "deny",
-    "trustrpid",
-    "sendrpid",
-    "allowsubscribe",
-    "allowoverlap",
-    "promiscredir",
-    "usereqphone",
-    "directmedia",
-    "fromuser",
-    "fromdomain",
-    "amaflags",
-    "accountcode",
-    "useclientcode",
-    "transport",
-    "remotesecret",
-    "callcounter",
-    "busylevel",
-    "callbackextension",
-    "contactpermit",
-    "contactdeny"
-];
-
 
 if(dwho::load_class('dwho_json') === true)
 {
@@ -92,23 +35,21 @@ if(dwho::load_class('dwho_json') === true)
 
     if(isset($_QR['fm_send']) === true && dwho_issa('protocol',$_QR) === true)
     {
-    	$nb = count($trunk_options);
-		for($i = 0;$i < $nb;$i++)
-        {
-            $option = $trunk_options[$i];
-            if(dwho_issa($_QR['protocol'],$option) === false)
-            {
-                $_QR['protocol'][$option] = '';
-            }
-        }
+        if(isset($_QR['protocol']['transport']) === false)
+            $_QR['protocol']['transport'] = 'udp';
+
+        if(dwho_issa('trunkfeatures',$_QR) === false)
+            $_QR['trunkfeatures'] = Array();
+
         if($apptrunk->set_add($_QR) === false
         || $apptrunk->add() === false)
         {
-//        }
-//        else
-//        {
-            print_r($_QR);
-            die;
+				$fm_save = false;
+				$result = $apptrunk->get_result();
+				$error = $apptrunk->get_error();
+        }
+        else
+        {
             $_QRY->go($_TPL->url('service/ipbx/trunk_management/sip'),$param);
         }
     }
