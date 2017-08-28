@@ -84,6 +84,9 @@ H.263+ (Vidéo)
 ; ast_codec_name_type(h264)
 H.264 (Vidéo)
 
+; ast_codec_name_type(vp8)
+VP8 (Vidéo)
+
 ; ast_format_name_info(g729)
 G729
 
