@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright 2006-2016 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2006-2017 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -64,6 +64,7 @@ define('XIVO_SRE_IPBX_AST_CODEC_VIDEO_H261','h261');
 define('XIVO_SRE_IPBX_AST_CODEC_VIDEO_H263','h263');
 define('XIVO_SRE_IPBX_AST_CODEC_VIDEO_H263P','h263p');
 define('XIVO_SRE_IPBX_AST_CODEC_VIDEO_H264','h264');
+define('XIVO_SRE_IPBX_AST_CODEC_VIDEO_VP8','vp8');
 
 define('XIVO_SRE_IPBX_AST_FORMAT_AUDIO_G729','g729');
 define('XIVO_SRE_IPBX_AST_FORMAT_AUDIO_WAV','wav');

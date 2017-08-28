@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright 2006-2016 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2006-2017 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -960,7 +960,8 @@ class xivo_service_asterisk extends xivo_service_abstract
 			     XIVO_SRE_IPBX_AST_CODEC_VIDEO_H261,
 			     XIVO_SRE_IPBX_AST_CODEC_VIDEO_H263,
 			     XIVO_SRE_IPBX_AST_CODEC_VIDEO_H263P,
-			     XIVO_SRE_IPBX_AST_CODEC_VIDEO_H264));
+			     XIVO_SRE_IPBX_AST_CODEC_VIDEO_H264,
+			     XIVO_SRE_IPBX_AST_CODEC_VIDEO_VP8));
 	}
 
 	public function get_sccp_codecs_list()
