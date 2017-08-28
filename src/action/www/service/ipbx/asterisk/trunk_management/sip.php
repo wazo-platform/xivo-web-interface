@@ -59,8 +59,6 @@ switch($act)
 			}
 			else
 			{
-			    print_r($_QR);
-			    die;
 				$_QRY->go($_TPL->url('service/ipbx/trunk_management/sip'),$param);
 			}
 		}
