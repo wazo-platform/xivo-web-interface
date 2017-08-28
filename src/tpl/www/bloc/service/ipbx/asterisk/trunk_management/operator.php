@@ -18,14 +18,12 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-$url = &$this->get_module('url');
 $form = &$this->get_module('form');
 $dhtml = &$this->get_module('dhtml');
 
 $operator = $this->get_var('operator');
 $operator_id = $this->get_var('operator_id');
 $configuration = $this->get_var('configuration');
-$info = $this->get_var('info');
 
 ?>
 <div class="b-infos">
@@ -58,8 +56,7 @@ $info = $this->get_var('info');
                               'name'	=> 'protocol[name]',
                               'labelid'	=> 'protocol-name',
                               'size'	=> 15,
-                              'default'	=> $element['protocol']['name']['default'],
-                              'value'	=> $info['protocol']['name'],
+                              'value'	=> $configuration['operator_config']['trunk']['name'],
                               'error'	=> $this->bbf_args('error',
                                        $this->get_var('error', 'protocol', 'name')) ));
                     if($configuration['user_config']['trunk']['username']):
@@ -67,8 +64,7 @@ $info = $this->get_var('info');
                               'name'	=> 'protocol[username]',
                               'labelid'	=> 'protocol-username',
                               'size'	=> 15,
-                              'default'	=> $element['protocol']['username']['default'],
-                              'value'	=> $info['protocol']['username'],
+                              'value'	=> $configuration['user_config']['trunk']['username'],
                               'error'	=> $this->bbf_args('error',
                                        $this->get_var('error', 'protocol', 'username')) ));
                     endif;
@@ -77,8 +73,7 @@ $info = $this->get_var('info');
                               'name'	=> 'protocol[secret]',
                               'labelid'	=> 'protocol-secret',
                               'size'	=> 15,
-                              'default'	=> $element['protocol']['secret']['default'],
-                              'value'	=> $info['protocol']['secret'],
+                              'value'	=> $configuration['user_config']['trunk']['secret'],
                               'error'	=> $this->bbf_args('error',
                                        $this->get_var('error', 'protocol', 'secret')) ));
                     endif;
@@ -88,8 +83,7 @@ $info = $this->get_var('info');
                               'labelid'	=> 'protocol-callerid',
                               'size'	=> 15,
                               'notag'	=> false,
-                              'default'	=> $element['protocol']['callerid']['default'],
-                              'value'	=> $info['protocol']['callerid'],
+                              'value'	=> $configuration['user_config']['trunk']['callerid'],
                               'error'	=> $this->bbf_args('error',
                                        $this->get_var('error', 'protocol', 'callerid')) ));
                      endif;

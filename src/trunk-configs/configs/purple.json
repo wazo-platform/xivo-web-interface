@@ -1,8 +1,9 @@
 {
   "version": "1.0",
+  "operator_name": "Purple",
   "operator_config": {
     "trunk": {
-      "name": "Purple",
+      "name": "trunk-purple",
       "callerID": "PURPLE"
     },
     "sip": {

@@ -67,7 +67,7 @@ if(dwho::load_class('dwho_json') === true)
                 $operator_id = $i + 1;
                 $configuration = $data;
             }
-            $operator[] = $data['operator_config']['trunk']['name'];
+            $operator[] = $data['operator_name'];
         }
     endfor;
 }
