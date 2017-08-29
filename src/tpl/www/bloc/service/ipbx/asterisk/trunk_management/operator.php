@@ -25,6 +25,7 @@ $operator = $this->get_var('operator');
 $operator_id = $this->get_var('operator_id');
 $configuration = $this->get_var('configuration');
 $protocol = $this->get_var('protocol');
+$user_protocol = $configuration['user_config']['trunk'];
 
 ?>
 <div class="b-infos">
@@ -58,41 +59,16 @@ $protocol = $this->get_var('protocol');
                         $operator,
                         	 'onchange="location.href = \''.$_SERVER[PHP_SELF].'\' + \'?id=\' + this.selectedIndex"');
                 if($operator_id > 0):
-                    echo       $form->text(array('desc'	=> $this->bbf('fm_protocol_name'),
-                              'name'	=> 'protocol[name]',
-                              'labelid'	=> 'protocol-name',
-                              'size'	=> 15,
-                              'value'	=> $configuration['user_config']['trunk']['name'],
-                              'error'	=> $this->bbf_args('error',
-                                       $this->get_var('error', 'protocol', 'name')) ));
-                    if($configuration['user_config']['trunk']['username']):
-                        echo       $form->text(array('desc'	=> $this->bbf('fm_protocol_username'),
-                              'name'	=> 'protocol[username]',
-                              'labelid'	=> 'protocol-username',
-                              'size'	=> 15,
-                              'value'	=> $configuration['user_config']['trunk']['username'],
-                              'error'	=> $this->bbf_args('error',
-                                       $this->get_var('error', 'protocol', 'username')) ));
-                    endif;
-                    if($configuration['user_config']['trunk']['secret']):
-                        echo       $form->text(array('desc'	=> $this->bbf('fm_protocol_secret'),
-                              'name'	=> 'protocol[secret]',
-                              'labelid'	=> 'protocol-secret',
-                              'size'	=> 15,
-                              'value'	=> $configuration['user_config']['trunk']['secret'],
-                              'error'	=> $this->bbf_args('error',
-                                       $this->get_var('error', 'protocol', 'secret')) ));
-                    endif;
-                    if($configuration['user_config']['trunk']['callerid']):
-                        echo       $form->text(array('desc'	=> $this->bbf('fm_protocol_callerid'),
-                              'name'	=> 'protocol[callerid]',
-                              'labelid'	=> 'protocol-callerid',
-                              'size'	=> 15,
-                              'notag'	=> false,
-                              'value'	=> $configuration['user_config']['trunk']['callerid'],
-                              'error'	=> $this->bbf_args('error',
-                                       $this->get_var('error', 'protocol', 'callerid')) ));
-                     endif;
+                    foreach($user_protocol as $key => $value)
+                    {
+                        echo       $form->text(array('desc'	=> $this->bbf('fm_protocol_'.$key),
+                                  'name'	=> 'protocol['.$key.']',
+                                  'labelid'	=> 'protocol-'.$key,
+                                  'size'	=> 15,
+                                  'value'	=> $value,
+                                  'error'	=> $this->bbf_args('error',
+                                           $this->get_var('error', 'protocol', $key)) ));
+                    }
                 echo    $form->hidden(array('name'	=> 'fm_send',
                             'value'	=> 1)),
                         $form->hidden(array('name'	=> 'act',
