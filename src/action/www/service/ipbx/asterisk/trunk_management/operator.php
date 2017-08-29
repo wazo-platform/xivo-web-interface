@@ -79,6 +79,10 @@ if(dwho::load_class('dwho_json') === true)
         else
             dwho_report::push('error', 'Error loading one or more configuration files. File size exceeds limit.');
     endfor;
+
+    if(isset($_QR['id']) === true
+    && $operator_id === 0)
+        $_QRY->go($_TPL->url('service/ipbx/trunk_management/operator'),$param);
 }
 
 $dhtml->set_js('js/utils/operator.js');
