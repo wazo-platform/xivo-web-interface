@@ -212,7 +212,7 @@ IAX Protocol
 SIP Protocol
 
 ; acl(service-ipbx-trunk_management-operator)
-Operator
+SIP Operator
 
 ; acl(service-monitoring)
 Monitoring
