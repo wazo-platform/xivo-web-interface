@@ -12,7 +12,7 @@
   "user_config": {
     "trunk": {
       "name": "trunk-orange",
-      "secret": "12345"
+      "secret": ""
     }
   }
 }

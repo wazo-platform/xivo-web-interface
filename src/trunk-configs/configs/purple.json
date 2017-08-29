@@ -12,8 +12,8 @@
   "user_config": {
     "trunk": {
       "name": "trunk-purple",
-      "username": "Avencall",
-      "secret": "54321"
+      "username": "",
+      "secret": ""
     }
   }
 }
