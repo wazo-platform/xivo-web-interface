@@ -19,7 +19,6 @@
 #
 
 $form = &$this->get_module('form');
-$dhtml = &$this->get_module('dhtml');
 
 $operator = $this->get_var('operator');
 $operator_id = $this->get_var('operator_id');

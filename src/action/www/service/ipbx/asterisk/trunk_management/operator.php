@@ -48,9 +48,7 @@ if(dwho::load_class('dwho_json') === true)
 				$error = $apptrunk->get_error();
         }
         else
-        {
-            $_QRY->go($_TPL->url('service/ipbx/trunk_management/sip'),$param);
-        }
+            $_QRY->go($_TPL->url('service/ipbx/trunk_management/sip'));
     }
     for($i = $id = 0; $i < $total; $i++):
         $ref = &$list[$i];
@@ -82,10 +80,8 @@ if(dwho::load_class('dwho_json') === true)
 
     if(isset($_QR['id']) === true
     && $operator_id === 0)
-        $_QRY->go($_TPL->url('service/ipbx/trunk_management/operator'),$param);
+        $_QRY->go($_TPL->url('service/ipbx/trunk_management/operator'));
 }
-
-$dhtml->set_js('js/utils/operator.js');
 
 $_TPL->set_var('configuration',$configuration);
 $_TPL->set_var('operator',$operator);
