@@ -12,15 +12,3 @@ This form will create a new SIP trunk and permanently modify general SIP protoco
 
 ; hlp_fm_operator
 Load configuration file from
-
-; fm_protocol_name
-Trunk name:
-
-; fm_protocol_username
-Authentication username:
-
-; fm_protocol_secret
-Password:
-
-; fm_protocol_callerid
-Caller ID:

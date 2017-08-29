@@ -62,6 +62,8 @@ $user_protocol = $configuration['user_config']['trunk'];
                         $operator,
                         	 'onchange="location.href = \''.$_SERVER[PHP_SELF].'\' + \'?id=\' + this.selectedIndex"');
                 if($operator_id > 0):
+                    $_I18N = dwho_gct::get('dwho_i18n');
+                    $_I18N->load_file('tpl/www/bloc/service/ipbx/asterisk/trunk_management/sip/add.php');
                     foreach($user_protocol as $key => $value)
                     {
                         echo       $form->text(array('desc'	=> $this->bbf('fm_protocol_'.$key),
