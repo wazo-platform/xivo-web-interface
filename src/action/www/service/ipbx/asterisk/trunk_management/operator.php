@@ -18,9 +18,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-// TODO: replace with $appoperator
-//$list = $appoperator->get_operator_list($search,$limit);
-//$total = $appoperator->get_cnt();
 $list = glob(XIVO_OPERATOR_SIP_CONFIG_DIR.'/*.json');
 $total = count($list);
 $configuration = array();
