@@ -982,13 +982,6 @@ class xivo_application_service_asterisk_trunk extends xivo_application_asterisk_
 
 		return(true);
 	}
-
-	function chk_dir_not_empty($path='',$mask='*')
-	{
-		$count = count(glob("$path/$mask"));
-
-		return($count > 0);
-	}
 }
 
 ?>
