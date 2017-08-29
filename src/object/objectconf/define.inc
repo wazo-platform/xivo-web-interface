@@ -34,7 +34,7 @@ if (file_exists($file_version_lts)) {
 		$xivo_version = $xivo_version_lts." (".$xivo_version.")";
 }
 
-define('XIVO_OPERATOR_SIP_CONFIG_DIR','/usr/share/xivo-web-interface/trunk-configs/configs');
+define('XIVO_OPERATOR_SIP_CONFIG_DIR','/usr/share/xivo-web-interface/trunk-configs');
 define('XIVO_OPERATOR_SIP_CONFIG_MAX_BYTES','200000');
 define('DWHO_LABEL_CUSTOM','XIVO-WEBI');
 
