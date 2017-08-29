@@ -46,8 +46,11 @@ $user_protocol = $configuration['user_config']['trunk'];
         <?php
                 foreach($protocol as $key => $value)
                 {
-                    echo   $form->hidden(array('name'	=> 'protocol['.$key.']',
-                                'value'	=> $value));
+                    if(isset($user_protocol[$key]) === false)
+                    {
+                        echo   $form->hidden(array('name'	=> 'protocol['.$key.']',
+                                    'value'	=> $value));
+                    }
                 }
                 echo    $form->select(array('desc'	=> $this->bbf('operator'),
                             'name'	=> 'operator',
@@ -69,10 +72,10 @@ $user_protocol = $configuration['user_config']['trunk'];
                                   'error'	=> $this->bbf_args('error',
                                            $this->get_var('error', 'protocol', $key)) ));
                     }
-                echo    $form->hidden(array('name'	=> 'fm_send',
-                            'value'	=> 1)),
-                        $form->hidden(array('name'	=> 'act',
-                            'value'	=> 'add'));
+                    echo    $form->hidden(array('name'	=> 'fm_send',
+                                'value'	=> 1)),
+                            $form->hidden(array('name'	=> 'act',
+                                'value'	=> 'add'));
                 endif;
                 echo	$form->submit(array('name'	=> 'submit',
                             'id'	=> 'it-submit',
