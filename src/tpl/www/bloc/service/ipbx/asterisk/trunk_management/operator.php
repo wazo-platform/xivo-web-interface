@@ -23,7 +23,7 @@ $form = &$this->get_module('form');
 $operator = $this->get_var('operator');
 $operator_id = $this->get_var('operator_id');
 $configuration = $this->get_var('configuration');
-$protocol = $this->get_var('protocol');
+$protocol = $configuration['operator_config']['trunk'];
 $user_protocol = $configuration['user_config']['trunk'];
 
 ?>
