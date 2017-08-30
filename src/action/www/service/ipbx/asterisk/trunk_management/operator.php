@@ -85,6 +85,18 @@ if(dwho::load_class('dwho_json') === true)
         $_QRY->go($_TPL->url('service/ipbx/trunk_management/operator'));
 }
 
+if(isset($configuration) === true)
+{
+    $operator_protocol = $configuration['operator_config']['trunk'];
+    $user_protocol = $configuration['user_config']['trunk'];
+
+    foreach($operator_protocol as $key => $value)
+    {
+        if(isset($user_protocol[$key]) === true)
+            dwho_report::push('error', 'Duplicate parameter "'.$key.'" in operator configuration file');
+    }
+}
+
 $_TPL->set_var('configuration',$configuration);
 $_TPL->set_var('operator',$operator);
 $_TPL->set_var('operator_id',$operator_id);
