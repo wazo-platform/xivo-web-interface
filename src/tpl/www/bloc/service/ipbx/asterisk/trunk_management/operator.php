@@ -23,7 +23,8 @@ $form = &$this->get_module('form');
 $operator = $this->get_var('operator');
 $operator_id = $this->get_var('operator_id');
 $configuration = $this->get_var('configuration');
-$protocol = $configuration['operator_config']['trunk'];
+$protocol = $this->get_var('protocol');
+$operator_protocol = $configuration['operator_config']['trunk'];
 $user_protocol = $configuration['user_config']['trunk'];
 
 ?>
@@ -43,7 +44,7 @@ $user_protocol = $configuration['user_config']['trunk'];
         ?>
             <form action="#" method="post" accept-charset="utf-8" onsubmit="">
         <?php
-                foreach($protocol as $key => $value)
+                foreach($operator_protocol as $key => $value)
                 {
                     if(isset($user_protocol[$key]) === false)
                     {
@@ -65,6 +66,9 @@ $user_protocol = $configuration['user_config']['trunk'];
                     $_I18N->load_file('tpl/www/bloc/service/ipbx/asterisk/trunk_management/sip/add.php');
                     foreach($user_protocol as $key => $value)
                     {
+                        if(isset($protocol[$key]) === true)
+                            $value = $protocol[$key];
+
                         echo       $form->text(array('desc'	=> $this->bbf('fm_protocol_'.$key),
                                   'name'	=> 'protocol['.$key.']',
                                   'labelid'	=> 'protocol-'.$key,
@@ -77,6 +81,8 @@ $user_protocol = $configuration['user_config']['trunk'];
                                 'value'	=> 1)),
                             $form->hidden(array('name'	=> 'act',
                                 'value'	=> 'add'));
+                    echo    $form->hidden(array('name'	=> 'id',
+                                'value'	=> $operator_id));
                 endif;
                 echo	$form->submit(array('name'	=> 'submit',
                             'id'	=> 'it-submit',
