@@ -5,7 +5,7 @@ SIP Operator properties
 Operator:
 
 ; no_trunk
-Could not find any operator configuration file
+No SIP operator configuration files found. Please read documentation or contact Avencall.
 
 ; hlp_fm_form
 This form will create a new SIP trunk and permanently modify general SIP protocol settings if required by the operator

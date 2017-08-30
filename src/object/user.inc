@@ -237,13 +237,6 @@ class xivo_user
 		return($r);
 	}
 
-	function chk_dir_not_empty($path='',$mask='*')
-	{
-		$count = count(glob("$path/$mask"));
-
-		return($count > 0);
-	}
-
 	function logoff()
 	{
 		session_unset();

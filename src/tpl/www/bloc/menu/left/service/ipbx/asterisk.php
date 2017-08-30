@@ -208,8 +208,7 @@ $dhtml = &$this->get_module('dhtml');
 				'</dd>';
 		endif;
 
-		if(xivo_user::chk_acl('trunk_management','operator') === true
-		&& xivo_user::chk_dir_not_empty(XIVO_OPERATOR_SIP_CONFIG_DIR)):
+		if(xivo_user::chk_acl('trunk_management','operator') === true):
 			echo	'<dd id="mn-trunk-management--operator">',
 				$url->href_html($this->bbf('mn_left_trunkmanagement-operator'),
 						'service/ipbx/trunk_management/operator'),

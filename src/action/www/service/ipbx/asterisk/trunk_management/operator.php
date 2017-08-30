@@ -21,8 +21,11 @@
 $list = glob(XIVO_OPERATOR_SIP_CONFIG_DIR.'/*.json');
 $total = count($list);
 $configuration = array();
-$operator = array('');
+$operator = array();
 $operator_id = 0;
+
+if($total > 0)
+    $operator[] = '';
 
 
 if(dwho::load_class('dwho_json') === true)
