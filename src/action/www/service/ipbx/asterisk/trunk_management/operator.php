@@ -89,6 +89,7 @@ $_TPL->set_var('configuration',$configuration);
 $_TPL->set_var('operator',$operator);
 $_TPL->set_var('operator_id',$operator_id);
 $_TPL->set_var('fm_save',$fm_save);
+$_TPL->set_var('error',$error);
 
 $menu = &$_TPL->get_module('menu');
 $menu->set_top('top/user/'.$_USR->get_info('meta'));
