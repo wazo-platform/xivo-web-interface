@@ -21,7 +21,7 @@
 $form = &$this->get_module('form');
 
 $operator = $this->get_var('operator');
-$operator_id = $this->get_var('operator_id');
+$operator_index = $this->get_var('operator_index');
 $configuration = $this->get_var('configuration');
 $protocol = $this->get_var('protocol');
 $operator_protocol = $configuration['operator_config']['trunk'];
@@ -57,11 +57,11 @@ $user_protocol = $configuration['user_config']['trunk'];
                             'labelid'	=> 'operator',
                             'key'	=> false,
                             'help'	=> $this->bbf('hlp_fm_operator').'<br>'.XIVO_OPERATOR_SIP_CONFIG_DIR,
-                            'selected'	=> $operator[$operator_id],
+                            'selected'	=> $operator[$operator_index],
                             'default'	=> ''),
                         $operator,
-                        	 'onchange="location.href = \''.$_SERVER[PHP_SELF].'\' + \'?id=\' + this.selectedIndex"');
-                if($operator_id > 0):
+                        	 'onchange="location.href = \''.$_SERVER[PHP_SELF].'\' + \'?index=\' + this.selectedIndex"');
+                if($operator_index > 0):
                     $_I18N = dwho_gct::get('dwho_i18n');
                     $_I18N->load_file('tpl/www/bloc/service/ipbx/asterisk/trunk_management/sip/add.php');
                     foreach($user_protocol as $key => $value)
@@ -81,8 +81,8 @@ $user_protocol = $configuration['user_config']['trunk'];
                                 'value'	=> 1)),
                             $form->hidden(array('name'	=> 'act',
                                 'value'	=> 'add'));
-                    echo    $form->hidden(array('name'	=> 'id',
-                                'value'	=> $operator_id));
+                    echo    $form->hidden(array('name'	=> 'index',
+                                'value'	=> $operator_index));
                 endif;
                 echo	$form->submit(array('name'	=> 'submit',
                             'id'	=> 'it-submit',

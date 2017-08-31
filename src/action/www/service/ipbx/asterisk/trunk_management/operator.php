@@ -22,7 +22,7 @@ $list = glob(XIVO_OPERATOR_SIP_CONFIG_DIR.'/*.json');
 $total = count($list);
 $configuration = array();
 $operator = array();
-$operator_id = 0;
+$operator_index = 0;
 
 if($total > 0)
     $operator[] = '';
@@ -53,7 +53,7 @@ if(dwho::load_class('dwho_json') === true)
         else
             $_QRY->go($_TPL->url('service/ipbx/trunk_management/sip'));
     }
-    for($i = $id = 0; $i < $total; $i++):
+    for($i = $index = 0; $i < $total; $i++):
         $ref = &$list[$i];
         $filesize = filesize($ref);
         if($filesize < XIVO_OPERATOR_SIP_CONFIG_MAX_BYTES)
@@ -64,11 +64,11 @@ if(dwho::load_class('dwho_json') === true)
             if(($data = dwho_json::decode($json,true)) !== false
             && count($data) > 0)
             {
-                $id += 1;
-                if(isset($_QR['id']) === true
-                && $_QR['id'] == $id)
+                $index += 1;
+                if(isset($_QR['index']) === true
+                && $_QR['index'] == $index)
                 {
-                    $operator_id = $id;
+                    $operator_index = $index;
                     $configuration = $data;
                 }
                 $operator[] = $data['operator_name'];
@@ -80,8 +80,8 @@ if(dwho::load_class('dwho_json') === true)
             dwho_report::push('error', 'Error loading one or more configuration files. File size exceeds limit.');
     endfor;
 
-    if(isset($_QR['id']) === true
-    && $operator_id === 0)
+    if(isset($_QR['index']) === true
+    && $operator_index === 0)
         $_QRY->go($_TPL->url('service/ipbx/trunk_management/operator'));
 }
 
@@ -99,7 +99,7 @@ if(isset($configuration) === true)
 
 $_TPL->set_var('configuration',$configuration);
 $_TPL->set_var('operator',$operator);
-$_TPL->set_var('operator_id',$operator_id);
+$_TPL->set_var('operator_index',$operator_index);
 $_TPL->set_var('fm_save',$fm_save);
 $_TPL->set_var('error',$error);
 $_TPL->set_var('protocol',$_QR['protocol']);
