@@ -1,5 +1,14 @@
+; title_content_name
+Paramètres de l'opérateur SIP
+
 ; operator
 Opérateur
 
 ; no_trunk
-Aucune configuration de l'opérateur trouvée
+Aucun fichier de configuration d'opérateur SIP trouvé. Merci de consulter la documentation ou de contacter Avencall.
+
+; hlp_fm_form
+Ce formulaire va créer un nouveau trunk SIP et modifiera de façon permanente les options générales du protocole SIP si cela est requis par l'opérateur
+
+; hlp_fm_operator
+Charge les fichiers de configuration de
