@@ -1,5 +1,11 @@
 xivo-web-interface (2017.10.00) xivo-dev; urgency=medium
 
+  * Simplify trunk configuration for SIP operator
+
+ -- Vojtech Sodoma <vsodoma@avencall.com>  Fri, 01 Sep 2017 10:38:21 +0200
+
+xivo-web-interface (2017.10.00) xivo-dev; urgency=medium
+
   * Set default values for new user:
     - Ringing time : 20
     - Simultaneous calls : 2
