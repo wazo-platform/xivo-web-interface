@@ -4,6 +4,14 @@ xivo-web-interface (2017.10.00) xivo-dev; urgency=medium
 
  -- Vojtech Sodoma <vsodoma@avencall.com>  Fri, 01 Sep 2017 10:38:21 +0200
 
+xivo-web-interface (2017.10.00) xivo-dev; urgency=medium
+
+  * Set default values for new user:
+    - Ringing time : 20
+    - Simultaneous calls : 2
+
+ -- Vojtech Sodoma <vsodoma@avencall.com>  Tue, 05 Sep 2017 10:15:56 +0200
+
 xivo-web-interface (2017.09.00) xivo-dev; urgency=medium
 
   * Fix adding template device

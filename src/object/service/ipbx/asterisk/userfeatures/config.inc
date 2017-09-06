@@ -44,12 +44,12 @@ $array['element']['agentid']['null'] = true;
 
 $array['element']['ringseconds'] = array();
 $array['element']['ringseconds']['value'] = array(0,5,10,15,20,25,30,35,40,45,50,55,60);
-$array['element']['ringseconds']['default'] = 30;
+$array['element']['ringseconds']['default'] = 20;
 $array['element']['ringseconds']['setdef'] = true;
 
 $array['element']['simultcalls'] = array();
 $array['element']['simultcalls']['value'] = array(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20);
-$array['element']['simultcalls']['default'] = 5;
+$array['element']['simultcalls']['default'] = 2;
 $array['element']['simultcalls']['setdef'] = true;
 
 $array['element']['enableclient'] = array();
