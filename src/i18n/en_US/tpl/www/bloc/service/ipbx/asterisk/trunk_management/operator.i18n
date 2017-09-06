@@ -1,0 +1,14 @@
+; title_content_name
+SIP Operator properties
+
+; operator
+Operator:
+
+; no_trunk
+No SIP operator configuration files found. Please read documentation or contact XiVO.Solutions.
+
+; hlp_fm_form
+This form will create a new SIP trunk pre-configured for this operator. It may also modify general SIP protocol settings if required by the operator.
+
+; hlp_fm_operator
+Configuration loaded from

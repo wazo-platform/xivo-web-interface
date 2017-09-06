@@ -29,7 +29,7 @@ DOCKER (default: 1) enables the starting/stopping of docker containers for each
 ```
 
 
-# To develop
+# To develop - using sshfs
 
 Here's the process one can use to develop:
 1. Clone projet
@@ -46,4 +46,22 @@ sshfs -o allow_other <MY_USER>@<MY_LAPTOP>:/path/to/GIT/xivo.solutions/xivo-web-
 ```
 
 Then all changes made in git are on the xivo (you need to install sshfs on your laptop and the xivo).
+
+
+# To develop - using nfs
+
+On laptop:
+
+1. Install nfs-kernel-server
+1. Change owner of xivo-web-interface directory to nobody:nogroup
+1. Add row to file /etc/exports
+
+	/PATH_TO/xivo-web-interface/src  XIVO_IP(rw,sync,no_subtree_check)
+
+1. sudo systemctl restart nfs-kernel-server
+
+
+On XiVO:
+
+mount -t nfs YOUR_IP:/PATH_TO/xivo-web-interface/src /usr/share/xivo-web-interface
 

@@ -53,6 +53,7 @@ $array['tree']['service']['ipbx']['trunk_management'] = array();
 $array['tree']['service']['ipbx']['trunk_management']['sip'] = true;
 $array['tree']['service']['ipbx']['trunk_management']['iax'] = true;
 $array['tree']['service']['ipbx']['trunk_management']['custom'] = true;
+$array['tree']['service']['ipbx']['trunk_management']['operator'] = true;
 
 $array['tree']['service']['ipbx']['pbx_services'] = array();
 $array['tree']['service']['ipbx']['pbx_services']['sounds'] = true;
