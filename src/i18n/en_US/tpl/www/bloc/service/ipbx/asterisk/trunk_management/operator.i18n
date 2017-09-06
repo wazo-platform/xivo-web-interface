@@ -5,10 +5,10 @@ SIP Operator properties
 Operator:
 
 ; no_trunk
-No SIP operator configuration files found. Please read documentation or contact Avencall.
+No SIP operator configuration files found. Please read documentation or contact XiVO.Solutions.
 
 ; hlp_fm_form
-This form will create a new SIP trunk and permanently modify general SIP protocol settings if required by the operator
+This form will create a new SIP trunk pre-configured for this operator. It may also modify general SIP protocol settings if required by the operator.
 
 ; hlp_fm_operator
-Load configuration file from
+Configuration loaded from
