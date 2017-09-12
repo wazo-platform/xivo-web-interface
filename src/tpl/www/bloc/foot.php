@@ -25,8 +25,7 @@ $dhtml->load_js('foot');
 		<h6 id="version-copyright">
 <?php
 		echo	XIVO_SOFT_LABEL,' - ',
-			$this->bbf('info_version'),' ',
-			XIVO_SOFT_VERSION,' ',XIVO_SOFT_CODENAME,' | ',
+			XIVO_SOFT_VERSION,' | ',
 			$this->bbf('visit_for_information',
 				   '<a href="http://'.XIVO_SOFT_URL.'" title="'.XIVO_SOFT_LABEL.'" target="_blank">'.XIVO_SOFT_URL.'</a>'),' | ',
 			$this->bbf('info_copyright',
