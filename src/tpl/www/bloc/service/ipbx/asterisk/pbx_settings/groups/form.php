@@ -69,7 +69,7 @@ $err_number = $this->get_var('error','groupfeatures','number');
 				    'key'	    => false,
 				    'bbf'	    => 'fm_queue_strategy-opt',
 				    'bbfopt'	=> array('argmode' => 'paramvalue'),
-				    'default'	=> $element['queue']['strategy']['default'],
+				    'default'	=> $element['queue']['strategy']['group-default'],
 				  	'selected'	=> $this->get_var('info','queue','strategy')),
 			      $element['queue']['strategy']['value']);
 
@@ -106,7 +106,7 @@ endif;
 				    'key'	=> false,
 				    'bbf'	=> 'fm_queue_timeout-opt',
 				    'bbfopt'	=> array('argmode' => 'paramvalue'),
-				    'default'	=> $element['queue']['timeout']['default'],
+				    'default'	=> $element['queue']['timeout']['group-default'],
 				    'selected'	=> (isset($info['queue']['timeout']) === true ? (int) $info['queue']['timeout'] : null)),
 			      $element['queue']['timeout']['value']),
 
@@ -118,7 +118,7 @@ endif;
 				    'bbf'	=> 'fm_queue_retry-opt',
 				    'bbfopt'	=> array('argmode' => 'paramvalue'),
 				    'error'	=> $this->get_var('error','queue','retry'),
-				    'default'	=> $element['queue']['retry']['default'],
+				    'default'	=> $element['queue']['retry']['group-default'],
 				    'selected'	=> $this->get_var('info','queue','retry')),
 			      $element['queue']['retry']['value']),
 
