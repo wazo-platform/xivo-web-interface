@@ -28,6 +28,7 @@ $array['element']['name']['default'] = '';
 $array['element']['timeout'] = array();
 $array['element']['timeout']['value'] = array(0,5,10,15,20,25,30,35,40,45,50,55,60);
 $array['element']['timeout']['default'] = 15;
+$array['element']['timeout']['group-default'] = 10;
 $array['element']['timeout']['setdef'] = true;
 
 $array['element']['musicclass'] = array();
@@ -44,6 +45,7 @@ $array['element']['strategy']['value'] = array('linear', 'leastrecent',
 								 'wrandom',
 					       'ringall');
 $array['element']['strategy']['default'] = 'rrmemory';
+$array['element']['strategy']['group-default'] = 'rrmemory';
 $array['element']['strategy']['setdef'] = true;
 
 $array['element']['servicelevel'] = array();
@@ -57,6 +59,7 @@ $array['element']['context']['null'] = true;
 $array['element']['retry'] = array();
 $array['element']['retry']['value'] = array(1,5,10,15,20,25,30,35,40,45,50,55,60);
 $array['element']['retry']['default'] = 1;
+$array['element']['retry']['group-default'] = 1;
 $array['element']['retry']['setdef'] = true;
 
 $array['element']['weight'] = array();
