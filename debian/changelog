@@ -1,3 +1,12 @@
+xivo-web-interface (2017.11.00) xivo-dev; urgency=medium
+
+  * Set default values for new group :
+    - Ring strategy : memorized round robin
+    - User reachability timeout : 10 seconds
+    - Time before retrying a call to a user : 1 second
+
+ -- Vojtech Sodoma <vsodoma@avencall.com>  Wed, 13 Sep 2017 12:18:20 +0200
+
 xivo-web-interface (2017.10.00) xivo-dev; urgency=medium
 
   * Simplify trunk configuration for SIP operator
