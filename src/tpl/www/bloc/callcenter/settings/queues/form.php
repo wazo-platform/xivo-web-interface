@@ -719,8 +719,9 @@ endif;
 						'class'   => 'multiselect',
 						'multiple' => true,
 						'key'			=> false,
-            'selected'  => $this->get_var('info','queue','joinempty'),
-            'default' => $element['queue']['joinempty']['default']),
+            'selected'  => (isset($info['queue']['joinempty']) === true
+                                ? $info['queue']['joinempty']
+                                : $element['queue']['joinempty']['default'])),
 				$element['queue']['joinempty']['value']),
 
      $form->jq_select(array('desc'  => $this->bbf('fm_queue_leavewhenempty'),
@@ -729,8 +730,9 @@ endif;
 						'class'   => 'multiselect',
 						'multiple' => true,
 						'key'   => false,
-            'selected'  => $this->get_var('info','queue','leavewhenempty'),
-            'default' => $element['queue']['leavewhenempty']['default']),
+            'selected'  => (isset($info['queue']['leavewhenempty']) === true
+                                ? $info['queue']['leavewhenempty']
+                                : $element['queue']['leavewhenempty']['default'])),
 				$element['queue']['leavewhenempty']['value']),
 
 		$form->checkbox(array('desc'	=> $this->bbf('fm_queue_ringinuse'),
