@@ -44,7 +44,7 @@ $array['element']['strategy']['value'] = array('linear', 'leastrecent',
 					       'random',
 								 'wrandom',
 					       'ringall');
-$array['element']['strategy']['default'] = 'ringall';
+$array['element']['strategy']['default'] = 'rrmemory';
 $array['element']['strategy']['group-default'] = 'rrmemory';
 $array['element']['strategy']['setdef'] = true;
 
@@ -58,7 +58,7 @@ $array['element']['context']['null'] = true;
 
 $array['element']['retry'] = array();
 $array['element']['retry']['value'] = array(1,5,10,15,20,25,30,35,40,45,50,55,60);
-$array['element']['retry']['default'] = 5;
+$array['element']['retry']['default'] = 1;
 $array['element']['retry']['group-default'] = 1;
 $array['element']['retry']['setdef'] = true;
 
@@ -112,11 +112,11 @@ $array['element']['monitor-type']['null'] = true;
 
 $array['element']['joinempty'] = array();
 $array['element']['joinempty']['value']   = array('paused','penalty','inuse','ringing','unavailable','invalid','unknown','wrapup');
-$array['element']['joinempty']['default'] = '';
+$array['element']['joinempty']['default'] = array('unavailable','invalid','unknown');
 
 $array['element']['leavewhenempty'] = array();
 $array['element']['leavewhenempty']['value']   = array('paused','penalty','inuse','ringing','unavailable','invalid','unknown','wrapup');
-$array['element']['leavewhenempty']['default'] = '';
+$array['element']['leavewhenempty']['default'] = array('unavailable','invalid','unknown');
 
 $array['element']['ringinuse'] = array();
 $array['element']['ringinuse']['value'] = array(0,1);

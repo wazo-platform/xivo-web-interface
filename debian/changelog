@@ -4,6 +4,11 @@ xivo-web-interface (2017.11.00) xivo-dev; urgency=medium
     - Ring strategy : memorized round robin
     - User reachability timeout : 10 seconds
     - Time before retrying a call to a user : 1 second
+  * Set default values for new queue :
+    - Ring strategy : memorized round robin
+    - Time before retrying a call to a user : 1 second
+    - Join an empty queue : unknown, unavailable, invalid
+    - Leave an empty queue : unknown, unavailable, invalid
 
  -- Vojtech Sodoma <vsodoma@avencall.com>  Wed, 13 Sep 2017 12:18:20 +0200
 
