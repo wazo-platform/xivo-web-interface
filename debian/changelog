@@ -7,6 +7,12 @@ xivo-web-interface (2017.11.00) xivo-dev; urgency=medium
 
  -- Vojtech Sodoma <vsodoma@avencall.com>  Wed, 13 Sep 2017 12:18:20 +0200
 
+xivo-web-interface (2017.11.00) xivo-dev; urgency=medium
+
+  * Display LTS version name (Polaris) in footer and configuration page
+
+ -- Etienne Allovon <eallovon@avencall.com>  Tue, 12 Sep 2017 16:25:53 +0200
+
 xivo-web-interface (2017.10.00) xivo-dev; urgency=medium
 
   * Simplify trunk configuration for SIP operator
