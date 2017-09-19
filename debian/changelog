@@ -9,6 +9,7 @@ xivo-web-interface (2017.11.00) xivo-dev; urgency=medium
     - Time before retrying a call to a user : 1 second
     - Join an empty queue : unknown, unavailable, invalid
     - Leave an empty queue : unknown, unavailable, invalid
+  * Edit tooltip for useragent input field in SIP Protocol
 
  -- Vojtech Sodoma <vsodoma@avencall.com>  Wed, 13 Sep 2017 12:18:20 +0200
 
