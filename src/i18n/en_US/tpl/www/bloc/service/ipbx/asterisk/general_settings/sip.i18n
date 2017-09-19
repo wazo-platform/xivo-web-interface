@@ -134,7 +134,9 @@ Asterisk config: limitonpeer
 User-Agent:
 
 ; hlp_fm_useragent
-Asterisk config: useragent
+Asterisk config: useragent<br>
+The default value "XIVO_VERSION" will be replaced by text
+"XiVO PBX" followed by the current version number
 
 ; fm_checkmwi
 Check for the presence of new messages:

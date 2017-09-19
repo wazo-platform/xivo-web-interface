@@ -125,7 +125,9 @@ Config asterisk: limitonpeer
 User-Agent :
 
 ; hlp_fm_useragent
-Config asterisk: useragent
+Config asterisk: useragent<br>
+La valeur par défaut "XIVO_VERSION" va être remplacé par la chaîné
+"XiVO PBX" suivie par la version actuelle de XiVO
 
 ; fm_checkmwi
 Vérifier la présence de nouveaux messages :
