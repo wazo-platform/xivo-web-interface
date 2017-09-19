@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright 2006-2017 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -319,7 +319,7 @@ $array['element']['jbresyncthreshold']['value'] = array(-1,0,250,500,750,1000,12
 $array['element']['jbresyncthreshold']['default'] = 1000;
 
 $array['element']['jbimpl'] = array();
-$array['element']['jbimpl']['value'] = array('fixed','adaptative');
+$array['element']['jbimpl']['value'] = array('fixed','adaptive');
 $array['element']['jbimpl']['default'] = 'fixed';
 
 $array['element']['jblog'] = array();
@@ -780,7 +780,7 @@ $array['filter']['jbenable'] = array('bool' => true);
 $array['filter']['jbforce'] = array('bool' => true);
 $array['filter']['jbmaxsize'] = array('key' => array(0,100,150,200,250,500,750,1000,1250,1500,1750,2000));
 $array['filter']['jbresyncthreshold'] = array('key' => array(-1,0,250,500,750,1000,1250,1500,1750,2000));
-$array['filter']['jbimpl'] = array('key' => array('fixed','adaptative'));
+$array['filter']['jbimpl'] = array('key' => array('fixed','adaptive'));
 $array['filter']['jblog'] = array('bool' => true);
 $array['filter']['context'] = array('set' => false,'chk' => 2,
 				    'callback' => 'xivo_service_asterisk::chk_context',

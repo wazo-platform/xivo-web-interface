@@ -655,7 +655,7 @@ Asterisk config: jbimpl
 ; fm_jbimpl-opt(fixed)
 Fix
 
-; fm_jbimpl-opt(adaptative)
+; fm_jbimpl-opt(adaptive)
 Adaptive
 
 ; fm_jblog
