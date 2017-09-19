@@ -532,7 +532,7 @@ Config asterisk: jbimpl
 ; fm_jbimpl-opt(fixed)
 Fixe
 
-; fm_jbimpl-opt(adaptative)
+; fm_jbimpl-opt(adaptive)
 Adaptative
 
 ; fm_jblog
