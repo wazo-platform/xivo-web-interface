@@ -77,7 +77,7 @@ $array['element']['alwaysauthreject']['default'] = 'no';
 $array['element']['alwaysauthreject']['set'] = true;
 
 $array['element']['useragent'] = array();
-$array['element']['useragent']['default'] = 'XIVO PBX';
+$array['element']['useragent']['default'] = 'XIVO_VERSION';
 
 $array['element']['buggymwi'] = array();
 $array['element']['buggymwi']['value'] = array('no','yes');
