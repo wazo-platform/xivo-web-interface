@@ -126,7 +126,7 @@ User-Agent :
 
 ; hlp_fm_useragent
 Config asterisk: useragent<br>
-La valeur par défaut "XIVO_VERSION" va être remplacé par la chaîné
+La valeur par défaut "XIVO_VERSION" va être remplacée par la chaîne
 "XiVO PBX" suivie par la version actuelle de XiVO
 
 ; fm_checkmwi
