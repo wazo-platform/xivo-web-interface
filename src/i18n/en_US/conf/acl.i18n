@@ -211,8 +211,8 @@ IAX Protocol
 ; acl(service-ipbx-trunk_management-sip)
 SIP Protocol
 
-; acl(service-ipbx-trunk_management-operator)
-SIP Operator
+; acl(service-ipbx-trunk_management-provider)
+SIP Provider
 
 ; acl(service-monitoring)
 Monitoring
