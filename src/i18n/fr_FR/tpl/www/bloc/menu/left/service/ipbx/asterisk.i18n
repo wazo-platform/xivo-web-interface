@@ -82,7 +82,7 @@ Protocole IAX
 ; mn_left_trunkmanagement-custom
 Personnalisée
 
-; mn_left_trunkmanagement-operator
+; mn_left_trunkmanagement-provider
 Opérateur SIP
 
 ; mn_left_ti_pbxservices

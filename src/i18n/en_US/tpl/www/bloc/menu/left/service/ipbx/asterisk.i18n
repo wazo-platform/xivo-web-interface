@@ -88,8 +88,8 @@ IAX Protocol
 ; mn_left_trunkmanagement-custom
 Customized
 
-; mn_left_trunkmanagement-operator
-SIP Operator
+; mn_left_trunkmanagement-provider
+SIP Provider
 
 ; mn_left_ti_pbxservices
 IPBX services

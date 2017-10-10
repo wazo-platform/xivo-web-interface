@@ -214,7 +214,7 @@ Protocole IAX
 ; acl(service-ipbx-trunk_management-sip)
 Protocole SIP
 
-; acl(service-ipbx-trunk_management-operator)
+; acl(service-ipbx-trunk_management-provider)
 Opérateur SIP
 
 ; acl(service-monitoring)

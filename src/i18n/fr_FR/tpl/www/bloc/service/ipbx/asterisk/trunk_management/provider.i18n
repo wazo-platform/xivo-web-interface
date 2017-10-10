@@ -1,7 +1,7 @@
 ; title_content_name
 Paramètres de l'opérateur SIP
 
-; operator
+; provider
 Opérateur
 
 ; no_trunk
@@ -10,5 +10,5 @@ Aucun fichier de configuration d'opérateur SIP trouvé. Merci de consulter la d
 ; hlp_fm_form
 Ce formulaire va créer un nouveau trunk SIP pré-configuré pour cet opérateur. Les paramètres SIP généraux seront modifiés si cela est nécessaire.
 
-; hlp_fm_operator
+; hlp_fm_provider
 Configuration récupérée depuis

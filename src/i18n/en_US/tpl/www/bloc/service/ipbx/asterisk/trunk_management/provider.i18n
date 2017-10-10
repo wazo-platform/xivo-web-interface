@@ -1,0 +1,14 @@
+; title_content_name
+SIP Provider properties
+
+; provider
+Provider:
+
+; no_trunk
+No SIP provider configuration files found. Please read documentation or contact XiVO.Solutions.
+
+; hlp_fm_form
+This form will create a new SIP trunk pre-configured for this provider. It may also modify general SIP protocol settings if required by the provider.
+
+; hlp_fm_provider
+Configuration loaded from

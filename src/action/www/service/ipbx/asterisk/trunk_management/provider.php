@@ -18,14 +18,14 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-$list = glob(XIVO_OPERATOR_SIP_CONFIG_DIR.'/*.json');
+$list = glob(XIVO_PROVIDER_SIP_CONFIG_DIR.'/*.json');
 $total = count($list);
 $configuration = array();
-$operator = array();
-$operator_index = 0;
+$provider = array();
+$provider_index = 0;
 
 if($total > 0)
-    $operator[] = '';
+    $provider[] = '';
 
 
 if(dwho::load_class('dwho_json') === true)
@@ -56,7 +56,7 @@ if(dwho::load_class('dwho_json') === true)
     for($i = $index = 0; $i < $total; $i++):
         $ref = &$list[$i];
         $filesize = filesize($ref);
-        if($filesize < XIVO_OPERATOR_SIP_CONFIG_MAX_BYTES)
+        if($filesize < XIVO_PROVIDER_SIP_CONFIG_MAX_BYTES)
         {
             $fh = fopen($ref,'r');
             $json = fread($fh, $filesize);
@@ -68,10 +68,10 @@ if(dwho::load_class('dwho_json') === true)
                 if(isset($_QR['index']) === true
                 && $_QR['index'] == $index)
                 {
-                    $operator_index = $index;
+                    $provider_index = $index;
                     $configuration = $data;
                 }
-                $operator[] = $data['operator_name'];
+                $provider[] = $data['provider_name'];
             }
             else
                 dwho_report::push('error', 'Error loading one or more configuration files. No data after decoding.');
@@ -81,25 +81,25 @@ if(dwho::load_class('dwho_json') === true)
     endfor;
 
     if(isset($_QR['index']) === true
-    && $operator_index === 0)
-        $_QRY->go($_TPL->url('service/ipbx/trunk_management/operator'));
+    && $provider_index === 0)
+        $_QRY->go($_TPL->url('service/ipbx/trunk_management/provider'));
 }
 
 if(isset($configuration) === true)
 {
-    $operator_protocol = $configuration['operator_config']['trunk'];
+    $provider_protocol = $configuration['provider_config']['trunk'];
     $user_protocol = $configuration['user_config']['trunk'];
 
-    foreach($operator_protocol as $key => $value)
+    foreach($provider_protocol as $key => $value)
     {
         if(isset($user_protocol[$key]) === true)
-            dwho_report::push('error', 'Duplicate parameter "'.$key.'" in operator configuration file');
+            dwho_report::push('error', 'Duplicate parameter "'.$key.'" in provider configuration file');
     }
 }
 
 $_TPL->set_var('configuration',$configuration);
-$_TPL->set_var('operator',$operator);
-$_TPL->set_var('operator_index',$operator_index);
+$_TPL->set_var('provider',$provider);
+$_TPL->set_var('provider_index',$provider_index);
 $_TPL->set_var('fm_save',$fm_save);
 $_TPL->set_var('error',$error);
 $_TPL->set_var('protocol',$_QR['protocol']);
@@ -108,7 +108,7 @@ $menu = &$_TPL->get_module('menu');
 $menu->set_top('top/user/'.$_USR->get_info('meta'));
 $menu->set_left('left/service/ipbx/'.$ipbx->get_name());
 
-$_TPL->set_bloc('main','service/ipbx/'.$ipbx->get_name().'/trunk_management/operator');
+$_TPL->set_bloc('main','service/ipbx/'.$ipbx->get_name().'/trunk_management/provider');
 $_TPL->set_struct('service/ipbx/'.$ipbx->get_name());
 $_TPL->display('index');
 
