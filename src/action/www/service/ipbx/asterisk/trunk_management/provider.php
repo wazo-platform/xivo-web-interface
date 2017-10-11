@@ -43,6 +43,13 @@ if(dwho::load_class('dwho_json') === true)
         if(dwho_issa('trunkfeatures',$_QR) === false)
             $_QR['trunkfeatures'] = Array();
 
+        if(isset($_QR['protocol']['allow']) === true
+        && empty($_QR['protocol']['allow']) === false)
+        {
+            if(is_array($_QR['protocol']['allow']) === false)
+                $_QR['protocol']['allow'] = explode(',',$_QR['protocol']['allow']);
+        }
+
         if($apptrunk->set_add($_QR) === false
         || $apptrunk->add() === false)
         {
