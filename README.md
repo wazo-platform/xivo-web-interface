@@ -65,3 +65,5 @@ On XiVO:
 
 mount -t nfs YOUR_IP:/PATH_TO/xivo-web-interface/src /usr/share/xivo-web-interface
 
+Use IP address of the interface used for ssh connection.
+

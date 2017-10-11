@@ -2,6 +2,7 @@ xivo-web-interface (2017.11.03) xivo-dev; urgency=medium
 
   * Change en translation of SIP Operator to SIP Provider
     - Change also variables and file names 
+  * Trunk plugin can create multiple trunks and codec can be customized
 
  -- Vojtech Sodoma <vsodoma@avencall.com>  Mon, 09 Oct 2017 11:14:53 +0200
 
