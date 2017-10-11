@@ -83,12 +83,13 @@ $user_protocol = $configuration['user_config']['trunk'];
                         else
                         {
                             $hosts = explode(',',$value);
+                            $trunks_count = count($hosts);
                             foreach($hosts as $host_key => $host_value)
                             {
-                                $trunks_count = $host_key + 1;
-                                echo       $form->text(array('desc'	=> $this->bbf('fm_protocol_host').' '.$trunks_count,
-                                      'name'	=> 'protocol[host-'.$trunks_count.']',
-                                      'labelid'	=> 'protocol-host-'.$trunks_count,
+                                echo       $form->text(array('desc'	=> $this->bbf('fm_protocol_host').
+                                                ($trunks_count > 1 ? ' '.($host_key + 1) : ''),
+                                      'name'	=> 'protocol[host-'.($host_key + 1).']',
+                                      'labelid'	=> 'protocol-host-'.($host_key + 1),
                                       'size'	=> 15,
                                       'value'	=> $host_value,
                                       'error'	=> $this->bbf_args('error',
