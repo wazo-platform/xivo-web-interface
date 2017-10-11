@@ -51,6 +51,7 @@ if(dwho::load_class('dwho_json') === true)
         }
 
         $trunk_name = $_QR['protocol']['name'];
+        $query = array();
         $query = $_QR;
 
         for($i = 0; $i < $query['trunks_count']; $i++)
@@ -71,7 +72,7 @@ if(dwho::load_class('dwho_json') === true)
                     $error = $apptrunk->get_error();
             }
         }
-        if(count($error) == 0)
+        if($error === null)
         {
             for($i = 0; $i < $query['trunks_count']; $i++)
             {
@@ -93,7 +94,7 @@ if(dwho::load_class('dwho_json') === true)
                 }
             }
         }
-        if(count($error) == 0)
+        if($error === null)
             $_QRY->go($_TPL->url('service/ipbx/trunk_management/sip'));
     }
     for($i = $index = 0; $i < $total; $i++):

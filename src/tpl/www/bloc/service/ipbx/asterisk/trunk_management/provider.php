@@ -102,7 +102,7 @@ $user_protocol = $configuration['user_config']['trunk'];
                             $form->hidden(array('name'	=> 'act',
                                 'value'	=> 'add')),
                             $form->hidden(array('name'	=> 'index',
-                                'value'	=> $operator_index)),
+                                'value'	=> $provider_index)),
                             $form->hidden(array('name'	=> 'trunks_count',
                                 'value'	=> $trunks_count));
                 endif;
