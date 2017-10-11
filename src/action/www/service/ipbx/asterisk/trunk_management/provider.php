@@ -50,14 +50,29 @@ if(dwho::load_class('dwho_json') === true)
                 $_QR['protocol']['allow'] = explode(',',$_QR['protocol']['allow']);
         }
 
-        if($apptrunk->set_add($_QR) === false
-        || $apptrunk->add() === false)
+        $trunk_name = $_QR['protocol']['name'];
+        $query = $_QR;
+
+        for($i = 0; $i < $query['trunks_count']; $i++)
         {
-				$fm_save = false;
-				$result = $apptrunk->get_result();
-				$error = $apptrunk->get_error();
+            if ($query['trunks_count'] > 1)
+                $query['protocol']['name'] = $trunk_name.'-'.($i + 1);
+
+            if(isset($query['protocol']['host-'.($i + 1)]))
+            {
+                $query['protocol']['host-type'] = 'static';
+                $query['protocol']['host-static'] = $query['protocol']['host-'.($i + 1)];
+            }
+
+            if($apptrunk->set_add($query) === false
+            || $apptrunk->add() === false)
+            {
+                    $fm_save = false;
+                    $result = $apptrunk->get_result();
+                    $error = $apptrunk->get_error();
+            }
         }
-        else
+        if(count($error) == 0)
             $_QRY->go($_TPL->url('service/ipbx/trunk_management/sip'));
     }
     for($i = $index = 0; $i < $total; $i++):

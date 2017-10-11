@@ -43,6 +43,9 @@ Dynamic
 ; fm_protocol_host-type-opt(static)
 Static
 
+; fm_protocol_host
+Host
+
 ; fm_protocol_port
 Port:
 

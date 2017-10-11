@@ -46,6 +46,9 @@ Dynamique
 ; fm_protocol_host-type-opt(static)
 Statique
 
+; fm_protocol_host
+Hôte
+
 ; fm_protocol_type
 Type de connexion :
 
