@@ -64,11 +64,14 @@ $user_protocol = $configuration['user_config']['trunk'];
                 if($provider_index > 0):
                     $_I18N = dwho_gct::get('dwho_i18n');
                     $_I18N->load_file('tpl/www/bloc/service/ipbx/asterisk/trunk_management/sip/add.php');
+                    $trunks_count = 1;
                     foreach($user_protocol as $key => $value)
                     {
                         if(isset($protocol[$key]) === true)
                             $value = $protocol[$key];
 
+                        if($key !== 'host')
+                        {
                         echo       $form->text(array('desc'	=> $this->bbf('fm_protocol_'.$key),
                                   'name'	=> 'protocol['.$key.']',
                                   'labelid'	=> 'protocol-'.$key,
@@ -76,13 +79,32 @@ $user_protocol = $configuration['user_config']['trunk'];
                                   'value'	=> $value,
                                   'error'	=> $this->bbf_args('error',
                                            $this->get_var('error', 'protocol', $key)) ));
+                        }
+                        else
+                        {
+                            $hosts = explode(',',$value);
+                            $trunks_count = count($hosts);
+                            foreach($hosts as $host_key => $host_value)
+                            {
+                                echo       $form->text(array('desc'	=> $this->bbf('fm_protocol_host').
+                                                ($trunks_count > 1 ? ' '.($host_key + 1) : ''),
+                                      'name'	=> 'protocol[host-'.($host_key + 1).']',
+                                      'labelid'	=> 'protocol-host-'.($host_key + 1),
+                                      'size'	=> 15,
+                                      'value'	=> $host_value,
+                                      'error'	=> $this->bbf_args('error',
+                                               $this->get_var('error', 'protocol', 'host')) ));
+                            }
+                        }
                     }
                     echo    $form->hidden(array('name'	=> 'fm_send',
                                 'value'	=> 1)),
                             $form->hidden(array('name'	=> 'act',
-                                'value'	=> 'add'));
-                    echo    $form->hidden(array('name'	=> 'index',
-                                'value'	=> $provider_index));
+                                'value'	=> 'add')),
+                            $form->hidden(array('name'	=> 'index',
+                                'value'	=> $provider_index)),
+                            $form->hidden(array('name'	=> 'trunks_count',
+                                'value'	=> $trunks_count));
                 endif;
                 echo	$form->submit(array('name'	=> 'submit',
                             'id'	=> 'it-submit',

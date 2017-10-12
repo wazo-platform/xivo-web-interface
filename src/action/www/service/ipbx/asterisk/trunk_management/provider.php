@@ -43,14 +43,58 @@ if(dwho::load_class('dwho_json') === true)
         if(dwho_issa('trunkfeatures',$_QR) === false)
             $_QR['trunkfeatures'] = Array();
 
-        if($apptrunk->set_add($_QR) === false
-        || $apptrunk->add() === false)
+        if(isset($_QR['protocol']['allow']) === true
+        && empty($_QR['protocol']['allow']) === false)
         {
-				$fm_save = false;
-				$result = $apptrunk->get_result();
-				$error = $apptrunk->get_error();
+            if(is_array($_QR['protocol']['allow']) === false)
+                $_QR['protocol']['allow'] = explode(',',$_QR['protocol']['allow']);
         }
-        else
+
+        $trunk_name = $_QR['protocol']['name'];
+        $query = array();
+        $query = $_QR;
+
+        for($i = 0; $i < $query['trunks_count']; $i++)
+        {
+            if ($query['trunks_count'] > 1)
+                $query['protocol']['name'] = $trunk_name.'-'.($i + 1);
+
+            if(isset($query['protocol']['host-'.($i + 1)]))
+            {
+                $query['protocol']['host-type'] = 'static';
+                $query['protocol']['host-static'] = $query['protocol']['host-'.($i + 1)];
+            }
+
+            if($apptrunk->set_add($query) === false)
+            {
+                    $fm_save = false;
+                    $result = $apptrunk->get_result();
+                    $error = $apptrunk->get_error();
+            }
+        }
+        if($error === null)
+        {
+            for($i = 0; $i < $query['trunks_count']; $i++)
+            {
+                if ($query['trunks_count'] > 1)
+                    $query['protocol']['name'] = $trunk_name.'-'.($i + 1);
+
+                if(isset($query['protocol']['host-'.($i + 1)]))
+                {
+                    $query['protocol']['host-type'] = 'static';
+                    $query['protocol']['host-static'] = $query['protocol']['host-'.($i + 1)];
+                }
+
+                if($apptrunk->set_add($query) === false
+                || $apptrunk->add() === false)
+                {
+                        $fm_save = false;
+                        $result = $apptrunk->get_result();
+                        $error = $apptrunk->get_error();
+                }
+            }
+        }
+        if($error === null)
             $_QRY->go($_TPL->url('service/ipbx/trunk_management/sip'));
     }
     for($i = $index = 0; $i < $total; $i++):

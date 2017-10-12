@@ -46,6 +46,9 @@ Dynamique
 ; fm_protocol_host-type-opt(static)
 Statique
 
+; fm_protocol_host
+Adresse IP
+
 ; fm_protocol_type
 Type de connexion :
 
