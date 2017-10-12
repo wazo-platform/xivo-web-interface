@@ -44,7 +44,7 @@ Dynamic
 Static
 
 ; fm_protocol_host
-Host
+IP Address
 
 ; fm_protocol_port
 Port:
