@@ -610,20 +610,15 @@ endif;
 <div id="sb-part-advanced" class="b-nodisplay">
 <?php
 
-if($context_list !== false):
-	echo	$form->select(array('desc'	=> $this->bbf('fm_queue_context'),
-				    'name'	=> 'queue[context]',
-				    'labelid' => 'queue-context',
-					'help' => $this->bbf('hlp_fm_queue-context'),
-				    'empty'	=> true,
-				    'key'	=> 'identity',
-				    'altkey'	=> 'name',
-				    'default'	=> $element['queue']['context']['default'],
-				    'selected'	=> $this->get_var('info','queue','context')),
-			      $context_list);
-endif;
-
-	echo	$form->text(array('desc'	=> $this->bbf('fm_queue_servicelevel'),
+	echo $form->text( array('desc' => $this->bbf('fm_queue_context'),
+				'name' => 'queue[context]',
+				'labelid' => 'queue-context',
+				'size' => 15,
+				'help' => $this->bbf('hlp_fm_queue-context'),
+				'required' => false,
+				'value' => $this->get_var('info','queue','context'),
+				'default' => $element['queue']['context']['default'])),
+		$form->text(array('desc'	=> $this->bbf('fm_queue_servicelevel'),
 				  'name'	=> 'queue[servicelevel]',
 				  'labelid' => 'queue-servicelevel',
 					'help' => $this->bbf('hlp_fm_queue-servicelevel'),

@@ -91,9 +91,6 @@ Contexte d'appel :
 ; fm_voicemail_callback
 Contexte de rappel :
 
-; fm_voicemail_exitcontext
-Contexte de sortie :
-
 ;;; asterisk 1.8 Fields
 ; smenu_email
 E-mail
