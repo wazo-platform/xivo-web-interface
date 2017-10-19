@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright 2006-2017 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -355,14 +355,13 @@ if($context_list !== false):
 				      'default'	=> $element['meetmefeatures']['user_enableexitcontext']['default'],
 				      'checked' => $info['meetmefeatures']['user_enableexitcontext'])),
 
-		$form->select(array('desc'	=> $this->bbf('fm_meetmefeatures_user-exitcontext'),
+		$form->text(array('desc'	=> $this->bbf('fm_meetmefeatures_user-exitcontext'),
 				    'name'	=> 'meetmefeatures[user_exitcontext]',
 				    'labelid'	=> 'meetmefeatures-user-exitcontext',
-				    'key'	=> 'identity',
-				    'altkey'	=> 'name',
+				    'size'	=> 15,
 				    'default'	=> $element['meetmefeatures']['user_exitcontext']['default'],
-				    'selected'	=> $info['meetmefeatures']['user_exitcontext']),
-			      $context_list);
+				    'value'	=> $info['meetmefeatures']['user_exitcontext']));
+
 endif;
 ?>
 </div>

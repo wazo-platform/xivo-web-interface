@@ -88,9 +88,6 @@ Call context:
 ; fm_voicemail_callback
 Callback context:
 
-; fm_voicemail_exitcontext
-Exit context:
-
 ;;; asterisk 1.8 Fields
 ; smenu_email
 E-mail
