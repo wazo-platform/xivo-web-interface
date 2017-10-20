@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2015  Avencall
+# Copyright 2006-2017 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -431,13 +431,9 @@ class xivo_application_service_asterisk_meetme extends xivo_application_asterisk
 	function set_contextmember()
 	{
 		$rs = array();
-		$rs['meetmefeatures-admin_exitcontext']['context'] = (string) $this->get_result_var('meetmefeatures','admin_exitcontext');
-		$rs['meetmefeatures-admin_exitcontext']['typeval'] = 0;
-		$rs['meetmefeatures-admin_exitcontext']['varname'] = 'admin_exitcontext';
-
-		$rs['meetmefeatures-user_exitcontext']['context'] = (string) $this->get_result_var('meetmefeatures','user_exitcontext');
-		$rs['meetmefeatures-user_exitcontext']['typeval'] = 0;
-		$rs['meetmefeatures-user_exitcontext']['varname'] = 'user_exitcontext';
+		$rs['meetmefeatures-context']['context'] = (string) $this->get_result_var('meetmefeatures','context');
+		$rs['meetmefeatures-context']['typeval'] = 0;
+		$rs['meetmefeatures-context']['varname'] = 'context';
 
 		return(parent::set_contextmember($rs));
 	}

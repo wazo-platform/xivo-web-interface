@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2015  Avencall
+# Copyright 2006-2017 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -613,8 +613,8 @@ class xivo_application_service_asterisk_queue extends xivo_application_asterisk_
 	function set_contextmember()
 	{
 		$rs = array();
-		$rs['queue-context']['context'] = (string) $this->get_result_var('queue','context');
-		$rs['queue-context']['typeval'] = (string) $this->get_result_var('queue','name');
+		$rs['queue-context']['context'] = (string) $this->get_result_var('queuefeatures','context');
+		$rs['queue-context']['typeval'] = (string) $this->get_result_var('queuefeatures','name');
 		$rs['queue-context']['varname'] = 'context';
 
 		return(parent::set_contextmember($rs));
