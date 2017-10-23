@@ -1,4 +1,13 @@
-location / {
+location /admin {
+    return 302 $scheme://$host/xivo/index.php;
+}
+
+location ~ ^/(?:xivo|service|callcenter|cti|graphs|statistics)/ {
+    index index.php;
+    include /etc/nginx/xivo_params;
+}
+
+location /backup/ {
     rewrite ^/backup/(.*) /backup.php?path=$1 last;
     index index.php;
     include /etc/nginx/xivo_params;
@@ -49,8 +58,42 @@ location /service/ipbx/web_services.php/phonebook/search {
 #    alias /usr/share/phppgadmin/$1;
 #}
 
-location ~* \.(?:ico|css|js|gif|jpe?g|png)$ {
+location ~* ^/(?:xivo|service|callcenter|cti|graphs|statistics|css|js|img|extra-libs)/.*\.(?:ico|css|js|gif|jpe?g|png)$ {
     expires max;
     add_header Pragma public;
     add_header Cache-Control "public, must-revalidate, proxy-revalidate";
 }
+
+
+location /ws {
+    proxy_pass http://localhost:5039;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+    proxy_set_header Host $host;
+    proxy_buffering off;
+    proxy_connect_timeout 43200000;
+    proxy_read_timeout 43200000;
+    proxy_send_timeout 43200000;
+    keepalive_timeout 180s;
+}
+
+location / {
+    proxy_pass  http://localhost:8070/;
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+}
+
+location /xuc/ {
+    proxy_pass http://localhost:8090/xuc/;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+    proxy_set_header Host $host;
+    proxy_buffering off;
+    proxy_connect_timeout 43200000;
+    proxy_read_timeout 43200000;
+    proxy_send_timeout 43200000;
+}
+
