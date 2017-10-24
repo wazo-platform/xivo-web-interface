@@ -2,6 +2,10 @@ location /admin {
     return 302 $scheme://$host/xivo/index.php;
 }
 
+location /index.php {
+    include /etc/nginx/xivo_params;
+}
+
 location ~ ^/(?:xivo|service|callcenter|cti|graphs|statistics)/ {
     index index.php;
     include /etc/nginx/xivo_params;
