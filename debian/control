@@ -22,7 +22,8 @@ Depends:
     php5-ldap,
     php5-pgsql,
     spawn-fcgi,
-    xivo-sysconfd
+    xivo-sysconfd,
+    xivo-nginx-cfg | xivo-uc-nginx-cfg
 Provides: pf-xivo-web-interface
 Conflicts: pf-xivo-web-interface
 Replaces: pf-xivo-web-interface
@@ -34,3 +35,21 @@ Description: XIVO web interface
  configure the XIVO solution.
  .
   Homepage: http://www.xivo.solutions/
+
+Package: xivo-nginx-cfg
+Pre-depends: xivo-config (>= 14.17~20140902.163641.dc5c476-1)
+Architecture: all
+Depends:
+Provides: xivo-nginx-cfg
+Conflicts: xivo-uc-nginx-cfg
+Replaces: xivo-uc-nginx-cfg
+Description: Nginx configuration for XIVO web interface
+
+Package: xivo-uc-nginx-cfg
+Pre-depends: xivo-config (>= 14.17~20140902.163641.dc5c476-1)
+Architecture: all
+Depends:
+Provides: xivo-uc-nginx-cfg
+Conflicts: xivo-nginx-cfg
+Replaces: xivo-nginx-cfg
+Description: Nginx configuration for XIVO web interface and XIVO UC

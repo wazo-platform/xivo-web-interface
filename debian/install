@@ -1,2 +1,2 @@
-src/*      usr/share/xivo-web-interface/
-etc/*      etc/
+src/*              usr/share/xivo-web-interface/
+install/etc/*      etc/

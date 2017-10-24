@@ -1,0 +1,56 @@
+location / {
+    rewrite ^/backup/(.*) /backup.php?path=$1 last;
+    index index.php;
+    include /etc/nginx/xivo_params;
+}
+
+location /dlbackup/ {
+    internal;
+    alias /var/backups/xivo/;
+}
+
+location ~ ^/monit {
+    rewrite ^/monit/(.*) /$1 break;
+    proxy_pass http://127.0.0.1:2812;
+    allow 127.0.0.1;
+    deny all;
+}
+
+location /server-status {
+    stub_status on;
+    access_log off;
+    allow 127.0.0.1;
+    deny all;
+}
+
+location /service/ipbx/web_services.php/phonebook/menu {
+    proxy_pass https://$server_addr:9499/0.1/directories/menu/autodetect;
+}
+
+location /service/ipbx/web_services.php/phonebook/search {
+    if ($arg_name) {
+        proxy_pass https://$server_addr:9499/0.1/directories/lookup/autodetect?term=$arg_name;
+    }
+
+    proxy_pass https://$server_addr:9499/0.1/directories/input/autodetect;
+}
+
+## for debug purpose
+#location /pgadmin {
+#    alias /usr/share/phppgadmin;
+#    index index.php;
+#}
+
+#location ~ ^/pgadmin/(.*\.php?)$ {
+#    alias /usr/share/phppgadmin/$1;
+#    include /etc/nginx/xivo_params;
+#}
+#location ~ ^/pgadmin/((?:themes|images|xloadtree)/.*)$ {
+#    alias /usr/share/phppgadmin/$1;
+#}
+
+location ~* \.(?:ico|css|js|gif|jpe?g|png)$ {
+    expires max;
+    add_header Pragma public;
+    add_header Cache-Control "public, must-revalidate, proxy-revalidate";
+}
