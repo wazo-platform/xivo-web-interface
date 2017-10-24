@@ -36,12 +36,14 @@ class dwho_monit
 	var $_process        = array();
 	var $_remotehost    = array();
 	var $_fifo            = array();
+	var $_program       = array();
 	var $_status        = array('accessible',
 			'accessible',
 			'accessible',
 			'running',
 			'online',
 			'running',
+			'accessible',
 			'accessible');
 	var $_types            = array('Device',
 			'Directory',
@@ -49,7 +51,8 @@ class dwho_monit
 			'Process',
 			'Remote Host',
 			'System',
-			'Fifo');
+			'Fifo',
+			'Program');
 	var $_monitor        = array('notmonitored',
 			'monitored',
 			'initializing');
@@ -164,6 +167,14 @@ class dwho_monit
 	{
 		if(empty($this->_system) === false)
 			return($this->_system);
+
+		return(false);
+	}
+
+	function get_program()
+	{
+		if (empty($this->_program) === false)
+			return ($this->_program);
 
 		return(false);
 	}
@@ -383,6 +394,7 @@ class dwho_monit
 		$this->_system        = array();
 		$this->_remotehost    = array();
 		$this->_fifo        = array();
+		$this->_program     = array();
 
 		for($i = 0;$i < $nb;$i++)
 		{
@@ -461,6 +473,9 @@ class dwho_monit
 					break;
 				case 'Fifo':
 					$this->_fifo[$name] = $ref;
+					break;
+				case 'Program':
+					$this->_program[$name] = $ref;
 					break;
 			}
 
