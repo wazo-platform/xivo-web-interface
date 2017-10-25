@@ -173,8 +173,8 @@ class dwho_monit
 
 	function get_program()
 	{
-		if (empty($this->_program) === false)
-			return ($this->_program);
+		if(empty($this->_program) === false)
+			return($this->_program);
 
 		return(false);
 	}
@@ -237,7 +237,8 @@ class dwho_monit
 	function is_startable_service($name)
 	{
 		if(isset($this->_service[$name]) === false
-				|| $this->_service[$name]['type'] !== 3
+				|| ($this->_service[$name]['type'] !== 3 &&
+				    $this->_service[$name]['type'] !== 7)
 				|| $this->_service[$name]['monitor'] === 2)
 			return(false);
 		else if($this->_service[$name]['monitor'] === 1
@@ -254,7 +255,8 @@ class dwho_monit
 	function is_stoppable_service($name)
 	{
 		if(isset($this->_service[$name]) === false
-				|| $this->_service[$name]['type'] !== 3)
+				|| ($this->_service[$name]['type'] !== 3 &&
+				    $this->_service[$name]['type'] !== 7 ))
 			return(false);
 		else if($this->_service[$name]['monitor'] === 1
 				&& $this->_service[$name]['status'] !== 0)
@@ -270,7 +272,8 @@ class dwho_monit
 	function is_restartable_service($name)
 	{
 		if(isset($this->_service[$name]) === false
-				|| $this->_service[$name]['type'] !== 3
+				|| ($this->_service[$name]['type'] !== 3 &&
+				    $this->_service[$name]['type'] !== 7)
 				|| $this->_service[$name]['monitor'] === 2)
 			return(false);
 		else if($this->_service[$name]['monitor'] === 1
