@@ -76,9 +76,9 @@ location /ws {
     proxy_set_header Connection "upgrade";
     proxy_set_header Host $host;
     proxy_buffering off;
-    proxy_connect_timeout 43200000;
-    proxy_read_timeout 43200000;
-    proxy_send_timeout 43200000;
+    proxy_connect_timeout 60m;
+    proxy_read_timeout 60m;
+    proxy_send_timeout 60m;
     keepalive_timeout 180s;
 }
 
@@ -96,8 +96,8 @@ location /xuc/ {
     proxy_set_header Connection "upgrade";
     proxy_set_header Host $host;
     proxy_buffering off;
-    proxy_connect_timeout 43200000;
-    proxy_read_timeout 43200000;
-    proxy_send_timeout 43200000;
+    proxy_connect_timeout 60m;
+    proxy_read_timeout 60m;
+    proxy_send_timeout 60m;
 }
 
