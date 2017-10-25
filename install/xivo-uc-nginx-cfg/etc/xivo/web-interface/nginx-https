@@ -1,5 +1,5 @@
 location /admin {
-    return 302 $scheme://$host/xivo/index.php;
+    return 302 $scheme://$host/index.php;
 }
 
 location /index.php {
