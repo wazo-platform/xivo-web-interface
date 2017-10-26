@@ -37,7 +37,7 @@ Description: XIVO web interface
 
 Package: xivo-nginx-cfg
 Pre-depends:
-    xivo-config (>= 14.17~20140902.163641.dc5c476-1)
+    xivo-config (>= 14.17~20140902.163641.dc5c476-1),
     xivo-web-interface (>= 2017.11.04)
 Architecture: all
 Conflicts: xivo-uc-nginx-cfg
@@ -46,7 +46,7 @@ Description: Nginx configuration for XIVO web interface
 
 Package: xivo-uc-nginx-cfg
 Pre-depends:
-    xivo-config (>= 14.17~20140902.163641.dc5c476-1)
+    xivo-config (>= 14.17~20140902.163641.dc5c476-1),
     xivo-web-interface (>= 2017.11.04)
 Architecture: all
 Provides: xivo-nginx-cfg
