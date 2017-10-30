@@ -2,7 +2,7 @@ xivo-web-interface (2017.11.04) xivo-dev; urgency=medium
 
   * 1306 Build two new packages with nginx configuration
     - xivo-nginx-cfg configured for XiVO (default)
-    - xivouc-nginx-cfg configured for UC 
+    - xivouc-nginx-cfg configured for UC
 
  -- Vojtech Sodoma <vsodoma@avencall.com>  Wed, 25 Oct 2017 12:17:36 +0200
 
