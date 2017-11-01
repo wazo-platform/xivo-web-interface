@@ -250,7 +250,7 @@ $array['filter']['servicelevel'] = array('set' => false,'chk' => 2,'cast' => 'in
 $array['filter']['context'] = array('set' => false,'chk' => 2,'callback' => 'xivo_service_asterisk::chk_context');
 $array['filter']['retry'] = array('set' => false,'chk' => 2,'cast' => 'uint','between' => array(1,60,5));
 $array['filter']['weight'] = array('set' => false,'chk' => 2,'cast' => 'uint','between' => array(0,10));
-$array['filter']['wrapuptime'] = array('set' => false,'chk' => 2,'cast' => 'uint','between' => array(0,3600,10));
+$array['filter']['wrapuptime'] = array('set' => false,'chk' => 2,'cast' => 'uint','between' => array(0,1800,5));
 $array['filter']['maxlen'] = array('set' => false,'chk' => 2,'cast' => 'uint','between' => array(0,65535));
 $array['filter']['announce-frequency'] = array('set'	=> false,
 					       'chk'	=> 2,
