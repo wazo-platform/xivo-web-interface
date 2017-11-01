@@ -50,11 +50,10 @@ if(($rightcalls = $apprightcall->get_rightcalls_list(null, $order, null, true)) 
 	$rightcall['list'] = $rightcalls;
 }
 
-if(isset($_QR['fm_send']) === true
-&& dwho_issa('userfeatures',$_QR) === true)
+if(isset($_QR['fm_send']) === true && dwho_issa('userfeatures',$_QR) === true)
 {
-	if($appuser->set_edit($_QR) === false
-	|| $appuser->edit() === false)
+	dwho_logw('edit : saving');
+	if($appuser->set_edit($_QR) === false	|| $appuser->edit() === false)
 	{
 		$fm_save = false;
 		$result = $appuser->get_result();
@@ -66,9 +65,13 @@ if(isset($_QR['fm_send']) === true
 		$error = $appuser->get_error();
 	}
 	else {
+		dwho_logw('edit : saved');
 		$_QRY->go($_TPL->url('service/ipbx/pbx_settings/users'),$param);
 	}
 }
+
+$list_device_line = $device_api->find_all();
+$_TPL->set_var('list_device_line',$list_device_line);
 
 dwho::load_class('dwho_sort');
 
