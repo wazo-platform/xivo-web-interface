@@ -1,5 +1,6 @@
 xivo-web-interface (2017.11.04) xivo-dev; urgency=medium
 
+  * Do not reload devices on saving user
   * A line number on a user can be up to 32
   * Increase wrapup time
 

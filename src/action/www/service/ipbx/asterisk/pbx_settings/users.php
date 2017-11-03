@@ -35,6 +35,8 @@ $param['act'] = 'list';
 if($search !== '')
 	$param['search'] = $search;
 
+dwho_logw($act);
+
 switch($act)
 {
 	case 'add':
@@ -45,10 +47,8 @@ switch($act)
 		$list_configregistrar = $appprovdconfig->get_config_list('',$order,false,false,false,'registrar');
 
 		$device_api = &$_RAPI->get_ressource('device');
-		$list_device_line = $device_api->find_all();
 
 		$_TPL->set_var('list_configregistrar',$list_configregistrar);
-		$_TPL->set_var('list_device_line',$list_device_line);
 		$_TPL->set_var('import_file',$appuser->get_config_import_file());
 
 		include(dirname(__FILE__).'/users/'.$act.'.php');
@@ -207,4 +207,5 @@ $_TPL->set_bloc('main','service/ipbx/'.$ipbx->get_name().'/pbx_settings/users/'.
 $_TPL->set_struct('service/ipbx/'.$ipbx->get_name());
 $_TPL->display('index');
 
+dwho_logw('users rendered')
 ?>
