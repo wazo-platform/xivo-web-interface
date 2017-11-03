@@ -198,6 +198,11 @@ $array['element']['func_key_template_id'] = array();
 $array['element']['func_key_template_id']['default'] = '';
 $array['element']['func_key_template_id']['null'] = true;
 
+$array['element']['linefeatures-num'] = array();
+$array['element']['linefeatures-num']['value'] = array(1,2,3,4,5,6,7,8,
+								9,10,11,12,13,14,15,16,
+								17,18,19,20,21,22,23,24,
+								25,26,27,28,29,30,31,32);
 
 $array['filter'] = array();
 $array['filter']['firstname'] = array('cast' => 'sgraph','maxlen' => 128);
