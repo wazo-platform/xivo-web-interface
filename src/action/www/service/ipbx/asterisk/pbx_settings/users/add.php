@@ -67,9 +67,10 @@ if(isset($_QR['fm_send']) === true && dwho_issa('userfeatures',$_QR) === true)
 
 		$error = $appuser->get_error();
 	}
-	else
-	dwho_logw('add : saved');
-	$_QRY->go($_TPL->url('service/ipbx/pbx_settings/users'),$param);
+	else {
+		dwho_logw('add : saved');
+		$_QRY->go($_TPL->url('service/ipbx/pbx_settings/users'),$param);
+	}
 }
 
 $list_device_line = $device_api->find_all();
