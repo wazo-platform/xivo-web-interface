@@ -155,6 +155,7 @@ function update_row_infos()
     }
 
     $('#list_linefeatures > tbody').find('tr').each(function() {
+        var MaxNbOfLines = 32;
 
         context = $(this).find("#linefeatures-context");
 
@@ -189,7 +190,7 @@ function update_row_infos()
                 devicenumline = $(this).parents('tr').find("#linefeatures-num");
                 $(devicenumline).each(function(){
                     $(this).find('option').remove();
-                    for (var i=1; i<=12; i++)
+                    for (var i=1; i<=MaxNbOfLines; i++)
                         $(this).append("<option value="+i+">"+i+"</option>");
                 });
                 xivo_http_search_line_from_provd(devicenumline,$(this).val());

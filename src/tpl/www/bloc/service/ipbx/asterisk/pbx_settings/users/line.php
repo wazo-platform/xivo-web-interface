@@ -23,6 +23,8 @@ $url = &$this->get_module('url');
 
 $info = $this->get_var('info');
 $list = $this->get_var('list');
+$element = $this->get_var('element');
+
 $list_configregistrar = $this->get_var('list_configregistrar');
 $list_device_line = $this->get_var('list_device_line');
 $err = $this->get_var('error','linefeatures');
@@ -44,7 +46,6 @@ endfor;
 
 ?>
 <span id="box-entityid"></span>
-
 <table id="list_linefeatures">
 	<thead>
 	<tr class="sb-top">
@@ -165,7 +166,8 @@ if($list !== false):
 				    	'key'		=> false,
 				    	'altkey'	=> false,
 						'selected'	=> $ref['num']),
-					array(1,2,3,4,5,6,7,8,9,10,11,12));?>
+						$element['userfeatures']['linefeatures-num']['value']);?>
+
 		</td>
 		<td class="td-right">
 			<?=$url->href_html($url->img_html('img/site/button/mini/blue/delete.gif',
@@ -274,7 +276,7 @@ endif;
 				    	'key'		=> false,
 				    	'altkey'	=> false,
 				   		'default'	=> 1),
-					array(1,2,3,4,5,6,7,8,9,10,11,12));?>
+							 $element['userfeatures']['linefeatures-num']['value']);?>
 		<?php endif; ?>
 		</td>
 		<td class="td-right">

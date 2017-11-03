@@ -1,3 +1,9 @@
+xivo-web-interface (2017.03.16) xivo-2017.03; urgency=medium
+
+  * A line number on a user can be up to 32
+
+ -- Jean-Yves LEBLEU <jylebleu@xivo.solutions>  Wed, 01 Nov 2017 15:40:30 +0200
+
 xivo-web-interface (2017.03.12) xivo-2017.03; urgency=medium
 
   * Fix adding template device
