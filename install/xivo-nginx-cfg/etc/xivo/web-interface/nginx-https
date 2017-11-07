@@ -4,6 +4,10 @@ location / {
     include /etc/nginx/xivo_params;
 }
 
+location /admin {
+    return 302 $scheme://$host/index.php;
+}
+
 location /dlbackup/ {
     internal;
     alias /var/backups/xivo/;

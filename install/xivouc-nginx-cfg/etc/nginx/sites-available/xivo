@@ -35,7 +35,7 @@ server {
     access_log /var/log/nginx/xivo.access.log;
     error_log /var/log/nginx/xivo.error.log;
 
-    include /etc/nginx/locations/8443/*;
+    include /etc/nginx/locations/https-xucsample/*;
 
     gzip off;
     ssl on;

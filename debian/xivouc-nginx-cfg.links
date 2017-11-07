@@ -1,1 +1,1 @@
-etc/xivo/web-interface/nginx-8443 etc/nginx/locations/8443/xivo-web-interface
+etc/xivo/web-interface/nginx-https-xucsample etc/nginx/locations/https-xucsample/xivo-web-interface
