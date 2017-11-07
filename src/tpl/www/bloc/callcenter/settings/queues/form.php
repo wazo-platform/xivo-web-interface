@@ -666,14 +666,15 @@ endif;
 				    'error'	=> $this->get_var('error','queue','weight'),
 				    'selected'	=> $this->get_var('info','queue','weight')),
 			      $element['queue']['weight']['value']),
-
+				 
 		$form->select(array('desc'	=> $this->bbf('fm_queue_wrapuptime'),
 				    'name'	=> 'queue[wrapuptime]',
 				    'labelid' => 'queue-wrapuptime',
 					'help' => $this->bbf('hlp_fm_queue-wrapuptime'),
 				    'key'	=> false,
-				    'bbf'	=> 'fm_queue_wrapuptime-opt',
-				    'bbfopt'	=> array('argmode' => 'paramvalue'),
+				    'bbf'	=> 'time-opt',
+						'bbfopt'	=> array('argmode' => 'paramvalue',
+							'time' => array('from'=>'second', 'format'=>'%M%s')),					
 				    'error'	=> $this->get_var('error','queue','wrapuptime'),
 				    'default'	=> $element['queue']['wrapuptime']['default'],
 				    'selected'	=> $this->get_var('info','queue','wrapuptime')),

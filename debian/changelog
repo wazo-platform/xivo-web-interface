@@ -1,5 +1,8 @@
 xivo-web-interface (2017.11.04) xivo-dev; urgency=medium
 
+  * Do not reload devices on saving user
+  * A line number on a user can be up to 32
+  * Increase wrapup time
   * 1306 Build two new packages with nginx configuration
     - xivo-nginx-cfg configured for XiVO (default)
     - xivouc-nginx-cfg configured for UC
