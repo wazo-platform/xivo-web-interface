@@ -3,14 +3,12 @@ xivo-web-interface (2017.11.04) xivo-dev; urgency=medium
   * Do not reload devices on saving user
   * A line number on a user can be up to 32
   * Increase wrapup time
-
- -- Jean-Yves LEBLEU <jylebleu@xivo.solutions>  Wed, 01 Nov 2017 15:40:30 +0200
-
-xivo-web-interface (2017.11.03) xivo-dev; urgency=medium
-
+  * 1306 Build two new packages with nginx configuration
+    - xivo-nginx-cfg configured for XiVO (default)
+    - xivouc-nginx-cfg configured for UC
   * CHECK PROGRAM monit check processing and showing
 
- -- Vitezslav Novy <vnovy@vnovy.net>  Tue, 24 Oct 2017 11:40:30 +0200
+ -- Vojtech Sodoma <vsodoma@avencall.com>  Wed, 25 Oct 2017 12:17:36 +0200
 
 xivo-web-interface (2017.11.03) xivo-dev; urgency=medium
 
