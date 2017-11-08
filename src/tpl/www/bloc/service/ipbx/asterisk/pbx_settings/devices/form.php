@@ -26,7 +26,7 @@ $info = $this->get_var('info');
 $error = $this->get_var('error');
 $plugininstalled = $this->get_var('plugininstalled');
 $listconfigdevice = $this->get_var('listconfigdevice');
-$listline = $this->get_var('info','config','sip_lines');
+$listline = $this->get_var('list');
 
 dwho::load_class('dwho_sort');
 $pluginsort = new dwho_sort(array('key' => 'name'));
@@ -148,8 +148,7 @@ endif;
 		<th class="th-center"><?=$this->bbf('col_line-protocol');?></th>
 		<th class="th-center"><?=$this->bbf('col_line-name');?></th>
 		<th class="th-center"><?=$this->bbf('col_line-number');?></th>
-		<th class="th-center"><?=$this->bbf('col_line-config_registrar');?></th>
-		<th class="th-right"><?=$this->bbf('col_line-user');?></th>
+		<th class="th-center"><?=$this->bbf('col_line-context');?></th>
 	</tr>
 	</thead>
 	<tbody>
@@ -163,17 +162,25 @@ if($listline !== false
 			$secureclass = 'xivo-icon xivo-icon-secure';
 ?>
 	<tr class="fm-paragraph">
-		<td class="td-left"><?=$num?></td>
+		<td class="td-left"><?=$line['num']?></td>
 		<td class="txt-center">
 			<span>
 				<span class="<?=$secureclass?>">&nbsp;</span>
 				<?=$this->bbf('line_protocol-sip')?>
 			</span>
 		</td>
-		<td><?=$line['auth_username']?></td>
-		<td><?=$line['number']?></td>
-		<td><?=$line['proxy_ip']?></td>
-		<td class="td-right"><?=$line['display_name']?></td>
+		<td><?=$line['callerid']?></td>
+		<td class>
+		<?php 	
+			echo $url->href_html(
+                        	$line['number'],
+                        	'service/ipbx/pbx_settings/lines',
+                        	array(
+                        	'id' => $line['id'],
+                        	'act' => 'edit'
+                        ));
+		?></td>
+		<td><?=$line['context']?></td>
 	</tr>
 <?php
 	endforeach;

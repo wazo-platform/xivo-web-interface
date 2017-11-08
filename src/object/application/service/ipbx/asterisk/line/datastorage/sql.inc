@@ -98,6 +98,10 @@ class xivo_application_service_asterisk_line_sql extends xivo_application_abstra
 		if(isset($where['context']) === true)
 			$context = $where['context'];
 
+		$device=null;
+		if(isset($where['device'])== true)
+			$device = $where['device'];
+
 		$use_sip = $use_sccp = $use_custom = true;
 		$sip = $sccp = $custom = array();
 		$sip['category'] = $custom['category'] = 'user';
@@ -164,6 +168,9 @@ class xivo_application_service_asterisk_line_sql extends xivo_application_abstra
 			$this->_dso->wherein('context',$context,$this->_table['linefeatures']);
 		elseif(dwho_has_len($context) === true)
 			$this->_dso->where($this->_table['linefeatures'].'.context = %s',$context);
+
+		if($device != null)
+			$this->_dso->where($this->_table['linefeatures'].'.device = %s',$device);
 
 		if(dwho_has_len($value) === true)
 		{
