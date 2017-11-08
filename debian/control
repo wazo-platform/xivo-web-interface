@@ -34,3 +34,22 @@ Description: XIVO web interface
  configure the XIVO solution.
  .
   Homepage: http://www.xivo.solutions/
+
+Package: xivo-nginx-cfg
+Pre-depends:
+    xivo-config (>= 14.17~20140902.163641.dc5c476-1),
+    xivo-web-interface (>= 2017.11.04)
+Architecture: all
+Conflicts: xivouc-nginx-cfg
+Replaces: xivouc-nginx-cfg
+Description: Nginx configuration for XIVO web interface
+
+Package: xivouc-nginx-cfg
+Pre-depends:
+    xivo-config (>= 14.17~20140902.163641.dc5c476-1),
+    xivo-web-interface (>= 2017.11.04)
+Architecture: all
+Provides: xivo-nginx-cfg
+Conflicts: xivo-nginx-cfg
+Replaces: xivo-nginx-cfg
+Description: Nginx configuration for XIVO web interface and XIVO UC

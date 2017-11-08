@@ -4,6 +4,10 @@ location / {
     include /etc/nginx/xivo_params;
 }
 
+location /admin {
+    return 302 $scheme://$host/index.php;
+}
+
 location /dlbackup/ {
     internal;
     alias /var/backups/xivo/;
@@ -43,7 +47,7 @@ location /service/ipbx/web_services.php/phonebook/search {
 
 #location ~ ^/pgadmin/(.*\.php?)$ {
 #    alias /usr/share/phppgadmin/$1;
-#    include /etc/nginx/xivo_params; 
+#    include /etc/nginx/xivo_params;
 #}
 #location ~ ^/pgadmin/((?:themes|images|xloadtree)/.*)$ {
 #    alias /usr/share/phppgadmin/$1;
