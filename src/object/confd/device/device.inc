@@ -53,7 +53,7 @@ class confd_ressource_device extends xivo_confd_helpers_abstract
 				}
 				break;
 			default:
-				if (($devices = parent::find_all($search,$order)) === false)
+				if (($devices = parent::find_all($search,$order,$limit)) === false)
 					return(false);
 				foreach ($devices as $device)
 				{

@@ -479,3 +479,13 @@ input.readonly {background-color: #F1F1F1;color: #7E7E7E;}
 {
 	margin: 0 4px;
 }
+
+.linefeatures-device {
+	width: 200px;
+	font-size: 8pt;
+}
+
+.select2-container--default .select2-selection--single{
+	color: #000 !important;
+	background-color: #BEDDFB !important;
+}

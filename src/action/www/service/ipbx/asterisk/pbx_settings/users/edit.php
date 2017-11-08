@@ -125,6 +125,17 @@ if(empty($return) === false)
 else
 	$return = null;
 
+	if(!empty($return)) {
+		if(!empty($return['linefeatures'])) {
+			if(!empty($return['linefeatures'][0])) {
+			 if(!empty($return['linefeatures'][0]['device'])) {
+				$list_device_line = $device_api->find_all($return['linefeatures'][0]['device'],false,[0,20]);
+				$_TPL->set_var('list_device_line',$list_device_line);
+			 }
+			}
+		}
+	}
+	
 $_TPL->load_i18n_file('tpl/www/bloc/service/ipbx/asterisk/pbx_settings/users/edit.i18n', 'global');
 
 $order_list    = range(1, 20);

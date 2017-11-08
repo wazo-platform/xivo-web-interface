@@ -236,4 +236,20 @@ $(document).ready(function() {
         return false;
     });
 
+    $('#linefeatures-device').select2({
+        minimumInputLength: 2,
+        ajax: {
+          url: '/xivo/configuration/ui.php/provisioning/configs',
+          dataType: 'json',
+          delay: 250,
+          data: function (params) {
+            var query = {
+              term: params.term,
+              act: 'search'
+            }
+            return query;
+          }
+        }
+      });
+
 });

@@ -35,6 +35,8 @@ $param['act'] = 'list';
 if($search !== '')
 	$param['search'] = $search;
 
+dwho_logw($act);
+
 switch($act)
 {
 	case 'add':
@@ -69,8 +71,9 @@ switch($act)
 		$dhtml->set_js('extra-libs/timepicker/jquery-ui-timepicker-addon.js',true);
 
 		// select2
-		$dhtml->set_css('extra-libs/select2/select2-xivo.css', true);
-		$dhtml->set_js('extra-libs/select2/select2.min.js', true);
+		//$dhtml->set_css('extra-libs/select2-3.2/select2-xivo.css', true);
+		$dhtml->set_css('extra-libs/select2-4.0.5/css/select2.min.css', true);
+		$dhtml->set_js('extra-libs/select2-4.0.5/js/select2.full.min.js', true);
 
 		break;
 	case 'delete':
@@ -205,6 +208,8 @@ $menu->set_toolbar('toolbar/service/ipbx/'.$ipbx->get_name().'/pbx_settings/user
 
 $_TPL->set_bloc('main','service/ipbx/'.$ipbx->get_name().'/pbx_settings/users/'.$act);
 $_TPL->set_struct('service/ipbx/'.$ipbx->get_name());
+
+
 $_TPL->display('index');
 
 ?>
