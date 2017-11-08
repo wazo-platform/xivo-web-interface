@@ -1,5 +1,11 @@
 xivo-web-interface (2017.11.04) xivo-dev; urgency=medium
 
+  * Display line list on device screen
+
+ -- Frédéric Servian <fservian@xivo.solutions>  Wed, 08 Nov 2017 10:40:30 +0200
+
+xivo-web-interface (2017.11.04) xivo-dev; urgency=medium
+
   * A line number on a user can be up to 32
   * Increase wrapup time
 
