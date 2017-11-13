@@ -184,7 +184,6 @@ function update_row_infos()
             if (device == '')
                 devicenumline.hide();
 
-            $(this).find('#linefeatures-device').select2();
 
             $(this).find('#linefeatures-device').change(function() {
                 devicenumline = $(this).parents('tr').find("#linefeatures-num");
@@ -237,7 +236,10 @@ $(document).ready(function() {
     });
 
     $('#linefeatures-device').select2({
+        placeholder: 'MAC | IP',
         minimumInputLength: 2,
+        allowClear: true,
+        theme: "xivo",
         ajax: {
           url: '/xivo/configuration/ui.php/provisioning/configs',
           dataType: 'json',

@@ -47,7 +47,7 @@ switch($act)
 		$list_configregistrar = $appprovdconfig->get_config_list('',$order,false,false,false,'registrar');
 
 		$device_api = &$_RAPI->get_ressource('device');
-		$list_device_line = $device_api->find_all();
+		$list_device_line = array();
 
 		$_TPL->set_var('list_configregistrar',$list_configregistrar);
 		$_TPL->set_var('list_device_line',$list_device_line);
