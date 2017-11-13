@@ -53,7 +53,7 @@ switch($act)
 		$list_device_line = array();
 		if (isset($_QR['term']) === true)
 		{
-			$list_device_line = $device_api->find_all($_QR['term'],false,[0,5]);
+			$list_device_line = $device_api->raw_find($_QR['term'],false,[0,5]);
 		}
 		dwho_logw($_QR['term']);
 
