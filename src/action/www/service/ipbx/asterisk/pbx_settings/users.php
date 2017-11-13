@@ -71,9 +71,10 @@ switch($act)
 		$dhtml->set_js('extra-libs/timepicker/jquery-ui-timepicker-addon.js',true);
 
 		// select2
-		//$dhtml->set_css('extra-libs/select2-3.2/select2-xivo.css', true);
 		$dhtml->set_css('extra-libs/select2-4.0.5/css/select2.min.css', true);
 		$dhtml->set_js('extra-libs/select2-4.0.5/js/select2.full.min.js', true);
+		$dhtml->set_js('extra-libs/select2-4.0.5/js/i18n/en.js', true);
+		$dhtml->set_js('extra-libs/select2-4.0.5/js/i18n/fr_patched.js', true);
 
 		break;
 	case 'delete':

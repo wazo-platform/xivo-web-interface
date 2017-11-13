@@ -236,7 +236,7 @@ $(document).ready(function() {
     });
 
     $('#linefeatures-device').select2({
-        placeholder: 'MAC | IP',
+        placeholder: 'MAC / IP',
         minimumInputLength: 2,
         allowClear: true,
         theme: "xivo",
