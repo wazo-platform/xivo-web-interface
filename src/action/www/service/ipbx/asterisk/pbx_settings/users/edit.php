@@ -129,7 +129,7 @@ else
 		if(!empty($return['linefeatures'])) {
 			if(!empty($return['linefeatures'][0])) {
 			 if(!empty($return['linefeatures'][0]['device'])) {
-				$list_device_line = $device_api->find_all($return['linefeatures'][0]['device'],false,[0,20]);
+				$list_device_line = $device_api->find_all($return['linefeatures'][0]['device']);
 				$_TPL->set_var('list_device_line',$list_device_line);
 			 }
 			}
