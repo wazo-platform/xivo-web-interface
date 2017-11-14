@@ -253,13 +253,14 @@ endif;
 		<?php else: ?>
 			<?=$form->select(array('paragraph'	=> false,
 				    'name'		=> 'linefeatures[device][]',
-				    'id'		=> 'linefeatures-device',
+						'id'		=> 'linefeatures-device',
+						'class' => 'linefeatures-device-select2',
 				    'label'		=> false,
 				    'key'		=> 'display',
 				    'altkey'	=> 'id',
 				    'default'	=> '',
 				    'empty'		=> true),
-			      $list_device);?>
+						$list_device);?>
 		<?php endif; ?>
 		</td>
 		<td>
