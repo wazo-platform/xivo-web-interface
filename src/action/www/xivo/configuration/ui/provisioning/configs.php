@@ -29,7 +29,9 @@ else
 
 $provdconfig = &$_XOBJ->get_module('provdconfig');
 $appdevice = &$ipbx->get_application('device',null,false);
+$device_api = &$_RAPI->get_ressource('device');
 
+dwho_logw($act);
 switch($act)
 {
 	case 'get':
@@ -46,6 +48,39 @@ switch($act)
 		$_TPL->set_var('list',array_keys($sip_lines));
 		$_TPL->display('/struct/page/genericjson');
 		break;
+	case 'search':
+		$list_device_line = array();
+		if (isset($_QR['term']) === true)
+		{
+			$list_device_line = $device_api->raw_find($_QR['term'],false,[0,5]);
+		}
+
+		$list_device = array();
+		$results=array();
+
+		$nb_device = count($list_device_line);
+
+		for($i=0; $i<$nb_device; $i++):
+			$cur_device = $list_device_line[$i];
+			$results[$i]['id'] = $cur_device['id'];
+			$trimmed_mac = trim($cur_device['mac']);
+			$trimmed_ip = trim($cur_device['ip']);
+			if(empty($trimmed_mac) === false) {
+				$results[$i]['text'] = 'MAC: '.$cur_device['mac'];
+			} else if(empty($trimmed_ip) === false) {
+				$results[$i]['text'] = 'IP: '.$cur_device['ip'];
+			}
+		endfor;
+
+		$list_device['results'] = $results;
+		$list_device['pagination'] = array();
+		$list_device['pagination']['more'] = false;
+		
+		$_TPL->set_var('act',$act);
+		$_TPL->set_var('list',$list_device);
+		$_TPL->display('/struct/page/genericjson');
+	break;
+
 	default:
 		$http_response->set_status_line(400);
 		$http_response->send(true);

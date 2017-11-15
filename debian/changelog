@@ -1,5 +1,6 @@
 xivo-web-interface (2017.03.16) xivo-2017.03; urgency=medium
 
+  * Fix performance issue when editing users
   * Display line list on device screen
   * A line number on a user can be up to 32
 
