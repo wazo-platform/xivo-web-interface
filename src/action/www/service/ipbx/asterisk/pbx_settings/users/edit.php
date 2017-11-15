@@ -135,7 +135,7 @@ else
 			}
 		}
 	}
-	
+
 $_TPL->load_i18n_file('tpl/www/bloc/service/ipbx/asterisk/pbx_settings/users/edit.i18n', 'global');
 
 $order_list    = range(1, 20);
