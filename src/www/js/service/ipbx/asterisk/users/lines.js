@@ -135,7 +135,6 @@ function get_entityid_val()
 
 function update_row_infos()
 {
-    console.log('update_row_infos');
     if ((entityid_val = get_entityid_val()) === false)
         return(false);
 
