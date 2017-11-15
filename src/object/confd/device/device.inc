@@ -32,6 +32,13 @@ class confd_ressource_device extends xivo_confd_helpers_abstract
 		$this->_httpheaders[] = 'Accept: application/json';
 	}
 
+	public function raw_find($search='',$order=false,$limit=false)
+	{
+		if (($devices = parent::find_all($search,$order,$limit)) === false)
+			return(false);
+
+		return($devices);
+	}
 	public function find_all($search='',$order=false,$limit=false,$search_column=null)
 	{
 		$_SRE = dwho_gct::get('xivo_service');
@@ -53,7 +60,7 @@ class confd_ressource_device extends xivo_confd_helpers_abstract
 				}
 				break;
 			default:
-				if (($devices = parent::find_all($search,$order)) === false)
+				if (($devices = $this->raw_find($search,$order)) === false)
 					return(false);
 				foreach ($devices as $device)
 				{
