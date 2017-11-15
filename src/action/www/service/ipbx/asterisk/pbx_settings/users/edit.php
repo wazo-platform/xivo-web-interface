@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2017  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -69,9 +69,6 @@ if(isset($_QR['fm_send']) === true && dwho_issa('userfeatures',$_QR) === true)
 		$_QRY->go($_TPL->url('service/ipbx/pbx_settings/users'),$param);
 	}
 }
-
-$list_device_line = $device_api->find_all();
-$_TPL->set_var('list_device_line',$list_device_line);
 
 dwho::load_class('dwho_sort');
 

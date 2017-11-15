@@ -1,11 +1,6 @@
 xivo-web-interface (2017.11.04) xivo-dev; urgency=medium
 
-  *  Fix performance issue when editing users
-  
- -- Jean-Yves LEBLEU <jylebleu@xivo.solutions>  Tues, 14 Nov 2017 14:56:36 +0200
-
-xivo-web-interface (2017.11.04) xivo-dev; urgency=medium
-
+  * Fix performance issue when editing users
   * Display line list on device screen (FServian)
   * Do not reload devices on saving user
   * A line number on a user can be up to 32
