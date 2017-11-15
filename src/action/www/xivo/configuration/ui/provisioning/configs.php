@@ -44,7 +44,6 @@ switch($act)
 			$http_response->send(true);
 		}
 		$sip_lines = $raw_config['sip_lines'];
-		dwho_logw($sip_lines[0]);
 		$_TPL->set_var('act',$act);
 		$_TPL->set_var('list',array_keys($sip_lines));
 		$_TPL->display('/struct/page/genericjson');
@@ -55,7 +54,6 @@ switch($act)
 		{
 			$list_device_line = $device_api->raw_find($_QR['term'],false,[0,5]);
 		}
-		dwho_logw($_QR['term']);
 
 		$list_device = array();
 		$results=array();
@@ -78,7 +76,6 @@ switch($act)
 		$list_device['pagination'] = array();
 		$list_device['pagination']['more'] = false;
 		
-		dwho_logw(dwho_json::encode($list_device_line));
 		$_TPL->set_var('act',$act);
 		$_TPL->set_var('list',$list_device);
 		$_TPL->display('/struct/page/genericjson');
