@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-# Copyright (C) 2015-2016 Avencall
+# Copyright 2015-2017 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -43,7 +43,7 @@ class Browser(object):
 
     def start(self):
         self.display.start()
-        self.driver = webdriver.Firefox(capabilities={'marionette': False})
+        self.driver = webdriver.Firefox()
         self.driver.set_window_size(1024, 768)
         self.login()
 
