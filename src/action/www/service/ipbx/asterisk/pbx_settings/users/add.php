@@ -54,7 +54,7 @@ $rightcall['list'] = $apprightcall->get_rightcalls_list(null,
 
 if(isset($_QR['fm_send']) === true && dwho_issa('userfeatures',$_QR) === true)
 {
-	if($appuser->set_add($_QR) === false 	|| $appuser->add() === false)
+	if($appuser->set_add($_QR) === false || $appuser->add() === false)
 	{
 		$fm_save = false;
 
