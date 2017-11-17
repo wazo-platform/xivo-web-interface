@@ -1,6 +1,6 @@
 /*
  * XiVO Web-Interface
- * Copyright (C) 2006-2016  Avencall
+ * Copyright (C) 2006-2017  Avencall
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -135,6 +135,7 @@ function get_entityid_val()
 
 function update_row_infos()
 {
+    console.log('update_row_infos');
     if ((entityid_val = get_entityid_val()) === false)
         return(false);
 
@@ -184,7 +185,6 @@ function update_row_infos()
             if (device == '')
                 devicenumline.hide();
 
-            $(this).find('#linefeatures-device').select2();
 
             $(this).find('#linefeatures-device').change(function() {
                 devicenumline = $(this).parents('tr').find("#linefeatures-num");
@@ -209,6 +209,26 @@ function enable_disable_add_button() {
     return true;
 }
 
+function init_device_select() {
+    $('#linefeatures-device').select2({
+        placeholder: 'MAC / IP',
+        minimumInputLength: 2,
+        allowClear: true,
+        theme: "xivo",
+        ajax: {
+          url: '/xivo/configuration/ui.php/provisioning/configs',
+          dataType: 'json',
+          delay: 250,
+          data: function (params) {
+            var query = {
+              term: params.term,
+              act: 'search'
+            }
+            return query;
+          }
+        }
+    });
+}
 
 $(document).ready(function() {
 
@@ -233,7 +253,9 @@ $(document).ready(function() {
         });
 
         update_row_infos();
+        init_device_select();
         return false;
     });
-
+    nb_row = $('#list_linefeatures > tbody > tr').length;
+    if (nb_row > 0) init_device_select();
 });

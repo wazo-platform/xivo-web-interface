@@ -148,13 +148,14 @@ if($list !== false):
 			<?=$form->select(array('paragraph'	=> false,
 				    'name'		=> 'linefeatures[device][]',
 				    'id'		=> 'linefeatures-device',
+				    'class' => 'linefeatures-device-select2',
 				    'label'		=> false,
 				    'key'		=> 'display',
 				    'altkey'	=> 'id',
 				    'empty'		=> true,
 				    'default'	=> '',
-					'selected'	=> $ref['device']),
-			      $list_device);?>
+				    'selected'	=> $ref['device']),
+			      $list_device);?>		
 		<?php endif; ?>
 		</td>
 		<td>
@@ -253,12 +254,13 @@ endif;
 			<?=$form->select(array('paragraph'	=> false,
 				    'name'		=> 'linefeatures[device][]',
 				    'id'		=> 'linefeatures-device',
+				    'class' => 'linefeatures-device-select2',
 				    'label'		=> false,
 				    'key'		=> 'display',
 				    'altkey'	=> 'id',
 				    'default'	=> '',
 				    'empty'		=> true),
-			      $list_device);?>
+				    $list_device);?>
 		<?php endif; ?>
 		</td>
 		<td>
@@ -291,3 +293,4 @@ endif;
 	</tr>
 	</tbody>
 </table>
+

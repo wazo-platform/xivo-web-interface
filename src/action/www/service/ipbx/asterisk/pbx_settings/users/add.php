@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2017  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -54,10 +54,7 @@ $rightcall['list'] = $apprightcall->get_rightcalls_list(null,
 
 if(isset($_QR['fm_send']) === true && dwho_issa('userfeatures',$_QR) === true)
 {
-	dwho_logw('add : saving');
-
-	if($appuser->set_add($_QR) === false
-	|| $appuser->add() === false)
+	if($appuser->set_add($_QR) === false || $appuser->add() === false)
 	{
 		$fm_save = false;
 
@@ -67,14 +64,20 @@ if(isset($_QR['fm_send']) === true && dwho_issa('userfeatures',$_QR) === true)
 
 		$error = $appuser->get_error();
 	}
-	else {
-		dwho_logw('add : saved');
+	else
 		$_QRY->go($_TPL->url('service/ipbx/pbx_settings/users'),$param);
-	}
 }
 
-$list_device_line = $device_api->find_all();
-$_TPL->set_var('list_device_line',$list_device_line);
+if(!empty($result)) {
+	if(!empty($result['linefeatures'])) {
+		if(!empty($result['linefeatures'][0])) {
+		 if(!empty($result['linefeatures'][0]['device'])) {
+			$list_device_line = $device_api->raw_find($result['linefeatures'][0]['device']);
+			$_TPL->set_var('list_device_line',$list_device_line);
+		 }
+		}
+	}
+}
 
 dwho::load_class('dwho_sort');
 

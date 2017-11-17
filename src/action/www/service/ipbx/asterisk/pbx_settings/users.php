@@ -47,6 +47,8 @@ switch($act)
 		$list_configregistrar = $appprovdconfig->get_config_list('',$order,false,false,false,'registrar');
 
 		$device_api = &$_RAPI->get_ressource('device');
+		
+		$list_device_line = array();
 
 		$_TPL->set_var('list_configregistrar',$list_configregistrar);
 		$_TPL->set_var('import_file',$appuser->get_config_import_file());
@@ -69,8 +71,10 @@ switch($act)
 		$dhtml->set_js('extra-libs/timepicker/jquery-ui-timepicker-addon.js',true);
 
 		// select2
-		$dhtml->set_css('extra-libs/select2/select2-xivo.css', true);
-		$dhtml->set_js('extra-libs/select2/select2.min.js', true);
+		$dhtml->set_css('extra-libs/select2-4.0.5/css/select2.min.css', true);
+		$dhtml->set_js('extra-libs/select2-4.0.5/js/select2.full.min.js', true);
+		$dhtml->set_js('extra-libs/select2-4.0.5/js/i18n/en.js', true);
+		$dhtml->set_js('extra-libs/select2-4.0.5/js/i18n/fr_patched.js', true);
 
 		break;
 	case 'delete':
@@ -205,6 +209,8 @@ $menu->set_toolbar('toolbar/service/ipbx/'.$ipbx->get_name().'/pbx_settings/user
 
 $_TPL->set_bloc('main','service/ipbx/'.$ipbx->get_name().'/pbx_settings/users/'.$act);
 $_TPL->set_struct('service/ipbx/'.$ipbx->get_name());
+
+
 $_TPL->display('index');
 
 dwho_logw('users rendered')

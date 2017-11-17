@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2017  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -70,9 +70,6 @@ if(isset($_QR['fm_send']) === true && dwho_issa('userfeatures',$_QR) === true)
 	}
 }
 
-$list_device_line = $device_api->find_all();
-$_TPL->set_var('list_device_line',$list_device_line);
-
 dwho::load_class('dwho_sort');
 
 if($gmember['list'] !== false && dwho_ak('groupmember',$return) === true)
@@ -128,6 +125,17 @@ if(empty($return) === false)
 else
 	$return = null;
 
+	if(!empty($return)) {
+		if(!empty($return['linefeatures'])) {
+			if(!empty($return['linefeatures'][0])) {
+			 if(!empty($return['linefeatures'][0]['device'])) {
+				$list_device_line = $device_api->raw_find($return['linefeatures'][0]['device']);
+				$_TPL->set_var('list_device_line',$list_device_line);
+			 }
+			}
+		}
+	}
+	
 $_TPL->load_i18n_file('tpl/www/bloc/service/ipbx/asterisk/pbx_settings/users/edit.i18n', 'global');
 
 $order_list    = range(1, 20);
