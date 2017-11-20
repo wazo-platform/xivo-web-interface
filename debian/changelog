@@ -1,5 +1,6 @@
 xivo-web-interface (2017.11.06) xivo-dev; urgency=medium
 
+  * Fix Cannot configure a func key for a Queue/User/Meetme/Group if its ID is 5
   * Fix performance issue when editing (and saving) users
 
  -- Jean-Yves Lebleu <jylebleu@avencall.com>  Fri, 17 Nov 2017 11:26:20 +0100
