@@ -157,6 +157,12 @@ Comedia
 ; fm_protocol_nat-opt(force_rport,comedia)
 Yes (force rport + comedia)
 
+; fm_protocol_nat-opt(auto_force_rport)
+Auto force rport
+
+; fm_protocol_nat-opt(auto_comedia)
+Auto comedia
+
 ; fm_protocol_progressinband
 Progress in BAND :
 

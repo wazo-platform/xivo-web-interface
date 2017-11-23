@@ -697,6 +697,12 @@ Comedia
 ; fm_nat-opt(force_rport,comedia)
 Yes (force rport + comedia)
 
+; fm_nat-opt(auto_force_rport)
+Auto force rport
+
+; fm_nat-opt(auto_comedia)
+Auto comedia
+
 ; fm_dtmfmode
 DTMF:
 

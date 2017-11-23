@@ -76,6 +76,12 @@ Comedia
 ; fm_protocol_nat-opt(force_rport,comedia)
 Oui (force rport + comedia)
 
+; fm_protocol_nat-opt(auto_force_rport)
+Auto force rport
+
+; fm_protocol_nat-opt(auto_comedia)
+Auto comedia
+
 ; fm_register
 Enregistrement :
 
