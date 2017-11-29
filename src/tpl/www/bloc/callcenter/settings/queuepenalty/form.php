@@ -69,7 +69,7 @@ echo	$form->text(array('desc'	=> $this->bbf('fm_queuepenalty_name'),
 ?>
 	<p>&nbsp;</p>
 	<div class="sb-list">
-		<table>
+		<table class="table">
 			<thead>
 			<tr class="sb-top">
 
