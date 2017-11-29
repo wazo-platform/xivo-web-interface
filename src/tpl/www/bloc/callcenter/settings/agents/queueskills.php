@@ -39,7 +39,7 @@ $data 		= $this->get_var('queueskills');
 ?>
 	<p>&nbsp;</p>
 	<div class="sb-list">
-		<table>
+		<table class="table">
 			<thead>
 			<tr class="sb-top">
 
@@ -72,7 +72,7 @@ $data 		= $this->get_var('queueskills');
 							'altkey'	=> 'id',
 							'empty'		=> true,
 							'optgroup'	=> array(
-								'key'		=> 'category', 
+								'key'		=> 'category',
 								'unique' 	=> true,
 							),
 							'selected'	=> $data[$i]['skillid'],
@@ -129,7 +129,7 @@ $data 		= $this->get_var('queueskills');
 							'label'     => false,
 							'empty'		=> true,
 							'optgroup'	=> array(
-								'key'		=> 'category', 
+								'key'		=> 'category',
 								'unique' 	=> true,
 							),
 						),
@@ -162,4 +162,3 @@ $data 		= $this->get_var('queueskills');
 		</table>
 	</div>
 </div>
-
