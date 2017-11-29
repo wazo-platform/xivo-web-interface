@@ -29,8 +29,8 @@ $rightcall    = $this->get_var('rightcall');
 $schedules    = $this->get_var('schedules');
 
 ?>
-
-<div id="sb-part-first" class="b-nodisplay">
+<div class="tab-content">
+	<div role="tabpanel" class="tab-pane active" id="general">
 <?php
 	echo	$form->text(array('desc'	=> $this->bbf('fm_outcall_name'),
 				  'name'	=> 'outcall[name]',
@@ -134,14 +134,13 @@ endif;
 				   $this->get_var('info','outcall','description'));?>
 	</div>
 </div>
-
-<div id="sb-part-exten" class="b-nodisplay">
+<div role="tabpanel" class="tab-pane" id="exten">
 	<div class="sb-list">
 <?php $this->file_include('bloc/service/ipbx/asterisk/call_management/outcall/exten'); ?>
 	</div>
 </div>
 
-<div id="sb-part-rightcalls" class="b-nodisplay">
+<div role="tabpanel" class="tab-pane" id="rightcalls">
 <?php
 	if($rightcall['list'] !== false):
 ?>
@@ -167,8 +166,8 @@ endif;
 ?>
 </div>
 
+<div role="tabpanel" class="tab-pane" id="schedule">
 
-<div id="sb-part-schedule" class="b-nodisplay">
 <?php
 	if($schedules === false):
 		echo	'<div class="txt-center">',

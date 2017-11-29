@@ -30,8 +30,8 @@ $context_list = $this->get_var('context_list');
 $schedules = $this->get_var('schedules');
 
 ?>
-
-<div id="sb-part-first" class="b-nodisplay">
+<div class="tab-content">
+	<div role="tabpanel" class="tab-pane active" id="general">
 <?php
 	echo	$form->text(array('desc'	=> $this->bbf('fm_incall_exten'),
 				  'name'	=> 'incall[exten]',
@@ -109,8 +109,7 @@ endif;
 				   $this->get_var('incall','description'));?>
 	</div>
 </div>
-
-<div id="sb-part-rightcalls" class="b-nodisplay">
+<div role="tabpanel" class="tab-pane" id="rightcalls">
 <?php
 	if($rightcall['list'] !== false):
 ?>
@@ -136,8 +135,7 @@ endif;
 ?>
 </div>
 
-
-<div id="sb-part-schedule" class="b-nodisplay">
+<div role="tabpanel" class="tab-pane" id="schedule">
 <?php
 	if($schedules === false):
 		echo	'<div class="txt-center">',
@@ -158,5 +156,4 @@ endif;
 	endif;
 ?>
 </div>
-
-
+</div>

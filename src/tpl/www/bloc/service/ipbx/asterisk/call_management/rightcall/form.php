@@ -32,8 +32,9 @@ $rcalloutcall = $this->get_var('rcalloutcall');
 $rcallexten = $this->get_var('rcallexten');
 
 ?>
+<div class="tab-content">
+	<div role="tabpanel" class="tab-pane active" id="general">
 
-<div id="sb-part-first" class="b-nodisplay">
 <?php
 	echo	$form->text(array('desc'	=> $this->bbf('fm_rightcall_name'),
 				  'name'	=> 'rightcall[name]',
@@ -114,8 +115,7 @@ $rcallexten = $this->get_var('rcallexten');
 			   $info['rightcall']['description']);?>
 </div>
 </div>
-
-<div id="sb-part-rightcalluser" class="b-nodisplay">
+<div role="tabpanel" class="tab-pane" id="rightcalluser">
 <?php
 	if($rcalluser['list'] !== false):
 ?>
@@ -140,8 +140,7 @@ $rcallexten = $this->get_var('rcallexten');
 	endif;
 ?>
 </div>
-
-<div id="sb-part-rightcallgroup" class="b-nodisplay">
+<div role="tabpanel" class="tab-pane" id="rightcallgroup">
 <?php
 	if($rcallgroup['list'] !== false):
 ?>
@@ -166,7 +165,7 @@ $rcallexten = $this->get_var('rcallexten');
 	endif;
 ?>
 </div>
-<div id="sb-part-rightcallincall" class="b-nodisplay">
+<div role="tabpanel" class="tab-pane" id="rightcallincall">
 <?php
 	if($rcallincall['list'] !== false):
 ?>
@@ -191,8 +190,7 @@ $rcallexten = $this->get_var('rcallexten');
 	endif;
 ?>
 </div>
-
-<div id="sb-part-last" class="b-nodisplay">
+<div role="tabpanel" class="tab-pane" id="outcall">
 <?php
 	if($rcalloutcall['list'] !== false):
 ?>
@@ -216,4 +214,5 @@ $rcallexten = $this->get_var('rcallexten');
 			'</div>';
 	endif;
 ?>
+</div>
 </div>

@@ -36,8 +36,8 @@ else:
 endif;
 
 ?>
-
-<div id="sb-part-first" class="b-nodisplay">
+<div class="tab-content">
+	<div role="tabpanel" class="tab-pane active" id="general">
 <?php
 	if ($this->get_var('entity_list') === false)
 	    echo $this->bbf('no_internal_context_for_this_entity');
@@ -191,8 +191,8 @@ endif;
 </div>
 
 </div>
+<div role="tabpanel" class="tab-pane" id="dialaction">
 
-<div id="sb-part-last" class="b-nodisplay">
 	<fieldset id="fld-dialaction-noanswer">
 		<legend><?=$this->bbf('fld-dialaction-noanswer');?></legend>
 <?php
@@ -200,4 +200,5 @@ endif;
 				    array('event'	=> 'noanswer'));
 ?>
 	</fieldset>
+</div>
 </div>

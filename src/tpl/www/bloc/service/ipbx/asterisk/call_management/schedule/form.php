@@ -29,8 +29,8 @@ $context_list = $this->get_var('context_list');
 $timezones = $this->get_var('timezones');
 
 ?>
-
-<div id="sb-part-first" class="b-nodisplay">
+<div class="tab-content">
+	<div role="tabpanel" class="tab-pane active" id="general">
 <?php
 	if ($this->get_var('entity_list') === false)
 	    echo $this->bbf('no_internal_context_for_this_entity');
@@ -72,7 +72,7 @@ echo	$form->text(array('desc'	=> $this->bbf('fm_schedule_name'),
 	<fieldset id="fld-opened-hours">
 		<legend><?=$this->bbf('fld-opened-hours');?></legend>
 
-		<table>
+		<table class="table">
 			<thead>
 			<tr class="sb-top">
 
@@ -243,8 +243,7 @@ echo	$form->text(array('desc'	=> $this->bbf('fm_schedule_name'),
 
 </div>
 
-
-<div id="sb-part-closed-periods" class="b-nodisplay">
+<div role="tabpanel" class="tab-pane" id="closed-periods">
 <?php
 	// closed hours
 	$type = 'disp2';
@@ -254,7 +253,7 @@ echo	$form->text(array('desc'	=> $this->bbf('fm_schedule_name'),
 ?>
 	<div class="sb-list">
 
-		<table>
+		<table class="table">
 			<thead>
 			<tr class="sb-top">
 
@@ -406,4 +405,5 @@ echo	$form->text(array('desc'	=> $this->bbf('fm_schedule_name'),
 		</table>
 	</div>
 
+</div>
 </div>

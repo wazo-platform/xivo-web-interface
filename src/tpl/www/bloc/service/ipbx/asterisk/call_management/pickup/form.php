@@ -26,8 +26,8 @@ $list         = $this->get_var('list');
 
 ?>
 
-
-<div id="sb-part-first" class="b-nodisplay">
+<div class="tab-content">
+	<div role="tabpanel" class="tab-pane active" id="general">
 <?php
 	if ($this->get_var('entity_list') === false)
 	    echo $this->bbf('no_internal_context_for_this_entity');
@@ -70,8 +70,7 @@ echo	$form->text(array('desc'	=> $this->bbf('fm_pickup_name'),
 
 </div>
 
-
-<div id="sb-part-members" class="b-nodisplay">
+<div role="tabpanel" class="tab-pane" id="members">
 	<fieldset id="fld-members-groups">
 		<legend><?=$this->bbf('fld-members-groups');?></legend>
 		<div id="interceptorgrouplist" class="fm-paragraph fm-description">
@@ -102,8 +101,7 @@ echo	$form->text(array('desc'	=> $this->bbf('fm_pickup_name'),
 		</div>
 	</fieldset>
 </div>
-
-<div id="sb-part-interceptors" class="b-nodisplay">
+<div role="tabpanel" class="tab-pane" id="interceptors">
 	<fieldset id="fld-interceptors-groups">
 		<legend><?=$this->bbf('fld-interceptors-groups');?></legend>
 		<div id="interceptedgrouplist" class="fm-paragraph fm-description">
@@ -133,4 +131,5 @@ echo	$form->text(array('desc'	=> $this->bbf('fm_pickup_name'),
 ?>
 		</div>
 	</fieldset>
+</div>
 </div>
