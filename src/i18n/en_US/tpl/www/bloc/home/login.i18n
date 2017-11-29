@@ -12,3 +12,6 @@ Language:
 
 ; fm_bt-connection
 Connection
+
+; login_description
+XIVO is a unified communication system that connects phones inside an organization with public and mobile telephone networks.
