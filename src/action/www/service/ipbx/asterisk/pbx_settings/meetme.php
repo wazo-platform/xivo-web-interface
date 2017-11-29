@@ -76,7 +76,6 @@ switch($act)
 		$dhtml->set_js('js/dwho/http.js');
 		$dhtml->set_js('js/dwho/suggest.js');
 		$dhtml->set_js('js/service/ipbx/'.$ipbx->get_name().'/meetme.js');
-		$dhtml->set_js('js/dwho/submenu.js');
 		break;
 	case 'edit':
 		$appmeetme = &$ipbx->get_application('meetme');
@@ -124,7 +123,6 @@ switch($act)
 		$dhtml->set_js('js/dwho/http.js');
 		$dhtml->set_js('js/dwho/suggest.js');
 		$dhtml->set_js('js/service/ipbx/'.$ipbx->get_name().'/meetme.js');
-		$dhtml->set_js('js/dwho/submenu.js');
 		break;
 	case 'delete':
 		$param['page'] = $page;
