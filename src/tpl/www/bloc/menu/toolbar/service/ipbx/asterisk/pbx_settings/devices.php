@@ -160,7 +160,7 @@ function autoprov_validate()
 </script>
 
 <div id="autoprov_dialog" class="dialog">
-	<table>
+	<table class="table">
 		<tbody>
 			<tr class="sb-top">
 				<th class="th-left"><span>&nbsp;</span></th>

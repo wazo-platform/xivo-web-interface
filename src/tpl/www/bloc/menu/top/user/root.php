@@ -21,79 +21,36 @@
 $url = &$this->get_module('url');
 $menu = &$this->get_module('menu');
 
-$this->file_include('bloc/menu/top/user/loginbox');
 
 ?>
 <div id="toolbox">
-<div id="logo"><?=$url->img_html('img/menu/top/logo.gif',XIVO_SOFT_LABEL);?></div>
-<div class="nav">
-	 <ul>
-		<li onmouseout="this.className = 'moo';"
-		    onmouseover="this.className = 'mov';">
-			<span class="span-left">&nbsp;</span>
-			<span class="span-center"><?=$this->bbf('mn_top_services');?></span>
-			<span class="span-right">&nbsp;</span>
-			<div class="stab">
-				<ul>
-					<li>
-						<?=$url->href_html($this->bbf('mn_sub_top_services_ipbx'),
-								   'service/ipbx');?>
-					</li>
-					<li>
-						<?=$url->href_html($this->bbf('mn_sub_top_services_cti'),
-								   'cti/general');?>
-					</li>
-					<li>
-						<?=$url->href_html($this->bbf('mn_sub_top_services_callcenter'),
-								   'callcenter');?>
-					</li>
-					<li>
-						<?=$url->href_html($this->bbf('mn_sub_top_services_monitoring'),
-								   'xivo');?>
-					</li>
-					<li>
-						<?=$url->href_html($this->bbf('mn_sub_top_services_stats'),
-								   'graphs');?>
-					</li>
-					<li>
-						<?=$url->href_html($this->bbf('mn_sub_top_services_statistiques'),
-								   'statistics');?>
-					</li>
-				</ul>
-			</div>
-		</li>
-		<li onmouseout="this.className = 'moo';"
-		    onmouseover="this.className = 'mov';">
-			<?=$url->href_html('<span class="span-left">&nbsp;</span>
-					    <span class="span-center">'.$this->bbf('mn_top_configuration').'</span>
-					    <span class="span-right">&nbsp;</span>',
-					   'xivo/configuration',
-					   null,
-					   null,
-					   $this->bbf('mn_top_configuration'));?>
-		</li>
-		<li onmouseout="this.className = 'moo';"
-		    onmouseover="this.className = 'mov';">
-			<?=$url->href_html('<span class="span-left">&nbsp;</span>
-					    <span class="span-center">'.$this->bbf('mn_top_help').'</span>
-					    <span class="span-right">&nbsp;</span>',
-					   'xivo/help',
-					   null,
-					   null,
-					   $this->bbf('mn_top_help'));?>
-		</li>
-		<li onmouseout="this.className = 'moo';"
-		    onmouseover="this.className = 'mov';">
-			<?=$url->href_html('<span class="span-left">&nbsp;</span>
-					    <span class="span-center">'.$this->bbf('mn_top_contact').'</span>
-					    <span class="span-right">&nbsp;</span>',
-					   'xivo/contact',
-					   null,
-					   null,
-					   $this->bbf('mn_top_contact'));?>
-		</li>
-	</ul>
+<div id="logo"><?=$url->img_html('img/xivo/xivo_logo.png',XIVO_SOFT_LABEL);?></div>
+<div class="nav navbar-left">
+	<div class="btn-group">
+		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+     <?=$this->bbf('mn_top_services');?><span class="caret"></span>
+   	</button>
+   	<ul class="navbar-nav navbar-right dropdown-menu">
+     <li><?=$url->href_html($this->bbf('mn_sub_top_services_ipbx'),'service/ipbx');?></li>
+		 <li><?=$url->href_html($this->bbf('mn_sub_top_services_cti'),'cti/general');?></li>
+		 <li><?=$url->href_html($this->bbf('mn_sub_top_services_callcenter'),'callcenter');?></li>
+		 <li><?=$url->href_html($this->bbf('mn_sub_top_services_monitoring'),'xivo');?></li>
+		 <li role="separator" class="divider"></li>
+		 <li><?=$url->href_html($this->bbf('mn_sub_top_services_stats'),'graphs');?></li>
+		 <li><?=$url->href_html($this->bbf('mn_sub_top_services_statistiques'),'statistics');?></li>
+  	</ul>
+		<button type="button" class="btn btn-default">
+			 <?=$url->href_html($this->bbf('mn_top_configuration'),'xivo/configuration');?>
+		</button>
+		<button type="button" class="btn btn-default">
+			 <?=$url->href_html($this->bbf('mn_top_help'),'xivo/help');?>
+		</button>
+		<button type="button" class="btn btn-default">
+			 <?=$url->href_html($this->bbf('mn_top_contact'),'xivo/contact');?>
+		</button>
+ 	</div>
 </div>
+<?php $this->file_include('bloc/menu/top/user/loginbox'); ?>
 <div id="tooltips">&nbsp;</div>
 <div id="toolbar">
 <?php
