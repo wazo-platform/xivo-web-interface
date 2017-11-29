@@ -59,7 +59,7 @@ class dwho_tpl_form extends dwho_tpl_module
 		$this->_param['id'] = false;
 		$this->_param['class'] = false;
 		$this->_param['label'] = true;
-		$this->_param['paragraph'] = true;
+		$this->_param['paragraph'] = false;
 		$this->_param['paragraphid'] = true;
 		$this->_param['key'] = null;
 		$this->_param['altkey'] = false;
@@ -74,6 +74,9 @@ class dwho_tpl_form extends dwho_tpl_module
 		$this->_param['invalid'] = false;
 		$this->_param['error'] = '';
 		$this->_param['legend']  = '';
+		$this->_param['group']  = 'form-group form-group-sm';
+		$this->_param['lbClass'] = 'col-sm-2';
+		$this->_param['controlSize'] = 'col-sm-4';
 
 		if(isset($v['name']) === true)
 			$this->_param['name'] = dwho_htmlsc($v['name']);
@@ -256,6 +259,16 @@ class dwho_tpl_form extends dwho_tpl_module
 
 		if(isset($v['error']) === true && dwho_has_len($v['error']) === true)
 			$this->_param['error'] = $v['error'];
+
+		if(isset($v['group']) === true)
+				$this->_param['group'] = (string) $v['group'];
+
+		if(isset($v['lbClass']) === true)
+				$this->_param['lbClass'] = (string) $v['lbClass'];
+
+		if(isset($v['controlSize']) === true)
+				$this->_param['controlSize'] = (string) $v['controlSize'];
+
 	}
 
 	function _mk_param_value($value,&$v)
@@ -371,7 +384,9 @@ class dwho_tpl_form extends dwho_tpl_module
 			return($str);
 		}
 
-		$format = '<label id="%s" for="%s">%s</label>';
+		$format = '<label class="%s" id="%s" for="%s">%s</label>';
+
+    $cl = "control-label";
 
 		if($this->_param['label'] === true)
 			$id = 'lb-'.$this->_param['name'];
@@ -382,6 +397,10 @@ class dwho_tpl_form extends dwho_tpl_module
 			$for = $this->_param['id'];
 		else
 			$for = $this->_param['name'];
+
+		if($this->_param['lbClass'] !== '') {
+			$cl = sprintf("%s %s",$cl, $this->_param['lbClass']);
+		}
 
 		if($str === false)
 			$ref = &$this->_render;
@@ -394,7 +413,7 @@ class dwho_tpl_form extends dwho_tpl_module
 			$this->_param['required'] = false;
 		}
 
-		$r = sprintf($format,$id,$for,$ref);
+		$r = sprintf($format,$cl,$id,$for,$ref);
 
 		if($str !== false)
 			return($r);
@@ -417,15 +436,34 @@ class dwho_tpl_form extends dwho_tpl_module
 		$this->_render = '<p'.$id.' class="fm-paragraph">'."\n".$this->_render."\n".'</p>';
 	}
 
+	function _mk_control_size()
+	{
+		if($this->_param['controlSize'] !== '')
+			$cl = ' class="'.$this->_param['controlSize'].'"';
+		else {
+			return false;
+		}
+
+		$this->_render = '<div '.$cl.' >'."\n".$this->_render."\n".'</div>';
+	}
+	function _mk_group()
+	{
+		if($this->_param['group'] !== '')
+			$cl = ' class="'.$this->_param['group'].'"';
+		else {
+			return false;
+		}
+
+		$this->_render = '<div '.$cl.' >'."\n".$this->_render."\n".'</div>';
+	}
+
 	function _mk_desc()
 	{
 		if($this->_param['desc'] === false)
 			return(false);
 		else if(is_scalar($this->_param['desc']) === true)
 		{
-			$this->_render = '<span class="fm-desc clearboth">'.
-					$this->_mk_label((string) $this->_param['desc']).
-					'</span>'.
+			$this->_render = 	$this->_mk_label((string) $this->_param['desc']).
 					$this->_render;
 
 			$this->_param['label'] = false;
@@ -526,7 +564,7 @@ class dwho_tpl_form extends dwho_tpl_module
 		if($this->_param['class'] !== false)
 			$class = $this->_param['class'];
 		else
-			$class = '';
+			$class = 'form-control';
 
 		if($this->_param['required'] !== false)
 			$class .= ' _dwho-form-field-required';
@@ -611,6 +649,7 @@ class dwho_tpl_form extends dwho_tpl_module
 
 		$this->_set_param_value($v['value'],$v);
 		$this->_mk_input($o);
+		$this->_mk_control_size();
 		$this->_mk_help();
 		$this->_mk_error();
 		$this->_mk_legend();
@@ -618,6 +657,7 @@ class dwho_tpl_form extends dwho_tpl_module
 		$this->_mk_desc();
 		$this->_mk_label();
 		$this->_mk_paragraph();
+		$this->_mk_group();
 
 		return($this->_render);
 	}
@@ -712,7 +752,7 @@ class dwho_tpl_form extends dwho_tpl_module
 
 		$v['size'] = false;
 		$v['regexp'] = $v['checked'] = $v['required'] = null;
-		$v['class'] = 'itb-submit';
+		$v['class'] = 'btn btn-primary itb-submit';
 		$v['type'] = 'submit';
 
 		$this->_set_param($v);
@@ -801,6 +841,7 @@ class dwho_tpl_form extends dwho_tpl_module
 		$this->_mk_desc();
 		$this->_mk_label();
 		$this->_mk_paragraph();
+		$this->_mk_group();
 
 		return($this->_render);
 	}
@@ -831,6 +872,7 @@ class dwho_tpl_form extends dwho_tpl_module
 
 		$this->_mk_input($o);
 
+		$this->_mk_control_size();
 		$this->_mk_help();
 		$this->_mk_error();
 		$this->_mk_legend();
@@ -838,6 +880,7 @@ class dwho_tpl_form extends dwho_tpl_module
 		$this->_mk_desc();
 		$this->_mk_label();
 		$this->_mk_paragraph();
+		$this->_mk_group();
 
 		return($this->_render);
 	}
@@ -1421,7 +1464,7 @@ class dwho_tpl_form extends dwho_tpl_module
 			$r .= "\n\n";
 		}
 
-		$r .= '<select name="'.$this->_param['name'].'"';
+		$r .= '<select class="form-control" name="'.$this->_param['name'].'"';
 
 		if($this->_param['disabled'] !== false)
 			$r .= ' disabled="disabled"';
@@ -1510,6 +1553,7 @@ class dwho_tpl_form extends dwho_tpl_module
 			}
 		}
 
+		$this->_mk_control_size();
 		$this->_mk_help();
 		$this->_mk_error();
 		$this->_mk_legend();
@@ -1517,6 +1561,7 @@ class dwho_tpl_form extends dwho_tpl_module
 		$this->_mk_desc();
 		$this->_mk_label();
 		$this->_mk_paragraph();
+		$this->_mk_group();
 
 		return($this->_render);
 	}
