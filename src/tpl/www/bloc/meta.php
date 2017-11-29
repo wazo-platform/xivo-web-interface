@@ -32,19 +32,25 @@
 
 <link rel="icon" href="<?=$this->file_time($this->url('favicon.ico'));?>">
 <link rel="shortcut icon" href="<?=$this->file_time($this->url('favicon.ico'));?>">
-
+<link rel="stylesheet" type="text/css" href="<?=$this->file_time($this->url('css/dashboard.css'));?>">
 <link rel="stylesheet" type="text/css" href="<?=$this->file_time($this->url('css/xivo.css'));?>">
+<link rel="stylesheet" type="text/css" href="<?=$this->file_time($this->url('extra-libs/jquery-ui/css/ui-lightness/jquery-ui.css'));?>">
+
+<script type="text/javascript" src="<?=$this->file_time($this->url('js/vendor.bundle.js'));?>"></script>
+
 <script type="text/javascript" src="<?=$this->file_time($this->url('js/dwho.js'));?>"></script>
+
 <script type="text/javascript" src="<?=$this->file_time($this->url('js/dwho/dom.js'));?>"></script>
 <script type="text/javascript" src="<?=$this->file_time($this->url('js/dwho/form.js'));?>"></script>
 <script type="text/javascript" src="<?=$this->file_time($this->url('js/xivo.js'));?>"></script>
 
 <script type="text/javascript" src="<?=$this->file_time($this->url('js/utils/func.js'));?>"></script>
-
-<link rel="stylesheet" type="text/css" href="<?=$this->file_time($this->url('extra-libs/jquery-ui/css/ui-lightness/jquery-ui.css'));?>">
-<script type="text/javascript" src="<?=$this->file_time($this->url('extra-libs/jquery/jquery.min.js'));?>"></script>
-<script type="text/javascript" src="<?=$this->file_time($this->url('extra-libs/jquery-ui/jquery-ui.min.js'));?>"></script>
-
+<script type="text/javascript">
+  $(document).ready(function() {
+    $("#it-user").select2();
+  });
+  console.log("-----------------");
+</script>
 <?php
 
 $dhtml = &$this->get_module('dhtml');
@@ -52,4 +58,3 @@ $dhtml = &$this->get_module('dhtml');
 echo $dhtml->mk_js(),"\n",$dhtml->mk_css();
 
 ?>
-

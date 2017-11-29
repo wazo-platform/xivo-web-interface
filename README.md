@@ -1,3 +1,8 @@
+# Building with npm
+
+    npm i
+    
+
 # Running functional tests
 
 You need Xephyr.

@@ -1,0 +1,65 @@
+@import "~bootstrap/less/bootstrap.less";
+@import "_variables.less";
+@import "_login.less";
+@import "_forms.less";
+@import "_buttons.less";
+@import "_bars.less";
+@import (less) "~select2/dist/css/select2.css";
+
+@icon-font-path: "~bootstrap/fonts/";
+
+
+html {
+    height: 100%;
+}
+
+body {
+    background-image: @background-gray;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    letter-spacing: 0.5px;
+    color: @color-normal;
+    height: 100%;
+}
+
+#bc-content {
+  margin-top: 30px;
+  float: inherit;
+}
+.b-form {
+  #b-content & {
+    float: left;
+  }
+}
+
+.sb-content {
+  margin-top: 10px;
+}
+#version-copyright {
+  text-align: center;
+}
+.login-box {
+  margin-right: 50px;
+  padding-left: 20px;
+}
+
+#logo>img {
+  float: left;
+  margin-left:50px;
+  width: 70px;
+}
+
+.logoff-button {
+  padding-left: 20px;
+  padding-top: 10px;
+}
+.sysinfo-title {
+  text-align: center;
+  font-weight: bold;
+}
+.form-control {
+  width: initial;
+}
+.form-group {
+  margin-bottom: 5px;
+}

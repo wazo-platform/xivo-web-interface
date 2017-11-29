@@ -1,0 +1,29 @@
+@import "_variables.less";
+
+.form-control {
+  &::-moz-placeholder {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  &:-ms-input-placeholder {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  &::-webkit-input-placeholder  {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+}
+
+
+.checkbox input[type=checkbox] + label::before {
+  border: 1px solid @xivo-dark-gray;
+}
+
+.checkbox input[type=checkbox]:focus + label::before {
+  outline: none;
+}
+
+.checkbox label {
+  padding-left: 5px;
+}

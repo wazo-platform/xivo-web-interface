@@ -1,0 +1,40 @@
+{
+  "name": "xivo",
+  "version": "2018.01.00",
+  "description": "This package provides web interfaces to XiVO system",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --devtool sourcemap",
+    "build-dev": "webpack --devtool sourcemap",
+    "build-n-watch": "webpack --devtool sourcemap --watch --cache"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com:xivo.solutions/xivo-web-interface.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "css-loader": "^0.28.4",
+    "eslint": "^3.19.0",
+    "eslint-config-google": "^0.7.1",
+    "eslint-loader": "^1.7.1",
+    "extract-text-webpack-plugin": "^2.1.2",
+    "file-loader": "^0.11.2",
+    "less": "^2.7.2",
+    "less-loader": "^4.0.4",
+    "promise-polyfill": "^6.0.2",
+    "script-loader": "^0.7.0",
+    "style-loader": "^0.18.2",
+    "url-loader": "^0.5.9",
+    "webpack": "^3.0.0"
+  },
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "expose-loader": "^0.7.3",
+    "font-awesome": "^4.7.0",
+    "jquery": "^3.2.1",
+    "jquery-ui-dist": "^1.12.1",
+    "select2": "^4.0.5"
+  }
+}
