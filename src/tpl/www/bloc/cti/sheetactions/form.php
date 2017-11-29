@@ -81,7 +81,7 @@ $informations = $this->get_var('informations');
 ?>
 	<p>&nbsp;</p>
 	<div class="sb-list">
-		<table>
+		<table class="table">
 			<thead>
 			<tr class="sb-top">
 				<th class="th-left">&nbsp;</th>
@@ -264,7 +264,7 @@ $informations = $this->get_var('informations');
 ?>
 	<p>&nbsp;</p>
 	<div class="sb-list">
-		<table>
+		<table class="table">
 			<thead>
 			<tr class="sb-top">
 
@@ -426,7 +426,7 @@ $informations = $this->get_var('informations');
 ?>
 	<p>&nbsp;</p>
 	<div class="sb-list">
-		<table>
+		<table class="table">
 			<thead>
 			<tr class="sb-top">
 
@@ -515,4 +515,3 @@ $informations = $this->get_var('informations');
 		</table>
 	</div>
 </div>
-

@@ -128,7 +128,7 @@ $count = count($actionslist);
 		<div class="clearboth"></div>
 	</div>
 	<div class="sb-list">
-		<table>
+		<table class="table">
 			<thead>
 			<tr class="sb-top">
 				<th class="th-left"><?=$this->bbf('col_'.$type.'-name');?></th>
@@ -238,4 +238,3 @@ $count = count($actionslist);
 		</table>
 	</div>
 </div>
-

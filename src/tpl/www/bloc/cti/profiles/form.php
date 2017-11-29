@@ -303,7 +303,7 @@ $yesno = array($this->bbf('no'), $this->bbf('yes'));
 ?>
 <div id="sb-part-last" class="b-nodisplay">
 	<div class="sb-list">
-		<table>
+		<table class="table">
 			<thead>
 			<tr class="sb-top">
 				<th class="th-left"><?=$this->bbf('col_'.$type.'-name');?></th>

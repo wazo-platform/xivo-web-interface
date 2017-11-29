@@ -116,7 +116,7 @@ function build_row($data, $form, $url, $helper) {
 ?>
 	<p>&nbsp;</p>
 	<div class="sb-list">
-		<table>
+		<table class="table">
 			<thead>
 			<tr class="sb-top">
 

@@ -78,7 +78,7 @@ $presence = $this->get_var('directories');
 	<p>&nbsp;</p>
 	<div class="sb-list">
 		<p><?= $this->bbf('fields_title');?></p>
-		<table>
+		<table class="table">
 			<thead>
 			<tr class="sb-top">
 
