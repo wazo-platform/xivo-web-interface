@@ -34,7 +34,7 @@ $ldapserverstat = $this->get_var('ldapserverstat');
 	</h3>
 	<div class="sb-content sb-list">
 		<div id="xivo-stats">
-			<table class="table">
+			<table>
 				<tr class="sb-top">
 					<th class="th-left"><?=$this->bbf('stats_col_type');?></th>
 					<th class="th-center"><?=$this->bbf('stats_col_enable');?></th>
@@ -73,7 +73,7 @@ $ldapserverstat = $this->get_var('ldapserverstat');
 			<?=$url->img_html('img/site/xivo.gif',XIVO_SOFT_LABEL);?>
 			<ul>
 				<li><b><?=$this->bbf('info_soft_label');?></b> <?=XIVO_SOFT_LABEL?></li>
-				<li><b><?=$this->bbf('info_soft_version');?></b> <?=XIVO_SOFT_VERSION.' '.XIVO_SOFT_CODENAME.''?></li>
+				<li><b><?=$this->bbf('info_soft_version');?></b> <?=XIVO_SOFT_VERSION?></li>
 			</ul>
 		</div>
 		<div class="clearboth"></div>
