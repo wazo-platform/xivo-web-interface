@@ -49,8 +49,9 @@ if(($reg_active = $this->get_var('info','register','commented')) !== null):
 endif;
 
 ?>
+<div class="tab-content">
+	<div role="tabpanel" class="tab-pane active" id="general">
 
-<div id="sb-part-first" class="b-nodisplay">
 <?php
 	echo	$form->text(array('desc'	=> $this->bbf('fm_protocol_name'),
 				  'name'	=> 'protocol[name]',
@@ -165,8 +166,7 @@ endif;
 			      $element['protocol']['nat']['value']);
 ?>
 </div>
-
-<div id="sb-part-register" class="b-nodisplay">
+<div role="tabpanel" class="tab-pane" id="register">
 <?php
 	echo	$form->checkbox(array('desc'		=> $this->bbf('fm_register'),
 				      'name'		=> 'register-active',
@@ -261,8 +261,7 @@ endif;
         $element['register']['expiry']['value']);
 ?>
 </div>
-
-<div id="sb-part-signalling" class="b-nodisplay">
+<div role="tabpanel" class="tab-pane" id="signalling">
 <?php
 	echo	$form->select(array('desc'	=> $this->bbf('fm_protocol_progressinband'),
 				    'name'	=> 'protocol[progressinband]',
@@ -533,8 +532,7 @@ endif;
 </fieldset>
 
 </div>
-
-<div id="sb-part-last" class="b-nodisplay">
+<div role="tabpanel" class="tab-pane" id="advanced">
 <?php
 	echo	$form->select(array('desc'	=> $this->bbf('fm_protocol_insecure'),
 				    'name'	=> 'protocol[insecure]',
@@ -793,4 +791,5 @@ endif;
 						   $this->get_var('error', 'trunkfeatures', 'description')) ),
 				   $info['trunkfeatures']['description']);?>
 	</div>
+</div>
 </div>
