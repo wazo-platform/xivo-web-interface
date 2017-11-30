@@ -220,7 +220,7 @@ if($act == "add") {
 
 <div id="sb-part-incall" class="b-nodisplay">
 	<div class="sb-list">
-	<table>
+	<table class="table">
 		<thead>
 		<tr class="sb-top">
 			<th class="th-left"><?=$this->bbf('col_contextnumbers_incall-numberbeg');?></th>
