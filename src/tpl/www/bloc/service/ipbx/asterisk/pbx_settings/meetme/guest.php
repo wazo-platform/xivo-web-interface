@@ -18,7 +18,7 @@ endif;
 
 ?>
 <div class="sb-list">
-	<table>
+	<table class="table">
 		<thead>
 		<tr class="sb-top">
 			<th class="th-left"><?=$this->bbf('col_meetmeguest-fullname');?></th>

@@ -41,16 +41,18 @@ else:
 endif;
 
 $codec_active = empty($allow) === false;
-
+?>
+<div class="tab-content">
+<?php
 $filename = dirname(__FILE__).'/protocol/'.$protocol.'.php';
 if (is_readable($filename) === true):
 	include($filename);
 endif;
 ?>
 
-<div id="sb-part-ipbxinfos" class="b-nodisplay">
+<div role="tabpanel" class="tab-pane" id="ipbxinfos">
 <div class="sb-list">
-<table>
+<table class="table table-condensed table-striped table-bordered">
 	<thead>
 	<tr class="sb-top">
 		<th class="th-left"><?=$this->bbf('col_line-key');?></th>
@@ -84,5 +86,6 @@ endif;
 ?>
 	</tbody>
 </table>
+</div>
 </div>
 </div>

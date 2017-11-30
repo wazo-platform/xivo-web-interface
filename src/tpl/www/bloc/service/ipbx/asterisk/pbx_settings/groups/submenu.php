@@ -19,32 +19,25 @@
 #
 
 ?>
-	<div class="sb-smenu">
-		<ul>
-			<li id="dwsm-tab-1" class="dwsm-blur" onclick="dwho_submenu.select(this,'sb-part-first');" onmouseout="dwho_submenu.blur(this);" onmouseover="dwho_submenu.focus(this);">
-				<div class="tab"><span class="span-center"><a href="#first"><?=$this->bbf('smenu_general');?></a></span></div><span class="span-right">&nbsp;</span>
-			</li>
-			<li id="dwsm-tab-2" class="dwsm-blur" onclick="dwho_submenu.select(this,'sb-part-user');" onmouseout="dwho_submenu.blur(this);" onmouseover="dwho_submenu.focus(this);">
-				<div class="tab"><span class="span-center"><a href="#user"><?=$this->bbf('smenu_users');?></a></span></div><span class="span-right">&nbsp;</span>
-			</li>
-			<li id="dwsm-tab-3" class="dwsm-blur" onclick="dwho_submenu.select(this,'sb-part-application');" onmouseout="dwho_submenu.blur(this);" onmouseover="dwho_submenu.focus(this);">
-				<div class="tab"><span class="span-center"><a href="#application"><?=$this->bbf('smenu_application');?></a></span></div><span class="span-right">&nbsp;</span>
-			</li>
-			<li id="dwsm-tab-4" class="dwsm-blur" onclick="dwho_submenu.select(this,'sb-part-rightcall');" onmouseout="dwho_submenu.blur(this);" onmouseover="dwho_submenu.focus(this);">
-				<div class="tab"><span class="span-center"><a href="#rightcall"><?=$this->bbf('smenu_rightcalls');?></a></span></div><span class="span-right">&nbsp;</span>
-			</li>
-			<li id="dwsm-tab-5" class="dwsm-blur" onclick="dwho_submenu.select(this,'sb-part-dialaction');" onmouseout="dwho_submenu.blur(this);" onmouseover="dwho_submenu.focus(this);">
-				<div class="tab"><span class="span-center"><a href="#last"><?=$this->bbf('smenu_dialaction');?></a></span></div><span class="span-right">&nbsp;</span>
-			</li>
-			<li id="dwsm-tab-6"
-		    class="dwsm-blur-last"
-		    onclick="dwho_submenu.select(this,'sb-part-schedule',1);"
-		    onmouseout="dwho_submenu.blur(this,1);"
-		    onmouseover="dwho_submenu.focus(this,1);">
-				<div class="tab">
-					<span class="span-center"><a href="#schedule"><?=$this->bbf('smenu_schedule');?></a></span>
-				</div>
-				<span class="span-right">&nbsp;</span>
-			</li>
-		</ul>
-	</div>
+<div class="sb-smenu">
+	<ul class="nav nav-tabs" role="tablist">
+		<li id="dwsm-tab-1"	role="presentation" class="active">
+				<a role="tab" data-toggle="tab" href="#general"><?=$this->bbf('smenu_general');?></a>
+		</li>
+		<li id="dwsm-tab-2"	role="presentation">
+				<a role="tab" data-toggle="tab" href="#user"><?=$this->bbf('smenu_users');?></a>
+		</li>
+		<li id="dwsm-tab-3"	role="presentation">
+				<a role="tab" data-toggle="tab" href="#application"><?=$this->bbf('smenu_application');?></a>
+		</li>
+		<li id="dwsm-tab-4"	role="presentation">
+				<a role="tab" data-toggle="tab" href="#rightcall"><?=$this->bbf('smenu_rightcalls');?></a>
+		</li>
+		<li id="dwsm-tab-5"	role="presentation">
+				<a role="tab" data-toggle="tab" href="#dialaction"><?=$this->bbf('smenu_dialaction');?></a>
+		</li>
+		<li id="dwsm-tab-6"	role="schedule">
+				<a role="tab" data-toggle="tab" href="#schedule"><?=$this->bbf('smenu_schedule');?></a>
+		</li>
+	</ul>
+</div>

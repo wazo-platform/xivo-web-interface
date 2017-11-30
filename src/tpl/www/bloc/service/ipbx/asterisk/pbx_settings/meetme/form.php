@@ -38,8 +38,8 @@ $dhtml->write_js('var xivo_fm_meetme_admin_suggest = \''.$dhtml->escape($admin_s
 $dhtml->write_js('var jsi18n_no_number_in_context = "'.$this->bbf('no_number_in_context').'"');
 
 ?>
-
-<div id="sb-part-first" class="b-nodisplay">
+<div class="tab-content">
+<div role="tabpanel" class="tab-pane active" id="general">
 <?php
 	echo	$form->text(array('desc'	=> $this->bbf('fm_meetmefeatures_name'),
 				  'name'	=> 'meetmefeatures[name]',
@@ -136,8 +136,7 @@ endif;
 				   $info['meetmefeatures']['description']);?>
 	</div>
 </div>
-
-<div id="sb-part-administrator" class="b-nodisplay">
+<div role="tabpanel" class="tab-pane" id="administrator">
 <?php
 	echo	$form->select(array('desc'	=> $this->bbf('fm_meetmefeatures_admin-typefrom'),
 				    'name'	=> 'meetmefeatures[admin_typefrom]',
@@ -275,8 +274,7 @@ if($context_list !== false):
 endif;
 ?>
 </div>
-
-<div id="sb-part-user" class="b-nodisplay">
+<div role="tabpanel" class="tab-pane" id="user">
 <?php
 	echo	$form->select(array('desc'	=> $this->bbf('fm_meetmefeatures_user-mode'),
 				    'name'	=> 'meetmefeatures[user_mode]',
@@ -366,8 +364,7 @@ if($context_list !== false):
 endif;
 ?>
 </div>
-
-<div id="sb-part-email" class="b-nodisplay">
+<div role="tabpanel" class="tab-pane" id="email">
 <?php
 	echo	$form->text(array('desc'	=> $this->bbf('fm_meetmefeatures_emailfrom'),
 				  'name'	=> 'meetmefeatures[emailfrom]',
@@ -414,9 +411,9 @@ endif;
 				   $info['meetmefeatures']['emailbody']);?>
 	</div>
 </div>
-
-<div id="sb-part-last" class="b-nodisplay">
+<div role="tabpanel" class="tab-pane" id="guest">
 <?php
 	$this->file_include('bloc/service/ipbx/asterisk/pbx_settings/meetme/guest');
 ?>
+</div>
 </div>
