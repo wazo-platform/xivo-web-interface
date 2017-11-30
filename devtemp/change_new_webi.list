@@ -1,0 +1,248 @@
+
+/* Done
+src/action/www/service/ipbx/asterisk/call_management/callfilter.php
+src/action/www/service/ipbx/asterisk/call_management/incall.php
+src/action/www/service/ipbx/asterisk/call_management/outcall.php
+src/action/www/service/ipbx/asterisk/call_management/pickup.php
+src/action/www/service/ipbx/asterisk/call_management/rightcall.php
+src/action/www/service/ipbx/asterisk/call_management/schedule.php
+*/
+
+***Changed *** src/action/www/service/ipbx/asterisk/pbx_settings/devices.php
+
+/* Done
+src/action/www/service/ipbx/asterisk/pbx_settings/groups.php
+src/action/www/service/ipbx/asterisk/pbx_settings/lines.php
+src/action/www/service/ipbx/asterisk/pbx_settings/meetme.php
+*/
+
+***Changed *** src/action/www/service/ipbx/asterisk/pbx_settings/users.php
+
+**Done** src/action/www/service/ipbx/asterisk/pbx_settings/voicemail.php
+
+src/action/www/service/ipbx/asterisk/trunk_management/iax.php
+***Changed ***  src/action/www/service/ipbx/asterisk/trunk_management/sip.php
+
+
+
+
+src/.gitignore
+/* Done
+src/i18n/en_US/tpl/www/bloc/home/login.i18n
+src/i18n/fr_FR/tpl/www/bloc/home/login.i18n
+*/
+
+
+NOT DONE src/lib/tpl/module/dhtml.inc
+***DONE*** src/lib/tpl/module/form.inc
+
+/* Generated
+src/package.json
+src/package-lock.json
+*/
+/* Done
+src/tpl/ui/xivo/monitoring/memstats.php
+src/tpl/ui/xivo/monitoring.php
+src/tpl/ui/xivo/monitoring/services.php
+src/tpl/ui/xivo/monitoring/systems.php
+*/
+/* Done
+src/tpl/www/bloc/callcenter/settings/agents/formagent.php
+src/tpl/www/bloc/callcenter/settings/agents/listagent.php
+src/tpl/www/bloc/callcenter/settings/agents/list.php
+src/tpl/www/bloc/callcenter/settings/agents/queueskills.php
+
+
+src/tpl/www/bloc/callcenter/settings/queuepenalty/form.php
+src/tpl/www/bloc/callcenter/settings/queuepenalty/list.php
+
+src/tpl/www/bloc/callcenter/settings/queueskillrules/form.php
+src/tpl/www/bloc/callcenter/settings/queueskillrules/list.php
+
+src/tpl/www/bloc/callcenter/settings/queueskills/form.php
+src/tpl/www/bloc/callcenter/settings/queueskills/list.php
+
+src/tpl/www/bloc/callcenter/settings/queues/list.php
+*/
+/* Done
+src/tpl/www/bloc/cti/contexts/list.php
+src/tpl/www/bloc/cti/directories/form.php
+src/tpl/www/bloc/cti/directories/list.php
+src/tpl/www/bloc/cti/displays/form.php
+src/tpl/www/bloc/cti/displays/list.php
+src/tpl/www/bloc/cti/phonehints/listgroup.php
+src/tpl/www/bloc/cti/phonehints/list.php
+src/tpl/www/bloc/cti/presences/formstatus.php
+src/tpl/www/bloc/cti/presences/list.php
+src/tpl/www/bloc/cti/presences/liststatus.php
+src/tpl/www/bloc/cti/profiles/form.php
+src/tpl/www/bloc/cti/profiles/list.php
+src/tpl/www/bloc/cti/sheetactions/form.php
+src/tpl/www/bloc/cti/sheetactions/list.php
+*/
+
+***Changed*** src/tpl/www/bloc/foot.php
+
+**Done** src/tpl/www/bloc/home/login.php
+
+/* Done
+src/tpl/www/bloc/menu/toolbar/service/ipbx/asterisk/pbx_settings/devices.php
+src/tpl/www/bloc/menu/toolbar/service/ipbx/asterisk/pbx_settings/users.php
+
+src/tpl/www/bloc/menu/top/user/admin.php
+src/tpl/www/bloc/menu/top/user/loginbox.php
+src/tpl/www/bloc/menu/top/user/root.php
+*/
+
+**Done** src/tpl/www/bloc/meta.php
+
+/* Done
+src/tpl/www/bloc/service/ipbx/asterisk/call_management/callfilter/form.php
+src/tpl/www/bloc/service/ipbx/asterisk/call_management/callfilter/list.php
+src/tpl/www/bloc/service/ipbx/asterisk/call_management/callfilter/submenu.php
+src/tpl/www/bloc/service/ipbx/asterisk/call_management/incall/form.php
+src/tpl/www/bloc/service/ipbx/asterisk/call_management/incall/list.php
+src/tpl/www/bloc/service/ipbx/asterisk/call_management/incall/submenu.php
+src/tpl/www/bloc/service/ipbx/asterisk/call_management/outcall/form.php
+src/tpl/www/bloc/service/ipbx/asterisk/call_management/outcall/list.php
+src/tpl/www/bloc/service/ipbx/asterisk/call_management/outcall/submenu.php
+src/tpl/www/bloc/service/ipbx/asterisk/call_management/pickup/form.php
+src/tpl/www/bloc/service/ipbx/asterisk/call_management/pickup/list.php
+src/tpl/www/bloc/service/ipbx/asterisk/call_management/pickup/submenu.php
+src/tpl/www/bloc/service/ipbx/asterisk/call_management/rightcall/form.php
+src/tpl/www/bloc/service/ipbx/asterisk/call_management/rightcall/list.php
+src/tpl/www/bloc/service/ipbx/asterisk/call_management/rightcall/submenu.php
+src/tpl/www/bloc/service/ipbx/asterisk/call_management/schedule/form.php
+src/tpl/www/bloc/service/ipbx/asterisk/call_management/schedule/list.php
+src/tpl/www/bloc/service/ipbx/asterisk/call_management/schedule/submenu.php
+*/
+/* Done
+src/tpl/www/bloc/service/ipbx/asterisk/control_system/logfiles/list.php
+src/tpl/www/bloc/service/ipbx/asterisk/general_settings/iax.php
+src/tpl/www/bloc/service/ipbx/asterisk/general_settings/sip.php
+src/tpl/www/bloc/service/ipbx/asterisk/general_settings/voicemail.php
+src/tpl/www/bloc/service/ipbx/asterisk/index.php
+src/tpl/www/bloc/service/ipbx/asterisk/pbx_services/musiconhold/listfile.php
+src/tpl/www/bloc/service/ipbx/asterisk/pbx_services/musiconhold/list.php
+src/tpl/www/bloc/service/ipbx/asterisk/pbx_services/paging/list.php
+src/tpl/www/bloc/service/ipbx/asterisk/pbx_services/parkinglot/list.php
+src/tpl/www/bloc/service/ipbx/asterisk/pbx_services/phonebook/list.php
+src/tpl/www/bloc/service/ipbx/asterisk/pbx_services/sounds/listdir.php
+src/tpl/www/bloc/service/ipbx/asterisk/pbx_services/sounds/list.php
+*/
+
+**Changed** src/tpl/www/bloc/service/ipbx/asterisk/pbx_settings/devices/form.php
+
+src/tpl/www/bloc/service/ipbx/asterisk/pbx_settings/devices/list.php
+src/tpl/www/bloc/service/ipbx/asterisk/pbx_settings/devices/submenu.php
+
+
+**Changed**  src/tpl/www/bloc/service/ipbx/asterisk/pbx_settings/groups/form.php
+/* Done
+src/tpl/www/bloc/service/ipbx/asterisk/pbx_settings/groups/list.php
+src/tpl/www/bloc/service/ipbx/asterisk/pbx_settings/groups/submenu.php
+src/tpl/www/bloc/service/ipbx/asterisk/pbx_settings/lines/form.php
+src/tpl/www/bloc/service/ipbx/asterisk/pbx_settings/lines/list.php
+src/tpl/www/bloc/service/ipbx/asterisk/pbx_settings/lines/protocol/sccp.php
+src/tpl/www/bloc/service/ipbx/asterisk/pbx_settings/lines/protocol/sip.php
+src/tpl/www/bloc/service/ipbx/asterisk/pbx_settings/lines/submenu/sccp.php
+src/tpl/www/bloc/service/ipbx/asterisk/pbx_settings/lines/submenu/sip.php
+src/tpl/www/bloc/service/ipbx/asterisk/pbx_settings/meetme/form.php
+src/tpl/www/bloc/service/ipbx/asterisk/pbx_settings/meetme/guest.php
+src/tpl/www/bloc/service/ipbx/asterisk/pbx_settings/meetme/list.php
+src/tpl/www/bloc/service/ipbx/asterisk/pbx_settings/meetme/submenu.php
+*/
+/* Done
+src/tpl/www/bloc/service/ipbx/asterisk/pbx_settings/users/edit.php
+src/tpl/www/bloc/service/ipbx/asterisk/pbx_settings/users/form.php
+src/tpl/www/bloc/service/ipbx/asterisk/pbx_settings/users/groups.php
+src/tpl/www/bloc/service/ipbx/asterisk/pbx_settings/users/list.php
+src/tpl/www/bloc/service/ipbx/asterisk/pbx_settings/users/phonefunckey.php
+src/tpl/www/bloc/service/ipbx/asterisk/pbx_settings/users/submenu.php
+src/tpl/www/bloc/service/ipbx/asterisk/pbx_settings/voicemail/form.php
+src/tpl/www/bloc/service/ipbx/asterisk/pbx_settings/voicemail/list.php
+src/tpl/www/bloc/service/ipbx/asterisk/pbx_settings/voicemail/submenu.php
+*/
+/* Done
+src/tpl/www/bloc/service/ipbx/asterisk/system_management/backupfiles/list.php
+src/tpl/www/bloc/service/ipbx/asterisk/system_management/configfiles/list.php
+src/tpl/www/bloc/service/ipbx/asterisk/system_management/context/contextnumbers.php
+src/tpl/www/bloc/service/ipbx/asterisk/system_management/context/form.php
+src/tpl/www/bloc/service/ipbx/asterisk/system_management/context/list.php
+src/tpl/www/bloc/service/ipbx/asterisk/system_management/ldapfilter/list.php
+*/
+/* Done
+src/tpl/www/bloc/service/ipbx/asterisk/trunk_management/custom/list.php
+src/tpl/www/bloc/service/ipbx/asterisk/trunk_management/iax/form.php
+src/tpl/www/bloc/service/ipbx/asterisk/trunk_management/iax/list.php
+src/tpl/www/bloc/service/ipbx/asterisk/trunk_management/iax/submenu.php
+src/tpl/www/bloc/service/ipbx/asterisk/trunk_management/sip/form.php
+src/tpl/www/bloc/service/ipbx/asterisk/trunk_management/sip/list.php
+src/tpl/www/bloc/service/ipbx/asterisk/trunk_management/sip/submenu.php
+*/
+
+src/tpl/www/bloc/statistics/call_center/settings/configuration/list.php
+src/tpl/www/bloc/xivo/configuration/index.php
+src/tpl/www/bloc/xivo/configuration/manage/accesswebservice/form.php
+src/tpl/www/bloc/xivo/configuration/manage/accesswebservice/list.php
+src/tpl/www/bloc/xivo/configuration/manage/acl/form.php
+src/tpl/www/bloc/xivo/configuration/manage/certificate/list.php
+src/tpl/www/bloc/xivo/configuration/manage/directories/list.php
+src/tpl/www/bloc/xivo/configuration/manage/entity/list.php
+src/tpl/www/bloc/xivo/configuration/manage/ldapserver/list.php
+src/tpl/www/bloc/xivo/configuration/manage/user/list.php
+src/tpl/www/bloc/xivo/configuration/network/interface/list.php
+src/tpl/www/bloc/xivo/configuration/provisioning/configdevice/list.php
+src/tpl/www/bloc/xivo/configuration/provisioning/config/list.php
+src/tpl/www/bloc/xivo/configuration/provisioning/configregistrar/list.php
+src/tpl/www/bloc/xivo/configuration/provisioning/plugin/list.php
+src/tpl/www/bloc/xivo/monitoring/group.php
+src/tpl/www/bloc/xivo/monitoring/memstats.php
+src/tpl/www/bloc/xivo/monitoring/system.php
+src/tpl/www/struct/page/center.php
+src/tpl/www/struct/page/index.php
+src/tpl/www/struct/page/simple.php
+
+
+src/webpack.config.js
+src/www/css/css.js
+src/www/css/dashboard.css
+src/www/css/less/_bars.less
+src/www/css/less/_buttons.less
+src/www/css/less/_forms.less
+src/www/css/less/_login.less
+src/www/css/less/_variables.less
+src/www/css/less/xivo.less
+src/www/css/xivo.css
+src/www/css/xivo.css.map
+src/www/extra-libs/bootstrap-3.3.7-dist/css/bootstrap.css
+src/www/extra-libs/bootstrap-3.3.7-dist/css/bootstrap.css.map
+src/www/extra-libs/bootstrap-3.3.7-dist/css/bootstrap.min.css
+src/www/extra-libs/bootstrap-3.3.7-dist/css/bootstrap.min.css.map
+src/www/extra-libs/bootstrap-3.3.7-dist/css/bootstrap-theme.css
+src/www/extra-libs/bootstrap-3.3.7-dist/css/bootstrap-theme.css.map
+src/www/extra-libs/bootstrap-3.3.7-dist/css/bootstrap-theme.min.css
+src/www/extra-libs/bootstrap-3.3.7-dist/css/bootstrap-theme.min.css.map
+src/www/extra-libs/bootstrap-3.3.7-dist/fonts/glyphicons-halflings-regular.eot
+src/www/extra-libs/bootstrap-3.3.7-dist/fonts/glyphicons-halflings-regular.svg
+src/www/extra-libs/bootstrap-3.3.7-dist/fonts/glyphicons-halflings-regular.ttf
+src/www/extra-libs/bootstrap-3.3.7-dist/fonts/glyphicons-halflings-regular.woff
+src/www/extra-libs/bootstrap-3.3.7-dist/fonts/glyphicons-halflings-regular.woff2
+src/www/extra-libs/bootstrap-3.3.7-dist/js/bootstrap.js
+src/www/extra-libs/bootstrap-3.3.7-dist/js/bootstrap.min.js
+src/www/extra-libs/bootstrap-3.3.7-dist/js/npm.js
+src/www/extra-libs/bootstrap/bootstrap.min.css
+src/www/extra-libs/bootstrap/bootstrap.min.js
+src/www/extra-libs/jquery/jquery-1.12.4.js
+src/www/fonts/glyphicons-halflings-regular.svg
+src/www/img/head-icon.svg
+src/www/img/xivo/xivo_illustration.png
+src/www/img/xivo/xivo_logo.png
+src/www/js/bundle.js
+src/www/js/bundle.js.map
+src/www/js/css.js
+src/www/js/css.js.map
+src/www/js/vendor.bundle.js
+src/www/js/vendor.bundle.js.map
+src/www/js/xivo.js
+TODO.md
