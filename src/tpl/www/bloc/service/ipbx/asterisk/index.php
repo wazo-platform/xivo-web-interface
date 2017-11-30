@@ -39,7 +39,7 @@ $live = $this->get_var('live');
 	</h3>
 	<div class="sb-content sb-list">
 		<div id="ipbx-stats">
-			<table>
+			<table class="table">
 				<tr class="sb-top">
 					<th class="th-left"><?=$this->bbf('stats_col_type');?></th>
 					<th class="th-center"><?=$this->bbf('stats_col_enable');?></th>
@@ -296,21 +296,8 @@ $live = $this->get_var('live');
 					</td>
 				</tr>
 			</table>
-<!--
-			<table>
-				<tr class="sb-top">
-					<th class="th-left"><?=$this->bbf('stats_col_status');?></th>
-					<th class="th-center"><?=$this->bbf('stats_col_user');?></th>
-					<th class="th-right"><?=$this->bbf('stats_col_total');?></th>
-				</tr>
-				<tr class="l-infos-1on2">
-					<td class="td-left txt-left"><?=$this->bbf('stats_status-initialized');?></td>
-					<td class="td-center"><?=$userstat['initialized']?></td>
-					<td class="td-right"><?=$userstat['total']?></td>
-				</tr>
-			</table>
--->
-			<table>
+
+			<table class="table">
 				<tr class="sb-top">
 					<th class="th-left"><?=$this->bbf('stats_col_status');?></th>
 					<th class="th-right"><?=$this->bbf('stats_col_total');?></th>
