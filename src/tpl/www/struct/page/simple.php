@@ -25,14 +25,14 @@ $this->file_include('bloc/head');
 <div id="bc-body">
 <div id="bpc-simple">
 
-<div id="bc-head">
+<div class="navbar navbar-inverse navbar-fixed-top" id="bc-head">
 	<div id="b-tmenu">
 <?php
 	$menu->mk_top();
 ?>
 	</div>
 </div>
-<div id="bc-main">
+<div  class="container-fluid"  id="bc-main">
 	<div id="bc-content">
 		<div id="b-content">
 <?php

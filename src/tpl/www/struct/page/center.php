@@ -32,7 +32,7 @@ $this->file_include('bloc/head');
 ?>
 	</div>
 </div>
-<div id="bc-main">
+<div  class="container-fluid" id="bc-main">
 	<div id="bc-content">
 		<div id="b-content">
 <?php
