@@ -29,7 +29,7 @@ if(is_array($grpdata) === true && ($nb = count($grpdata)) > 0):
 
 ?>
 	<div class="monit-group">
-		<table>
+		<table class="table">
 			<tr class="sb-top">
 				<th colspan="8" class="th-left th-right"><?=$this->bbf('sysinfos_'.$grpname);?></th>
 			</tr>
