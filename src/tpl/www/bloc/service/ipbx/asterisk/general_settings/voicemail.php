@@ -620,7 +620,7 @@ endif;
 
 <div id="sb-part-timezone" class="b-nodisplay">
 <div class="sb-list">
-	<table>
+	<table class="table">
 		<thead>
 		<tr class="sb-top">
 			<th class="th-left"><?=$this->bbf('col_timezone-name');?></th>

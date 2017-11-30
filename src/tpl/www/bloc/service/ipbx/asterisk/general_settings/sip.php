@@ -1681,7 +1681,7 @@ endif;
 	$errdisplay = '';
 ?>
 	<div class="sb-list">
-		<table>
+		<table class="table">
 			<thead>
 			<tr class="sb-top">
 

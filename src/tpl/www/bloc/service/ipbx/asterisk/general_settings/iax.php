@@ -678,7 +678,7 @@ endif;
 	<br/><br/>
 	<div class="sb-list">
 	<p><?= $this->bbf('title_pernetwork_calllimits'); ?></p>
-		<table>
+		<table class="table">
 			<thead>
 			<tr class="sb-top">
 
