@@ -1,6 +1,9 @@
-# Building with npm
+# Building with npm before testing in live
 
     npm i
+    npm run build
+
+
     
 
 # Running functional tests

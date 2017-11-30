@@ -2,3 +2,7 @@
 /.*
 !/.git*
 src/node_modules/*
+*.map
+vendor.bundle.js
+src/www/js/css.js
+src/www/fonts/*
