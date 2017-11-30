@@ -95,8 +95,9 @@ function build_row($option, $form, $url, $helper) {
 }
 
 ?>
+<div class="tab-content">
+<div role="tabpanel" class="tab-pane active" id="general">
 
-<div id="sb-part-first" class="b-nodisplay">
 <?php
 	echo	$form->text(array('desc'	=> $this->bbf('fm_voicemail_fullname'),
 				  'name'	=> 'voicemail[name]',
@@ -194,9 +195,7 @@ endif;
 				      'checked'	=> (int)$info['voicemail']['delete_messages']));
 ?>
 </div>
-
-<div id="sb-part-email" class="b-nodisplay">
-
+<div role="tabpanel" class="tab-pane" id="email">
 	<?= $form->text(array('desc'  => $this->bbf('fm_voicemail_pager'),
 			'name'     => 'voicemail[pager]',
 			'labelid'  => 'voicemail-pager',
@@ -238,10 +237,10 @@ endif;
 	<br/>
 </div>
 
-<div id="sb-part-last" class="b-nodisplay">
+<div role="tabpanel" class="tab-pane" id="advanced">
 <div class="sb-list">
 
-<table>
+<table class="table table-condensed table-striped table-bordered">
 <thead>
 	<th class="th-left">
 		<?= $this->bbf('col_voicemail-option-name') ?>
@@ -345,5 +344,6 @@ $(function() {
 	overflow-x: hidden;
 }
 </style>
+</div>
 </div>
 </div>

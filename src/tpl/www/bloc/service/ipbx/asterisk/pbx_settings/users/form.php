@@ -48,46 +48,44 @@ if(dwho_issa('linefeatures',$info) === true
 	$line_list = $info['linefeatures'];
 
 ?>
-
-<div id="sb-part-first" class="b-nodisplay">
-
+<div class="tab-content">
+<div role="tabpanel" class="tab-pane active" id="first">
 <?php
-	echo	$form->text(array('desc'	=> $this->bbf('fm_userfeatures_firstname'),
-				  'name'	=> 'userfeatures[firstname]',
-				  'labelid'	=> 'userfeatures-firstname',
-				  'size'	=> 15,
-				  'default'	=> $element['userfeatures']['firstname']['default'],
-				  'value'	=> $info['userfeatures']['firstname'],
-				  'error'	=> $this->bbf_args('error',
-						   $this->get_var('error', 'userfeatures', 'firstname')) )),
+echo    $form->text(array('desc'        => $this->bbf('fm_userfeatures_firstname'),
+                                 'name'        => 'userfeatures[firstname]',
+                                 'labelid'     => 'userfeatures-firstname',
+                                 'size'        => 15,
+                                 'default'     => $element['userfeatures']['firstname']['default'],
+                                 'value'       => $info['userfeatures']['firstname'],
+                                 'error'       => $this->bbf_args('error',
+                                                  $this->get_var('error', 'userfeatures', 'firstname')) )),
 
-		$form->text(array('desc'	=> $this->bbf('fm_userfeatures_lastname'),
-				  'name'	=> 'userfeatures[lastname]',
-				  'labelid'	=> 'userfeatures-lastname',
-				  'size'	=> 15,
-				  'default'	=> $element['userfeatures']['lastname']['default'],
-				  'value'	=> $info['userfeatures']['lastname'],
-				  'error'	=> $this->bbf_args('error',
-						   $this->get_var('error', 'userfeatures', 'lastname')) )),
+               $form->text(array('desc'        => $this->bbf('fm_userfeatures_lastname'),
+                                 'name'        => 'userfeatures[lastname]',
+                                 'labelid'     => 'userfeatures-lastname',
+                                 'size'        => 15,
+                                 'default'     => $element['userfeatures']['lastname']['default'],
+                                 'value'       => $info['userfeatures']['lastname'],
+                                 'error'       => $this->bbf_args('error',
+                                                  $this->get_var('error', 'userfeatures', 'lastname')) ));
 
-		$form->text(array('desc'	=> $this->bbf('fm_userfeatures_mobilephonenumber'),
-				  'name'	=> 'userfeatures[mobilephonenumber]',
-				  'labelid'	=> 'userfeatures-mobilephonenumber',
-				  'size'	=> 15,
-				  'default'	=> $element['userfeatures']['mobilephonenumber']['default'],
-				  'value'	=> $info['userfeatures']['mobilephonenumber'],
-				  'error'	=> $this->bbf_args('error',
-						   $this->get_var('error', 'userfeatures', 'mobilephonenumber')) )),
+echo          $form->text(array('desc'        => $this->bbf('fm_userfeatures_mobilephonenumber'),
+                                 'name'        => 'userfeatures[mobilephonenumber]',
+                                 'labelid'     => 'userfeatures-mobilephonenumber',
+                                 'size'        => 15,
+                                 'default'     => $element['userfeatures']['mobilephonenumber']['default'],
+                                 'value'       => $info['userfeatures']['mobilephonenumber'],
+                                 'error'       => $this->bbf_args('error',
+                                                  $this->get_var('error', 'userfeatures', 'mobilephonenumber')) )),
 
-		$form->text(array('desc'	=> $this->bbf('fm_userfeatures_email'),
-				  'name'	=> 'userfeatures[email]',
-				  'labelid'	=> 'userfeatures-email',
-				  'size'	=> 15,
-				  'default'	=> $element['userfeatures']['email']['default'],
-				  'value'	=> $info['userfeatures']['email'],
-				  'error'	=> $this->bbf_args('error',
-						   $this->get_var('error', 'userfeatures', 'email')) ));
-
+               $form->text(array('desc'        => $this->bbf('fm_userfeatures_email'),
+                                 'name'        => 'userfeatures[email]',
+                                 'labelid'     => 'userfeatures-email',
+                                 'size'        => 15,
+                                 'default'     => $element['userfeatures']['email']['default'],
+                                 'value'       => $info['userfeatures']['email'],
+                                 'error'       => $this->bbf_args('error',
+                                                  $this->get_var('error', 'userfeatures', 'email')) ));
 	if($schedules === false):
 		echo	'<div class="txt-center">',
 			$url->href_htmln($this->bbf('create_schedules'),
@@ -213,6 +211,10 @@ if(dwho_issa('linefeatures',$info) === true
 				  'name'	=> 'userfeatures[loginclient]',
 				  'labelid'	=> 'userfeatures-loginclient',
 				  'size'	=> 15,
+					'paragraph' => false,
+					'group'			=> 'form-group',
+					'lbClass'   => 'col-sm-2',
+					'controlSize' => 'col-sm-4',
 				  'default'	=> $element['userfeatures']['loginclient']['default'],
 				  'value'	=> $info['userfeatures']['loginclient'],
 				  'error'	=> $this->bbf_args('error',
@@ -222,6 +224,10 @@ if(dwho_issa('linefeatures',$info) === true
 				  'name'	=> 'userfeatures[passwdclient]',
 				  'labelid'	=> 'userfeatures-passwdclient',
 				  'size'	=> 15,
+					'paragraph' => false,
+					'group'			=> 'form-group',
+					'lbClass'   => 'col-sm-2',
+					'controlSize' => 'col-sm-4',
 				  'default'	=> $element['userfeatures']['passwdclient']['default'],
 				  'value'	=> $info['userfeatures']['passwdclient'],
 				  'error'	=> $this->bbf_args('error',
@@ -256,8 +262,7 @@ if(dwho_issa('linefeatures',$info) === true
 				   $info['userfeatures']['description']);?>
 	</div>
 </div>
-
-<div id="sb-part-lines" class="b-nodisplay">
+<div role="tabpanel" class="tab-pane" id="lines">
 <?php
 	if ($this->get_var('entity_list') === false):
 	    echo $this->bbf('no_internal_context_for_this_entity');
@@ -285,7 +290,8 @@ if(dwho_issa('linefeatures',$info) === true
 ?>
 </div>
 
-<div id="sb-part-voicemail" class="b-nodisplay">
+<div role="tabpanel" class="tab-pane" id="voicemail">
+
 <fieldset id="fld-voicemail-actions">
 <legend><?= $this->bbf('user_vm_header') ?></legend>
 <p id="vm-action-search" class="fm-paragraph">
@@ -450,7 +456,8 @@ if(dwho_issa('linefeatures',$info) === true
 </fieldset>
 </div>
 
-<div id="sb-part-dialaction" class="b-nodisplay">
+<div role="tabpanel" class="tab-pane" id="dialaction">
+
 	<fieldset id="fld-dialaction-noanswer">
 		<legend><?=$this->bbf('fld-dialaction-noanswer');?></legend>
 <?php
@@ -484,7 +491,7 @@ if(dwho_issa('linefeatures',$info) === true
 	</fieldset>
 </div>
 
-<div id="sb-part-service" class="b-nodisplay">
+<div role="tabpanel" class="tab-pane" id="service">
 
 	<fieldset id="fld-services">
 		<legend><?=$this->bbf('fld-services');?></legend>
@@ -645,20 +652,16 @@ if(dwho_issa('linefeatures',$info) === true
 	</fieldset>
 </div>
 
-<div id="sb-part-groups" class="b-nodisplay">
-<?php
-	$this->file_include('bloc/service/ipbx/asterisk/pbx_settings/users/groups');
-?>
-</div>
+	<div role="tabpanel" class="tab-pane" id="groups">
+	<?php
+		$this->file_include('bloc/service/ipbx/asterisk/pbx_settings/users/groups');
+	?>
+	</div>
 
-<div id="sb-part-funckeys" class="b-nodisplay">
-<?php
-	$this->file_include('bloc/service/ipbx/asterisk/pbx_settings/users/phonefunckey');
-?>
-</div>
+	<div role="tabpanel" class="tab-pane" id="funckeys">
+	<?php
+		$this->file_include('bloc/service/ipbx/asterisk/pbx_settings/users/phonefunckey');
+	?>
+	</div>
 
-<div id="sb-part-rightcalls" class="b-nodisplay">
-</div>
-
-<div id="sb-part-schedule" class="b-nodisplay">
 </div>

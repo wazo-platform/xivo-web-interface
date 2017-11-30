@@ -169,7 +169,7 @@ $dhtml->write_js('var xivo_fk_supervision = '. dwho_json::encode($supervisable) 
 
 ?>
 <div class="sb-list">
-<table>
+<table class="table">
 	<thead>
 	<tr class="sb-top">
 		<th class="th-left"><?=$this->bbf('col_phonefunckey-fknum');?></th>
