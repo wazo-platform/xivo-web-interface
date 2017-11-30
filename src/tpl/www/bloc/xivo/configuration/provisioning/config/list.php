@@ -42,7 +42,7 @@ $page = $url->pager($pager['pages'],
 <?=$form->hidden(array('name' => DWHO_SESS_NAME,'value'	=> DWHO_SESS_ID));?>
 <?=$form->hidden(array('name' => 'act','value'	=> $act));?>
 <?=$form->hidden(array('name' => 'page','value' => $pager['page']));?>
-<table id="table-main-listing">
+<table class="table table-condensed table-striped table-bordered" id="table-main-listing">
 	<tr class="sb-top">
 		<th class="th-left xspan"><span class="span-left">&nbsp;</span></th>
 		<th class="th-center"><?=$this->bbf('col_name');?></th>
@@ -78,7 +78,7 @@ $page = $url->pager($pager['pages'],
 						array('act'	=> 'edit',
 						      'id'	=> $ref['id']),
 						null,
-						$this->bbf('opt_modify'));					
+						$this->bbf('opt_modify'));
 				echo	$url->href_html($url->img_html('img/site/button/delete.gif',
 				 				       $this->bbf('opt_delete'),
 								       'border="0"'),
