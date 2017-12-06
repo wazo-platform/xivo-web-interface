@@ -3,6 +3,9 @@
     npm i
     npm run build
 
+See 
+- devtemp/change_master.list for files changed since the original branch (1116-Refresh-web-interface)
+- devtemp/change_new_webi.list for files changed from the original branch
 
     
 
