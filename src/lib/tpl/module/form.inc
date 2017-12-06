@@ -59,7 +59,7 @@ class dwho_tpl_form extends dwho_tpl_module
 		$this->_param['id'] = false;
 		$this->_param['class'] = false;
 		$this->_param['label'] = true;
-		$this->_param['paragraph'] = false;
+		$this->_param['paragraph'] = true;
 		$this->_param['paragraphid'] = true;
 		$this->_param['key'] = null;
 		$this->_param['altkey'] = false;
@@ -75,8 +75,8 @@ class dwho_tpl_form extends dwho_tpl_module
 		$this->_param['error'] = '';
 		$this->_param['legend']  = '';
 		$this->_param['group']  = 'form-group form-group-sm';
-		$this->_param['lbClass'] = 'col-sm-2';
-		$this->_param['controlSize'] = 'col-sm-4';
+		$this->_param['lbClass'] = 'col-sm-6';
+		$this->_param['controlSize'] = 'col-sm-6';
 
 		if(isset($v['name']) === true)
 			$this->_param['name'] = dwho_htmlsc($v['name']);
@@ -425,6 +425,8 @@ class dwho_tpl_form extends dwho_tpl_module
 
 	function _mk_paragraph()
 	{
+		return false;
+		//TODO to be removed
 		if($this->_param['paragraph'] === false)
 			return(false);
 
@@ -435,21 +437,26 @@ class dwho_tpl_form extends dwho_tpl_module
 
 		$this->_render = '<p'.$id.' class="fm-paragraph">'."\n".$this->_render."\n".'</p>';
 	}
+	function _mk_group()
+	{
+		if($this->_param['group'] !== '')
+			$cl = ' class="'.$this->_param['group'].'"';
+		else {
+			return false;
+		}
+
+		if(is_string($this->_param['paragraphid']) === true)
+			$id = ' id="'.$this->_param['paragraphid'].'"';
+		else
+			$id = '';
+
+		$this->_render = '<div '.$id.' '.$cl.' >'."\n".$this->_render."\n".'</div>';
+	}
 
 	function _mk_control_size()
 	{
 		if($this->_param['controlSize'] !== '')
 			$cl = ' class="'.$this->_param['controlSize'].'"';
-		else {
-			return false;
-		}
-
-		$this->_render = '<div '.$cl.' >'."\n".$this->_render."\n".'</div>';
-	}
-	function _mk_group()
-	{
-		if($this->_param['group'] !== '')
-			$cl = ' class="'.$this->_param['group'].'"';
 		else {
 			return false;
 		}
