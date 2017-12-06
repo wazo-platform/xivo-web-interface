@@ -68,7 +68,7 @@ $(document).ready(function() {
 </script>
 
 <div class="tab-content">
-<div  role="tabpanel" class="tab-pane active" id="general">
+<div role="tabpanel" class="tab-pane active" id="general">
 <?php
 	echo	$form->text(array('desc'	=> $this->bbf('fm_device_ip'),
 				  'name'	=> 'device[ip]',

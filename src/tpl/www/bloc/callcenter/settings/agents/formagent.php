@@ -31,8 +31,8 @@ $qmember = $this->get_var('qmember');
 $act = $this->get_var('act');
 
 ?>
-
-<div id="sb-part-first" class="b-nodisplay">
+<div class="tab-content">
+<div  role="tabpanel" class="tab-pane active" id="general">
 <?php
 	echo	$form->text(array('desc'	=> $this->bbf('fm_agentfeatures_firstname'),
 				  'name'	=> 'agentfeatures[firstname]',
@@ -131,13 +131,7 @@ if ($act === 'addagent') {
 ?>
 </div>
 
-<div id="sb-part-queueskills" class="b-nodisplay">
-<?php
-	$this->file_include('bloc/callcenter/settings/agents/queueskills');
-?>
-</div>
-
-<div id="sb-part-user" class="b-nodisplay">
+<div role="tabpanel" class="tab-pane" id="user">
 <?php
 	if($umember['list'] !== false):
 ?>
@@ -163,7 +157,7 @@ if ($act === 'addagent') {
 ?>
 </div>
 
-<div id="sb-part-queue" class="b-nodisplay">
+<div role="tabpanel" class="tab-pane" id="queue">
 <?php
 	if(is_array($queues) === true && empty($queues) === false):
 ?>
@@ -266,8 +260,13 @@ if ($act === 'addagent') {
 	endif;
 ?>
 </div>
+<div role="tabpanel" class="tab-pane" id="queueskills">
+<?php
+	$this->file_include('bloc/callcenter/settings/agents/queueskills');
+?>
+</div>
 
-<div id="sb-part-last" class="b-nodisplay">
+<div role="tabpanel" class="tab-pane" id="advanced">
 <?php
 		echo $form->select(array('desc'	=> $this->bbf('fm_agentfeatures_autologoff'),
 					 'name'	=> 'agentfeatures[autologoff]',
@@ -293,4 +292,5 @@ if ($act === 'addagent') {
 					 'default'	=> $element['agentfeatures']['description']['default']),
 				   $info['agentfeatures']['description']);?>
 	</div>
+</div>
 </div>

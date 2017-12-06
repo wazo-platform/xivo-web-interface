@@ -315,7 +315,6 @@ switch($act)
 		$_TPL->set_var('agentgroup_list',$agentgroup_list);
 
 		$dhtml = &$_TPL->get_module('dhtml');
-		$dhtml->set_js('js/dwho/submenu.js');
 		$dhtml->load_js_multiselect_files();
 		break;
 	case 'editagent':
@@ -436,7 +435,6 @@ switch($act)
 		$_TPL->set_var('agentgroup_list',$agentgroup_list);
 
 		$dhtml = &$_TPL->get_module('dhtml');
-		$dhtml->set_js('js/dwho/submenu.js');
 		$dhtml->load_js_multiselect_files();
 		break;
 	case 'deleteagent':
