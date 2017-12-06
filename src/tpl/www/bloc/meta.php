@@ -32,7 +32,6 @@
 
 <link rel="icon" href="<?=$this->file_time($this->url('favicon.ico'));?>">
 <link rel="shortcut icon" href="<?=$this->file_time($this->url('favicon.ico'));?>">
-<link rel="stylesheet" type="text/css" href="<?=$this->file_time($this->url('css/dashboard.css'));?>">
 <link rel="stylesheet" type="text/css" href="<?=$this->file_time($this->url('css/xivo.css'));?>">
 <link rel="stylesheet" type="text/css" href="<?=$this->file_time($this->url('extra-libs/jquery-ui/css/ui-lightness/jquery-ui.css'));?>">
 
