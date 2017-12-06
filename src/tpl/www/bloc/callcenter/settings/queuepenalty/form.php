@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2017  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -31,7 +31,8 @@ if (is_array($info) && array_key_exists('changes', $info))
 $signs = array('+','-','=');
 ?>
 
-<div id="sb-part-first" class="b-nodisplay">
+<div class="tab-content">
+<div  role="tabpanel" class="tab-pane active" id="general">
 <?php
 echo	$form->text(array('desc'	=> $this->bbf('fm_queuepenalty_name'),
 			  'name'	=> 'queuepenalty[name]',
@@ -60,7 +61,7 @@ echo	$form->text(array('desc'	=> $this->bbf('fm_queuepenalty_name'),
 	</div>
 </div>
 
-<div id="sb-part-penalties" class="b-nodisplay">
+<div  role="tabpanel" class="tab-pane" id="penalties">
 <div id="sb-list">
 <?php
 	$dtype = "disp";
