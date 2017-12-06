@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2016  Avencall
+# Copyright (C) 2006-2017  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -40,8 +40,9 @@ $dhtml = &$this->get_module('dhtml');
 $dhtml->write_js('var xivo_fm_user_suggest = \''.$dhtml->escape($user_suggest).'\';');
 
 ?>
+<div class="tab-content">
 
-<div id="sb-part-first" class="b-nodisplay">
+<div role="tabpanel" class="tab-pane active" id="general">
 <?php
 
 $err_number = $this->get_var('error','groupfeatures','number');
@@ -173,7 +174,7 @@ endif;
 ?>
 </div>
 
-<div id="sb-part-user" class="b-nodisplay">
+<div role="tabpanel" class="tab-pane" id="user">
 <?php
 	if($user['list'] !== false):
 ?>
@@ -199,7 +200,7 @@ endif;
 ?>
 </div>
 
-<div id="sb-part-application" class="b-nodisplay">
+<div role="tabpanel" class="tab-pane" id="application">
 <?php
 	echo	$form->checkbox(array('desc'	=> $this->bbf('fm_groupfeatures_transfer-user'),
 				    'name'	    => 'groupfeatures[transfer_user]',
@@ -234,7 +235,7 @@ endif;
 ?>
 </div>
 
-<div id="sb-part-rightcall" class="b-nodisplay">
+<div role="tabpanel" class="tab-pane" id="rightcall">
 <?php
 	if($rightcall['list'] !== false):
 ?>
@@ -260,7 +261,7 @@ endif;
 ?>
 </div>
 
-<div id="sb-part-dialaction" class="b-nodisplay">
+<div role="tabpanel" class="tab-pane" id="dialaction">
 	<fieldset id="fld-dialaction-noanswer">
 		<legend><?=$this->bbf('fld-dialaction-noanswer');?></legend>
 <?php
@@ -294,7 +295,7 @@ endif;
 	</fieldset>
 </div>
 
-<div id="sb-part-schedule" class="b-nodisplay">
+<div role="tabpanel" class="tab-pane" id="schedule">
 <?php
 	if($schedules === false):
 		echo	'<div class="txt-center">',
@@ -313,4 +314,5 @@ endif;
 			      $schedules);
 	endif;
 ?>
+</div>
 </div>

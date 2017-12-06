@@ -49,7 +49,6 @@
   $(document).ready(function() {
     $("#it-user").select2();
   });
-  console.log("-----------------");
 </script>
 <?php
 

@@ -8,7 +8,7 @@ src/action/www/service/ipbx/asterisk/call_management/rightcall.php
 src/action/www/service/ipbx/asterisk/call_management/schedule.php
 */
 
-***Changed *** src/action/www/service/ipbx/asterisk/pbx_settings/devices.php
+***Changed -> Done** src/action/www/service/ipbx/asterisk/pbx_settings/devices.php
 
 /* Done
 src/action/www/service/ipbx/asterisk/pbx_settings/groups.php
@@ -16,12 +16,12 @@ src/action/www/service/ipbx/asterisk/pbx_settings/lines.php
 src/action/www/service/ipbx/asterisk/pbx_settings/meetme.php
 */
 
-***Changed *** src/action/www/service/ipbx/asterisk/pbx_settings/users.php
+***Changed -> Done*** src/action/www/service/ipbx/asterisk/pbx_settings/users.php
 
 **Done** src/action/www/service/ipbx/asterisk/pbx_settings/voicemail.php
 
 src/action/www/service/ipbx/asterisk/trunk_management/iax.php
-***Changed ***  src/action/www/service/ipbx/asterisk/trunk_management/sip.php
+***Changed -> Done ***  src/action/www/service/ipbx/asterisk/trunk_management/sip.php
 
 
 
@@ -81,7 +81,7 @@ src/tpl/www/bloc/cti/sheetactions/form.php
 src/tpl/www/bloc/cti/sheetactions/list.php
 */
 
-***Changed*** src/tpl/www/bloc/foot.php
+***Changed -> Done*** src/tpl/www/bloc/foot.php
 
 **Done** src/tpl/www/bloc/home/login.php
 
@@ -131,13 +131,13 @@ src/tpl/www/bloc/service/ipbx/asterisk/pbx_services/sounds/listdir.php
 src/tpl/www/bloc/service/ipbx/asterisk/pbx_services/sounds/list.php
 */
 
-**Changed** src/tpl/www/bloc/service/ipbx/asterisk/pbx_settings/devices/form.php
+**Changed -> Done ** src/tpl/www/bloc/service/ipbx/asterisk/pbx_settings/devices/form.php
 
 src/tpl/www/bloc/service/ipbx/asterisk/pbx_settings/devices/list.php
 src/tpl/www/bloc/service/ipbx/asterisk/pbx_settings/devices/submenu.php
 
 
-**Changed**  src/tpl/www/bloc/service/ipbx/asterisk/pbx_settings/groups/form.php
+**Changed -> Done**  src/tpl/www/bloc/service/ipbx/asterisk/pbx_settings/groups/form.php
 /* Done
 src/tpl/www/bloc/service/ipbx/asterisk/pbx_settings/groups/list.php
 src/tpl/www/bloc/service/ipbx/asterisk/pbx_settings/groups/submenu.php

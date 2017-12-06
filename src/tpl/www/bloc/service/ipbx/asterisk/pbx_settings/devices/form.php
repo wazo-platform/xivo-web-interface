@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2017  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -67,7 +67,8 @@ $(document).ready(function() {
 });
 </script>
 
-<div id="sb-part-first" class="b-nodisplay">
+<div class="tab-content">
+<div  role="tabpanel" class="tab-pane active" id="general">
 <?php
 	echo	$form->text(array('desc'	=> $this->bbf('fm_device_ip'),
 				  'name'	=> 'device[ip]',
@@ -125,73 +126,74 @@ $(document).ready(function() {
 				   $this->get_var('info','device','description'));?>
 	</div>
 </div>
-<div id="sb-part-last" class="b-nodisplay">
-<?php
+<div role="tabpanel" class="tab-pane" id="lines">
+	<?php
 
-$nbcap = $busy = 0;
-if (isset($info['capabilities'])
-&& ($capabilities = $info['capabilities']) !== false):
-	if(isset($capabilities['sip.lines']) === true
-	&& ($nbcap = (int) $capabilities['sip.lines']) !== 0):
-		if (empty($listline) === false)
-			$busy = count($listline);
-		echo $this->bbf('nb_line_busy-free',array($busy,$nbcap-$busy));
+	$nbcap = $busy = 0;
+	if (isset($info['capabilities'])
+	&& ($capabilities = $info['capabilities']) !== false):
+		if(isset($capabilities['sip.lines']) === true
+		&& ($nbcap = (int) $capabilities['sip.lines']) !== 0):
+			if (empty($listline) === false)
+				$busy = count($listline);
+			echo $this->bbf('nb_line_busy-free',array($busy,$nbcap-$busy));
+		endif;
 	endif;
-endif;
 
-?>
-<div class="sb-list">
-<table>
-	<thead>
-	<tr class="sb-top">
-		<th class="th-left"><?=$this->bbf('col_line-line');?></th>
-		<th class="th-center"><?=$this->bbf('col_line-protocol');?></th>
-		<th class="th-center"><?=$this->bbf('col_line-name');?></th>
-		<th class="th-center"><?=$this->bbf('col_line-number');?></th>
-		<th class="th-center"><?=$this->bbf('col_line-context');?></th>
-	</tr>
-	</thead>
-	<tbody>
-<?php
-if($listline !== false
-&& ($nb = count($listline)) !== 0):
-	foreach($listline as $num => $line):
-		$secureclass = '';
-		if(isset($ref['encryption']) === true
-		&& $ref['encryption'] === true)
-			$secureclass = 'xivo-icon xivo-icon-secure';
-?>
-	<tr class="fm-paragraph">
-		<td class="td-left"><?=$line['num']?></td>
-		<td class="txt-center">
-			<span>
-				<span class="<?=$secureclass?>">&nbsp;</span>
-				<?=$this->bbf('line_protocol-sip')?>
-			</span>
-		</td>
-		<td><?=$line['callerid']?></td>
-		<td class>
-		<?php 	
-			echo $url->href_html(
-                        	$line['number'],
-                        	'service/ipbx/pbx_settings/lines',
-                        	array(
-                        	'id' => $line['id'],
-                        	'act' => 'edit'
-                        ));
-		?></td>
-		<td><?=$line['context']?></td>
-	</tr>
-<?php
-	endforeach;
-endif;
-?>
-	</tbody>
-	<tfoot>
-	<tr id="no-device"<?=($listline !== false ? ' class="b-nodisplay"' : '')?>>
-		<td colspan="7" class="td-single"><?=$this->bbf('no_lines');?></td>
-	</tr>
-	</tfoot>
-</table>
+	?>
+	<div class="sb-list">
+	<table>
+		<thead>
+		<tr class="sb-top">
+			<th class="th-left"><?=$this->bbf('col_line-line');?></th>
+			<th class="th-center"><?=$this->bbf('col_line-protocol');?></th>
+			<th class="th-center"><?=$this->bbf('col_line-name');?></th>
+			<th class="th-center"><?=$this->bbf('col_line-number');?></th>
+			<th class="th-center"><?=$this->bbf('col_line-context');?></th>
+		</tr>
+		</thead>
+		<tbody>
+	<?php
+	if($listline !== false
+	&& ($nb = count($listline)) !== 0):
+		foreach($listline as $num => $line):
+			$secureclass = '';
+			if(isset($ref['encryption']) === true
+			&& $ref['encryption'] === true)
+				$secureclass = 'xivo-icon xivo-icon-secure';
+	?>
+		<tr class="fm-paragraph">
+			<td class="td-left"><?=$line['num']?></td>
+			<td class="txt-center">
+				<span>
+					<span class="<?=$secureclass?>">&nbsp;</span>
+					<?=$this->bbf('line_protocol-sip')?>
+				</span>
+			</td>
+			<td><?=$line['callerid']?></td>
+			<td class>
+			<?php 	
+				echo $url->href_html(
+														$line['number'],
+														'service/ipbx/pbx_settings/lines',
+														array(
+														'id' => $line['id'],
+														'act' => 'edit'
+													));
+			?></td>
+			<td><?=$line['context']?></td>
+		</tr>
+	<?php
+		endforeach;
+	endif;
+	?>
+		</tbody>
+		<tfoot>
+		<tr id="no-device"<?=($listline !== false ? ' class="b-nodisplay"' : '')?>>
+			<td colspan="7" class="td-single"><?=$this->bbf('no_lines');?></td>
+		</tr>
+		</tfoot>
+	</table>
+</div>
 </div>
 </div>
