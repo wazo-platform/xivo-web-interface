@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2016  Avencall
+# Copyright (C) 2006-2017  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -34,8 +34,8 @@ $defaultrules    = $this->get_var('defaultrules');
 $act             = $this->get_var('act');
 
 ?>
-
-<div id="sb-part-first" class="b-nodisplay">
+<div class="tab-content">
+<div  role="tabpanel" class="tab-pane active" id="general">
 <?php
 if ($act === 'add') {
 	echo $form->text(array('desc'	=> $this->bbf('fm_queuefeatures_name'),
@@ -168,8 +168,7 @@ endif;
 					   $this->get_var('error','queuefeatures','preprocess_subroutine'))));
 ?>
 </div>
-
-<div id="sb-part-announce" class="b-nodisplay">
+<div  role="tabpanel" class="tab-pane" id="announce">
 <?php
 	echo	$form->select(array('desc'	=> $this->bbf('fm_queue_announce-frequency'),
 				    'name'	=> 'queue[announce-frequency]',
@@ -423,8 +422,7 @@ endif;
 
 ?>
 </div>
-
-<div id="sb-part-member" class="b-nodisplay">
+<div  role="tabpanel" class="tab-pane" id="member">
 	<fieldset id="fld-user">
 		<legend><?=$this->bbf('fld-users');?></legend>
 <?php
@@ -484,8 +482,7 @@ endif;
 ?>
 	</fieldset>
 </div>
-
-<div id="sb-part-application" class="b-nodisplay">
+<div  role="tabpanel" class="tab-pane" id="application">
 <?php
 
 	echo	$form->text(array('desc'	=> $this->bbf('fm_queuefeatures_timeout'),
@@ -572,8 +569,7 @@ endif;
 				      'checked'	=> $this->get_var('info','queuefeatures','ignore_forward')));
 ?>
 </div>
-
-<div id="sb-part-dialaction" class="b-nodisplay">
+<div  role="tabpanel" class="tab-pane" id="dialaction">
 	<fieldset id="fld-dialaction-noanswer">
 		<legend><?=$this->bbf('fld-dialaction-noanswer');?></legend>
 <?php
@@ -607,7 +603,7 @@ endif;
 	</fieldset>
 </div>
 
-<div id="sb-part-advanced" class="b-nodisplay">
+<div  role="tabpanel" class="tab-pane" id="advanced">
 <?php
 
 if($context_list !== false):
@@ -833,7 +829,7 @@ endif;
 ?>
 </div>
 
-<div id="sb-part-schedule" class="b-nodisplay">
+<div  role="tabpanel" class="tab-pane" id="schedule">
 <?php
 	if($schedules === false):
 		echo	'<div class="txt-center">',
@@ -853,7 +849,7 @@ endif;
 	endif;
 ?>
 </div>
-<div id="sb-part-diversion" class="b-nodisplay">
+<div  role="tabpanel" class="tab-pane" id="diversion">
 	<fieldset id="fld-diversion-waittime">
 		<legend><?=$this->bbf('fld-diversion-waittime');?></legend>
 <?php

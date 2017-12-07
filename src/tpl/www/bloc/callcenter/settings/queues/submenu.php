@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2017  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,45 +19,31 @@
 #
 
 ?>
-	<div class="sb-smenu">
-		<ul>
-			<li id="dwsm-tab-1" class="dwsm-blur" onclick="dwho_submenu.select(this,'sb-part-first');" onmouseout="dwho_submenu.blur(this);" onmouseover="dwho_submenu.focus(this);">
-				<div class="tab"><span class="span-center"><a href="#first"><?=$this->bbf('smenu_general');?></a></span></div><span class="span-right">&nbsp;</span>
-			</li>
-			<li id="dwsm-tab-2" class="dwsm-blur" onclick="dwho_submenu.select(this,'sb-part-announce');" onmouseout="dwho_submenu.blur(this);" onmouseover="dwho_submenu.focus(this);">
-				<div class="tab"><span class="span-center"><a href="#announce"><?=$this->bbf('smenu_announces');?></a></span></div><span class="span-right">&nbsp;</span>
-			</li>
-			<li id="dwsm-tab-3" class="dwsm-blur" onclick="dwho_submenu.select(this,'sb-part-member');" onmouseout="dwho_submenu.blur(this);" onmouseover="dwho_submenu.focus(this);">
-				<div class="tab"><span class="span-center"><a href="#member"><?=$this->bbf('smenu_members');?></a></span></div><span class="span-right">&nbsp;</span>
-			</li>
-			<li id="dwsm-tab-4" class="dwsm-blur" onclick="dwho_submenu.select(this,'sb-part-application');" onmouseout="dwho_submenu.blur(this);" onmouseover="dwho_submenu.focus(this);">
-				<div class="tab"><span class="span-center"><a href="#application"><?=$this->bbf('smenu_application');?></a></span></div><span class="span-right">&nbsp;</span>
-			</li>
-			<li id="dwsm-tab-5" class="dwsm-blur" onclick="dwho_submenu.select(this,'sb-part-dialaction');" onmouseout="dwho_submenu.blur(this);" onmouseover="dwho_submenu.focus(this);">
-				<div class="tab"><span class="span-center"><a href="#dialaction"><?=$this->bbf('smenu_dialaction');?></a></span></div><span class="span-right">&nbsp;</span>
-			</li>
-			<li id="dwsm-tab-6" class="dwsm-blur" onclick="dwho_submenu.select(this,'sb-part-advanced');" onmouseout="dwho_submenu.blur(this);" onmouseover="dwho_submenu.focus(this);">
-				<div class="tab"><span class="span-center"><a href="#advanced"><?=$this->bbf('smenu_advanced');?></a></span></div><span class="span-right">&nbsp;</span>
-			</li>
-			<li id="dwsm-tab-7"
-		    class="dwsm-blur"
-		    onclick="dwho_submenu.select(this,'sb-part-schedule');"
-		    onmouseout="dwho_submenu.blur(this);"
-		    onmouseover="dwho_submenu.focus(this);">
-				<div class="tab">
-					<span class="span-center"><a href="#schedule"><?=$this->bbf('smenu_schedule');?></a></span>
-				</div>
-				<span class="span-right">&nbsp;</span>
-			</li>
-			<li id="dwsm-tab-8"
-		    class="dwsm-blur-last"
-		    onclick="dwho_submenu.select(this,'sb-part-diversion',1);"
-		    onmouseout="dwho_submenu.blur(this,1);"
-		    onmouseover="dwho_submenu.focus(this,1);">
-				<div class="tab">
-					<span class="span-center"><a href="#diversion"><?=$this->bbf('smenu_diversion');?></a></span>
-				</div>
-				<span class="span-right">&nbsp;</span>
-			</li>
-		</ul>
-	</div>
+<div class="sb-smenu">
+	<ul class="nav nav-tabs" role="tablist">
+		<li id="dwsm-tab-1" role="presentation" class="active">
+			<a role="tab" data-toggle="tab" href="#general"><?=$this->bbf('smenu_general');?></a>
+		</li>
+		<li id="dwsm-tab-2"	role="presentation">
+			<a role="tab" data-toggle="tab" href="#announce"><?=$this->bbf('smenu_announces');?></a>
+		</li>
+		<li id="dwsm-tab-3"	role="presentation">
+			<a role="tab" data-toggle="tab" href="#member"><?=$this->bbf('smenu_members');?></a>
+		</li>
+		<li id="dwsm-tab-4"	role="presentation">
+			<a role="tab" data-toggle="tab" href="#application"><?=$this->bbf('smenu_application');?></a>
+		</li>
+		<li id="dwsm-tab-5"	role="presentation">
+			<a role="tab" data-toggle="tab" href="#dialaction"><?=$this->bbf('smenu_dialaction');?></a>
+		</li>
+		<li id="dwsm-tab-6"	role="presentation">
+			<a role="tab" data-toggle="tab" href="#advanced"><?=$this->bbf('smenu_advanced');?></a>
+		</li>
+		<li id="dwsm-tab-7"	role="presentation">
+			<a role="tab" data-toggle="tab" href="#schedule"><?=$this->bbf('smenu_schedule');?></a>
+		</li>
+		<li id="dwsm-tab-8"	role="presentation">
+			<a role="tab" data-toggle="tab" href="#diversion"><?=$this->bbf('smenu_diversion');?></a>
+		</li>
+	</ul>
+</div>
