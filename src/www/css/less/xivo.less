@@ -6,9 +6,6 @@
 @import "_bars.less";
 @import (less) "~select2/dist/css/select2.css";
 
-@icon-font-path: "~bootstrap/fonts/";
-
-
 html {
     height: 100%;
 }
@@ -20,6 +17,12 @@ body {
     letter-spacing: 0.5px;
     color: @color-normal;
     height: 100%;
+}
+
+#bc-main {
+  &::before {
+    margin-top: 50px;
+  }
 }
 
 #bc-content {

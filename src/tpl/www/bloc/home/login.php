@@ -32,6 +32,7 @@ $dhtml = &$this->get_module('dhtml');
 	</div>
 
 		<form class="loginForm" action="#" method="post" accept-charset="utf-8">
+		<div class="title"><?=$this->bbf('title_content_name');?></div>
 <?php
 	echo	$form->hidden(array('name'	=> DWHO_SESS_NAME,
 				    'value'	=> DWHO_SESS_ID)),

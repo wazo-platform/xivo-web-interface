@@ -1,3 +1,9 @@
+xivo-web-interface (2018.01.00) xivo-aldebaran; urgency=medium
+
+  * Refresh web interface
+
+ -- Vojtech Sodoma <vsodoma@avencall.com>  Fri, 08 Dec 2017 10:12:17 +0100
+
 xivo-web-interface (2017.11.06) xivo-dev; urgency=medium
 
   * Fix Cannot configure a func key for a Queue/User/Meetme/Group if its ID is 5
