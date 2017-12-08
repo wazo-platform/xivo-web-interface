@@ -6,11 +6,12 @@ const ExtractTextPlugin = require("extract-text-webpack-plugin");
 module.exports = {
   entry: {
     css: './www/css/css.js',
+    xivo: './www/js/xivo/app.js',
     vendor: ['jquery', 'jquery-ui', 'bootstrap', 'select2']
   },
   output: {
       publicPath: '/',
-      filename: 'www/js/[name].js'
+      filename: 'www/js/[name].bundle.js'
   },
   resolve: {
     alias: {
@@ -28,8 +29,31 @@ module.exports = {
         })
       },
       {
+        enforce: "pre",
+        test: /\.js$/,
+        include: [/xivo/],
+        exclude: [/node_modules/, /configuration/, /monitoring.js/, /wizard.js/],
+        loader: "eslint-loader"
+      },
+      {
+        test: /\.js$/,
+        include: [/xivo/],
+        exclude: [/node_modules/, /configuration/, /monitoring.js/, /wizard.js/],
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['env'],
+            cacheDirectory: true
+          }
+        }
+      },
+      {
         test: require.resolve('jquery'),
         loader: 'expose-loader?jQuery!expose-loader?$'
+      },
+      {
+        test: require.resolve('angular'),
+        loader: 'expose-loader?angular!expose-loader?angular'
       },
       {
         test: /\.(ttf|eot|woff|woff2|svg)$/,

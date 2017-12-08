@@ -36,6 +36,7 @@
 <link rel="stylesheet" type="text/css" href="<?=$this->file_time($this->url('extra-libs/jquery-ui/css/ui-lightness/jquery-ui.css'));?>">
 
 <script type="text/javascript" src="<?=$this->file_time($this->url('js/vendor.bundle.js'));?>"></script>
+<script type="text/javascript" src="<?=$this->file_time($this->url('js/xivo.bundle.js'));?>"></script>
 
 <script type="text/javascript" src="<?=$this->file_time($this->url('js/dwho.js'));?>"></script>
 

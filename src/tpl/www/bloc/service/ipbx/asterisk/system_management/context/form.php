@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2017  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -74,8 +74,8 @@ endif;
 $incall_err = $this->get_var('error','contextnumbers','incall');
 
 ?>
-
-<div id="sb-part-first" class="b-nodisplay">
+<uib-tabset active="active">
+<uib-tab index="0" heading="<?=$this->bbf('smenu_general');?>">
 
 <?php
 if($act == "add") {
@@ -172,9 +172,9 @@ if($act == "add") {
 			   $info['context']['description']);?>
 </div>
 
-</div>
+</uib-tab>
 
-<div id="sb-part-user" class="b-nodisplay">
+<uib-tab index="1" heading="<?=$this->bbf('smenu_users');?>">
 	<div class="sb-list">
 <?php
 	$this->file_include('bloc/service/ipbx/asterisk/system_management/context/contextnumbers',
@@ -183,9 +183,9 @@ if($act == "add") {
 				  'list'	=> $user_list));
 ?>
 	</div>
-</div>
+</uib-tab>
 
-<div id="sb-part-group" class="b-nodisplay">
+<uib-tab index="2" heading="<?=$this->bbf('smenu_groups');?>">
 	<div class="sb-list">
 <?php
 	$this->file_include('bloc/service/ipbx/asterisk/system_management/context/contextnumbers',
@@ -194,150 +194,156 @@ if($act == "add") {
 				  'list'	=> $group_list));
 ?>
 	</div>
-</div>
+</uib-tab>
 
-<div id="sb-part-queue" class="b-nodisplay">
+<uib-tab index="3" heading="<?=$this->bbf('smenu_queues');?>">
 	<div class="sb-list">
-<?php
-	$this->file_include('bloc/service/ipbx/asterisk/system_management/context/contextnumbers',
-			    array('type'	=> 'queue',
-				  'count'	=> $queue_nb,
-				  'list'	=> $queue_list));
-?>
+		<?php
+			$this->file_include('bloc/service/ipbx/asterisk/system_management/context/contextnumbers',
+							array('type'	=> 'queue',
+							'count'	=> $queue_nb,
+							'list'	=> $queue_list));
+		?>
 	</div>
-</div>
+</uib-tab>
 
-<div id="sb-part-meetme" class="b-nodisplay">
+<uib-tab index="4" heading="<?=$this->bbf('smenu_meetme');?>">
 	<div class="sb-list">
-<?php
-	$this->file_include('bloc/service/ipbx/asterisk/system_management/context/contextnumbers',
-			    array('type'	=> 'meetme',
-				  'count'	=> $meetme_nb,
-				  'list'	=> $meetme_list));
-?>
+		<?php
+			$this->file_include('bloc/service/ipbx/asterisk/system_management/context/contextnumbers',
+							array('type'	=> 'meetme',
+							'count'	=> $meetme_nb,
+							'list'	=> $meetme_list));
+		?>
 	</div>
-</div>
+</uib-tab>
+	
+<uib-tab index="5" heading="<?=$this->bbf('smenu_incall');?>">
 
-<div id="sb-part-incall" class="b-nodisplay">
 	<div class="sb-list">
-	<table class="table">
-		<thead>
-		<tr class="sb-top">
-			<th class="th-left"><?=$this->bbf('col_contextnumbers_incall-numberbeg');?></th>
-			<th class="th-center"><?=$this->bbf('col_contextnumbers_incall-numberend');?></th>
-			<th class="th-center"><?=$this->bbf('col_contextnumbers_incall-didlength');?></th>
-			<th class="th-right"><?=$url->href_html($url->img_html('img/site/button/mini/orange/bo-add.gif',
-									       $this->bbf('col_contextnumbers_incall-add'),
-									       'border="0"'),
-								'#',
-								null,
-								'id="add_line_button" onclick="xivo_context_entity_enable_add(\'incall\',this);
-									  return(dwho.dom.free_focus());"',
-								$this->bbf('col_contextnumbers_incall-add'));?></th>
-		</tr>
-		</thead>
-		<tbody id="contextnumbers-incall">
-<?php
-if($incall_list !== false):
-	for($i = 0;$i < $incall_nb;$i++):
-		$ref = &$incall_list[$i];
+			<table class="table">
+				<thead>
+				<tr class="sb-top">
+					<th class="th-left"><?=$this->bbf('col_contextnumbers_incall-numberbeg');?></th>
+					<th class="th-center"><?=$this->bbf('col_contextnumbers_incall-numberend');?></th>
+					<th class="th-center"><?=$this->bbf('col_contextnumbers_incall-didlength');?></th>
+					<th class="th-right"><?=$url->href_html($url->img_html('img/site/button/mini/orange/bo-add.gif',
+														$this->bbf('col_contextnumbers_incall-add'),
+														'border="0"'),
+										'#',
+										null,
+										'id="add_line_button" onclick="xivo_context_entity_enable_add(\'incall\',this);
+												return(dwho.dom.free_focus());"',
+										$this->bbf('col_contextnumbers_incall-add'));?></th>
+				</tr>
+				</thead>
+				<tbody id="contextnumbers-incall">
+		<?php
+		if($incall_list !== false):
+			for($i = 0;$i < $incall_nb;$i++):
+				$ref = &$incall_list[$i];
 
-		if(isset($incall_err[$i]) === true):
-			$errdisplay = ' l-infos-error';
-		else:
-			$errdisplay = '';
+				if(isset($incall_err[$i]) === true):
+					$errdisplay = ' l-infos-error';
+				else:
+					$errdisplay = '';
+				endif;
+		?>
+				<tr class="fm-paragraph<?=$errdisplay?>">
+					<td class="td-left txt-center">
+						<?=$form->text(array('paragraph'	=> false,
+										'name'		=> 'contextnumbers[incall][numberbeg][]',
+										'id'		=> false,
+										'label'		=> false,
+										'size'		=> 15,
+										'value'		=> $ref['numberbeg'],
+										'default'		=> $element['contextnumbers']['numberbeg']['default']));?>
+					</td>
+					<td>
+						<?=$form->text(array('paragraph'	=> false,
+										'name'		=> 'contextnumbers[incall][numberend][]',
+										'id'		=> false,
+										'label'		=> false,
+										'size'		=> 15,
+										'value'		=> $ref['numberend'],
+										'default'		=> $element['contextnumbers']['numberend']['default']));?>
+					</td>
+					<td>
+						<?=$form->select(array('paragraph'	=> false,
+											'name'		=> 'contextnumbers[incall][didlength][]',
+											'id'		=> false,
+											'label'		=> false,
+											'key'		=> false,
+											'selected'	=> $ref['didlength'],
+											'default'	=> $element['contextnumbers']['didlength']['default']),
+								$element['contextnumbers']['didlength']['value']);?>
+					</td>
+					<td class="td-right"><?=$url->href_html($url->img_html('img/site/button/mini/blue/delete.gif',
+														$this->bbf('opt_contextnumbers_incall-delete'),
+														'border="0"'),
+										'#',
+										null,
+										'onclick="dwho.dom.make_table_list(\'contextnumbers-incall\',this,1);
+												return(dwho.dom.free_focus());"',
+										$this->bbf('opt_contextnumbers_incall-delete'));?></td>
+				</tr>
+
+		<?php
+			endfor;
 		endif;
-?>
-		<tr class="fm-paragraph<?=$errdisplay?>">
-			<td class="td-left txt-center">
-				<?=$form->text(array('paragraph'	=> false,
-						     'name'		=> 'contextnumbers[incall][numberbeg][]',
-						     'id'		=> false,
-						     'label'		=> false,
-						     'size'		=> 15,
-						     'value'		=> $ref['numberbeg'],
-						     'default'		=> $element['contextnumbers']['numberbeg']['default']));?>
-			</td>
-			<td>
-				<?=$form->text(array('paragraph'	=> false,
-						     'name'		=> 'contextnumbers[incall][numberend][]',
-						     'id'		=> false,
-						     'label'		=> false,
-						     'size'		=> 15,
-						     'value'		=> $ref['numberend'],
-						     'default'		=> $element['contextnumbers']['numberend']['default']));?>
-			</td>
-			<td>
-				<?=$form->select(array('paragraph'	=> false,
-						       'name'		=> 'contextnumbers[incall][didlength][]',
-						       'id'		=> false,
-						       'label'		=> false,
-						       'key'		=> false,
-						       'selected'	=> $ref['didlength'],
-						       'default'	=> $element['contextnumbers']['didlength']['default']),
-						 $element['contextnumbers']['didlength']['value']);?>
-			</td>
-			<td class="td-right"><?=$url->href_html($url->img_html('img/site/button/mini/blue/delete.gif',
-									       $this->bbf('opt_contextnumbers_incall-delete'),
-									       'border="0"'),
-								'#',
-								null,
-								'onclick="dwho.dom.make_table_list(\'contextnumbers-incall\',this,1);
-									  return(dwho.dom.free_focus());"',
-								$this->bbf('opt_contextnumbers_incall-delete'));?></td>
-		</tr>
+		?>
+				</tbody>
+				<tfoot>
+				<tr id="no-contextnumbers-incall"<?=($incall_list !== false ? ' class="b-nodisplay"' : '')?>>
+					<td colspan="4" class="td-single"><?=$this->bbf('no_contextnumbers-incall');?></td>
+				</tr>
+				</tfoot>
+			</table>
 
-<?php
-	endfor;
-endif;
-?>
-		</tbody>
-		<tfoot>
-		<tr id="no-contextnumbers-incall"<?=($incall_list !== false ? ' class="b-nodisplay"' : '')?>>
-			<td colspan="4" class="td-single"><?=$this->bbf('no_contextnumbers-incall');?></td>
-		</tr>
-		</tfoot>
-	</table>
-	<table class="b-nodisplay">
-		<tbody id="ex-contextnumbers-incall">
-		<tr class="fm-paragraph">
-			<td class="td-left txt-center">
-				<?=$form->text(array('paragraph'	=> false,
-						     'name'		=> 'contextnumbers[incall][numberbeg][]',
-						     'id'		=> false,
-						     'label'		=> false,
-						     'disabled'		=> true,
-						     'size'		=> 15,
-						     'default'		=> $element['contextnumbers']['numberend']['default']));?>
-			</td>
-			<td>
-				<?=$form->text(array('paragraph'	=> false,
-						     'name'		=> 'contextnumbers[incall][numberend][]',
-						     'id'		=> false,
-						     'label'		=> false,
-						     'disabled'		=> true,
-						     'size'		=> 15,
-						     'default'		=> $element['contextnumbers']['numberend']['default']));?>
-			</td>
-			<td>
-				<?=$form->select(array('paragraph'	=> false,
-						       'name'		=> 'contextnumbers[incall][didlength][]',
-						       'id'		=> false,
-						       'label'		=> false,
-						       'key'		=> false,
-						       'disabled'	=> true,
-						       'default'	=> $element['contextnumbers']['didlength']['default']),
-						 $element['contextnumbers']['didlength']['value']);?></td>
-			<td class="td-right"><?=$url->href_html($url->img_html('img/site/button/mini/blue/delete.gif',
-									       $this->bbf('opt_contextnumbers_incall-delete'),
-									       'border="0"'),
-								'#',
-								null,
-								'onclick="dwho.dom.make_table_list(\'contextnumbers-incall\',this,1);
-									  return(dwho.dom.free_focus());"',
-								$this->bbf('opt_contextnumbers_incall-delete'));?></td>
-		</tr>
-		</tbody>
-	</table>
+	
+			<table class="b-nodisplay">
+				<tbody id="ex-contextnumbers-incall">
+				<tr class="fm-paragraph">
+					<td class="td-left txt-center">
+						<?=$form->text(array('paragraph'	=> false,
+										'name'		=> 'contextnumbers[incall][numberbeg][]',
+										'id'		=> false,
+										'label'		=> false,
+										'disabled'		=> true,
+										'size'		=> 15,
+										'default'		=> $element['contextnumbers']['numberend']['default']));?>
+					</td>
+					<td>
+						<?=$form->text(array('paragraph'	=> false,
+										'name'		=> 'contextnumbers[incall][numberend][]',
+										'id'		=> false,
+										'label'		=> false,
+										'disabled'		=> true,
+										'size'		=> 15,
+										'default'		=> $element['contextnumbers']['numberend']['default']));?>
+					</td>
+					<td>
+						<?=$form->select(array('paragraph'	=> false,
+											'name'		=> 'contextnumbers[incall][didlength][]',
+											'id'		=> false,
+											'label'		=> false,
+											'key'		=> false,
+											'disabled'	=> true,
+											'default'	=> $element['contextnumbers']['didlength']['default']),
+								$element['contextnumbers']['didlength']['value']);?></td>
+					<td class="td-right"><?=$url->href_html($url->img_html('img/site/button/mini/blue/delete.gif',
+														$this->bbf('opt_contextnumbers_incall-delete'),
+														'border="0"'),
+										'#',
+										null,
+										'onclick="dwho.dom.make_table_list(\'contextnumbers-incall\',this,1);
+												return(dwho.dom.free_focus());"',
+										$this->bbf('opt_contextnumbers_incall-delete'));?></td>
+				</tr>
+				</tbody>
+			</table>
 	</div>
-</div>
+
+
+</uib-tab>
+</uib-tabset>
