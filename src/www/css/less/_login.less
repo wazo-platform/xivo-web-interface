@@ -1,11 +1,35 @@
 div[state=login] {
   padding-top: 70px;
-}
 
-div[state=login] > div {
-  width: 360px;
-  margin-left: auto;
-  margin-right: auto;
+  & > div {
+    width: 360px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  form {
+    padding: 30px 25px 20px 25px;
+    border-radius: 4px;
+    background-image: @background-light;
+    box-shadow: 0 2px 5px 0 rgba(110, 110, 110, 0.5);
+
+    .title {
+      text-transform: uppercase;
+      font-size: 22px;
+      font-weight: bold;
+      letter-spacing: 2.9px;
+      color: @xivo-primary;
+      margin-bottom: 30px;
+    }
+
+    .form-control {
+      width: 100%;
+      font-weight: normal;
+    }
+    label {
+      width: 100%;
+    }
+  }
 }
 
 #xivo-description {
@@ -15,22 +39,6 @@ div[state=login] > div {
   line-height: 1.54;
   color: @xivo-dark-gray;
   text-align: center;
-}
-
-div[state=login] form {
-  padding: 30px 25px 20px 25px;
-  border-radius: 4px;
-  background-image: @background-light;
-  box-shadow: 0 2px 5px 0 rgba(110, 110, 110, 0.5);
-}
-
-div[state=login] form .title {
-  text-transform: uppercase;
-  font-size: 22px;
-  font-weight: bold;
-  letter-spacing: 2.9px;
-  color: @xivo-primary;
-  margin-bottom: 30px;
 }
 
 .retry-auto-login {
