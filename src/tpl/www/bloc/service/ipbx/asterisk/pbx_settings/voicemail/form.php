@@ -295,7 +295,6 @@ var vmOptions = [
 	"minsecs",
 	"moveheard",
 	"nextaftercmd",
-	"operator",
 	"passwordlocation",
 	"review",
 	"saycid",

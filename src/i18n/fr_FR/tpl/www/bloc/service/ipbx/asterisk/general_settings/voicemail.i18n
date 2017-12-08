@@ -85,12 +85,6 @@ Réécouter / réenregistrer un message:
 ; hlp_fm_voicemail-review
 Config asterisk: review
 
-; fm_voicemail-operator
-Mise en relation avec un opérateur:
-
-; hlp_fm_voicemail-operator
-Config asterisk: operator
-
 ; fm_voicemail-format
 Formats d'enregistrement:
 

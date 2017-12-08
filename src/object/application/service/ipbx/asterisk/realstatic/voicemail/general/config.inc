@@ -54,11 +54,6 @@ $array['element']['review']['value'] = array('no','yes');
 $array['element']['review']['default'] = 'no';
 $array['element']['review']['set'] = true;
 
-$array['element']['operator'] = array();
-$array['element']['operator']['value'] = array('no','yes');
-$array['element']['operator']['default'] = 'yes';
-$array['element']['operator']['set'] = true;
-
 $array['element']['format'] = array();
 $array['element']['format']['value'] = array(
 					XIVO_SRE_IPBX_AST_FORMAT_AUDIO_G729,
@@ -387,7 +382,6 @@ $array['filter']['maxsecs'] = array('key' => array(0,1,2,3,4,5,6,7,8,9,10,20,30,
 						      300,310,320,330,340,350,360));
 $array['filter']['maxsilence'] = array('cast' => 'uint','key' => $array['element']['maxsilence']['value']);
 $array['filter']['review'] = array('bool' => true);
-$array['filter']['operator'] = array('bool' => true);
 $array['filter']['format'] = array('set' => false,'chk' => 2,'uvalue' => $array['element']['format']['value']);
 $array['filter']['maxlogins'] = array('cast' => 'uint','between' => array(1,20));
 $array['filter']['envelope'] = array('bool' => true);
