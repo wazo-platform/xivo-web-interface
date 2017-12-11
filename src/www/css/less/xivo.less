@@ -1,5 +1,6 @@
 @import "~bootstrap/less/bootstrap.less";
 @import "_variables.less";
+@import "_bootstrap-override.less";
 @import "_login.less";
 @import "_forms.less";
 @import "_buttons.less";
@@ -36,24 +37,23 @@ body {
 }
 .login-box {
   margin-right: 10px;
-  padding-left: 10px;  
+  padding-left: 10px;
 
   .badge {
     font-weight: normal;
     padding: 5px 10px;
-    margin: 10px 5px;
+    margin: 14px 5px;
   }
 }
 
 #logo>img {
-  float: left;
-  margin-left:50px;
   width: 70px;
 }
 
 .logoff-button {
-  padding-left: 20px;
-  padding-top: 10px;
+  padding: 10px 10px 10px 20px;
+  position: relative;
+  top: 3px;
 }
 .sysinfo-title {
   text-align: center;

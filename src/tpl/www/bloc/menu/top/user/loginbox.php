@@ -21,7 +21,7 @@
 $url = &$this->get_module('url');
 
 ?>
-<div class="nav navbar-nav navbar-right" id="loginbox">
+<ul class="nav navbar-nav navbar-right" id="loginbox">
 <?php
 	echo	'<div class="login-box">',
 		'<span class="badge">',
@@ -39,4 +39,4 @@ $url = &$this->get_module('url');
 				$this->bbf('mn_top_logoff')),
 		'</div>';
 ?>
-</div>
+</ul>

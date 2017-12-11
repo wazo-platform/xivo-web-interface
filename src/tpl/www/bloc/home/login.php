@@ -24,7 +24,7 @@ $dhtml = &$this->get_module('dhtml');
 <div id="login_body" state="login">
 	<div id="login_form">
 	<div id="xivo-logo">
-			<img src="img/xivo/xivo_logo.png" />
+			<img src="img/xivo/xivo_login.png" />
 			<img src="img/xivo/xivo_illustration.png" />
 	</div>
 	<div id="xivo-description">
