@@ -41,6 +41,7 @@ $this->file_include('bloc/head');
 ?>
 	</div>
 	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" id="bc-content">
+		<div id="tooltips"></div>
 		<div id="toolbar">
 			<?php
 				$menu->mk_toolbar();
