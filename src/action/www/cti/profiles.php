@@ -1,7 +1,7 @@
 <?php
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2017  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -83,7 +83,6 @@ switch($act)
 		$_TPL->set_var('preference',$list_preference);
 
 		$dhtml = &$_TPL->get_module('dhtml');
-		$dhtml->set_js('js/dwho/submenu.js');
 		$dhtml->set_js('js/cti/profiles.js');
 		$dhtml->set_js('js/utils/dyntable.js');
 		$dhtml->load_js_multiselect_files();
@@ -138,7 +137,6 @@ switch($act)
 		$_TPL->set_var('preference',$list_preference);
 
 		$dhtml = &$_TPL->get_module('dhtml');
-		$dhtml->set_js('js/dwho/submenu.js');
 		$dhtml->set_js('js/cti/profiles.js');
 		$dhtml->set_js('js/utils/dyntable.js');
 		$dhtml->load_js_multiselect_files();
