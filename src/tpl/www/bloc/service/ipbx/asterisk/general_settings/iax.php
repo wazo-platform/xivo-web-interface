@@ -724,7 +724,7 @@ $codec_active = empty($allow) === false;
 			</tbody>
 		</table>
 	</uib-tab>
-</uib-tabsets>
+</uib-tabset>
 	<?=$form->submit(array('name'	=> 'submit',
 			       'id'		=> 'it-submit',
 			       'value'	=> $this->bbf('fm_bt-save')));?>
