@@ -29,9 +29,10 @@ $systrays = $this->get_var('systrays');
 $informations = $this->get_var('informations');
 
 ?>
+<uib-tabset active="active">
+<uib-tab index="0" heading="<?=$this->bbf('smenu_general');?>">
 
-<div id="sb-part-first" class="b-nodisplay">
-<?php
+	<?php
 	echo	$form->text(array('desc'	=> $this->bbf('fm_sheetactions_name'),
 				  'name'	=> 'sheetactions[name]',
 				  'labelid'	=> 'sheetactions-name',
@@ -44,7 +45,7 @@ $informations = $this->get_var('informations');
 						'labelid' => 'sheetactions_focus',
 						'checked' => $info['sheetactions']['focus']));
 
-?>
+	?>
 
 	<br />
 	<div class="fm-paragraph fm-description">
@@ -60,25 +61,26 @@ $informations = $this->get_var('informations');
 					 'default'  => $element['sheetactions']['description']['default']),
 				   $info['sheetactions']['description']);?>
 	</div>
-</div>
-<div id="sb-part-screens" class="b-nodisplay">
-<?=$form->checkbox(array('desc'	=> $this->bbf('fm_sheetactions_disable'),
-	'name'		=> 'sheetactions[disable]',
-	'checked'		=> $info['sheetactions']['disable'],
-	'id'		=> 'it-sheetactions-disable',
-	'default'	=> !$element['sheetactions']['disable']['default']));?>
-<?php
-	$type = 'screens';
-	$count = count($screens);
-	$errdisplay = '';
-	echo	$form->text(array('desc'	=> $this->bbf('fm_sheetactions_qtui'),
-				  'name'	=> 'sheetactions[sheet_qtui]',
-				  'labelid'	=> 'sheetactions-qtui',
-				  'size'	=> 30,
-				  'default'	=> $element['sheetactions']['sheet_qtui']['default'],
-				  'value'	=> $info['sheetactions']['sheet_qtui']));
+</uib-tab>
+<uib-tab index="1" heading="<?=$this->bbf('smenu_screens');?>">
 
-?>
+	<?=$form->checkbox(array('desc'	=> $this->bbf('fm_sheetactions_disable'),
+		'name'		=> 'sheetactions[disable]',
+		'checked'		=> $info['sheetactions']['disable'],
+		'id'		=> 'it-sheetactions-disable',
+		'default'	=> !$element['sheetactions']['disable']['default']));?>
+	<?php
+		$type = 'screens';
+		$count = count($screens);
+		$errdisplay = '';
+		echo	$form->text(array('desc'	=> $this->bbf('fm_sheetactions_qtui'),
+						'name'	=> 'sheetactions[sheet_qtui]',
+						'labelid'	=> 'sheetactions-qtui',
+						'size'	=> 30,
+						'default'	=> $element['sheetactions']['sheet_qtui']['default'],
+						'value'	=> $info['sheetactions']['sheet_qtui']));
+
+	?>
 	<p>&nbsp;</p>
 	<div class="sb-list">
 		<table class="table">
@@ -255,13 +257,15 @@ $informations = $this->get_var('informations');
 			</tbody>
 		</table>
 	</div>
-</div>
-<div id="sb-part-systrays" class="b-nodisplay">
-<?php
-	$type = 'systrays';
-	$count = count($systrays);
-	$errdisplay = '';
-?>
+</uib-tab>
+
+<uib-tab index="2" heading="<?=$this->bbf('smenu_systrays');?>">
+
+	<?php
+		$type = 'systrays';
+		$count = count($systrays);
+		$errdisplay = '';
+	?>
 	<p>&nbsp;</p>
 	<div class="sb-list">
 		<table class="table">
@@ -417,22 +421,19 @@ $informations = $this->get_var('informations');
 			</tbody>
 		</table>
 	</div>
-</div>
-<div id="sb-part-last" class="b-nodisplay">
-<?php
-	$type = 'informations';
-	$count = count($informations);
-	$errdisplay = '';
-?>
+</uib-tab>
+<uib-tab index="3" heading="<?=$this->bbf('smenu_infos');?>">
+
+	<?php
+		$type = 'informations';
+		$count = count($informations);
+		$errdisplay = '';
+	?>
 	<p>&nbsp;</p>
 	<div class="sb-list">
 		<table class="table">
 			<thead>
 			<tr class="sb-top">
-
-<!--				<th class="th-left"><?=$this->bbf('col_1');?></th> -->
-<!-- 				<th class="th-center"><?=$this->bbf('col_2');?></th> -->
-<!-- 				<th class="th-center"><?=$this->bbf('col_3');?></th> -->
 				<th class="th-center"><?=$this->bbf('col_4');?></th>
 				<th class="th-right">
 					<?=$url->href_html($url->img_html('img/site/button/mini/orange/bo-add.gif',
@@ -513,5 +514,5 @@ $informations = $this->get_var('informations');
 			</tr>
 			</tbody>
 		</table>
-	</div>
-</div>
+	</uib-tab>
+</uib-tabset>
