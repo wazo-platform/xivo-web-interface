@@ -52,11 +52,6 @@ $menu = &$this->get_module('menu');
 </div>
 <?php $this->file_include('bloc/menu/top/user/loginbox'); ?>
 <div id="tooltips">&nbsp;</div>
-<div id="toolbar">
-<?php
-	$menu->mk_toolbar();
-?>
-</div>
 </div>
 
 <?php if (dwho_report::has('error') === true) : echo dwho_report::get_message('error'); endif; ?>

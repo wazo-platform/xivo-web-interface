@@ -74,10 +74,24 @@ $dhtml = &$this->get_module('dhtml');
 		</form>
 	</div>
 </div>
+
+<footer>
+<h6 id="version-copyright">
+<?php
+echo	XIVO_SOFT_LABEL,' - ',
+	XIVO_SOFT_VERSION,' | ',
+	$this->bbf('info_copyright',
+			 array(2006,dwho_i18n::strftime_l('%Y',null),
+			 '<a href="http://'.XIVO_SOFT_URL.'" title="'.XIVO_SOFT_LABEL.'" target="_blank">'.XIVO_SOFT_URL.'</a>'));
+?>
+</h6>
+</footer>
+
 <script type="text/javascript">
 dwho.dom.set_onload(function ()
 {
 	dwho.form.set_events_text_helper('it-login');
 	dwho.form.set_events_text_helper('it-password');
 });
+$('body').addClass('background-gray');
 </script>

@@ -24,7 +24,7 @@ $this->file_include('bloc/head');
 ?>
 <div id="bc-body">
 
-<div class="navbar navbar-fixed-top" id="bc-head">
+<div class="navbar navbar-default navbar-fixed-top" id="bc-head">
 	<div class="container-fluid">
 		<div id="b-tmenu">
 	<?php
@@ -41,10 +41,15 @@ $this->file_include('bloc/head');
 ?>
 	</div>
 	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" id="bc-content">
+		<div id="toolbar">
+			<?php
+				$menu->mk_toolbar();
+			?>
+		</div>
 		<div id="b-content">
-<?php
-	$this->mk_struct();
-?>
+			<?php
+				$this->mk_struct();
+			?>
 		</div>
 	</div>
 </div>

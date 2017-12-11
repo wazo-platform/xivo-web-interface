@@ -24,11 +24,11 @@ $url = &$this->get_module('url');
 <div class="nav navbar-nav navbar-right" id="loginbox">
 <?php
 	echo	'<div class="login-box">',
-		'<span>',
+		'<span class="badge">',
 		$this->bbf('info_top_login'),
 		'&nbsp;<b>',dwho_htmlen(xivo_user::get_info('login')),'</b>',
 		'</span>',
-		'<span>',
+		'<span class="badge">',
 		$this->bbf('info_top_type'),
 		'&nbsp;<b>',$this->bbf('usr_type__'.xivo_user::get_info('meta')),'</b>',
 		'</span>',

@@ -15,3 +15,6 @@ Connexion
 
 ; login_description
 Simplicité, évolutivité, performance : bienvenue sur votre espace XiVO. La solution Open Source de téléphonie au service de votre entreprise.
+
+; info_copyright
+&copy; %s-%s %s
