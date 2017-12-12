@@ -118,7 +118,7 @@ function attachAutocomplete(fields) {
 		source: function(request, response) {
 			var fktype = fields.type.val();
 			var url = xivo_fk_autocomplete[fktype] + dwho_sess_str;
-			var body = encodeURI("except=5&search=" + request.term);
+			var body = encodeURI("search=" + request.term);
 			var settings = {
 				url: url,
 				method: "POST",
