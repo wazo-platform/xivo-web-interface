@@ -74,7 +74,7 @@ class dwho_tpl_form extends dwho_tpl_module
 		$this->_param['invalid'] = false;
 		$this->_param['error'] = '';
 		$this->_param['legend']  = '';
-		$this->_param['group']  = 'form-group form-group-sm';
+		$this->_param['group']  = 'form-group form-group-sm form-inline';
 		$this->_param['lbClass'] = 'col-sm-6';
 		$this->_param['controlSize'] = 'col-sm-6';
 
@@ -506,7 +506,7 @@ class dwho_tpl_form extends dwho_tpl_module
 			return(null);
 
 		$r = &$this->_render;
-		
+
 		if(is_string($this->_param['help']) === true)
 		{
 			$r = $r.'<span tooltip-placement="right" uib-tooltip="'.$this->_param['help'].'" class="help-tooltip glyphicon glyphicon-question-sign"></span>';
@@ -566,7 +566,7 @@ class dwho_tpl_form extends dwho_tpl_module
 		if($this->_param['class'] !== false)
 			$class = $this->_param['class'];
 		else
-			$class = 'pull-left form-control';
+			$class = 'form-control';
 
 		if($this->_param['required'] !== false)
 			$class .= ' _dwho-form-field-required';
@@ -1462,7 +1462,7 @@ class dwho_tpl_form extends dwho_tpl_module
 			$r .= "\n\n";
 		}
 
-		$r .= '<select class="pull-left form-control" name="'.$this->_param['name'].'"';
+		$r .= '<select class="form-control" name="'.$this->_param['name'].'"';
 
 		if($this->_param['disabled'] !== false)
 			$r .= ' disabled="disabled"';
