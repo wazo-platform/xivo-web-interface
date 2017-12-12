@@ -13,6 +13,14 @@ body {
     height: 100%;
 }
 
+.table {
+  margin-bottom: 0;
+
+  th {
+    border: 0 !important;
+  }
+}
+
 
 #bc-main {
   &::before {
@@ -21,13 +29,17 @@ body {
 }
 
 #bc-content {
-  margin-top: 30px;
+  margin-top: 12px;
   float: inherit;
 }
 .b-form {
   #b-content & {
     float: left;
   }
+}
+
+#b-content {
+  margin-top: 15px;
 }
 
 .sb-content {
@@ -70,6 +82,11 @@ body {
 .b-nodisplay {display: none;}
 .b-bdisplay {display: block;}
 .b-ldisplay {display: inline;}
+.b-page {text-align: right;}
+
+#b-lmenu .mn-active a {
+  font-weight: bold;
+}
 
 .underline {
   text-decoration: underline;

@@ -35,85 +35,95 @@ $toolbar_js[] = 'var xivo_toolbar_adv_menu_delete_confirm = \''.$dhtml->escape($
 $dhtml->write_js($toolbar_js);
 
 ?>
+
 <script type="text/javascript" src="<?=$this->file_time($this->url('js/xivo_toolbar.js'));?>"></script>
 
-<form class="navbar-form navbar-right" action="#" method="post" accept-charset="utf-8">
-<?php
-	echo	$form->hidden(array('name'	=> DWHO_SESS_NAME,
-				    'value'	=> DWHO_SESS_ID)),
+<div class="toolbar">
+	<form action="#" method="post" accept-charset="utf-8">
+	<?php
+		echo	$form->hidden(array('name'	=> DWHO_SESS_NAME,
+					    'value'	=> DWHO_SESS_ID)),
 
-		$form->hidden(array('name'	=> 'act',
-				    'value'	=> 'list'));
-?>
-	<div class="fm-paragraph">
-<?php
-		echo	$form->text(array('name'	=> 'search',
-					  'id'		=> 'it-toolbar-search',
-					  'size'	=> 20,
-					  'paragraph'	=> false,
-						'group' => 'form-group',
-					  'value'	=> $search,
-					  'default'	=> $this->bbf('toolbar_fm_search'))),
+			$form->hidden(array('name'	=> 'act',
+					    'value'	=> 'list'));
+	?>
+		<div class="fm-paragraph">
+			<div class="form-group form-inline pull-right">
+				 <div class="input-group">
+				 			 <!-- TODO move in directive and allow pre filtering with dropdown as suggested below
+							 <div class="input-group-btn">
 
-			$form->image(array('name'	=> 'submit',
-					   'id'		=> 'it-toolbar-subsearch',
-					   'src'	=> $url->img('img/menu/top/toolbar/bt-search.gif'),
-					   'paragraph'	=> false,
-						 'group' => 'form-group',
-					   'alt'	=> $this->bbf('toolbar_fm_search')));
-?>
-	</div>
-</form>
-<div class="navbar-form navbar-right">
-	<div class="btn-group sb-advanced-menu">
-		<button type="button" class="glyphicon glyphicon-plus btn btn-default dropdown-toggle" data-toggle="dropdown"
-		aria-haspopup="true" aria-expanded="false" id="dropdownMenuAdd">
-		</button>
-		<ul id="toolbar-add-menu" class="dropdown-menu">
-			<li><?=$url->href_html($this->bbf('toolbar_add_menu_add'),
-					       'service/ipbx/pbx_settings/users',
-					       'act=add');?></li>
-			<li><?=$url->href_html($this->bbf('toolbar_add_menu_import-file'),
-					       'service/ipbx/pbx_settings/users',
-					       'act=import');?></li>
-			<li><?=$url->href_html($this->bbf('toolbar_add_menu_update_import'),
-					       'service/ipbx/pbx_settings/users',
-					       'act=update_import');?></li>
-			<li><?=$url->href_html($this->bbf('toolbar_add_menu_export'),
-					       'service/ipbx/pbx_settings/users',
-					       'act=export');?></li>
-		</ul>
-	</div>
-<?php
-/* TODO disable on edit
-if($act === 'list'):
-	echo	$url->img_html('img/menu/top/toolbar/bt-more.gif',
-			       $this->bbf('toolbar_opt_advanced'),
-			       'id="toolbar-bt-advanced"
-				border="0"');
-				*/
-?>
-	<div class="btn-group sb-advanced-menu">
-		<button type="button" class="glyphicon glyphicon-chevron-down btn btn-default dropdown-toggle" data-toggle="dropdown"
-		aria-haspopup="true" aria-expanded="false" id="dropdownMenuAdd">
-		</button>
-		<ul id="toolbar-advanced-menu" class="dropdown-menu">
-			<li>
-				<a href="#" id="toolbar-advanced-menu-enable"><?=$this->bbf('toolbar_adv_menu_enable');?></a>
-			</li>
-			<li>
-				<a href="#" id="toolbar-advanced-menu-disable"><?=$this->bbf('toolbar_adv_menu_disable');?></a>
-			</li>
-			<li>
-				<a href="#" id="toolbar-advanced-menu-select-all"><?=$this->bbf('toolbar_adv_menu_select-all');?></a>
-			</li>
-			<li>
-				<a href="#" id="toolbar-advanced-menu-delete"><?=$this->bbf('toolbar_adv_menu_delete');?></a>
-			</li>
-		</ul>
+						 <div class="btn-group">
+								 <button class="btn btn-default btn-dropdown dropdown-toggle" type="button" data-toggle="dropdown">
+										 <span data-bind="label" id="searchLabel">Search By</span><span class="caret"></span>
+								 </button>
+								 <ul class="dropdown-menu" role="menu">
+										 <li><a href="#">1</a></li>
+										 <li><a href="#">2</a></li>
+										 <li><a href="#">3</a></li>
+								 </ul>
+						 </div>
+				 </div> -->
+				 <input type="search" name="search" id="it-toolbar-search" class="form-control input-search" size=24 placeholder="<?= $this->bbf('toolbar_fm_search') ?>"/>
+				 <span class="input-group-btn">
+						 <button id="'it-toolbar-subsearch" name="submit" class="btn btn-default btn-search btn-block" title="<?= $this->bbf('toolbar_fm_search') ?>">
+								 <span class="glyphicon glyphicon-search"></span>
+						 </button>
+				 </span>
+				 </div>
+			</div>
+	</form>
+
+	<div class="form-group">
+		<div class="btn-group sb-advanced-menu">
+			<button type="button" class="glyphicon glyphicon-plus btn btn-default btn-action dropdown-toggle" data-toggle="dropdown"
+			aria-haspopup="true" aria-expanded="false" id="toolbar-bt-add">
+			</button>
+			<ul id="toolbar-add-menu" class="dropdown-menu">
+				<li><?=$url->href_html($this->bbf('toolbar_add_menu_add'),
+						       'service/ipbx/pbx_settings/users',
+						       'act=add');?></li>
+				<li><?=$url->href_html($this->bbf('toolbar_add_menu_import-file'),
+						       'service/ipbx/pbx_settings/users',
+						       'act=import');?></li>
+				<li><?=$url->href_html($this->bbf('toolbar_add_menu_update_import'),
+						       'service/ipbx/pbx_settings/users',
+						       'act=update_import');?></li>
+				<li><?=$url->href_html($this->bbf('toolbar_add_menu_export'),
+						       'service/ipbx/pbx_settings/users',
+						       'act=export');?></li>
+			</ul>
+		</div>
+	<?php
+	/* TODO disable on edit
+	if($act === 'list'):
+		echo	$url->img_html('img/menu/top/toolbar/bt-more.gif',
+				       $this->bbf('toolbar_opt_advanced'),
+				       'id="toolbar-bt-advanced"
+					border="0"');
+					*/
+	?>
+		<div class="btn-group sb-advanced-menu">
+			<button type="button" class="glyphicon glyphicon-chevron-down btn btn-default btn-action dropdown-toggle" data-toggle="dropdown"
+			aria-haspopup="true" aria-expanded="false" id="toolbar-bt-advanced">
+			</button>
+			<ul id="toolbar-advanced-menu" class="dropdown-menu">
+				<li>
+					<a href="#" id="toolbar-advanced-menu-enable"><?=$this->bbf('toolbar_adv_menu_enable');?></a>
+				</li>
+				<li>
+					<a href="#" id="toolbar-advanced-menu-disable"><?=$this->bbf('toolbar_adv_menu_disable');?></a>
+				</li>
+				<li>
+					<a href="#" id="toolbar-advanced-menu-select-all"><?=$this->bbf('toolbar_adv_menu_select-all');?></a>
+				</li>
+				<li>
+					<a href="#" id="toolbar-advanced-menu-delete"><?=$this->bbf('toolbar_adv_menu_delete');?></a>
+				</li>
+			</ul>
+		</div>
 	</div>
 </div>
-
 <?php
 //endif;
 ?>
