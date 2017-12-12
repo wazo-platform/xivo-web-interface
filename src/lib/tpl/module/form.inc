@@ -506,17 +506,12 @@ class dwho_tpl_form extends dwho_tpl_module
 			return(null);
 
 		$r = &$this->_render;
-
+		
 		if(is_string($this->_param['help']) === true)
 		{
-			$dhtml = &$this->_get_module('dhtml');
-
-			$r .= $dhtml->message_help($this->_param['help'],
-					'fm-help-icon',
-					null);
+			$r = $r.'<span tooltip-placement="right" uib-tooltip="'.$this->_param['help'].'" class="help-tooltip glyphicon glyphicon-question-sign"></span>';
 		}
-
-		$r = '<span class="fm-help">'.$r.'</span>';
+		$r;
 	}
 
 	function _mk_error()
@@ -571,7 +566,7 @@ class dwho_tpl_form extends dwho_tpl_module
 		if($this->_param['class'] !== false)
 			$class = $this->_param['class'];
 		else
-			$class = 'form-control';
+			$class = 'pull-left form-control';
 
 		if($this->_param['required'] !== false)
 			$class .= ' _dwho-form-field-required';
@@ -656,8 +651,8 @@ class dwho_tpl_form extends dwho_tpl_module
 
 		$this->_set_param_value($v['value'],$v);
 		$this->_mk_input($o);
-		$this->_mk_control_size();
 		$this->_mk_help();
+		$this->_mk_control_size();
 		$this->_mk_error();
 		$this->_mk_legend();
 		$this->_mk_comment();
@@ -879,8 +874,8 @@ class dwho_tpl_form extends dwho_tpl_module
 
 		$this->_mk_input($o);
 
-		$this->_mk_control_size();
 		$this->_mk_help();
+		$this->_mk_control_size();
 		$this->_mk_error();
 		$this->_mk_legend();
 		$this->_mk_comment();
@@ -1464,14 +1459,10 @@ class dwho_tpl_form extends dwho_tpl_module
 			$id = $this->_param['id'];
 			$key = $this->_param['key'];
 			$uniqid = uniqid();
-			//if (ereg('list',$id))
-			//    $r .= '<center><input type="text" id="it-'.$uniqid.'" /></center>';
-			//else
-			//    $r .= $this->bbf('input_filter_ms').' <input type="text" id="it-'.$uniqid.'" />';
 			$r .= "\n\n";
 		}
 
-		$r .= '<select class="form-control" name="'.$this->_param['name'].'"';
+		$r .= '<select class="pull-left form-control" name="'.$this->_param['name'].'"';
 
 		if($this->_param['disabled'] !== false)
 			$r .= ' disabled="disabled"';
@@ -1560,8 +1551,8 @@ class dwho_tpl_form extends dwho_tpl_module
 			}
 		}
 
-		$this->_mk_control_size();
 		$this->_mk_help();
+		$this->_mk_control_size();
 		$this->_mk_error();
 		$this->_mk_legend();
 		$this->_mk_comment();
