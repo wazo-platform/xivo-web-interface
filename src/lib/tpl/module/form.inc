@@ -75,8 +75,8 @@ class dwho_tpl_form extends dwho_tpl_module
 		$this->_param['error'] = '';
 		$this->_param['legend']  = '';
 		$this->_param['group']  = 'form-group form-group-sm form-inline';
-		$this->_param['lbClass'] = 'col-sm-6';
-		$this->_param['controlSize'] = 'col-sm-6';
+		$this->_param['lbClass'] = 'col-sm-3';
+		$this->_param['controlSize'] = 'col-sm-3';
 
 		if(isset($v['name']) === true)
 			$this->_param['name'] = dwho_htmlsc($v['name']);
