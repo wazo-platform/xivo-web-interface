@@ -45,5 +45,14 @@
 <script type="text/javascript" src="<?=$this->file_time($this->url('js/xivo.js'));?>"></script>
 
 <script type="text/javascript" src="<?=$this->file_time($this->url('js/utils/func.js'));?>"></script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $("#it-user").select2();
+  });
+</script>
+<?php
 
+$dhtml = &$this->get_module('dhtml');
+
+echo $dhtml->mk_js(),"\n",$dhtml->mk_css();
 ?>
