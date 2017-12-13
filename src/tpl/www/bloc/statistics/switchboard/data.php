@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2016  Avencall
+# Copyright (C) 2017  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@ $switchboards = $this->get_var('switchboards');
 <div class="sb-content">
 
 <div id="sb-part-first">
-<form action="#" method="post" accept-charset="utf-8">
+<form class="form-horizontal" action="#" method="post" accept-charset="utf-8">
 <?=$form->hidden(array('name' => DWHO_SESS_NAME,'value' => DWHO_SESS_ID))?>
 <?=$form->hidden(array('name' => 'act','value' => 'exportcsv'))?>
 <?=$form->hidden(array('name' => 'fm_send','value' => 1))?>
