@@ -293,9 +293,6 @@ $menu->set_top('top/user/'.$_USR->get_info('meta'));
 $menu->set_left('left/statistics/statistics');
 $menu->set_toolbar('toolbar/statistics/call_center/configuration');
 
-$dhtml = &$_TPL->get_module('dhtml');
-$dhtml->set_js('js/dwho/submenu.js');
-
 $_TPL->set_bloc('main','statistics/call_center/settings/configuration/'.$act);
 $_TPL->set_struct('statistics/index');
 $_TPL->display('index');
