@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2017  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -28,127 +28,131 @@ $paginguser = $this->get_var('paginguser');
 $pagingcaller = $this->get_var('pagingcaller');
 
 ?>
-<div id="sb-part-first" class="b-nodisplay">
-<?php
-	echo $form->text(array('desc'	=> $this->bbf('fm_paging_number'),
-				  'name'	=> 'paging[number]',
-				  'labelid'	=> 'paging-number',
-				  'size'	=> 15,
-				  'default'	=> $element['paging']['number']['default'],
-				  'value'	=> $this->get_var('info','paging','number'),
-				  'error'	=> $this->bbf_args('error',
-					$this->get_var('error', 'paging', 'number')) )),
+<uib-tabset active="active">
 
-		$form->checkbox(array('desc'	=> $this->bbf('fm_paging_duplex'),
-				      'name'		=> 'paging[duplex]',
-				      'labelid'		=> 'paging-duplex',
-				      'default'		=> $element['paging']['duplex']['default'],
-					  'checked'		=> $this->get_var('info','paging','duplex'))),
+	<uib-tab index="0" heading="<?=$this->bbf('smenu_general');?>">
+		<?php
+			echo $form->text(array('desc'	=> $this->bbf('fm_paging_number'),
+							'name'	=> 'paging[number]',
+							'labelid'	=> 'paging-number',
+							'size'	=> 15,
+							'default'	=> $element['paging']['number']['default'],
+							'value'	=> $this->get_var('info','paging','number'),
+							'error'	=> $this->bbf_args('error',
+							$this->get_var('error', 'paging', 'number')) )),
 
-		$form->checkbox(array('desc'	=> $this->bbf('fm_paging_ignore'),
-				      'name'		=> 'paging[ignore]',
-				      'labelid'		=> 'paging-ignore',
-				      'default'		=> $element['paging']['ignore']['default'],
-					  'checked'		=> $this->get_var('info','paging','ignore'))),
+				$form->checkbox(array('desc'	=> $this->bbf('fm_paging_duplex'),
+									'name'		=> 'paging[duplex]',
+									'labelid'		=> 'paging-duplex',
+									'default'		=> $element['paging']['duplex']['default'],
+								'checked'		=> $this->get_var('info','paging','duplex'))),
 
-		$form->checkbox(array('desc'	=> $this->bbf('fm_paging_record'),
-				      'name'		=> 'paging[record]',
-				      'labelid'		=> 'paging-record',
-				      'default'		=> $element['paging']['record']['default'],
-					  'checked'		=> $this->get_var('info','paging','record'))),
+				$form->checkbox(array('desc'	=> $this->bbf('fm_paging_ignore'),
+									'name'		=> 'paging[ignore]',
+									'labelid'		=> 'paging-ignore',
+									'default'		=> $element['paging']['ignore']['default'],
+								'checked'		=> $this->get_var('info','paging','ignore'))),
 
-		$form->checkbox(array('desc'	=> $this->bbf('fm_paging_quiet'),
-				      'name'		=> 'paging[quiet]',
-				      'labelid'		=> 'paging-quiet',
-				      'default'		=> $element['paging']['quiet']['default'],
-					  'checked'		=> $this->get_var('info','paging','quiet'))),
+				$form->checkbox(array('desc'	=> $this->bbf('fm_paging_record'),
+									'name'		=> 'paging[record]',
+									'labelid'		=> 'paging-record',
+									'default'		=> $element['paging']['record']['default'],
+								'checked'		=> $this->get_var('info','paging','record'))),
 
-		$form->select(array('desc'	=> $this->bbf('fm_paging_timeout'),
-					    'name'		=> 'paging[timeout]',
-					    'labelid'	=> 'paging-timeout',
-						'help'		=> $this->bbf('hlp_fm_paging_timeout'),
-					    'key'		=> false,
-					    'default'	=> $element['paging']['timeout']['default'],
-					    'selected'	=> $this->get_var('info','paging','timeout')),
-					$element['paging']['timeout']['value']),
+				$form->checkbox(array('desc'	=> $this->bbf('fm_paging_quiet'),
+									'name'		=> 'paging[quiet]',
+									'labelid'		=> 'paging-quiet',
+									'default'		=> $element['paging']['quiet']['default'],
+								'checked'		=> $this->get_var('info','paging','quiet'))),
 
-		$form->checkbox(array('desc'	=> $this->bbf('fm_paging_announcement_caller'),
-				      'name'		=> 'paging[announcement_caller]',
-				      'labelid'		=> 'paging-announcement_caller',
-				      'default'		=> $element['paging']['announcement_caller']['default'],
-					  'checked'		=> $this->get_var('info','paging','announcement_caller'))),
+				$form->select(array('desc'	=> $this->bbf('fm_paging_timeout'),
+									'name'		=> 'paging[timeout]',
+									'labelid'	=> 'paging-timeout',
+								'help'		=> $this->bbf('hlp_fm_paging_timeout'),
+									'key'		=> false,
+									'default'	=> $element['paging']['timeout']['default'],
+									'selected'	=> $this->get_var('info','paging','timeout')),
+							$element['paging']['timeout']['value']),
 
-		$form->checkbox(array('desc'	=> $this->bbf('fm_paging_announcement_play'),
-				      'name'		=> 'paging[announcement_play]',
-				      'labelid'		=> 'paging-announcement_play',
-				      'default'		=> $element['paging']['announcement_play']['default'],
-					  'checked'		=> $this->get_var('info','paging','announcement_play'))),
+				$form->checkbox(array('desc'	=> $this->bbf('fm_paging_announcement_caller'),
+									'name'		=> 'paging[announcement_caller]',
+									'labelid'		=> 'paging-announcement_caller',
+									'default'		=> $element['paging']['announcement_caller']['default'],
+								'checked'		=> $this->get_var('info','paging','announcement_caller'))),
 
-		$form->select(array('desc'	=> $this->bbf('fm_paging_announcement_file'),
-					    'name'		=> 'paging[announcement_file]',
-					    'labelid'	=> 'paging-announcement_file',
-						'empty' 	=> true,
-					    'key'		=> 'filename',
-					    'altkey'	=> 'filename',
-					    'selected'	=> $this->get_var('info','paging','announcement_file')),
-					$this->get_var('files'));
-?>
+				$form->checkbox(array('desc'	=> $this->bbf('fm_paging_announcement_play'),
+									'name'		=> 'paging[announcement_play]',
+									'labelid'		=> 'paging-announcement_play',
+									'default'		=> $element['paging']['announcement_play']['default'],
+								'checked'		=> $this->get_var('info','paging','announcement_play'))),
 
-	<div class="fm-paragraph fm-description">
-		<p>
-			<label id="lb-paging-description" for="it-paging-description"><?=$this->bbf('fm_paging_description');?></label>
-		</p>
-		<?=$form->textarea(array('paragraph'	=> false,
-					 'label'	=> false,
-					 'name'		=> 'paging[description]',
-					 'id'		=> 'it-paging-description',
-					 'cols'		=> 60,
-					 'rows'		=> 5,
-					 'default'	=> $element['paging']['description']['default'],
-					 'error'	=> $this->bbf_args('error',
-						   $this->get_var('error', 'paging', 'description')) ),
-				   $this->get_var('info','paging','description'));?>
-	</div>
-</div>
-<div id="sb-part-last" class="b-nodisplay">
-<?php
-if($paginguser['list'] === false):
-	echo	'<div class="txt-center">',
-		$url->href_htmln($this->bbf('create_user'),
-				'service/ipbx/pbx_settings/users',
-				'act=add'),
-		'</div>';
-else:
-?>
-<div id="paginguserlist" class="fm-paragraph fm-description">
-	<p>
-		<label id="lb-paginguser" for="it-paginguser"><?=$this->bbf('fm_paginguser');?></label>
-	</p>
-		<?=$form->jq_select(array('paragraph'	=> false,
-					 	'label'		=> false,
-            			'name'    	=> 'paginguser[]',
-						'id' 		=> 'paginguser',
-						'key'		=> 'identity',
-				       	'altkey'	=> 'id',
-            			'selected'  => $paginguser['slt']),
-					$paginguser['list']);?>
-</div>
-<div class="clearboth"></div>
-<div id="pagingcallerlist" class="fm-paragraph fm-description">
-	<p>
-		<label id="lb-pagingcaller" for="it-pagingcaller"><?=$this->bbf('fm_pagingcaller');?></label>
-	</p>
-		<?=$form->jq_select(array('paragraph'	=> false,
-					 	'label'		=> false,
-            			'name'    	=> 'pagingcaller[]',
-						'id' 		=> 'pagingcaller',
-						'key'		=> 'identity',
-				       	'altkey'	=> 'id',
-            			'selected'  => $pagingcaller['slt']),
-					$pagingcaller['list']);?>
-</div>
-<div class="clearboth"></div>
-<?php
-endif;
-?>
-</div>
+				$form->select(array('desc'	=> $this->bbf('fm_paging_announcement_file'),
+									'name'		=> 'paging[announcement_file]',
+									'labelid'	=> 'paging-announcement_file',
+								'empty' 	=> true,
+									'key'		=> 'filename',
+									'altkey'	=> 'filename',
+									'selected'	=> $this->get_var('info','paging','announcement_file')),
+							$this->get_var('files'));
+		?>
+
+		<div class="fm-paragraph fm-description">
+			<p>
+				<label id="lb-paging-description" for="it-paging-description"><?=$this->bbf('fm_paging_description');?></label>
+			</p>
+			<?=$form->textarea(array('paragraph'	=> false,
+						'label'	=> false,
+						'name'		=> 'paging[description]',
+						'id'		=> 'it-paging-description',
+						'cols'		=> 60,
+						'rows'		=> 5,
+						'default'	=> $element['paging']['description']['default'],
+						'error'	=> $this->bbf_args('error',
+								$this->get_var('error', 'paging', 'description')) ),
+						$this->get_var('info','paging','description'));?>
+		</div>
+	</uib-tab>
+
+	<uib-tab index="1" heading="<?=$this->bbf('smenu_users');?>">
+		<?php
+			if($paginguser['list'] === false):
+				echo	'<div class="txt-center">',
+					$url->href_htmln($this->bbf('create_user'),
+							'service/ipbx/pbx_settings/users',
+							'act=add'),
+					'</div>';
+			else:
+		?>
+		<div id="paginguserlist" class="fm-paragraph fm-description">
+			<p>
+				<label id="lb-paginguser" for="it-paginguser"><?=$this->bbf('fm_paginguser');?></label>
+			</p>
+				<?=$form->jq_select(array('paragraph'	=> false,
+								'label'		=> false,
+											'name'    	=> 'paginguser[]',
+								'id' 		=> 'paginguser',
+								'key'		=> 'identity',
+										'altkey'	=> 'id',
+											'selected'  => $paginguser['slt']),
+							$paginguser['list']);?>
+		</div>
+		<div class="clearboth"></div>
+		<div id="pagingcallerlist" class="fm-paragraph fm-description">
+			<p>
+				<label id="lb-pagingcaller" for="it-pagingcaller"><?=$this->bbf('fm_pagingcaller');?></label>
+			</p>
+				<?=$form->jq_select(array('paragraph'	=> false,
+								'label'		=> false,
+											'name'    	=> 'pagingcaller[]',
+								'id' 		=> 'pagingcaller',
+								'key'		=> 'identity',
+										'altkey'	=> 'id',
+											'selected'  => $pagingcaller['slt']),
+							$pagingcaller['list']);?>
+		</div>
+		<div class="clearboth"></div>
+		<?php
+			endif;
+		?>
+	</uib-tab>
+</uib-tabset>
