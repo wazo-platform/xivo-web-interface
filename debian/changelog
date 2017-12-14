@@ -1,4 +1,4 @@
-xivo-web-interface (2017.03.17) xivo-2017.03; urgency=medium
+xivo-web-interface (2017.03.17) xivo-five; urgency=medium
 
   * Fix Cannot configure a func key for a Queue/User/Meetme/Group if its ID is 5
 
