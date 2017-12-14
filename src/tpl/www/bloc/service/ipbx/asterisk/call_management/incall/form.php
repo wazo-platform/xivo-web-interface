@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2017  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -93,7 +93,7 @@ $schedules = $this->get_var('schedules');
 						  'error'	=> $this->bbf_args('incall-preprocess-subroutine',
 							   $this->get_var('error','incall','preprocess_subroutine'))));
 		?>
-		<div class="fm-paragraph fm-description col-sm-offset-2">
+		<div class="col-sm-offset-2 fm-paragraph fm-description">
 			<p>
 				<label id="lb-incall-description" for="it-incall-description"><?=$this->bbf('fm_incall_description');?></label>
 			</p>
