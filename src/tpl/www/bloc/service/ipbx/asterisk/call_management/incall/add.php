@@ -28,12 +28,8 @@ $form = &$this->get_module('form');
 		<span class="span-right">&nbsp;</span>
 	</h3>
 
-<?php
-	$this->file_include('bloc/service/ipbx/asterisk/call_management/incall/submenu');
-?>
-
 	<div class="sb-content">
-		<form action="#" method="post" accept-charset="utf-8">
+		<form class="form-horizontal" action="#" method="post" accept-charset="utf-8">
 <?=$form->hidden(array('name' => DWHO_SESS_NAME,'value' => DWHO_SESS_ID));?>
 <?=$form->hidden(array('name' => 'fm_send','value' => 1));?>
 <?=$form->hidden(array('name' => 'act','value' => 'add'));?>
