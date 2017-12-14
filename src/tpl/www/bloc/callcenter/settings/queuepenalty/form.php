@@ -31,20 +31,19 @@ if (is_array($info) && array_key_exists('changes', $info))
 $signs = array('+','-','=');
 ?>
 
-<div class="tab-content">
-<div  role="tabpanel" class="tab-pane active" id="general">
-<?php
-echo	$form->text(array('desc'	=> $this->bbf('fm_queuepenalty_name'),
-			  'name'	=> 'queuepenalty[name]',
-			  'labelid'	=> 'queuepenalty-name',
-			  'size'	=> 15,
-			  'default'	=> $element['queuepenalty']['name']['default'],
-			  'value'	=> $info['queuepenalty']['name'],
-			  'error'	=> $this->bbf_args('error',
-				$this->get_var('error', 'queuepenalty', 'name')) ));
-?>
-
-	<div class="fm-paragraph fm-description">
+<uib-tabset active="active">
+<uib-tab index="0" heading="<?=$this->bbf('smenu_general');?>">
+	<?php
+		echo	$form->text(array('desc'	=> $this->bbf('fm_queuepenalty_name'),
+					'name'	=> 'queuepenalty[name]',
+					'labelid'	=> 'queuepenalty-name',
+					'size'	=> 15,
+					'default'	=> $element['queuepenalty']['name']['default'],
+					'value'	=> $info['queuepenalty']['name'],
+					'error'	=> $this->bbf_args('error',
+					$this->get_var('error', 'queuepenalty', 'name')) ));
+	?>
+	<div class="col-sm-offset-2 fm-paragraph fm-description">
 		<p>
 			<label id="lb-queuepenalty-description" for="it-queuepenalty-description"><?=$this->bbf('fm_queuepenalty_description');?></label>
 		</p>
@@ -59,194 +58,193 @@ echo	$form->text(array('desc'	=> $this->bbf('fm_queuepenalty_name'),
 						   $this->get_var('error', 'queuepenalty', 'description')) ),
 				   $info['queuepenalty']['description']);?>
 	</div>
-</div>
+</uib-tab>
 
-<div  role="tabpanel" class="tab-pane" id="penalties">
-<div id="sb-list">
-<?php
-	$dtype = "disp";
-  $count = count($penalties);
-	$errdisplay = '';
-?>
-	<p>&nbsp;</p>
-	<div class="sb-list">
-		<table class="table">
-			<thead>
-			<tr class="sb-top">
-
-				<th class="th-left"><?=$this->bbf('queuepenalty_col1');?></th>
-				<th class="th-center"><?=$this->bbf('queuepenalty_col2');?></th>
-				<th class="th-center"><?=$this->bbf('queuepenalty_col3');?></th>
-				<th class="th-right th-rule">
-					<?=$url->href_html($url->img_html('img/site/button/mini/orange/bo-add.gif',
-									  $this->bbf('col_add'),
-									  'border="0"'),
-							   '#',
-							   null,
-							   'onclick="dwho.dom.make_table_list(\''.$dtype.'\',this); return(dwho.dom.free_focus());"',
-							   $this->bbf('col_add'));?>
-				</th>
-			</tr>
-			</thead>
-			<tbody id="<?=$dtype?>">
+<uib-tab index="1" heading="<?=$this->bbf('smenu_penalties');?>">
+	<div id="sb-list">
 		<?php
-		if($count > 0):
-			for($i = 0;$i < $count;$i++):
-
+			$dtype = "disp";
+			$count = count($penalties);
+			$errdisplay = '';
 		?>
-			<tr class="fm-paragraph<?=$errdisplay?>">
-				<td class="td-left">
-<?php
-					echo $form->text(array('paragraph'	=> false,
-								   'name'	   => "queuepenalty_seconds[$i]",
-								   'id'      => false,
-								   'label'   => false,
-								   'size'	   => 3,
-								   'key'	   => false,
-									 'default' => '',
-									 'error'	=> $this->bbf_args('error',$this->get_var('error','queuepenaltychange',$i,'seconds')),
-								   'value'   => $penalties[$i]['seconds']));
-	?>
-					</td>
-					<td>
-	<?php
-					echo	$form->select(array(
-							'name'		=> "queuepenalty_maxp_sign[]",
-							'id'	  	=> "it-maxp_sign[$i]",
-							'key'	  	=> false,
-							'label'   => false,
-							'empty'		=> true,
-							'paragraph' => false,
-							'selected'  => $penalties[$i]['maxp_sign']
-						),
-						$signs),
+		<p>&nbsp;</p>
+		<div class="sb-list">
+			<table class="table">
+				<thead>
+					<tr class="sb-top">
 
-					$form->text(array('paragraph'	=> false,
-								   'name'	   => "queuepenalty_maxp_value[$i]",
-								   'id'		   => false,
-								   'label'	 => false,
-								   'size'	   => 3,
-								   'key'	   => false,
-									 'default' => '',
-									 'error'	=> $this->bbf_args('error',$this->get_var('error','queuepenaltychange',$i,'maxp_value')),
-								   'value'   => $penalties[$i]['maxp_value']));
-	 ?>
-				</td>
-				<td>
-	<?php
-					echo	$form->select(array(
-							'name'		=> "queuepenalty_minp_sign[$i]",
-							'id'	  	=> "it-minp_sign[$i]",
-							'key'	  	=> false,
-							'label'   => false,
-							'empty'		=> true,
-							'paragraph' => false,
-							'selected'  => $penalties[$i]['minp_sign']
-						),
-						$signs),
+						<th class="th-left"><?=$this->bbf('queuepenalty_col1');?></th>
+						<th class="th-center"><?=$this->bbf('queuepenalty_col2');?></th>
+						<th class="th-center"><?=$this->bbf('queuepenalty_col3');?></th>
+						<th class="th-right th-rule">
+							<?=$url->href_html($url->img_html('img/site/button/mini/orange/bo-add.gif',
+												$this->bbf('col_add'),
+												'border="0"'),
+										'#',
+										null,
+										'onclick="dwho.dom.make_table_list(\''.$dtype.'\',this); return(dwho.dom.free_focus());"',
+										$this->bbf('col_add'));?>
+						</th>
+					</tr>
+				</thead>
+				<tbody id="<?=$dtype?>">
+					<?php
+						if($count > 0):
+							for($i = 0;$i < $count;$i++):
 
-					$form->text(array('paragraph'	=> false,
-								   'name'	   => "queuepenalty_minp_value[$i]",
-								   'id'		   => false,
-								   'label'	 => false,
-								   'size'	   => 3,
-								   'key'	   => false,
-									 'default' => '',
-									 'error'	=> $this->bbf_args('error',$this->get_var('error','queuepenaltychange',$i,'minp_value')),
-								   'value'   => $penalties[$i]['minp_value']));
-	 ?>
-				</td>
-				<td class="td-right">
-					<?=$url->href_html($url->img_html('img/site/button/mini/blue/delete.gif',
-									  $this->bbf('opt_'.$dtype.'-delete'),
-									  'border="0"'),
-							   '#',
-							   null,
-							   'onclick="dwho.dom.make_table_list(\''.$dtype.'\',this,1); return(dwho.dom.free_focus());"',
-							   $this->bbf('opt_'.$dtype.'-delete'));?>
-				</td>
-			</tr>
+					?>
+					<tr class="fm-paragraph<?=$errdisplay?>">
+						<td class="td-left">
+							<?php
+												echo $form->text(array('paragraph'	=> false,
+																'name'	   => "queuepenalty_seconds[$i]",
+																'id'      => false,
+																'label'   => false,
+																'size'	   => 3,
+																'key'	   => false,
+																'default' => '',
+																'error'	=> $this->bbf_args('error',$this->get_var('error','queuepenaltychange',$i,'seconds')),
+																'value'   => $penalties[$i]['seconds']));
+							?>
+						</td>
+						<td>
+							<?php
+											echo	$form->select(array(
+													'name'		=> "queuepenalty_maxp_sign[]",
+													'id'	  	=> "it-maxp_sign[$i]",
+													'key'	  	=> false,
+													'label'   => false,
+													'empty'		=> true,
+													'paragraph' => false,
+													'selected'  => $penalties[$i]['maxp_sign']
+												),
+												$signs),
 
-		<?php
-			endfor;
-		endif;
-		?>
-			</tbody>
-			<tfoot>
-			<tr id="no-<?=$dtype?>"<?=($count > 0 ? ' class="b-nodisplay"' : '')?>>
-				<td colspan="5" class="td-single"><?=$this->bbf('no_'.$dtype);?></td>
-			</tr>
-			</tfoot>
-		</table>
-		<table class="b-nodisplay">
-			<tbody id="ex-<?=$dtype?>">
-			<tr class="fm-paragraph">
-				<td class="td-left">
-	<?php
-					echo $form->text(array('paragraph'	=> false,
-								   'name'	   => "queuepenalty_seconds[]",
-								   'id'      => false,
-								   'label'   => false,
-								   'size'	   => 3,
-								   'key'	   => false,
-									 'default' => ''));
-	?>
-					</td>
-					<td>
-	<?php
-					echo	$form->select(array(
-							'name'		=> "queuepenalty_maxp_sign[]",
-							'id'	  	=> "it-maxp_sign[]",
-							'key'	  	=> false,
-							'label'   => false,
-							'empty'		=> true,
-							'paragraph' => false
-						),
-						$signs),
+											$form->text(array('paragraph'	=> false,
+															'name'	   => "queuepenalty_maxp_value[$i]",
+															'id'		   => false,
+															'label'	 => false,
+															'size'	   => 3,
+															'key'	   => false,
+															'default' => '',
+															'error'	=> $this->bbf_args('error',$this->get_var('error','queuepenaltychange',$i,'maxp_value')),
+															'value'   => $penalties[$i]['maxp_value']));
+							?>
+						</td>
+						<td>
+							<?php
+											echo	$form->select(array(
+													'name'		=> "queuepenalty_minp_sign[$i]",
+													'id'	  	=> "it-minp_sign[$i]",
+													'key'	  	=> false,
+													'label'   => false,
+													'empty'		=> true,
+													'paragraph' => false,
+													'selected'  => $penalties[$i]['minp_sign']
+												),
+												$signs),
 
-					$form->text(array('paragraph'	=> false,
-								   'name'	   => "queuepenalty_maxp_value[]",
-								   'id'		   => false,
-								   'label'	 => false,
-								   'size'	   => 3,
-								   'key'	   => false,
-								   'default' => ''));
-	 ?>
-				</td>
-				<td>
-	<?php
-					echo	$form->select(array(
-							'name'		=> "queuepenalty_minp_sign[]",
-							'id'	  	=> "it-minp_sign[]",
-							'key'	  	=> false,
-							'label'   => false,
-							'empty'		=> true,
-							'paragraph' => false
-						),
-						$signs),
+											$form->text(array('paragraph'	=> false,
+															'name'	   => "queuepenalty_minp_value[$i]",
+															'id'		   => false,
+															'label'	 => false,
+															'size'	   => 3,
+															'key'	   => false,
+															'default' => '',
+															'error'	=> $this->bbf_args('error',$this->get_var('error','queuepenaltychange',$i,'minp_value')),
+															'value'   => $penalties[$i]['minp_value']));
+							?>
+						</td>
+						<td class="td-right">
+							<?=$url->href_html($url->img_html('img/site/button/mini/blue/delete.gif',
+												$this->bbf('opt_'.$dtype.'-delete'),
+												'border="0"'),
+										'#',
+										null,
+										'onclick="dwho.dom.make_table_list(\''.$dtype.'\',this,1); return(dwho.dom.free_focus());"',
+										$this->bbf('opt_'.$dtype.'-delete'));?>
+						</td>
+					</tr>
+					<?php
+						endfor;
+					endif;
+					?>
+				</tbody>
+				<tfoot>
+					<tr id="no-<?=$dtype?>"<?=($count > 0 ? ' class="b-nodisplay"' : '')?>>
+						<td colspan="5" class="td-single"><?=$this->bbf('no_'.$dtype);?></td>
+					</tr>
+				</tfoot>
+			</table>
+			<table class="b-nodisplay">
+				<tbody id="ex-<?=$dtype?>">
+					<tr class="fm-paragraph">
+						<td class="td-left">
+							<?php
+											echo $form->text(array('paragraph'	=> false,
+															'name'	   => "queuepenalty_seconds[]",
+															'id'      => false,
+															'label'   => false,
+															'size'	   => 3,
+															'key'	   => false,
+															'default' => ''));
+							?>
+						</td>
+						<td>
+							<?php
+											echo	$form->select(array(
+													'name'		=> "queuepenalty_maxp_sign[]",
+													'id'	  	=> "it-maxp_sign[]",
+													'key'	  	=> false,
+													'label'   => false,
+													'empty'		=> true,
+													'paragraph' => false
+												),
+												$signs),
 
-					$form->text(array('paragraph'	=> false,
-								   'name'	   => "queuepenalty_minp_value[]",
-								   'id'		   => false,
-								   'label'	 => false,
-								   'size'	   => 3,
-								   'key'	   => false,
-								   'default' => ''));
-	 ?>
-				</td>
+											$form->text(array('paragraph'	=> false,
+															'name'	   => "queuepenalty_maxp_value[]",
+															'id'		   => false,
+															'label'	 => false,
+															'size'	   => 3,
+															'key'	   => false,
+															'default' => ''));
+							?>
+						</td>
+						<td>
+							<?php
+											echo	$form->select(array(
+													'name'		=> "queuepenalty_minp_sign[]",
+													'id'	  	=> "it-minp_sign[]",
+													'key'	  	=> false,
+													'label'   => false,
+													'empty'		=> true,
+													'paragraph' => false
+												),
+												$signs),
 
-				<td class="td-right">
-					<?=$url->href_html($url->img_html('img/site/button/mini/blue/delete.gif',
-									  $this->bbf('opt_'.$dtype.'-delete'),
-									  'border="0"'),
-							   '#',
-							   null,
-							   'onclick="dwho.dom.make_table_list(\''.$dtype.'\',this,1); return(dwho.dom.free_focus());"',
-							   $this->bbf('opt_'.$dtype.'-delete'));?>
-				</td>
-			</tr>
-			</tbody>
-		</table>
+											$form->text(array('paragraph'	=> false,
+															'name'	   => "queuepenalty_minp_value[]",
+															'id'		   => false,
+															'label'	 => false,
+															'size'	   => 3,
+															'key'	   => false,
+															'default' => ''));
+							?>
+						</td>
+						<td class="td-right">
+							<?=$url->href_html($url->img_html('img/site/button/mini/blue/delete.gif',
+												$this->bbf('opt_'.$dtype.'-delete'),
+												'border="0"'),
+										'#',
+										null,
+										'onclick="dwho.dom.make_table_list(\''.$dtype.'\',this,1); return(dwho.dom.free_focus());"',
+										$this->bbf('opt_'.$dtype.'-delete'));?>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 	</div>
-</div>
-</div>
+</uib-tab>
+</uib-tabset>
