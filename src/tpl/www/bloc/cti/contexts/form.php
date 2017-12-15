@@ -62,7 +62,7 @@ $yesno = array($this->bbf('no'), $this->bbf('yes'));
 		</fieldset>
 	</div>
 
-	<div class="fm-paragraph fm-description">
+	<div class="col-sm-offset-2 fm-paragraph fm-description">
 		<p>
 			<label id="lb-contexts-description" for="it-contexts-description"><?=$this->bbf('fm_contexts_description');?></label>
 		</p>
