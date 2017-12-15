@@ -33,7 +33,7 @@ $proto = $this->get_var('proto');
 	$this->file_include('bloc/service/ipbx/asterisk/pbx_settings/lines/submenu/'.$proto);
 ?>
 	<div class="sb-content">
-		<form action="#" method="post" accept-charset="utf-8">
+		<form class="form-horizontal" action="#" method="post" accept-charset="utf-8">
 <?=$form->hidden(array('name' => DWHO_SESS_NAME,'value' => DWHO_SESS_ID))?>
 <?=$form->hidden(array('name' => 'act','value' => 'add'))?>
 <?=$form->hidden(array('name' => 'fm_send','value' => 1))?>
