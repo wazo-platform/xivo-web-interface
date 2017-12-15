@@ -142,7 +142,7 @@ $moh = $this->get_var('moh');
 							'checked'	=> $this->get_var('info','hints')=='1'));
 
 ?>
-	<div class="fm-paragraph fm-description">
+	<div class="col-sm-offset-2 fm-paragraph fm-description">
 		<p>
 			<label id="lb-parkinglot-description" for="it-parkinglot-description"><?=$this->bbf('fm_parkinglot_description');?></label>
 		</p>

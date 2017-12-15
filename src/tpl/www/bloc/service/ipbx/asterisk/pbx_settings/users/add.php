@@ -43,7 +43,7 @@ endif;
 	</h3>
 
 	<div class="sb-content">
-		<form action="#" method="post" accept-charset="utf-8" enctype="multipart/form-data"
+		<form class="form-horizontal" action="#" method="post" accept-charset="utf-8" enctype="multipart/form-data"
 			 onsubmit="dwho.form.select('it-group');
 					dwho.form.select('it-queue');
 					dwho.form.select('it-codec');">

@@ -45,7 +45,7 @@ $yesno = array($this->bbf('no'), $this->bbf('yes'));
 			    'selected'	=> $info['cticontexts']['display']),
 		      $info['displays']['list']);
 ?>
-	<div class="fm-paragraph fm-description">
+	<div class="col-sm-offset-2 fm-paragraph fm-description">
 		<fieldset id="cti-contexts_services">
 			<legend><?=$this->bbf('cti-contexts-directories');?></legend>
 			<div id="contexts_services" class="fm-paragraph fm-description">
@@ -62,7 +62,7 @@ $yesno = array($this->bbf('no'), $this->bbf('yes'));
 		</fieldset>
 	</div>
 
-	<div class="fm-paragraph fm-description">
+	<div class="col-sm-offset-2 fm-paragraph fm-description">
 		<p>
 			<label id="lb-contexts-description" for="it-contexts-description"><?=$this->bbf('fm_contexts_description');?></label>
 		</p>
@@ -79,4 +79,4 @@ $yesno = array($this->bbf('no'), $this->bbf('yes'));
 	</div>
 </div>
 
-<div class="fm-paragraph fm-description"><p><?=$this->bbf('need-xivo-dird-restart');?></p></div>
+<div class="col-sm-offset-2 fm-paragraph fm-description"><p><?=$this->bbf('need-xivo-dird-restart');?></p></div>

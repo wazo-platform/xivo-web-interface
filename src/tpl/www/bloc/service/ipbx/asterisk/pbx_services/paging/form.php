@@ -96,7 +96,7 @@ $pagingcaller = $this->get_var('pagingcaller');
 							$this->get_var('files'));
 		?>
 
-		<div class="fm-paragraph fm-description">
+		<div class="col-sm-offset-2 fm-paragraph fm-description">
 			<p>
 				<label id="lb-paging-description" for="it-paging-description"><?=$this->bbf('fm_paging_description');?></label>
 			</p>

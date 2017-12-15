@@ -200,20 +200,19 @@ if(dwho_issa('linefeatures',$info) === true
 		?>
 		<fieldset id="fld-xivoclient">
 			<legend><?=$this->bbf('fld-client');?></legend>
-			<?php echo		$form->checkbox(array('desc'	=> $this->bbf('fm_userfeatures_enableclient'),
+			<?php 
+				echo	
+					$form->checkbox(array('desc'	=> $this->bbf('fm_userfeatures_enableclient'),
 										'name'	=> 'userfeatures[enableclient]',
 										'labelid'	=> 'userfeatures-enableclient',
 										'default'	=> $element['userfeatures']['enableclient']['default'],
 										'checked'	=> $info['userfeatures']['enableclient'])),
 
-							$form->text(array('desc'	=> $this->bbf('fm_userfeatures_loginclient'),
+					$form->text(array('desc'	=> $this->bbf('fm_userfeatures_loginclient'),
 								'name'	=> 'userfeatures[loginclient]',
 								'labelid'	=> 'userfeatures-loginclient',
 								'size'	=> 15,
 								'paragraph' => false,
-								'group'			=> 'form-group',
-								'lbClass'   => 'col-sm-2',
-								'controlSize' => 'col-sm-4',
 								'default'	=> $element['userfeatures']['loginclient']['default'],
 								'value'	=> $info['userfeatures']['loginclient'],
 								'error'	=> $this->bbf_args('error',
@@ -224,9 +223,6 @@ if(dwho_issa('linefeatures',$info) === true
 								'labelid'	=> 'userfeatures-passwdclient',
 								'size'	=> 15,
 								'paragraph' => false,
-								'group'			=> 'form-group',
-								'lbClass'   => 'col-sm-2',
-								'controlSize' => 'col-sm-4',
 								'default'	=> $element['userfeatures']['passwdclient']['default'],
 								'value'	=> $info['userfeatures']['passwdclient'],
 								'error'	=> $this->bbf_args('error',
@@ -245,7 +241,7 @@ if(dwho_issa('linefeatures',$info) === true
 				endif;
 			?>
 		</fieldset>
-		<div class="fm-paragraph fm-description">
+		<div class="col-sm-offset-2 fm-paragraph fm-description">
 			<p>
 				<label id="lb-userfeatures-description" for="it-userfeatures-description"><?=$this->bbf('fm_userfeatures_description');?></label>
 			</p>
