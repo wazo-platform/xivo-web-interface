@@ -1,19 +1,12 @@
-import 'angular-translate-loader-partial';
+import 'angular-translate-loader-url';
 
-export default function config($translateProvider, $translatePartialLoaderProvider, $logProvider) {
+export default function config($translateProvider, $logProvider, $locationProvider) {
 
   $logProvider.debugEnabled(true);
 
   $translateProvider.useSanitizeValueStrategy('escape');
-  $translatePartialLoaderProvider.addPart('xivo');
-  $translateProvider.useLoader('$translatePartialLoader', {
-    urlTemplate: '/i18n/{part}-{lang}.json'
-  });
-  $translateProvider.registerAvailableLanguageKeys(['en','fr'], {
-    'en_*': 'en',
-    'fr_*': 'fr'
-  });
+  $translateProvider.useUrlLoader('/service/ipbx/json.php/public/i18n/translate/');
   $translateProvider.preferredLanguage(document.getElementsByTagName('html')[0].getAttribute('lang'));
-  $translateProvider.fallbackLanguage('fr');
-  $translateProvider.forceAsyncReload(true);
+
+  $locationProvider.html5Mode({ enabled: true, requireBase: false });
 }

@@ -139,6 +139,12 @@ $array['xivo/configuration/web_services/private/provisioning/configregistrar'] =
 	'path'		=> 'xivo/configuration/web_services/provisioning/configregistrar',
 	'define'	=> array('XIVO_LOC_WEBSERVICES_MODE'	=> 'private'));
 
+###################################################################
+# SERVICE I18N
+###################################################################
+$array['service/ipbx/asterisk/web_services/public/i18n/translate'] = array(
+	'path'		=> 'service/ipbx/asterisk/web_services/i18n/translate',
+	'define'	=> array('XIVO_LOC_WEBSERVICES_MODE'	=> 'public'));
 
 ###################################################################
 # SERVICE IPBX ASTERISK

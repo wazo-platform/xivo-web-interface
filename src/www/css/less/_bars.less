@@ -3,6 +3,7 @@
 @colDefault     : @xivo-light;
 @colHighlight   : @xivo-light;
 @dropDown       : true;
+
 .ddm() when (@dropDown) {
   > li > .dropdown-menu {
       background-color: @bgDefault;
@@ -18,6 +19,7 @@
     > a, > a:hover, > a:focus {
       color: @colHighlight;
       background-color: @bgHighlight; }}}
+
 .navbar-default {
   background-color: @bgDefault;
   border-color: @bgHighlight;
@@ -55,6 +57,7 @@
     color: @colDefault;
     &:hover {
       color: @colHighlight; }}}
+
 @media (max-width: 767px) {
   .navbar-default .navbar-nav .open .dropdown-menu {
     > li > a {
@@ -95,6 +98,9 @@
 }
 
 .toolbar {
+    height: 36px;
+    margin-bottom: 10px;
+
   .input-search {
     height: 36px;
   }
