@@ -100,7 +100,7 @@ $interfaces = $this->get_var('interfaces');
 							'error'	=> $this->bbf_args('error',
 								$this->get_var('error', 'gateway'))));
 		?>
-		<div class="fm-paragraph fm-description">
+		<div class="col-sm-offset-2 fm-paragraph fm-description">
 			<p>
 				<label id="lb-description" for="it-description"><?=$this->bbf('fm_description');?></label>
 			</p>
@@ -147,7 +147,7 @@ $interfaces = $this->get_var('interfaces');
 		?>
 	</uib-tab>
 	<uib-tab index="2" heading="<?=$this->bbf('smenu_advanced');?>">
-		<div class="fm-paragraph fm-description">
+		<div class="col-sm-offset-2 fm-paragraph fm-description">
 			<p>
 				<label id="lb-options" for="it-options"><?=$this->bbf('fm_options');?></label>
 			</p>

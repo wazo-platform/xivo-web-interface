@@ -516,7 +516,7 @@ endif;
 											'bbfopt'	=> array('argmode' => 'paramvalue')),
 									$element['protocol']['disallow']['value']);
 				?>
-				<div class="fm-paragraph fm-description">
+				<div class="col-sm-offset-2 fm-paragraph fm-description">
 					<?=$form->jq_select(array('paragraph'	=> false,
 										'label'		=> false,
 										'name'		=> 'protocol[allow][]',

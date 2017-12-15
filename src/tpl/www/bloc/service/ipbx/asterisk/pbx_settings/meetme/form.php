@@ -397,7 +397,7 @@ $dhtml->write_js('var jsi18n_no_number_in_context = "'.$this->bbf('no_number_in_
 							'error'	=> $this->bbf_args('error',
 								$this->get_var('error','meetmefeatures','emailsubject'))));
 		?>
-		<div class="fm-paragraph fm-description">
+		<div class="col-sm-offset-2 fm-paragraph fm-description">
 			<p>
 				<label id="col-sm-offset-2 lb-meetmefeatures-emailbody" for="it-meetmefeatures-emailbody">
 					<?=$this->bbf('fm_meetmefeatures_emailbody');?>

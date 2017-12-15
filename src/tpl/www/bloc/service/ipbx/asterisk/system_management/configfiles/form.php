@@ -37,7 +37,7 @@ $element = $this->get_var('element');
 					$this->get_var('error', 'filename'))));
 
 ?>
-<div class="fm-paragraph fm-description">
+<div class="col-sm-offset-2 fm-paragraph fm-description">
 	<p>
 		<label id="lb-configfile-description" for="it-configfile-description">
 			<?=$this->bbf('fm_content');?>

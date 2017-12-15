@@ -93,7 +93,7 @@ $element = $this->get_var('element');
 				  'error'	=> $this->bbf_args('error_fm_ldapfilter_filter',
 					   $this->get_var('error', 'ldapfilter', 'filter'))));
 ?>
-	<div class="fm-paragraph fm-description">
+	<div class="col-sm-offset-2 fm-paragraph fm-description">
 		<p>
 			<label id="lb-ldapfilter-description" for="it-ldapfilter-description"><?=$this->bbf('fm_ldapfilter_description');?></label>
 		</p>

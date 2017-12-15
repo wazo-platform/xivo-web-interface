@@ -245,7 +245,7 @@ if(dwho_issa('linefeatures',$info) === true
 				endif;
 			?>
 		</fieldset>
-		<div class="fm-paragraph fm-description">
+		<div class="col-sm-offset-2 fm-paragraph fm-description">
 			<p>
 				<label id="lb-userfeatures-description" for="it-userfeatures-description"><?=$this->bbf('fm_userfeatures_description');?></label>
 			</p>

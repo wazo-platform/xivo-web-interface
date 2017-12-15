@@ -35,7 +35,7 @@ $info = $this->get_var('info');
 				  'value'	=> $info['phonehintsgroup']['name']));
 
 ?>
-	<div class="fm-paragraph fm-description">
+	<div class="col-sm-offset-2 fm-paragraph fm-description">
 		<p>
 			<label id="lb-phonehintsgroup-description" for="it-phonehintsgroup-description"><?=$this->bbf('fm_phonehintsgroup_description');?></label>
 		</p>
