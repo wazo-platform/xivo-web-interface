@@ -62,8 +62,10 @@ $.widget("ui.multiselect", {
 		this.availableContainer.width(Math.floor(this.element.width()*(1-this.options.dividerLocation)));
 
 		// fix list height to match <option> depending on their individual header's heights
-		this.selectedList.height(Math.max(this.element.height()-this.selectedActions.height(),1));
-		this.availableList.height(Math.max(this.element.height()-this.availableActions.height(),1));
+		console.log(this.element.height());
+		console.log(this.availableActions.height());
+		this.selectedList.height(Math.max(this.element.height()-this.selectedActions.height(),150));
+		this.availableList.height(Math.max(this.element.height()-this.availableActions.height(),150));
 		
 		if ( !this.options.animated ) {
 			this.options.show = 'show';
