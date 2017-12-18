@@ -1,4 +1,4 @@
-export default function toolbarButtons($window) {
+export default function toolbarButtons($window, toolbar) {
 
   return {
     restrict: 'E',
@@ -19,7 +19,7 @@ export default function toolbarButtons($window) {
       };
 
       scope.isList = () => {
-        let params = scope.parseParams($window.location.search);
+        let params = toolbar.parseParams($window.location.search);
         return params.act === 'list';
       };
 

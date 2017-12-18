@@ -1,6 +1,6 @@
 import 'angular-translate-loader-url';
 
-export default function config($translateProvider, $logProvider, $locationProvider) {
+export default function config($translateProvider, $logProvider) {
 
   $logProvider.debugEnabled(true);
 
