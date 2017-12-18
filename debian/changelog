@@ -1,8 +1,9 @@
 xivo-web-interface (2018.01.00) xivo-aldebaran; urgency=medium
 
   * Refresh web interface
+  * 1418 Deactivate enablexfer for new users
 
- -- Vojtech Sodoma <vsodoma@avencall.com>  Fri, 08 Dec 2017 10:12:17 +0100
+ -- Jean-Yves Lebleu <jylebleu@avencall.com>  Fri, 08 Dec 2017 10:12:17 +0100
 
 xivo-web-interface (2017.11.06) xivo-dev; urgency=medium
 
