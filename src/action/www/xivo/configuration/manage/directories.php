@@ -107,7 +107,6 @@ switch($act)
 		$element['type']['default'] = 'sqlite';
 
 		$dhtml = &$_TPL->get_module('dhtml');
-		$dhtml->set_js('js/dwho/submenu.js');
 		$dhtml->set_js('js/xivo/configuration/manage/directories.js');
 
 		$_TPL->set_var('info',$info);
@@ -176,7 +175,6 @@ switch($act)
 		}
 
 		$dhtml = &$_TPL->get_module('dhtml');
-		$dhtml->set_js('js/dwho/submenu.js');
 		$dhtml->set_js('js/xivo/configuration/manage/directories.js');
 
 		$_TPL->set_var('id',$info['id']);

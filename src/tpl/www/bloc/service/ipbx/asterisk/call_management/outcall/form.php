@@ -29,161 +29,163 @@ $rightcall    = $this->get_var('rightcall');
 $schedules    = $this->get_var('schedules');
 
 ?>
-<div class="tab-content">
-	<div role="tabpanel" class="tab-pane active" id="general">
-<?php
-	echo	$form->text(array('desc'	=> $this->bbf('fm_outcall_name'),
-				  'name'	=> 'outcall[name]',
-				  'labelid'	=> 'outcall-name',
-				  'size'	=> 15,
-				  'default'	=> $element['outcall']['name']['default'],
-				  'value'	=> $this->get_var('info','outcall','name'),
-				  'error'	=> $this->bbf_args('error',
-						   $this->get_var('error', 'outcall', 'name')) ));
+<uib-tabset active="active">
+	<uib-tab index="0" heading="<?=$this->bbf('smenu_general');?>">
+		<?php
+			echo	$form->text(array('desc'	=> $this->bbf('fm_outcall_name'),
+							'name'	=> 'outcall[name]',
+							'labelid'	=> 'outcall-name',
+							'size'	=> 15,
+							'default'	=> $element['outcall']['name']['default'],
+							'value'	=> $this->get_var('info','outcall','name'),
+							'error'	=> $this->bbf_args('error',
+									$this->get_var('error', 'outcall', 'name')) ));
 
-if($context_list !== false):
-	echo	$form->select(array('desc'	=> $this->bbf('fm_outcall_context'),
-				    'name'	=> 'outcall[context]',
-				    'labelid'	=> 'outcall-context',
-				    'key'	=> 'identity',
-				    'altkey'	=> 'name',
-				    'default'	=> $element['outcall']['context']['default'],
-				    'selected'	=> $this->get_var('info','outcall','context')),
-			      $context_list);
-else:
-	echo	'<div id="fd-outcall-context" class="txt-center">',
-		$url->href_htmln($this->bbf('create_context'),
-				'service/ipbx/system_management/context',
-				'act=add'),
-		'</div>';
-endif;
+			if($context_list !== false):
+				echo	$form->select(array('desc'	=> $this->bbf('fm_outcall_context'),
+									'name'	=> 'outcall[context]',
+									'labelid'	=> 'outcall-context',
+									'key'	=> 'identity',
+									'altkey'	=> 'name',
+									'default'	=> $element['outcall']['context']['default'],
+									'selected'	=> $this->get_var('info','outcall','context')),
+									$context_list);
+			else:
+				echo	'<div id="fd-outcall-context" class="txt-center">',
+					$url->href_htmln($this->bbf('create_context'),
+							'service/ipbx/system_management/context',
+							'act=add'),
+					'</div>';
+			endif;
 
-	echo	$form->checkbox(array('desc'	=> $this->bbf('fm_outcall_useenum'),
-				      'name'	=> 'outcall[useenum]',
-				      'labelid'	=> 'useenum',
-				      'checked'	=> $this->get_var('info','outcall','useenum'),
-				      'default'	=> $element['outcall']['useenum']['default']));
-?>
-<?php
-	echo	$form->checkbox(array('desc'	=> $this->bbf('fm_outcall_internal'),
-				      'name'	=> 'outcall[internal]',
-				      'labelid'	=> 'internal',
-				      'checked'	=> $this->get_var('info','outcall','internal'),
-				      'default'	=> $element['outcall']['internal']['default'])),
+			echo	$form->checkbox(array('desc'	=> $this->bbf('fm_outcall_useenum'),
+									'name'	=> 'outcall[useenum]',
+									'labelid'	=> 'useenum',
+									'checked'	=> $this->get_var('info','outcall','useenum'),
+									'default'	=> $element['outcall']['useenum']['default']));
+		?>
+		<?php
+			echo	$form->checkbox(array('desc'	=> $this->bbf('fm_outcall_internal'),
+									'name'	=> 'outcall[internal]',
+									'labelid'	=> 'internal',
+									'checked'	=> $this->get_var('info','outcall','internal'),
+									'default'	=> $element['outcall']['internal']['default'])),
 
-		$form->text(array('desc'	=> $this->bbf('fm_outcall_preprocess-subroutine'),
-				  'name'	=> 'outcall[preprocess_subroutine]',
-				  'labelid'	=> 'outcall-preprocess-subroutine',
-				  'size'	=> 15,
-				  'default'	=> $element['outcall']['preprocess_subroutine']['default'],
-				  'value'	=> $this->get_var('info','outcall','preprocess_subroutine'),
-				  'error'	=> $this->bbf_args('error',
-						   $this->get_var('error', 'outcall', 'preprocess_subroutine')) )),
+				$form->text(array('desc'	=> $this->bbf('fm_outcall_preprocess-subroutine'),
+							'name'	=> 'outcall[preprocess_subroutine]',
+							'labelid'	=> 'outcall-preprocess-subroutine',
+							'size'	=> 15,
+							'default'	=> $element['outcall']['preprocess_subroutine']['default'],
+							'value'	=> $this->get_var('info','outcall','preprocess_subroutine'),
+							'error'	=> $this->bbf_args('error',
+									$this->get_var('error', 'outcall', 'preprocess_subroutine')) )),
 
-		$form->select(array('desc'	=> $this->bbf('fm_outcall_hangupringtime'),
-				    'name'	    => 'outcall[hangupringtime]',
-				    'labelid'	=> 'outcall-hangupringtime',
-				    'key'	    => false,
-				    'bbf'	    => 'fm_outcall_hangupringtime-opt',
-				    'bbfopt'	=> array('argmode'	=> 'paramvalue',
-							 'time'		=> array(
-									'from'		=> 'second',
-									'format'	=> '%M%s')),
-				    'default'	=> $element['outcall']['hangupringtime']['default'],
-				    'selected'	=> $this->get_var('info','outcall','hangupringtime')),
-			      $element['outcall']['hangupringtime']['value']);
+				$form->select(array('desc'	=> $this->bbf('fm_outcall_hangupringtime'),
+								'name'	    => 'outcall[hangupringtime]',
+								'labelid'	=> 'outcall-hangupringtime',
+								'key'	    => false,
+								'bbf'	    => 'fm_outcall_hangupringtime-opt',
+								'bbfopt'	=> array('argmode'	=> 'paramvalue',
+									'time'		=> array(
+											'from'		=> 'second',
+											'format'	=> '%M%s')),
+								'default'	=> $element['outcall']['hangupringtime']['default'],
+								'selected'	=> $this->get_var('info','outcall','hangupringtime')),
+								$element['outcall']['hangupringtime']['value']);
 
-if($outcalltrunk['list'] !== false):
-?>
-<div id="outcalltrunklist" class="fm-paragraph fm-description">
-	<p>
-		<label id="lb-outcalltrunk" for="it-outcalltrunk"><?=$this->bbf('fm_outcalltrunk');?></label>
-	</p>
-		<?=$form->jq_select(array('paragraph'	=> false,
-					 	'label'		=> false,
-            			'name'    	=> 'outcalltrunk[]',
-						'id' 		=> 'outcalltrunk',
-						'key'		=> 'identity',
-				       	'altkey'	=> 'id',
-            			'selected'  => $outcalltrunk['slt']),
-					$outcalltrunk['list']);?>
-</div>
-<div class="clearboth"></div>
-<?php
-else:
-	echo	'<div class="txt-center">',
-		$url->href_htmln($this->bbf('create_trunk'),
-				'service/ipbx/trunk_management/sip',
-				'act=add'),
-		'</div>';
-endif;
-?>
-	<div class="fm-paragraph fm-description">
-		<p>
-			<label id="lb-outcall-description" for="it-outcall-description"><?=$this->bbf('fm_outcall_description');?></label>
-		</p>
-		<?=$form->textarea(array('paragraph'	=> false,
-					 'label'	=> false,
-					 'name'		=> 'outcall[description]',
-					 'id'		=> 'outcall-description',
-					 'cols'		=> 60,
-					 'rows'		=> 5,
-					 'default'	=> $element['outcall']['description']['default'],
-					 'error'	=> $this->bbf_args('error',
-						   $this->get_var('error', 'outcall', 'description')) ),
-				   $this->get_var('info','outcall','description'));?>
-	</div>
-</div>
-<div role="tabpanel" class="tab-pane" id="exten">
-	<div class="sb-list">
-<?php $this->file_include('bloc/service/ipbx/asterisk/call_management/outcall/exten'); ?>
-	</div>
-</div>
+			if($outcalltrunk['list'] !== false):
+		?>
+		<div id="outcalltrunklist" class="fm-paragraph fm-description">
+			<p>
+				<label id="lb-outcalltrunk" for="it-outcalltrunk"><?=$this->bbf('fm_outcalltrunk');?></label>
+			</p>
+				<?=$form->jq_select(array('paragraph'	=> false,
+								'label'		=> false,
+											'name'    	=> 'outcalltrunk[]',
+								'id' 		=> 'outcalltrunk',
+								'key'		=> 'identity',
+										'altkey'	=> 'id',
+											'selected'  => $outcalltrunk['slt']),
+							$outcalltrunk['list']);?>
+		</div>
+		<div class="clearboth"></div>
+		<?php
+			else:
+				echo	'<div class="txt-center">',
+					$url->href_htmln($this->bbf('create_trunk'),
+							'service/ipbx/trunk_management/sip',
+							'act=add'),
+					'</div>';
+			endif;
+		?>
+		<div class="col-sm-offset-2 fm-paragraph fm-description">
+			<p>
+				<label id="lb-outcall-description" for="it-outcall-description"><?=$this->bbf('fm_outcall_description');?></label>
+			</p>
+			<?=$form->textarea(array('paragraph'	=> false,
+						'label'	=> false,
+						'name'		=> 'outcall[description]',
+						'id'		=> 'outcall-description',
+						'cols'		=> 60,
+						'rows'		=> 5,
+						'default'	=> $element['outcall']['description']['default'],
+						'error'	=> $this->bbf_args('error',
+								$this->get_var('error', 'outcall', 'description')) ),
+						$this->get_var('info','outcall','description'));?>
+		</div>
+	</uib-tab>
 
-<div role="tabpanel" class="tab-pane" id="rightcalls">
-<?php
-	if($rightcall['list'] !== false):
-?>
-<div id="rightcalllist" class="fm-paragraph fm-description">
-		<?=$form->jq_select(array('paragraph'	=> false,
-					 	'label'		=> false,
-            			'name'    	=> 'rightcall[]',
-						'id' 		=> 'it-rightcall',
-						'key'		=> 'identity',
-				       	'altkey'	=> 'id',
-            			'selected'  => $rightcall['slt']),
-					$rightcall['list']);?>
-</div>
-<div class="clearboth"></div>
-<?php
-	else:
-		echo	'<div class="txt-center">',
-			$url->href_htmln($this->bbf('create_rightcall'),
-					'service/ipbx/call_management/rightcall',
-					'act=add'),
-			'</div>';
-	endif;
-?>
-</div>
+	<uib-tab index="2" heading="<?=$this->bbf('smenu_exten');?>">
+		<div class="sb-list">
+			<?php $this->file_include('bloc/service/ipbx/asterisk/call_management/outcall/exten'); ?>
+		</div>
+	</uib-tab>
 
-<div role="tabpanel" class="tab-pane" id="schedule">
+	<uib-tab index="3" heading="<?=$this->bbf('smenu_rightcalls');?>">
+		<?php
+			if($rightcall['list'] !== false):
+		?>
+		<div id="rightcalllist" class="fm-paragraph fm-description">
+				<?=$form->jq_select(array('paragraph'	=> false,
+								'label'		=> false,
+											'name'    	=> 'rightcall[]',
+								'id' 		=> 'it-rightcall',
+								'key'		=> 'identity',
+										'altkey'	=> 'id',
+											'selected'  => $rightcall['slt']),
+							$rightcall['list']);?>
+		</div>
+		<div class="clearboth"></div>
+		<?php
+			else:
+				echo	'<div class="txt-center">',
+					$url->href_htmln($this->bbf('create_rightcall'),
+							'service/ipbx/call_management/rightcall',
+							'act=add'),
+					'</div>';
+			endif;
+		?>
+	</uib-tab>
 
-<?php
-	if($schedules === false):
-		echo	'<div class="txt-center">',
-			$url->href_htmln($this->bbf('create_schedules'),
-					'service/ipbx/call_management/schedule',
-					'act=add'),
-			'</div>';
-	else:
-		echo $form->select(array('desc'	=> $this->bbf('fm_outcall_schedule'),
-				    'name'	    => 'schedule_id',
-				    'labelid'	  => 'schedule_id',
-						'key'	      => 'name',
-						'altkey'    => 'id',
-						'empty'     => true,
-				    'selected'	=> $this->get_var('info', 'schedule_id')),
-			      $schedules);
-	endif;
-?>
-</div>
+	<uib-tab index="4" heading="<?=$this->bbf('smenu_schedule');?>">
+
+		<?php
+			if($schedules === false):
+				echo	'<div class="txt-center">',
+					$url->href_htmln($this->bbf('create_schedules'),
+							'service/ipbx/call_management/schedule',
+							'act=add'),
+					'</div>';
+			else:
+				echo $form->select(array('desc'	=> $this->bbf('fm_outcall_schedule'),
+								'name'	    => 'schedule_id',
+								'labelid'	  => 'schedule_id',
+								'key'	      => 'name',
+								'altkey'    => 'id',
+								'empty'     => true,
+								'selected'	=> $this->get_var('info', 'schedule_id')),
+								$schedules);
+			endif;
+		?>
+	</uib-tab>
+</uib-tabset>

@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2017  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -31,155 +31,134 @@ $element = $this->get_var('element');
 	<span class="span-right">&nbsp;</span>
 </h3>
 
-<div class="sb-smenu">
-	<ul>
-		<li id="dwsm-tab-1"
-		    class="dwsm-blur"
-		    onclick="dwho_submenu.select(this,'sb-part-first');"
-		    onmouseout="dwho_submenu.blur(this);"
-		    onmouseover="dwho_submenu.focus(this);">
-			<div class="tab">
-				<span class="span-center"><a href="#first"><?=$this->bbf('smenu_general');?></a></span>
-			</div>
-			<span class="span-right">&nbsp;</span>
-		</li>
-		<li id="dwsm-tab-2"
-		    class="dwsm-blur-last"
-		    onclick="dwho_submenu.select(this,'sb-part-last',1);"
-		    onmouseout="dwho_submenu.blur(this,1);"
-		    onmouseover="dwho_submenu.focus(this,1);">
-			<div class="tab">
-				<span class="span-center"><a href="#last"><?=$this->bbf('smenu_search');?></a></span>
-			</div>
-			<span class="span-right">&nbsp;</span>
-		</li>
-	</ul>
-</div>
-
 <div class="sb-content">
-<form action="#" method="post" accept-charset="utf-8">
+<form class="form-horizontal" action="#" method="post" accept-charset="utf-8">
 
-<div id="sb-part-first" class="b-nodisplay">
-<?php
-	echo	$form->hidden(array('name'	=> DWHO_SESS_NAME,
-				    'value'	=> DWHO_SESS_ID)),
+<uib-tabset active="active">
 
-		$form->hidden(array('name'	=> 'fm_send',
-				    'value'	=> 1)),
+	<uib-tab index="0" heading="<?=$this->bbf('smenu_general');?>">
+		<?php
+			echo	$form->hidden(array('name'	=> DWHO_SESS_NAME,
+								'value'	=> DWHO_SESS_ID)),
 
-		$form->text(array('desc'	=> $this->bbf('fm_hostname'),
-				  'name'	=> 'hostname',
-				  'labelid'	=> 'hostname',
-				  'size'	=> 15,
-				  'default'	=> $element['resolvconf']['hostname']['default'],
-				  'value'	=> $this->get_var('info','hostname'),
-				  'error'	=> $this->bbf_args('error',
-					   $this->get_var('error', 'hostname')) )),
+				$form->hidden(array('name'	=> 'fm_send',
+								'value'	=> 1)),
 
-		$form->text(array('desc'	=> $this->bbf('fm_domain'),
-				  'name'	=> 'domain',
-				  'labelid'	=> 'domain',
-				  'size'	=> 15,
-				  'default'	=> $element['resolvconf']['domain']['default'],
-				  'value'	=> $this->get_var('info','domain'),
-				  'error'	=> $this->bbf_args('error',
-					   $this->get_var('error', 'domain')) )),
+				$form->text(array('desc'	=> $this->bbf('fm_hostname'),
+							'name'	=> 'hostname',
+							'labelid'	=> 'hostname',
+							'size'	=> 15,
+							'default'	=> $element['resolvconf']['hostname']['default'],
+							'value'	=> $this->get_var('info','hostname'),
+							'error'	=> $this->bbf_args('error',
+								$this->get_var('error', 'hostname')) )),
 
-		$form->text(array('desc'	=> $this->bbf('fm_nameserver1'),
-				  'name'	=> 'nameserver1',
-				  'labelid'	=> 'nameserver1',
-				  'size'	=> 15,
-				  'default'	=> $element['resolvconf']['nameserver1']['default'],
-				  'value'	=> $this->get_var('info','nameserver1'),
-				  'error'	=> $this->bbf_args('error',
-					   $this->get_var('error', 'nameserver1')) )),
+				$form->text(array('desc'	=> $this->bbf('fm_domain'),
+							'name'	=> 'domain',
+							'labelid'	=> 'domain',
+							'size'	=> 15,
+							'default'	=> $element['resolvconf']['domain']['default'],
+							'value'	=> $this->get_var('info','domain'),
+							'error'	=> $this->bbf_args('error',
+								$this->get_var('error', 'domain')) )),
 
-		$form->text(array('desc'	=> $this->bbf('fm_nameserver2'),
-				  'name'	=> 'nameserver2',
-				  'labelid'	=> 'nameserver2',
-				  'size'	=> 15,
-				  'default'	=> $element['resolvconf']['nameserver2']['default'],
-				  'value'	=> $this->get_var('info','nameserver2'),
-				  'error'	=> $this->bbf_args('error',
-					   $this->get_var('error', 'nameserver2')) )),
+				$form->text(array('desc'	=> $this->bbf('fm_nameserver1'),
+							'name'	=> 'nameserver1',
+							'labelid'	=> 'nameserver1',
+							'size'	=> 15,
+							'default'	=> $element['resolvconf']['nameserver1']['default'],
+							'value'	=> $this->get_var('info','nameserver1'),
+							'error'	=> $this->bbf_args('error',
+								$this->get_var('error', 'nameserver1')) )),
 
-		$form->text(array('desc'	=> $this->bbf('fm_nameserver3'),
-				  'name'	=> 'nameserver3',
-				  'labelid'	=> 'nameserver3',
-				  'size'	=> 15,
-				  'default'	=> $element['resolvconf']['nameserver3']['default'],
-				  'value'	=> $this->get_var('info','nameserver3'),
-				  'error'	=> $this->bbf_args('error',
-					   $this->get_var('error', 'nameserver3')) ));
-?>
-	<div class="fm-paragraph fm-description">
-		<p>
-			<label id="lb-description" for="it-description"><?=$this->bbf('fm_description');?></label>
-		</p>
-		<?=$form->textarea(array('paragraph'	=> false,
-					 'label'	=> false,
-					 'name'		=> 'description',
-					 'id'		=> 'it-description',
-					 'cols'		=> 60,
-					 'rows'		=> 5,
-					 'default'	=> $element['resolvconf']['description']['default'],
-					 'error'	=> $this->bbf_args('error',
-					   $this->get_var('error', 'description')) ),
-				   $this->get_var('info','description'));?>
-	</div>
-</div>
+				$form->text(array('desc'	=> $this->bbf('fm_nameserver2'),
+							'name'	=> 'nameserver2',
+							'labelid'	=> 'nameserver2',
+							'size'	=> 15,
+							'default'	=> $element['resolvconf']['nameserver2']['default'],
+							'value'	=> $this->get_var('info','nameserver2'),
+							'error'	=> $this->bbf_args('error',
+								$this->get_var('error', 'nameserver2')) )),
 
-<div id="sb-part-last" class="b-nodisplay">
-<?php
-	echo	$form->text(array('desc'	=> $this->bbf('fm_search1'),
-				  'name'	=> 'search[]',
-				  'labelid'	=> 'search1',
-				  'size'	=> 15,
-				  'value'	=> $this->get_var('search',0),
-				  'error'	=> $this->bbf_args('error',
-					   $this->get_var('error', 'search',0)) )),
+				$form->text(array('desc'	=> $this->bbf('fm_nameserver3'),
+							'name'	=> 'nameserver3',
+							'labelid'	=> 'nameserver3',
+							'size'	=> 15,
+							'default'	=> $element['resolvconf']['nameserver3']['default'],
+							'value'	=> $this->get_var('info','nameserver3'),
+							'error'	=> $this->bbf_args('error',
+								$this->get_var('error', 'nameserver3')) ));
+		?>
+		<div class="fm-paragraph fm-description">
+			<p>
+				<label id="lb-description" for="it-description"><?=$this->bbf('fm_description');?></label>
+			</p>
+			<?=$form->textarea(array('paragraph'	=> false,
+						'label'	=> false,
+						'name'		=> 'description',
+						'id'		=> 'it-description',
+						'cols'		=> 60,
+						'rows'		=> 5,
+						'default'	=> $element['resolvconf']['description']['default'],
+						'error'	=> $this->bbf_args('error',
+							$this->get_var('error', 'description')) ),
+						$this->get_var('info','description'));?>
+		</div>
+</uib-tab>
 
-		$form->text(array('desc'	=> $this->bbf('fm_search2'),
-				  'name'	=> 'search[]',
-				  'labelid'	=> 'search2',
-				  'size'	=> 15,
-				  'value'	=> $this->get_var('search',1),
-				  'error'	=> $this->bbf_args('error',
-					   $this->get_var('error', 'search',1)) )),
+	<uib-tab index="1" heading="<?=$this->bbf('smenu_search');?>">
+		<?php
+			echo	$form->text(array('desc'	=> $this->bbf('fm_search1'),
+							'name'	=> 'search[]',
+							'labelid'	=> 'search1',
+							'size'	=> 15,
+							'value'	=> $this->get_var('search',0),
+							'error'	=> $this->bbf_args('error',
+								$this->get_var('error', 'search',0)) )),
 
-		$form->text(array('desc'	=> $this->bbf('fm_search3'),
-				  'name'	=> 'search[]',
-				  'labelid'	=> 'search3',
-				  'size'	=> 15,
-				  'value'	=> $this->get_var('search',2),
-				  'error'	=> $this->bbf_args('error',
-					   $this->get_var('error', 'search',2)) )),
+				$form->text(array('desc'	=> $this->bbf('fm_search2'),
+							'name'	=> 'search[]',
+							'labelid'	=> 'search2',
+							'size'	=> 15,
+							'value'	=> $this->get_var('search',1),
+							'error'	=> $this->bbf_args('error',
+								$this->get_var('error', 'search',1)) )),
 
-		$form->text(array('desc'	=> $this->bbf('fm_search4'),
-				  'name'	=> 'search[]',
-				  'labelid'	=> 'search4',
-				  'size'	=> 15,
-				  'value'	=> $this->get_var('search',3),
-				  'error'	=> $this->bbf_args('error',
-					   $this->get_var('error', 'search',3)) )),
+				$form->text(array('desc'	=> $this->bbf('fm_search3'),
+							'name'	=> 'search[]',
+							'labelid'	=> 'search3',
+							'size'	=> 15,
+							'value'	=> $this->get_var('search',2),
+							'error'	=> $this->bbf_args('error',
+								$this->get_var('error', 'search',2)) )),
 
-		$form->text(array('desc'	=> $this->bbf('fm_search5'),
-				  'name'	=> 'search[]',
-				  'labelid'	=> 'search5',
-				  'size'	=> 15,
-				  'value'	=> $this->get_var('search',4),
-				  'error'	=> $this->bbf_args('error',
-					   $this->get_var('error', 'search',4)) )),
+				$form->text(array('desc'	=> $this->bbf('fm_search4'),
+							'name'	=> 'search[]',
+							'labelid'	=> 'search4',
+							'size'	=> 15,
+							'value'	=> $this->get_var('search',3),
+							'error'	=> $this->bbf_args('error',
+								$this->get_var('error', 'search',3)) )),
 
-		$form->text(array('desc'	=> $this->bbf('fm_search6'),
-				  'name'	=> 'search[]',
-				  'labelid'	=> 'search6',
-				  'size'	=> 15,
-				  'value'	=> $this->get_var('search',5),
-				  'error'	=> $this->bbf_args('error',
-					   $this->get_var('error', 'name',5)) ));
-?>
-</div>
+				$form->text(array('desc'	=> $this->bbf('fm_search5'),
+							'name'	=> 'search[]',
+							'labelid'	=> 'search5',
+							'size'	=> 15,
+							'value'	=> $this->get_var('search',4),
+							'error'	=> $this->bbf_args('error',
+								$this->get_var('error', 'search',4)) )),
+
+				$form->text(array('desc'	=> $this->bbf('fm_search6'),
+							'name'	=> 'search[]',
+							'labelid'	=> 'search6',
+							'size'	=> 15,
+							'value'	=> $this->get_var('search',5),
+							'error'	=> $this->bbf_args('error',
+								$this->get_var('error', 'name',5)) ));
+		?>
+	</uib-tab>
+</uib-tabset>
+
 <?php
 
 echo	$form->submit(array('name'	=> 'submit',

@@ -158,7 +158,7 @@ if($act == "add") {
 	endif;
 ?>
 
-<div class="fm-paragraph fm-description">
+<div class="col-sm-offset-2 fm-paragraph fm-description">
 	<p>
 		<label id="lb-context-description" for="it-context-description"><?=$this->bbf('fm_context_description');?></label>
 	</p>

@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2017  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,17 +18,13 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+// set common i18n as default
+$_I18N->load_file('tpl/www/struct/service/ipbx/asterisk');
+$_I18N->load_file('tpl/tpl');
+
+$translation = dwho_i18n::get_babelfish('global');
+$_TPL->set_var('list', $translation);
+
+$_TPL->display('/service/ipbx/'.$ipbx->get_name().'/generic');
+
 ?>
-<div class="sb-smenu">
-	<ul class="nav nav-tabs" role="tablist">
-		<li id="dwsm-tab-1"	role="presentation" class="active">
-				<a role="tab" data-toggle="tab" href="#general"><?=$this->bbf('smenu_general');?></a>
-		</li>
-		<li id="dwsm-tab-2"	role="presentation">
-				<a role="tab" data-toggle="tab" href="#members"><?=$this->bbf('smenu_members');?></a>
-		</li>
-		<li id="dwsm-tab-3"	role="presentation">
-				<a role="tab" data-toggle="tab" href="#interceptors"><?=$this->bbf('smenu_interceptors');?></a>
-		</li>
-	</ul>
-</div>

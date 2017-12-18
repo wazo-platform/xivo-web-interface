@@ -1,3 +1,5 @@
+@import (less) "../../extra-libs/multiselect/css/ui.multiselect.css";
+
 @import "~bootstrap/less/bootstrap.less";
 @import "_variables.less";
 @import "_bootstrap-override.less";
@@ -5,6 +7,7 @@
 @import "_forms.less";
 @import "_buttons.less";
 @import "_bars.less";
+@import "_multiselect.less";
 @import (less) "~select2/dist/css/select2.css";
 
 body {
@@ -24,21 +27,13 @@ body {
 
 #bc-main {
   &::before {
-    margin-top: 35px;
+    margin-top: 50px;
   }
 }
 
 #bc-content {
-  margin-top: 12px;
-  float: inherit;
-}
-.b-form {
-  #b-content & {
-  }
-}
-
-#b-content {
   margin-top: 15px;
+  float: inherit;
 }
 
 #version-copyright {
@@ -91,4 +86,8 @@ body {
 
 .help-tooltip {
   left: 5px;
+}
+
+.icons-list {
+  padding-right: 5px;
 }

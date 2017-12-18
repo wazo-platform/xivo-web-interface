@@ -3,17 +3,20 @@
     npm i
     npm run build
 
-See 
+See
 - devtemp/change_master.list for files changed since the original branch (1116-Refresh-web-interface)
 - devtemp/change_new_webi.list for files changed from the original branch
 
-    
+# Running JS unit tests
+    npm i
+    npm test
 
-# Running functional tests
+
+# Running legacy functional tests
 
 You need Xephyr.
 
-    apt-get install xserver-xephyr 
+    apt-get install xserver-xephyr
 
 1. [XiVO acceptance](https://gitlab.com/xivo.solutions/xivo-acceptance)
 2. ```

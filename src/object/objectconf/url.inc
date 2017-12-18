@@ -114,6 +114,9 @@ $array['xivo/configuration/controlsystem/network'] = 'xivo/configuration/index.p
 
 $array['service/ipbx'] = 'service/ipbx/index.php';
 
+// i18n
+$array['service/ipbx/json/public/i18n/translate'] = 'service/ipbx/json.php/public/i18n/translate/';
+
 // general_settings
 $array['service/ipbx/general_settings/sip'] = 'service/ipbx/index.php/general_settings/sip/';
 $array['service/ipbx/general_settings/iax'] = 'service/ipbx/index.php/general_settings/iax/';

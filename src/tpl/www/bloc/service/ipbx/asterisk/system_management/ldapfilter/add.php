@@ -24,7 +24,7 @@
 	<h3 class="sb-top xspan"><span class="span-left">&nbsp;</span><span class="span-center"><?=$this->bbf('title_content_name');?></span><span class="span-right">&nbsp;</span></h3>
 
 	<div class="sb-content">
-<form action="#" method="post" accept-charset="utf-8">
+<form class="form-horizontal" action="#" method="post" accept-charset="utf-8">
 
 <?=$form->hidden(array('name' => DWHO_SESS_NAME,'value' => DWHO_SESS_ID));?>
 <?=$form->hidden(array('name' => 'fm_send','value' => 1));?>

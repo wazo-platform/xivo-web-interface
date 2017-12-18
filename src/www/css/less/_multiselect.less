@@ -1,38 +1,40 @@
-
-/* reset xivo css width limit select */
-.fm-paragraph select {max-width: 500px;}
-
-/* fix size on multiselect */
 .ui-multiselect li {font-size: 10px;}
 .ui-multiselect li a {font-size: 10px;}
 
 .multiselect {
-    width: 500px;
+    width: 600px;
     height: 151px;
     margin-bottom: 5px;
 }
 
 .ui-multiselect {
     margin: auto;
-    padding: 0px;
+    padding: 10px;
     text-align: left;
-    border: 1px solid #7F99B1;
+    border: 1px solid @xivo-dark;
 }
 
 .ui-multiselect .selected {
+    width: 50%;
     margin: -10px;
     top: 0px;
-    border: 2px solid red;
+    border: 2px solid @xivo-danger;
 }
-
+.ui-multiselect .available {
+  width: 50%;
+}  
 .ui-multiselect .ui-widget-header {
-    border-bottom: 1px solid #7F99B1;
-    background: #BEDDFB;
+    border-bottom: 1px solid @xivo-light-gray;
+    background: @xivo-dark-gray;
     color: black;
     font-size: 10px;
 }
 
 .ui-multiselect .ui-widget-header a {
-    color: grey;
+    color: @color-normal;
     font-size: 10px;
+}
+
+.ui-multiselect .ui-state-default {
+    color: @xivo-dark;
 }

@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2017  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -28,14 +28,14 @@ $url = &$this->get_module('url');
 		<span class="span-center"><?=$this->bbf('title_content_name');?></span>
 		<span class="span-right">&nbsp;</span>
 	</h3>
-<?php $this->file_include('bloc/service/ipbx/asterisk/pbx_settings/devices/submenu'); ?>
+
 	<div class="sb-content">
-		<form action="#" method="post" accept-charset="utf-8">
-<?=$form->hidden(array('name' => DWHO_SESS_NAME,'value' => DWHO_SESS_ID))?>
-<?=$form->hidden(array('name' => 'act','value' => 'add'))?>
-<?=$form->hidden(array('name' => 'fm_send','value' => 1))?>
-<?php $this->file_include('bloc/service/ipbx/asterisk/pbx_settings/devices/form'); ?>
-<?=$form->submit(array('name' => 'submit','id' => 'it-submit','value' => $this->bbf('fm_bt-save')))?>
+		<form class="form-horizontal" action="#" method="post" accept-charset="utf-8">
+			<?=$form->hidden(array('name' => DWHO_SESS_NAME,'value' => DWHO_SESS_ID))?>
+			<?=$form->hidden(array('name' => 'act','value' => 'add'))?>
+			<?=$form->hidden(array('name' => 'fm_send','value' => 1))?>
+			<?php $this->file_include('bloc/service/ipbx/asterisk/pbx_settings/devices/form'); ?>
+			<?=$form->submit(array('name' => 'submit','id' => 'it-submit','value' => $this->bbf('fm_bt-save')))?>
 		</form>
 	</div>
 	<div class="sb-foot xspan">

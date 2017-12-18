@@ -130,7 +130,7 @@ echo	$form->text(array('desc'	=> $this->bbf('fm_name'),
 			  'selected'	=> $info['country']),
 				   $this->get_var('territory'));
 ?>
-<div class="fm-paragraph fm-description">
+<div class="col-sm-offset-2 fm-paragraph fm-description">
 	<p>
 		<label id="lb-description" for="it-description"><?=$this->bbf('fm_description');?></label>
 	</p>

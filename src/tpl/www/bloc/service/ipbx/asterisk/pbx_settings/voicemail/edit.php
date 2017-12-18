@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2015  Avencall
+# Copyright (C) 2006-2017  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -26,15 +26,11 @@ $info = $this->get_var('info');
 	<h3 class="sb-top xspan">
 		<span class="span-left">&nbsp;</span>
 		<span class="span-center"><?=$this->bbf('title_content_name');?> <font><?=$info['voicemail']['name']?></font></span>
-		<span class="span-right">&nbsp;</span>	
+		<span class="span-right">&nbsp;</span>
 	</h3>
 
-<?php
-	$this->file_include('bloc/service/ipbx/asterisk/pbx_settings/voicemail/submenu');
-?>
-
 	<div class="sb-content">
-<form action="#" method="post" accept-charset="utf-8">
+<form class="form-horizontal" action="#" method="post" accept-charset="utf-8">
 
 <?=$form->hidden(array('name' => DWHO_SESS_NAME,'value' => DWHO_SESS_ID));?>
 <?=$form->hidden(array('name' => 'act','value' => 'edit'));?>

@@ -42,7 +42,7 @@ $codec_active = empty($allow) === false;
 </h3>
 
 <div class="sb-content">
-<form action="#" method="post" accept-charset="utf-8" onsubmit="dwho.form.select('it-codec');">
+<form class="form-horizontal" action="#" method="post" accept-charset="utf-8" onsubmit="dwho.form.select('it-codec');">
 
 <?php
 	echo	$form->hidden(array('name'	=> DWHO_SESS_NAME,

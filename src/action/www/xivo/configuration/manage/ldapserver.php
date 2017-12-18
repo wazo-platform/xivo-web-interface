@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2017  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -46,8 +46,6 @@ switch($act)
 				$_QRY->go($_TPL->url('xivo/configuration/manage/ldapserver'),$param);
 		}
 
-		$dhtml = &$_TPL->get_module('dhtml');
-		$dhtml->set_js('js/dwho/submenu.js');
 		$_TPL->set_var('info',$result);
 		$_TPL->set_var('element',$_LDAPSVR->get_element());
 		break;
@@ -75,8 +73,6 @@ switch($act)
 				$_QRY->go($_TPL->url('xivo/configuration/manage/ldapserver'),$param);
 		}
 
-		$dhtml = &$_TPL->get_module('dhtml');
-		$dhtml->set_js('js/dwho/submenu.js');
 		$_TPL->set_var('id',$info['id']);
 		$_TPL->set_var('info',$return);
 		$_TPL->set_var('element',$_LDAPSVR->get_element());

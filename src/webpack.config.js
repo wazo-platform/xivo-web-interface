@@ -62,12 +62,12 @@ module.exports = {
     ]
   },
   plugins: [
-    new webpack.optimize.CommonsChunkPlugin({ name: 'vendor', filename: 'www/js/vendor.bundle.js' }),
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery',
       "window.jQuery":"jquery"
     }),
+    new webpack.optimize.CommonsChunkPlugin({ name: 'vendor', filename: 'www/js/vendor.bundle.js' }),
     new ExtractTextPlugin({
       filename: 'www/css/xivo.css',
       disable: false,

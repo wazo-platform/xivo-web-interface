@@ -38,7 +38,7 @@ $presence = $this->get_var('presences');
 				  'value'	=> $info['presences']['name']));
 
 ?>
-	<div class="fm-paragraph fm-description">
+	<div class="col-sm-offset-2 fm-paragraph fm-description">
 		<p>
 			<label id="lb-presences-description" for="it-presences-description"><?=$this->bbf('fm_presences_description');?></label>
 		</p>
