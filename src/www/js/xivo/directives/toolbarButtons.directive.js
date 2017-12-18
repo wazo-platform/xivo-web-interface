@@ -9,8 +9,6 @@ export default function toolbarButtons($window, toolbar) {
       actionsAdv: '='
     },
     link: (scope) => {
-      // register to outer dwho existing implementation
-      toolbar.registerDwho();
 
       scope.isListDisplayed = () => {
         return toolbar.isDisplayed($window.location.search, scope.displayAdvOn);
@@ -19,6 +17,12 @@ export default function toolbarButtons($window, toolbar) {
       scope.getLabelKey = (action) => {
         return toolbar.getLabelKey(action);
       };
+
+      scope.$on('ngRepeatActionsAdvFinished', () => {
+        // register to outer dwho existing implementation
+        // when DOM is ready
+        toolbar.registerDwho();
+      });
     }
   };
 }

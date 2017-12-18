@@ -25,7 +25,7 @@ export default function toolbar() {
     case 'export': return 'toolbar_add_menu_export';
     case 'toolbar-advanced-menu-enable' : return 'toolbar_adv_menu_enable';
     case 'toolbar-advanced-menu-disable': return 'toolbar_adv_menu_disable';
-    case 'toolbar-advanced-menu-select-all' : return 'toolbar_adv_menu_select';
+    case 'toolbar-advanced-menu-select-all' : return 'toolbar_adv_menu_select-all';
     case 'toolbar-advanced-menu-delete' : return 'toolbar_adv_menu_delete'; }
   };
 

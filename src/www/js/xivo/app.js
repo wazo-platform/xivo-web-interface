@@ -9,6 +9,7 @@ import run from './xivo.run';
 import toolbar from './services/toolbar.service';
 import toolbarButtons from './directives/toolbarButtons.directive';
 import toolbarSearch from './directives/toolbarSearch.directive';
+import onFinishRender from './directives/onFinishRender.directive';
 
 
 angular.module('Xivo', [angulartranslate, uibootstrap])
@@ -16,4 +17,5 @@ angular.module('Xivo', [angulartranslate, uibootstrap])
 .service('toolbar',toolbar)
 .directive('toolbarButtons',toolbarButtons)
 .directive('toolbarSearch',toolbarSearch)
+.directive('onFinishRender',onFinishRender)
 .run(run);
