@@ -7,6 +7,4 @@ export default function config($translateProvider, $logProvider, $locationProvid
   $translateProvider.useSanitizeValueStrategy('escape');
   $translateProvider.useUrlLoader('/service/ipbx/json.php/public/i18n/translate/');
   $translateProvider.preferredLanguage(document.getElementsByTagName('html')[0].getAttribute('lang'));
-
-  $locationProvider.html5Mode({ enabled: true, requireBase: false });
 }

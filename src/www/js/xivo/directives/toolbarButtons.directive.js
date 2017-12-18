@@ -1,4 +1,4 @@
-export default function toolbarButtons($location) {
+export default function toolbarButtons($window) {
 
   return {
     restrict: 'E',
@@ -12,8 +12,15 @@ export default function toolbarButtons($location) {
         /* eslint-enable */
       };
 
+      scope.parseParams = (search) => {
+        return (search).replace(/(^\?)/,'').split("&").reduce((p,n) => {
+          return n = n.split("="), p[n[0]] = n[1], p;
+        }, {});
+      };
+
       scope.isList = () => {
-        return $location.search().act === 'list';
+        let params = scope.parseParams($window.location.search);
+        return params.act === 'list';
       };
 
       scope.init();
