@@ -3,27 +3,22 @@ export default function toolbarButtons($window, toolbar) {
   return {
     restrict: 'E',
     templateUrl: '/js/xivo/directives/toolbar-buttons.html',
+    scope: {
+      displayAdvOn: '@',
+      actions: '=',
+      actionsAdv: '='
+    },
     link: (scope) => {
+      // register to outer dwho existing implementation
+      toolbar.registerDwho();
 
-      scope.init = () => {
-        // call to outer dwho existing implementation
-        /* eslint-disable */
-        xivo_toolbar_init();
-        /* eslint-enable */
+      scope.isListDisplayed = () => {
+        return toolbar.isDisplayed($window.location.search, scope.displayAdvOn);
       };
 
-      scope.parseParams = (search) => {
-        return (search).replace(/(^\?)/,'').split("&").reduce((p,n) => {
-          return n = n.split("="), p[n[0]] = n[1], p;
-        }, {});
+      scope.getLabelKey = (action) => {
+        return toolbar.getLabelKey(action);
       };
-
-      scope.isList = () => {
-        let params = toolbar.parseParams($window.location.search);
-        return params.act === 'list';
-      };
-
-      scope.init();
     }
   };
 }

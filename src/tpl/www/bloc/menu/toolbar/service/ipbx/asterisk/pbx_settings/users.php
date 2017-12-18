@@ -49,5 +49,7 @@ $dhtml->write_js($toolbar_js);
 		?>
 		<toolbar-search></toolbar-search>
 	</form>
-	<toolbar-buttons></toolbar-buttons>
+	<toolbar-buttons actions="['add', 'import', 'update_import', 'export']"
+		actions-adv="['toolbar-advanced-menu-enable','toolbar-advanced-menu-disable', 'toolbar-advanced-menu-select-all', 'toolbar-advanced-menu-delete']"
+		display-adv-on="list"></toolbar-buttons>
 </div>

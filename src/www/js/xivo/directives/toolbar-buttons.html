@@ -4,30 +4,16 @@
     aria-haspopup="true" aria-expanded="false" id="toolbar-bt-add">
     </button>
     <ul id="toolbar-add-menu" class="dropdown-menu">
-      <li><a href="./?act=add">{{'toolbar_add_menu_add' | translate}}</a></li>
-      <li><a href="./?act=import">{{'toolbar_add_menu_import-file' | translate}}</a></li>
-      <li><a href="./?act=update_import">{{'toolbar_add_menu_update_import' | translate}}</a></li>
-      <li><a href="./?act=export">{{'toolbar_add_menu_export' | translate}}</a></li>
+      <li ng-repeat="act in actions track by $index"><a href="./?act={{act}}">{{getLabelKey(act) | translate}}</a></li>
     </ul>
   </div>
 
-  <div class="btn-group sb-advanced-menu" ng-show="isList()">
+  <div class="btn-group sb-advanced-menu" ng-show="isListDisplayed()">
     <button type="button" class="glyphicon glyphicon-chevron-down btn btn-default btn-action dropdown-toggle" data-toggle="dropdown"
     aria-haspopup="true" aria-expanded="false" id="toolbar-bt-advanced">
     </button>
     <ul id="toolbar-advanced-menu" class="dropdown-menu">
-      <li>
-        <a href="#" id="toolbar-advanced-menu-enable">{{'toolbar_adv_menu_enable' | translate}}</a>
-      </li>
-      <li>
-        <a href="#" id="toolbar-advanced-menu-disable">{{'toolbar_adv_menu_disable' | translate}}</a>
-      </li>
-      <li>
-        <a href="#" id="toolbar-advanced-menu-select-all">{{'toolbar_adv_menu_select-all' | translate}}</a>
-      </li>
-      <li>
-        <a href="#" id="toolbar-advanced-menu-delete">{{'toolbar_adv_menu_delete' | translate}}</a>
-      </li>
+      <li ng-repeat="actAdv in actionsAdv track by $index"><a href="#" id={{actAdv}} >{{getLabelKey(actAdv) | translate}}</a></li>
     </ul>
   </div>
 </div>
