@@ -48,6 +48,6 @@ $dhtml->write_js($toolbar_js);
 						    'value'	=> 'list'));
 		?>
 		<toolbar-search></toolbar-search>
-		<toolbar-buttons></toolbar-buttons>
 	</form>
+	<toolbar-buttons></toolbar-buttons>
 </div>

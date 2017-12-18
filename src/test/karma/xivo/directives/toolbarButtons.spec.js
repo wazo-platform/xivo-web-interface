@@ -1,17 +1,15 @@
 describe('toolbar-buttons directive', () => {
   var $compile;
   var $rootScope;
-  var $location;
   var scope;
 
   beforeEach(angular.mock.module('karma-backend'));
   beforeEach(angular.mock.module('html-templates'));
   beforeEach(angular.mock.module('Xivo'));
 
-  beforeEach(angular.mock.inject((_$compile_, _$rootScope_, _$location_) =>{
+  beforeEach(angular.mock.inject((_$compile_, _$rootScope_) =>{
     $compile = _$compile_;
     $rootScope = _$rootScope_;
-    $location = _$location_;
 
     var elem = angular.element('<toolbar-buttons></toolbar-buttons>');
     scope = $rootScope.$new();
@@ -28,13 +26,17 @@ describe('toolbar-buttons directive', () => {
     expect(window.xivo_toolbar_init).toHaveBeenCalled();
   });
 
+  it('retrieves url parameters from window.location.search', () => {
+    expect(scope.parseParams("?param1=value1&param2=value2")).toEqual({param1:'value1', param2:'value2' });
+  });
+
   it('checks if we are listing entities', () => {
-    spyOn($location, 'search').and.returnValue({act: 'list'});
+    spyOn(scope, 'parseParams').and.returnValue({act: 'list'});
     expect(scope.isList()).toBe(true);
   });
 
   it('checks if we are editing entity', () => {
-    spyOn($location, 'search').and.returnValue({act: 'edit'});
+    spyOn(scope, 'parseParams').and.returnValue({act: 'edit'});
     expect(scope.isList()).toBe(false);
   });
 });
