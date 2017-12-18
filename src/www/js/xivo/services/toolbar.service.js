@@ -1,9 +1,15 @@
-export default function toolbar() {
+export default function toolbar($window) {
 
-  const _registerDwho = () => {
-    /* eslint-disable */
-    xivo_toolbar_init();
-    /* eslint-enable */
+  var searchValue;
+
+  const _registerDwho = (page) => {
+    $window.xivo_toolbar_init();
+    switch (page) {
+    case 'users': $window.xivo_toolbar_init_adv_delete();
+      break;
+    }
+
+    searchValue = $window.xivo_toolbar_fm_search;
   };
 
   const _parseParams = (search) => {
@@ -15,6 +21,10 @@ export default function toolbar() {
   const _isDisplayed = (searchParams, value) => {
     let params = _parseParams(searchParams);
     return params.act === value;
+  };
+
+  const _getSearchValue = () => {
+    return searchValue;
   };
 
   const _getLabelKey = (input) => {
@@ -33,6 +43,7 @@ export default function toolbar() {
     registerDwho : _registerDwho,
     parseParams : _parseParams,
     isDisplayed : _isDisplayed,
-    getLabelKey : _getLabelKey
+    getLabelKey : _getLabelKey,
+    getSearchValue : _getSearchValue
   };
 }

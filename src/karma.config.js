@@ -45,9 +45,9 @@ module.exports = function(config) {
 
     webpack: webpackConfig,
 
-    // webpackMiddleware: {
-    //   noInfo: 'errors-only'
-    // },
+    webpackMiddleware: {
+      noInfo: 'errors-only'
+    },
 
     ngHtml2JsPreprocessor: {
       stripPrefix: 'www',

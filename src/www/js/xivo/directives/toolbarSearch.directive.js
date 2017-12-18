@@ -4,9 +4,13 @@ export default function toolbarSearch($window, toolbar) {
     restrict: 'E',
     templateUrl: '/js/xivo/directives/toolbar-search.html',
     scope: {
-      displayOn: '@',
+      displayOn: '@'
     },
     link: (scope) => {
+
+      scope.getSearchValue = () => {
+        return toolbar.getSearchValue();
+      };
 
       scope.isDisplayed = () => {
         return toolbar.isDisplayed($window.location.search, scope.displayOn);

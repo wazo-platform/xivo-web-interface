@@ -47,9 +47,35 @@ $dhtml->write_js($toolbar_js);
 				$form->hidden(array('name'	=> 'act',
 						    'value'	=> 'list'));
 		?>
-		<toolbar-search></toolbar-search>
+		<toolbar-search search-value=xivo_toolbar_fm_search></toolbar-search>
 	</form>
 	<toolbar-buttons actions="['add', 'import', 'update_import', 'export']"
 		actions-adv="['toolbar-advanced-menu-enable','toolbar-advanced-menu-disable', 'toolbar-advanced-menu-select-all', 'toolbar-advanced-menu-delete']"
-		display-adv-on="list"></toolbar-buttons>
+		display-adv-on="list" page='users'></toolbar-buttons>
 </div>
+
+<script type="text/javascript">
+var xivo_toolbar_init_adv_delete = function()
+{
+	dwho.dom.remove_event('click',
+    dwho_eid('toolbar-advanced-menu-delete'),
+    xivo_toolbar_fn_adv_menu_delete);
+
+	dwho.dom.add_event('click',
+   dwho_eid('toolbar-advanced-menu-delete'),
+   function(e)
+   {
+		 if(dwho_is_function(e.preventDefault) === true)
+			e.preventDefault();
+
+			if(confirm(xivo_toolbar_adv_menu_delete_confirm) === true)
+			{
+				if(dwho_is_undef(dwho.fm[xivo_toolbar_form_name]['search']) === false)
+				dwho.fm[xivo_toolbar_form_name]['search'].value = xivo_toolbar_fm_search;
+
+				dwho.fm[xivo_toolbar_form_name]['act'].value = 'deletes';
+				dwho.fm[xivo_toolbar_form_name].submit();
+			}
+	 });
+};
+</script>

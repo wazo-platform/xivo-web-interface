@@ -13,7 +13,7 @@
     aria-haspopup="true" aria-expanded="false" id="toolbar-bt-advanced">
     </button>
     <ul id="toolbar-advanced-menu" class="dropdown-menu">
-      <li ng-repeat="actAdv in actionsAdv track by $index" on-finish-render="ngRepeatActionsAdvFinished">
+      <li ng-repeat="actAdv in actionsAdv track by $index" on-finish-render="{{page}}ActionsAdv">
         <a href="#" id={{actAdv}} >{{getLabelKey(actAdv) | translate}}</a>
       </li>
     </ul>
