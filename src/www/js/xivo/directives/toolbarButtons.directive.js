@@ -19,8 +19,8 @@ export default function toolbarButtons($window, toolbar) {
         return toolbar.getLabelKey(action);
       };
 
-      scope.$on('usersActionsAdv', () => {
-        toolbar.registerDwho('users');
+      scope.$on(scope.page+'Actions', () => {
+        toolbar.registerDwho(scope.page);
       });
     }
   };

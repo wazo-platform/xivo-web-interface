@@ -13,7 +13,12 @@ export default function toolbarSearch($window, toolbar) {
       };
 
       scope.isDisplayed = () => {
-        return toolbar.isDisplayed($window.location.search, scope.displayOn);
+        if (angular.isUndefined(scope.displayOn)) {
+          return true;
+        }
+        else {
+          return toolbar.isDisplayed($window.location.search, scope.displayOn);
+        }
       };
     }
   };
