@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright 2006-2017 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -1542,7 +1542,7 @@ abstract class dwho_datastorage_adapter_abstract_sql extends dwho_datastorage_ad
 		return($this->_expr_typetime('date',$column,$time,$this->_date['date'],$table));
 	}
 
-	function time_from_date($column='',$time='',$table='',$table='')
+	function time_from_date($column='',$time='',$table='')
 	{
 		return($this->_expr_typetime('date',$column,$time,$this->_date['time'],$table));
 	}
