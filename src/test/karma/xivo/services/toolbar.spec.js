@@ -1,19 +1,22 @@
 describe('toolbar service', () => {
+  var $window;
   var toolbar;
 
   beforeEach(angular.mock.module('karma-backend'));
   beforeEach(angular.mock.module('html-templates'));
   beforeEach(angular.mock.module('Xivo'));
 
-  beforeEach(angular.mock.inject((_toolbar_) =>{
+  beforeEach(angular.mock.inject((_toolbar_, _$window_) =>{
+    $window = _$window_;
     toolbar = _toolbar_;
-    spyOn(window, 'xivo_toolbar_init');
+    spyOn($window, 'xivo_toolbar_init');
   }));
 
   it('init dwho implementation when instantiated', () => {
     toolbar.registerDwho();
     expect(window.xivo_toolbar_init).toHaveBeenCalled();
   });
+
 
   it('retrieves url parameters from window.location.search', () => {
     expect(toolbar.parseParams("?param1=value1&param2=value2")).toEqual({param1:'value1', param2:'value2' });

@@ -1,19 +1,21 @@
 <div class="form-group">
-  <div class="btn-group sb-advanced-menu">
+  <div class="btn-group sb-advanced-menu" ng-if="actions">
     <button type="button" class="glyphicon glyphicon-plus btn btn-default btn-action dropdown-toggle" data-toggle="dropdown"
     aria-haspopup="true" aria-expanded="false" id="toolbar-bt-add">
     </button>
     <ul id="toolbar-add-menu" class="dropdown-menu">
-      <li ng-repeat="act in actions track by $index"><a href="./?act={{act}}">{{getLabelKey(act) | translate}}</a></li>
+      <li ng-repeat="act in actions track by $index" on-finish-render="{{page}}Actions">
+        <a href="./?act={{act}}">{{getLabelKey(act, page) | translate}}</a>
+      </li>
     </ul>
   </div>
 
-  <div class="btn-group sb-advanced-menu" ng-show="isListDisplayed()">
+  <div class="btn-group sb-advanced-menu" ng-show="isListDisplayed()" ng-if="actionsAdv">
     <button type="button" class="glyphicon glyphicon-chevron-down btn btn-default btn-action dropdown-toggle" data-toggle="dropdown"
     aria-haspopup="true" aria-expanded="false" id="toolbar-bt-advanced">
     </button>
     <ul id="toolbar-advanced-menu" class="dropdown-menu">
-      <li ng-repeat="actAdv in actionsAdv track by $index" on-finish-render="ngRepeatActionsAdvFinished">
+      <li ng-repeat="actAdv in actionsAdv track by $index">
         <a href="#" id={{actAdv}} >{{getLabelKey(actAdv) | translate}}</a>
       </li>
     </ul>
