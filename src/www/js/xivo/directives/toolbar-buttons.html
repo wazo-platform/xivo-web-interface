@@ -1,13 +1,20 @@
 <div class="form-group">
   <div class="btn-group sb-advanced-menu" ng-if="actions">
-    <button type="button" class="glyphicon glyphicon-plus btn btn-default btn-action dropdown-toggle" data-toggle="dropdown"
-    aria-haspopup="true" aria-expanded="false" id="toolbar-bt-add">
-    </button>
-    <ul id="toolbar-add-menu" class="dropdown-menu">
-      <li ng-repeat="act in actions track by $index" on-finish-render="{{page}}Actions">
-        <a href="./?act={{act}}{{getOtherParams()}}">{{getLabelKey(act, page) | translate}}</a>
-      </li>
-    </ul>
+    <div ng-if="actions.length == 1">
+      <a class="glyphicon glyphicon-plus btn btn-default btn-action"
+        ng-href="./?act=add{{getOtherParams()}}" ng-init="$last=true" on-finish-render="{{page}}ActionsLoaded">
+      </a>
+    </div>
+    <div ng-if="actions.length > 1">
+      <button type="button" class="glyphicon glyphicon-plus btn btn-default btn-action dropdown-toggle" data-toggle="dropdown"
+        aria-haspopup="true" aria-expanded="false" id="toolbar-bt-add">
+      </button>
+      <ul id="toolbar-add-menu" class="dropdown-menu">
+        <li ng-repeat="act in actions track by $index" on-finish-render="{{page}}ActionsLoaded">
+          <a ng-href="./?act={{act}}{{getOtherParams()}}">{{getLabelKey(act, page) | translate}}</a>
+        </li>
+      </ul>
+    </div>
   </div>
 
   <div class="btn-group sb-advanced-menu" ng-show="isListDisplayed()" ng-if="actionsAdv">
