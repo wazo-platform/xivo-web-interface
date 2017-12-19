@@ -33,7 +33,7 @@ $live = $this->get_var('live');
 ?>
 <div id="index" class="b-infos">
 	<div class="row">
-		<div class="col-sm-offset-1 col-sm-8"id="ipbx-logo">
+		<div class="col-sm-offset-1 col-sm-4 pull-left"id="ipbx-logo">
 			<?=$url->img_html('img/service/ipbx/asterisk.png',XIVO_SRE_IPBX_LABEL);?>
 			<ul>
 				<li><b><?=$this->bbf('info_service_label');?></b>
@@ -48,7 +48,7 @@ $live = $this->get_var('live');
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-sm-offset-1 col-sm-6" id="ipbx-stats-live">
+		<div class="col-sm-offset-1 col-sm-10" id="ipbx-stats-live">
 			<table class="table table-condensed table-striped">
 					<tr class="sb-top">
 						<th class="th-left"><?=$this->bbf('stats_col_type');?></th>
@@ -310,7 +310,7 @@ $live = $this->get_var('live');
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-sm-offset-1 col-sm-6" id="ipbx-stats-live">
+		<div class="col-sm-offset-1 col-sm-10" id="ipbx-stats-live">
 			<table class="table table-condensed">
 				<tr class="sb-top">
 					<th class="th-left"><?=$this->bbf('stats_col_status');?></th>
