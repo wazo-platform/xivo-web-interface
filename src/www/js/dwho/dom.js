@@ -27,12 +27,10 @@ dwho.dom.eids = {};
 dwho.dom.table_list = {};
 dwho.dom.callback_onload = [];
 
-dwho.dom.eid = function(id,forcereload)
+dwho.dom.eid = function(id)
 {
-    if(Boolean(forcereload) === false && dwho_is_undef(dwho.dom.eids[id]) === false)
-        return(dwho.dom.eids[id]);
-    else if((get = document.getElementById(id)))
-        return((dwho.dom.eids[id] = get));
+    if((get = document.getElementById(id)))
+        return(get);
 
     return(false);
 };

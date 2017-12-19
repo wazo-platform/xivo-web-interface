@@ -1567,12 +1567,9 @@ class dwho_tpl_form extends dwho_tpl_module
 	function input_for_ms($name,$str)
 	{
 		$divid = 'it-'.$name.'-finder';
-		$r = '<center style="margin:5px;">';
-		$r .= '<input type="text" name="'.$name.'" id="'.$divid.'" value="'.$str.'" />';
-		$r .= '</center>';
-		$r .= "\n\n<script type=\"text/javascript\">
-		dwho.form.set_events_text_helper('$divid');
-		</script>\n\n";
+		$r = '<div class="select-finder form-group-sm from-inline">';
+		$r .= '<input class="form-control" type="text" name="'.$name.'" id="'.$divid.'" value="'.$str.'" />';
+		$r .= '</div>';
 		return $r;
 	}
 
