@@ -75,19 +75,3 @@ endif;
 	<toolbar-buttons actions-adv="['toolbar-advanced-menu-select-all', 'toolbar-advanced-menu-delete-agents']"
 		display-adv-on="listagent" page='agents'></toolbar-buttons>
 </div>
-
-<script type="text/javascript">
-var xivo_toolbar_init_toolbar_linked = function()
-{
-	dwho.dom.add_event('change',
-			   dwho_eid('it-toolbar-linked'),
-			   function(e)
-			   {
-				if(xivo_toolbar_fm_search === ''
-				&& dwho_has_len(dwho.form.text_helper['it-toolbar-search']) === false)
-					this.form['search'].value = '';
-
-				this.form.submit();
-			   });
-};
-</script>

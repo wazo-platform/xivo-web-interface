@@ -138,3 +138,41 @@ var xivo_toolbar_init = function() {
              dwho_eid('toolbar-advanced-menu-delete-agents'),
              xivo_toolbar_fn_adv_menu_delete_agents);
 }
+
+var xivo_toolbar_init_adv_delete = function()
+{
+	dwho.dom.remove_event('click',
+    dwho_eid('toolbar-advanced-menu-delete'),
+    xivo_toolbar_fn_adv_menu_delete);
+
+	dwho.dom.add_event('click',
+   dwho_eid('toolbar-advanced-menu-delete'),
+   function(e)
+   {
+		 if(dwho_is_function(e.preventDefault) === true)
+			e.preventDefault();
+
+			if(confirm(xivo_toolbar_adv_menu_delete_confirm) === true)
+			{
+				if(dwho_is_undef(dwho.fm[xivo_toolbar_form_name]['search']) === false)
+				dwho.fm[xivo_toolbar_form_name]['search'].value = xivo_toolbar_fm_search;
+
+				dwho.fm[xivo_toolbar_form_name]['act'].value = 'deletes';
+				dwho.fm[xivo_toolbar_form_name].submit();
+			}
+	 });
+}
+
+var xivo_toolbar_init_toolbar_linked = function()
+{
+	dwho.dom.add_event('change',
+			   dwho_eid('it-toolbar-linked'),
+			   function(e)
+			   {
+				if(xivo_toolbar_fm_search === ''
+				&& dwho_has_len(dwho.form.text_helper['it-toolbar-search']) === false)
+					this.form['search'].value = '';
+
+				this.form.submit();
+			   });
+};
