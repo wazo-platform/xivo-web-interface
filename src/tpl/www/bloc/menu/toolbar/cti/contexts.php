@@ -31,6 +31,4 @@ $dhtml->write_js($toolbar_js);
 ?>
 <script type="text/javascript" src="<?=$this->file_time($this->url('js/xivo_toolbar.js'));?>"></script>
 
-<toolbar-buttons actions="['add']"
-	actions-adv="['toolbar-advanced-menu-enable','toolbar-advanced-menu-disable', 'toolbar-advanced-menu-select-all', 'toolbar-advanced-menu-delete']"
-	display-adv-on="list"></toolbar-buttons>
+<toolbar-buttons actions="['add']"></toolbar-buttons>
