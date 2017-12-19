@@ -193,7 +193,7 @@ endif;
 
 ?>
 <script type="text/javascript">
-dwho.dom.set_onload(function()
+var xivo_toolbar_init_toolbar-linked = function()
 {
 	dwho.dom.add_event('change',
 			   dwho_eid('it-toolbar-linked'),

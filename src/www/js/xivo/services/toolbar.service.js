@@ -7,6 +7,7 @@ export default function toolbar($window) {
     switch (page) {
     case 'users': $window.xivo_toolbar_init_adv_delete();
       break;
+    case 'agents': $window.xivo_toolbar_init_toolbar_linked();
     }
 
     searchValue = $window.xivo_toolbar_fm_search;

@@ -5,7 +5,7 @@
     </button>
     <ul id="toolbar-add-menu" class="dropdown-menu">
       <li ng-repeat="act in actions track by $index" on-finish-render="{{page}}Actions">
-        <a href="./?act={{act}}">{{getLabelKey(act, page) | translate}}</a>
+        <a href="./?act={{act}}{{getOtherParams()}}">{{getLabelKey(act, page) | translate}}</a>
       </li>
     </ul>
   </div>

@@ -65,7 +65,9 @@ module.exports = {
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery',
-      "window.jQuery":"jquery"
+      "window.jQuery":"jquery",
+      "window._": "lodash",
+      _: 'lodash'
     }),
     new webpack.optimize.CommonsChunkPlugin({ name: 'vendor', filename: 'www/js/vendor.bundle.js' }),
     new ExtractTextPlugin({

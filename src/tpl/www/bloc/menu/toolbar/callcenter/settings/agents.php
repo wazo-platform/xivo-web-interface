@@ -77,7 +77,7 @@ endif;
 </div>
 
 <script type="text/javascript">
-dwho.dom.set_onload(function()
+var xivo_toolbar_init_toolbar_linked = function()
 {
 	dwho.dom.add_event('change',
 			   dwho_eid('it-toolbar-linked'),
@@ -89,5 +89,5 @@ dwho.dom.set_onload(function()
 
 				this.form.submit();
 			   });
-});
+};
 </script>
