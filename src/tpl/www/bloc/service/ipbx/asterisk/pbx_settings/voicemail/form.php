@@ -293,7 +293,6 @@ function build_row($option, $form, $url, $helper) {
 					"minsecs",
 					"moveheard",
 					"nextaftercmd",
-					"operator",
 					"passwordlocation",
 					"review",
 					"saycid",

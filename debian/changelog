@@ -3,6 +3,7 @@ xivo-web-interface (2018.01.00) xivo-aldebaran; urgency=medium
   * Refresh web interface
   * 1565 Disable CC Agent and CC Manager in Xivo UC
   * 1418 Deactivate enablexfer for new users
+  * 1603 Remove operator option from voicemail
 
  -- Jean-Yves Lebleu <jylebleu@avencall.com>  Fri, 08 Dec 2017 10:12:17 +0100
 
