@@ -5,7 +5,14 @@ export default function toolbar($window) {
   const _registerDwho = (page) => {
     $window.xivo_toolbar_init();
     switch (page) {
+    case 'queueskillrules':
     case 'users': $window.xivo_toolbar_init_adv_delete();
+      break;
+    case 'queueskills':
+      $window.xivo_toolbar_init_adv_delete(true);
+      $window.xivo_toolbar_init_toolbar_change('it-toolbar-context');
+      break;
+    case 'agents': $window.xivo_toolbar_init_toolbar_change('it-toolbar-linked');
       break;
     }
 

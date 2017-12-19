@@ -41,6 +41,13 @@ $this->file_include('bloc/head');
 ?>
 	</div>
 	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" id="bc-content">
+		<div id=messages>
+			<?php if (dwho_report::has('error') === true) : echo dwho_report::get_message('error'); endif; ?>
+			<?php if (dwho_report::has('warning') === true) : echo dwho_report::get_message('warning'); endif; ?>
+			<?php if (dwho_report::has('info') === true) : echo dwho_report::get_message('info'); endif; ?>
+			<?php if (dwho_report::has('notice') === true) : echo dwho_report::get_message('notice'); endif; ?>
+			<?php if (dwho_report::has('debug') === true) : echo dwho_report::get_message('debug'); endif; ?>
+		</div>
 		<div id="tooltips"></div>
 		<div id="toolbar">
 			<?php

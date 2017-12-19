@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 export default function toolbarButtons($window, toolbar) {
 
   return {
@@ -10,6 +12,15 @@ export default function toolbarButtons($window, toolbar) {
       actionsAdv: '='
     },
     link: (scope) => {
+      scope.page = angular.isDefined(scope.page) ? scope.page : 'generic';
+
+      scope.getOtherParams = () => {
+        let params = _.omit(toolbar.parseParams($window.location.search), 'act');
+
+        return  _.reduce(params, function(result, value, key) {
+          return result += '&' + key + '=' + value;
+        }, '');
+      };
 
       scope.isListDisplayed = () => {
         return toolbar.isDisplayed($window.location.search, scope.displayAdvOn);
@@ -19,7 +30,7 @@ export default function toolbarButtons($window, toolbar) {
         return toolbar.getLabelKey(action);
       };
 
-      scope.$on(scope.page+'Actions', () => {
+      scope.$on(scope.page+'ActionsLoaded', () => {
         toolbar.registerDwho(scope.page);
       });
     }

@@ -50,9 +50,3 @@ $menu = &$this->get_module('menu');
 	</ul>
 	<?php $this->file_include('bloc/menu/top/user/loginbox'); ?>
 </div>
-
-<?php if (dwho_report::has('error') === true) : echo dwho_report::get_message('error'); endif; ?>
-<?php if (dwho_report::has('warning') === true) : echo dwho_report::get_message('warning'); endif; ?>
-<?php if (dwho_report::has('info') === true) : echo dwho_report::get_message('info'); endif; ?>
-<?php if (dwho_report::has('notice') === true) : echo dwho_report::get_message('notice'); endif; ?>
-<?php if (dwho_report::has('debug') === true) : echo dwho_report::get_message('debug'); endif; ?>

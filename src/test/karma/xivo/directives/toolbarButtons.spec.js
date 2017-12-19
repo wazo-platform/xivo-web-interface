@@ -40,4 +40,9 @@ describe('toolbar-buttons directive', () => {
     expect(toolbar.getLabelKey).toHaveBeenCalledWith('add');
   });
 
+  it('builds params list without act param in it', () => {
+    spyOn(toolbar, 'parseParams').and.returnValue({act:'list', group: 3, something: 'else'});
+    expect(isolatedScope.getOtherParams()).toBe('&group=3&something=else');
+  });
+
 });

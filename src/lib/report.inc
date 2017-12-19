@@ -97,8 +97,16 @@ abstract class dwho_report {
 
 		krsort($self);
 
+		$class_type = $type;
+		if ($class_type == 'notice' || $class_type == 'debug') {
+			$class_type = 'info';
+		}
+		if ($class_type == 'error') {
+			$class_type = 'danger';
+		}
+
 		$return = '';
-		$return .= '<div id="report-xivo-'.$type.'" class="xivo-'.$type.' xivo-messages">';
+		$return .= '<div id="report-xivo-'.$type.'" class="alert alert-'.$class_type.' xivo-'.$type.' xivo-messages">';
 		$return .= '<ul>';
 		foreach($self as $k => $v)
 		{
