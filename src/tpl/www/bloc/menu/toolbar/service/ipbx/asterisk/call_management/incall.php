@@ -47,4 +47,4 @@ $dhtml->write_js($toolbar_js);
 </form>
 <toolbar-buttons actions="['add']"
 	actions-adv="['toolbar-advanced-menu-enable','toolbar-advanced-menu-disable', 'toolbar-advanced-menu-select-all', 'toolbar-advanced-menu-delete']"
-	display-adv-on="list" page='users'></toolbar-buttons>
+	display-adv-on="list"></toolbar-buttons>
