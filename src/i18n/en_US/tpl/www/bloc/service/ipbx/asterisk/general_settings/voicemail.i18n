@@ -85,12 +85,6 @@ Review / record again a message:
 ; hlp_fm_voicemail-review
 Asterisk config: review
 
-; fm_voicemail-operator
-Get transfered to an operator:
-
-; hlp_fm_voicemail-operator
-Asterisk config: operator
-
 ; fm_voicemail-format
 Recording formats:
 
