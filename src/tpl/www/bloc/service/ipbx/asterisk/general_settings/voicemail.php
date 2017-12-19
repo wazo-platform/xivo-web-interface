@@ -123,14 +123,7 @@ endif;
 											'labelid'	=> 'voicemail-review',
 											'help'	=> $this->bbf('hlp_fm_voicemail-review'),
 											'checked'	=> $this->get_var('voicemail','review','var_val'),
-											'default'	=> $element['voicemail']['review']['default'])),
-
-						$form->checkbox(array('desc'	=> $this->bbf('fm_voicemail-operator'),
-											'name'	=> 'voicemail[operator]',
-											'labelid'	=> 'voicemail-operator',
-											'help'	=> $this->bbf('hlp_fm_voicemail-operator'),
-											'checked'	=> $this->get_var('voicemail','operator','var_val'),
-											'default'	=> $element['voicemail']['operator']['default']));
+											'default'	=> $element['voicemail']['review']['default']));
 
 				?>
 				<fieldset id="fld-codeclist">

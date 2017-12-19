@@ -8,7 +8,12 @@ export default function toolbar($window) {
     case 'queueskillrules':
     case 'users': $window.xivo_toolbar_init_adv_delete();
       break;
-    case 'agents': $window.xivo_toolbar_init_toolbar_linked();
+    case 'queueskills':
+      $window.xivo_toolbar_init_adv_delete(true);
+      $window.xivo_toolbar_init_toolbar_change('it-toolbar-context');
+      break;
+    case 'agents': $window.xivo_toolbar_init_toolbar_change('it-toolbar-linked');
+      break;
     }
 
     searchValue = $window.xivo_toolbar_fm_search;

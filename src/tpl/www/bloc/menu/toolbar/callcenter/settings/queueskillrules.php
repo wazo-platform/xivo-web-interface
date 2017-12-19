@@ -48,4 +48,4 @@ $dhtml->write_js($toolbar_js);
 	<toolbar-search display-on="list"></toolbar-search>
 </form>
 <toolbar-buttons actions="['add']" actions-adv="['toolbar-advanced-menu-select-all', 'toolbar-advanced-menu-delete']"
-	display-adv-on="list" page='users'></toolbar-buttons>
+	display-adv-on="list" page='queueskillrules'></toolbar-buttons>

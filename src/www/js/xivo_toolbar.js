@@ -139,7 +139,7 @@ var xivo_toolbar_init = function() {
              xivo_toolbar_fn_adv_menu_delete_agents);
 }
 
-var xivo_toolbar_init_adv_delete = function()
+var xivo_toolbar_init_adv_delete = function(withContext)
 {
 	dwho.dom.remove_event('click',
     dwho_eid('toolbar-advanced-menu-delete'),
@@ -157,16 +157,21 @@ var xivo_toolbar_init_adv_delete = function()
 				if(dwho_is_undef(dwho.fm[xivo_toolbar_form_name]['search']) === false)
 				dwho.fm[xivo_toolbar_form_name]['search'].value = xivo_toolbar_fm_search;
 
+        if (withContext) {
+          if(dwho_is_undef(dwho.fm[xivo_toolbar_form_name]['context']) === false)
+            dwho.fm[xivo_toolbar_form_name]['context'].value = xivo_toolbar_fm_context;
+        }
+
 				dwho.fm[xivo_toolbar_form_name]['act'].value = 'deletes';
 				dwho.fm[xivo_toolbar_form_name].submit();
 			}
 	 });
 }
 
-var xivo_toolbar_init_toolbar_linked = function()
+var xivo_toolbar_init_toolbar_change = function(item)
 {
 	dwho.dom.add_event('change',
-			   dwho_eid('it-toolbar-linked'),
+			   dwho_eid(item),
 			   function(e)
 			   {
 				if(xivo_toolbar_fm_search === ''
@@ -175,4 +180,4 @@ var xivo_toolbar_init_toolbar_linked = function()
 
 				this.form.submit();
 			   });
-};
+}
