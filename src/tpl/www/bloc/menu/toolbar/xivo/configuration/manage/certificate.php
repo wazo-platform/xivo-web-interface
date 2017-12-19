@@ -30,45 +30,6 @@ $dhtml->write_js($toolbar_js);
 
 ?>
 <script type="text/javascript" src="<?=$this->file_time($this->url('js/xivo_toolbar.js'));?>"></script>
-<?php
-	echo $url->img_html('img/menu/top/toolbar/bt-add.gif',
-				       $this->bbf('toolbar_opt_add'),
-				       'id="toolbar-bt-add"
-					border="0"');
-?>
-<div class="sb-advanced-menu">
-	<ul id="toolbar-add-menu">
-		<li><?=$url->href_html($this->bbf('toolbar_add_menu_add'),
-				       'xivo/configuration/manage/certificate',
-				       'act=add');?></li>
-		<li><?=$url->href_html($this->bbf('toolbar_add_menu_import'),
-				       'xivo/configuration/manage/certificate',
-				       'act=import');?></li>
-	</ul>
-</div><?php
-
-if($this->get_var('act') === 'list'):
-	echo	$url->img_html('img/menu/top/toolbar/bt-more.gif',
-			       $this->bbf('toolbar_opt_advanced'),
-			       'id="toolbar-bt-advanced"
-				border="0"');
-?>
-<div class="sb-advanced-menu">
-	<ul id="toolbar-advanced-menu">
-		<li>
-			<a href="#" id="toolbar-advanced-menu-select-all">
-				<?=$this->bbf('toolbar_adv_menu_select-all');?>
-			</a>
-		</li>
-		<li>
-			<a href="#" id="toolbar-advanced-menu-delete">
-				<?=$this->bbf('toolbar_adv_menu_delete');?>
-			</a>
-		</li>
-	</ul>
-</div>
-<?php
-
-endif;
-
-?>
+<toolbar-buttons actions="['add', 'import']"
+	actions-adv="['toolbar-advanced-menu-select-all', 'toolbar-advanced-menu-delete']"
+	display-adv-on="list"></toolbar-buttons>
