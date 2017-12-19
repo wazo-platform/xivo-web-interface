@@ -36,13 +36,15 @@ $dhtml->write_js($toolbar_js);
 <script type="text/javascript" src="<?=$this->file_time($this->url('js/xivo_toolbar.js'));?>"></script>
 
 <form action="#" method="post" accept-charset="utf-8">
-<?php
-	echo	$form->hidden(array('name'	=> DWHO_SESS_NAME,
-				    'value'	=> DWHO_SESS_ID)),
+	<?php
+		echo	$form->hidden(array('name'	=> DWHO_SESS_NAME,
+					    'value'	=> DWHO_SESS_ID)),
 
-		$form->hidden(array('name'	=> 'act',
-				    'value'	=> 'list'));
-?>
+			$form->hidden(array('name'	=> 'act',
+					    'value'	=> 'list'));
+	?>
+	<toolbar-search display-on="list"></toolbar-search>
+</form>
 <toolbar-buttons actions="['add']"
 	actions-adv="['toolbar-advanced-menu-enable','toolbar-advanced-menu-disable', 'toolbar-advanced-menu-select-all', 'toolbar-advanced-menu-delete']"
 	display-adv-on="list"></toolbar-buttons>
