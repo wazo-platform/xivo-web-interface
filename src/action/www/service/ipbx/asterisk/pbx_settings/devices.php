@@ -101,7 +101,6 @@ switch($act)
 		$element = $appdevice->get_elements();
 
 		$dhtml = &$_TPL->get_module('dhtml');
-		$dhtml->set_js('js/dwho/submenu.js');
 		$dhtml->set_js('js/service/ipbx/'.$ipbx->get_name().'/devices.js');
 
 		$_TPL->set_var('info',$result);
@@ -145,7 +144,6 @@ switch($act)
 		$appline = &$ipbx->get_application('line');
 		$list= $appline->get_lines_list(array("device"=>$_QR['id']),'','num');
 		$dhtml = &$_TPL->get_module('dhtml');
-		$dhtml->set_js('js/dwho/submenu.js');
 		$dhtml->set_js('js/service/ipbx/'.$ipbx->get_name().'/devices.js');
 
 		$_TPL->set_var('id',$_QR['id']);

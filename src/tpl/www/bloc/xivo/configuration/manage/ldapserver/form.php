@@ -76,7 +76,7 @@ $element = $this->get_var('element');
 			  $element['protocolversion']['value']);
 
 	?>
-	<div class="fm-paragraph fm-description">
+	<div class="col-sm-offset-2 fm-paragraph fm-description">
 		<p>
 			<label id="lb-description" for="it-description"><?=$this->bbf('fm_description');?></label>
 		</p>

@@ -35,7 +35,8 @@ $.widget("ui.multiselect", {
 		animated: 'fast',
 		show: 'slideDown',
 		hide: 'slideUp',
-		dividerLocation: 0.6,
+		dividerLocation: 0.5,
+		minimumHeight: 150,
 		onUpdate: null, // Define a callback function when a update
 		nodeComparator: function(node1,node2) {
 			var text1 = node1.text(), text2 = node2.text();
@@ -62,8 +63,8 @@ $.widget("ui.multiselect", {
 		this.availableContainer.width(Math.floor(this.element.width()*(1-this.options.dividerLocation)));
 
 		// fix list height to match <option> depending on their individual header's heights
-		this.selectedList.height(Math.max(this.element.height()-this.selectedActions.height(),1));
-		this.availableList.height(Math.max(this.element.height()-this.availableActions.height(),1));
+		this.selectedList.height(Math.max(this.element.height()-this.selectedActions.height(),this.options.minimumHeight));
+		this.availableList.height(Math.max(this.element.height()-this.availableActions.height(),this.options.minimumHeight));
 		
 		if ( !this.options.animated ) {
 			this.options.show = 'show';

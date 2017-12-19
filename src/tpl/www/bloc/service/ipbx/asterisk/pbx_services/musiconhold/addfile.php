@@ -32,7 +32,7 @@ $info = $this->get_var('info');
 		<span class="span-right">&nbsp;</span>
 	</h3>
 	<div class="sb-content">
-		<form action="#" enctype="multipart/form-data" method="post" accept-charset="utf-8">
+		<form class="form-horizontal" action="#" enctype="multipart/form-data" method="post" accept-charset="utf-8">
 <?php
 	echo	$form->hidden(array('name'	=> 'max_file_size',
 				    'value'	=> $option['file']['size'])),

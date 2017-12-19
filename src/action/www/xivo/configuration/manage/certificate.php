@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2015  Avencall
+# Copyright (C) 2006-2017  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -197,9 +197,6 @@ $_TPL->set_var('act'      , $act);
 $_TPL->set_var('contexts' , $contexts);
 $_TPL->set_var('error'    , $error);
 $_TPL->set_var('element'  , $modcert->get_element());
-
-$dhtml = &$_TPL->get_module('dhtml');
-$dhtml->set_js('js/dwho/submenu.js');
 
 $menu = &$_TPL->get_module('menu');
 $menu->set_top('top/user/'.$_USR->get_info('meta'));

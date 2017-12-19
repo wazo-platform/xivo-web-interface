@@ -25,7 +25,7 @@ $this->file_include('bloc/menu/top/user/loginbox');
 
 ?>
 <div id="toolbox">
-<div id="logo"><?=$url->img_html('img/menu/top/logo.gif',XIVO_SOFT_LABEL);?></div>
+<div id="logo"><?=$url->img_html('img/xivo/xivo_logo.png',XIVO_SOFT_LABEL);?></div>
 <div class="nav">
 	 <ul>
 <?php

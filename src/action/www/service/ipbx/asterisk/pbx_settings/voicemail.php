@@ -55,7 +55,6 @@ switch($act)
 		}
 
 		$dhtml = &$_TPL->get_module('dhtml');
-		$dhtml->set_js('js/dwho/submenu.js');
 
 		$_TPL->set_var('info',$result);
 		$_TPL->set_var('error',$error);
@@ -87,7 +86,6 @@ switch($act)
 				$_QRY->go($_TPL->url('service/ipbx/pbx_settings/voicemail'),$param);
 		}
 		$dhtml = &$_TPL->get_module('dhtml');
-		$dhtml->set_js('js/dwho/submenu.js');
 
 		$_TPL->set_var('id',$info['voicemail']['id']);
 		$_TPL->set_var('info',$return);

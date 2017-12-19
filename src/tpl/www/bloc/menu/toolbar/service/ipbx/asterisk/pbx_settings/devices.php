@@ -160,7 +160,7 @@ function autoprov_validate()
 </script>
 
 <div id="autoprov_dialog" class="dialog">
-	<table>
+	<table class="table">
 		<tbody>
 			<tr class="sb-top">
 				<th class="th-left"><span>&nbsp;</span></th>
@@ -193,7 +193,7 @@ endif;
 
 ?>
 <script type="text/javascript">
-dwho.dom.set_onload(function()
+var xivo_toolbar_init_toolbar-linked = function()
 {
 	dwho.dom.add_event('change',
 			   dwho_eid('it-toolbar-linked'),

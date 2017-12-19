@@ -70,7 +70,6 @@ $_TPL->set_var('element',$element);
 $_TPL->set_var('info', $info);
 
 $dhtml = &$_TPL->get_module('dhtml');
-$dhtml->set_js('js/dwho/submenu.js');
 
 $menu = &$_TPL->get_module('menu');
 $menu->set_top('top/user/'.$_USR->get_info('meta'));

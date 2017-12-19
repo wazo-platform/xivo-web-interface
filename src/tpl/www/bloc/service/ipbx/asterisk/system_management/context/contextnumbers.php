@@ -28,7 +28,7 @@ $nb = $this->get_var('count');
 $err = $this->get_var('error','contextnumbers',$type);
 
 ?>
-<table>
+<table class="table">
 	<thead>
 	<tr class="sb-top">
 		<th class="th-left"><?=$this->bbf('col_contextnumbers_'.$type.'-numberbeg');?></th>

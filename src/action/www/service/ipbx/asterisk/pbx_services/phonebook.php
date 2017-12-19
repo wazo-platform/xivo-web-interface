@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2017  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -62,9 +62,6 @@ switch($act)
 		if(dwho_issa('phonebooknumber',$result) === false || empty($result['phonebooknumber']) === true)
 			$result['phonebooknumber'] = null;
 
-		$dhtml = &$_TPL->get_module('dhtml');
-		$dhtml->set_js('js/dwho/submenu.js');
-
 		$_TPL->set_var('info'   ,$result);
 		$_TPL->set_var('error'  ,$error);
 		$_TPL->set_var('fm_save',$fm_save);
@@ -103,9 +100,6 @@ switch($act)
 
 		if(dwho_issa('phonebooknumber',$return) === false || empty($return['phonebooknumber']) === true)
 			$return['phonebooknumber'] = null;
-
-		$dhtml = &$_TPL->get_module('dhtml');
-		$dhtml->set_js('js/dwho/submenu.js');
 
 		$_TPL->set_var('id'              , $info['phonebook']['id']);
 		$_TPL->set_var('info'            , $return);
@@ -159,9 +153,6 @@ switch($act)
 		$nbbypage = XIVO_SRE_IPBX_AST_NBBYPAGE;
 
 		$order = array();
-		//$order['displayname'] = SORT_ASC;
-		//$order['firstname'] = SORT_ASC;
-		//$order['lastname'] = SORT_ASC;
 		$order[$sort[1]] = $sort[0];
 
 		$limit = array();

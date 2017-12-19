@@ -78,7 +78,6 @@ switch($act)
 		
 		$dhtml = &$_TPL->get_module('dhtml');
 		$dhtml->set_js('js/service/ipbx/'.$ipbx->get_name().'/paging.js');
-		$dhtml->set_js('js/dwho/submenu.js');
 		$dhtml->load_js_multiselect_files();
 
 		$_TPL->set_var('paginguser',$paginguser);
@@ -140,7 +139,6 @@ switch($act)
 		
 		$dhtml = &$_TPL->get_module('dhtml');
 		$dhtml->set_js('js/service/ipbx/'.$ipbx->get_name().'/paging.js');
-		$dhtml->set_js('js/dwho/submenu.js');
 		$dhtml->load_js_multiselect_files();
 
 		$_TPL->set_var('id', $info['paging']['id']);

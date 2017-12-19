@@ -61,7 +61,6 @@ switch($act)
 		$_TPL->set_var('fm_save',$fm_save);
 
 		$dhtml = &$_TPL->get_module('dhtml');
-		$dhtml->set_js('js/dwho/submenu.js');
 		$dhtml->set_js('js/jscolor/jscolor.js');
 		break;
 
@@ -96,7 +95,6 @@ switch($act)
 		$_TPL->set_var('fm_save',$fm_save);
 
 		$dhtml = &$_TPL->get_module('dhtml');
-		$dhtml->set_js('js/dwho/submenu.js');
 		$dhtml->set_js('js/jscolor/jscolor.js');
 		break;
 
@@ -240,7 +238,6 @@ switch($act)
 		$_TPL->set_var('fm_save',$fm_save);
 
 		$dhtml = &$_TPL->get_module('dhtml');
-		$dhtml->set_js('js/dwho/submenu.js');
 		$dhtml->set_js('js/jscolor/jscolor.js');
 		break;
 
@@ -318,7 +315,6 @@ switch($act)
 		$_TPL->set_var('fm_save',$fm_save);
 
 		$dhtml = &$_TPL->get_module('dhtml');
-		$dhtml->set_js('js/dwho/submenu.js');
 		$dhtml->set_js('js/jscolor/jscolor.js');
 		break;
 

@@ -29,12 +29,8 @@ $info = $this->get_var('info');
 		<span class="span-right">&nbsp;</span>
 	</h3>
 
-<?php
-	$this->file_include('bloc/callcenter/settings/agents/submenuagent');
-?>
-
 	<div class="sb-content">
-		<form action="#" method="post" accept-charset="utf-8" onsubmit="dwho.form.select('it-queue');">
+		<form class="form-horizontal"  action="#" method="post" accept-charset="utf-8" onsubmit="dwho.form.select('it-queue');">
 <?php
 		echo	$form->hidden(array('name'	=> DWHO_SESS_NAME,
 					    'value'	=> DWHO_SESS_ID)),

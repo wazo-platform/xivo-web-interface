@@ -101,3 +101,10 @@ location /xuc/ {
     proxy_send_timeout 60m;
 }
 
+location /ccagent {
+    deny all;
+}
+
+location /ccmanager {
+    deny all;
+}

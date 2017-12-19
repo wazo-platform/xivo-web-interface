@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2016 Avencall
+# Copyright (C) 2006-2017 Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -145,7 +145,6 @@ switch($act)
 		$dhtml->set_js('js/service/ipbx/'.$ipbx->get_name().'/dialaction.js');
 		$dhtml->set_js('js/service/ipbx/'.$ipbx->get_name().'/callerid.js');
 		$dhtml->set_js('js/service/ipbx/'.$ipbx->get_name().'/queues.js');
-		$dhtml->set_js('js/dwho/submenu.js');
 		$dhtml->load_js_multiselect_files();
 
 		$_TPL->set_var('info',$result);
@@ -275,7 +274,6 @@ switch($act)
 		$dhtml->set_js('js/service/ipbx/'.$ipbx->get_name().'/dialaction.js');
 		$dhtml->set_js('js/service/ipbx/'.$ipbx->get_name().'/callerid.js');
 		$dhtml->set_js('js/service/ipbx/'.$ipbx->get_name().'/queues.js');
-		$dhtml->set_js('js/dwho/submenu.js');
 		$dhtml->load_js_multiselect_files();
 
 		$_TPL->set_var('id',$info['queuefeatures']['id']);

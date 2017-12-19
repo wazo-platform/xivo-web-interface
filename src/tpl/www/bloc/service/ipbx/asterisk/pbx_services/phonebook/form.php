@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2017  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -25,101 +25,103 @@ $info = $this->get_var('info');
 $element = $this->get_var('element');
 
 ?>
-<div id="sb-part-first" class="b-nodisplay">
-<?php
-	echo	$form->select(array('desc'	=> $this->bbf('fm_phonebook_title'),
-				    'name'	=> 'phonebook[title]',
-				    'labelid'	=> 'phonebook-title',
-				    'key'	=> false,
-				    'bbf'	=> 'fm_phonebook_title-opt',
-				    'bbfopt'	=> array('argmode' => 'paramvalue'),
-				    'selected'	=> $info['phonebook']['title'],
-				    'default'	=> $element['phonebook']['title']['default']),
-			      $element['phonebook']['title']['value']),
+<uib-tabset active="active">
+	<uib-tab index="0" heading="<?=$this->bbf('smenu_general');?>">
+		<?php
+			echo	$form->select(array('desc'	=> $this->bbf('fm_phonebook_title'),
+								'name'	=> 'phonebook[title]',
+								'labelid'	=> 'phonebook-title',
+								'key'	=> false,
+								'bbf'	=> 'fm_phonebook_title-opt',
+								'bbfopt'	=> array('argmode' => 'paramvalue'),
+								'selected'	=> $info['phonebook']['title'],
+								'default'	=> $element['phonebook']['title']['default']),
+								$element['phonebook']['title']['value']),
 
-		$form->text(array('desc'	=> $this->bbf('fm_phonebook_firstname'),
-				  'name'	=> 'phonebook[firstname]',
-				  'labelid'	=> 'phonebook-firstname',
-				  'size'	=> 15,
-				  'default'	=> $element['phonebook']['firstname']['default'],
-				  'value'	=> $info['phonebook']['firstname'])),
+				$form->text(array('desc'	=> $this->bbf('fm_phonebook_firstname'),
+							'name'	=> 'phonebook[firstname]',
+							'labelid'	=> 'phonebook-firstname',
+							'size'	=> 15,
+							'default'	=> $element['phonebook']['firstname']['default'],
+							'value'	=> $info['phonebook']['firstname'])),
 
-		$form->text(array('desc'	=> $this->bbf('fm_phonebook_lastname'),
-				  'name'	=> 'phonebook[lastname]',
-				  'labelid'	=> 'phonebook-lastname',
-				  'size'	=> 15,
-				  'default'	=> $element['phonebook']['lastname']['default'],
-				  'value'	=> $info['phonebook']['lastname'])),
+				$form->text(array('desc'	=> $this->bbf('fm_phonebook_lastname'),
+							'name'	=> 'phonebook[lastname]',
+							'labelid'	=> 'phonebook-lastname',
+							'size'	=> 15,
+							'default'	=> $element['phonebook']['lastname']['default'],
+							'value'	=> $info['phonebook']['lastname'])),
 
-		$form->text(array('desc'	=> $this->bbf('fm_phonebook_displayname'),
-				  'name'	=> 'phonebook[displayname]',
-				  'labelid'	=> 'phonebook-displayname',
-				  'size'	=> 15,
-				  'error'	=> $this->bbf_args('error',
-						   $this->get_var('error', 'phonebook', 'displayname')),
-				  'default'	=> $element['phonebook']['displayname']['default'],
-				  'value'	=> $info['phonebook']['displayname'])),
+				$form->text(array('desc'	=> $this->bbf('fm_phonebook_displayname'),
+							'name'	=> 'phonebook[displayname]',
+							'labelid'	=> 'phonebook-displayname',
+							'size'	=> 15,
+							'error'	=> $this->bbf_args('error',
+									$this->get_var('error', 'phonebook', 'displayname')),
+							'default'	=> $element['phonebook']['displayname']['default'],
+							'value'	=> $info['phonebook']['displayname'])),
 
-		$form->text(array('desc'	=> $this->bbf('fm_phonebook_society'),
-				  'name'	=> 'phonebook[society]',
-				  'labelid'	=> 'phonebook-society',
-				  'size'	=> 15,
-				  'default'	=> $element['phonebook']['society']['default'],
-				  'value'	=> $info['phonebook']['society'])),
+				$form->text(array('desc'	=> $this->bbf('fm_phonebook_society'),
+							'name'	=> 'phonebook[society]',
+							'labelid'	=> 'phonebook-society',
+							'size'	=> 15,
+							'default'	=> $element['phonebook']['society']['default'],
+							'value'	=> $info['phonebook']['society'])),
 
-		$form->text(array('desc'	=> $this->bbf('fm_phonebooknumber_mobile'),
-				  'name'	=> 'phonebooknumber[mobile]',
-				  'labelid'	=> 'phonebooknumber-mobile',
-				  'size'	=> 15,
-				  'default'	=> $element['phonebooknumber']['number']['default'],
-				  'value'	=> $this->get_var('phonebooknumber','mobile','number'))),
+				$form->text(array('desc'	=> $this->bbf('fm_phonebooknumber_mobile'),
+							'name'	=> 'phonebooknumber[mobile]',
+							'labelid'	=> 'phonebooknumber-mobile',
+							'size'	=> 15,
+							'default'	=> $element['phonebooknumber']['number']['default'],
+							'value'	=> $this->get_var('phonebooknumber','mobile','number'))),
 
-		$form->text(array('desc'	=> $this->bbf('fm_phonebook_email'),
-				  'name'	=> 'phonebook[email]',
-				  'labelid'	=> 'phonebook-email',
-				  'size'	=> 15,
-				  'default'	=> $element['phonebook']['email']['default'],
-				  'value'	=> $info['phonebook']['email'])),
+				$form->text(array('desc'	=> $this->bbf('fm_phonebook_email'),
+							'name'	=> 'phonebook[email]',
+							'labelid'	=> 'phonebook-email',
+							'size'	=> 15,
+							'default'	=> $element['phonebook']['email']['default'],
+							'value'	=> $info['phonebook']['email'])),
 
-		$form->text(array('desc'	=> $this->bbf('fm_phonebook_url'),
-				  'name'	=> 'phonebook[url]',
-				  'labelid'	=> 'phonebook-url',
-				  'size'	=> 15,
-				  'default'	=> $element['phonebook']['url']['default'],
-				  'value'	=> $info['phonebook']['url']));
-?>
-	<div class="fm-paragraph fm-description">
-		<p>
-			<label id="lb-phonebook-description" for="it-phonebook-description"><?=$this->bbf('fm_phonebook_description');?></label>
-		</p>
-		<?=$form->textarea(array('paragraph'	=> false,
-					 'label'	=> false,
-					 'name'		=> 'phonebook[description]',
-					 'id'		=> 'it-phonebook-description',
-					 'cols'		=> 60,
-					 'rows'		=> 5,
-					 'default'	=> $element['phonebook']['description']['default']),
-				   $info['phonebook']['description']);?>
-	</div>
-</div>
+				$form->text(array('desc'	=> $this->bbf('fm_phonebook_url'),
+							'name'	=> 'phonebook[url]',
+							'labelid'	=> 'phonebook-url',
+							'size'	=> 15,
+							'default'	=> $element['phonebook']['url']['default'],
+							'value'	=> $info['phonebook']['url']));
+		?>
+		<div class="col-sm-offset-2 fm-paragraph fm-description">
+			<p>
+				<label id="lb-phonebook-description" for="it-phonebook-description"><?=$this->bbf('fm_phonebook_description');?></label>
+			</p>
+			<?=$form->textarea(array('paragraph'	=> false,
+						'label'	=> false,
+						'name'		=> 'phonebook[description]',
+						'id'		=> 'it-phonebook-description',
+						'cols'		=> 60,
+						'rows'		=> 5,
+						'default'	=> $element['phonebook']['description']['default']),
+						$info['phonebook']['description']);?>
+		</div>
+	</uib-tab>
 
-<div id="sb-part-office" class="b-nodisplay">
-<?php
-	$this->file_include('bloc/service/ipbx/asterisk/pbx_services/phonebook/type',
-			    array('type'	=> 'office'));
-?>
-</div>
+	<uib-tab index="1" heading="<?=$this->bbf('smenu_office');?>">
+		<?php
+			$this->file_include('bloc/service/ipbx/asterisk/pbx_services/phonebook/type',
+							array('type'	=> 'office'));
+		?>
+	</uib-tab>
 
-<div id="sb-part-home" class="b-nodisplay">
-<?php
-	$this->file_include('bloc/service/ipbx/asterisk/pbx_services/phonebook/type',
-			    array('type'	=> 'home'));
-?>
-</div>
+	<uib-tab index="2" heading="<?=$this->bbf('smenu_home');?>">
+		<?php
+			$this->file_include('bloc/service/ipbx/asterisk/pbx_services/phonebook/type',
+							array('type'	=> 'home'));
+		?>
+	</uib-tab>
 
-<div id="sb-part-last" class="b-nodisplay">
-<?php
-	$this->file_include('bloc/service/ipbx/asterisk/pbx_services/phonebook/type',
-			    array('type'	=> 'other'));
-?>
-</div>
+	<uib-tab index="3" heading="<?=$this->bbf('smenu_other');?>">
+		<?php
+			$this->file_include('bloc/service/ipbx/asterisk/pbx_services/phonebook/type',
+							array('type'	=> 'other'));
+		?>
+	</uib-tab>
+</uib-tabset>

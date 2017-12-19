@@ -96,7 +96,6 @@ if(dwho_issa('format',$element['voicemail']) === true
 
 $dhtml = &$_TPL->get_module('dhtml');
 $dhtml->set_js('js/service/ipbx/'.$ipbx->get_name().'/general.js');
-$dhtml->set_js('js/dwho/submenu.js');
 $dhtml->load_js_multiselect_files();
 
 $_TPL->set_var('fm_save',$fm_save);

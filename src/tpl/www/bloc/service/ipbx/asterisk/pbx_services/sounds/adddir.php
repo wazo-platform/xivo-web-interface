@@ -30,7 +30,7 @@ $element = $this->get_var('element');
 		<span class="span-right">&nbsp;</span>
 	</h3>
 	<div class="sb-content">
-		<form action="#" method="post" accept-charset="utf-8">
+		<form class="form-horizontal" action="#" method="post" accept-charset="utf-8">
 <?php
 	echo	$form->hidden(array('name'	=> DWHO_SESS_NAME,
 				    'value'	=> DWHO_SESS_ID)),

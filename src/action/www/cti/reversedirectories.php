@@ -76,7 +76,6 @@ $_TPL->set_var('fm_save'	, $fm_save);
 $_TPL->set_var('error'		, $error);
 
 $dhtml = &$_TPL->get_module('dhtml');
-$dhtml->set_js('js/dwho/submenu.js');
 $dhtml->set_js('js/jscolor/jscolor.js');
 $dhtml->load_js_multiselect_files();
 

@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2017  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,17 +22,6 @@ $dhtml = &$this->get_module('dhtml');
 $dhtml->load_js('foot');
 
 ?>
-		<h6 id="version-copyright">
-<?php
-		echo	XIVO_SOFT_LABEL,' - ',
-			XIVO_SOFT_VERSION,' | ',
-			$this->bbf('visit_for_information',
-				   '<a href="http://'.XIVO_SOFT_URL.'" title="'.XIVO_SOFT_LABEL.'" target="_blank">'.XIVO_SOFT_URL.'</a>'),' | ',
-			$this->bbf('info_copyright',
-				   array(2006,dwho_i18n::strftime_l('%Y',null),
-				   '<a href="http://'.XIVO_CORP_URL.'" title="'.XIVO_CORP_LABEL.'" target="_blank">'.XIVO_CORP_LABEL.'</a>'));
-?>
-		</h6>
 		<span id="page_loaded"></span>
 	</body>
 </html>

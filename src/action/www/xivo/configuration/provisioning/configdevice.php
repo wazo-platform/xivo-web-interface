@@ -50,7 +50,6 @@ switch($act)
 		$_TPL->set_var('element',$appprovdconfig->get_elements());
 
 		$dhtml = &$_TPL->get_module('dhtml');
-		$dhtml->set_js('js/dwho/submenu.js');
 		$dhtml->set_js('js/service/ipbx/asterisk/devices.js');
 		break;
 	case 'edit':
@@ -80,7 +79,6 @@ switch($act)
 		$_TPL->set_var('element',$appprovdconfig->get_elements());
 
 		$dhtml = &$_TPL->get_module('dhtml');
-		$dhtml->set_js('js/dwho/submenu.js');
 		$dhtml->set_js('js/service/ipbx/asterisk/devices.js');
 		break;
 	case 'delete':

@@ -81,7 +81,6 @@ switch($act)
 		$dhtml->set_js('js/service/ipbx/'.$ipbx->get_name().'/dialaction.js');
 		$dhtml->set_js('js/service/ipbx/'.$ipbx->get_name().'/callerid.js');
 		$dhtml->set_js('js/service/ipbx/'.$ipbx->get_name().'/callfilter.js');
-		$dhtml->set_js('js/dwho/submenu.js');
 		$dhtml->load_js_multiselect_files();
 		break;
 	case 'edit':
@@ -162,7 +161,6 @@ switch($act)
 		$dhtml->set_js('js/service/ipbx/'.$ipbx->get_name().'/dialaction.js');
 		$dhtml->set_js('js/service/ipbx/'.$ipbx->get_name().'/callerid.js');
 		$dhtml->set_js('js/service/ipbx/'.$ipbx->get_name().'/callfilter.js');
-		$dhtml->set_js('js/dwho/submenu.js');
 		$dhtml->load_js_multiselect_files();
 		break;
 	case 'delete':

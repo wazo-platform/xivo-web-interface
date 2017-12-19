@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2017  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -34,8 +34,9 @@ $preference = $this->get_var('preference');
 $yesno = array($this->bbf('no'), $this->bbf('yes'));
 
 ?>
+<uib-tabset active="active">
+<uib-tab index="0" heading="<?=$this->bbf('smenu_general');?>">
 
-<div id="sb-part-first" class="b-nodisplay">
 <?php
 	echo	$form->text(array('desc'	=> $this->bbf('fm_profiles_name'),
 				'name'	=> 'cti_profile[name]',
@@ -90,9 +91,9 @@ $yesno = array($this->bbf('no'), $this->bbf('yes'));
 	endif;
 ?>
 	</fieldset>
-</div>
+</uib-tab>
 
-<div id="sb-part-xlets" class="b-nodisplay">
+<uib-tab index="1" heading="<?=$this->bbf('smenu_xlets');?>">
 	<div class="sb-list">
 		<table id="list_xlet">
 			<thead>
@@ -296,14 +297,15 @@ $yesno = array($this->bbf('no'), $this->bbf('yes'));
 			</tbody>
 		</table>
 	</div>
-</div>
+</uib-tab>
 
 <?php
 	$type = 'preferences';
 ?>
-<div id="sb-part-last" class="b-nodisplay">
+<uib-tab index="2" heading="<?=$this->bbf('smenu_prefs');?>">
+
 	<div class="sb-list">
-		<table>
+		<table class="table">
 			<thead>
 			<tr class="sb-top">
 				<th class="th-left"><?=$this->bbf('col_'.$type.'-name');?></th>
@@ -399,5 +401,5 @@ $yesno = array($this->bbf('no'), $this->bbf('yes'));
 			</tr>
 			</tbody>
 		</table>
-	</div>
-</div>
+	</uib-tab>
+</uib-tabset>

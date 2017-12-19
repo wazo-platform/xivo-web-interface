@@ -24,28 +24,37 @@ $this->file_include('bloc/head');
 ?>
 <div id="bc-body">
 
-<div id="bc-head">
-	<div id="b-tmenu">
-<?php
-	$menu->mk_top();
-?>
+<div class="navbar navbar-default navbar-fixed-top" id="bc-head">
+	<div class="container-fluid">
+		<div id="b-tmenu">
+	<?php
+		$menu->mk_top();
+	?>
+		</div>
 	</div>
 </div>
-<div id="bc-main">
-	<div id="b-lmenu">
+<div class="container-fluid" id="bc-main">
+	<div class="row">
+	<div class="col-sm-3 col-md-2 sidebar" id="b-lmenu">
 <?php
 	$menu->mk_left();
 ?>
 	</div>
-	<div id="bc-content">
+	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" id="bc-content">
+		<div id="tooltips"></div>
+		<div id="toolbar">
+			<?php
+				$menu->mk_toolbar();
+			?>
+		</div>
 		<div id="b-content">
-<?php
-	$this->mk_struct();
-?>
+			<?php
+				$this->mk_struct();
+			?>
 		</div>
 	</div>
 </div>
-
+</div>
 <div id="bc-foot">
 	<div id="b-bmenu">
 <?php

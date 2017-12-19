@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2017  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@ $info    = $this->get_var('info');
 $import_file = $this->get_var('import_file');
 
 ?>
-<div id="sr-users" class="b-infos b-form">
+<div id="sr-users" class="container-fluid b-infos b-form">
 	<h3 class="sb-top xspan">
 		<span class="span-left">&nbsp;</span>
 		<span class="span-center">
@@ -33,18 +33,15 @@ $import_file = $this->get_var('import_file');
 		</span>
 		<span class="span-right">&nbsp;</span>
 	</h3>
-<?php
-	$this->file_include('bloc/service/ipbx/asterisk/pbx_settings/users/submenu');
-?>
 	<div class="sb-content">
-		<form action="#" method="post" accept-charset="utf-8" enctype="multipart/form-data"
+		<form class="form-horizontal" action="#" method="post" accept-charset="utf-8" enctype="multipart/form-data"
 			onsubmit="dwho.form.select('it-group');
 					dwho.form.select('it-queue');
 					dwho.form.select('it-codec');">
 <?php
 		echo	$form->hidden(array('name'	=> 'max_file_size',
 					    'value'	=> $import_file['size'])),
-		
+
 			$form->hidden(array('name'	=> DWHO_SESS_NAME,
 					    'value'	=> DWHO_SESS_ID)),
 
@@ -65,10 +62,5 @@ $import_file = $this->get_var('import_file');
 					    'value'	=> $this->bbf('fm_bt-save')));
 ?>
 		</form>
-	</div>
-	<div class="sb-foot xspan">
-		<span class="span-left">&nbsp;</span>
-		<span class="span-center">&nbsp;</span>
-		<span class="span-right">&nbsp;</span>
 	</div>
 </div>

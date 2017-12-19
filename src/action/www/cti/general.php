@@ -66,7 +66,6 @@ $_TPL->set_var('tlscertfiles', array_filter($allcerts, "certfilter"));
 $_TPL->set_var('tlsprivkeyfiles', array_filter($allcerts, "privkeyfilter"));
 
 $dhtml = &$_TPL->get_module('dhtml');
-$dhtml->set_js('js/dwho/submenu.js');
 $dhtml->load_js_multiselect_files();
 $dhtml->set_js('js/utils/dyntable.js');
 $dhtml->set_js('js/cti/general.js');

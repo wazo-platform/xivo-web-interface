@@ -77,7 +77,7 @@ function build_row($option, $form, $url, $helper) {
 
 ?>
 
-<div id="sb-part-first" class="b-nodisplay">
+<div role="tabpanel" class="tab-pane active" id="general">
 <?php
 	echo	$form->text(array('desc'	=> $this->bbf('fm_protocol_name'),
 				  'name'	   => 'protocol[name]',
@@ -201,9 +201,9 @@ function build_row($option, $form, $url, $helper) {
 
 </div>
 
-<div id="sb-part-advanced" class="b-nodisplay">
+<div role="tabpanel" class="tab-pane" id="advanced">
 	<div class="sb-list">
-		<table>
+		<table class="table">
 			<thead>
 				<th class="th-left">
 					<?= $this->bbf('col_line-sip-option-name') ?>

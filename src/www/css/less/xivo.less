@@ -1,0 +1,93 @@
+@import (less) "../../extra-libs/multiselect/css/ui.multiselect.css";
+
+@import "~bootstrap/less/bootstrap.less";
+@import "_variables.less";
+@import "_bootstrap-override.less";
+@import "_login.less";
+@import "_forms.less";
+@import "_buttons.less";
+@import "_bars.less";
+@import "_multiselect.less";
+@import (less) "~select2/dist/css/select2.css";
+
+body {
+    letter-spacing: 0.5px;
+    color: @color-normal;
+    height: 100%;
+}
+
+.table {
+  margin-bottom: 0;
+
+  th {
+    border: 0 !important;
+  }
+}
+
+
+#bc-main {
+  &::before {
+    margin-top: 50px;
+  }
+}
+
+#bc-content {
+  margin-top: 15px;
+  float: inherit;
+}
+
+#version-copyright {
+  text-align: center;
+}
+.login-box {
+  margin-right: 10px;
+  padding-left: 10px;
+
+  .badge {
+    font-weight: normal;
+    padding: 5px 10px;
+    margin: 14px 5px;
+  }
+}
+
+#logo>img {
+  width: 70px;
+}
+
+.logoff-button {
+  padding: 10px 10px 10px 20px;
+  position: relative;
+  top: 3px;
+}
+.sysinfo-title {
+  text-align: center;
+  font-weight: bold;
+}
+
+.fm-description {
+  padding-bottom: 10px;
+  p {
+    margin: 0;
+  }
+}
+
+.b-nodisplay {display: none;}
+.b-bdisplay {display: block;}
+.b-ldisplay {display: inline;}
+.b-page {text-align: right;}
+
+#b-lmenu .mn-active a {
+  font-weight: bold;
+}
+
+.underline {
+  text-decoration: underline;
+}
+
+.help-tooltip {
+  left: 5px;
+}
+
+.icons-list {
+  padding-right: 5px;
+}

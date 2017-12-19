@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2017  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -29,12 +29,9 @@ $info = array('incall'=>$this->get_var('incall'));
 		<span class="span-right">&nbsp;</span>
 	</h3>
 
-<?php
-	$this->file_include('bloc/service/ipbx/asterisk/call_management/incall/submenu');
-?>
 
 	<div class="sb-content">
-		<form action="#" method="post" accept-charset="utf-8">
+		<form class="form-horizontal" action="#" method="post" accept-charset="utf-8">
 <?=$form->hidden(array('name' => DWHO_SESS_NAME,'value' => DWHO_SESS_ID));?>
 <?=$form->hidden(array('name' => 'fm_send','value' => 1));?>
 <?=$form->hidden(array('name' => 'act','value' => 'edit'));?>

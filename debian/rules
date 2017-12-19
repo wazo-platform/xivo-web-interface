@@ -1,4 +1,13 @@
 #!/usr/bin/make -f
 
+WORKING_DIR := $(CURDIR)
+# export DH_VERBOSE=1
+
 %:
-	dh $@ 
+	dh $@
+
+override_dh_auto_build:
+	(cd $(WORKING_DIR)/src; \
+		npm i)
+	(cd $(WORKING_DIR)/src; \
+		npm run build)
