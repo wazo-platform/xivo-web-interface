@@ -8,6 +8,9 @@ export default function toolbar($window) {
     case 'queueskillrules':
     case 'users': $window.xivo_toolbar_init_adv_delete();
       break;
+    case 'configuration':
+      $window.xivo_toolbar_init_adv_delete(true);
+      break;
     case 'queueskills':
       $window.xivo_toolbar_init_adv_delete(true);
       $window.xivo_toolbar_init_toolbar_change('it-toolbar-context');
