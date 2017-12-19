@@ -1,7 +1,5 @@
 /* global clean_ms */
 
-import _ from 'lodash';
-
 export default class IpbxUsersController {
 
   constructor($scope, $log) {
