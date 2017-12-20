@@ -49,8 +49,8 @@ if(dwho_issa('linefeatures',$info) === true
 
 ?>
 <div  ng-controller="IpbxUsersController as ctrl">
-	<uib-tabset active="active">
-		<uib-tab index="0" heading="<?=$this->bbf('smenu_general');?>">	
+	<div class="tab-content">
+		<div role="tabpanel" class="tab-pane active" id="first">	
 		
 			<?php
 				echo    $form->text(array('desc'        => $this->bbf('fm_userfeatures_firstname'),
@@ -257,8 +257,8 @@ if(dwho_issa('linefeatures',$info) === true
 									$this->get_var('error', 'userfeatures', 'description')) ),
 							$info['userfeatures']['description']);?>
 			</div>
-		</uib-tab>
-		<uib-tab index="1" heading="<?=$this->bbf('smenu_lines');?>">
+		</div>
+		<div id="lines" class="tab-pane" index="1" heading="<?=$this->bbf('smenu_lines');?>">
 			<?php
 				if ($this->get_var('entity_list') === false):
 						echo $this->bbf('no_internal_context_for_this_entity');
@@ -284,8 +284,8 @@ if(dwho_issa('linefeatures',$info) === true
 			<?php
 				endif;
 			?>
-		</uib-tab>
-		<uib-tab index="2" heading="<?=$this->bbf('smenu_dialaction');?>">
+		</div>
+		<div id="dialaction" class="tab-pane" index="2" heading="<?=$this->bbf('smenu_dialaction');?>">
 			<fieldset id="fld-voicemail-actions">
 				<legend><?= $this->bbf('user_vm_header') ?></legend>
 				<p id="vm-action-search" class="fm-paragraph">
@@ -447,8 +447,8 @@ if(dwho_issa('linefeatures',$info) === true
 											'checked'	=> (int)$this->get_var('voicemail', 'delete_messages')));
 				?>
 			</fieldset>
-		</uib-tab>
-		<uib-tab index="3" heading="<?=$this->bbf('smenu_services');?>">
+		</div>
+		<div id="service" class="tab-pane" index="3" heading="<?=$this->bbf('smenu_services');?>">
 			<fieldset id="fld-dialaction-noanswer">
 				<legend><?=$this->bbf('fld-dialaction-noanswer');?></legend>
 				<?php
@@ -480,8 +480,8 @@ if(dwho_issa('linefeatures',$info) === true
 										array('event'	=> 'chanunavail'));
 				?>
 			</fieldset>
-		</uib-tab>
-		<uib-tab index="4" heading="<?=$this->bbf('smenu_voicemail');?>">
+		</div>
+		<div id="voicemail" class="tab-pane" index="4" heading="<?=$this->bbf('smenu_voicemail');?>">
 
 			<fieldset id="fld-services">
 				<legend><?=$this->bbf('fld-services');?></legend>
@@ -640,17 +640,17 @@ if(dwho_issa('linefeatures',$info) === true
 											$this->get_var('error', 'userfeatures', 'destunc')) ));
 				?>
 			</fieldset>
-		</uib-tab>
-		<uib-tab index="5" heading="<?=$this->bbf('smenu_groups');?>" select="ctrl.init_tab_group()">
+		</div>
+		<div id="groups" class="tab-pane" index="5" heading="<?=$this->bbf('smenu_groups');?>" select="ctrl.init_tab_group()">
 			<?php
 				$this->file_include('bloc/service/ipbx/asterisk/pbx_settings/users/groups');
 			?>
-		</uib-tab>
-		<uib-tab index="6" heading="<?=$this->bbf('smenu_funckeys');?>">
+		</div>
+		<div id="funckeys" class="tab-pane" index="6" heading="<?=$this->bbf('smenu_funckeys');?>">
 			<?php
 				$this->file_include('bloc/service/ipbx/asterisk/pbx_settings/users/phonefunckey');
 			?>
-		</uib-tab>
+		</div>
 
-	</uib-tabset>
+	</div>
 </div>
