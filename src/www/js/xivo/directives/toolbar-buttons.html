@@ -23,7 +23,7 @@
     </button>
     <ul id="toolbar-advanced-menu" class="dropdown-menu">
       <li ng-repeat="actAdv in actionsAdv track by $index">
-        <a href="#" id={{actAdv}} >{{getLabelKey(actAdv) | translate}}</a>
+        <a href="#" id={{actAdv}} >{{getLabelKey(actAdv, page) | translate}}</a>
       </li>
     </ul>
   </div>

@@ -26,8 +26,8 @@ export default function toolbarButtons($window, toolbar) {
         return toolbar.isDisplayed($window.location.search, scope.displayAdvOn);
       };
 
-      scope.getLabelKey = (action) => {
-        return toolbar.getLabelKey(action);
+      scope.getLabelKey = (action, page) => {
+        return toolbar.getLabelKey(action, page);
       };
 
       scope.updatePlugins = () => {

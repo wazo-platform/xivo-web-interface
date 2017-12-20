@@ -43,8 +43,13 @@ export default function toolbar($window) {
 
   const _getLabelKey = (input, page) => {
     switch(input) {
-    case 'add': return (page === 'agents') ? 'toolbar_adv_menu_add-group' : 'toolbar_add_menu_add';
+    case 'add':
+      switch (page) {
+      case 'agents': return 'toolbar_adv_menu_add-group';
+      case 'musiconhold': return 'toolbar_adv_menu_add-category';
+      default: return 'toolbar_add_menu_add';}
     case 'addagent' : return 'toolbar_adv_menu_add-agent';
+    case 'addfile' : return 'toolbar_adv_menu_add-file';
     case 'import': return 'toolbar_add_menu_import-file';
     case 'update_import': return 'toolbar_add_menu_update_import';
     case 'export': return 'toolbar_add_menu_export';

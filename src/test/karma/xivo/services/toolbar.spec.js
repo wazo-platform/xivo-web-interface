@@ -34,6 +34,7 @@ describe('toolbar service', () => {
   it('returns PHP label key for an input if exist', () => {
     expect(toolbar.getLabelKey("fakePHPBundle")).toBeUndefined();
     expect(toolbar.getLabelKey("add")).toBe('toolbar_add_menu_add');
+    expect(toolbar.getLabelKey("add", "musiconhold")).toBe('toolbar_adv_menu_add-category');
   });
 
   it('updates plugins', () => {

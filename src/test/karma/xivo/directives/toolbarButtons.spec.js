@@ -37,7 +37,13 @@ describe('toolbar-buttons directive', () => {
   it('gets translation key', () => {
     spyOn(toolbar, 'getLabelKey');
     isolatedScope.getLabelKey('add');
-    expect(toolbar.getLabelKey).toHaveBeenCalledWith('add');
+    expect(toolbar.getLabelKey).toHaveBeenCalledWith('add', undefined);
+  });
+
+  it('gets translation key if overrided by a specific page', () => {
+    spyOn(toolbar, 'getLabelKey');
+    isolatedScope.getLabelKey('add', 'musiconhold');
+    expect(toolbar.getLabelKey).toHaveBeenCalledWith('add', 'musiconhold');
   });
 
   it('builds params list without act param in it', () => {
