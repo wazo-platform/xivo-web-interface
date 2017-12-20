@@ -1528,6 +1528,28 @@ class dwho_tpl_form extends dwho_tpl_module
 		}
 
 		$this->_render = $r.$this->_render.'</select>';
+		
+		if($this->_param['multiple'] === true)
+		{
+			if (ereg('list',$id))
+				$id2 = str_replace('list','',$id);
+			else
+				$id2 = $id.'list';
+
+			if (ereg('list',$id))
+			{
+				$r = "
+				<script type=\"text/javascript\">
+				function load_$uniqid()
+				{
+				var cc = new clean_ms('$id-finder','$id','$id2');
+				cc.__init();
+			}
+			dwho.dom.set_onload(load_$uniqid);
+			</script>\n\n";
+				$this->_render = $this->_render.$r;
+			}
+		}
 
 		$this->_mk_help();
 		$this->_mk_control_size();
