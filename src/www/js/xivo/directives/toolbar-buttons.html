@@ -2,7 +2,7 @@
   <div class="btn-group sb-advanced-menu" ng-if="actions">
     <div ng-if="actions.length == 1">
       <a class="glyphicon glyphicon-plus btn btn-default btn-action"
-        ng-href="./?act=add{{getOtherParams()}}" ng-init="$last=true" on-finish-render="{{page}}ActionsLoaded">
+        ng-href="./?act={{actions[0]}}{{getOtherParams()}}" ng-init="$last=true" on-finish-render="{{page}}ActionsLoaded">
       </a>
     </div>
     <div ng-if="actions.length > 1">

@@ -16,9 +16,8 @@ export default function toolbarButtons($window, toolbar) {
 
       scope.getOtherParams = () => {
         let params = _.omit(toolbar.parseParams($window.location.search), 'act');
-
         return  _.reduce(params, function(result, value, key) {
-          return result += '&' + key + '=' + value;
+          return (!_.isUndefined(value)) ? result += '&' + key + '=' + value : result;
         }, '');
       };
 
