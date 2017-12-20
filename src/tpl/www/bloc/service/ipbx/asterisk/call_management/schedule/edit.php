@@ -29,6 +29,9 @@ $info = $this->get_var('info');
 		<span class="span-right">&nbsp;</span>
 	</h3>
 
+<?php
+       $this->file_include('bloc/service/ipbx/asterisk/call_management/schedule/submenu');
+?>
 
 	<div class="sb-content">
 <form class="form-horizontal" action="#" method="post" accept-charset="utf-8">
