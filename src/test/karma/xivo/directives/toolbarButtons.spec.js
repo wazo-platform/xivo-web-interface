@@ -37,12 +37,24 @@ describe('toolbar-buttons directive', () => {
   it('gets translation key', () => {
     spyOn(toolbar, 'getLabelKey');
     isolatedScope.getLabelKey('add');
-    expect(toolbar.getLabelKey).toHaveBeenCalledWith('add');
+    expect(toolbar.getLabelKey).toHaveBeenCalledWith('add', undefined);
+  });
+
+  it('gets translation key if overrided by a specific page', () => {
+    spyOn(toolbar, 'getLabelKey');
+    isolatedScope.getLabelKey('add', 'musiconhold');
+    expect(toolbar.getLabelKey).toHaveBeenCalledWith('add', 'musiconhold');
   });
 
   it('builds params list without act param in it', () => {
     spyOn(toolbar, 'parseParams').and.returnValue({act:'list', group: 3, something: 'else'});
     expect(isolatedScope.getOtherParams()).toBe('&group=3&something=else');
+  });
+
+  it('updates plugins', () => {
+    spyOn(toolbar, 'updatePlugins');
+    isolatedScope.updatePlugins();
+    expect(toolbar.updatePlugins).toHaveBeenCalled();
   });
 
 });

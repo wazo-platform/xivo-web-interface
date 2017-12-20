@@ -10,11 +10,12 @@ describe('toolbar service', () => {
     $window = _$window_;
     toolbar = _toolbar_;
     spyOn($window, 'xivo_toolbar_init');
+    spyOn($window, 'init_update_plugin');
   }));
 
   it('init dwho implementation when instantiated', () => {
     toolbar.registerDwho();
-    expect(window.xivo_toolbar_init).toHaveBeenCalled();
+    expect($window.xivo_toolbar_init).toHaveBeenCalled();
   });
 
 
@@ -33,6 +34,12 @@ describe('toolbar service', () => {
   it('returns PHP label key for an input if exist', () => {
     expect(toolbar.getLabelKey("fakePHPBundle")).toBeUndefined();
     expect(toolbar.getLabelKey("add")).toBe('toolbar_add_menu_add');
+    expect(toolbar.getLabelKey("add", "musiconhold")).toBe('toolbar_adv_menu_add-category');
+  });
+
+  it('updates plugins', () => {
+    toolbar.updatePlugins();
+    expect($window.init_update_plugin).toHaveBeenCalled();
   });
 
 });

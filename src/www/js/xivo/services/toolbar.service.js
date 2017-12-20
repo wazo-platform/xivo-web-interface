@@ -22,6 +22,10 @@ export default function toolbar($window) {
     searchValue = $window.xivo_toolbar_fm_search;
   };
 
+  const _updatePlugins = () => {
+    $window.init_update_plugin();
+  };
+
   const _parseParams = (search) => {
     return (search).replace(/(^\?)/,'').split("&").reduce((p,n) => {
       return n = n.split("="), p[n[0]] = n[1], p;
@@ -39,8 +43,13 @@ export default function toolbar($window) {
 
   const _getLabelKey = (input, page) => {
     switch(input) {
-    case 'add': return (page === 'agents') ? 'toolbar_adv_menu_add-group' : 'toolbar_add_menu_add';
+    case 'add':
+      switch (page) {
+      case 'agents': return 'toolbar_adv_menu_add-group';
+      case 'musiconhold': return 'toolbar_adv_menu_add-category';
+      default: return 'toolbar_add_menu_add';}
     case 'addagent' : return 'toolbar_adv_menu_add-agent';
+    case 'addfile' : return 'toolbar_adv_menu_add-file';
     case 'import': return 'toolbar_add_menu_import-file';
     case 'update_import': return 'toolbar_add_menu_update_import';
     case 'export': return 'toolbar_add_menu_export';
@@ -56,6 +65,7 @@ export default function toolbar($window) {
     parseParams : _parseParams,
     isDisplayed : _isDisplayed,
     getLabelKey : _getLabelKey,
-    getSearchValue : _getSearchValue
+    getSearchValue : _getSearchValue,
+    updatePlugins : _updatePlugins
   };
 }

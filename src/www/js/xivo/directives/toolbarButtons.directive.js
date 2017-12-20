@@ -9,7 +9,8 @@ export default function toolbarButtons($window, toolbar) {
       displayAdvOn: '@',
       page: '@',
       actions: '=',
-      actionsAdv: '='
+      actionsAdv: '=',
+      plugins: '='
     },
     link: (scope) => {
       scope.page = angular.isDefined(scope.page) ? scope.page : 'generic';
@@ -25,8 +26,12 @@ export default function toolbarButtons($window, toolbar) {
         return toolbar.isDisplayed($window.location.search, scope.displayAdvOn);
       };
 
-      scope.getLabelKey = (action) => {
-        return toolbar.getLabelKey(action);
+      scope.getLabelKey = (action, page) => {
+        return toolbar.getLabelKey(action, page);
+      };
+
+      scope.updatePlugins = () => {
+        toolbar.updatePlugins();
       };
 
       scope.$on(scope.page+'ActionsLoaded', () => {
