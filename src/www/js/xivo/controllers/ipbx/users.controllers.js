@@ -2,9 +2,7 @@
 
 export default class IpbxUsersController {
 
-  constructor($scope, $log) {
-    this.$log = $log;
-    this.$scope = $scope;
+  constructor() {
     this.init_tab_group_done = false;
   }
 
