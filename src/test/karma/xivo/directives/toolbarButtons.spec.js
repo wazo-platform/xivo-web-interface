@@ -45,4 +45,10 @@ describe('toolbar-buttons directive', () => {
     expect(isolatedScope.getOtherParams()).toBe('&group=3&something=else');
   });
 
+  it('updates plugins', () => {
+    spyOn(toolbar, 'updatePlugins');
+    isolatedScope.updatePlugins();
+    expect(toolbar.updatePlugins).toHaveBeenCalled();
+  });
+
 });

@@ -33,31 +33,9 @@ $dhtml->write_js($toolbar_js);
 <script type="text/javascript" src="<?=$this->file_time($this->url('js/xivo_toolbar.js'));?>"></script>
 
 <form action="#" method="post" accept-charset="utf-8">
-<?=$form->hidden(array('name' => DWHO_SESS_NAME,'value' => DWHO_SESS_ID));?>
-<?=$form->hidden(array('name' => 'act','value' => 'list'));?>
-	<div class="fm-paragraph">
-<?php
-		echo	$form->text(array('name'	=> 'search',
-					  'id'		=> 'it-toolbar-search',
-					  'size'	=> 20,
-					  'paragraph'	=> false,
-					  'value'	=> $search,
-					  'default'	=> $this->bbf('toolbar_fm_search'))),
+	<?=$form->hidden(array('name' => DWHO_SESS_NAME,'value' => DWHO_SESS_ID));?>
+	<?=$form->hidden(array('name' => 'act','value' => 'list'));?>
 
-			$form->image(array('name'	=> 'submit',
-					   'id'		=> 'it-toolbar-subsearch',
-					   'src'	=> $url->img('img/menu/top/toolbar/bt-search.gif'),
-					   'paragraph'	=> false,
-					   'alt'	=> $this->bbf('toolbar_fm_search')));
-?>
-	</div>
-</form><?php
-echo	$url->href_html($url->img_html('img/site/utils/update-manager.png',
-						$this->bbf('toolbar_opt_update'),
-						'id="toolbar-bt-update"
-						border="0"'),
-			'#',
-			null,
-			'onclick="init_update_plugin();return(false);"',
-			$this->bbf('toolbar_opt_update'));
-?>
+	<toolbar-search></toolbar-search>
+</form>
+<toolbar-buttons plugins="true"></toolbar-buttons>

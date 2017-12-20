@@ -28,6 +28,7 @@ module.exports = function(config) {
       './www/js/xivo_toolbar.js',
       './www/js/dwho.js',
       './www/js/dwho/*.js',
+      './www/js/xivo/configuration/provisioning/plugin.js',
       {pattern: './i18n/**/*', watched: false, served: true, included: false},
       './www/js/xivo/**/*.html',
       './test/karma/**/*.spec.js'

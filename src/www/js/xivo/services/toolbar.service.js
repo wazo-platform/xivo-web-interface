@@ -22,6 +22,10 @@ export default function toolbar($window) {
     searchValue = $window.xivo_toolbar_fm_search;
   };
 
+  const _updatePlugins = () => {
+    $window.init_update_plugin();
+  };
+
   const _parseParams = (search) => {
     return (search).replace(/(^\?)/,'').split("&").reduce((p,n) => {
       return n = n.split("="), p[n[0]] = n[1], p;
@@ -56,6 +60,7 @@ export default function toolbar($window) {
     parseParams : _parseParams,
     isDisplayed : _isDisplayed,
     getLabelKey : _getLabelKey,
-    getSearchValue : _getSearchValue
+    getSearchValue : _getSearchValue,
+    updatePlugins : _updatePlugins
   };
 }
