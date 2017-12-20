@@ -34,49 +34,14 @@ $dhtml->write_js($toolbar_js);
 ?>
 <script type="text/javascript" src="<?=$this->file_time($this->url('js/xivo_toolbar.js'));?>"></script>
 <?php
-
 if($act == 'list')
 {
-	echo	$url->href_html($url->img_html('img/menu/top/toolbar/bt-add.gif',
-						   $this->bbf('toolbar_opt_add'),
-						   'id="toolbar-bt-add"
-						border="0"'),
-				'cti/presences',
-				'act=add',
-				null,
-				$this->bbf('toolbar_opt_add'));
+	$ngact = "['add']";
 }
 
 if($act == 'liststatus')
 {
-	echo	$url->href_html($url->img_html('img/menu/top/toolbar/bt-add.gif',
-						   $this->bbf('toolbar_opt_add'),
-						   'id="toolbar-bt-add"
-						border="0"'),
-				'cti/presences',
-				array('act'   => 'addstatus',
-				'idpresences' => $idpresences),
-				null,
-				$this->bbf('toolbar_opt_add'));
+	$ngact = "['addstatus']";
 }
 ?>
-<div class="sb-advanced-menu">
-	<ul id="toolbar-advanced-menu">
-		<li>
-			<a href="#" id="toolbar-advanced-menu-enable"><?=$this->bbf('toolbar_adv_menu_enable');?></a>
-		</li>
-		<li>
-			<a href="#" id="toolbar-advanced-menu-disable"><?=$this->bbf('toolbar_adv_menu_disable');?></a>
-		</li>
-		<li>
-			<a href="#" id="toolbar-advanced-menu-select-all"><?=$this->bbf('toolbar_adv_menu_select-all');?></a>
-		</li>
-		<li>
-			<a href="#" id="toolbar-advanced-menu-delete"><?=$this->bbf('toolbar_adv_menu_delete');?></a>
-		</li>
-	</ul>
-</div>
-<?php
-
-
-?>
+<toolbar-buttons actions="<?="$ngact"?>"></toolbar-buttons>
