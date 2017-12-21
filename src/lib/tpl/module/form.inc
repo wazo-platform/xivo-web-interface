@@ -1482,7 +1482,8 @@ class dwho_tpl_form extends dwho_tpl_module
 		if($this->_param['class'] !== false)
 			$class = $this->_param['class'];
 		else
-			$class = 'form-control';
+			if(isset($o{0}) !== true)
+				$class = 'form-control';
 
 		if($this->_param['required'] !== false)
 			$class .= ' _dwho-form-field-required';
