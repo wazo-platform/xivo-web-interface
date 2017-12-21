@@ -22,6 +22,9 @@ export default function toolbar($window) {
       $window.xivo_toolbar_init_adv_delete(false,true);
       $window.xivo_toolbar_init_toolbar_change('it-toolbar-directory', true);
       break;
+    case 'devices':
+      $window.xivo_toolbar_init_toolbar_change('it-toolbar-linked');
+      $window.xivo_toolbar_init_adv_delete(false,false,true);
     }
     searchValue = $window.xivo_toolbar_fm_search;
   };
@@ -65,7 +68,8 @@ export default function toolbar($window) {
     case 'toolbar-advanced-menu-disable': return 'toolbar_adv_menu_disable';
     case 'toolbar-advanced-menu-select-all' : return 'toolbar_adv_menu_select-all';
     case 'toolbar-advanced-menu-delete' :
-    case 'toolbar-advanced-menu-delete-agents' : return 'toolbar_adv_menu_delete'; }
+    case 'toolbar-advanced-menu-delete-agents' : return 'toolbar_adv_menu_delete';
+    case 'toolbar-advanced-menu-autoprov' : return 'toolbar_adv_menu_autoprov';}
   };
 
   return {
