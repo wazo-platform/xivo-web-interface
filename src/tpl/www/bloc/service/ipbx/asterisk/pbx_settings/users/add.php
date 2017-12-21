@@ -41,6 +41,9 @@ endif;
 		<span class="span-center"><?=$this->bbf('title_content_name');?></span>
 		<span class="span-right">&nbsp;</span>
 	</h3>
+	<?php
+	$this->file_include('bloc/service/ipbx/asterisk/pbx_settings/users/submenu');
+	?>
 
 	<div class="sb-content">
 		<form class="form-horizontal" action="#" method="post" accept-charset="utf-8" enctype="multipart/form-data"

@@ -7,16 +7,11 @@ module.exports = {
   entry: {
     css: './www/css/css.js',
     xivo: './www/js/xivo/app.js',
-    vendor: ['jquery', 'jquery-ui', 'bootstrap', 'select2']
+    vendor: ['bootstrap']
   },
   output: {
-      publicPath: '/',
-      filename: 'www/js/[name].bundle.js'
-  },
-  resolve: {
-    alias: {
-      "jquery-ui": 'jquery-ui-dist/jquery-ui.js'
-    }
+    publicPath: '/',
+    filename: 'www/js/[name].bundle.js'
   },
   devtool: 'source-map',
   module: {
@@ -48,10 +43,6 @@ module.exports = {
         }
       },
       {
-        test: require.resolve('jquery'),
-        loader: 'expose-loader?jQuery!expose-loader?$'
-      },
-      {
         test: require.resolve('angular'),
         loader: 'expose-loader?angular!expose-loader?angular'
       },
@@ -63,9 +54,6 @@ module.exports = {
   },
   plugins: [
     new webpack.ProvidePlugin({
-      $: 'jquery',
-      jQuery: 'jquery',
-      "window.jQuery":"jquery",
       "window._": "lodash",
       _: 'lodash'
     }),
