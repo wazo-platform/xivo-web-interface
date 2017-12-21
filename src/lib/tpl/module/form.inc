@@ -566,6 +566,7 @@ class dwho_tpl_form extends dwho_tpl_module
 		if($this->_param['class'] !== false)
 			$class = $this->_param['class'];
 		else
+		if ($this->_param['type'] !== 'hidden')
 			$class = 'form-control';
 
 		if($this->_param['required'] !== false)
@@ -1462,7 +1463,7 @@ class dwho_tpl_form extends dwho_tpl_module
 			$r .= "\n\n";
 		}
 
-		$r .= '<select class="form-control" name="'.$this->_param['name'].'"';
+		$r .= '<select name="'.$this->_param['name'].'"';
 
 		if($this->_param['disabled'] !== false)
 			$r .= ' disabled="disabled"';
@@ -1481,7 +1482,7 @@ class dwho_tpl_form extends dwho_tpl_module
 		if($this->_param['class'] !== false)
 			$class = $this->_param['class'];
 		else
-			$class = '';
+			$class = 'form-control';
 
 		if($this->_param['required'] !== false)
 			$class .= ' _dwho-form-field-required';

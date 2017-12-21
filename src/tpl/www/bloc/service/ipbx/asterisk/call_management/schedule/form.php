@@ -67,7 +67,7 @@ echo	$form->text(array('desc'	=> $this->bbf('fm_schedule_name'),
 	$opened = $info['opened'];
 	$count = $opened?count($opened):0;
 	$errdisplay = '';
-?>
+	?>
 	<div class="sb-list">
 	<fieldset id="fld-opened-hours">
 		<legend><?=$this->bbf('fld-opened-hours');?></legend>
@@ -97,11 +97,15 @@ echo	$form->text(array('desc'	=> $this->bbf('fm_schedule_name'),
 			<tr class="fm-paragraph<?=$errdisplay?>">
 				<td class="td-left">
 	<?php
+	
 					echo $form->text(array('paragraph'	=> false,
 							       'name'	  	=> "opened-schedule-$i",
 							       'id'	    	=> false,
 							       'label'  	=> false,
-							       'size'	   	=> 43,
+										 'size'	   	=> 100,
+										 'controlSize' => false,
+										 'class'		=> '',
+										 'group' => false,
 							       'key'	    => false,
 										 'readonly' => true,
 										 'default'	=> ''));
