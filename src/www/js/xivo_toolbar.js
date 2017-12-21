@@ -139,7 +139,7 @@ var xivo_toolbar_init = function() {
              xivo_toolbar_fn_adv_menu_delete_agents);
 }
 
-var xivo_toolbar_init_adv_delete = function(withContext, withDir)
+var xivo_toolbar_init_adv_delete = function(withContext, withDir, withAutoProv)
 {
 	dwho.dom.remove_event('click',
     dwho_eid('toolbar-advanced-menu-delete'),
@@ -154,22 +154,35 @@ var xivo_toolbar_init_adv_delete = function(withContext, withDir)
 
 			if(confirm(xivo_toolbar_adv_menu_delete_confirm) === true)
 			{
-				if(dwho_is_undef(dwho.fm[xivo_toolbar_form_name]['search']) === false)
-				dwho.fm[xivo_toolbar_form_name]['search'].value = xivo_toolbar_fm_search;
+        xivo_toolbar_init_form_item('search', xivo_toolbar_fm_search);
 
         if (withContext) {
-          if(dwho_is_undef(dwho.fm[xivo_toolbar_form_name]['context']) === false)
-            dwho.fm[xivo_toolbar_form_name]['context'].value = xivo_toolbar_fm_context;
+          xivo_toolbar_init_form_item('context', xivo_toolbar_fm_context);
         }
         if (withDir) {
-          if(dwho_is_undef(dwho.fm[xivo_toolbar_form_name]['dir']) === false)
-            dwho.fm[xivo_toolbar_form_name]['dir'].value = xivo_toolbar_fm_dir;
+          xivo_toolbar_init_form_item('dir', xivo_toolbar_fm_dir);
+        }
+        if (withAutoProv) {
+          xivo_toolbar_init_form_item('linked', xivo_toolbar_fm_linked);
         }
 
 				dwho.fm[xivo_toolbar_form_name]['act'].value = 'deletes';
 				dwho.fm[xivo_toolbar_form_name].submit();
 			}
 	 });
+
+   if (withAutoProv) {
+     dwho.dom.add_event('click', dwho_eid('toolbar-advanced-menu-autoprov'),
+     function(e) {
+       dialog = document.getElementById('autoprov_dialog');
+       dialog.style.visibility= 'visible';
+     });
+   }
+}
+
+var xivo_toolbar_init_form_item = function(item, value) {
+  if(dwho_is_undef(dwho.fm[xivo_toolbar_form_name][item]) === false)
+    dwho.fm[xivo_toolbar_form_name][item].value = value;
 }
 
 var xivo_toolbar_init_toolbar_change = function(item, hasDir)
@@ -194,4 +207,23 @@ var xivo_toolbar_init_toolbar_change = function(item, hasDir)
 
 				this.form.submit();
 			   });
+}
+
+function autoprov_cancel()
+{
+	dialog = document.getElementById('autoprov_dialog');
+	dialog.style.visibility= 'hidden';
+
+	return false;
+}
+
+function autoprov_validate()
+{
+	dialog = document.getElementById('autoprov_dialog');
+	dialog.style.visibility= 'hidden';
+
+	dwho.fm[xivo_toolbar_form_name]['act'].value = 'mass_synchronize';
+	dwho.fm[xivo_toolbar_form_name].submit();
+
+	return false;
 }
