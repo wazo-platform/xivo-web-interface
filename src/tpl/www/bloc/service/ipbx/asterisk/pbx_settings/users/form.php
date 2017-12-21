@@ -285,7 +285,7 @@ if(dwho_issa('linefeatures',$info) === true
 				endif;
 			?>
 		</div>
-		<div id="dialaction" class="tab-pane" index="2" heading="<?=$this->bbf('smenu_dialaction');?>">
+		<div id="voicemail" class="tab-pane" index="2" heading="<?=$this->bbf('smenu_voicemail');?>">
 			<fieldset id="fld-voicemail-actions">
 				<legend><?= $this->bbf('user_vm_header') ?></legend>
 				<p id="vm-action-search" class="fm-paragraph">
@@ -448,7 +448,7 @@ if(dwho_issa('linefeatures',$info) === true
 				?>
 			</fieldset>
 		</div>
-		<div id="service" class="tab-pane" index="3" heading="<?=$this->bbf('smenu_services');?>">
+		<div id="dialaction" class="tab-pane" index="3" heading="<?=$this->bbf('smenu_dialaction');?>">
 			<fieldset id="fld-dialaction-noanswer">
 				<legend><?=$this->bbf('fld-dialaction-noanswer');?></legend>
 				<?php
@@ -481,7 +481,7 @@ if(dwho_issa('linefeatures',$info) === true
 				?>
 			</fieldset>
 		</div>
-		<div id="voicemail" class="tab-pane" index="4" heading="<?=$this->bbf('smenu_voicemail');?>">
+		<div id="service" class="tab-pane" index="4" heading="<?=$this->bbf('smenu_services');?>">
 
 			<fieldset id="fld-services">
 				<legend><?=$this->bbf('fld-services');?></legend>
