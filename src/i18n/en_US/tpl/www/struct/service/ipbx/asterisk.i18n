@@ -147,6 +147,15 @@ Add a group
 ; toolbar_adv_menu_add-agent
 Add an agent
 
+; toolbar_menu_add_sip
+Add SIP
+
+; toolbar_menu_add_sccp
+Add SCCP
+
+; toolbar_menu_add_custom
+Add CUSTOM
+
 ; toolbar_fm_directory
 -- Directory --
 

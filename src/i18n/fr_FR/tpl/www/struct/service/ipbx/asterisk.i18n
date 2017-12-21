@@ -159,6 +159,15 @@ Ajouter un groupe
 ; toolbar_adv_menu_add-agent
 Ajouter un agent
 
+; toolbar_menu_add_sip
+Ajouter une ligne SIP
+
+; toolbar_menu_add_sccp
+Ajouter une ligne SCCP
+
+; toolbar_menu_add_custom
+Ajouter une ligne personnalisée
+
 ; toolbar_fm_directory
 -- Répertoire --
 

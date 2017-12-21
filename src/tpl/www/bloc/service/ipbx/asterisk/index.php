@@ -33,22 +33,7 @@ $live = $this->get_var('live');
 ?>
 <div id="index" class="b-infos">
 	<div class="row">
-		<div class="col-sm-offset-1 col-sm-4 pull-left"id="ipbx-logo">
-			<?=$url->img_html('img/service/ipbx/asterisk.png',XIVO_SRE_IPBX_LABEL);?>
-			<ul>
-				<li><b><?=$this->bbf('info_service_label');?></b>
-				       <?=$this->bbf('info_service_version-opt',
-						     XIVO_SRE_IPBX_LABEL);?>
-				</li>
-				<li><b><?=$this->bbf('info_service_version');?></b>
-				       <?=$this->bbf('info_service_version-opt',
-						     XIVO_SRE_IPBX_VERSION);?>
-				</li>
-			</ul>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-sm-offset-1 col-sm-10" id="ipbx-stats-live">
+		<div class="col-sm-8" id="ipbx-stats-live">
 			<table class="table table-condensed table-striped">
 					<tr class="sb-top">
 						<th class="th-left"><?=$this->bbf('stats_col_type');?></th>
@@ -306,11 +291,24 @@ $live = $this->get_var('live');
 						</td>
 					</tr>
 				</table>
-
+		</div>
+		<div class="col-sm-4"id="ipbx-logo">
+			<?=$url->img_html('img/service/ipbx/asterisk.png',XIVO_SRE_IPBX_LABEL);?>
+			<ul>
+				<li><b><?=$this->bbf('info_service_label');?></b>
+							 <?=$this->bbf('info_service_version-opt',
+								 XIVO_SRE_IPBX_LABEL);?>
+				</li>
+				<li><b><?=$this->bbf('info_service_version');?></b>
+							 <?=$this->bbf('info_service_version-opt',
+								 XIVO_SRE_IPBX_VERSION);?>
+				</li>
+			</ul>
 		</div>
 	</div>
+	<hr>
 	<div class="row">
-		<div class="col-sm-offset-1 col-sm-10" id="ipbx-stats-live">
+		<div class="col-sm-8" id="ipbx-stats-live">
 			<table class="table table-condensed">
 				<tr class="sb-top">
 					<th class="th-left"><?=$this->bbf('stats_col_status');?></th>
