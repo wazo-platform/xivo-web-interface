@@ -34,7 +34,7 @@ $live = $this->get_var('live');
 <div id="index" class="b-infos">
 	<div class="row">
 		<div class="col-sm-8" id="ipbx-stats-live">
-			<table class="table table-condensed table-striped">
+			<table class="table table-condensed table-striped table-hover">
 					<tr class="sb-top">
 						<th class="th-left"><?=$this->bbf('stats_col_type');?></th>
 						<th class="th-center"><?=$this->bbf('stats_col_enable');?></th>

@@ -56,7 +56,7 @@ endif;
 ?>
 <div class="row">
 	<div class="col-md-offset-1 col-md-9">
-		<table class="table table-striped table-bordered">
+		<table class="table table-striped table-hover table-bordered">
 			<caption class="sysinfo-title" ><span><?=$this->bbf('sysinfos_memory');?></caption>
 			<thead>
 				<tr>

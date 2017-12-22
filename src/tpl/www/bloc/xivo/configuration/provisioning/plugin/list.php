@@ -50,7 +50,7 @@ $page = $url->pager($pager['pages'],
 	</div>
 </div>
 
-<table class="table table-condensed table-striped table-bordered" id="table-main-listing">
+<table class="table table-condensed table-striped table-hover table-bordered" id="table-main-listing">
 	<tr class="sb-top">
 		<th class="th-left xspan"><span class="span-left">&nbsp;</span></th>
 		<th class="th-center"><?=$this->bbf('col_name');?></th>

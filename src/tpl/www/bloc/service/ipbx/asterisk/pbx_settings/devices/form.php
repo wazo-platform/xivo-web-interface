@@ -141,7 +141,7 @@ $(document).ready(function() {
 			endif;
 		?>
 		<div class="sb-list">
-			<table class="table table-condensed table-striped">
+			<table class="table table-condensed table-striped table-hover">
 				<thead>
 					<tr class="sb-top">
 						<th class="th-left"><?=$this->bbf('col_line-line');?></th>

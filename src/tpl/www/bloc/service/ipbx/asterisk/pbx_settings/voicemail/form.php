@@ -239,7 +239,7 @@ function build_row($option, $form, $url, $helper) {
 	<uib-tab index="2" heading="<?=$this->bbf('smenu_advanced');?>">
 		<div class="sb-list">
 
-			<table class="table table-condensed table-striped table-bordered">
+			<table class="table table-condensed table-striped table-hover table-bordered">
 				<thead>
 					<th class="th-left">
 						<?= $this->bbf('col_voicemail-option-name') ?>

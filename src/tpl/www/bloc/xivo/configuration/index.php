@@ -34,7 +34,7 @@ $ldapserverstat = $this->get_var('ldapserverstat');
 	</h3>
 	<div class="sb-content sb-list row">
 		<div id="xivo-stats" class="col-sm-7">
-			<table class="table table-condensed table-striped">
+			<table class="table table-condensed table-striped table-hover">
 				<tr class="sb-top">
 					<th class="th-left"><?=$this->bbf('stats_col_type');?></th>
 					<th class="th-center"><?=$this->bbf('stats_col_enable');?></th>

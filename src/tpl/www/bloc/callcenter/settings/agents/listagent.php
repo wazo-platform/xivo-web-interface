@@ -55,7 +55,7 @@ $page = $url->pager(
 	$form->hidden(array('name'	=> 'group', 'value'	=> $group)),
 	$form->hidden(array('name' => 'search','value' => ''));
 ?>
-<table class="table table-condensed table-striped table-bordered" id="table-main-listing">
+<table class="table table-condensed table-striped table-hover table-bordered" id="table-main-listing">
 	<tr class="sb-top">
 		<th class="th-left xspan"><span class="span-left">&nbsp;</span></th>
 		<th class="th-center"><?=$this->bbf('col_fullname');?></th>

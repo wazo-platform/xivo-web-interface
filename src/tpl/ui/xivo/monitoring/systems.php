@@ -47,7 +47,7 @@ endif;
 <div id="leftinfo">
 	<div class="row">
 		<div class="col-md-offset-1 col-md-4" id="sysinfo">
-			<table class="table table-striped table-bordered">
+			<table class="table table-striped table-hover table-bordered">
 				<caption  class="sysinfo-title"><?=$this->bbf('sysinfos_system');?></caption>
 				<thead>
 				</thead>
@@ -85,7 +85,7 @@ endif;
 			</table>
 		</div>
 		<div  class="col-md-offset-1 col-md-4" id="cpustats">
-			<table class="table table-striped table-bordered">
+			<table class="table table-striped table-hover table-bordered">
 				<caption  class="sysinfo-title"><?=$this->bbf('sysinfos_cpu');?></caption>
 				<thead>
 					<tr class="l-subth">
@@ -107,7 +107,7 @@ endif;
 			</table>
 		</div>
 		<div  class="col-md-offset-1 col-md-4" id="netstats">
-			<table class="table table-striped table-bordered">
+			<table class="table table-striped table-hover table-bordered">
 				<caption  class="sysinfo-title"><?=$this->bbf('sysinfos_network');?></caption>
 				<thead>
 				<tr class="l-subth">
@@ -149,7 +149,7 @@ endif;
 	</div>
 	<div class="row">
 		<div  class="col-md-offset-1 col-md-4" id="devstats">
-			<table class="table table-striped table-bordered">
+			<table class="table table-striped table-hover table-bordered">
 				<caption  class="sysinfo-title"><?=$this->bbf('sysinfos_device');?></caption>
 				<thead>
 					<tr class="l-subth">

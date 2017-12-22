@@ -52,7 +52,7 @@ endif;
 
 <div role="tabpanel" class="tab-pane" id="ipbxinfos">
 <div class="sb-list">
-<table class="table table-condensed table-striped table-bordered">
+<table class="table table-condensed table-striped table-hover table-bordered">
 	<thead>
 	<tr class="sb-top">
 		<th class="th-left"><?=$this->bbf('col_line-key');?></th>

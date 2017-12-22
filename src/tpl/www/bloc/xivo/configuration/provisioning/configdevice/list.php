@@ -29,7 +29,7 @@ $act = $this->get_var('act');
 <form action="#" name="fm-config-list" method="post" accept-charset="utf-8">
 <?=$form->hidden(array('name' => DWHO_SESS_NAME,'value'	=> DWHO_SESS_ID));?>
 <?=$form->hidden(array('name' => 'act','value'	=> $act));?>
-<table class="table table-condensed table-striped table-bordered" id="table-main-listing">
+<table class="table table-condensed table-striped table-hover table-bordered" id="table-main-listing">
 	<tr class="sb-top">
 		<th class="th-left xspan"><span class="span-left">&nbsp;</span></th>
 		<th class="th-center"><?=$this->bbf('col_name');?></th>

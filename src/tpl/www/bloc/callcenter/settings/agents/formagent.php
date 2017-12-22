@@ -219,7 +219,7 @@ $act = $this->get_var('act');
 			</div>
 
 			<div class="sb-list">
-				<table class="table table-condensed table-striped table-bordered">
+				<table class="table table-condensed table-striped table-hover table-bordered">
 					<tr class="sb-top">
 						<th class="th-left"><?=$this->bbf('col_queue-name');?></th>
 						<th class="th-right"><?=$this->bbf('col_queue-penalty');?></th>

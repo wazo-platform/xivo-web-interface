@@ -39,7 +39,7 @@ $page = $url->pager($pager['pages'],
 		echo '<div class="b-page">',$page,'</div>';
 	endif;
 ?>
-<table class="table table-condensed table-striped table-bordered" id="table-main-listing">
+<table class="table table-condensed table-striped table-hover table-bordered" id="table-main-listing">
 	<tr class="sb-top">
 		<th class="th-left xspan"><span class="span-left">&nbsp;</span></th>
 		<th class="th-center"><?=$url->href_html($this->bbf('col_directory'),
