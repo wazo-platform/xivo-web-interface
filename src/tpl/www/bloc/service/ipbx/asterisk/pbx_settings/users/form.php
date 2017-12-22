@@ -56,7 +56,7 @@ if(dwho_issa('linefeatures',$info) === true
 				echo    $form->text(array('desc'        => $this->bbf('fm_userfeatures_firstname'),
 																				'name'        => 'userfeatures[firstname]',
 																				'labelid'     => 'userfeatures-firstname',
-																				'size'        => 15,
+																				'size'        => 25,
 																				'default'     => $element['userfeatures']['firstname']['default'],
 																				'value'       => $info['userfeatures']['firstname'],
 																				'error'       => $this->bbf_args('error',
@@ -65,7 +65,7 @@ if(dwho_issa('linefeatures',$info) === true
 											$form->text(array('desc'        => $this->bbf('fm_userfeatures_lastname'),
 																				'name'        => 'userfeatures[lastname]',
 																				'labelid'     => 'userfeatures-lastname',
-																				'size'        => 15,
+																				'size'        => 25,
 																				'default'     => $element['userfeatures']['lastname']['default'],
 																				'value'       => $info['userfeatures']['lastname'],
 																				'error'       => $this->bbf_args('error',
@@ -159,7 +159,7 @@ if(dwho_issa('linefeatures',$info) === true
 									'name'	=> 'userfeatures[callerid]',
 									'labelid'	=> 'userfeatures-callerid',
 									'value'	=> $this->get_var('info','userfeatures','callerid'),
-									'size'	=> 15,
+									'size'	=> 50,
 									'notag'	=> false,
 									'error'	=> $this->bbf_args('error',
 								$this->get_var('error', 'userfeatures', 'callerid')) )),
@@ -285,7 +285,7 @@ if(dwho_issa('linefeatures',$info) === true
 				endif;
 			?>
 		</div>
-		<div id="dialaction" class="tab-pane" index="2" heading="<?=$this->bbf('smenu_dialaction');?>">
+		<div id="voicemail" class="tab-pane" index="2" heading="<?=$this->bbf('smenu_voicemail');?>">
 			<fieldset id="fld-voicemail-actions">
 				<legend><?= $this->bbf('user_vm_header') ?></legend>
 				<p id="vm-action-search" class="fm-paragraph">
@@ -448,7 +448,7 @@ if(dwho_issa('linefeatures',$info) === true
 				?>
 			</fieldset>
 		</div>
-		<div id="service" class="tab-pane" index="3" heading="<?=$this->bbf('smenu_services');?>">
+		<div id="dialaction" class="tab-pane" index="3" heading="<?=$this->bbf('smenu_dialaction');?>">
 			<fieldset id="fld-dialaction-noanswer">
 				<legend><?=$this->bbf('fld-dialaction-noanswer');?></legend>
 				<?php
@@ -481,7 +481,7 @@ if(dwho_issa('linefeatures',$info) === true
 				?>
 			</fieldset>
 		</div>
-		<div id="voicemail" class="tab-pane" index="4" heading="<?=$this->bbf('smenu_voicemail');?>">
+		<div id="service" class="tab-pane" index="4" heading="<?=$this->bbf('smenu_services');?>">
 
 			<fieldset id="fld-services">
 				<legend><?=$this->bbf('fld-services');?></legend>
