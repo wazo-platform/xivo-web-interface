@@ -840,6 +840,7 @@ class dwho_tpl_form extends dwho_tpl_module
 		$this->_mk_help();
 		$this->_mk_error();
 		$this->_mk_legend();
+		$this->_mk_control_size();
 		$this->_mk_comment();
 		$this->_mk_desc();
 		$this->_mk_label();
