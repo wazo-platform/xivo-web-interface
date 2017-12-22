@@ -724,7 +724,7 @@ class dwho_tpl_form extends dwho_tpl_module
 
 		$v['size'] = false;
 		$v['regexp'] = $v['checked'] = $v['required'] = null;
-		$v['class'] = 'itb-button';
+		$v['class'] = isset($v['class']) ? $v['class'].' itb-button' : 'itb-button';
 		$v['type'] = 'button';
 
 		$this->_set_param($v);
@@ -1530,7 +1530,7 @@ class dwho_tpl_form extends dwho_tpl_module
 		}
 
 		$this->_render = $r.$this->_render.'</select>';
-		
+
 		if($this->_param['multiple'] === true)
 		{
 			if (ereg('list',$id))

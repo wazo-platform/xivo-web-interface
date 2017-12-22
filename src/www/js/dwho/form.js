@@ -231,7 +231,7 @@ dwho.form.move_selected = function(from,to)
         if(from.options[i].selected !== true)
             continue;
 
-        opt = new Option(from.options[i].text,from.options[i].value);        
+        opt = new Option(from.options[i].text,from.options[i].value);
         attrs = from.options[i].attributes;
         for(var j = 0; j < attrs.length; j++)
         {
@@ -252,7 +252,7 @@ dwho.form.move_selected = function(from,to)
 };
 
 dwho.form.copy_select = function(from,to)
-{    
+{
     var selected = '';
     if((from = dwho_eid(from)) === false
     || (to = dwho_eid(to)) === false
@@ -260,7 +260,7 @@ dwho.form.copy_select = function(from,to)
        && from.type !== 'select-multiple') === true
     || (to.type !== 'select-one'
        && to.type !== 'select-multiple') === true)
-        return(false);    
+        return(false);
     else if(to.selectedIndex === -1 || dwho_is_undef(to.options[to.selectedIndex]) === true)
         selected = false;
     else
@@ -756,7 +756,7 @@ dwho.form.toggle_enable_field = function(form,name,disable,exform,exformtag)
     || dwho_is_string(name) === false
     || dwho_is_undef(form[name]) === true)
         return(false);
-    
+
     var disableparent = '';
     var classname = '';
 

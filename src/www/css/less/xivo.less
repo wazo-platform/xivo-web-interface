@@ -79,6 +79,10 @@ body {
 .b-ldisplay {display: inline;}
 .b-page {text-align: right;}
 
+.mn-active {
+  color: @xivo-primary;
+}
+
 #b-lmenu .mn-active a {
   font-weight: bold;
 }
@@ -150,3 +154,18 @@ body {
   font-size: 8pt;
 }
 
+.fm-paragraph-submit {
+  padding-top: 10px;
+}
+
+.fm-success input, .fm-success textarea, .fm-success select {background-color: lighten(@xivo-danger,50);}
+.fm-error input, .fm-error textarea, .fm-error select {background-color: lighten(@xivo-danger,50);}
+input.fm-success, textarea.fm-success, select.fm-success, option.fm-success {background-color: lighten(@xivo-danger,50);}
+input.fm-error, textarea.fm-error, select.fm-error, option.fm-error {background-color: lighten(@xivo-danger,50);}
+
+.dwho-msg-error-icon, .fm-error-icon {padding: 2px 6px;background-image: url(/img/site/button/mini/red/bo-error.gif); background-repeat: no-repeat;background-position: center center;}
+.dwho-msg-help-icon, .fm-help-icon {padding: 2px 6px;background-image: url(/img/site/button/mini/blue/bo-help.gif); background-repeat: no-repeat;background-position: center center;}
+
+#r-wizard {
+  margin-top: -50px;
+}
