@@ -1,5 +1,5 @@
 ; title_content_name
-Authentication
+Login to XiVO PBX
 
 ; fm_login
 Login
@@ -12,3 +12,9 @@ Language:
 
 ; fm_bt-connection
 Connection
+
+; login_description
+XIVO is a unified communication system that connects phones inside an organization with public and mobile telephone networks.
+
+; info_copyright
+&copy; %s-%s %s

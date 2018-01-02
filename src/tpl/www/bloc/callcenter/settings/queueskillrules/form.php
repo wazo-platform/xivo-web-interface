@@ -65,7 +65,7 @@ $rules = $this->get_var('rules');
 <?php	} ?>
 
 	<div class="sb-list">
-		<table>
+		<table class="table">
 			<thead>
 			<tr class="sb-top">
 
@@ -154,4 +154,3 @@ $rules = $this->get_var('rules');
 	</div>
 </div>
 <br />
-

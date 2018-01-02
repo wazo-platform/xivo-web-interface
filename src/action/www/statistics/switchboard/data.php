@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2016 Avencall
+# Copyright (C) 2006-2017 Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -87,7 +87,6 @@ $menu->set_toolbar('toolbar/statistics/switchboard/data');
 
 $dhtml = &$_TPL->get_module('dhtml');
 $dhtml->add_js('/struct/js/date.js.php');
-$dhtml->set_js('js/dwho/submenu.js');
 $dhtml->set_js('js/statistics/switchboard/data.js');
 
 $dhtml->set_css('extra-libs/timepicker/jquery-ui-timepicker-addon.css',true);

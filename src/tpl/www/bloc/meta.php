@@ -32,18 +32,23 @@
 
 <link rel="icon" href="<?=$this->file_time($this->url('favicon.ico'));?>">
 <link rel="shortcut icon" href="<?=$this->file_time($this->url('favicon.ico'));?>">
-
 <link rel="stylesheet" type="text/css" href="<?=$this->file_time($this->url('css/xivo.css'));?>">
+<link rel="stylesheet" type="text/css" href="<?=$this->file_time($this->url('extra-libs/jquery-ui/css/ui-lightness/jquery-ui.css'));?>">
+<script type="text/javascript" src="<?=$this->file_time($this->url('extra-libs/jquery/jquery.min.js'));?>"></script>
+<script type="text/javascript" src="<?=$this->file_time($this->url('extra-libs/jquery-ui/jquery-ui.min.js'));?>"></script>
+<script type="text/javascript" src="<?=$this->file_time($this->url('js/vendor.bundle.js'));?>"></script>
+<link rel="stylesheet" type="text/css" href="<?=$this->file_time($this->url('extra-libs/select2-4.0.5/css/select2.min.css'));?>">
+<script type="text/javascript" src="<?=$this->file_time($this->url('js/xivo.bundle.js'));?>"></script>
+
 <script type="text/javascript" src="<?=$this->file_time($this->url('js/dwho.js'));?>"></script>
+
 <script type="text/javascript" src="<?=$this->file_time($this->url('js/dwho/dom.js'));?>"></script>
 <script type="text/javascript" src="<?=$this->file_time($this->url('js/dwho/form.js'));?>"></script>
 <script type="text/javascript" src="<?=$this->file_time($this->url('js/xivo.js'));?>"></script>
 
 <script type="text/javascript" src="<?=$this->file_time($this->url('js/utils/func.js'));?>"></script>
 
-<link rel="stylesheet" type="text/css" href="<?=$this->file_time($this->url('extra-libs/jquery-ui/css/ui-lightness/jquery-ui.css'));?>">
-<script type="text/javascript" src="<?=$this->file_time($this->url('extra-libs/jquery/jquery.min.js'));?>"></script>
-<script type="text/javascript" src="<?=$this->file_time($this->url('extra-libs/jquery-ui/jquery-ui.min.js'));?>"></script>
+
 
 <?php
 
@@ -52,4 +57,14 @@ $dhtml = &$this->get_module('dhtml');
 echo $dhtml->mk_js(),"\n",$dhtml->mk_css();
 
 ?>
-
+<script>
+jQuery.browser = {};
+  (function () {
+      jQuery.browser.msie = false;
+      jQuery.browser.version = 0;
+      if (navigator.userAgent.match(/MSIE ([0-9]+)\./)) {
+          jQuery.browser.msie = true;
+          jQuery.browser.version = RegExp.$1;
+      }
+  })();
+</script>

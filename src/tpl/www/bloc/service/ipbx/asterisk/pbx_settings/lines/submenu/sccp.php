@@ -21,18 +21,9 @@
 ?>
 
 <div class="sb-smenu">
-	<ul>
-		<li id="dwsm-tab-1"
-			class="dwsm-blur-last"
-			onclick="dwho_submenu.select(this,'sb-part-first',1);"
-			onmouseout="dwho_submenu.blur(this,1);"
-			onmouseover="dwho_submenu.focus(this,1);">
-			<div class="tab">
-				<span class="span-center"><a href="#first">
-					<?=$this->bbf('smenu_general');?></a>
-				</span>
-			</div>
-			<span class="span-right">&nbsp;</span>
+	<ul class="nav nav-tabs" role="tablist">
+		<li id="dwsm-tab-1"	role="presentation" class="active">
+				<a role="tab" data-toggle="tab" href="#general"><?=$this->bbf('smenu_general');?></a>
 		</li>
 	</ul>
 </div>

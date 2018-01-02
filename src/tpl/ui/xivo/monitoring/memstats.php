@@ -54,19 +54,22 @@ else:
 endif;
 
 ?>
-<table>
-	<tr class="sb-top">
-		<th colspan="8" class="th-left th-right"><?=$this->bbf('sysinfos_memory');?></th>
-	</tr>
-	<tr class="l-subth">
-		<td><?=$this->bbf('sysinfos_col_type');?></td>
-		<td colspan="2"><?=$this->bbf('sysinfos_col_percent');?></td>
-		<td><?=$this->bbf('sysinfos_col_free');?></td>
-		<td><?=$this->bbf('sysinfos_col_used');?></td>
-		<td><?=$this->bbf('sysinfos_col_buffers');?></td>
-		<td><?=$this->bbf('sysinfos_col_cached');?></td>
-		<td class="td-right"><?=$this->bbf('sysinfos_col_total');?></td>
-	</tr>
+<div class="row">
+	<div class="col-md-offset-1 col-md-9">
+		<table class="table table-striped table-hover table-bordered">
+			<caption class="sysinfo-title" ><span><?=$this->bbf('sysinfos_memory');?></caption>
+			<thead>
+				<tr>
+					<th><?=$this->bbf('sysinfos_col_type');?></th>
+					<th colspan="2"><?=$this->bbf('sysinfos_col_percent');?></th>
+					<th><?=$this->bbf('sysinfos_col_free');?></th>
+					<th><?=$this->bbf('sysinfos_col_used');?></th>
+					<th><?=$this->bbf('sysinfos_col_buffers');?></th>
+					<th><?=$this->bbf('sysinfos_col_cached');?></th>
+					<th class="td-right"><?=$this->bbf('sysinfos_col_total');?></th>
+				</tr>
+			</thead>
+			<tbody>
 	<tr class="l-infos-1on2">
 		<td><?=$this->bbf('sysinfos_physical-memory');?></td>
 		<td class="gauge">
@@ -106,4 +109,7 @@ endif;
 		<td class="txt-right">-</td>
 		<td class="td-right txt-right"><?=$this->bbf('size_iec_'.$swaptotal[1],$swaptotal[0]);?></td>
 	</tr>
+</tbody>
 </table>
+	</div>
+</div>

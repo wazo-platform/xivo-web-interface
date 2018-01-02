@@ -299,9 +299,9 @@ function xivo_form_result(success,str)
     str = dwho_string(str);
 
     if(Boolean(success) === true)
-        txtclassname = 'fm-txt-success';
+        txtclassname = 'alert alert-success';
     else
-        txtclassname = 'fm-txt-error';
+        txtclassname = 'alert alert-danger';
 
     if(str.length === 0 || dwho_eid('tooltips') === false)
         var property = {innerHTML: '&nbsp;'};
@@ -334,4 +334,3 @@ function xivo_set_confirm_uri_for_main_listing()
 
 dwho.dom.set_onload(xivo_set_confirm_uri_for_main_listing);
 dwho.dom.set_onload(xivo_menu_active);
-

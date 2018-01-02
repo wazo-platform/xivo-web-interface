@@ -42,7 +42,7 @@ $page = $url->pager($pager['pages'],
 <?=$form->hidden(array('name' => DWHO_SESS_NAME,'value' => DWHO_SESS_ID));?>
 <?=$form->hidden(array('name' => 'act',$act));?>
 <?=$form->hidden(array('name' => 'page','value' => $pager['page']));?>
-<table id="table-main-listing">
+<table class="table table-condensed table-striped table-hover table-bordered" id="table-main-listing">
 	<tr class="sb-top">
 		<th class="th-left xspan"><span class="span-left">&nbsp;</span></th>
 		<th class="th-center"><?=$this->bbf('col_profile');?></th>
@@ -108,11 +108,6 @@ $page = $url->pager($pager['pages'],
 		endfor;
 	endif;
 ?>
-	<tr class="sb-foot">
-		<td class="td-left xspan b-nosize"><span class="span-left b-nosize">&nbsp;</span></td>
-		<td class="td-center" colspan="2"><span class="b-nosize">&nbsp;</span></td>
-		<td class="td-right xspan b-nosize"><span class="span-right b-nosize">&nbsp;</span></td>
-	</tr>
 </table>
 </form>
 <?php

@@ -1,3 +1,9 @@
 *.pyc
 /.*
 !/.git*
+src/node_modules/*
+*.map
+*.bundle.js
+src/www/js/css.js
+src/www/css/xivo.css
+src/www/fonts/*

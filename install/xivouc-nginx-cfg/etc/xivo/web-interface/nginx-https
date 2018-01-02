@@ -62,7 +62,7 @@ location /service/ipbx/web_services.php/phonebook/search {
 #    alias /usr/share/phppgadmin/$1;
 #}
 
-location ~* ^/(?:xivo|service|callcenter|cti|graphs|statistics|css|js|img|extra-libs)/.*\.(?:ico|css|js|gif|jpe?g|png)$ {
+location ~* ^/(?:xivo|service|callcenter|cti|graphs|statistics|css|js|img|extra-libs)/.*\.(?:ico|css|js|gif|jpe?g|png|htm?l)$ {
     expires max;
     add_header Pragma public;
     add_header Cache-Control "public, must-revalidate, proxy-revalidate";
@@ -101,3 +101,10 @@ location /xuc/ {
     proxy_send_timeout 60m;
 }
 
+location /ccagent {
+    deny all;
+}
+
+location /ccmanager {
+    deny all;
+}

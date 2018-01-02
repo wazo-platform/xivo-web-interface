@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2017  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -32,10 +32,6 @@ $info  = $this->get_var('info');
 			</span>
 		<span class="span-right">&nbsp;</span>
 	</h3>
-<?php
-		$this->file_include('bloc/xivo/configuration/manage/certificate/submenu');
-?>
-
 	<div class="sb-content">
 <?php
 		$this->file_include('bloc/xivo/configuration/manage/certificate/form');

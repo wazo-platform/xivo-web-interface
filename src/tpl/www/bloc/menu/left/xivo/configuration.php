@@ -198,7 +198,7 @@ $dhtml = &$this->get_module('dhtml');
 		echo '<dl><dt>',$this->bbf('mn_left_ti_controlsystem'),'</dt>';
 
 		if(xivo_user::chk_acl('controlsystem','network') === true):
-			$class_network = file_exists('/tmp/network.reload')?'active':false;
+			$class_network = file_exists('/tmp/network.reload')?'active-menu':false;
 
 			echo	'<dd id="mn-controlsystem--network">',
 				$url->href_html($this->bbf('mn_left_controlsystem-network'),

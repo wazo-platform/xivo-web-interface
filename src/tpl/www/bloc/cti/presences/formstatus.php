@@ -67,68 +67,74 @@ $count = count($actionslist);
 				  'value'	=> $info['status']['color']));
 
 ?>
-	<div class="fm-paragraph fm-description">
+	<div class="col-sm-offset-1 col-sm-5 fm-paragraph fm-description">
 		<fieldset id="cti-access_status">
 			<legend><?=$this->bbf('cti-access_status');?></legend>
 			<div id="fd-cti-access_status" class="fm-paragraph fm-multilist">
-				<?=$form->input_for_ms('access_statuslist',$this->bbf('ms_seek'))?>
-				<div class="slt-outlist">
-<?php
-				/* A status does not need to be authorized to access to itself,
-				 * so we remove it from the lists */
-				$status_id = $info['status']['id'];
-				unset($info['access_status']['list'][$status_id]);
-				echo    $form->select(array('name'  => 'access_statuslist',
-							'label' => false,
-							'id'    => 'it-access_statuslist',
-							'key'   => 'display_name',
-							'altkey'    => 'id',
-							'multiple'  => true,
-							'size'  => 5,
-							'paragraph' => false),
-						$info['access_status']['list']);
-?>
+				<div class="row">
+					<div class="col-sm-5">
+						<?=$form->input_for_ms('access_statuslist',$this->bbf('ms_seek'))?>
+					</div>
 				</div>
-				<div class="inout-list">
-					<a href="#"
-					onclick="dwho.form.move_selected('it-access_statuslist','it-access_status');
-					return(dwho.dom.free_focus());"
-					title="<?=$this->bbf('bt_inaccess_status');?>">
-					<?=$url->img_html('img/site/button/arrow-left.gif',
-							$this->bbf('bt_inaccess_status'),
-							'class="bt-inlist" id="bt-inaccess_status" border="0"');?></a><br />
+				<div class="row">
+					<div class="col-sm-2 slt-outlist">
+						<?php
+							/* A status does not need to be authorized to access to itself,
+							* so we remove it from the lists */
+							$status_id = $info['status']['id'];
+							unset($info['access_status']['list'][$status_id]);
+							echo    $form->select(array('name'  => 'access_statuslist',
+										'label' => false,
+										'id'    => 'it-access_statuslist',
+										'key'   => 'display_name',
+										'altkey'    => 'id',
+										'multiple'  => true,
+										'size'  => 5,
+										'paragraph' => false),
+									$info['access_status']['list']);
+						?>
+					</div>
+					<div class="col-sm-1 inout-list">
+						<a href="#"
+						onclick="dwho.form.move_selected('it-access_statuslist','it-access_status');
+						return(dwho.dom.free_focus());"
+						title="<?=$this->bbf('bt_inaccess_status');?>">
+						<?=$url->img_html('img/site/button/arrow-left.gif',
+								$this->bbf('bt_inaccess_status'),
+								'class="bt-inlist" id="bt-inaccess_status" border="0"');?></a><br />
 
-					<a href="#"
-					onclick="dwho.form.move_selected('it-access_status','it-access_statuslist');
-					return(dwho.dom.free_focus());"
-					title="<?=$this->bbf('bt_outaccess_status');?>">
-					<?=$url->img_html('img/site/button/arrow-right.gif',
-							$this->bbf('bt_outaccess_status'),
-							'class="bt-outlist" id="bt-outaccess_status" border="0"');?></a>
+						<a href="#"
+						onclick="dwho.form.move_selected('it-access_status','it-access_statuslist');
+						return(dwho.dom.free_focus());"
+						title="<?=$this->bbf('bt_outaccess_status');?>">
+						<?=$url->img_html('img/site/button/arrow-right.gif',
+								$this->bbf('bt_outaccess_status'),
+								'class="bt-outlist" id="bt-outaccess_status" border="0"');?></a>
+					</div>
+					<div class="col-sm-2 slt-inlist">
+						<?php
+										/* A status does not need to be authorized to access to itself,
+										* so we remove it from the lists */
+										$status_id = $info['status']['id'];
+										unset($info['access_status']['slt'][$status_id]);
+										echo    $form->select(array('name'  => 'access_status[]',
+												'label' => false,
+												'id'    => 'it-access_status',
+												'key'	=> 'display_name',
+												'altkey'    => 'id',
+												'multiple'  => true,
+												'size'  => 5,
+												'paragraph' => false),
+											$info['access_status']['slt']);
+						?>
 				</div>
-				<div class="slt-inlist">
-<?php
-				/* A status does not need to be authorized to access to itself,
-				 * so we remove it from the lists */
-				$status_id = $info['status']['id'];
-				unset($info['access_status']['slt'][$status_id]);
-				echo    $form->select(array('name'  => 'access_status[]',
-						'label' => false,
-						'id'    => 'it-access_status',
-						'key'	=> 'display_name',
-						'altkey'    => 'id',
-						'multiple'  => true,
-						'size'  => 5,
-						'paragraph' => false),
-					$info['access_status']['slt']);
-?>
 				</div>
 			</div>
 		</fieldset>
 		<div class="clearboth"></div>
 	</div>
 	<div class="sb-list">
-		<table>
+		<table class="table">
 			<thead>
 			<tr class="sb-top">
 				<th class="th-left"><?=$this->bbf('col_'.$type.'-name');?></th>
@@ -238,4 +244,3 @@ $count = count($actionslist);
 		</table>
 	</div>
 </div>
-

@@ -21,89 +21,32 @@
 $url = &$this->get_module('url');
 $menu = &$this->get_module('menu');
 
-$this->file_include('bloc/menu/top/user/loginbox');
 
 ?>
-<div id="toolbox">
-<div id="logo"><?=$url->img_html('img/menu/top/logo.gif',XIVO_SOFT_LABEL);?></div>
-<div class="nav">
-	 <ul>
-		<li onmouseout="this.className = 'moo';"
-		    onmouseover="this.className = 'mov';">
-			<span class="span-left">&nbsp;</span>
-			<span class="span-center"><?=$this->bbf('mn_top_services');?></span>
-			<span class="span-right">&nbsp;</span>
-			<div class="stab">
-				<ul>
-					<li>
-						<?=$url->href_html($this->bbf('mn_sub_top_services_ipbx'),
-								   'service/ipbx');?>
-					</li>
-					<li>
-						<?=$url->href_html($this->bbf('mn_sub_top_services_cti'),
-								   'cti/general');?>
-					</li>
-					<li>
-						<?=$url->href_html($this->bbf('mn_sub_top_services_callcenter'),
-								   'callcenter');?>
-					</li>
-					<li>
-						<?=$url->href_html($this->bbf('mn_sub_top_services_monitoring'),
-								   'xivo');?>
-					</li>
-					<li>
-						<?=$url->href_html($this->bbf('mn_sub_top_services_stats'),
-								   'graphs');?>
-					</li>
-					<li>
-						<?=$url->href_html($this->bbf('mn_sub_top_services_statistiques'),
-								   'statistics');?>
-					</li>
-				</ul>
-			</div>
+<div class="navbar-header">
+	<a class="navbar-brand" href="/">
+		<div id="logo"><?=$url->img_html('img/xivo/xivo_logo.png',XIVO_SOFT_LABEL);?></div>
+	</a>
+</div>
+<div class="collapse navbar-collapse">
+	<ul class="nav navbar-nav">
+		<li class="dropdown">
+			<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+				<?=$this->bbf('mn_top_services');?><span class="caret"></span>
+			</a>
+		  <ul class="dropdown-menu">
+	      <li><?=$url->href_html($this->bbf('mn_sub_top_services_ipbx'),'service/ipbx');?></li>
+			  <li><?=$url->href_html($this->bbf('mn_sub_top_services_cti'),'cti/general');?></li>
+			  <li><?=$url->href_html($this->bbf('mn_sub_top_services_callcenter'),'callcenter');?></li>
+			  <li><?=$url->href_html($this->bbf('mn_sub_top_services_monitoring'),'xivo');?></li>
+			  <li role="separator" class="divider"></li>
+			  <li><?=$url->href_html($this->bbf('mn_sub_top_services_stats'),'graphs');?></li>
+			  <li><?=$url->href_html($this->bbf('mn_sub_top_services_statistiques'),'statistics');?></li>
+	  	</ul>
 		</li>
-		<li onmouseout="this.className = 'moo';"
-		    onmouseover="this.className = 'mov';">
-			<?=$url->href_html('<span class="span-left">&nbsp;</span>
-					    <span class="span-center">'.$this->bbf('mn_top_configuration').'</span>
-					    <span class="span-right">&nbsp;</span>',
-					   'xivo/configuration',
-					   null,
-					   null,
-					   $this->bbf('mn_top_configuration'));?>
-		</li>
-		<li onmouseout="this.className = 'moo';"
-		    onmouseover="this.className = 'mov';">
-			<?=$url->href_html('<span class="span-left">&nbsp;</span>
-					    <span class="span-center">'.$this->bbf('mn_top_help').'</span>
-					    <span class="span-right">&nbsp;</span>',
-					   'xivo/help',
-					   null,
-					   null,
-					   $this->bbf('mn_top_help'));?>
-		</li>
-		<li onmouseout="this.className = 'moo';"
-		    onmouseover="this.className = 'mov';">
-			<?=$url->href_html('<span class="span-left">&nbsp;</span>
-					    <span class="span-center">'.$this->bbf('mn_top_contact').'</span>
-					    <span class="span-right">&nbsp;</span>',
-					   'xivo/contact',
-					   null,
-					   null,
-					   $this->bbf('mn_top_contact'));?>
-		</li>
+		<li><?=$url->href_html($this->bbf('mn_top_configuration'),'xivo/configuration');?></li>
+		<li><?=$url->href_html($this->bbf('mn_top_help'),'xivo/help');?></li>
+		<li><?=$url->href_html($this->bbf('mn_top_contact'),'xivo/contact');?></li>
 	</ul>
+	<?php $this->file_include('bloc/menu/top/user/loginbox'); ?>
 </div>
-<div id="tooltips">&nbsp;</div>
-<div id="toolbar">
-<?php
-	$menu->mk_toolbar();
-?>
-</div>
-</div>
-
-<?php if (dwho_report::has('error') === true) : echo dwho_report::get_message('error'); endif; ?>
-<?php if (dwho_report::has('warning') === true) : echo dwho_report::get_message('warning'); endif; ?>
-<?php if (dwho_report::has('info') === true) : echo dwho_report::get_message('info'); endif; ?>
-<?php if (dwho_report::has('notice') === true) : echo dwho_report::get_message('notice'); endif; ?>
-<?php if (dwho_report::has('debug') === true) : echo dwho_report::get_message('debug'); endif; ?>

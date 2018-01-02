@@ -93,7 +93,6 @@ switch($act)
 		$_TPL->set_var('proto',$_QR['proto']);
 
 		$dhtml = &$_TPL->get_module('dhtml');
-		$dhtml->set_js('js/dwho/submenu.js');
 		$dhtml->set_js('js/utils/codeclist.js');
 		$dhtml->load_js_multiselect_files();
 		break;
@@ -146,7 +145,6 @@ switch($act)
 		$_TPL->set_var('context_list',$appline->get_context_list(null,null,null,false,'internal'));
 
 		$dhtml = &$_TPL->get_module('dhtml');
-		$dhtml->set_js('js/dwho/submenu.js');
 		$dhtml->set_js('js/utils/codeclist.js');
 		$dhtml->load_js_multiselect_files();
 		break;

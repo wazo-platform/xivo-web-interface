@@ -77,7 +77,6 @@ switch($act)
 			$rightcall['slt'] = array_keys($rightcall['slt']);
 
 		$dhtml = &$_TPL->get_module('dhtml');
-		$dhtml->set_js('js/dwho/submenu.js');
 		$dhtml->set_js('js/service/ipbx/'.$ipbx->get_name().'/outcall.js');
 		$dhtml->set_js('js/utils/dyntable.js');
 		$dhtml->load_js_multiselect_files();
@@ -136,7 +135,6 @@ switch($act)
 			$rightcall['slt'] = array_keys($rightcall['slt']);
 
 		$dhtml = &$_TPL->get_module('dhtml');
-		$dhtml->set_js('js/dwho/submenu.js');
 		$dhtml->set_js('js/service/ipbx/'.$ipbx->get_name().'/outcall.js');
 		$dhtml->set_js('js/utils/dyntable.js');
 		$dhtml->load_js_multiselect_files();

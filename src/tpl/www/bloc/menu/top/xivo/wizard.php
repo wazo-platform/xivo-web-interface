@@ -22,18 +22,8 @@ $url = &$this->get_module('url');
 $menu = &$this->get_module('menu');
 
 ?>
-<div id="toolbox">
-<div id="logo"><?=$url->img_html('img/menu/top/logo.gif',XIVO_SOFT_LABEL);?></div>
-<div class="nav">&nbsp;</div>
-<div id="tooltips">&nbsp;</div>
-<div id="toolbar">
-<?php
-	$menu->mk_toolbar();
-?>
+<div class="navbar-header">
+	<a class="navbar-brand" href="/">
+		<div id="logo"><?=$url->img_html('img/xivo/xivo_logo.png',XIVO_SOFT_LABEL);?></div>
+	</a>
 </div>
-</div>
-<?php if (dwho_report::has('error') === true) : echo dwho_report::get_message('error'); endif; ?>
-<?php if (dwho_report::has('warning') === true) : echo dwho_report::get_message('warning'); endif; ?>
-<?php if (dwho_report::has('info') === true) : echo dwho_report::get_message('info'); endif; ?>
-<?php if (dwho_report::has('notice') === true) : echo dwho_report::get_message('notice'); endif; ?>
-<?php if (dwho_report::has('debug') === true) : echo dwho_report::get_message('debug'); endif; ?>

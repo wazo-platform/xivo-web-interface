@@ -44,7 +44,7 @@ $tree = $this->get_var('tree');
 		$form->hidden(array('name'	=> 'id',
 				    'value'	=> $info['id'])),
 
-		'<table>';
+		'<table class="table">';
 
 	$ref = &$tree['xivo'];
 

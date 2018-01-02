@@ -26,7 +26,7 @@ $element = $this->get_var('element');
 
 ?>
 
-<div id="sb-part-first">
+<div role="tabpanel" class="tab-pane active" id="general">
 <?php
 		echo	$form->text(array('desc'	=> $this->bbf('fm_protocol_name'),
 					  'name'	=> 'protocol[name]',

@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2017  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -67,131 +67,133 @@ $(document).ready(function() {
 });
 </script>
 
-<div id="sb-part-first" class="b-nodisplay">
-<?php
-	echo	$form->text(array('desc'	=> $this->bbf('fm_device_ip'),
-				  'name'	=> 'device[ip]',
-				  'labelid'	=> 'device-ip',
-				  'size'	=> 15,
-				  'readonly'=> ($act === 'add') ? false : true,
-				  'value'	=> $this->get_var('info','device','ip'),
-				  'error'	=> $this->bbf_args('error',
-						   $this->get_var('error', 'device', 'ip')) )),
+<uib-tabset active="active">
+	<uib-tab index="0" heading="<?=$this->bbf('smenu_general');?>">
+		<?php
+			echo	$form->text(array('desc'	=> $this->bbf('fm_device_ip'),
+							'name'	=> 'device[ip]',
+							'labelid'	=> 'device-ip',
+							'size'	=> 15,
+							'readonly'=> ($act === 'add') ? false : true,
+							'value'	=> $this->get_var('info','device','ip'),
+							'error'	=> $this->bbf_args('error',
+									$this->get_var('error', 'device', 'ip')) )),
 
-		$form->text(array('desc'	=> $this->bbf('fm_device_mac'),
-				  'name'	=> 'device[mac]',
-				  'labelid'	=> 'device-mac',
-				  'size'	=> 15,
-				  'readonly'=> ($act === 'add') ? false : true,
-				  'value'	=> $this->get_var('info','device','mac'),
-				  'error'	=> $this->bbf_args('error',
-						   $this->get_var('error', 'device', 'mac')) )),
+				$form->text(array('desc'	=> $this->bbf('fm_device_mac'),
+							'name'	=> 'device[mac]',
+							'labelid'	=> 'device-mac',
+							'size'	=> 15,
+							'readonly'=> ($act === 'add') ? false : true,
+							'value'	=> $this->get_var('info','device','mac'),
+							'error'	=> $this->bbf_args('error',
+									$this->get_var('error', 'device', 'mac')) )),
 
-		$form->select(array('desc'	=> $this->bbf('fm_device_plugin'),
-				  'name'	=> 'device[plugin]',
-				  'labelid'	=> 'device-plugin',
-				  'empty'	=> true,
-				  'key'		=> 'name',
-				  'altkey'	=> 'name',
-				  'selected'	=> $this->get_var('info','device','plugin'),
-				  'error'	=> $this->bbf_args('error',
-						   $this->get_var('error', 'device', 'plugin'))),
-			      $plugininstalled),
+				$form->select(array('desc'	=> $this->bbf('fm_device_plugin'),
+							'name'	=> 'device[plugin]',
+							'labelid'	=> 'device-plugin',
+							'empty'	=> true,
+							'key'		=> 'name',
+							'altkey'	=> 'name',
+							'selected'	=> $this->get_var('info','device','plugin'),
+							'error'	=> $this->bbf_args('error',
+									$this->get_var('error', 'device', 'plugin'))),
+								$plugininstalled),
 
-		$form->select(array('desc'	=> $this->bbf('fm_device_configdevice'),
-				  'name'	=> 'device[template_id]',
-				  'labelid'	=> 'device-template_id',
-				  'key'		=> 'label',
-				  'altkey'	=> 'id',
-				  'selected'	=> $this->get_var('info','device','template_id')),
-			      $listconfigdevice),
+				$form->select(array('desc'	=> $this->bbf('fm_device_configdevice'),
+							'name'	=> 'device[template_id]',
+							'labelid'	=> 'device-template_id',
+							'key'		=> 'label',
+							'altkey'	=> 'id',
+							'selected'	=> $this->get_var('info','device','template_id')),
+								$listconfigdevice),
 
-		$form->checkbox(array('desc'	=> $this->bbf('fm_device_switchboard'),
-				'name'		=> 'device[options][switchboard]',
-				'labelid'	=> 'device-switchboard-id'));
-?>
-	<div class="fm-paragraph fm-description">
-		<p>
-			<label id="lb-userfeatures-description" for="it-userfeatures-description"><?=$this->bbf('fm_userfeatures_description');?></label>
-		</p>
-		<?=$form->textarea(array('paragraph' => false,
-					 'label'	=> false,
-					 'name'		=> 'device[description]',
-					 'labelid'	=> 'device-description',
-					 'cols'		=> 60,
-					 'rows'		=> 5,
-					 'error'	=> $this->bbf_args('error',
-						   $this->get_var('error', 'device', 'description')) ),
-				   $this->get_var('info','device','description'));?>
-	</div>
-</div>
-<div id="sb-part-last" class="b-nodisplay">
-<?php
+				$form->checkbox(array('desc'	=> $this->bbf('fm_device_switchboard'),
+						'name'		=> 'device[options][switchboard]',
+						'labelid'	=> 'device-switchboard-id'));
+		?>
+		<div class="col-sm-offset-2 fm-paragraph fm-description">
+			<p>
+				<label id="lb-userfeatures-description" for="it-userfeatures-description"><?=$this->bbf('fm_userfeatures_description');?></label>
+			</p>
+			<?=$form->textarea(array('paragraph' => false,
+						'label'	=> false,
+						'name'		=> 'device[description]',
+						'labelid'	=> 'device-description',
+						'cols'		=> 60,
+						'rows'		=> 5,
+						'error'	=> $this->bbf_args('error',
+								$this->get_var('error', 'device', 'description')) ),
+						$this->get_var('info','device','description'));?>
+		</div>
+	</uib-tab>
 
-$nbcap = $busy = 0;
-if (isset($info['capabilities'])
-&& ($capabilities = $info['capabilities']) !== false):
-	if(isset($capabilities['sip.lines']) === true
-	&& ($nbcap = (int) $capabilities['sip.lines']) !== 0):
-		if (empty($listline) === false)
-			$busy = count($listline);
-		echo $this->bbf('nb_line_busy-free',array($busy,$nbcap-$busy));
-	endif;
-endif;
-
-?>
-<div class="sb-list">
-<table>
-	<thead>
-	<tr class="sb-top">
-		<th class="th-left"><?=$this->bbf('col_line-line');?></th>
-		<th class="th-center"><?=$this->bbf('col_line-protocol');?></th>
-		<th class="th-center"><?=$this->bbf('col_line-name');?></th>
-		<th class="th-center"><?=$this->bbf('col_line-number');?></th>
-		<th class="th-center"><?=$this->bbf('col_line-context');?></th>
-	</tr>
-	</thead>
-	<tbody>
-<?php
-if($listline !== false
-&& ($nb = count($listline)) !== 0):
-	foreach($listline as $num => $line):
-		$secureclass = '';
-		if(isset($ref['encryption']) === true
-		&& $ref['encryption'] === true)
-			$secureclass = 'xivo-icon xivo-icon-secure';
-?>
-	<tr class="fm-paragraph">
-		<td class="td-left"><?=$line['num']?></td>
-		<td class="txt-center">
-			<span>
-				<span class="<?=$secureclass?>">&nbsp;</span>
-				<?=$this->bbf('line_protocol-sip')?>
-			</span>
-		</td>
-		<td><?=$line['callerid']?></td>
-		<td class>
-		<?php 	
-			echo $url->href_html(
-                        	$line['number'],
-                        	'service/ipbx/pbx_settings/lines',
-                        	array(
-                        	'id' => $line['id'],
-                        	'act' => 'edit'
-                        ));
-		?></td>
-		<td><?=$line['context']?></td>
-	</tr>
-<?php
-	endforeach;
-endif;
-?>
-	</tbody>
-	<tfoot>
-	<tr id="no-device"<?=($listline !== false ? ' class="b-nodisplay"' : '')?>>
-		<td colspan="7" class="td-single"><?=$this->bbf('no_lines');?></td>
-	</tr>
-	</tfoot>
-</table>
-</div>
-</div>
+	<uib-tab index="1" heading="<?=$this->bbf('smenu_lines');?>">
+		<?php
+			$nbcap = $busy = 0;
+			if (isset($info['capabilities'])
+			&& ($capabilities = $info['capabilities']) !== false):
+				if(isset($capabilities['sip.lines']) === true
+				&& ($nbcap = (int) $capabilities['sip.lines']) !== 0):
+					if (empty($listline) === false)
+						$busy = count($listline);
+					echo $this->bbf('nb_line_busy-free',array($busy,$nbcap-$busy));
+				endif;
+			endif;
+		?>
+		<div class="sb-list">
+			<table class="table table-condensed table-striped table-hover">
+				<thead>
+					<tr class="sb-top">
+						<th class="th-left"><?=$this->bbf('col_line-line');?></th>
+						<th class="th-center"><?=$this->bbf('col_line-protocol');?></th>
+						<th class="th-center"><?=$this->bbf('col_line-name');?></th>
+						<th class="th-center"><?=$this->bbf('col_line-number');?></th>
+						<th class="th-center"><?=$this->bbf('col_line-context');?></th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php
+						if($listline !== false
+						&& ($nb = count($listline)) !== 0):
+							foreach($listline as $num => $line):
+								$secureclass = '';
+								if(isset($ref['encryption']) === true
+								&& $ref['encryption'] === true)
+									$secureclass = 'xivo-icon xivo-icon-secure';
+					?>
+					<tr class="fm-paragraph">
+						<td class="td-left"><?=$line['num']?></td>
+						<td class="txt-center">
+							<span>
+								<span class="<?=$secureclass?>">&nbsp;</span>
+								<?=$this->bbf('line_protocol-sip')?>
+							</span>
+						</td>
+						<td><?=$line['callerid']?></td>
+						<td class>
+							<?php 	
+								echo $url->href_html(
+																		$line['number'],
+																		'service/ipbx/pbx_settings/lines',
+																		array(
+																		'id' => $line['id'],
+																		'act' => 'edit'
+																	));
+							?>
+						</td>
+						<td><?=$line['context']?></td>
+					</tr>
+					<?php
+						endforeach;
+					endif;
+					?>
+				</tbody>
+				<tfoot>
+					<tr id="no-device"<?=($listline !== false ? ' class="b-nodisplay"' : '')?>>
+						<td colspan="7" class="td-single"><?=$this->bbf('no_lines');?></td>
+					</tr>
+				</tfoot>
+			</table>
+		</div>
+	</uib-tab>
+</uib-tabset>

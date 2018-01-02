@@ -56,7 +56,6 @@ switch($act)
 		include(dirname(__FILE__).'/users/'.$act.'.php');
 
 		$dhtml = &$_TPL->get_module('dhtml');
-		$dhtml->set_js('js/dwho/submenu.js');
 		$dhtml->set_js('js/dwho/uri.js');
 		$dhtml->set_js('js/dwho/http.js');
 		$dhtml->set_js('js/dwho/suggest.js');
@@ -71,8 +70,8 @@ switch($act)
 		$dhtml->set_js('extra-libs/timepicker/jquery-ui-timepicker-addon.js',true);
 
 		// select2
-		$dhtml->set_css('extra-libs/select2-4.0.5/css/select2.min.css', true);
-		$dhtml->set_js('extra-libs/select2-4.0.5/js/select2.full.min.js', true);
+    $dhtml->set_js('extra-libs/select2-4.0.5/js/select2.full.min.js', true);
+		
 		$dhtml->set_js('extra-libs/select2-4.0.5/js/i18n/en.js', true);
 		$dhtml->set_js('extra-libs/select2-4.0.5/js/i18n/fr_patched.js', true);
 

@@ -29,7 +29,7 @@ $presence = $this->get_var('directories');
 
 ?>
 
-<div id="sb-part-first">
+<div>
 <?php
 	echo	$form->text(array('desc'	=> $this->bbf('fm_directories_name'),
 				  'name'	=> 'directories[name]',
@@ -78,7 +78,7 @@ $presence = $this->get_var('directories');
 	<p>&nbsp;</p>
 	<div class="sb-list">
 		<p><?= $this->bbf('fields_title');?></p>
-		<table>
+		<table class="table">
 			<thead>
 			<tr class="sb-top">
 
@@ -188,7 +188,7 @@ $presence = $this->get_var('directories');
 	</div>
 <br />
 
-<div class="fm-paragraph fm-description">
+<div class="col-sm-offset-2 fm-paragraph fm-description">
 	<p>
 		<label id="lb-description" for="it-description"><?=$this->bbf('fm_description');?></label>
 	</p>
@@ -203,4 +203,4 @@ $presence = $this->get_var('directories');
 </div>
 </div>
 
-<div class="fm-paragraph fm-description"><p><?=$this->bbf('need-xivo-dird-restart');?></p></div>
+<div class="col-sm-offset-2 fm-paragraph fm-description"><p><?=$this->bbf('need-xivo-dird-restart');?></p></div>

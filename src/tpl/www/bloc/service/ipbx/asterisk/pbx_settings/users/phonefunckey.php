@@ -34,7 +34,7 @@ foreach($fktypes as $fktype => $info) {
 
 function build_bsfilter($helper, $funckey) {
 	$bsfilters = $helper->get_var('bsfilter_list');
-	$html = 'class="fkbsfilter" style="display: none;"';
+	$html = 'class="fkbsfilter form-control" style="display: none;"';
 
 	if(is_array($bsfilters) && count($bsfilters) >= 1) {
 		$form = &$helper->get_module('form');
@@ -110,7 +110,7 @@ function build_row($helper, $funckey) {
 
 	$fksupervision = array_merge($defaults, array(
 		'name' => 'phonefunckey[supervision][]',
-		'class' => 'it-enabled',
+		'class' => 'it-enabled form-control',
 		'default' => '1',
 		'selected' => $funckey['supervision'],
 		'bbf' => 'fm_phonefunckey_supervision-opt',
@@ -169,7 +169,7 @@ $dhtml->write_js('var xivo_fk_supervision = '. dwho_json::encode($supervisable) 
 
 ?>
 <div class="sb-list">
-<table>
+<table class="table">
 	<thead>
 	<tr class="sb-top">
 		<th class="th-left"><?=$this->bbf('col_phonefunckey-fknum');?></th>

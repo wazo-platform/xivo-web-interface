@@ -57,7 +57,7 @@ $page = $url->pager($pager['pages'],
 	<div class="bi_loading"><?=$url->img_html('img/site/loading.gif', $this->bbf('img_loading'), 'height="75" width="75" border="0"')?></div>
 </div>
 
-<table id="table-main-listing">
+<table class="table table-condensed table-striped table-hover table-bordered" id="table-main-listing">
 	<tr class="sb-top">
 		<th class="th-left xspan"><span class="span-left">&nbsp;</span></th>
 		<th class="th-center">
@@ -225,11 +225,6 @@ $page = $url->pager($pager['pages'],
 		endfor;
 	endif;
 ?>
-	<tr class="sb-foot">
-		<td class="td-left xspan b-nosize"><span class="span-left b-nosize">&nbsp;</span></td>
-		<td class="td-center" colspan="8"><span class="b-nosize">&nbsp;</span></td>
-		<td class="td-right xspan b-nosize"><span class="span-right b-nosize">&nbsp;</span></td>
-	</tr>
 </table>
 </form>
 <?php

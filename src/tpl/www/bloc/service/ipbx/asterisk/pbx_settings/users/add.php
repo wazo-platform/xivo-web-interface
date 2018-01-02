@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2017  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -41,13 +41,12 @@ endif;
 		<span class="span-center"><?=$this->bbf('title_content_name');?></span>
 		<span class="span-right">&nbsp;</span>
 	</h3>
-
-<?php
+	<?php
 	$this->file_include('bloc/service/ipbx/asterisk/pbx_settings/users/submenu');
-?>
+	?>
 
 	<div class="sb-content">
-		<form action="#" method="post" accept-charset="utf-8" enctype="multipart/form-data"
+		<form class="form-horizontal" action="#" method="post" accept-charset="utf-8" enctype="multipart/form-data"
 			 onsubmit="dwho.form.select('it-group');
 					dwho.form.select('it-queue');
 					dwho.form.select('it-codec');">

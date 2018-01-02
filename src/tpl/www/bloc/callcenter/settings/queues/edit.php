@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2017  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -28,11 +28,9 @@ $info = $this->get_var('info');
 		<span class="span-center"><?=$this->bbf('title_content_name');?><font><?=$this->get_var('info','queuefeatures','identity')?></font></span>
 		<span class="span-right">&nbsp;</span>
 	</h3>
-<?php
-	$this->file_include('bloc/callcenter/settings/queues/submenu');
-?>
+
 	<div class="sb-content">
-		<form action="#" method="post" accept-charset="utf-8" onsubmit="dwho.form.select('it-queue-periodic-announce');
+		<form class="form-horizontal" action="#" method="post" accept-charset="utf-8" onsubmit="dwho.form.select('it-queue-periodic-announce');
 										dwho.form.select('it-rightcall');">
 <?php
 		echo	$form->hidden(array('name'	=> DWHO_SESS_NAME,

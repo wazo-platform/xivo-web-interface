@@ -1,0 +1,165 @@
+@import (less) "../../extra-libs/multiselect/css/ui.multiselect.css";
+
+@import "~bootstrap/less/bootstrap.less";
+@import "_variables.less";
+@import "_bootstrap-override.less";
+@import "_login.less";
+@import "_forms.less";
+@import "_buttons.less";
+@import "_bars.less";
+@import "_multiselect.less";
+
+body {
+    letter-spacing: 0.5px;
+    color: @color-normal;
+    height: 100%;
+}
+
+.table {
+  margin-bottom: 0;
+
+  tr.sb-top:hover {
+    background-color: @xivo-gradient-light-gray;
+  }
+
+  th {
+    border: 0 !important;
+  }
+}
+
+
+#bc-main {
+  &::before {
+    margin-top: 50px;
+  }
+}
+
+#bc-content {
+  margin-top: 15px;
+  float: inherit;
+}
+
+#version-copyright {
+  text-align: center;
+}
+.login-box {
+  margin-right: 10px;
+  padding-left: 10px;
+
+  .badge {
+    font-weight: normal;
+    padding: 5px 10px;
+    margin: 14px 5px;
+  }
+}
+
+#logo>img {
+  width: 70px;
+}
+
+.logoff-button {
+  padding: 10px 10px 10px 20px;
+  position: relative;
+  top: 3px;
+}
+.sysinfo-title {
+  text-align: center;
+  font-weight: bold;
+}
+
+.fm-description {
+  padding-bottom: 10px;
+  p {
+    margin: 0;
+  }
+}
+
+.b-nodisplay {display: none;}
+.b-bdisplay {display: block;}
+.b-ldisplay {display: inline;}
+.b-page {text-align: right;}
+
+.mn-active {
+  color: @xivo-primary;
+}
+
+#b-lmenu .mn-active a {
+  font-weight: bold;
+}
+
+.underline {
+  text-decoration: underline;
+}
+
+.help-tooltip {
+  left: 5px;
+}
+
+.icons-list {
+  padding-right: 5px;
+}
+
+#box_installer {
+	display: none;
+	position: fixed;
+	z-index: 100;
+	top: 0px;
+	left: 0px;
+	height: 100%;
+	width: 100%;
+
+  &.bi_bg {
+    background-color: @xivo-dark-gray;
+    opacity: 0.75;
+  }
+
+  .bi_loading {
+    position: fixed;
+    height: 75px;
+    width: 75px;
+    z-index: 103;
+    top: 50%;
+    left: 50%;
+    margin: -38px 0 0 -38px;
+  }
+
+  .bi_message {
+  	position: fixed;
+  	width: 500px;
+  	height: 150px;
+  	z-index: 103;
+  	top: 50%;
+  	left: 50%;
+  	margin: -75px 0 0 -250px;
+  	opacity: 1;
+  	padding: 10px;
+  	text-align: center;
+  	font-weight: bold;
+  }
+}
+
+#autoprov_dialog {
+  position: fixed;
+  width: 500px;
+  top: 20%;
+  left: 50%;
+  margin-left: -250px;
+  text-align: center;
+  visibility: hidden;
+  box-shadow: 1px 1px 12px @xivo-dark-gray;
+}
+
+.linefeatures-device-select2 {
+	width: 200px;
+  font-size: 8pt;
+}
+
+.active-menu {
+  font-weight: bold;
+}
+
+.active-menu:before {
+  padding-right: 3px;
+  content: url('/img/site/button/restart.gif');
+}
+

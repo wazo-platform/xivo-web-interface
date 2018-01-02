@@ -25,6 +25,6 @@ $this->file_include('xivo/monitoring/services');
 
 ?>
 
-<div id="systems"><?php $this->file_include('xivo/monitoring/systems'); ?></div>
-<div id="memstats"><?php $this->file_include('xivo/monitoring/memstats'); ?></div>
-<div id="services"><?php $this->file_include('xivo/monitoring/services'); ?></div>
+<div class="container-fluid" id="systems"><?php $this->file_include('xivo/monitoring/systems'); ?></div>
+<div class="container-fluid"  id="memstats"><?php $this->file_include('xivo/monitoring/memstats'); ?></div>
+<div class="container-fluid"  id="services"><?php $this->file_include('xivo/monitoring/services'); ?></div>

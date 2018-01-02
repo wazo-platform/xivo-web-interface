@@ -24,21 +24,22 @@ $menu = &$this->get_module('menu');
 $this->file_include('bloc/menu/top/user/loginbox');
 
 ?>
-<div id="toolbox">
-<div id="logo"><?=$url->img_html('img/menu/top/logo.gif',XIVO_SOFT_LABEL);?></div>
-<div class="nav">
-	 <ul>
+<div class="navbar-header">
+	<a class="navbar-brand" href="/">
+		<div id="logo"><?=$url->img_html('img/xivo/xivo_logo.png',XIVO_SOFT_LABEL);?></div>
+	</a>
+</div>
+<div class="collapse navbar-collapse">
+	<ul class="nav navbar-nav">
 <?php
 	if(xivo_user::chk_acl_section('service') === true
 	|| xivo_user::chk_acl_section('statistics') === true):
 ?>
-		<li onmouseout="this.className = 'moo';"
-		    onmouseover="this.className = 'mov';">
-			<span class="span-left">&nbsp;</span>
-			<span class="span-center"><?=$this->bbf('mn_top_services');?></span>
-			<span class="span-right">&nbsp;</span>
-			<div class="stab">
-				<ul>
+		<li class="dropdown">
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+					<?=$this->bbf('mn_top_services');?><span class="caret"></span>
+				</a>
+				<ul class="dropdown-menu">
 					<?php
 					if(xivo_user::chk_acl_section('service/ipbx') === true):
 					?>
@@ -97,18 +98,14 @@ $this->file_include('bloc/menu/top/user/loginbox');
 					</li>
 					<?php endif; ?>
 				</ul>
-			</div>
 		</li>
 <?php
 	endif;
 
 	if(xivo_user::chk_acl_section('xivo/configuration') === true):
 ?>
-		<li onmouseout="this.className = 'moo';"
-			onmouseover="this.className = 'mov';">
-			<?=$url->href_html('<span class="span-left">&nbsp;</span>
-						<span class="span-center">'.$this->bbf('mn_top_configuration').'</span>
-						<span class="span-right">&nbsp;</span>',
+		<li>
+			<?=$url->href_html('<span>'.$this->bbf('mn_top_configuration').'</span>',
 						'xivo/configuration',
 						null,
 						null,
@@ -117,21 +114,15 @@ $this->file_include('bloc/menu/top/user/loginbox');
 <?php
 	endif;
 ?>
-		<li onmouseout="this.className = 'moo';"
-		    onmouseover="this.className = 'mov';">
-			<?=$url->href_html('<span class="span-left">&nbsp;</span>
-					    <span class="span-center">'.$this->bbf('mn_top_help').'</span>
-					    <span class="span-right">&nbsp;</span>',
+		<li>
+			<?=$url->href_html('<span>'.$this->bbf('mn_top_help').'</span>',
 					   'xivo/help',
 					   null,
 					   null,
 					   $this->bbf('mn_top_help'));?>
 		</li>
-		<li onmouseout="this.className = 'moo';"
-		    onmouseover="this.className = 'mov';">
-			<?=$url->href_html('<span class="span-left">&nbsp;</span>
-					    <span class="span-center">'.$this->bbf('mn_top_contact').'</span>
-					    <span class="span-right">&nbsp;</span>',
+		<li>
+			<?=$url->href_html('<span>'.$this->bbf('mn_top_contact').'</span>',
 					   'xivo/contact',
 					   null,
 					   null,
@@ -139,16 +130,3 @@ $this->file_include('bloc/menu/top/user/loginbox');
 		</li>
 	</ul>
 </div>
-<div id="tooltips">&nbsp;</div>
-<div id="toolbar">
-<?php
-	$menu->mk_toolbar();
-?>
-</div>
-</div>
-
-<?php if (dwho_report::has('error') === true) : echo dwho_report::get_message('error'); endif; ?>
-<?php if (dwho_report::has('warning') === true) : echo dwho_report::get_message('warning'); endif; ?>
-<?php if (dwho_report::has('info') === true) : echo dwho_report::get_message('info'); endif; ?>
-<?php if (dwho_report::has('notice') === true) : echo dwho_report::get_message('notice'); endif; ?>
-<?php if (dwho_report::has('debug') === true) : echo dwho_report::get_message('debug'); endif; ?>

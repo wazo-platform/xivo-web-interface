@@ -45,56 +45,122 @@ endif;
 
 ?>
 <div id="leftinfo">
-	<div id="sysinfo">
-		<table>
-			<tr class="sb-top">
-				<th colspan="2" class="th-left th-right"><?=$this->bbf('sysinfos_system');?></th>
-			</tr>
-			<tr class="l-infos-1on2">
-				<td class="td-left txt-left"><?=$this->bbf('sysinfos_servername');?></td>
-				<td class="td-right txt-right"><?=php_uname('n');?></td>
-			</tr>
-			<tr class="l-infos-2on2">
-				<td class="td-left txt-left"><?=$this->bbf('sysinfos_os');?></td>
-				<td class="td-right txt-right"><?=php_uname('s');?></td>
-			</tr>
-			<tr class="l-infos-1on2">
-				<td class="td-left txt-left"><?=$this->bbf('sysinfos_kernel');?></td>
-				<td class="td-right txt-right"><?=php_uname('r');?></td>
-			</tr>
-			<tr class="l-infos-2on2">
-				<td class="td-left txt-left"><?=$this->bbf('sysinfos_ipaddr');?></td>
-				<td class="td-right txt-right"><?=$_SERVER['SERVER_ADDR']?></td>
-			</tr>
-			<tr class="l-infos-1on2">
-				<td class="td-left txt-left"><?=$this->bbf('sysinfos_dnsaddr');?></td>
-				<td class="td-right txt-right"><?=gethostbyaddr($_SERVER['SERVER_ADDR']);?></td>
-			</tr>
-			<tr class="l-infos-2on2">
-				<td class="td-left txt-left"><?=$this->bbf('sysinfos_uptime');?></td>
-				<td class="td-right txt-right"><?=$this->bbf('sysinfos_uptime-duration',
-									     dwho_calc_time('second',
-											    $this->get_var('uptime'),
-											    '%d%H%M%s'));?></td>
-			</tr>
-			<tr class="l-infos-1on2">
-				<td class="td-left txt-left"><?=$this->bbf('sysinfos_loadaverage');?></td>
-				<td class="td-right txt-right"><?=$load?></td>
-			</tr>
-		</table>
+	<div class="row">
+		<div class="col-md-offset-1 col-md-4" id="sysinfo">
+			<table class="table table-striped table-hover table-bordered">
+				<caption  class="sysinfo-title"><?=$this->bbf('sysinfos_system');?></caption>
+				<thead>
+				</thead>
+				<tr class="l-infos-1on2">
+					<td class="td-left txt-left"><?=$this->bbf('sysinfos_servername');?></td>
+					<td class="td-right txt-right"><?=php_uname('n');?></td>
+				</tr>
+				<tr class="l-infos-2on2">
+					<td class="td-left txt-left"><?=$this->bbf('sysinfos_os');?></td>
+					<td class="td-right txt-right"><?=php_uname('s');?></td>
+				</tr>
+				<tr class="l-infos-1on2">
+					<td class="td-left txt-left"><?=$this->bbf('sysinfos_kernel');?></td>
+					<td class="td-right txt-right"><?=php_uname('r');?></td>
+				</tr>
+				<tr class="l-infos-2on2">
+					<td class="td-left txt-left"><?=$this->bbf('sysinfos_ipaddr');?></td>
+					<td class="td-right txt-right"><?=$_SERVER['SERVER_ADDR']?></td>
+				</tr>
+				<tr class="l-infos-1on2">
+					<td class="td-left txt-left"><?=$this->bbf('sysinfos_dnsaddr');?></td>
+					<td class="td-right txt-right"><?=gethostbyaddr($_SERVER['SERVER_ADDR']);?></td>
+				</tr>
+				<tr class="l-infos-2on2">
+					<td class="td-left txt-left"><?=$this->bbf('sysinfos_uptime');?></td>
+					<td class="td-right txt-right"><?=$this->bbf('sysinfos_uptime-duration',
+										     dwho_calc_time('second',
+												    $this->get_var('uptime'),
+												    '%d%H%M%s'));?></td>
+				</tr>
+				<tr class="l-infos-1on2">
+					<td class="td-left txt-left"><?=$this->bbf('sysinfos_loadaverage');?></td>
+					<td class="td-right txt-right"><?=$load?></td>
+				</tr>
+			</table>
+		</div>
+		<div  class="col-md-offset-1 col-md-4" id="cpustats">
+			<table class="table table-striped table-hover table-bordered">
+				<caption  class="sysinfo-title"><?=$this->bbf('sysinfos_cpu');?></caption>
+				<thead>
+					<tr class="l-subth">
+						<th colspan="2"><?=$this->bbf('sysinfos_col_percent');?></th>
+						<th><?=$this->bbf('sysinfos_col_user');?></th>
+						<th><?=$this->bbf('sysinfos_col_system');?></th>
+						<th class="td-right"><?=$this->bbf('sysinfos_col_wait');?></th>
+					</tr>
+				</thead>
+				<tr class="l-infos-1on2">
+					<td class="gauge">
+						<div><div style="width: <?=round($cputotalpercent);?>px;">&nbsp;</div></div>
+					</td>
+					<td class="gaugepercent txt-right"><?=$cputotal?></td>
+					<td class="txt-right"><?=$cpuuser?></td>
+					<td class="txt-right"><?=$cpusystem?></td>
+					<td class="td-right txt-right"><?=$cpuwait?></td>
+				</tr>
+			</table>
+		</div>
+		<div  class="col-md-offset-1 col-md-4" id="netstats">
+			<table class="table table-striped table-hover table-bordered">
+				<caption  class="sysinfo-title"><?=$this->bbf('sysinfos_network');?></caption>
+				<thead>
+				<tr class="l-subth">
+					<th><?=$this->bbf('sysinfos_col_interface');?></th>
+					<th><?=$this->bbf('sysinfos_col_receive');?></th>
+					<th><?=$this->bbf('sysinfos_col_transmit');?></th>
+					<th><?=$this->bbf('sysinfos_col_error');?></th>
+					<th class="td-right"><?=$this->bbf('sysinfos_col_drop');?></th>
+				</tr>
+			</thead>
+		<?php
+		if(is_array($netstats) === true):
+			$i = 0;
+			foreach($netstats as $devname => $stats):
+				$rx_bytes = dwho_size_iec($stats['statistics']['rx']['bytes']);
+				$tx_bytes = dwho_size_iec($stats['statistics']['tx']['bytes']);
+				$total_errs = dwho_size_iec($stats['statistics']['total']['errs']);
+				$total_drop = dwho_size_iec($stats['statistics']['total']['drop']);
+		?>
+				<tr class="l-infos-<?=(($i++ % 2) + 1)?>on2">
+					<td title="<?=dwho_alttitle($devname);?>"><?=dwho_htmlen(dwho_trunc($devname,20,'...',false));?></td>
+					<td class="txt-right"><?=$this->bbf('size_iec_'.$rx_bytes[1],$rx_bytes[0]);?></td>
+					<td class="txt-right"><?=$this->bbf('size_iec_'.$tx_bytes[1],$tx_bytes[0]);?></td>
+					<td class="txt-right"><?=$stats['statistics']['total']['errs']?></td>
+					<td class="td-right txt-right"><?=$stats['statistics']['total']['drop']?></td>
+				</tr>
+		<?php
+			endforeach;
+		else:
+		?>
+				<tr class="l-infos-1on2">
+					<td colspan="5" class="td-single"><?=$this->bbf('sysinfos_no-netstats');?></td>
+				</tr>
+		<?php
+		endif;
+		?>
+			</table>
+		</div>
 	</div>
-	<div id="devstats">
-		<table>
-			<tr class="sb-top">
-				<th colspan="6" class="th-left th-right"><?=$this->bbf('sysinfos_device');?></th>
-			</tr>
-			<tr class="l-subth">
-				<td><?=$this->bbf('sysinfos_col_partition');?></td>
-				<td colspan="2"><?=$this->bbf('sysinfos_col_percent');?></td>
-				<td><?=$this->bbf('sysinfos_col_free');?></td>
-				<td><?=$this->bbf('sysinfos_col_used');?></td>
-				<td class="td-right"><?=$this->bbf('sysinfos_col_total');?></td>
-			</tr>
+	<div class="row">
+		<div  class="col-md-offset-1 col-md-4" id="devstats">
+			<table class="table table-striped table-hover table-bordered">
+				<caption  class="sysinfo-title"><?=$this->bbf('sysinfos_device');?></caption>
+				<thead>
+					<tr class="l-subth">
+						<th><?=$this->bbf('sysinfos_col_partition');?></td>
+						<th colspan="2"><?=$this->bbf('sysinfos_col_percent');?></th>
+						<th><?=$this->bbf('sysinfos_col_free');?></th>
+						<th><?=$this->bbf('sysinfos_col_used');?></th>
+						<th class="td-right"><?=$this->bbf('sysinfos_col_total');?></th>
+					</tr>
+				</thead>
+	</div>
 <?php
 	if(is_array($devstats) === true && ($nb = count($devstats)) > 0):
 		for($i = 0;$i < $nb;$i++):
@@ -133,66 +199,6 @@ endif;
 		</table>
 	</div>
 </div>
-<div id="cpustats">
-	<table>
-		<tr class="sb-top">
-			<th colspan="5" class="th-left th-right"><?=$this->bbf('sysinfos_cpu');?></th>
-		</tr>
-		<tr class="l-subth">
-			<td colspan="2"><?=$this->bbf('sysinfos_col_percent');?></td>
-			<td><?=$this->bbf('sysinfos_col_user');?></td>
-			<td><?=$this->bbf('sysinfos_col_system');?></td>
-			<td class="td-right"><?=$this->bbf('sysinfos_col_wait');?></td>
-		</tr>
-		<tr class="l-infos-1on2">
-			<td class="gauge">
-				<div><div style="width: <?=round($cputotalpercent);?>px;">&nbsp;</div></div>
-			</td>
-			<td class="gaugepercent txt-right"><?=$cputotal?></td>
-			<td class="txt-right"><?=$cpuuser?></td>
-			<td class="txt-right"><?=$cpusystem?></td>
-			<td class="td-right txt-right"><?=$cpuwait?></td>
-		</tr>
-	</table>
-</div>
-<div id="netstats">
-	<table>
-		<tr class="sb-top">
-			<th colspan="5" class="th-left th-right"><?=$this->bbf('sysinfos_network');?></th>
-		</tr>
-		<tr class="l-subth">
-			<td><?=$this->bbf('sysinfos_col_interface');?></td>
-			<td><?=$this->bbf('sysinfos_col_receive');?></td>
-			<td><?=$this->bbf('sysinfos_col_transmit');?></td>
-			<td><?=$this->bbf('sysinfos_col_error');?></td>
-			<td class="td-right"><?=$this->bbf('sysinfos_col_drop');?></td>
-		</tr>
-<?php
-if(is_array($netstats) === true):
-	$i = 0;
-	foreach($netstats as $devname => $stats):
-		$rx_bytes = dwho_size_iec($stats['statistics']['rx']['bytes']);
-		$tx_bytes = dwho_size_iec($stats['statistics']['tx']['bytes']);
-		$total_errs = dwho_size_iec($stats['statistics']['total']['errs']);
-		$total_drop = dwho_size_iec($stats['statistics']['total']['drop']);
-?>
-		<tr class="l-infos-<?=(($i++ % 2) + 1)?>on2">
-			<td title="<?=dwho_alttitle($devname);?>"><?=dwho_htmlen(dwho_trunc($devname,20,'...',false));?></td>
-			<td class="txt-right"><?=$this->bbf('size_iec_'.$rx_bytes[1],$rx_bytes[0]);?></td>
-			<td class="txt-right"><?=$this->bbf('size_iec_'.$tx_bytes[1],$tx_bytes[0]);?></td>
-			<td class="txt-right"><?=$stats['statistics']['total']['errs']?></td>
-			<td class="td-right txt-right"><?=$stats['statistics']['total']['drop']?></td>
-		</tr>
-<?php
-	endforeach;
-else:
-?>
-		<tr class="l-infos-1on2">
-			<td colspan="5" class="td-single"><?=$this->bbf('sysinfos_no-netstats');?></td>
-		</tr>
-<?php
-endif;
-?>
-	</table>
-</div>
+
+
 <div class="clearboth"></div>

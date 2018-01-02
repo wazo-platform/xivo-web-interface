@@ -34,105 +34,109 @@ $qmember = $this->get_var('qmember');
 
 <fieldset id="fld-group">
 	<legend><?=$this->bbf('fld-callgroup');?></legend>
-<?php
-	if(is_array($groups) === true && empty($groups) === false):
-?>
-<div id="grouplist" class="fm-paragraph fm-multilist">
-		<?=$form->input_for_ms('grouplist',$this->bbf('ms_seek'))?>
-	<div class="slt-outlist">
-<?php
-		echo	   $form->select(array('name'		=> 'grouplist',
-					       'label'		=> false,
-					       'id'		=> 'it-grouplist',
-					       'multiple'	=> true,
-					       'size'		=> 5,
-					       'paragraph'	=> false,
-					       'key'		=> 'name',
-					       'altkey'		=> 'name'),
-					 $gmember['list']);
-?>
+	<?php
+		if(is_array($groups) === true && empty($groups) === false):
+	?>
+	<div id="grouplist" class="fm-paragraph fm-multilist">
+		<div class="row">
+			<div class="col-sm-5">
+				<?=$form->input_for_ms('grouplist',$this->bbf('ms_seek'))?>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-2 slt-outlist">
+				<?php
+						echo	   $form->select(array('name'		=> 'grouplist',
+												'label'		=> false,
+												'id'		=> 'it-grouplist',
+												'multiple'	=> true,
+												'size'		=> 5,
+												'paragraph'	=> false,
+												'key'		=> 'name',
+												'altkey'		=> 'name'),
+									$gmember['list']);
+				?>
+			</div>
+
+			<div class="col-sm-1 inout-list">
+				<a href="#"
+					onclick="xivo_ast_user_ingroup();
+							return(dwho.dom.free_focus());"
+					title="<?=$this->bbf('bt_ingroup');?>">
+					<?=$url->img_html('img/site/button/arrow-left.gif',
+								$this->bbf('bt_ingroup'),
+								'class="bt-inlist" id="bt-ingroup" border="0"');?></a><br />
+				<a href="#"
+					onclick="xivo_ast_user_outgroup();
+							return(dwho.dom.free_focus());"
+					title="<?=$this->bbf('bt_outgroup');?>">
+					<?=$url->img_html('img/site/button/arrow-right.gif',
+								$this->bbf('bt_outgroup'),
+								'class="bt-outlist" id="bt-outgroup" border="0"');?></a>
+			</div>
+
+			<div class="col-sm-2 slt-inlist">
+				<?php
+						echo	$form->select(array('name'	=> 'group-select[]',
+											'label'	=> false,
+											'id'	=> 'it-group',
+											'multiple'	=> true,
+											'size'	=> 5,
+											'paragraph'	=> false,
+											'key'	=> 'name',
+											'altkey'	=> 'name'),
+											$gmember['slt']);
+				?>
+			</div>
+		</div>
 	</div>
+	<div class="sb-list">
+		<table class="table table-condensed table-striped table-hover table-bordered">
+			<tr class="sb-top">
+				<th class="th-left"><?=$this->bbf('col_group-name');?></th>
+				<th class="th-right"><?=$this->bbf('col_group-channel');?></th>
+			</tr>
+				<?php
+						foreach($groups as $value):
+							$name = $value['name'];
 
-	<div class="inout-list">
-		<a href="#"
-		   onclick="xivo_ast_user_ingroup();
-			    return(dwho.dom.free_focus());"
-		   title="<?=$this->bbf('bt_ingroup');?>">
-			<?=$url->img_html('img/site/button/arrow-left.gif',
-					  $this->bbf('bt_ingroup'),
-					  'class="bt-inlist" id="bt-ingroup" border="0"');?></a><br />
-		<a href="#"
-		   onclick="xivo_ast_user_outgroup();
-			    return(dwho.dom.free_focus());"
-		   title="<?=$this->bbf('bt_outgroup');?>">
-			<?=$url->img_html('img/site/button/arrow-right.gif',
-					  $this->bbf('bt_outgroup'),
-					  'class="bt-outlist" id="bt-outgroup" border="0"');?></a>
+							if(dwho_issa($value['id'],$gmember['info']) === true):
+								$class = '';
+								$value['member'] = $gmember['info'][$value['id']];
+							else:
+								$class = ' b-nodisplay';
+								$value['member'] = null;
+							endif;
+
+						echo	'<tr id="group-',$name,'" class="fm-paragraph',$class,'">',"\n",
+							'<td class="td-left">',$name,'</td>',"\n",
+							'<td class="td-right">',
+							$form->select(array('paragraph'	=> false,
+											'name'	=> 'group['.$name.'][chantype]',
+											'id'	=> false,
+											'label'	=> false,
+											'key'	=> false,
+											'default'	=> $element['qmember']['chantype']['default'],
+											'selected'	=> $value['member']['channel']),
+											$element['qmember']['chantype']['value']),
+							'</td>',"\n",
+							'</tr>',"\n";
+						endforeach;
+				?>
+			<tr id="no-group"<?=(empty($gmember['slt']) === false ? ' class="b-nodisplay"' : '')?>>
+				<td colspan="2" class="td-single"><?=$this->bbf('no_group');?></td>
+			</tr>
+		</table>
 	</div>
-
-	<div class="slt-inlist">
-<?php
-		echo	$form->select(array('name'	=> 'group-select[]',
-					    'label'	=> false,
-					    'id'	=> 'it-group',
-					    'multiple'	=> true,
-					    'size'	=> 5,
-					    'paragraph'	=> false,
-					    'key'	=> 'name',
-					    'altkey'	=> 'name'),
-				      $gmember['slt']);
-?>
-	</div>
-</div>
-<div class="clearboth"></div>
-
-<div class="sb-list">
-	<table>
-		<tr class="sb-top">
-			<th class="th-left"><?=$this->bbf('col_group-name');?></th>
-			<th class="th-right"><?=$this->bbf('col_group-channel');?></th>
-		</tr>
-<?php
-		foreach($groups as $value):
-			$name = $value['name'];
-
-			if(dwho_issa($value['id'],$gmember['info']) === true):
-				$class = '';
-				$value['member'] = $gmember['info'][$value['id']];
-			else:
-				$class = ' b-nodisplay';
-				$value['member'] = null;
-			endif;
-
-		echo	'<tr id="group-',$name,'" class="fm-paragraph',$class,'">',"\n",
-			'<td class="td-left">',$name,'</td>',"\n",
-			'<td class="td-right">',
-			$form->select(array('paragraph'	=> false,
-					    'name'	=> 'group['.$name.'][chantype]',
-					    'id'	=> false,
-					    'label'	=> false,
-					    'key'	=> false,
-					    'default'	=> $element['qmember']['chantype']['default'],
-					    'selected'	=> $value['member']['channel']),
-				      $element['qmember']['chantype']['value']),
-			'</td>',"\n",
-			'</tr>',"\n";
-		endforeach;
-?>
-		<tr id="no-group"<?=(empty($gmember['slt']) === false ? ' class="b-nodisplay"' : '')?>>
-			<td colspan="2" class="td-single"><?=$this->bbf('no_group');?></td>
-		</tr>
-	</table>
-</div>
-<?php
-	else:
-		echo	'<div class="txt-center">',
-			$url->href_htmln($this->bbf('create_group'),
-					'service/ipbx/pbx_settings/groups',
-					'act=add'),
-			'</div>';
-	endif;
-?>
+	<?php
+		else:
+			echo	'<div class="txt-center">',
+				$url->href_htmln($this->bbf('create_group'),
+						'service/ipbx/pbx_settings/groups',
+						'act=add'),
+				'</div>';
+		endif;
+	?>
 </fieldset>
 
 <fieldset id="fld-queue">
@@ -141,22 +145,27 @@ $qmember = $this->get_var('qmember');
 	if(is_array($queues) === true && empty($queues) === false):
 ?>
 <div id="queuelist" class="fm-paragraph fm-multilist">
-		<?=$form->input_for_ms('queuelist',$this->bbf('ms_seek'))?>
-	<div class="slt-outlist">
-<?php
-		echo	$form->select(array('name'	=> 'queuelist',
-					    'label'	=> false,
-					    'id'	=> 'it-queuelist',
-					    'multiple'	=> true,
-					    'size'	=> 5,
-					    'paragraph'	=> false,
-					    'key'	=> 'name',
-					    'altkey'	=> 'name'),
-				      $qmember['list']);
-?>
+	<div class="row">
+		<div class="col-sm-5">
+			<?=$form->input_for_ms('queuelist',$this->bbf('ms_seek'))?>
+		</div>
+	</div>
+	<div class="row">
+	<div class="col-sm-2 slt-outlist">
+		<?php
+				echo	$form->select(array('name'	=> 'queuelist',
+									'label'	=> false,
+									'id'	=> 'it-queuelist',
+									'multiple'	=> true,
+									'size'	=> 5,
+									'paragraph'	=> false,
+									'key'	=> 'name',
+									'altkey'	=> 'name'),
+									$qmember['list']);
+		?>
 	</div>
 
-	<div class="inout-list">
+	<div class="col-sm-1 inout-list">
 		<a href="#"
 		   onclick="xivo_ast_inqueue();
 			    return(dwho.dom.free_focus());"
@@ -174,24 +183,25 @@ $qmember = $this->get_var('qmember');
 
 	</div>
 
-	<div class="slt-inlist">
-<?php
-		echo	$form->select(array('name'	=> 'queue-select[]',
-					    'label'	=> false,
-					    'id'	=> 'it-queue',
-					    'multiple'	=> true,
-					    'size'	=> 5,
-					    'paragraph'	=> false,
-					    'key'	=> 'name',
-					    'altkey'	=> 'name'),
-				      $qmember['slt']);
-?>
+	<div class="col-sm-2 slt-inlist">
+		<?php
+				echo	$form->select(array('name'	=> 'queue-select[]',
+									'label'	=> false,
+									'id'	=> 'it-queue',
+									'multiple'	=> true,
+									'size'	=> 5,
+									'paragraph'	=> false,
+									'key'	=> 'name',
+									'altkey'	=> 'name'),
+									$qmember['slt']);
+		?>
+	</div>
 	</div>
 </div>
 <div class="clearboth"></div>
 
 <div class="sb-list">
-	<table>
+	<table class="table table-condensed table-striped table-hover table-bordered">
 		<tr class="sb-top">
 			<th class="th-left"><?=$this->bbf('col_queue-name');?></th>
 			<th class="th-center"><?=$this->bbf('col_queue-channel');?></th>

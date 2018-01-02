@@ -65,7 +65,7 @@ if($context_list !== false):
 endif;
 
 ?>
-<div class="fm-paragraph fm-description">
+<div class="col-sm-offset-2 fm-paragraph fm-description">
 	<p>
 		<label id="lb-trunkfeatures-description" for="it-trunkfeatures-description">
 			<?=$this->bbf('fm_trunkfeatures_description');?>

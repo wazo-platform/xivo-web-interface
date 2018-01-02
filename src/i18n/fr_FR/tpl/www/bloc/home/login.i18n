@@ -1,5 +1,5 @@
 ; title_content_name
-Authentification
+Authentification XiVO PBX
 
 ; fm_login
 Identifiant
@@ -12,3 +12,9 @@ Langue :
 
 ; fm_bt-connection
 Connexion
+
+; login_description
+Simplicité, évolutivité, performance : bienvenue sur votre espace XiVO. La solution Open Source de téléphonie au service de votre entreprise.
+
+; info_copyright
+&copy; %s-%s %s

@@ -39,7 +39,7 @@ $page = $url->pager($pager['pages'],
 		echo '<div class="b-page">',$page,'</div>';
 	endif;
 ?>
-<table id="table-main-listing">
+<table class="table table-condensed table-striped table-hover table-bordered" id="table-main-listing">
 	<tr class="sb-top">
 		<th class="th-left xspan"><span class="span-left">&nbsp;</span></th>
 		<th class="th-center"><?=$url->href_html($this->bbf('col_directory'),
@@ -104,11 +104,6 @@ $page = $url->pager($pager['pages'],
 		endfor;
 	endif;
 ?>
-	<tr class="sb-foot">
-		<td class="td-left xspan b-nosize"><span class="span-left b-nosize">&nbsp;</span></td>
-		<td class="td-center" colspan="3"><span class="b-nosize">&nbsp;</span></td>
-		<td class="td-right xspan b-nosize"><span class="span-right b-nosize">&nbsp;</span></td>
-	</tr>
 </table>
 <?php
 	if($page !== ''):

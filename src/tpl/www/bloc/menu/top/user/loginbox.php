@@ -21,24 +21,22 @@
 $url = &$this->get_module('url');
 
 ?>
-<h1 id="loginbox">
+<ul class="nav navbar-nav navbar-right" id="loginbox">
 <?php
-	echo	$url->img_html('img/menu/top/login/left.gif'),
-		'<span>',
+	echo	'<div class="login-box">',
+		'<span class="badge">',
 		$this->bbf('info_top_login'),
 		'&nbsp;<b>',dwho_htmlen(xivo_user::get_info('login')),'</b>',
 		'</span>',
-		$url->img_html('img/menu/top/login/sep.gif'),
-		'<span>',
+		'<span class="badge">',
 		$this->bbf('info_top_type'),
 		'&nbsp;<b>',$this->bbf('usr_type__'.xivo_user::get_info('meta')),'</b>',
 		'</span>',
-		$url->href_html($url->img_html('img/menu/top/login/bt-logoff.gif',
-					       $this->bbf('mn_top_logoff'),
-					       'border="0"'),
+		$url->href_html('<span class="glyphicon glyphicon-off logoff-button"></span>',
 				'xivo/logoff',
 				null,
 				null,
-				$this->bbf('mn_top_logoff'));
+				$this->bbf('mn_top_logoff')),
+		'</div>';
 ?>
-</h1>
+</ul>

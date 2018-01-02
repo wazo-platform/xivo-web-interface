@@ -21,13 +21,6 @@
 $url = &$this->get_module('url');
 $dhtml = &$this->get_module('dhtml');
 
-echo	$url->href_html($url->img_html('img/menu/top/toolbar/bt-add.gif',
-				       $this->bbf('toolbar_opt_add'),
-				       'id="toolbar-bt-add"
-					border="0"'),
-			'xivo/configuration/provisioning/configdevice',
-			'act=add',
-			null,
-			$this->bbf('toolbar_opt_add'));
-
 ?>
+<script type="text/javascript" src="<?=$this->file_time($this->url('js/xivo_toolbar.js'));?>"></script>
+<toolbar-buttons actions="['add']"></toolbar-buttons>

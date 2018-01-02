@@ -28,39 +28,28 @@ $step = $this->get_var('step');
 <form action="#" method="post" enctype="multipart/form-data" accept-charset="utf-8">
 <div id="xivo-wizard-step-<?=$step?>" class="b-infos">
 	<h3 class="sb-top xspan">
-		<span class="span-left">&nbsp;</span>
-		<span class="span-center">
-			<?=$this->bbf('title_content_name',$step);?>
-		</span>
-		<span class="span-right">&nbsp;</span>
+		<?=$this->bbf('title_content_name',$step);?>
 	</h3>
 	<div class="sb-snav">
-		<span class="span-left">
 <?php
 	if((bool) $this->get_var('can_previous_step') === true):
 		echo $form->button(array('name'		=> 'previous',
+					 'class' => 'btn btn-default',
 					 'value'	=> $this->bbf('fm_bt-previous'),
 					 'id'		=> 'it-previous',
 					 'paragraph'	=> false));
-	else:
-		echo '&nbsp;';
 	endif;
 ?>
-		</span>
-		<span class="span-center">&nbsp;</span>
-		<span class="span-right">
 <?php
 	if((bool) $this->get_var('can_next_step') === true):
 		echo $form->submit(array('name'		=> 'next',
 					 'value'	=> $this->bbf('fm_bt-next'),
 					 'id'		=> 'it-next',
 					 'paragraph'	=> false));
-	else:
-		echo '&nbsp;';
 	endif;
 ?>
-		</span>
 	</div>
+	<hr>
 	<div class="sb-content">
 <?=$form->hidden(array('name' => 'fm_send', 'value' => 1))?>
 <?=$form->hidden(array('name' => 'step', 'value' => $step))?>
@@ -71,11 +60,6 @@ $step = $this->get_var('step');
 <?php
 		$this->file_include('bloc/xivo/wizard/'.$step);
 ?>
-	</div>
-	<div class="sb-foot xspan">
-		<span class="span-left">&nbsp;</span>
-		<span class="span-center">&nbsp;</span>
-		<span class="span-right">&nbsp;</span>
 	</div>
 </div>
 </form>
