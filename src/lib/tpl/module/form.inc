@@ -579,10 +579,10 @@ class dwho_tpl_form extends dwho_tpl_module
 			$r .= ' size="'.$this->_param['size'].'"';
 
 		if($this->_param['disabled'] !== false)
-			$r .= ' disabled="disabled"';
+			$r .= ' disabled';
 
 		if($this->_param['readonly'] !== false)
-			$r .= ' readonly="readonly"';
+			$r .= ' readonly';
 
 		if($this->_param['checked'] !== false)
 			$r .= ' checked="checked"';
@@ -942,10 +942,10 @@ class dwho_tpl_form extends dwho_tpl_module
 		$r .= '<textarea name="'.$this->_param['name'].'"';
 
 		if($this->_param['disabled'] !== false)
-			$r .= ' disabled="disabled"';
+			$r .= ' disabled';
 
 		if($this->_param['readonly'] !== false)
-			$r .= ' readonly="readonly"';
+			$r .= ' readonly';
 
 		if($this->_param['id'] !== false)
 			$r .= ' id="'.$this->_param['id'].'"';
