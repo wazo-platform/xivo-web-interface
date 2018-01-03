@@ -22,11 +22,7 @@ $form = &$this->get_module('form');
 
 ?>
 <div id="sr-agent" class="b-infos b-form">
-	<h3 class="sb-top xspan">
-		<span class="span-left">&nbsp;</span>
-		<span class="span-center"><?=$this->bbf('title_content_name');?></span>
-		<span class="span-right">&nbsp;</span>
-	</h3>
+	<h4 class="sb-top xspan"><a href="./"><?=$this->bbf('title_parent_name');?></a><span class="text-muted"> > </span><?=$this->bbf('title_content_name');?></h4>
 
 	<div class="sb-content">
 		<form class="form-horizontal"  action="#" method="post" accept-charset="utf-8" onsubmit="dwho.form.select('it-queue');">
@@ -48,9 +44,5 @@ $form = &$this->get_module('form');
 ?>
 		</form>
 	</div>
-	<div class="sb-foot xspan">
-		<span class="span-left">&nbsp;</span>
-		<span class="span-center">&nbsp;</span>
-		<span class="span-right">&nbsp;</span>
-	</div>
+	<div class="sb-foot xspan"></div>
 </div>
