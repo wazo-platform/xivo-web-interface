@@ -39,15 +39,15 @@ case "$1" in
 			fi
 		done
 
-		# link need to be created in postinst, otherwise it isn't placed at
-		# the right place during the wheezy to jessie upgrade
-		ln -sf /etc/xivo/web-interface/php.ini /etc/php5/cgi/conf.d/xivo.ini
-
 		if dpkg --compare-versions "$2" le '16.13~20161004.141420.044d600'; then
 			ln -sf /etc/nginx/locations/http-available/xivo-web-interface \
 			       /etc/nginx/locations/http-enabled/xivo-web-interface
 			ln -sf /etc/nginx/locations/https-available/xivo-web-interface \
 			       /etc/nginx/locations/https-enabled/xivo-web-interface
+		fi
+
+		if dpkg --compare-versions "$2" le '18.01'; then
+			rm -f /etc/php5/cgi/conf.d/xivo.ini
 		fi
 
 		if [ -x /etc/init.d/spawn-fcgi ]; then
