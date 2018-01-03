@@ -33,7 +33,7 @@ function build_row($option, $form, $url, $helper) {
 			'size' => 30,
 			'name' => 'options[optionname][]',
 			'value' => $option[0],
-			'class' => 'sip-option-name',
+			'class' => 'sip-option-name form-control',
 		)
 	);
 
@@ -46,7 +46,7 @@ function build_row($option, $form, $url, $helper) {
 			'size' => 30,
 			'name' => 'options[optionvalue][]',
 			'value' => $option[1],
-			'class' => 'sip-option-value',
+			'class' => 'sip-option-value form-control',
 		)
 	);
 

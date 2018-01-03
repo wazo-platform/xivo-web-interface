@@ -184,7 +184,7 @@ if($this->get_var('showdashboard_call_center') === true):
 							'empty'		=> $this->bbf('toolbar_fm_conf'),
 							'key'		=> 'name',
 							'altkey'	=> 'id',
-							'class'		=> 'fm-selected-conf',
+							'class'		=> 'fm-selected-conf form-control',
 							'selected'	=> $this->get_var('confid')),
 							$listconf);
 ?>
@@ -202,7 +202,7 @@ if($this->get_var('showdashboard_call_center') === true):
 							'browse'	=> 'key',
 							'key'		=> 'identity',
 							'altkey'	=> 'keyfile',
-							'class'		=> 'fm-selected-obj',
+							'class'		=> 'fm-selected-obj form-control',
 							'selected'	=> $this->get_var('objectkey')),
 							$listobject);
 ?>

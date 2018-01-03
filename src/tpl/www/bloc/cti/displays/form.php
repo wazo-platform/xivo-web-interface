@@ -50,7 +50,7 @@ function build_row($data, $form, $url, $helper) {
 			'size' => 15,
 			'name' => 'dispcol2[]',
 			'value' => $data[1],
-			'class' => 'field-type-name',
+			'class' => 'field-type-name form-control',
 		)
 	);
 

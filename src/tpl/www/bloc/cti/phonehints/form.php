@@ -38,10 +38,9 @@ $info = $this->get_var('info');
 				  'name'	=> 'phonehints[color]',
 				  'labelid'	=> 'phonehints-color',
 				  'size'	=> 15,
-				  'class'	=> 'color {hash:true}',
+				  'class'	=> 'color {hash:true} form-control',
 				  'default'	=> $element['phonehints']['color']['default'],
 				  'value'	=> $info['phonehints']['color']));
 
 ?>
 </div>
-

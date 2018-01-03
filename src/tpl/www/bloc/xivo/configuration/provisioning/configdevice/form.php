@@ -149,7 +149,6 @@ $element = $this->get_var('element');
 						'id'		=> 'it-config-_comment',
 						'cols'		=> 60,
 						'rows'		=> 5,
-						'class'   => '',
 						'default'	=> $element['config']['_comment']['default'],
 						'error'	=> $this->bbf_args('error',
 								$this->get_var('error', 'description')) ),

@@ -97,14 +97,13 @@ echo	$form->text(array('desc'	=> $this->bbf('fm_schedule_name'),
 			<tr class="fm-paragraph<?=$errdisplay?>">
 				<td class="td-left">
 	<?php
-	
+
 					echo $form->text(array('paragraph'	=> false,
 							       'name'	  	=> "opened-schedule-$i",
 							       'id'	    	=> false,
 							       'label'  	=> false,
 										 'size'	   	=> 100,
 										 'controlSize' => false,
-										 'class'		=> '',
 										 'group' => false,
 							       'key'	    => false,
 										 'readonly' => true,

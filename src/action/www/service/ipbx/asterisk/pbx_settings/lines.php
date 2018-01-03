@@ -75,13 +75,11 @@ switch($act)
 			}
 			$element['protocol']['name']   = array(
 				'default'  => $name,
-				'readonly' => $ro,
-				'class'    => 'it-'.($ro?'disabled':'enabled')
+				'readonly' => $ro
 			);
 			$element['protocol']['secret']   = array(
 				'default'  => $appline->gen_password(6),
-				'readonly' => $ro,
-				'class'    => 'it-'.($ro?'disabled':'enabled')
+				'readonly' => $ro
 			);
 		}
 
@@ -127,12 +125,10 @@ switch($act)
 			$ro = !($config['user']['readonly-idpwd'] == 'false');
 
 			$element['protocol']['name']   = array(
-				'readonly' => $ro,
-				'class'    => 'it-'.($ro?'disabled':'enabled')
+				'readonly' => $ro
 			);
 			$element['protocol']['secret']   = array(
-				'readonly' => $ro,
-				'class'    => 'it-'.($ro?'disabled':'enabled')
+				'readonly' => $ro
 			);
 		}
 
