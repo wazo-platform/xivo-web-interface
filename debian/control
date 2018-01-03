@@ -17,6 +17,7 @@ Depends:
     php-gd,
     php-json,
     php-pgsql,
+    php-xml,
     spawn-fcgi,
     xivo-nginx,
     xivo-sysconfd
