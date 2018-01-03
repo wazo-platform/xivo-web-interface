@@ -1,4 +1,7 @@
 ; load ./add
 
 ; title_content_name
-Queue penalty > Edit
+Edit
+
+; title_parent_name
+Queue penalty

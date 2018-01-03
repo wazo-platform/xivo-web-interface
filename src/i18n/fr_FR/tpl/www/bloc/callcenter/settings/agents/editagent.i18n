@@ -1,4 +1,7 @@
 ; load ./addagent
 
 ; title_content_name
-Agents > Modifier un agent
+Modifier un agent
+
+; title_parent_name
+Agents

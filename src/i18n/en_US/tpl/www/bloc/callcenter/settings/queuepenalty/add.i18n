@@ -1,5 +1,8 @@
 ; title_content_name
-Queue penalty > Add
+Add
+
+; title_parent_name
+Queue penalty
 
 ; smenu_general
 General

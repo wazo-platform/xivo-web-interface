@@ -1,5 +1,8 @@
 ; title_content_name
-LDAP filters > Add
+Add
+
+; title_parent_name
+LDAP filters
 
 ; fm_ldapfilter_name
 Name:

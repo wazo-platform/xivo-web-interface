@@ -1,6 +1,9 @@
 
 ; title_content_name
-Configuration > Ajouter
+Ajouter
+
+; title_parent_name
+Configuration
 
 ; smenu_general
 Général

@@ -1,4 +1,7 @@
 ; load ./add
 
 ; title_content_name
-Device > Edit
+Edit
+
+; title_parent_name
+Device

@@ -1,4 +1,7 @@
 ; load ./addgroup
 
 ; title_content_name
-Profiles group > Edit
+Edit
+
+; title_parent_name
+Profiles group

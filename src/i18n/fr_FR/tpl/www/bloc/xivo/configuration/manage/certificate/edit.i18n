@@ -1,5 +1,8 @@
 ; load ./add
 
 ; title_content_name
-Certificats > Consulter
+Consulter
+
+; title_parent_name
+Certificats
 

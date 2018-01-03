@@ -1,5 +1,8 @@
 ; title_content_name
-Users > Import a file
+Import a file
+
+; title_parent_name
+Users
 
 ; ipbximportuser_instruction
 File to be imported must be encoded in UTF-8 and contain CSV data.

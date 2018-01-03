@@ -1,4 +1,7 @@
 ; load ./add
 
 ; title_content_name
-Agents > Edit a group
+Edit a group
+
+; title_parent_name
+Agents

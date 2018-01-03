@@ -1,4 +1,7 @@
 ; load ./add
 
 ; title_content_name
-Carnet d'adresses > Modifier
+Modifier
+
+; title_parent_name
+Carnet d'adresses

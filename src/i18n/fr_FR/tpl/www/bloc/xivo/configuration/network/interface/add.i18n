@@ -1,7 +1,10 @@
 ; load [global] util/network
 
 ; title_content_name
-Interfaces > Ajouter
+Ajouter
+
+; title_parent_name
+Interfaces
 
 ; smenu_general
 Général
