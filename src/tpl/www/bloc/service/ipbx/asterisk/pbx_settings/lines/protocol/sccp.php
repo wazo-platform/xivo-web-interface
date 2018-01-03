@@ -34,7 +34,6 @@ $element = $this->get_var('element');
 					  'size'	=> 18,
 					  'disabled'	=> true,
 					  'readonly' => true,
-					  'class'    => 'it-disabled',
 					  'default'	=> $element['protocol']['sccp']['name']['default'],
 					  'value'	=> $this->get_var('info','line','name')));
 
@@ -42,8 +41,7 @@ $element = $this->get_var('element');
 			echo	$form->select(array('desc'	=> $this->bbf('fm_protocol_context'),
 						    'name'		=> 'protocol[context]',
 						    'labelid'	=> 'protocol-context',
-							'class'    	=> $this->get_var('act') == 'add' ? '' : 'it-disabled',
-							'disabled'	=> $this->get_var('act') == 'add' ? false : true,
+								'disabled'	=> $this->get_var('act') == 'add' ? false : true,
 						    'key'		=> 'identity',
 						    'altkey'	=> 'name',
 						    'selected'	=> $context),
