@@ -43,5 +43,5 @@ $form = &$this->get_module('form');
 
 </form>
 	</div>
-	<div class="sb-foot xspan"><span class="span-left">&nbsp;</span><span class="span-center">&nbsp;</span><span class="span-right">&nbsp;</span></div>
+	<div class="sb-foot xspan"></div>
 </div>
