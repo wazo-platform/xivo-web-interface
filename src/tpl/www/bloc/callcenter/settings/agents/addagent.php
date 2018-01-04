@@ -22,7 +22,7 @@ $form = &$this->get_module('form');
 
 ?>
 <div id="sr-agent" class="b-infos b-form">
-	<h4 class="sb-top xspan"><a href="./"><?=$this->bbf('title_parent_name');?></a><span class="text-muted"> > </span><?=$this->bbf('title_content_name');?></h4>
+	<h4 class="sb-top xspan"><a href="./?act=list"><?=$this->bbf('title_parent_name');?></a><span class="text-muted"> > </span><?=$this->bbf('title_content_name');?></h4>
 
 	<div class="sb-content">
 		<form class="form-horizontal"  action="#" method="post" accept-charset="utf-8" onsubmit="dwho.form.select('it-queue');">
