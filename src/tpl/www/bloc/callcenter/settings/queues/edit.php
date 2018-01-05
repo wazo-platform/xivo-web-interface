@@ -23,11 +23,11 @@ $info = $this->get_var('info');
 
 ?>
 <div id="sr-queues" class="b-infos b-form">
-	<h3 class="sb-top xspan">
-		<span class="span-left">&nbsp;</span>
-		<span class="span-center"><?=$this->bbf('title_content_name');?><font><?=$this->get_var('info','queuefeatures','identity')?></font></span>
-		<span class="span-right">&nbsp;</span>
-	</h3>
+	<breadcrumb
+		parent="<?=$this->bbf('title_parent_name');?>"
+		page="<?=$this->bbf('title_content_name');?>"
+		value="<?=$this->get_var('info','queuefeatures','identity')?>">
+	</breadcrumb>
 
 	<div class="sb-content">
 		<form class="form-horizontal" action="#" method="post" accept-charset="utf-8" onsubmit="dwho.form.select('it-queue-periodic-announce');
@@ -56,9 +56,5 @@ $info = $this->get_var('info');
 ?>
 		</form>
 	</div>
-	<div class="sb-foot xspan">
-		<span class="span-left">&nbsp;</span>
-		<span class="span-center">&nbsp;</span>
-		<span class="span-right">&nbsp;</span>
-	</div>
+	<div class="sb-foot xspan"></div>
 </div>
