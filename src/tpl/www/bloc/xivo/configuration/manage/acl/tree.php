@@ -47,7 +47,7 @@ if(is_array($tree) === true && empty($tree) === false):
 		$mod3 = $i % 3;
 
 		if($v['level'] === 3):
-			echo	'<div class="acl-category"><div><h4>',
+			echo	'<div class="acl-category panel panel-default access_rights_category"><div class="panel-heading"><h4>',
 				$form->checkbox(array('desc'		=> array('format'	=> '%{formfield}$s%{description}$s',
 										 'description'	=> $this->bbf('acl',$v['id'])),
 						      'name'		=> 'tree[]',
@@ -55,18 +55,14 @@ if(is_array($tree) === true && empty($tree) === false):
 						      'id'		=> $v['id'],
 						      'paragraph'	=> false,
 						      'value'		=> $v['path'],
-						      'checked'		=> $v['access']),
+									'checked'		=> $v['access'],
+									'controlSize' => 'col-sm-1'),
 						'onclick="xivo_form_mk_acl(this);"'),
 				'</h4>';
 
 			if(isset($v['child']) === true):
-				echo	'<span><a href="#"
-						  title="',$this->bbf('opt_browse'),'"
-						  onclick="dwho_eid(\'table-',$v['id'],'\').style.display =
-							   dwho_eid(\'table-',$v['id'],'\').style.display === \'block\'
-							   ? \'none\'
-							   : \'block\';
-							   return(false);">',
+				echo	'<span><a data-toggle="collapse" data-target="#div-'.$v['id'].'" href="#" onclick="return false;"
+						  title="',$this->bbf('opt_browse'),'">',
 					$url->img_html('img/site/button/more.gif',
 						       $this->bbf('opt_browse'),
 						       'border="0"'),
@@ -76,7 +72,7 @@ if(is_array($tree) === true && empty($tree) === false):
 			echo	'</div>';
 		else:
 			if($i === 0):
-				echo	'<table id="table-',
+				echo	'<div id="div-'.$v['parent']['id'].'" class="container-fluid collapse"><table id="table-',
 					$v['parent']['id'],
 					'"><tr><td>',"\n";
 			elseif($mod9 === 0):
@@ -85,17 +81,19 @@ if(is_array($tree) === true && empty($tree) === false):
 				echo	'</td><td>';
 			endif;
 
-			echo	'<div class="acl-func">',
-				$form->checkbox(array('desc'		=> array('format'	=> '%{formfield}$s%{description}$s',
-										 'description'	=> $this->bbf('acl',$v['id'])),
+				/* echo $form->checkbox(array('desc'		=> array('format'	=> '%{formfield}$s%{description}$s',
+									'description'	=> $this->bbf('acl',$v['id'])), //texte du label traduit
 						      'name'		=> 'tree[]',
-						      'label'		=> 'lb-'.$v['id'],
-						      'id'		=> $v['id'],
+						      'label'		=> 'lb-'.$v['id'], //id du label
+						      'id'		=> $v['id'], //id du checkbox
 						      'paragraph'	=> false,
-						      'value'		=> $v['path'],
-						      'checked'		=> $v['access']),
-						'onclick="xivo_form_mk_acl(this);"'),
-				'</div>',"\n";
+						      'value'		=> $v['path'], //value des checkboxs
+									'checked'		=> $v['access'],
+									'controlSize' => 'not_a_col_sm'), //class de la div contenant le checkbox
+						'onclick="xivo_form_mk_acl(this);"'); */
+			echo '<div class="checkbox">',
+					 '<label id="lb-'.$v['id'].'"><input '.($v['access']==""?"":"checked").' name="tree[]" type="checkbox" id="'.$v['id'].'" value="'.$v['path'].'" onclick="xivo_form_mk_acl(this);">'.$this->bbf('acl',$v['id']).'</label>',
+					 '</div>';
 
 			if($cnt === $i):
 				if($mod9 < 3):
@@ -103,10 +101,9 @@ if(is_array($tree) === true && empty($tree) === false):
 				elseif($mod9 < 6):
 					$repeat = 1;
 				else:
-					echo	'</td>';
 					$repeat = 0;
 				endif;
-				echo	str_repeat('<td>&nbsp;</td>',$repeat),'</tr></table>',"\n";
+				echo	str_repeat('',$repeat),'</tr></table></div>',"\n";
 			endif;
 
 		endif;
