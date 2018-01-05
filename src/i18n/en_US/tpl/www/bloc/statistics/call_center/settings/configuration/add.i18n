@@ -1,5 +1,8 @@
+; title_parent_name
+Panel
+
 ; title_content_name
-Panel> Add
+Add
 
 ; smenu_general
 General
@@ -30,8 +33,8 @@ Permissions
 ; fm_name
 Name:
 
-; fm_stats_conf_timezone 
-Timezone: 
+; fm_stats_conf_timezone
+Timezone:
 
 ; fm_default_delta
 Interval:
