@@ -52,7 +52,6 @@ $page = $url->pager($pager['pages'],
 ?>
 <table class="table table-condensed table-striped table-hover table-bordered" id="table-main-listing">
 	<tr class="sb-top">
-		<th class="th-left xspan"><span class="span-left">&nbsp;</span></th>
 		<th class="th-center"><?=$this->bbf('col_name');?></th>
 		<th class="th-center"><?=$this->bbf('col_color');?></th>
 		<th class="th-center col-action"><?=$this->bbf('col_action');?></th>
@@ -62,7 +61,7 @@ $page = $url->pager($pager['pages'],
 	if(($list = $this->get_var('list')) === false || ($nb = count($list)) === 0):
 ?>
 	<tr class="sb-content">
-		<td colspan="5" class="td-single"><?=$this->bbf('no_phonehints');?></td>
+		<td colspan="4" class="td-single"><?=$this->bbf('no_phonehints');?></td>
 	</tr>
 <?php
 	else:
@@ -72,14 +71,6 @@ $page = $url->pager($pager['pages'],
 	<tr onmouseover="this.tmp = this.className; this.className = 'sb-content l-infos-over';"
 	    onmouseout="this.className = this.tmp;"
 	    class="sb-content l-infos-<?=(($i % 2) + 1)?>on2">
-		<td class="td-left">
-			<?=$form->checkbox(array('name'		=> 'phonehints[]',
-						 'value'	=> $ref['ctiphonehints']['id'],
-						 'label'	=> false,
-						 'id'		=> 'it-phonehints-'.$i,
-						 'checked'	=> false,
-						 'paragraph'	=> false));?>
-		</td>
 		<td class="txt-left" title="<?=dwho_alttitle($ref['ctiphonehints']['name']);?>">
 <?php
 			echo	$url->img_html('img/site/flag/enable.gif',null,'class="icons-list"');

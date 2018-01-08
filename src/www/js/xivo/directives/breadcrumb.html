@@ -1,6 +1,6 @@
 <h4 class="sb-top xspan">
   <span ng-if="parent.length">
-    <a href="./?act=list">{{parent}}</a>
+    <a ng-href="{{redirectParent()}}">{{parent}}</a>
     <span class="text-muted"> > </span>
   </span>
   {{page}}

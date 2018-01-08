@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 export default function breadcrumb() {
   return {
     restrict: 'E',
@@ -5,7 +7,13 @@ export default function breadcrumb() {
     scope: {
       page: '@',
       parent: '@',
-      value: '@'
+      value: '@',
+      redirect: '@'
+    },
+    link: (scope) => {
+      scope.redirectParent = () => {
+        return (scope.redirect) ? scope.redirect : './?act=list';
+      };
     }
   };
 }
