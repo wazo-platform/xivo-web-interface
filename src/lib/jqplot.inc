@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright 2006-2018 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -761,7 +761,7 @@ class xivo_jqplot
 		{
 			$colname = array_shift($datakey);
 			$colvalue = array_shift($data);
-			if (ereg('aperiod',$colname) === false)
+			if (preg_match('/aperiod/',$colname) === false)
 				continue;
 			$row = $this->bbf('col_'.$colname);
 			$fieldname = preg_replace('/<+\s*\/*\s*([A-Z][A-Z0-9]*)\b[^>]*\/*\s*>+/i','',$row);
@@ -824,7 +824,7 @@ class xivo_jqplot
 		{
 			$colname = array_shift($datakey);
 			$colvalue = array_shift($data);
-			if (ereg('tperiod',$colname) === false)
+			if (preg_match('/tperiod/',$colname) === false)
 				continue;
 			$row = $this->bbf('col_'.$colname);
 			$fieldname = preg_replace('/<+\s*\/*\s*([A-Z][A-Z0-9]*)\b[^>]*\/*\s*>+/i','',$row);
