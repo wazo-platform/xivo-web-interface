@@ -1,5 +1,3 @@
-import _ from 'lodash';
-
 export default function breadcrumb() {
   return {
     restrict: 'E',
