@@ -44,7 +44,7 @@ define('XIVO_SOFT_VERSION',$xivo_version);
 define('XIVO_SOFT_URL','www.xivo.solutions');
 define('XIVO_DOC_URL','documentation.xivo.solutions');
 define('XIVO_DOC_API_URL','documentation.xivo.solutions');
-define('XIVO_BLOG_URL','www.xivo.solutions');
+define('XIVO_BLOG_URL','xivo-solutions-blog.gitlab.io');
 define('XIVO_CORP_LABEL','Avencall');
 define('XIVO_PF_FR_CORP_LABEL','Avencall');
 define('XIVO_CORP_URL','avencall.com');
