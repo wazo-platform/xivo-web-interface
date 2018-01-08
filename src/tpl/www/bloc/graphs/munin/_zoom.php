@@ -1,7 +1,7 @@
 <?php
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright 2006-2018 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@ $next    = $this->get_var('next');
 
 function bbf_format($ctx, $link)
 {
-    list($domain, $mod, $freq) = split('-', $link);
+    list($domain, $mod, $freq) = preg_split('/-/', $link);
     return $ctx->bbf('title_content_name').' - '.$ctx->bbf($mod).' ('.
         $ctx->bbf('per-'.$freq).')';
 }

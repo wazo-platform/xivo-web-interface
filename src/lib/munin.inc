@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright 2006-2018 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -97,7 +97,7 @@ function dwho_munin_graphs($urldir, $domain)
 	$captions = array();
 	foreach($graphs as $graph)
 	{
-		list($graph_id, $freq, $fmt) = split("[\.-]", $graph);
+		list($graph_id, $freq, $fmt) = preg_split("/[\.-]/", $graph);
 
 		$category = _get_category($graph_id);
 		$caption = _get_caption($graph_id);

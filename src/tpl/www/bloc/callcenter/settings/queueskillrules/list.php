@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright 2006-2018 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -80,7 +80,7 @@ $page = $url->pager($pager['pages'],
 
 			$ref 	= &$list[$i];
 			$icon = 'enable';
-			$arr =  split(';', $ref['rule'], 2);
+			$arr =  preg_split('/;/', $ref['rule'], 2);
 			$rule = $arr[0];
 			if (count($arr) > 1)
 			{

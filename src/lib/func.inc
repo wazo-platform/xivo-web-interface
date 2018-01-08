@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2016  Avencall
+# Copyright 2006-2018 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -1115,7 +1115,7 @@ function dwho_last_key(&$a,$sort=SORT_NUMERIC)
 
 function dwho_his_to_second($his)
 {
-	$arr = split('[:/]',$his);
+	$arr = preg_split('/[:/]/',$his);
 	$time = 0;
 	$time += ($arr[0] * 3600);
 	$time += ($arr[1] * 60);
@@ -1343,8 +1343,8 @@ function dwho_date_parse_from_format($stFormat, $stData)
 	$aDataRet['hour']	 = 0;
 	$aDataRet['minute'] = 0;
 	$aDataRet['second'] = 0;
-	$aPieces = split('[:/.\ \-]', $stFormat);
-	$aDatePart = split('[:/.\ \-]', $stData);
+	$aPieces = preg_split('/[:/.\ \-]/', $stFormat);
+	$aDatePart = preg_split('/[:/.\ \-]/', $stData);
 	foreach($aPieces as $key => $chPiece)
 	{
 		if (isset($aDatePart[$key]) === false)
