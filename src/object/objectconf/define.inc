@@ -42,7 +42,6 @@ define('XIVO_SOFT_NAME','xivo');
 define('XIVO_SOFT_LABEL','XIVO');
 define('XIVO_SOFT_VERSION',$xivo_version);
 define('XIVO_SOFT_URL','www.xivo.solutions');
-define('XIVO_DOWNLOAD_URL','mirror.xivo.solutions/iso/archives/xivo-'.$xivo_version_num);
 define('XIVO_DOC_URL','documentation.xivo.solutions');
 define('XIVO_DOC_API_URL','documentation.xivo.solutions');
 define('XIVO_BLOG_URL','www.xivo.solutions');
