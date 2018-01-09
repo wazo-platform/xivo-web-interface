@@ -1,1 +1,2 @@
 var/www/munin usr/share/xivo-web-interface/www/img/graphs/munin
+etc/xivo/web-interface/php.ini etc/php/7.0/cgi/conf.d/50-wazo-web-interface.ini

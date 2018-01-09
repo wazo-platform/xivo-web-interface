@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2015  Avencall
+# Copyright 2006-2018 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -48,8 +48,8 @@ class xivo_object_commonconf extends xivo_object_abstract
 
 	function _ip2subnet($ip, $netmask)
 	{
-		$dotted_ip = split('\.', $ip);
-		$dotted_nm = split('\.', $netmask);
+		$dotted_ip = preg_split('/\./', $ip);
+		$dotted_nm = preg_split('/\./', $netmask);
 
 		$subnet = sprintf("%d.%d.%d.%d",
 				(((int)$dotted_ip[0]) & ((int)$dotted_nm[0])),

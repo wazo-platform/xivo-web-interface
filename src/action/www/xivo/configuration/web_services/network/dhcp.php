@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright 2006-2018 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -47,7 +47,7 @@ switch($act)
 		}
 
 		$info['active']         = $info['active'] == 0?False:True;
-		$info['extra_ifaces']   = split(' ', $info['extra_ifaces']);
+		$info['extra_ifaces']   = preg_split('/ /', $info['extra_ifaces']);
 		if(count($info['extra_ifaces']) == 1 && strlen($info['extra_ifaces'][0]) == 0)
 			$info['extra_ifaces'] = array();
 

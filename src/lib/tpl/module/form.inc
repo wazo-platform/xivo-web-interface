@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright 2006-2018 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -1414,7 +1414,7 @@ class dwho_tpl_form extends dwho_tpl_module
 			$id = $this->_param['id'];
 			$key = $this->_param['key'];
 			$uniqid = uniqid();
-			//if (ereg('list',$id))
+			//if (preg_match('/list/',$id))
 			//    $r .= '<center><input type="text" id="it-'.$uniqid.'" /></center>';
 			//else
 			//    $r .= $this->bbf('input_filter_ms').' <input type="text" id="it-'.$uniqid.'" />';
@@ -1490,12 +1490,12 @@ class dwho_tpl_form extends dwho_tpl_module
 
 		if($this->_param['multiple'] === true)
 		{
-			if (ereg('list',$id))
+			if (preg_match('/list/',$id))
 				$id2 = str_replace('list','',$id);
 			else
 				$id2 = $id.'list';
 
-			if (ereg('list',$id))
+			if (preg_match('/list/',$id))
 			{
 				$r = "
 				<script type=\"text/javascript\">

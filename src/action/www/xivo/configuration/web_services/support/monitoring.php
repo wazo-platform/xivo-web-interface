@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright 2006-2018 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -55,7 +55,7 @@ switch($act)
         if(count($info['alert_emails']) == 1 && strlen($info['alert_emails'][0]) == 0)
             $info['alert_emails'] = array();
 
-        $info['dahdi_monitor_ports']   = split(' ', $info['dahdi_monitor_ports']);
+        $info['dahdi_monitor_ports']   = preg_split('/ /', $info['dahdi_monitor_ports']);
         if(count($info['dahdi_monitor_ports']) == 1 && strlen($info['dahdi_monitor_ports'][0]) == 0)
             $info['dahdi_monitor_ports'] = array();
         for($i = 0; $i < count($info['dahdi_monitor_ports']); $i++)

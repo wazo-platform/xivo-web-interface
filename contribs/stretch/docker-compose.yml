@@ -1,0 +1,83 @@
+version: '2.1'
+
+services:
+  postgres:
+    image: wazopbx/postgres-test
+    expose:
+      - "5432"
+    ports:
+      - "5432"
+  rabbitmq:
+    image: rabbitmq
+    expose:
+      - "5672"
+    ports:
+      - "5672"
+  confd:
+    image: p0bailey/docker-flask
+    expose:
+      - "9487"
+    ports:
+      - "9487"
+    volumes:
+      - "./mocks/confd/:/tmp/confd"
+    command: "python /tmp/confd/confd.py"
+  auth:
+    image: p0bailey/docker-flask
+    expose:
+      - "9497"
+    ports:
+      - "9497"
+    volumes:
+      - "./mocks/auth/:/tmp/auth"
+    command: "python /tmp/auth/auth.py"
+  provd:
+    image: wazopbx/xivo-provd
+    ports:
+      - "8666"
+    expose:
+      - "8666"
+    volumes:
+      - "./etc/xivo-provd/provd.conf:/etc/xivo/provd/provd.conf"
+      - "./provd/null:/var/lib/xivo-provd/plugins/null"
+      - "./provd/zero:/var/lib/xivo-provd/plugins/zero"
+  sysconfd:
+    image: p0bailey/docker-flask
+    expose:
+      - "8668"
+    volumes:
+      - "./mocks/sysconfd:/tmp/sysconfd"
+    command: "python /tmp/sysconfd/sysconfd.py"
+  webi:
+    image: wazopbx/xivo-web-interface:stretch
+    build:
+      context: ../../
+      dockerfile: Dockerfile-stretch
+    ports:
+      - "80"
+    volumes:
+      - "../../src:/usr/share/xivo-web-interface"
+      - "./php.ini:/etc/xivo/web-interface/php.ini"
+      - "./etc/xivo/datastorage.conf:/etc/xivo/datastorage.conf"
+      - "./etc/xivo/web-interface/ipbx.ini:/etc/xivo/web-interface/ipbx.ini"
+      - "./etc/xivo-sysconfd/config.inc:/usr/share/xivo-web-interface/object/xivo/sysconfd/config.inc"
+      - "./etc/xivo-confd/config.inc:/usr/share/xivo-web-interface/object/confd/abstract/config.inc"
+    links:
+      - postgres
+      - confd
+      - provd
+      - sysconfd
+      - rabbitmq
+      - auth
+  tests:
+    image: n3llyb0y/wait
+    links:
+      - confd
+      - postgres
+      - provd
+      - rabbitmq
+      - sysconfd
+      - webi
+      - auth
+    environment:
+      PORTS: "80 5432 5672 8666 8668 9847 9497"

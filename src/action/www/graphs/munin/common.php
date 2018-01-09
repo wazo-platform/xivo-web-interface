@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright 2006-2018 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@ sort($module_graphs);
 if(isset($_QR['zoom']))
 {
     // get previous/next graphs
-    list($domain, $zoomod, $zoofreq)    = split('-', $_QR['zoom']);
+    list($domain, $zoomod, $zoofreq)    = preg_split('/-/', $_QR['zoom']);
     $current = array(
         array_search($zoomod , $module_graphs),   // module index
         array_search($zoofreq, $freqs)          // frequency index

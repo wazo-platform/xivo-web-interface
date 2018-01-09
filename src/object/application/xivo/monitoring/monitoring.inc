@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright 2006-2018 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -73,7 +73,7 @@ class xivo_application_xivo_object_monitoring extends xivo_application_xivo_obje
         // check dahdi_monitor_ports
         if(strlen(trim($arr['dahdi_monitor_ports'])) > 0)
         {
-            foreach(split(' ', $arr['dahdi_monitor_ports']) as $port)
+            foreach(preg_split('/ /', $arr['dahdi_monitor_ports']) as $port)
             {
                 if(!ctype_digit($port))
                     $this->_set_error('dahdi_monitor_ports', 'typechecking');
