@@ -27,11 +27,9 @@ $element = $this->get_var('element');
 ?>
 
 <div class="b-infos b-form">
-<h3 class="sb-top xspan">
-	<span class="span-left">&nbsp;</span>
-	<span class="span-center"><?=$this->bbf('title_content_name');?></span>
-	<span class="span-right">&nbsp;</span>
-</h3>
+<breadcrumb
+        page="<?=$this->bbf('title_content_name');?>">
+</breadcrumb>
 
 <div class="sb-content">
 <form action="#" method="post" accept-charset="utf-8">
@@ -60,9 +58,5 @@ echo	$form->submit(array('name'	=> 'submit',
 ?>
 </form>
 	</div>
-	<div class="sb-foot xspan">
-		<span class="span-left">&nbsp;</span>
-		<span class="span-center">&nbsp;</span>
-		<span class="span-right">&nbsp;</span>
-	</div>
+	<div class="sb-foot xspan"></div>
 </div>
