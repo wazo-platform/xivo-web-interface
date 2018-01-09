@@ -30,11 +30,10 @@ $params = $info['params'];
 
 ?>
 <div class="b-infos b-form">
-	<h3 class="sb-top xspan">
-		<span class="span-left">&nbsp;</span>
-		<span class="span-center"><?=$this->bbf('title_content_name',array($this->get_var('id'),$pginfo['version']));?></span>
-		<span class="span-right">&nbsp;</span>
-	</h3>
+	<breadcrumb
+			parent="<?=$this->bbf('title_parent_name');?>"
+      page="<?=$this->bbf('title_content_name',array($this->get_var('id'),$pginfo['version']));?>">
+	</breadcrumb>
 	<div class="sb-content">
 	<fieldset>
 		<legend><?=$this->bbf('plugin-description_legend',array($this->get_var('id'),$pginfo['version']));?></legend>
@@ -54,7 +53,7 @@ else:
 	</div>
 
 	<div class="sb-list">
-	<table id="tb-list-pkgs">
+	<table class="table table-condensed table-striped table-hover" id="tb-list-pkgs">
 		<thead>
 		<tr class="sb-top">
 			<th class="th-left"><?=$this->bbf('col_name');?></th>
