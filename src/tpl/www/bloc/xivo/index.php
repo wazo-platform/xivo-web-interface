@@ -25,11 +25,9 @@ $dhtml->write_js('dwho.dom.set_onload(dwho.dom.set_confirm_uri_onchild,\'service
 ?>
 
 <div id="system-infos" class="b-infos">
-	<h3 class="sb-top xspan">
-		<span class="span-left">&nbsp;</span>
-		<span class="span-center"><?=$this->bbf('title_content_name');?></span>
-		<span class="span-right">&nbsp;</span>
-	</h3>
+	<breadcrumb
+        page="<?=$this->bbf('title_content_name');?>">
+	</breadcrumb>
 
 	<div id="box_infos" style="position: absolute;z-index: 100;margin-left: 200px;width: 500px;height: 150px;background: #eee;border: 1px solid #333;display: none;;
 		opacity: 0.9;filter: alpha(opacity=90);font-size: 12px;padding: 10px;text-align: center;font-weight: bold;">
