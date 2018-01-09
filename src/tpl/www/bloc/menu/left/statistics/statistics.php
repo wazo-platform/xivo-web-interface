@@ -320,12 +320,7 @@ if($this->get_var('showdashboard_call_center') === true):
 			<?=dwho_second_to($this->get_var('bench'),2).' - '.$this->bbf('size_iec_'.$mem_info[1],$mem_info[0])?>
 		</fieldset>
 </div>
-	<div class="sb-foot xspan">
-		<span class="span-left">&nbsp;</span>
-		<span class="span-center">&nbsp;</span>
-		<span class="span-right">&nbsp;</span>
-	</div>
-</div>
+	<div class="sb-foot xspan"></div>
 <?php
 endif;
 ?>

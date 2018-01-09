@@ -42,9 +42,4 @@ $dhtml->write_js('dwho.dom.set_onload(dwho.dom.set_confirm_uri_onchild,\'service
 		<div id="services"><?php include(XIVO_PATH_ROOT.DIRECTORY_SEPARATOR.'tpl/ui/xivo/monitoring/services.php'); ?></div>
 	</div>
 	
-	<div class="sb-foot xspan">
-		<span class="span-left">&nbsp;</span>
-		<span class="span-center">&nbsp;</span>
-		<span class="span-right">&nbsp;</span>
-	</div>
-</div>
+	<div class="sb-foot xspan"></div>

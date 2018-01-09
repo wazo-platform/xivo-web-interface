@@ -76,9 +76,4 @@ $blog_url = $this->bbf('url_xivo-blog',XIVO_BLOG_URL);
 					       false);?>
 		</dl>
 	</div>
-	<div class="sb-foot xspan">
-		<span class="span-left">&nbsp;</span>
-		<span class="span-center">&nbsp;</span>
-		<span class="span-right">&nbsp;</span>
-	</div>
-</div>
+	<div class="sb-foot xspan"></div>
