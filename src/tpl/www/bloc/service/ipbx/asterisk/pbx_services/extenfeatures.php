@@ -62,11 +62,9 @@ if(isset($error_js[0]) === true)
 
 ?>
 <div class="b-infos b-form">
-	<h3 class="sb-top xspan">
-		<span class="span-left">&nbsp;</span>
-		<span class="span-center"><?=$this->bbf('title_content_name');?></span>
-		<span class="span-right">&nbsp;</span>
-	</h3>
+	<breadcrumb
+		page="<?=$this->bbf('title_content_name');?>">
+	</breadcrumb>
 
 <div class="sb-content">
 	<form class="form-horizontal" action="#" method="post" accept-charset="utf-8">
@@ -175,7 +173,7 @@ if(isset($error_js[0]) === true)
 									'checked'	=> ((bool) $this->get_var('extenfeatures','pickup','commented') === false)));
 		?>
 		<div class="form-group form-group-sm form-inline">
-			<?php 
+			<?php
 				echo	$form->text(array('desc'	=> $this->bbf('fm_extenfeatures-extension'),
 								'name'	=> 'extenfeatures[pickup][exten]',
 								'paragraph'	=> false,
@@ -194,7 +192,7 @@ if(isset($error_js[0]) === true)
 									'empty'	=> true,
 									'key'	=> false),
 									array('*',range(3,11)));
-								
+
 			?>
 		</div>
 		<?php
@@ -597,7 +595,7 @@ if(isset($error_js[0]) === true)
 								'name'	=> 'extenfeatures[enablevmslt][exten]',
 								'paragraph'	=> false,
 								'labelid'	=> 'extenfeatures-enablevmslt',
-								'size'	=> 15,								
+								'size'	=> 15,
 								'group' => false,
 								'controlSize' => 'col-sm-4 second-on-three',
 								'value'	=> $this->get_var('extenfeatures','enablevmslt','exten'),
@@ -779,7 +777,7 @@ if(isset($error_js[0]) === true)
 									array('*',range(3,11)));
 			?>
 		</div>
-	
+
 	</uib-tab>
 
 	<uib-tab index="5" heading="<?=$this->bbf('smenu_agent');?>">
@@ -867,7 +865,7 @@ if(isset($error_js[0]) === true)
 									array('*',range(3,11)));
 			?>
 		</div>
-	
+
   </uib-tab>
 
 	<uib-tab index="6" heading="<?=$this->bbf('smenu_parking');?>">
@@ -1115,9 +1113,5 @@ if(isset($error_js[0]) === true)
 			       'value'	=> $this->bbf('fm_bt-save')));?>
 	</form>
 	</div>
-	<div class="sb-foot xspan">
-		<span class="span-left">&nbsp;</span>
-		<span class="span-center">&nbsp;</span>
-		<span class="span-right">&nbsp;</span>
-	</div>
+	<div class="sb-foot xspan"></div>
 </div>
