@@ -58,7 +58,7 @@ if(is_array($tree) === true && empty($tree) === false):
 
 							<a role="button" class="collapsed" data-toggle="collapse" data-parent="#accordion-<?=$id?>" href="#div-<?=$v['id']?>" aria-expanded="false" aria-controls="div-<?=$v['id']?>" title="<?=$this->bbf('opt_browse')?>">
 								<span class="glyphicon glyphicon-triangle-bottom"></span>
-							</a><h4>
+							</a></h4>
 		<?php	endif;
 
 		echo	'</div>';
@@ -74,7 +74,7 @@ if(is_array($tree) === true && empty($tree) === false):
 			endif;?>
 
 			<div class="checkbox">
-				<label id="lb-<?=$v['id']?>"><input <?=($v['access']==""?"":"checked")?> name="tree[]" type="checkbox" id="<?=$v['id']?>" value="<?$v['path']?>" onclick="xivo_form_mk_acl(this);">  <?=$this->bbf('acl',$v['id'])?></label>
+				<label id="lb-<?=$v['id']?>"><input <?=($v['access']==""?"":"checked")?> name="tree[]" type="checkbox" id="<?=$v['id']?>" value="<?=$v['path']?>" onclick="xivo_form_mk_acl(this);">  <?=$this->bbf('acl',$v['id'])?></label>
 			</div>
 
 			<?php if($cnt === $i):
