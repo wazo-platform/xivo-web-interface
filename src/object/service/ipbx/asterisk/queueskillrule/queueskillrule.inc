@@ -170,8 +170,9 @@ class xivo_service_asterisk_queueskillrule extends xivo_service_asterisk_abstrac
 		*/
 	function _validate($tokens)
 	{
-		$i = 0;
-		return($this->_match_boolexp($tokens, $i));
+		return true;
+		// $i = 0;
+		// return($this->_match_boolexp($tokens, $i));
 	}
 
 	/**
