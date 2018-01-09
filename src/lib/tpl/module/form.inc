@@ -681,7 +681,7 @@ class dwho_tpl_form extends dwho_tpl_module
 
 		$this->_mk_input($o);
 
-		$this->_mk_help();
+		$this->_mk_help();		
 		$this->_mk_error();
 		$this->_mk_legend();
 		$this->_mk_comment();
