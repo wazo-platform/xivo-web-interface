@@ -1526,7 +1526,7 @@ $codec_active = empty($allow) === false;
 						$errdisplay = '';
 					?>
 					<div class="sb-list">
-						<table class="table">
+						<table class="table table-condensed table-hover">
 							<thead>
 							<tr class="sb-top">
 

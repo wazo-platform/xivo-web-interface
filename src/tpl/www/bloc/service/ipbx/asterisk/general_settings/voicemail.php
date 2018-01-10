@@ -521,7 +521,7 @@ endif;
 
 			<uib-tab index="4" heading="<?=$this->bbf('smenu_timezones');?>">
 				<div class="sb-list">
-					<table class="table">
+					<table class="table table-condensed table-hover">
 						<thead>
 							<tr class="sb-top">
 								<th class="th-left"><?=$this->bbf('col_timezone-name');?></th>

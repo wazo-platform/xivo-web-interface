@@ -72,7 +72,7 @@ echo	$form->text(array('desc'	=> $this->bbf('fm_schedule_name'),
 	<fieldset id="fld-opened-hours">
 		<legend><?=$this->bbf('fld-opened-hours');?></legend>
 
-		<table class="table">
+		<table class="table table-condensed table-hover">
 			<thead>
 			<tr class="sb-top">
 
@@ -256,7 +256,7 @@ echo	$form->text(array('desc'	=> $this->bbf('fm_schedule_name'),
 ?>
 	<div class="sb-list">
 
-		<table class="table">
+		<table class="table table-condensed table-hover">
 			<thead>
 			<tr class="sb-top">
 

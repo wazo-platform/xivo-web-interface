@@ -39,7 +39,7 @@ $data 		= $this->get_var('queueskills');
 ?>
 	<p>&nbsp;</p>
 	<div class="sb-list">
-		<table class="table">
+		<table class="table table-condensed table-hover">
 			<thead>
 			<tr class="sb-top">
 

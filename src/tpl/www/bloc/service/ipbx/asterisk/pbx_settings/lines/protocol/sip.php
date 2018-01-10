@@ -202,7 +202,7 @@ function build_row($option, $form, $url, $helper) {
 
 <div role="tabpanel" class="tab-pane" id="advanced">
 	<div class="sb-list">
-		<table class="table">
+		<table class="table table-condensed table-hover">
 			<thead>
 				<th class="th-left">
 					<?= $this->bbf('col_line-sip-option-name') ?>

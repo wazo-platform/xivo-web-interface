@@ -305,7 +305,7 @@ $yesno = array($this->bbf('no'), $this->bbf('yes'));
 <uib-tab index="2" heading="<?=$this->bbf('smenu_prefs');?>">
 
 	<div class="sb-list">
-		<table class="table">
+		<table class="table table-condensed table-hover">
 			<thead>
 			<tr class="sb-top">
 				<th class="th-left"><?=$this->bbf('col_'.$type.'-name');?></th>

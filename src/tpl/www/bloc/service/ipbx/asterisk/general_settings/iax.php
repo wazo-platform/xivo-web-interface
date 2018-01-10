@@ -584,7 +584,7 @@ $codec_active = empty($allow) === false;
 	<br/><br/>
 	<div class="sb-list">
 	<p><?= $this->bbf('title_pernetwork_calllimits'); ?></p>
-		<table class="table">
+		<table class="table table-condensed table-hover">
 			<thead>
 			<tr class="sb-top">
 
