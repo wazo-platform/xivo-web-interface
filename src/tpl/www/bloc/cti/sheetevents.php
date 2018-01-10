@@ -37,7 +37,7 @@ if(isset($error_js[0]) === true)
 		page="<?=$this->bbf('title_content_name');?>">
 	</breadcrumb>
 <div class="sb-content">
-<form action="#" method="post" accept-charset="utf-8">
+<form action="#" method="post" accept-charset="utf-8" class="form-horizontal">
 <?php
 	echo
 		$form->hidden(array('name'	=> DWHO_SESS_NAME,
