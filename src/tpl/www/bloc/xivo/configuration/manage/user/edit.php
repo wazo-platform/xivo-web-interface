@@ -23,11 +23,12 @@ $info = $this->get_var('info');
 
 ?>
 <div class="b-infos b-form">
-	<h3 class="sb-top xspan">
-		<span class="span-left">&nbsp;</span>
-		<span class="span-center"><?=$this->bbf('title_content_name');?></span>
-		<span class="span-right">&nbsp;</span>
-	</h3>
+	<breadcrumb
+		parent="<?=$this->bbf('title_parent_name');?>"
+		page="<?=$this->bbf('title_content_name');?>"
+		value="<?=dwho_htmlen($info['login']);?>">
+	</breadcrumb>
+
 	<div class="sb-content">
 		<form class="form-horizontal" action="#" method="post" accept-charset="utf-8">
 <?php
@@ -36,13 +37,22 @@ $info = $this->get_var('info');
 		$form->hidden(array('name' => 'fm_send', 'value' => 1)),
 		$form->hidden(array('name' => 'id', 'value' => $info['id']));
 ?>
-		<p class="fm-paragraph txt-left">
-			<span class="fm-desc"><?=$this->bbf('fm_login');?></span>&nbsp;<?=dwho_htmlen($info['login']);?>
-		</p>
-		<p class="fm-paragraph txt-left">
-			<span class="fm-desc"><?=$this->bbf('fm_type');?></span>&nbsp;<?=$info['meta']?>
-		</p>
+
 <?php
+	echo	$form->text(array('desc'	=> $this->bbf('fm_login'),
+				'name'	=> 'login',
+				'labelid'	=> 'fm_login',
+				'size'	=> 15,
+				'readonly' => true,
+				'value'	=> dwho_htmlen($info['login'])));
+
+	echo	$form->text(array('desc'	=> $this->bbf('fm_type'),
+				'name'	=> 'type',
+				'labelid'	=> 'fm_type',
+				'size'	=> 15,
+				'readonly' => true,
+				'value'	=> dwho_htmlen($info['meta'])));
+
 	echo	$form->password(array('desc'	=> $this->bbf('fm_password'),
 				  'name'	=> 'passwd',
 				  'labelid'	=> 'passwd',
