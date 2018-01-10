@@ -26,10 +26,10 @@ function create_category($id, $checked, $path, $label, $child) {
 	echo	'<tr><th>',
 		'<div class="panel panel-primary acces_rights_group">',
 			'<div class="panel-heading">',
-				'<h4><label id="lb-'.$id.'" for="'.$id.'">',
+				'<h5><label id="lb-'.$id.'" for="'.$id.'">',
 					'<input '.($checked==""?"":"checked").' name="tree[]" type="checkbox" id="'.$id.'" value="'.$path.'" onclick="xivo_form_mk_acl(this);"> ',
 					$label,
-				'</label></h4>',
+				'</label></h5>',
 			'</div>',
 		'</div>',
 	'</th></tr>';
@@ -52,7 +52,7 @@ function create_category($id, $checked, $path, $label, $child) {
 		$form->hidden(array('name'	=> 'id',
 				    'value'	=> $info['id'])),
 
-		'<table class="table">';
+		'<table class="table table-condensed">';
 
 	$ref = &$tree['xivo'];
 

@@ -51,14 +51,15 @@ if(is_array($tree) === true && empty($tree) === false):
 		if($v['level'] === 3):?>
 			<div class="acl-category panel panel-default access_rights_category">
 				<div class="panel-heading" role="tab" id="heading-<?=$v['id']?>">
-					<h4 class="panel-title">
+					<h6 class="panel-title">
 						<label id="lb-<?=$v['id']?>"><input <?=($v['access']==""?"":"checked")?> name="tree[]" type="checkbox" id="<?=$v['id']?>" value="<?=$v['path']?>" onclick="xivo_form_mk_acl(this);">  <?=$this->bbf('acl',$v['id'])?></label>
 
 						<?php if(isset($v['child']) === true): ?>
 
-							<a role="button" class="collapsed" data-toggle="collapse" data-parent="#accordion-<?=$id?>" href="#div-<?=$v['id']?>" aria-expanded="false" aria-controls="div-<?=$v['id']?>" title="<?=$this->bbf('opt_browse')?>">
-								<span class="glyphicon glyphicon-triangle-bottom"></span>
-							</a></h4>
+						<a role="button" class="collapsed" data-toggle="collapse" data-parent="#accordion-<?=$id?>" href="#div-<?=$v['id']?>" aria-expanded="false" aria-controls="div-<?=$v['id']?>" title="<?=$this->bbf('opt_browse')?>">
+							<span class="glyphicon glyphicon-triangle-bottom"></span>
+						</a>
+					</h6>
 		<?php	endif;
 
 		echo	'</div>';
@@ -66,7 +67,7 @@ if(is_array($tree) === true && empty($tree) === false):
 			if($i === 0):?>
 				<div id="div-<?=$v['parent']['id']?>" class="panel-collapse collapse" role="tabpanel"  aria-labelledby="heading-<?=$v['parent']['id']?>">
 					<div class="panel-body">
-						<table id="table-<?=$v['parent']['id']?>"><tr><td>
+						<table id="table-<?=$v['parent']['id']?>" class="table-condensed"><tr><td>
 			<?php elseif($mod9 === 0):
 				echo	'</td></tr><tr><td>',"\n";
 			elseif($mod3 === 0):
