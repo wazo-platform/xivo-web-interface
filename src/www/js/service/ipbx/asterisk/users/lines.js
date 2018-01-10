@@ -214,7 +214,7 @@ function init_device_select() {
         placeholder: 'MAC / IP',
         minimumInputLength: 2,
         allowClear: true,
-        theme: "xivo",
+        theme: "bootstrap",
         ajax: {
           url: '/xivo/configuration/ui.php/provisioning/configs',
           dataType: 'json',
