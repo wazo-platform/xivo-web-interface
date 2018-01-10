@@ -31,18 +31,19 @@ $memtotal = $this->get_var('memstats','memtotal');
 if(is_array($grpdata) === true && ($nb = count($grpdata)) > 0):
 
 ?>
-	<div class="monit-group">
-		<table class="table">
+	<div class="row monit-group">
+		<div class="col-md-offset-1 col-md-10">
+		<table class="table table-condensed table-hover table-striped table-bordered">
 			<tr class="sb-top">
-				<th colspan="8" class="th-left th-right"><?=$this->bbf('sysinfos_'.$grpname);?></th>
+				<td colspan="8" class="th-left th-right"><strong><?=$this->bbf('sysinfos_'.$grpname);?></strong></td>
 			</tr>
 			<tr class="l-subth">
-				<td><?=$this->bbf('sysinfos_col_process');?></td>
-				<td><?=$this->bbf('sysinfos_col_status');?></td>
-				<td><?=$this->bbf('sysinfos_col_uptime');?></td>
-				<td><?=$this->bbf('sysinfos_col_cpu');?></td>
-				<td colspan="3"><?=$this->bbf('sysinfos_col_memory');?></td>
-				<td class="td-right"><?=$this->bbf('sysinfos_col_action');?></td>
+				<th><?=$this->bbf('sysinfos_col_process');?></th>
+				<th><?=$this->bbf('sysinfos_col_status');?></th>
+				<th><?=$this->bbf('sysinfos_col_uptime');?></th>
+				<th><?=$this->bbf('sysinfos_col_cpu');?></th>
+				<th colspan="3"><?=$this->bbf('sysinfos_col_memory');?></th>
+				<th class="td-right"><?=$this->bbf('sysinfos_col_action');?></th>
 			</tr>
 <?php
 		for($i = 0;$i < $nb;$i++):
@@ -163,6 +164,7 @@ if(is_array($grpdata) === true && ($nb = count($grpdata)) > 0):
 ?>
 		</table>
 	</div>
+</div>
 <?php
 
 endif;

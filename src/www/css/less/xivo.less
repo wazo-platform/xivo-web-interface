@@ -64,6 +64,46 @@ h4.sb-top  {
   float: inherit;
 }
 
+#b-content {
+  .monit-group {
+    padding: 10px 0;
+
+    .l-subth {
+      font-weight: bold;
+    }
+
+    .monit-state-notaccessible {color: @xivo-danger;}
+    .monit-state-notonline {color: @xivo-dark;}
+    .monit-state-notrunning {color: @xivo-dark;}
+    .monit-state-accessible {color: @xivo-success;}
+    .monit-state-online {color: @xivo-success;}
+    .monit-state-running {color: @xivo-success;}
+    .monit-state-initializing {color: @xivo-warning;}
+    .monit-state-notmonitored {color: @xivo-dark;}
+  }
+
+  .gauge {
+    margin-top: 10px;
+    width: 104px;
+    vertical-align: middle;
+
+    div {
+      text-align: left;
+      background-color: @xivo-light-gray;
+      width: 100px;
+      height: 10px;
+
+      div {
+        background-color: #055a82;
+        width: 0px;
+      }
+    }
+  }
+  .gaugepercent {
+    width: 75px;
+  }
+}
+
 #version-copyright {
   text-align: center;
 }
