@@ -16,6 +16,7 @@ Depends:
     php-curl,
     php-gd,
     php-json,
+    php-ldap,
     php-pgsql,
     php-xml,
     spawn-fcgi,
