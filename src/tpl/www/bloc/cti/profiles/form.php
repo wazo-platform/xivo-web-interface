@@ -95,7 +95,7 @@ $yesno = array($this->bbf('no'), $this->bbf('yes'));
 
 <uib-tab index="1" heading="<?=$this->bbf('smenu_xlets');?>">
 	<div class="sb-list">
-		<table id="list_xlet">
+		<table id="list_xlet" class="table table-hover table-condensed">
 			<thead>
 			<tr class="sb-top">
 				<th class="th-left"><?=$this->bbf('col_xlets-name');?></th>

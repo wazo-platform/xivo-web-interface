@@ -41,7 +41,7 @@ $user_protocol = $configuration['user_config']['trunk'];
         <?php
             else:
         ?>
-            <form action="#" method="post" accept-charset="utf-8" onsubmit="">
+            <form class="form-horizontal" action="#" method="post" accept-charset="utf-8" onsubmit="">
         <?php
                 foreach($provider_protocol as $key => $value)
                 {

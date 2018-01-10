@@ -28,7 +28,7 @@ $nb = 0;
 
 ?>
 
-<table id="list_exten">
+<table id="list_exten" class="table table-hover table-condensed">
 	<thead>
 	<tr class="sb-top">
 		<th class="th-left th-rule">&nbsp;</th>

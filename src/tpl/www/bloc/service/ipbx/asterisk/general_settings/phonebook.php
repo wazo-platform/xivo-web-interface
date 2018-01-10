@@ -32,7 +32,7 @@ $element = $this->get_var('element');
 	</breadcrumb>
 
 <div class="sb-content">
-	<form action="#" method="post" accept-charset="utf-8" onsubmit="dwho.form.select('it-access');">
+	<form class="form-horizontal" action="#" method="post" accept-charset="utf-8" onsubmit="dwho.form.select('it-access');">
 
 <?php
 	echo	$form->hidden(array('name'	=> DWHO_SESS_NAME,
