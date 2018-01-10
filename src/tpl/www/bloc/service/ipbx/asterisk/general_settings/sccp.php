@@ -39,7 +39,7 @@ $codec_active = empty($allow) === false;
 	</div>
 
 	<div class="sb-content">
-		<form action="#" method="post" accept-charset="utf-8">
+		<form action="#" method="post" accept-charset="utf-8" class="form-horizontal">
 
 		<?php
 			echo $form->checkbox(array(

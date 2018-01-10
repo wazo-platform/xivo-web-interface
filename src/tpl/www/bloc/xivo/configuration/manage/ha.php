@@ -29,7 +29,7 @@ $element = $this->get_var('element');
 	</breadcrumb>
 
 <div class="sb-content">
-<form action="#" method="post" accept-charset="utf-8">
+<form action="#" method="post" accept-charset="utf-8" class="form-horizontal">
 <?=$form->hidden(array('name' => DWHO_SESS_NAME,'value' => DWHO_SESS_ID))?>
 <?=$form->hidden(array('name' => 'fm_send','value' => 1))?>
 <?php

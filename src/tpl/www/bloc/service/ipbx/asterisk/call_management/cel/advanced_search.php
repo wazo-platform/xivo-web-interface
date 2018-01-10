@@ -31,7 +31,7 @@ $result = $this->get_var('result');
 <div class="sb-content">
 
 <div id="sb-part-first"<?=($result !== false ? ' class="b-nodisplay"' : '')?>>
-<form action="#" method="post" accept-charset="utf-8">
+<form action="#" method="post" accept-charset="utf-8" class="form-horizontal">
 <?=$form->hidden(array('name' => DWHO_SESS_NAME,'value' => DWHO_SESS_ID))?>
 <?=$form->hidden(array('name' => 'act','value' => 'search'))?>
 <?=$form->hidden(array('name' => 'fm_send','value' => 1))?>

@@ -32,7 +32,7 @@ $element = $this->get_var('element');
 </breadcrumb>
 
 <div class="sb-content">
-<form action="#" method="post" accept-charset="utf-8">
+<form action="#" method="post" accept-charset="utf-8" class="form-horizontal">
 
 <div id="sb-part-first">
 <?php

@@ -69,7 +69,7 @@ endif;
 ?>
 </fieldset>
 
-<form action="#" method="post" accept-charset="utf-8">
+<form action="#" method="post" accept-charset="utf-8" class="form-horizontal">
 
 <div id="sb-part-first">
 <?=$form->hidden(array('name' => DWHO_SESS_NAME,'value'	=> DWHO_SESS_ID));?>
