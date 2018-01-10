@@ -25,9 +25,9 @@ $doc_api_url = $this->bbf('url_xivo-documentation',XIVO_DOC_API_URL);
 $blog_url = $this->bbf('url_xivo-blog',XIVO_BLOG_URL);
 
 ?>
-<div class="two_col_separator">	
+<div class="two_col_separator">
 	<div class="b-infos col-sm-6">
-	<h3 class="sb-top xspan"><?=$this->bbf('title_contact_content_name');?></h3>
+
 		<div class="sb-content">
 			<div class="logo"><?=$url->img_html('img/site/logo_avencall_rgb_quadri_en.png',XIVO_AV_FR_CORP_NAME);?></div>
 			<div class="clear"></div>
@@ -52,9 +52,10 @@ $blog_url = $this->bbf('url_xivo-blog',XIVO_BLOG_URL);
 		</div>
 	</div>
 	<div class="b-infos col-sm-5 col-sm-offset-1">
-	<h3 class="sb-top xspan">
-			<?=$this->bbf('title_content_name');?>
-		</h3>
+		<breadcrumb
+			page="<?=$this->bbf('title_content_name');?>">
+		</breadcrumb>
+
 		<div class="sb-content">
 			<dl>
 				<dt><?=$this->bbf('info_xivo-documentation');?></dt>
