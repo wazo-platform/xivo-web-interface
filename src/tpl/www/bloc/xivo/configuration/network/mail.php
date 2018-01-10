@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2018  Avencall
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,20 +20,18 @@
 
 $form	 = &$this->get_module('form');
 $dhtml 	 = &$this->get_module('dhtml');
-
 $element = $this->get_var('element');
 
 ?>
 
 <div class="b-infos b-form">
-<h3 class="sb-top xspan">
-	<span class="span-left">&nbsp;</span>
-	<span class="span-center"><?=$this->bbf('title_content_name');?></span>
-	<span class="span-right">&nbsp;</span>
-</h3>
+
+<breadcrumb
+        page="<?=$this->bbf('title_content_name');?>">
+</breadcrumb>
 
 <div class="sb-content">
-<form action="#" method="post" accept-charset="utf-8">
+<form class="form-horizontal" action="#" method="post" accept-charset="utf-8">
 
 <div id="sb-part-first">
 <?php
@@ -80,7 +78,7 @@ $element = $this->get_var('element');
 				  'error'	=> $this->bbf_args('error',
 						   $this->get_var('error', 'xivo-smtp-fallback_relayhost')) ));
 ?>
-	<div class="fm-paragraph fm-description">
+	<div class="col-sm-offset-2 fm-paragraph fm-description">
 		<p>
 			<label id="lb-description" for="it-description"><?=$this->bbf('fm_canonical');?></label>
 		</p>
