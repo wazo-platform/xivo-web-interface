@@ -24,11 +24,9 @@ $element = $this->get_var('element');
 
 ?>
 <div class="b-infos b-form">
-	<h3 class="sb-top xspan">
-		<span class="span-left">&nbsp;</span>
-		<span class="span-center"><?=$this->bbf('title_content_name');?></span>
-		<span class="span-right">&nbsp;</span>
-	</h3>
+	<breadcrumb
+		page="<?=$this->bbf('title_content_name');?>">
+	</breadcrumb>
 
 <div class="sb-content">
 <form action="#" method="post" accept-charset="utf-8">
@@ -58,7 +56,7 @@ $element = $this->get_var('element');
 					'error'   	=> $this->bbf_args('error', $this->get_var('error','ha','remote_address'))));
 ?>
 </fieldset>
-
+<br class="clearboth">
 <?=$form->submit(array('name' => 'submit', 'id' => 'it-submit', 'value' => $this->bbf('fm_bt-save')));?>
 </form>
 

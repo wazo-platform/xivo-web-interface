@@ -1,12 +1,14 @@
+; title_parent_name
+Certificats
 
 ; title_content_name
 Import de Certificat SSL
 
 ; fm_type
-Type : 
+Type :
 
 ; fm_import
-Fichier : 
+Fichier :
 
 ; fm_import(pubkey)
 Clé publique
