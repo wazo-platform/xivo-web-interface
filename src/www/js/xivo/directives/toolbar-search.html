@@ -1,19 +1,5 @@
 <div class="form-group form-inline pull-right" ng-show="isDisplayed()">
    <div class="input-group">
-         <!-- TODO move in directive and allow pre filtering with dropdown as suggested below
-         <div class="input-group-btn">
-
-       <div class="btn-group">
-           <button class="btn btn-default btn-dropdown dropdown-toggle" type="button" data-toggle="dropdown">
-               <span data-bind="label" id="searchLabel">Search By</span><span class="caret"></span>
-           </button>
-           <ul class="dropdown-menu" role="menu">
-               <li><a href="#">1</a></li>
-               <li><a href="#">2</a></li>
-               <li><a href="#">3</a></li>
-           </ul>
-       </div>
-   </div> -->
    <input type="search" name="search" id="it-toolbar-search" value={{getSearchValue()}} class="form-control input-search" size=24 translate translate-attr-placeholder="{{'toolbar_fm_search'}}" translate-value-browser="{{'toolbar_fm_search'}}" />
    <span class="input-group-btn">
        <button id="it-toolbar-subsearch" name="submitBtn" class="btn btn-default btn-search btn-block" title="{{'toolbar_fm_search' | translate}}">
