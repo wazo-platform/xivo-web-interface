@@ -57,7 +57,7 @@ $element = $this->get_var('element');
 					    'altkey'	=> 'host',
 					    'help'	=> $this->bbf('hlp_accessfeatures'),
 					    'multiple'	=> true,
-					    'size'	=> 5,
+					    'size'	=> 8,
 					    'paragraph'	=> false),
 				      $info['accessfeatures']);
 ?>

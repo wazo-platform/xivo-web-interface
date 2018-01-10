@@ -517,8 +517,8 @@ $codec_active = empty($allow) === false;
 												$this->get_var('error', 'outboundproxy')) ));
 
 					?>
-
-					<div id="localnetlist" class="fm-paragraph fm-multilist">
+					<br>
+					<div id="localnetlist" class="fm-paragraph fm-multilist col-sm-offset-2">
 						<p>
 							<label id="lb-localnetlist" for="it-localnet">
 								<?=$this->bbf('fm_localnet');?>
@@ -531,7 +531,7 @@ $codec_active = empty($allow) === false;
 												'key'		=> 'var_val',
 												'altkey'		=> 'var_val',
 												'multiple'	=> true,
-												'size'		=> 5,
+												'size'		=> 8,
 												'paragraph'	=> false),
 									$this->get_var('info','localnet'));?>
 							<div class="bt-adddelete">
