@@ -22,6 +22,19 @@ $form = &$this->get_module('form');
 $info = $this->get_var('info');
 $tree = $this->get_var('tree');
 
+function create_category($id, $checked, $path, $label, $child) {
+	echo	'<tr><th>',
+		'<div class="panel panel-primary acces_rights_group">',
+			'<div class="panel-heading">',
+				'<h5><label id="lb-'.$id.'" for="'.$id.'">',
+					'<input '.($checked==""?"":"checked").' name="tree[]" type="checkbox" id="'.$id.'" value="'.$path.'" onclick="xivo_form_mk_acl(this);"> ',
+					$label,
+				'</label></h5>',
+			'</div>',
+		'</div>',
+	'</th></tr>';
+}
+
 ?>
 <div id="acl" class="b-infos b-form">
 	<breadcrumb
@@ -42,28 +55,18 @@ $tree = $this->get_var('tree');
 		$form->hidden(array('name'	=> 'id',
 				    'value'	=> $info['id'])),
 
-		'<table class="table table-condensed table-hover">';
+		'<table class="table table-condensed">';
 
 	$ref = &$tree['xivo'];
 
 	if(dwho_issa('child',$ref) === true && empty($ref['child']) === false):
 		foreach($ref['child'] as $v):
-			echo	'<tr><th>',
-				$form->checkbox(array('desc'		=> array('format'	=> '%{formfield}$s%{description}$s',
-										 'description'	=> $this->bbf('acl',$v['id'])),
-						      'name'		=> 'tree[]',
-						      'label'		=> 'lb-'.$v['id'],
-						      'id'		=> $v['id'],
-						      'paragraph'	=> false,
-						      'value'		=> $v['path'],
-						      'checked'		=> $v['access']),
-						'onclick="xivo_form_mk_acl(this);"'),
-				'</th></tr>';
-
+			create_category($v['id'], $v['access'], $v['path'], $this->bbf('acl',$v['id']));
 			if(isset($v['child']) === true):
 				$this->file_include('bloc/xivo/configuration/manage/acl/tree',
 						    array('tree'	=> $v['child'],
-							  'parent'	=> null));
+								'parent'	=> null,
+								'id' => $v['id']));
 			endif;
 		endforeach;
 	endif;
@@ -72,22 +75,12 @@ $tree = $this->get_var('tree');
 
 	if(dwho_issa('child',$ref) === true && empty($ref['child']) === false):
 		foreach($ref['child'] as $v):
-			echo	'<tr><th>',
-				$form->checkbox(array('desc'		=> array('format'	=> '%{formfield}$s%{description}$s',
-										 'description'	=> $this->bbf('acl',$v['id'])),
-						      'name'		=> 'tree[]',
-						      'label'		=> 'lb-'.$v['id'],
-						      'id'		=> $v['id'],
-						      'paragraph'	=> false,
-						      'value'		=> $v['path'],
-						      'checked'		=> $v['access']),
-						'onclick="xivo_form_mk_acl(this);"'),
-				'</th></tr>';
-
+			create_category($v['id'], $v['access'], $v['path'], $this->bbf('acl',$v['id']));
 			if(isset($v['child']) === true):
 				$this->file_include('bloc/xivo/configuration/manage/acl/tree',
 						    array('tree'	=> $v['child'],
-							  'parent'	=> null));
+							  'parent'	=> null,
+								'id' => $v['id']));
 			endif;
 		endforeach;
 	endif;
@@ -96,22 +89,12 @@ $tree = $this->get_var('tree');
 
 	if(dwho_issa('child',$ref) === true && empty($ref['child']) === false):
 		foreach($ref['child'] as $v):
-			echo	'<tr><th>',
-				$form->checkbox(array('desc'		=> array('format'	=> '%{formfield}$s%{description}$s',
-										 'description'	=> $this->bbf('acl',$v['id'])),
-						      'name'		=> 'tree[]',
-						      'label'		=> 'lb-'.$v['id'],
-						      'id'		=> $v['id'],
-						      'paragraph'	=> false,
-						      'value'		=> $v['path'],
-						      'checked'		=> $v['access']),
-						'onclick="xivo_form_mk_acl(this);"'),
-				'</th></tr>';
-
+			create_category($v['id'], $v['access'], $v['path'], $this->bbf('acl',$v['id']));
 			if(isset($v['child']) === true):
 				$this->file_include('bloc/xivo/configuration/manage/acl/tree',
 						    array('tree'	=> $v['child'],
-							  'parent'	=> null));
+							  'parent'	=> null,
+								'id' => $v['id']));
 			endif;
 		endforeach;
 	endif;
@@ -120,22 +103,12 @@ $tree = $this->get_var('tree');
 
 	if(dwho_issa('child',$ref) === true && empty($ref['child']) === false):
 		foreach($ref['child'] as $v):
-			echo	'<tr><th>',
-				$form->checkbox(array('desc'		=> array('format'	=> '%{formfield}$s%{description}$s',
-										 'description'	=> $this->bbf('acl',$v['id'])),
-						      'name'		=> 'tree[]',
-						      'label'		=> 'lb-'.$v['id'],
-						      'id'		=> $v['id'],
-						      'paragraph'	=> false,
-						      'value'		=> $v['path'],
-						      'checked'		=> $v['access']),
-						'onclick="xivo_form_mk_acl(this);"'),
-				'</th></tr>';
-
+			create_category($v['id'], $v['access'], $v['path'], $this->bbf('acl',$v['id']));
 			if(isset($v['child']) === true):
 				$this->file_include('bloc/xivo/configuration/manage/acl/tree',
 						    array('tree'	=> $v['child'],
-							  'parent'	=> null));
+							  'parent'	=> null,
+								'id' => $v['id']));
 			endif;
 		endforeach;
 	endif;
@@ -144,22 +117,12 @@ $tree = $this->get_var('tree');
 
 	if(dwho_issa('child',$ref) === true && empty($ref['child']) === false):
 		foreach($ref['child'] as $v):
-			echo	'<tr><th>',
-				$form->checkbox(array('desc'		=> array('format'	=> '%{formfield}$s%{description}$s',
-										 'description'	=> $this->bbf('acl',$v['id'])),
-						      'name'		=> 'tree[]',
-						      'label'		=> 'lb-'.$v['id'],
-						      'id'		=> $v['id'],
-						      'paragraph'	=> false,
-						      'value'		=> $v['path'],
-						      'checked'		=> $v['access']),
-						'onclick="xivo_form_mk_acl(this);"'),
-				'</th></tr>';
-
+			create_category($v['id'], $v['access'], $v['path'], $this->bbf('acl',$v['id']));
 			if(isset($v['child']) === true):
 				$this->file_include('bloc/xivo/configuration/manage/acl/tree',
 						    array('tree'	=> $v['child'],
-							  'parent'	=> null));
+							  'parent'	=> null,
+								'id' => $v['id']));
 			endif;
 		endforeach;
 	endif;
@@ -172,4 +135,4 @@ $tree = $this->get_var('tree');
 ?>
 		</form>
 	</div>
-	<div class="sb-foot xspan"></div>
+</div>
