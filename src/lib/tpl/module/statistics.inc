@@ -557,13 +557,11 @@ class dwho_tpl_statistics extends dwho_tpl_module
 		$format = $data['type'];
 
 		$return = '';
-		$return .= '<table id="'.$this->_name.'">';
+		$return .= '<table id="'.$this->_name.'" class="table table-striped table-hover table-condensed table-bordered">';
 
-		$return .= '<thead>';
 		$return .= '<tr class="sb-top">';
 		$return .= '<th class="th-single" colspan="3">'.$this->bbf($this->_name).'</th>';
 		$return .= '</tr>';
-		$return .= '</thead>';
 
 		$divtoken = '';
 		for($i=0;$i<count($result);$i++)
@@ -602,7 +600,6 @@ class dwho_tpl_statistics extends dwho_tpl_module
 			function show_infos_'.$uid.'() {$("#infos-'.$uid.'").dialog();}
 			</script>';
 
-			$return .= '<tbody id="disp">';
 			$return .= '<tr class="fm-paragraph l-infos-'.(($i % 2) + 1).'on2" title="'.dwho_alttitle($identity).'">';
 			$return .= '<td class="td-left">'.($i+1).'</td>';
 			$return .= '<td class="td-center">'.$link.'</td>';
@@ -611,7 +608,6 @@ class dwho_tpl_statistics extends dwho_tpl_module
 			$return .= $this->eval_result_data($eval);
 			$return .= '</td>';
 			$return .= '</tr>';
-			$return .= '</tbody>';
 			$divtoken .= $divinfos;
 		}
 		$return .= '</table>';
@@ -648,11 +644,10 @@ class dwho_tpl_statistics extends dwho_tpl_module
 		}
 
 		$return = '';
-		$return .= '<table id="'.$this->_name.'">';
+		$return .= '<table id="'.$this->_name.'" class="table table-striped table-hover table-condensed table-bordered">';
 
 		if ($colstruct === true)
 		{
-			$return .= '<thead>';
 			$return .= '<tr class="sb-top">';
 
 			if ($chkbox === true)
@@ -674,7 +669,6 @@ class dwho_tpl_statistics extends dwho_tpl_module
 					$return .= '<th class="th-right" colspan="'.(count($refstruct['content'])).'">'.$label.'</th>';
 			}
 			$return .= '</tr>';
-			$return .= '</thead>';
 		}
 
 		$y=0;
@@ -683,7 +677,6 @@ class dwho_tpl_statistics extends dwho_tpl_module
 			if ($y>0)
 				continue;
 
-			$return .= '<thead>';
 			$return .= '<tr class="sb-top">';
 			$nbcolsup = 0;
 			if ($chkbox === true)
@@ -709,7 +702,6 @@ class dwho_tpl_statistics extends dwho_tpl_module
 					$return .= '<th class="th-right">'.$this->bbf('col_'.$colname).'</th>';
 			}
 			$return .= '</tr>';
-			$return .= '</thead>';
 			$y++;
 		}
 		$c=0;
@@ -748,7 +740,6 @@ class dwho_tpl_statistics extends dwho_tpl_module
 				}
 			}
 
-			$return .= '<tbody id="disp">';
 			$return .= '<tr class="fm-paragraph l-infos-'.(($c % 2) + 1).'on2" title="'.dwho_alttitle($identity).'">';
 			$nbcolsup = 0;
 			if ($chkbox === true)
@@ -842,7 +833,6 @@ class dwho_tpl_statistics extends dwho_tpl_module
 					$return .= '<td class="td-right">'.$this->eval_result_data($colvalue).'</td>';
 			}
 			$return .= '</tr>';
-			$return .= '</tbody>';
 			$c++;
 		}
 

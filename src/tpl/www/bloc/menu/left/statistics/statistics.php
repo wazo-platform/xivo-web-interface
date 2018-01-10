@@ -159,18 +159,16 @@ endif;
 <?php
 if($this->get_var('showdashboard_call_center') === true):
 ?>
-<div id="dashboard">
+<div id="dashboard" class="well">
 	<div class="sb-top xspan">
-		<span class="span-left">&nbsp;</span>
-		<span class="span-center"><?=$this->bbf('mn_left_name_dashboard');?></span>
-		<span class="span-right">&nbsp;</span>
+		<strong><?=$this->bbf('mn_left_name_dashboard');?></strong>
 	</div>
 	<div class="sb-content">
 		<div id="sr-stats" class="">
 		<div id="it-loading" class="b-nodisplay" style="position: absolute;width: 75px;height: 75px;margin-left: 50px;">
 			<img alt="loading" src="/img/site/loading.gif" width="75" height="75" />
 		</div>
-		<form action="<?=$_SERVER['PHP_SELF']?>" method="get" accept-charset="utf-8" onsubmit="fm_chk();">
+		<form action="<?=$_SERVER['PHP_SELF']?>" method="get" accept-charset="utf-8" onsubmit="fm_chk();" class="form-horizontal">
 			<div id="d-conf-list" class="fm-paragraph">
 <?php
 				echo	$form->select(array('name'	=> 'confid',
@@ -235,45 +233,45 @@ if($this->get_var('showdashboard_call_center') === true):
 ?>
 			<div id="it-cal-type" class="b-nodisplay">
 				<div class="fm-paragraph fm-multifield">
-					<div class="fm-desc-inline">
-						<label id="lb-dbeg" for="it-dbeg-type"><?=$this->bbf('fm_dbeg')?></label>
-						<input type="text" name="dbeg" id="it-dbeg" value="<?=$infocal['dbeg']?>" size="8" />
+					<div class="fm-desc-inline row">
+						<label class="col-sm-4" id="lb-dbeg" for="it-dbeg-type"><?=$this->bbf('fm_dbeg')?></label>
+						<input class="col-sm-5" type="text" name="dbeg" id="it-dbeg" value="<?=$infocal['dbeg']?>" size="8" />
 					</div>
-					<div class="fm-desc-inline">
-						<label id="lb-dend" for="it-dend-type"><?=$this->bbf('fm_dend')?></label>
-						<input type="text" name="dend" id="it-dend" value="<?=$infocal['dend']?>" size="8" />
+					<div class="fm-desc-inline row">
+						<label class="col-sm-4" id="lb-dend" for="it-dend-type"><?=$this->bbf('fm_dend')?></label>
+						<input class="col-sm-5" type="text" name="dend" id="it-dend" value="<?=$infocal['dend']?>" size="8" />
 					</div>
 				</div>
 			</div>
 			<div id="it-cal-day" class="b-nodisplay">
 				<div class="fm-paragraph fm-multifield">
-					<div class="fm-desc-inline">
-						<label id="lb-dbeg" for="it-dbeg-day"><?=$this->bbf('fm_dday')?></label>
+					<div class="fm-desc-inline row">
+						<label class="col-sm-4" id="lb-dbeg" for="it-dbeg-day"><?=$this->bbf('fm_dday')?></label>
 						<input type="text" name="dday" id="it-dday" value="<?=$infocal['dday']?>" size="8" />
 					</div>
 				</div>
 			</div>
 			<div id="it-cal-week" class="b-nodisplay">
 				<div class="fm-paragraph fm-multifield">
-					<div class="fm-desc-inline">
-						<label id="lb-dbeg" for="it-dbeg-week"><?=$this->bbf('fm_dweek')?></label>
-						<input type="text" name="dweek" id="it-dweek" value="<?=$infocal['dweek']?>" size="8" />
+					<div class="fm-desc-inline row">
+						<label class="col-sm-4" id="lb-dbeg" for="it-dbeg-week"><?=$this->bbf('fm_dweek')?></label>
+						<input class="col-sm-5" type="text" name="dweek" id="it-dweek" value="<?=$infocal['dweek']?>" size="8" />
 					</div>
 				</div>
 			</div>
 			<div id="it-cal-month" class="b-nodisplay">
 				<div class="fm-paragraph fm-multifield">
-					<div class="fm-desc-inline">
-						<label id="lb-dbeg" for="it-dbeg-month"><?=$this->bbf('fm_dmonth')?></label>
-						<input type="text" name="dmonth" id="it-dmonth" value="<?=$infocal['dmonth']?>" size="8" />
+					<div class="fm-desc-inline row">
+						<label class="col-sm-4" id="lb-dbeg" for="it-dbeg-month"><?=$this->bbf('fm_dmonth')?></label>
+						<input class="col-sm-5" type="text" name="dmonth" id="it-dmonth" value="<?=$infocal['dmonth']?>" size="8" />
 					</div>
 				</div>
 			</div>
 			<div id="it-cal-year" class="b-nodisplay">
 				<div class="fm-paragraph fm-multifield">
-					<div class="fm-desc-inline">
-						<label id="lb-dbeg" for="it-dbeg-year"><?=$this->bbf('fm_dyear')?></label>
-						<input type="text" name="dyear" id="it-dyear" value="<?=$infocal['dyear']?>" size="4" />
+					<div class="fm-desc-inline row">
+						<label class="col-sm-4" id="lb-dbeg" for="it-dbeg-year"><?=$this->bbf('fm_dyear')?></label>
+						<input class="col-sm-5"type="text" name="dyear" id="it-dyear" value="<?=$infocal['dyear']?>" size="4" />
 					</div>
 				</div>
 			</div>
@@ -321,6 +319,7 @@ if($this->get_var('showdashboard_call_center') === true):
 		</fieldset>
 </div>
 	<div class="sb-foot xspan"></div>
+</div>
 <?php
 endif;
 ?>

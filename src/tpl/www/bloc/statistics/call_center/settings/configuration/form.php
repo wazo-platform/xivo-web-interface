@@ -242,7 +242,7 @@ if (is_null($listqos) === false
 		<div id="it-listgroupqos"></div>
 	</uib-tab>
 
-	<uib-tab index="4" heading="<?=$this->bbf('smenu_agents');?>">>
+	<uib-tab index="4" heading="<?=$this->bbf('smenu_agents');?>">
 		<fieldset>
 			<legend><?=$this->bbf('agent')?></legend>
 			<?php
@@ -285,5 +285,5 @@ if (is_null($listqos) === false
 			<div class="clearboth"></div>
 		</fieldset>
 	</uib-tab>
-	
+
 </uib-tabset>
