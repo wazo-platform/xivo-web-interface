@@ -26,7 +26,7 @@ $blog_url = $this->bbf('url_xivo-blog',XIVO_BLOG_URL);
 
 ?>
 <div class="two_col_separator">
-	<div class="b-infos col-sm-6">
+	<div class="b-infos  col-sm-offset-2 col-sm-4">
 
 		<div class="sb-content">
 			<div class="logo"><?=$url->img_html('img/site/logo_avencall_rgb_quadri_en.png',XIVO_AV_FR_CORP_NAME);?></div>
@@ -51,7 +51,7 @@ $blog_url = $this->bbf('url_xivo-blog',XIVO_BLOG_URL);
 			<div class="clear"></div>
 		</div>
 	</div>
-	<div class="b-infos col-sm-5 col-sm-offset-1">
+	<div class="b-infos col-sm-offset-2 col-sm-3 ">
 		<breadcrumb
 			page="<?=$this->bbf('title_content_name');?>">
 		</breadcrumb>
