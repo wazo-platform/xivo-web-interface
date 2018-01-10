@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright 2006-2017 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2006-2018 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ define('DWHO_LABEL_CUSTOM','XIVO-WEBI');
 define('XIVO_SOFT_NAME','wazo');
 define('XIVO_SOFT_LABEL','Wazo');
 define('XIVO_SOFT_VERSION',trim($xivo_version));
-define('XIVO_SOFT_CODENAME','Phoenix');
+define('XIVO_SOFT_CODENAME','phoenix-stretch');
 define('XIVO_SOFT_URL','wazo.community');
 define('XIVO_DOWNLOAD_URL','mirror.wazo.community/iso/archives/wazo-'.XIVO_SOFT_VERSION);
 define('XIVO_DOC_URL','documentation.wazo.community');
