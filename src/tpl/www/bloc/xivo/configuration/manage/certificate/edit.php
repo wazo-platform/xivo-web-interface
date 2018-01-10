@@ -30,9 +30,11 @@ $info  = $this->get_var('info');
 	</breadcrumb>
 
 	<div class="sb-content">
+		<div class="form-horizontal">
 <?php
 		$this->file_include('bloc/xivo/configuration/manage/certificate/form');
 ?>
+		</div>
 	</div>
 	<div class="sb-foot xspan"></div>
 
