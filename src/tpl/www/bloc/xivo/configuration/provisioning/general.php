@@ -30,7 +30,7 @@ $dhtml   = &$this->get_module('dhtml');
 
 <div class="sb-content">
 
-<fieldset id="fld-registrar">
+<fieldset id="fld-registrar" class="form-horizontal">
 	<legend><?=$this->bbf('fld_provd_server');?></legend>
 
 <?php
