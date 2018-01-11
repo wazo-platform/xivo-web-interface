@@ -62,7 +62,7 @@ $dhtml->write_js('var jsi18n_no_number_in_context = "'.$this->bbf('no_number_in_
 							'error'	=> $this->bbf_args('error',
 								$this->get_var('error','meetmefeatures','confno'))));
 		?>
-		<div class="dialog-helper" style="margin-left:400px;" id="helper-context_num_pool"></div>
+		<div class="dialog-helper" id="helper-context_num_pool"></div>
 		<?php 	echo	$form->text(array('desc'	=> $this->bbf('fm_meetmeroom_pin'),
 							'name'	=> 'meetmeroom[pin]',
 							'labelid'	=> 'meetmeroom-pin',

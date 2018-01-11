@@ -72,7 +72,7 @@ echo	$form->text(array('desc'	=> $this->bbf('fm_schedule_name'),
 	<fieldset id="fld-opened-hours">
 		<legend><?=$this->bbf('fld-opened-hours');?></legend>
 
-		<table class="table">
+		<table class="table table-condensed table-hover">
 			<thead>
 			<tr class="sb-top">
 
@@ -97,14 +97,13 @@ echo	$form->text(array('desc'	=> $this->bbf('fm_schedule_name'),
 			<tr class="fm-paragraph<?=$errdisplay?>">
 				<td class="td-left">
 	<?php
-	
+
 					echo $form->text(array('paragraph'	=> false,
 							       'name'	  	=> "opened-schedule-$i",
 							       'id'	    	=> false,
 							       'label'  	=> false,
 										 'size'	   	=> 100,
 										 'controlSize' => false,
-										 'class'		=> '',
 										 'group' => false,
 							       'key'	    => false,
 										 'readonly' => true,
@@ -257,7 +256,7 @@ echo	$form->text(array('desc'	=> $this->bbf('fm_schedule_name'),
 ?>
 	<div class="sb-list">
 
-		<table class="table">
+		<table class="table table-condensed table-hover">
 			<thead>
 			<tr class="sb-top">
 

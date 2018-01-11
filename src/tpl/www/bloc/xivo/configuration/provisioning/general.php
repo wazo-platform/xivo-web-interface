@@ -24,11 +24,9 @@ $dhtml   = &$this->get_module('dhtml');
 ?>
 
 <div class="b-infos b-form">
-<h3 class="sb-top xspan">
-	<span class="span-left">&nbsp;</span>
-	<span class="span-center"><?=$this->bbf('title_content_name');?></span>
-	<span class="span-right">&nbsp;</span>
-</h3>
+<breadcrumb
+        page="<?=$this->bbf('title_content_name');?>">
+</breadcrumb>
 
 <div class="sb-content">
 
@@ -71,7 +69,7 @@ endif;
 ?>
 </fieldset>
 
-<form action="#" method="post" accept-charset="utf-8">
+<form action="#" method="post" accept-charset="utf-8" class="form-horizontal">
 
 <div id="sb-part-first">
 <?=$form->hidden(array('name' => DWHO_SESS_NAME,'value'	=> DWHO_SESS_ID));?>
@@ -149,9 +147,4 @@ endif;
 <?=$form->submit(array('name' => 'submit','id' => 'it-submit','value' => $this->bbf('fm_bt-save')));?>
 </form>
 	</div>
-	<div class="sb-foot xspan">
-		<span class="span-left">&nbsp;</span>
-		<span class="span-center">&nbsp;</span>
-		<span class="span-right">&nbsp;</span>
-	</div>
-</div>
+	<div class="sb-foot xspan"></div>

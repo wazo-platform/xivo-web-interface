@@ -50,7 +50,7 @@ function build_row($data, $form, $url, $helper) {
 			'size' => 15,
 			'name' => 'dispcol2[]',
 			'value' => $data[1],
-			'class' => 'field-type-name',
+			'class' => 'field-type-name form-control',
 		)
 	);
 
@@ -116,7 +116,7 @@ function build_row($data, $form, $url, $helper) {
 ?>
 	<p>&nbsp;</p>
 	<div class="sb-list">
-		<table class="table">
+		<table class="table table-condensed table-hover">
 			<thead>
 			<tr class="sb-top">
 

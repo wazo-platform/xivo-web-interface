@@ -1,7 +1,10 @@
 ; load ./common
 
+; title_parent_name
+Terminaisons
+
 ; title_content_name
-Terminaison / Ajouter
+Ajouter
 
 ; smenu_general
 Général
@@ -13,10 +16,10 @@ Avancées
 Lignes
 
 ; fm_device_ip
-IP: 
+IP:
 
 ; fm_device_mac
-MAC: 
+MAC:
 
 ; fm_device_configdevice
 Modele de configuration de la terminaison:
@@ -25,37 +28,37 @@ Modele de configuration de la terminaison:
 POPC:
 
 ; fm_device_plugin
-Greffon: 
+Greffon:
 
 ; fm_userfeatures_description
-Description: 
+Description:
 
 ; nb_line_busy-free
 Liste des lignes:
 Occupée: %d
 Disponible: %d
 
-; col_line-line	
+; col_line-line
 Ligne
 
-; col_line-protocol	
+; col_line-protocol
 Protocole
 
-; col_line-name	
+; col_line-name
 Nom
 
 ; col_line-context
 Contexte
-	
+
 ; col_line-number
 Numéro
 
-; col_line-config_registrar	
+; col_line-config_registrar
 Site d'enregistrement
 
 ; col_line-user
  Utilisateur
- 
+
 ; no_lines
 Aucune ligne
 

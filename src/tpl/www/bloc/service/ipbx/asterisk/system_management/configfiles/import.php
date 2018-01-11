@@ -23,11 +23,11 @@ $import_file = $this->get_var('import_file');
 
 ?>
 <div class="b-infos b-form">
-	<h3 class="sb-top xspan">
-		<span class="span-left">&nbsp;</span>
-		<span class="span-center"><?=$this->bbf('title_content_name');?></span>
-		<span class="span-right">&nbsp;</span>
-	</h3>
+	<breadcrumb
+		parent="<?=$this->bbf('title_parent_name');?>"
+		page="<?=$this->bbf('title_content_name');?>">
+	</breadcrumb>
+
 	<div class="sb-content">
 		<form action="#" method="post" enctype="multipart/form-data" accept-charset="utf-8">
 <?php
@@ -47,23 +47,21 @@ $import_file = $this->get_var('import_file');
 					  'name'	=> 'import',
 					  'labelid'	=> 'import',
 					  'size'	=> 15,
-					  'error'	=> $this->bbf_args('error_fm_import', 
+					  'error'	=> $this->bbf_args('error_fm_import',
 						$this->get_var('error', 'filename')))),
 
 			$form->checkbox(array('desc' => $this->bbf('fm_configfiles_reload_dialplan'),
 			                      'name' => 'reload-dialplan',
 			                      'labelid' => 'configfile-reload-dialplan',
-			                      'default' => true)),
-
-			$form->submit(array('name'	=> 'submit',
+			                      'default' => true));
+?>
+<br class="clearboth">
+<?php
+		echo $form->submit(array('name'	=> 'submit',
 					    'id'	=> 'it-submit',
 					    'value'	=> $this->bbf('fm_bt-save')));
 ?>
 		</form>
 	</div>
-	<div class="sb-foot xspan">
-		<span class="span-left">&nbsp;</span>
-		<span class="span-center">&nbsp;</span>
-		<span class="span-right">&nbsp;</span>
-	</div>
+	<div class="sb-foot xspan"></div>
 </div>

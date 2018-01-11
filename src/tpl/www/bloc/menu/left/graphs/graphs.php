@@ -119,9 +119,5 @@ $tree = &$this->get_var('tree');
 			<?php } ?>
 		</dl>
 	</dd>
-	<dd class="b-nosize">
-		<span class="span-left">&nbsp;</span>
-		<span class="span-center">&nbsp;</span>
-		<span class="span-right">&nbsp;</span>
-	</dd>
+	<dd class="b-nosize"></dd>
 </dl>

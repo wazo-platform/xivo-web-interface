@@ -27,9 +27,10 @@ $step = $this->get_var('step');
 
 <form action="#" method="post" enctype="multipart/form-data" accept-charset="utf-8">
 <div id="xivo-wizard-step-<?=$step?>" class="b-infos">
-	<h3 class="sb-top xspan">
-		<?=$this->bbf('title_content_name',$step);?>
-	</h3>
+	<breadcrumb
+		page="<?=$this->bbf('title_content_name',$step);?>">
+	</breadcrumb>
+
 	<div class="sb-snav">
 <?php
 	if((bool) $this->get_var('can_previous_step') === true):

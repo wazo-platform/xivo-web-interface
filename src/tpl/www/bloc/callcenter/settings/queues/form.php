@@ -52,7 +52,6 @@ $act             = $this->get_var('act');
 								'labelid' => 'queuefeatures-name',
 								'size'	=> 15,
 								'readonly'	=> true,
-								'class'		=> 'it-disabled',
 								'default'	=> $element['queuefeatures']['name']['default'],
 								'value'	=> $this->get_var('info','queuefeatures','name'),
 								'error'	=> $this->bbf_args('error',
@@ -170,7 +169,7 @@ $act             = $this->get_var('act');
 		</uib-tab>
 
 		<uib-tab index="1" heading="<?=$this->bbf('smenu_announces');?>" select="ctrl.init_tab_announce()">
-		
+
 			<?php
 				echo	$form->select(array('desc'	=> $this->bbf('fm_queue_announce-frequency'),
 									'name'	=> 'queue[announce-frequency]',
@@ -487,12 +486,12 @@ $act             = $this->get_var('act');
 							'</div>';
 					endif;
 				?>
-			</fieldset>	
-			
+			</fieldset>
+
 		</uib-tab>
 
 		<uib-tab index="3" heading="<?=$this->bbf('smenu_application');?>">
-		
+
 			<?php
 
 				echo	$form->text(array('desc'	=> $this->bbf('fm_queuefeatures_timeout'),
@@ -581,7 +580,7 @@ $act             = $this->get_var('act');
 		</uib-tab>
 
 		<uib-tab index="4" heading="<?=$this->bbf('smenu_dialaction');?>">
-		
+
 			<fieldset id="fld-dialaction-noanswer">
 				<legend><?=$this->bbf('fld-dialaction-noanswer');?></legend>
 				<?php
@@ -616,7 +615,7 @@ $act             = $this->get_var('act');
 		</uib-tab>
 
 		<uib-tab index="5" heading="<?=$this->bbf('smenu_advanced');?>">
-		
+
 			<?php
 				if($context_list !== false):
 					echo	$form->select(array('desc'	=> $this->bbf('fm_queue_context'),
@@ -674,7 +673,7 @@ $act             = $this->get_var('act');
 									'error'	=> $this->get_var('error','queue','weight'),
 									'selected'	=> $this->get_var('info','queue','weight')),
 									$element['queue']['weight']['value']),
-							
+
 					$form->select(array('desc'	=> $this->bbf('fm_queue_wrapuptime'),
 									'name'	=> 'queue[wrapuptime]',
 									'labelid' => 'queue-wrapuptime',
@@ -682,7 +681,7 @@ $act             = $this->get_var('act');
 									'key'	=> false,
 									'bbf'	=> 'time-opt',
 									'bbfopt'	=> array('argmode' => 'paramvalue',
-										'time' => array('from'=>'second', 'format'=>'%M%s')),					
+										'time' => array('from'=>'second', 'format'=>'%M%s')),
 									'error'	=> $this->get_var('error','queue','wrapuptime'),
 									'default'	=> $element['queue']['wrapuptime']['default'],
 									'selected'	=> $this->get_var('info','queue','wrapuptime')),
@@ -842,7 +841,7 @@ $act             = $this->get_var('act');
 		</uib-tab>
 
 		<uib-tab index="6" heading="<?=$this->bbf('smenu_schedule');?>">
-		
+
 			<?php
 				if($schedules === false):
 					echo	'<div class="txt-center">',
@@ -864,7 +863,7 @@ $act             = $this->get_var('act');
 		</uib-tab>
 
 		<uib-tab index="7" heading="<?=$this->bbf('smenu_diversion');?>">
-		
+
 			<fieldset id="fld-diversion-waittime">
 				<legend><?=$this->bbf('fld-diversion-waittime');?></legend>
 				<?php

@@ -32,11 +32,10 @@ if (($type = $table1->get_data_custom('listtype')) !== null
 ?>
 
 <div class="b-infos">
-	<h3 class="sb-top xspan">
-		<span class="span-left">&nbsp;</span>
-		<span class="span-center"><?=$this->bbf('title_content_name');?> <?=$tbl_identity?></span>
-		<span class="span-right">&nbsp;</span>
-	</h3>
+  <breadcrumb
+		page="<?=$this->bbf('title_content_name');?>">
+	</breadcrumb>
+
 	<div class="sb-content">
 		<div class="sb-list">
 <?php
@@ -66,9 +65,5 @@ if (($type = $table1->get_data_custom('listtype')) !== null
 ?>
 		</div>
 	</div>
-	<div class="sb-foot xspan">
-		<span class="span-left">&nbsp;</span>
-		<span class="span-center">&nbsp;</span>
-		<span class="span-right">&nbsp;</span>
-	</div>
+	<div class="sb-foot xspan"></div>
 </div>

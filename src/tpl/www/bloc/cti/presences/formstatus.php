@@ -61,7 +61,7 @@ $count = count($actionslist);
 				  'name'	=> 'status[color]',
 				  'labelid'	=> 'status-color',
 				  'size'	=> 15,
-				  'class'	=> 'color {hash:true}',
+				  'class'	=> 'color {hash:true} form-control',
 				  'comment' => $this->bbf('cmt_status_color'),
 				  'default'	=> $element['ctistatus']['color']['default'],
 				  'value'	=> $info['status']['color']));
@@ -134,7 +134,7 @@ $count = count($actionslist);
 		<div class="clearboth"></div>
 	</div>
 	<div class="sb-list">
-		<table class="table">
+		<table class="table table-condensed table-hover">
 			<thead>
 			<tr class="sb-top">
 				<th class="th-left"><?=$this->bbf('col_'.$type.'-name');?></th>

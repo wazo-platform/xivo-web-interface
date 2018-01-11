@@ -40,14 +40,12 @@ endif;
 
 ?>
 <div class="b-infos b-form">
-	<h3 class="sb-top xspan">
-		<span class="span-left">&nbsp;</span>
-		<span class="span-center"><?=$this->bbf('title_content_name');?></span>
-		<span class="span-right">&nbsp;</span>
-	</h3>
+	<breadcrumb
+		page="<?=$this->bbf('title_content_name');?>">
+	</breadcrumb>
 
 	<div class="sb-content">
-		<form action="#" method="post" accept-charset="utf-8" onsubmit="dwho.form.select('it-voicemail-format');">
+		<form class="form-horizontal" action="#" method="post" accept-charset="utf-8" onsubmit="dwho.form.select('it-voicemail-format');">
 
 		<?php
 			echo	$form->hidden(array('name'	=> DWHO_SESS_NAME,
@@ -523,7 +521,7 @@ endif;
 
 			<uib-tab index="4" heading="<?=$this->bbf('smenu_timezones');?>">
 				<div class="sb-list">
-					<table class="table">
+					<table class="table table-condensed table-hover">
 						<thead>
 							<tr class="sb-top">
 								<th class="th-left"><?=$this->bbf('col_timezone-name');?></th>
@@ -949,9 +947,5 @@ endif;
 
 		</form>
 	</div>
-	<div class="sb-foot xspan">
-		<span class="span-left">&nbsp;</span>
-		<span class="span-center">&nbsp;</span>
-		<span class="span-right">&nbsp;</span>
-	</div>
+	<div class="sb-foot xspan"></div>
 </div>

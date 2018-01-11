@@ -31,12 +31,6 @@ $element = $this->get_var('element');
 		echo $form->hidden(array('name'	  => 'config[id]',
 				  'value'	  => $this->get_var('info','config','id')));
 ?>
-	<p id="fd-config-id" class="fm-paragraph">
-		<span class="fm-desc clearboth">
-			<label for="it-config-id"><?=$this->bbf('fm_config-id')?></label>
-		</span>
-		&nbsp; 	<?=$this->get_var('info','config','id')?>
-	</p>
 <?php
 	else:
 		echo $form->text(array('desc'	=> $this->bbf('fm_config-id'),

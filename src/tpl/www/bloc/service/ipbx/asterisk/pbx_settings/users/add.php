@@ -36,11 +36,11 @@ endif;
 
 ?>
 <div id="sr-users" class="b-infos b-form">
-	<h3 class="sb-top xspan">
-		<span class="span-left">&nbsp;</span>
-		<span class="span-center"><?=$this->bbf('title_content_name');?></span>
-		<span class="span-right">&nbsp;</span>
-	</h3>
+  <breadcrumb
+		parent="<?=$this->bbf('title_parent_name');?>"
+		page="<?=$this->bbf('title_content_name');?>">
+	</breadcrumb>
+
 	<?php
 	$this->file_include('bloc/service/ipbx/asterisk/pbx_settings/users/submenu');
 	?>
@@ -53,7 +53,7 @@ endif;
 <?php
 		echo	$form->hidden(array('name'	=> 'max_file_size',
 					    'value'	=> $import_file['size'])),
-		
+
 			$form->hidden(array('name'	=> DWHO_SESS_NAME,
 					    'value'	=> DWHO_SESS_ID)),
 
@@ -71,9 +71,5 @@ endif;
 ?>
 		</form>
 	</div>
-	<div class="sb-foot xspan">
-		<span class="span-left">&nbsp;</span>
-		<span class="span-center">&nbsp;</span>
-		<span class="span-right">&nbsp;</span>
-	</div>
+	<div class="sb-foot xspan"></div>
 </div>

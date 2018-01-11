@@ -1,7 +1,10 @@
 ; load ./common
 
+; title_parent_name
+Devices
+
 ; title_content_name
-Device / Add
+Add
 
 ; smenu_general
 General
@@ -10,10 +13,10 @@ General
 Lines
 
 ; fm_device_ip
-IP: 
+IP:
 
 ; fm_device_mac
-MAC: 
+MAC:
 
 ; fm_device_configdevice
 Device config template:
@@ -22,7 +25,7 @@ Device config template:
 Switchboard:
 
 ; fm_device_plugin
-Plugin: 
+Plugin:
 
 ; fm_userfeatures_description
 Description:
@@ -32,27 +35,27 @@ Lines list:
 Busy: %d
 Free: %d
 
-; col_line-line	
+; col_line-line
 Line
 
-; col_line-protocol	
+; col_line-protocol
 Protocol
 
-; col_line-name	
+; col_line-name
 Name
 
 ; col_line-context
 Context
-	
+
 ; col_line-number
 Number
 
-; col_line-config_registrar	
+; col_line-config_registrar
 Site
 
 ; col_line-user
  User
- 
+
 ; no_lines
 No line
 

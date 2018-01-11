@@ -62,7 +62,8 @@ $rcallexten = $this->get_var('rcallexten');
 								'default'	=> $element['rightcall']['authorization']['default']),
 								$element['rightcall']['authorization']['value']);
 		?>
-		<div id="extenlist" class="fm-paragraph fm-multilist">
+		<br>
+		<div id="extenlist" class="fm-paragraph fm-multilist col-sm-offset-2">
 			<p>
 				<label id="lb-exten" for="it-exten"><?=$this->bbf('fm_rightcallexten_exten');?></label>
 			</p>
@@ -74,7 +75,7 @@ $rcallexten = $this->get_var('rcallexten');
 									'key'		=> true,
 									'altkey'		=> 'exten',
 									'multiple'	=> true,
-									'size'		=> 5,
+									'size'		=> 8,
 									'paragraph'	=> false),
 						$rcallexten);?>
 				<div class="bt-adddelete">

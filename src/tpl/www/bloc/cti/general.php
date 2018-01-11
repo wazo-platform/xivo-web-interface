@@ -40,13 +40,11 @@ if(isset($error_js[0]) === true)
 
 ?>
 <div class="b-infos b-form">
-<h3 class="sb-top xspan">
-	<span class="span-left">&nbsp;</span>
-	<span class="span-center"><?=$this->bbf('title_content_name');?></span>
-	<span class="span-right">&nbsp;</span>
-</h3>
+	<breadcrumb
+		page="<?=$this->bbf('title_content_name');?>">
+	</breadcrumb>
 <div class="sb-content">
-<form action="#" method="post" accept-charset="utf-8">
+<form action="#" method="post" accept-charset="utf-8" class="form-horizontal">
 <?php
 	echo
 		$form->hidden(array('name'	=> DWHO_SESS_NAME,
@@ -63,7 +61,7 @@ if(isset($error_js[0]) === true)
 		$form->checkbox(array(
 			'name' => 'cti[ctis_active]',
 			'checked' => $info['ctimain']['ctis_active'],
-			'label' => false,
+			'label' => $this->bbf('fm_start_tls'),
 			'id' => 'it-ctis_active',
 			'desc' => $this->bbf('fm_start_tls'))),
 		$form->select(array(
@@ -73,7 +71,7 @@ if(isset($error_js[0]) === true)
 			'key' => 'name',
 			'altkey' => 'path',
 			'empty' => true,
-			'label' => false,
+			'label' => $this->bbf('fm_tlscertfile'),
 			'selected'=> $this->get_var('info','ctimain','tlscertfile'),
 			'default' => $element['ctimain']['tlscertfile']['default']),
 		$this->get_var('tlscertfiles')),
@@ -106,9 +104,5 @@ if(isset($error_js[0]) === true)
 </form>
 
 	</div>
-	<div class="sb-foot xspan">
-		<span class="span-left">&nbsp;</span>
-		<span class="span-center">&nbsp;</span>
-		<span class="span-right">&nbsp;</span>
-	</div>
+	<div class="sb-foot xspan"></div>
 </div>

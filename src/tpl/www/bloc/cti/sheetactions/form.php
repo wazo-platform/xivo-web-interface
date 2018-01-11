@@ -83,7 +83,7 @@ $informations = $this->get_var('informations');
 	?>
 	<p>&nbsp;</p>
 	<div class="sb-list">
-		<table class="table">
+		<table class="table table-condensed table-hover">
 			<thead>
 			<tr class="sb-top">
 				<th class="th-left">&nbsp;</th>
@@ -268,7 +268,7 @@ $informations = $this->get_var('informations');
 	?>
 	<p>&nbsp;</p>
 	<div class="sb-list">
-		<table class="table">
+		<table class="table table-condensed table-hover">
 			<thead>
 			<tr class="sb-top">
 
@@ -431,7 +431,7 @@ $informations = $this->get_var('informations');
 	?>
 	<p>&nbsp;</p>
 	<div class="sb-list">
-		<table class="table">
+		<table class="table table-condensed table-hover">
 			<thead>
 			<tr class="sb-top">
 				<th class="th-center"><?=$this->bbf('col_4');?></th>

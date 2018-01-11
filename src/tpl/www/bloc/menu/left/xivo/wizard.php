@@ -35,9 +35,5 @@
 			<dd id="mn-wizard--validate"><?=$this->bbf('mn_left_wizard-validate');?></dd>
 		</dl>
 	</dd>
-	<dd class="b-nosize">
-		<span class="span-left">&nbsp;</span>
-		<span class="span-center">&nbsp;</span>
-		<span class="span-right">&nbsp;</span>
-	</dd>
+	<dd class="b-nosize"></dd>
 </dl>

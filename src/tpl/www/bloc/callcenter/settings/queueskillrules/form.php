@@ -65,7 +65,7 @@ $rules = $this->get_var('rules');
 <?php	} ?>
 
 	<div class="sb-list">
-		<table class="table">
+		<table class="table table-condensed table-hover">
 			<thead>
 			<tr class="sb-top">
 

@@ -52,7 +52,7 @@ function build_row($option, $form, $url, $helper) {
 			'size' => 30,
 			'name' => 'voicemail[optionname][]',
 			'value' => $option[0],
-			'class' => 'vm-option-name',
+			'class' => 'vm-option-name form-control',
 		)
 	);
 
@@ -65,7 +65,7 @@ function build_row($option, $form, $url, $helper) {
 			'size' => 30,
 			'name' => 'voicemail[optionvalue][]',
 			'value' => $option[1],
-			'class' => 'vm-option-value',
+			'class' => 'vm-option-value form-control',
 		)
 	);
 

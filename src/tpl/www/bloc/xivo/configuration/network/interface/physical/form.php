@@ -45,7 +45,6 @@ $interfaces = $this->get_var('interfaces');
 							'size'		=> 10,
 							'disabled'	=> true,
 							'readonly' 	=> true,
-							'class'    	=> 'it-disabled',
 							'value'		=> $this->get_var_default('info', 'ifname', $this->get_var('devinfo','name'))));
 
 			echo	$form->select(array('desc'	=> $this->bbf('fm_networktype'),

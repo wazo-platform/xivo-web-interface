@@ -23,26 +23,20 @@ $info  = $this->get_var('info');
 
 ?>
 <div class="b-infos b-form">
-	<h3 class="sb-top xspan">
-		<span class="span-left">&nbsp;</span>
-		<span class="span-center"><?=$this->bbf('title_content_name');?>
+	<breadcrumb
+		parent="<?=$this->bbf('title_parent_name');?>"
+		page="<?=$this->bbf('title_content_name');?>"
+		value="<?=$this->get_var('id')?>">
+	</breadcrumb>
 
-			&nbsp;&nbsp;
-			<font size="-2"><?=$this->get_var('id')?></font>
-			</span>
-		<span class="span-right">&nbsp;</span>
-	</h3>
 	<div class="sb-content">
+		<div class="form-horizontal">
 <?php
 		$this->file_include('bloc/xivo/configuration/manage/certificate/form');
 ?>
+		</div>
 	</div>
-	<div class="sb-foot xspan">
-		<span class="span-left">&nbsp;</span>
-		<span class="span-center">&nbsp;</span>
-		<span class="span-right">&nbsp;</span>
-	</div>
-</div>
+	<div class="sb-foot xspan"></div>
 
 <script type="text/javascript">
 		$(document).ready(function() {

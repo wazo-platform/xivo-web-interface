@@ -23,11 +23,12 @@ $info = $this->get_var('info');
 
 ?>
 <div class="b-infos b-form">
-	<h3 class="sb-top xspan">
-		<span class="span-left">&nbsp;</span>
-		<span class="span-center"><?=$this->bbf('title_content_name');?><font><?=$info['protocol']['name']?></font></span>
-		<span class="span-right">&nbsp;</span>
-	</h3>
+	<breadcrumb
+		parent="<?=$this->bbf('title_parent_name');?>"
+		page="<?=$this->bbf('title_content_name');?>"
+		value="<?=$info['protocol']['name']?>">
+	</breadcrumb>
+	
 <?php
 	$this->file_include('bloc/service/ipbx/asterisk/trunk_management/sip/submenu');
 ?>
@@ -55,9 +56,5 @@ $info = $this->get_var('info');
 ?>
 		</form>
 	</div>
-	<div class="sb-foot xspan">
-		<span class="span-left">&nbsp;</span>
-		<span class="span-center">&nbsp;</span>
-		<span class="span-right">&nbsp;</span>
-	</div>
+	<div class="sb-foot xspan"></div>
 </div>

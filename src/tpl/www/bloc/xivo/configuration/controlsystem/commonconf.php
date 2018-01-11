@@ -25,18 +25,10 @@ $info    = $this->get_var('info');
 ?>
 
 <div class="b-infos b-form">
-<h3 class="sb-top xspan">
-	<span class="span-left">&nbsp;</span>
-	<span class="span-center"><?=$this->bbf('title_content_name');?></span>
-	<span class="span-right">&nbsp;</span>
-</h3>
+	<breadcrumb
+		page="<?=$this->bbf('title_content_name');?>">
+	</breadcrumb>
     <div class="sb-content">
         <?php echo $info; ?>
     </div>
-	<div class="sb-foot xspan">
-		<span class="span-left">&nbsp;</span>
-		<span class="span-center">&nbsp;</span>
-		<span class="span-right">&nbsp;</span>
-	</div>
-</div>
-
+	<div class="sb-foot xspan"></div>

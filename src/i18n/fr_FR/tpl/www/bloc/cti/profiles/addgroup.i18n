@@ -1,8 +1,11 @@
-; title_content_name 
+; title_parent_name
+Profiles
+
+; title_content_name
 Ajouter un profil CTI
 
 ; fm_profilesgroup_name
-Nom: 
+Nom:
 
 ; fm_profilesgroup_description
 Description

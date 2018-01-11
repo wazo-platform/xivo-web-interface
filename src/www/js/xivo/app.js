@@ -13,6 +13,7 @@ import toolbar from './services/toolbar.service';
 import toolbarButtons from './directives/toolbarButtons.directive';
 import toolbarSearch from './directives/toolbarSearch.directive';
 import onFinishRender from './directives/onFinishRender.directive';
+import breadcrumb from './directives/breadcrumb.directive';
 
 
 angular.module('Xivo', [angulartranslate, uibootstrap])
@@ -24,4 +25,5 @@ angular.module('Xivo', [angulartranslate, uibootstrap])
 .directive('toolbarButtons',toolbarButtons)
 .directive('toolbarSearch',toolbarSearch)
 .directive('onFinishRender',onFinishRender)
+.directive('breadcrumb',breadcrumb)
 .run(run);

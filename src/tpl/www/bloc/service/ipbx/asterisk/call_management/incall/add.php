@@ -22,11 +22,10 @@ $form = &$this->get_module('form');
 
 ?>
 <div class="b-infos b-form">
-	<h3 class="sb-top xspan">
-		<span class="span-left">&nbsp;</span>
-		<span class="span-center"><?=$this->bbf('title_content_name');?></span>
-		<span class="span-right">&nbsp;</span>
-	</h3>
+	<breadcrumb
+		parent="<?=$this->bbf('title_parent_name');?>"
+		page="<?=$this->bbf('title_content_name');?>">
+	</breadcrumb>
 
 	<div class="sb-content">
 		<form class="form-horizontal" action="#" method="post" accept-charset="utf-8">
@@ -37,9 +36,5 @@ $form = &$this->get_module('form');
 <?=$form->submit(array('name' => 'submit','id' => 'it-submit','value' => $this->bbf('fm_bt-save')));?>
 		</form>
 	</div>
-	<div class="sb-foot xspan">
-		<span class="span-left">&nbsp;</span>
-		<span class="span-center">&nbsp;</span>
-		<span class="span-right">&nbsp;</span>
-	</div>
+	<div class="sb-foot xspan"></div>
 </div>

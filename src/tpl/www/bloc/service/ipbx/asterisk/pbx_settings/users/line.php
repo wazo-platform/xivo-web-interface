@@ -47,8 +47,8 @@ endfor;
 ?>
 <span id="box-entityid"></span>
 <div class="row">
-<div class="col-sm-6">
-<table class="table table-condensed table-bordered" id="list_linefeatures">
+<div class="col-sm-8">
+<table class="table table-condensed table-bordered table-hover" id="list_linefeatures">
 	<thead>
 		<tr class="sb-top">
 			<th class="th-center"><?=$this->bbf('col_line-protocol');?></th>
@@ -103,7 +103,7 @@ endfor;
 										'id'		=> 'linefeatures-name',
 									'value' 	=> $ref['name']));?>
 						<span>
-							<span class="<?=$secureclass?>">&nbsp;</span>
+							<span class="<?=$secureclass?>"></span>
 							<?=$this->bbf('line_protocol-'.$ref['protocol'])?>
 						</span>
 					</td>
@@ -155,11 +155,11 @@ endfor;
 									'empty'		=> true,
 									'default'	=> '',
 									'selected'	=> $ref['device']),
-									$list_device);?>		
+									$list_device);?>
 					<?php endif; ?>
 					</td>
 					<td>
-						&nbsp;
+
 						<?=$form->select(array('paragraph'	=> false,
 										'name'		=> 'linefeatures[num][]',
 										'id'		=> 'linefeatures-num',
@@ -264,7 +264,7 @@ endfor;
 		<?php endif; ?>
 		</td>
 		<td>
-			&nbsp;
+
 		<?php if ($list_device === false): ?>
 			 -
 			<?=$form->hidden(array('name' => 'linefeatures[num][]',
@@ -295,4 +295,3 @@ endfor;
 </table>
 </div>
 </div>
-

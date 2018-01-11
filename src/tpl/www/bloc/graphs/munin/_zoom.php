@@ -34,32 +34,25 @@ function bbf_format($ctx, $link)
 
 ?>
 <div id="sr-users" class="b-infos b-form">
-	<h3 class="sb-top xspan">
-		<span class="span-left">&nbsp;</span>
-		<span class="span-center"><?= bbf_format($this, $zoom); ?></span>
-		<span class="span-right">&nbsp;</span>
-	</h3>
+  <breadcrumb
+		page="<?=$this->bbf('title_content_name');?>">
+	</breadcrumb>
 	<div class="sb-content">
 <?php
     if(!is_null($prev))
-        echo $url->href_html('«'.$url->img_html("$basedir/$basename".substr($prev,strpos($prev,'-')+1).".png", 
-                null, "class=nav-left"), 
+        echo $url->href_html('«'.$url->img_html("$basedir/$basename".substr($prev,strpos($prev,'-')+1).".png",
+                null, "class=nav-left"),
             null, array("zoom" => $prev), null, bbf_format($this, $prev)
         );
 
     echo $url->img_html("$basedir/$basename".substr($zoom,strpos($zoom,'-')+1).".png", "$zoom graph");
 
     if(!is_null($next))
-        echo $url->href_html($url->img_html("$basedir/$basename".substr($next,strpos($next,'-')+1).".png", 
-                null, "class=nav-right").'»', 
+        echo $url->href_html($url->img_html("$basedir/$basename".substr($next,strpos($next,'-')+1).".png",
+                null, "class=nav-right").'»',
             null, array("zoom" => $next), null, bbf_format($this, $next)
         );
 ?>
     </div>
-	<div class="sb-foot xspan">
-		<span class="span-left">&nbsp;</span>
-		<span class="span-center">&nbsp;</span>
-		<span class="span-right">&nbsp;</span>
-	</div>
+	<div class="sb-foot xspan"></div>
 </div>
-

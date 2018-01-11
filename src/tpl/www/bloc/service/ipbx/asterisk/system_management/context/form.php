@@ -93,7 +93,6 @@ if($act == "add") {
 				  'labelid'	=> 'context-name',
 				  'size'	=> 15,
 				  'readonly' => true,
-				  'class' => 'it-disabled',
 				  'default'	=> $element['context']['name']['default'],
 				  'value'	=> $info['context']['name'],
 				  'error'	=> $this->bbf_args('error',
@@ -217,11 +216,11 @@ if($act == "add") {
 		?>
 	</div>
 </uib-tab>
-	
+
 <uib-tab index="5" heading="<?=$this->bbf('smenu_incall');?>">
 
 	<div class="sb-list">
-			<table class="table">
+			<table class="table table-condensed table-hover">
 				<thead>
 				<tr class="sb-top">
 					<th class="th-left"><?=$this->bbf('col_contextnumbers_incall-numberbeg');?></th>
@@ -300,7 +299,7 @@ if($act == "add") {
 				</tfoot>
 			</table>
 
-	
+
 			<table class="b-nodisplay">
 				<tbody id="ex-contextnumbers-incall">
 				<tr class="fm-paragraph">

@@ -27,11 +27,10 @@ $ldapserverstat = $this->get_var('ldapserverstat');
 
 ?>
 <div id="index" class="b-infos">
-	<h3 class="sb-top xspan">
-		<span class="span-left">&nbsp;</span>
-		<span class="span-center"><?=$this->bbf('title_content_name');?></span>
-		<span class="span-right">&nbsp;</span>
-	</h3>
+	<breadcrumb
+		page="<?=$this->bbf('title_content_name');?>">
+	</breadcrumb>
+	
 	<div class="sb-content sb-list row">
 		<div id="xivo-stats" class="col-sm-7">
 			<table class="table table-condensed table-striped table-hover">

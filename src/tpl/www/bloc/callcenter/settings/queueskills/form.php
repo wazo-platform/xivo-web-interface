@@ -50,7 +50,7 @@ $data = $this->get_var('data');
 	<p>&nbsp;</p>
 	<p><?=$this->bbf('fm_queueskill_items');?></p>
 	<div class="sb-list">
-		<table class="table">
+		<table class="table table-condensed table-hover">
 			<thead>
 			<tr class="sb-top">
 

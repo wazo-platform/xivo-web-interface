@@ -23,16 +23,13 @@ $info    = $this->get_var('info');
 $import_file = $this->get_var('import_file');
 
 ?>
-<div id="sr-users" class="container-fluid b-infos b-form">
-	<h3 class="sb-top xspan">
-		<span class="span-left">&nbsp;</span>
-		<span class="span-center">
-			<?=$this->bbf('title_content_name');?>
-			&nbsp;&nbsp;
-			<font size="-2"><?=$info['userfeatures']['firstname'];?> <?=$info['userfeatures']['lastname'];?></font>
-		</span>
-		<span class="span-right">&nbsp;</span>
-	</h3>
+<div id="sr-users" class="b-infos b-form">
+	<breadcrumb
+		parent="<?=$this->bbf('title_parent_name');?>"
+		page="<?=$this->bbf('title_content_name');?>"
+		value="<?=$info['userfeatures']['firstname'];?> <?=$info['userfeatures']['lastname'];?> - <?=$this->bbf('col_provisioning');?>: <?='<'.$info['linefeatures'][0]['provisioningid'].'>';?>">
+	</breadcrumb>
+
 	<?php
 	$this->file_include('bloc/service/ipbx/asterisk/pbx_settings/users/submenu');
 	?>

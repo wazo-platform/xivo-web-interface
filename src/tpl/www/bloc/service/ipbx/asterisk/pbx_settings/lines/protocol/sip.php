@@ -33,7 +33,7 @@ function build_row($option, $form, $url, $helper) {
 			'size' => 30,
 			'name' => 'options[optionname][]',
 			'value' => $option[0],
-			'class' => 'sip-option-name',
+			'class' => 'sip-option-name form-control',
 		)
 	);
 
@@ -46,7 +46,7 @@ function build_row($option, $form, $url, $helper) {
 			'size' => 30,
 			'name' => 'options[optionvalue][]',
 			'value' => $option[1],
-			'class' => 'sip-option-value',
+			'class' => 'sip-option-value form-control',
 		)
 	);
 
@@ -101,8 +101,7 @@ function build_row($option, $form, $url, $helper) {
 		echo	$form->select(array('desc'	=> $this->bbf('fm_protocol_context'),
 					    'name'		=> 'protocol[context]',
 					    'labelid'	=> 'protocol-context',
-						'class'    	=> $this->get_var('act') == 'add' ? '' : 'it-disabled',
-						'disabled'	=> $this->get_var('act') == 'add' ? false : true,
+							'disabled'	=> $this->get_var('act') == 'add' ? false : true,
 					    'key'		=> 'identity',
 					    'altkey'	=> 'name',
 					    'selected'	=> $context),
@@ -203,7 +202,7 @@ function build_row($option, $form, $url, $helper) {
 
 <div role="tabpanel" class="tab-pane" id="advanced">
 	<div class="sb-list">
-		<table class="table">
+		<table class="table table-condensed table-hover">
 			<thead>
 				<th class="th-left">
 					<?= $this->bbf('col_line-sip-option-name') ?>

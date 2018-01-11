@@ -68,7 +68,6 @@ $act = $this->get_var('act');
 								'labelid'	=> 'agentfeatures-number',
 								'size'	=> 15,
 								'readonly'	=> true,
-								'class'		=> 'it-disabled',
 								'default'	=> $element['agentfeatures']['number']['default'],
 								'value'	=> $info['agentfeatures']['number'],
 								'error'	=> $this->bbf_args('error',
@@ -168,7 +167,7 @@ $act = $this->get_var('act');
 						<?=$form->input_for_ms('queuelist',$this->bbf('ms_seek'))?>
 					</div>
 				</div>
-				
+
 				<div class="row">
 					<div class="col-sm-2 slt-outlist">
 						<?php
