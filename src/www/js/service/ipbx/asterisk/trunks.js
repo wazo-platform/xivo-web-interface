@@ -30,8 +30,8 @@ xivo_attrib_register('ast_fm_trunk_host',xivo_ast_fm_trunk_host);
 
 var xivo_ast_fm_trunk_codec = {
     'it-protocol-disallow':
-        {property: [{disabled: false, className: 'it-enabled'},
-                {disabled: true, className: 'it-disabled'}],
+        {property: [{disabled: false, className: 'it-enabled form-control'},
+                {disabled: true, className: 'it-disabled form-control'}],
          link: 'it-codeclist'},
     'it-codeclist':
         {property: [{disabled: false, className: 'it-enabled'},
@@ -53,40 +53,40 @@ xivo_attrib_register('ast_fm_register_contact',xivo_ast_fm_register_contact);
 
 xivo_ast_fm_trunk_register = {
     'it-register-username':
-        {property: [{disabled: false, className: 'it-enabled'},
-                {disabled: true, className: 'it-disabled'}],
+        {property: [{disabled: false, className: 'it-enabled form-control'},
+                {disabled: true, className: 'it-disabled form-control'}],
          link: 'it-register-password'},
     'it-register-password':
-        {property: [{disabled: false, className: 'it-enabled'},
-                {disabled: true, className: 'it-disabled'}],
+        {property: [{disabled: false, className: 'it-enabled form-control'},
+                {disabled: true, className: 'it-disabled form-control'}],
          link: 'it-register-authuser'},
     'it-register-authuser':
-        {property: [{disabled: false, className: 'it-enabled'},
-                {disabled: true, className: 'it-disabled'}],
+        {property: [{disabled: false, className: 'it-enabled form-control'},
+                {disabled: true, className: 'it-disabled form-control'}],
          link: 'it-register-host'},
     'it-register-host':
-        {property: [{disabled: false, className: 'it-enabled'},
-                {disabled: true, className: 'it-disabled'}],
+        {property: [{disabled: false, className: 'it-enabled form-control'},
+                {disabled: true, className: 'it-disabled form-control'}],
          link: 'it-register-port'},
     'it-register-port':
-        {property: [{disabled: false, className: 'it-enabled'},
-                {disabled: true, className: 'it-disabled'}],
+        {property: [{disabled: false, className: 'it-enabled form-control'},
+                {disabled: true, className: 'it-disabled form-control'}],
          link: 'it-register-transport'},
     'it-register-transport':
-        {property: [{disabled: false, className: 'it-enabled'},
-                {disabled: true, className: 'it-disabled'}],
+        {property: [{disabled: false, className: 'it-enabled form-control'},
+                {disabled: true, className: 'it-disabled form-control'}],
          link: 'it-register-expiry'},
     'it-register-expiry':
-        {property: [{disabled: false, className: 'it-enabled'},
-                {disabled: true, className: 'it-disabled'}],
+        {property: [{disabled: false, className: 'it-enabled form-control'},
+                {disabled: true, className: 'it-disabled form-control'}],
          link: 'it-register-callbackextension'},
     'it-register-callbackextension':
         {property: [{disabled: false, className: 'it-enabled'},
                 {disabled: true, className: 'it-disabled'}],
          link: 'it-register-contact'},
     'it-register-contact':
-        {property: [{disabled: false, className: 'it-enabled'},
-                {disabled: true, className: 'it-disabled', selectedIndex: -1}]}};
+        {property: [{disabled: false, className: 'it-enabled form-control'},
+                {disabled: true, className: 'it-disabled form-control', selectedIndex: -1}]}};
 
 xivo_attrib_register('ast_fm_trunk_register',xivo_ast_fm_trunk_register);
 
@@ -106,10 +106,10 @@ function xivo_ast_build_trunks_elt()
     || dwho_type_object(xivo_ast_trunks_elt) === false)
         return(false);
 
-    var it_true = {property: {disabled: false, className: 'it-enabled'}};
+    var it_true = {property: {disabled: false, className: 'it-enabled form-control'}};
     var fd_true = {style: {display: 'block'}};
 
-    var it_false = {property: {disabled: true, className: 'it-disabled'}};
+    var it_false = {property: {disabled: true, className: 'it-disabled form-control'}};
     var fd_false = {style: {display: 'none'}};
 
     var i = 0;

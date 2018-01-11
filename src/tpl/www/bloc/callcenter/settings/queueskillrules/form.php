@@ -53,14 +53,9 @@ $rules = $this->get_var('rules');
 	{
 		$msg = $this->bbf_args('queueskillrule-allrules', $rules_err);
 ?>
-	<p>
-		<a href="#" class="fm-error-icon" onclick="return(false);"
-			onfocus="dwho.form.create_error_div(this, '<?=$msg?>');"
-			onblur="dwho.form.destroy_error_div();"
-			onmouseover="dwho.form.create_error_div(this,'<?=$msg?>');"
-			onmouseout="dwho.form.destroy_error_div();">&nbsp;
-		</a>
-	</p>
+	<span class="fm-error has-error">
+		<div class="fm-error-icon"><?=$msg?></div>
+	</span>
 
 <?php	} ?>
 
