@@ -62,19 +62,19 @@ var xivo_ast_fm_meetme_admin_typefrom_elt = {
 	'it-meetmeroom-pinadmin' : {
 		property : {
 			disabled : false,
-			className : 'it-enabled'
+			className : 'it-enabled form-control'
 		}
 	},
 	'it-meetmefeatures-admin-identification' : {
 		property : {
 			disabled : false,
-			className : 'it-enabled'
+			className : 'it-enabled form-control'
 		}
 	},
 	'it-meetmefeatures-admin-mode' : {
 		property : {
 			disabled : false,
-			className : 'it-enabled'
+			className : 'it-enabled form-control'
 		}
 	},
 	'it-meetmefeatures-admin-announceusercount' : {
@@ -86,7 +86,7 @@ var xivo_ast_fm_meetme_admin_typefrom_elt = {
 	'it-meetmefeatures-admin-announcejoinleave' : {
 		property : {
 			disabled : false,
-			className : 'it-enabled'
+			className : 'it-enabled form-control'
 		}
 	},
 	'it-meetmefeatures-admin-moderationmode' : {
@@ -104,7 +104,7 @@ var xivo_ast_fm_meetme_admin_typefrom_elt = {
 	'it-meetmefeatures-admin-musiconhold' : {
 		property : {
 			disabled : false,
-			className : 'it-enabled'
+			className : 'it-enabled form-control'
 		}
 	},
 	'it-meetmefeatures-admin-poundexit' : {
@@ -134,7 +134,7 @@ var xivo_ast_fm_meetme_admin_typefrom_elt = {
 	'it-meetmefeatures-admin-enableexitcontext' : {
 		property : {
 			disabled : false,
-			className : 'it-enabled'
+			className : 'it-enabled form-control'
 		}
 	},
 	'it-meetmefeatures-admin-exitcontext' : {
@@ -171,15 +171,15 @@ var xivo_ast_fm_meetme_admin_typefrom = {};
 xivo_ast_fm_meetme_admin_typefrom['none'] = dwho_clone(xivo_ast_fm_meetme_admin_typefrom_elt);
 xivo_ast_fm_meetme_admin_typefrom['none']['it-meetmefeatures-admin-identification']['property'] = {
 	disabled : true,
-	className : 'it-disabled'
+	className : 'it-disabled form-control'
 };
 xivo_ast_fm_meetme_admin_typefrom['none']['it-meetmeroom-pinadmin']['property'] = {
 	disabled : true,
-	className : 'it-disabled'
+	className : 'it-disabled form-control'
 };
 xivo_ast_fm_meetme_admin_typefrom['none']['it-meetmefeatures-admin-mode']['property'] = {
 	disabled : true,
-	className : 'it-disabled'
+	className : 'it-disabled form-control'
 };
 xivo_ast_fm_meetme_admin_typefrom['none']['it-meetmefeatures-admin-announceusercount']['property'] = {
 	disabled : true,
@@ -187,7 +187,7 @@ xivo_ast_fm_meetme_admin_typefrom['none']['it-meetmefeatures-admin-announceuserc
 };
 xivo_ast_fm_meetme_admin_typefrom['none']['it-meetmefeatures-admin-announcejoinleave']['property'] = {
 	disabled : true,
-	className : 'it-disabled'
+	className : 'it-disabled form-control'
 };
 xivo_ast_fm_meetme_admin_typefrom['none']['it-meetmefeatures-admin-moderationmode']['property'] = {
 	disabled : true,
@@ -199,7 +199,7 @@ xivo_ast_fm_meetme_admin_typefrom['none']['it-meetmefeatures-admin-initiallymute
 };
 xivo_ast_fm_meetme_admin_typefrom['none']['it-meetmefeatures-admin-musiconhold']['property'] = {
 	disabled : true,
-	className : 'it-disabled'
+	className : 'it-disabled form-control'
 };
 xivo_ast_fm_meetme_admin_typefrom['none']['it-meetmefeatures-admin-poundexit']['property'] = {
 	disabled : true,
@@ -223,7 +223,7 @@ xivo_ast_fm_meetme_admin_typefrom['none']['it-meetmefeatures-admin-enableexitcon
 };
 xivo_ast_fm_meetme_admin_typefrom['none']['it-meetmefeatures-admin-exitcontext']['property'] = {
 	disabled : true,
-	className : 'it-disabled'
+	className : 'it-disabled form-control'
 };
 
 xivo_attrib_register('ast_fm_meetme_admin_typefrom-none',
@@ -257,7 +257,7 @@ xivo_attrib_register('ast_fm_meetme_admin_typefrom-external',
 xivo_ast_fm_meetme_admin_typefrom['undefined'] = dwho_clone(xivo_ast_fm_meetme_admin_typefrom_elt);
 xivo_ast_fm_meetme_admin_typefrom['undefined']['it-meetmefeatures-admin-identification']['property'] = {
 	disabled : true,
-	className : 'it-readonly',
+	className : 'it-readonly form-control',
 	selectedIndex : 1
 };
 
@@ -268,10 +268,10 @@ var xivo_ast_fm_meetme_admin_enableexitcontext = {
 	'it-meetmefeatures-admin-exitcontext' : {
 		property : [ {
 			disabled : true,
-			className : 'it-disabled'
+			className : 'it-disabled form-control'
 		}, {
 			disabled : false,
-			className : 'it-enabled'
+			className : 'it-enabled form-control'
 		} ]
 	}
 };
@@ -283,10 +283,10 @@ var xivo_ast_fm_meetme_user_enableexitcontext = {
 	'it-meetmefeatures-user-exitcontext' : {
 		property : [ {
 			disabled : true,
-			className : 'it-disabled'
+			className : 'it-disabled form-control'
 		}, {
 			disabled : false,
-			className : 'it-enabled'
+			className : 'it-enabled form-control'
 		} ]
 	}
 };

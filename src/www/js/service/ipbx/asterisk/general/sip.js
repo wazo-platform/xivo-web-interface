@@ -18,31 +18,31 @@
 
 var xivo_ast_fm_tcpbindaddr = {
     'it-tcpbindaddr':
-        {property: [{disabled: false, className: 'it-enabled'},
-                {disabled: true, className: 'it-disabled'}]}};
+        {property: [{disabled: false, className: 'it-enabled form-control'},
+                {disabled: true, className: 'it-disabled form-control'}]}};
 
 xivo_attrib_register('ast_fm_tcpbindaddr',xivo_ast_fm_tcpbindaddr);
 
 var xivo_ast_fm_tlsbindaddr = {
     'it-tlsbindaddr':
-        {property: [{disabled: false, className: 'it-enabled'},
-                {disabled: true, className: 'it-disabled'}],
+        {property: [{disabled: false, className: 'it-enabled form-control'},
+                {disabled: true, className: 'it-disabled form-control'}],
          link: 'it-tlscertfile'},
     'it-tlscertfile':
-        {property: [{disabled: false, className: 'it-enabled'},
-                {disabled: true, className: 'it-disabled'}],
+        {property: [{disabled: false, className: 'it-enabled form-control'},
+                {disabled: true, className: 'it-disabled form-control'}],
          link: 'it-tlscafile'},
     'it-tlscafile':
-        {property: [{disabled: false, className: 'it-enabled'},
-                {disabled: true, className: 'it-disabled'}],
+        {property: [{disabled: false, className: 'it-enabled form-control'},
+                {disabled: true, className: 'it-disabled form-control'}],
          link: 'it-tlsdontverifyserver'},
     'it-tlsdontverifyserver':
         {property: [{disabled: false, className: 'it-enabled'},
                 {disabled: true, className: 'it-disabled'}],
          link: 'it-tlscipher'},
     'it-tlscipher':
-        {property: [{disabled: false, className: 'it-enabled'},
-                {disabled: true, className: 'it-disabled'}]},
+        {property: [{disabled: false, className: 'it-enabled form-control'},
+                {disabled: true, className: 'it-disabled form-control'}]},
     };
 
 xivo_attrib_register('ast_fm_tlsbindaddr',xivo_ast_fm_tlsbindaddr);

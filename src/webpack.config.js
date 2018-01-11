@@ -47,7 +47,7 @@ module.exports = {
         loader: 'expose-loader?angular!expose-loader?angular'
       },
       {
-        test: /\.(ttf|eot|woff|woff2|svg)$/,
+        test: /\.(ttf|eot|woff|woff2|svg|gif|png)$/,
         loader: "url-loader?limit=50000&name=www/fonts/[name].[ext]"
       }
     ]

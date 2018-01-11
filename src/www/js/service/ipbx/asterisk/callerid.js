@@ -21,8 +21,8 @@ var xivo_ast_fm_callerid = {
         {style: [{display: 'block'},{display: 'none'}],
          link: 'it-callerid-callerdisplay'},
     'it-callerid-callerdisplay':
-        {property: [{readOnly: false, className: 'it-enabled'},
-                {readOnly: true, className: 'it-readonly'}]}};
+        {property: [{readOnly: false, className: 'it-enabled form-control'},
+                {readOnly: true, className: 'it-readonly form-control'}]}};
 
 xivo_attrib_register('ast_fm_callerid',xivo_ast_fm_callerid);
 

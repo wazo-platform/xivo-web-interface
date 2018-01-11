@@ -186,7 +186,7 @@ function xivo_ast_register_dialaction(dialevent,actiontype)
 
 function xivo_ast_chg_dialaction(dialevent,actiontype)
 {
-    
+
     if(dwho_type_object(xivo_elt_dialaction[dialevent]) === false
     || dwho_is_undef(actiontype.value) === true
     || (dwho_is_undef(actiontype.disabled) === false && actiontype.disabled === true) === true
