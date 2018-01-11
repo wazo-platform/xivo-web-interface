@@ -22,6 +22,7 @@ $form = &$this->get_module('form');
 $url = &$this->get_module('url');
 
 $tree = $this->get_var('tree');
+$id = &$this->get_var('id');
 
 if(($parent = $this->get_var('parent')) === null):
 	$pid = '';
@@ -33,7 +34,8 @@ endif;
 
 if(is_array($tree) === true && empty($tree) === false):
 	if($pid === '' && $plevel === 0):
-		echo	'<tr><td>';
+		echo	'<tr><td>',
+			'<div class="panel-group" id="accordion-' . $id . '" role="tablist" aria-multiselectable="true">';
 	endif;
 
 	$keys = array_keys($tree);
@@ -46,67 +48,45 @@ if(is_array($tree) === true && empty($tree) === false):
 		$mod9 = $i % 9;
 		$mod3 = $i % 3;
 
-		if($v['level'] === 3):
-			echo	'<div class="acl-category"><div><h4>',
-				$form->checkbox(array('desc'		=> array('format'	=> '%{formfield}$s%{description}$s',
-										 'description'	=> $this->bbf('acl',$v['id'])),
-						      'name'		=> 'tree[]',
-						      'label'		=> 'lb-'.$v['id'],
-						      'id'		=> $v['id'],
-						      'paragraph'	=> false,
-						      'value'		=> $v['path'],
-						      'checked'		=> $v['access']),
-						'onclick="xivo_form_mk_acl(this);"'),
-				'</h4>';
+		if($v['level'] === 3):?>
+			<div class="acl-category panel panel-default access_rights_category">
+				<div class="panel-heading" role="tab" id="heading-<?=$v['id']?>">
+					<h6 class="panel-title">
+						<label id="lb-<?=$v['id']?>"><input <?=($v['access']==""?"":"checked")?> name="tree[]" type="checkbox" id="<?=$v['id']?>" value="<?=$v['path']?>" onclick="xivo_form_mk_acl(this);">  <?=$this->bbf('acl',$v['id'])?></label>
 
-			if(isset($v['child']) === true):
-				echo	'<span><a href="#"
-						  title="',$this->bbf('opt_browse'),'"
-						  onclick="dwho_eid(\'table-',$v['id'],'\').style.display =
-							   dwho_eid(\'table-',$v['id'],'\').style.display === \'block\'
-							   ? \'none\'
-							   : \'block\';
-							   return(false);">',
-					$url->img_html('img/site/button/more.gif',
-						       $this->bbf('opt_browse'),
-						       'border="0"'),
-					'</a></span>';
-			endif;
+						<?php if(isset($v['child']) === true): ?>
 
-			echo	'</div>';
+						<a role="button" class="collapsed" data-toggle="collapse" data-parent="#accordion-<?=$id?>" href="#div-<?=$v['id']?>" aria-expanded="false" aria-controls="div-<?=$v['id']?>" title="<?=$this->bbf('opt_browse')?>">
+							<span class="glyphicon glyphicon-triangle-bottom"></span>
+						</a>
+					</h6>
+		<?php	endif;
+
+		echo	'</div>';
 		else:
-			if($i === 0):
-				echo	'<table id="table-',
-					$v['parent']['id'],
-					'"><tr><td>',"\n";
-			elseif($mod9 === 0):
+			if($i === 0):?>
+				<div id="div-<?=$v['parent']['id']?>" class="panel-collapse collapse" role="tabpanel"  aria-labelledby="heading-<?=$v['parent']['id']?>">
+					<div class="panel-body">
+						<table id="table-<?=$v['parent']['id']?>" class="table-condensed"><tr><td>
+			<?php elseif($mod9 === 0):
 				echo	'</td></tr><tr><td>',"\n";
 			elseif($mod3 === 0):
 				echo	'</td><td>';
-			endif;
+			endif;?>
 
-			echo	'<div class="acl-func">',
-				$form->checkbox(array('desc'		=> array('format'	=> '%{formfield}$s%{description}$s',
-										 'description'	=> $this->bbf('acl',$v['id'])),
-						      'name'		=> 'tree[]',
-						      'label'		=> 'lb-'.$v['id'],
-						      'id'		=> $v['id'],
-						      'paragraph'	=> false,
-						      'value'		=> $v['path'],
-						      'checked'		=> $v['access']),
-						'onclick="xivo_form_mk_acl(this);"'),
-				'</div>',"\n";
+			<div class="checkbox">
+				<label id="lb-<?=$v['id']?>"><input <?=($v['access']==""?"":"checked")?> name="tree[]" type="checkbox" id="<?=$v['id']?>" value="<?=$v['path']?>" onclick="xivo_form_mk_acl(this);">  <?=$this->bbf('acl',$v['id'])?></label>
+			</div>
 
-			if($cnt === $i):
+			<?php if($cnt === $i):
 				if($mod9 < 3):
 					$repeat = 2;
 				elseif($mod9 < 6):
 					$repeat = 1;
 				else:
-					echo	'</td>';
 					$repeat = 0;
 				endif;
-				echo	str_repeat('<td>&nbsp;</td>',$repeat),'</tr></table>',"\n";
+				echo	str_repeat('',$repeat),'</tr></table></div></div>',"\n";
 			endif;
 
 		endif;
@@ -128,7 +108,7 @@ if(is_array($tree) === true && empty($tree) === false):
 		endif;
 	endfor;
 	if($pid === '' && $plevel === 0):
-		echo	'</td></tr>';
+		echo	'</td></tr></div>';
 	endif;
 endif;
 

@@ -121,12 +121,5 @@ $this->file_include('bloc/menu/top/user/loginbox');
 					   null,
 					   $this->bbf('mn_top_help'));?>
 		</li>
-		<li>
-			<?=$url->href_html('<span>'.$this->bbf('mn_top_contact').'</span>',
-					   'xivo/contact',
-					   null,
-					   null,
-					   $this->bbf('mn_top_contact'));?>
-		</li>
 	</ul>
 </div>

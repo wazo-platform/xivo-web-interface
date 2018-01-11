@@ -46,7 +46,6 @@ $menu = &$this->get_module('menu');
 		</li>
 		<li><?=$url->href_html($this->bbf('mn_top_configuration'),'xivo/configuration');?></li>
 		<li><?=$url->href_html($this->bbf('mn_top_help'),'xivo/help');?></li>
-		<li><?=$url->href_html($this->bbf('mn_top_contact'),'xivo/contact');?></li>
 	</ul>
 	<?php $this->file_include('bloc/menu/top/user/loginbox'); ?>
 </div>

@@ -1,12 +1,6 @@
 ; title_content_name
 Help
 
-; info_download_xivo-client
-Download XiVO Client at the following address:
-
-; download_soft_url_xivo-client
-http://%s
-
 ; info_xivo-documentation
 Documentation:
 
@@ -21,3 +15,21 @@ Blog:
 
 ; url_xivo-blog
 http://%s
+
+; title_contact_content_name
+Contact
+
+; info_address
+Address:
+
+; info_phone
+Phone:
+
+; info_fax
+Fax:
+
+; info_e-mail
+E-mail:
+
+; info_websites
+Websites:

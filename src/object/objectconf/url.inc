@@ -30,7 +30,6 @@ $array['xivo'] = 'xivo/index.php';
 $array['xivo/configuration'] = 'xivo/configuration/index.php';
 $array['xivo/preferences'] = 'xivo/preferences.php';
 $array['xivo/help'] = 'xivo/help.php';
-$array['xivo/contact'] = 'xivo/contact.php';
 $array['xivo/logoff'] = 'xivo/logoff.php';
 
 // just check is user can access webservices
