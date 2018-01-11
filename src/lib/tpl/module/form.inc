@@ -439,8 +439,13 @@ class dwho_tpl_form extends dwho_tpl_module
 	}
 	function _mk_group()
 	{
-		if($this->_param['group'] !== '')
-			$cl = ' class="'.$this->_param['group'].'"';
+		if($this->_param['group'] !== '') {
+			$cl = ' class="'.$this->_param['group'];
+			if($this->_param['error'] !== '') {
+				$cl .= ' has-error';
+			}
+			$cl .= '"';
+		}
 		else {
 			return false;
 		}
@@ -530,7 +535,7 @@ class dwho_tpl_form extends dwho_tpl_module
 					null);
 		}
 
-		$r = '<span class="fm-error">'.$r.'</span>';
+		$r = '<span class="fm-error has-error">'.$r.'</span>';
 	}
 
 	function _mk_legend()
@@ -563,11 +568,14 @@ class dwho_tpl_form extends dwho_tpl_module
 		if($this->_param['id'] !== false)
 			$r .= ' id="'.$this->_param['id'].'"';
 
-		if($this->_param['class'] !== false)
+		if($this->_param['class'] !== false){
 			$class = $this->_param['class'];
-		else
-		if ($this->_param['type'] !== 'hidden')
-			$class = 'form-control';
+		}
+
+		if ($this->_param['type'] !== 'hidden'
+			&& $this->_param['type'] !== 'radio'
+			&& $this->_param['type'] !== 'checkbox')
+			$class .= ' form-control';
 
 		if($this->_param['required'] !== false)
 			$class .= ' _dwho-form-field-required';
@@ -958,8 +966,8 @@ class dwho_tpl_form extends dwho_tpl_module
 
 		if($this->_param['class'] !== false)
 			$class = $this->_param['class'];
-		else
-			$class = '';
+
+		$class .= ' form-control';
 
 		if($this->_param['required'] !== false)
 			$class .= ' _dwho-form-field-required';
@@ -1482,9 +1490,7 @@ class dwho_tpl_form extends dwho_tpl_module
 
 		if($this->_param['class'] !== false)
 			$class = $this->_param['class'];
-		else
-			if(isset($o{0}) !== true)
-				$class = 'form-control';
+		$class .= ' form-control';
 
 		if($this->_param['required'] !== false)
 			$class .= ' _dwho-form-field-required';
@@ -1625,6 +1631,7 @@ class dwho_tpl_form extends dwho_tpl_module
 
 		if($this->_param['class'] !== false)
 			$class .= ' '.$this->_param['class'];
+		$class .= ' form-control';
 
 		if($this->_param['required'] !== false)
 			$class .= ' _dwho-form-field-required';
