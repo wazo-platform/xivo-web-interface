@@ -50,8 +50,8 @@ if(dwho_issa('linefeatures',$info) === true
 ?>
 <div  ng-controller="IpbxUsersController as ctrl">
 	<div class="tab-content">
-		<div role="tabpanel" class="tab-pane active" id="first">	
-		
+		<div role="tabpanel" class="tab-pane active" id="first">
+
 			<?php
 				echo    $form->text(array('desc'        => $this->bbf('fm_userfeatures_firstname'),
 																				'name'        => 'userfeatures[firstname]',
@@ -201,8 +201,8 @@ if(dwho_issa('linefeatures',$info) === true
 			?>
 			<fieldset id="fld-xivoclient">
 				<legend><?=$this->bbf('fld-client');?></legend>
-				<?php 
-					echo	
+				<?php
+					echo
 						$form->checkbox(array('desc'	=> $this->bbf('fm_userfeatures_enableclient'),
 											'name'	=> 'userfeatures[enableclient]',
 											'labelid'	=> 'userfeatures-enableclient',
@@ -288,44 +288,47 @@ if(dwho_issa('linefeatures',$info) === true
 		<div id="voicemail" class="tab-pane" index="2" heading="<?=$this->bbf('smenu_voicemail');?>">
 			<fieldset id="fld-voicemail-actions">
 				<legend><?= $this->bbf('user_vm_header') ?></legend>
-				<p id="vm-action-search" class="fm-paragraph">
-					<span class="fm-desc clearboth">
-						<?= $this->bbf('user_vm_search') ?>
+				<div class="well well-sm">
+					<p id="vm-action-search" class="fm-paragraph">
+						<span class="fm-desc clearboth">
+							<?= $this->bbf('user_vm_search') ?>
+						</span>
+						<input type="text" size="15" id="user-vm-search" class="it-mblur" />
+					</p>
+					<span id="vm-action-add" class="fm-paragraph">
+							<span class="fm-desc">
+								<?= $this->bbf('user_vm_add') ?>
+							</span>
+							<?= $url->href_html(
+									$url->img_html(
+										'img/site/button/mini/orange/bo-add.gif',
+										$this->bbf('user_vm_add')
+									),
+									'#',
+									null,
+									"id='user-vm-add'",
+									$this->bbf('user_vm_add'))
+									;
+							?>
+
 					</span>
-					<input type="text" size="15" id="user-vm-search" class="it-mblur" />
-				</p>
-				<p id="vm-action-add" class="fm-paragraph">
+					<span id="vm-action-delete" class="fm-paragraph">
 						<span class="fm-desc">
-							<?= $this->bbf('user_vm_add') ?>
+							<?= $this->bbf('user_vm_delete') ?>
 						</span>
 						<?= $url->href_html(
-								$url->img_html(
-									'img/site/button/mini/orange/bo-add.gif',
-									$this->bbf('user_vm_add')
-								),
-								'#',
-								null,
-								"id='user-vm-add'",
-								$this->bbf('user_vm_add'))
-								;
+							$url->img_html(
+								'img/site/button/mini/blue/delete.gif',
+								$this->bbf('user_vm_delete')
+							),
+							'#',
+							null,
+							'id="user-vm-delete"',
+							$this->bbf('user_vm_delete'));
 						?>
-
-				</p>
-				<p id="vm-action-delete" class="fm-paragraph">
-					<span class="fm-desc">
-						<?= $this->bbf('user_vm_delete') ?>
 					</span>
-					<?= $url->href_html(
-						$url->img_html(
-							'img/site/button/mini/blue/delete.gif',
-							$this->bbf('user_vm_delete')
-						),
-						'#',
-						null,
-						'id="user-vm-delete"',
-						$this->bbf('user_vm_delete'));
-					?>
-				</p>
+				</div>
+				<hr>
 				<?php
 					echo $form->checkbox(array(
 						'desc'    => $this->bbf('fm_userfeatures_enablevoicemail'),
