@@ -51,7 +51,7 @@ dwho.suggest = function(options,id)
         'result_field':            '',
         'result_onsetfield':        null,
         'result_onclearfield':        null,
-        'result_class':            'dwho-suggest',
+        'result_class':            'dwho-suggest well well-sm',
         'result_topoffset':        -10,
         'result_emptyalert'     : false};
 
@@ -612,4 +612,3 @@ dwho.suggest.prototype.deletetimeout = function()
 
     this._timeoutid = null;
 };
-
