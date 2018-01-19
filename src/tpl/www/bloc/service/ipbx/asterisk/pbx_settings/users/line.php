@@ -47,7 +47,7 @@ endfor;
 ?>
 <span id="box-entityid"></span>
 <div class="row">
-<div class="col-sm-8">
+<div class="col-sm-10">
 <table class="table table-condensed table-bordered table-hover" id="list_linefeatures">
 	<thead>
 		<tr class="sb-top">
