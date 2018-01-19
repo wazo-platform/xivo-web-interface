@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2016 Avencall
+# Copyright 2006-2018 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -75,7 +75,7 @@ switch($act)
 			if(isset($_QR['queue']['joinempty'])
 			&& is_array($_QR['queue']['joinempty']))
 				$_QR['queue']['joinempty'] = implode(',', $_QR['queue']['joinempty']);
-			if(isset($_QR['queue']['joinempty'])
+			if(isset($_QR['queue']['leavewhenempty'])
 			&& is_array($_QR['queue']['leavewhenempty']))
 				$_QR['queue']['leavewhenempty'] = implode(',', $_QR['queue']['leavewhenempty']);
 
