@@ -126,14 +126,9 @@ switch($act)
 			}
 
 			$len = strLen($str_start);
-			$number = '';
 			for($int_number = $start; $int_number <= $end; $int_number += 1)
 			{
-				$number = $int_number;
-				while(strLen($number) < $len)
-				{
-					$number = '0' . $int_number;
-				}
+				$number = str_pad($int_number, $len, "0", STR_PAD_LEFT);
 				array_push($numbers, $number);
 			}
 		}
