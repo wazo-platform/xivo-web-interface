@@ -97,6 +97,10 @@ switch($act)
 		{
 			$str_start = $numb['numberbeg'];
 			$str_end = $numb['numberend'];
+
+			if($str_end == '')
+				$str_end = $str_start;
+
 			$start = intval($str_start);
 			$end = intval($str_end);
 			$digits = strLen($str_start);
@@ -107,18 +111,18 @@ switch($act)
 				continue;
 			}
 
-            if ($filter != '')
-            {
-                $start = str_pad($filter, $digits, "0", STR_PAD_RIGHT);
-                $end = str_pad($filter, $digits, "9", STR_PAD_RIGHT);
+			if ($filter != '')
+			{
+				$start = str_pad($filter, $digits, "0", STR_PAD_RIGHT);
+				$end = str_pad($filter, $digits, "9", STR_PAD_RIGHT);
 
-                if(strcmp($start, $str_end) > 0)
-                    continue;
-                if(strcmp($start, $str_start) < 0)
-                    $start = $str_start;
-                if(strcmp($end, $str_end) > 0)
-                    $end = $str_end;
-            }
+				if(strcmp($start, $str_end) > 0)
+					continue;
+				if(strcmp($start, $str_start) < 0)
+					$start = $str_start;
+				if(strcmp($end, $str_end) > 0)
+					$end = $str_end;
+			}
 
 			for($int_number = intval($start); $int_number <= intval($end); $int_number += 1)
 			{
