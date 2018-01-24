@@ -76,22 +76,19 @@ switch($act)
 
 		$has_getnumpull = (bool) $_QRY->get('getnumpool');
 
-		$filter = 0;
+		$filter = '';
 		if (is_null($_QRY->get('startnum')) === false)
 			$filter  = $_QRY->get('startnum');
 		elseif(is_null($_QRY->get('q')) === false)
 			$filter  = $_QRY->get('q');
 
-		if ($filter)
+		if ($filter != '')
 		{
 			if(strlen($filter) > 0 && !is_numeric($filter))
 			{
 				$_TPL->set_var('list', array());
 				break;
 			}
-
-			$filter  = intval($filter);
-			$lfilter = floor(log10($filter)) + 1;
 		}
 
 		$numbers = array();
@@ -100,10 +97,13 @@ switch($act)
 		{
 			$str_start = $numb['numberbeg'];
 			$str_end = $numb['numberend'];
+
+			if($str_end == '')
+				$str_end = $str_start;
+
 			$start = intval($str_start);
 			$end = intval($str_end);
-			$lstart = floor(log10($start)) + 1;
-			$lend = floor(log10($end)) + 1;
+			$digits = strLen($str_start);
 
 			if($has_getnumpull)
 			{
@@ -111,29 +111,22 @@ switch($act)
 				continue;
 			}
 
-			if ($filter)
+			if ($filter != '')
 			{
-				if($lfilter > $lend)
-					continue;
+				$start = str_pad($filter, $digits, "0", STR_PAD_RIGHT);
+				$end = str_pad($filter, $digits, "9", STR_PAD_RIGHT);
 
-				$fstart = intval($start / pow(10, $lstart - $lfilter));
-				$fend = intval($end / pow(10, $lend - $lfilter));
-				if($filter < $fstart || $fend < $filter)
+				if(strcmp($start, $str_end) > 0)
 					continue;
-
-				$start = max($start, $filter * (pow(10, $lstart - $lfilter)));
-				$end = min($end, ($filter+1) * (pow(10, $lend - $lfilter)) - 1);
+				if(strcmp($start, $str_start) < 0)
+					$start = $str_start;
+				if(strcmp($end, $str_end) > 0)
+					$end = $str_end;
 			}
 
-			$len = strLen($str_start);
-			$number = '';
-			for($int_number = $start; $int_number <= $end; $int_number += 1)
+			for($int_number = intval($start); $int_number <= intval($end); $int_number += 1)
 			{
-				$number = $int_number;
-				while(strLen($number) < $len)
-				{
-					$number = '0' . $int_number;
-				}
+				$number = str_pad($int_number, $digits, "0", STR_PAD_LEFT);
 				array_push($numbers, $number);
 			}
 		}

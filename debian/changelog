@@ -2,6 +2,8 @@ xivo-web-interface (2018.02.00) xivo-aldebaran; urgency=medium
 
   * Merge help and contact menu in only one 
   * 1675 Fix error displayed when creating new queue
+  * 1685 Fix cpu overload when displaying list of available numbers 
+    in range beginning with 00
 
  -- Erwan SEVELLEC <esevellec@xivo.solutions>  Mon, 08 Jan 2018 14:40:18 +0100
 
