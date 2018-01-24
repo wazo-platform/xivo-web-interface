@@ -112,14 +112,15 @@ switch($act)
                 $start = str_pad($filter, $digits, "0", STR_PAD_RIGHT);
                 $end = str_pad($filter, $digits, "9", STR_PAD_RIGHT);
 
+                if(strcmp($start, $str_end) > 0)
+                    continue;
                 if(strcmp($start, $str_start) < 0)
-                    continue;
-
+                    $start = $str_start;
                 if(strcmp($end, $str_end) > 0)
-                    continue;
+                    $end = $str_end;
             }
 
-			for($int_number = $start; $int_number <= $end; $int_number += 1)
+			for($int_number = intval($start); $int_number <= intval($end); $int_number += 1)
 			{
 				$number = str_pad($int_number, $digits, "0", STR_PAD_LEFT);
 				array_push($numbers, $number);
