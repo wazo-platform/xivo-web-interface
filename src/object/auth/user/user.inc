@@ -58,7 +58,7 @@ class AuthUserResource {
 		}
 		return($response->decode_or_raise());
 	}
-	
+
 	public function edit($uuid, $username, $firstname, $lastname, $enable_login)
 	{
 		$body = array(
@@ -74,7 +74,7 @@ class AuthUserResource {
 		}
 		return(true);
 	}
-	
+
 	public function edit_password($uuid, $password)
 	{
 		$query = array(
@@ -90,13 +90,14 @@ class AuthUserResource {
 		}
 		return(true);
 	}
-	
+
 	public function edit_email($uuid, $email)
 	{
 		$body = array(
 			'emails' => array(
-				'address': $email,
-				'confirmed': true
+				'address' => $email,
+				'confirmed' => true,
+				'main' => true
 			)
 		);
 		$request = Request::json_put('/admin/users/'.$uuid.'/emails', $body, null, $this->_headers);
@@ -106,7 +107,7 @@ class AuthUserResource {
 		}
 		return(true);
 	}
-		
+
 	public function delete($uuid)
 	{
 		$request = Request::delete('/users/'.$uuid, "", null, $this->_headers);
