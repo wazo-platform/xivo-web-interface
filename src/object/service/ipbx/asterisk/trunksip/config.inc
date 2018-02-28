@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2016  Avencall
+# Copyright 2006-2018 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -105,7 +105,7 @@ $array['element']['insecure']['null'] = true;
 
 $array['element']['nat'] = array();
 $array['element']['nat']['value'] = array('no','force_rport','comedia','force_rport,comedia','auto_force_rport','auto_comedia');
-$array['element']['nat']['default'] = 'auto_force_rport';
+$array['element']['nat']['default'] = '';
 $array['element']['nat']['null'] = true;
 
 $array['element']['promiscredir'] = array();
