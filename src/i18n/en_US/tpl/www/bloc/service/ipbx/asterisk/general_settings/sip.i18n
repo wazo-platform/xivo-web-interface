@@ -703,6 +703,9 @@ Auto force rport
 ; fm_nat-opt(auto_comedia)
 Auto comedia
 
+; fm_nat-opt(auto_force_rport,auto_comedia)
+Auto (rport + comedia)
+
 ; fm_dtmfmode
 DTMF:
 

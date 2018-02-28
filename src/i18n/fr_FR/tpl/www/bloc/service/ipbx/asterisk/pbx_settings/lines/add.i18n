@@ -55,6 +55,9 @@ Auto force rport
 ; fm_protocol_nat-opt(auto_comedia)
 Auto comedia
 
+; fm_protocol_nat-opt(auto_force_rport,auto_comedia)
+Auto (rport + comedia)
+
 ; fm_protocol_dtmfmode
 DTMF :
 

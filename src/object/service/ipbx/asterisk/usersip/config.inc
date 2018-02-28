@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2016 Avencall
+# Copyright 2006-2018 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -107,8 +107,8 @@ $array['element']['insecure']['default'] = '';
 $array['element']['insecure']['null'] = true;
 
 $array['element']['nat'] = array();
-$array['element']['nat']['value'] = array('no','force_rport','comedia','force_rport,comedia','auto_force_rport','auto_comedia');
-$array['element']['nat']['default'] = 'auto_force_rport';
+$array['element']['nat']['value'] = array('no','force_rport','comedia','force_rport,comedia','auto_force_rport','auto_comedia','auto_force_rport,auto_comedia');
+$array['element']['nat']['default'] = '';
 $array['element']['nat']['null'] = true;
 
 
@@ -413,7 +413,7 @@ $array['filter']['fullname'] = array('set' => false,'chk' => 0);
 $array['filter']['cid_number'] = array('set' => false,'chk' => 0);
 $array['filter']['maxcallbitrate'] = array('set' => false,'chk' => 2,'cast' => 'uint','between' => array(1,1860));
 $array['filter']['insecure'] = array('set' => false,'chk' => 2,'key' => $array['element']['insecure']['value']);
-$array['filter']['nat'] = array('set' => false,'chk' => 2,'key' => array('no','force_rport','comedia','force_rport,comedia','auto_force_rport','auto_comedia'));
+$array['filter']['nat'] = array('set' => false,'chk' => 2,'key' => array('no','force_rport','comedia','force_rport,comedia','auto_force_rport','auto_comedia','auto_force_rport,auto_comedia'));
 $array['filter']['promiscredir'] = array('set' => false,'chk' => 2,'bool' => true);
 $array['filter']['usereqphone'] = array('set' => false,'chk' => 2,'bool' => true);
 $array['filter']['trustrpid'] = array('set' => false,'chk' => 2,'bool' => true);
