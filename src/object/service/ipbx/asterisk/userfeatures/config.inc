@@ -2,8 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2016 Avencall
-# Copyright (C) 2016 Proformatique Inc.
+# Copyright 2006-2018 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -253,7 +252,7 @@ $array['filter']['mobilephonenumber'] = array('set'	=> false,
 					      'chk'	=> 2,
 					      'regexp'	=> '/^\+?[0-9\*#]+$/',
 					      'maxlen'	=> 128);
-$array['filter']['email'] = array('set' => false,'chk' => 2,'maxlen' => 254);
+$array['filter']['email'] = array('set' => false,'chk' => 2,'maxlen' => 254,'callback' => 'dwho_network::valid_email');
 $array['filter']['preprocess_subroutine'] = array('set' => false,
 						  'chk'	=> 2,
 						  'callback' => 'xivo_service_asterisk::chk_context',
