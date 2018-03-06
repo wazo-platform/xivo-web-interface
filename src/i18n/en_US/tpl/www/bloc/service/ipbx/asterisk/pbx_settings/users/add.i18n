@@ -466,6 +466,9 @@ Login:
 ; fm_userfeatures_passwdclient
 Password:
 
+; hlp_fm_userfeatures_passwdclient
+Current password is hidden (empty field do not change password)
+
 ; fm_userfeatures_mobilephonenumber
 Mobile phone number:
 

@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright 2006-2017 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2006-2018 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -36,6 +36,8 @@ require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'user', 'user.inc'));
 require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'line', 'line.inc'));
 require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'extension', 'extension.inc'));
 require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'facade', 'line.inc'));
+require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'auth', 'client.inc'));
+require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'auth', 'user', 'user.inc'));
 
 class xivo_application_service_asterisk_user extends xivo_application_asterisk_abstract
 {
@@ -69,6 +71,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 	protected $_vm_mapper = null;
 	protected $_voicemail = null;
 	protected $_confd_user = null;
+	protected $_auth_user = null;
 	protected $_line_manager = null;
 	protected $_bus_msg_factory = null;
 
@@ -167,6 +170,9 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		$nonraising_client = ConfdClient::default_config();
 		$this->_confd_user = new UserResource($nonraising_client);
 
+		$auth_client = AuthClient::default_config($nonraising_client);
+		$this->_auth_user = new AuthUserResource($auth_client);
+
 		$context_dso = &$this->_service->get_module('context');
 
 		$client = ConfdClient::default_config(true);
@@ -195,6 +201,9 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 
 		if ($this->_info['userfeatures'] === false)
 			return(false);
+
+		$auth_user = $this->_auth_user->get($this->_info['userfeatures']['uuid']);
+		$this->_info['userfeatures']['loginclient'] = $auth_user['username'];
 
 		$this->_origin['userfeatures'] = $this->_userfeatures->get_origin();
 
@@ -851,13 +860,6 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 				$id = $this->_origin['userfeatures']['id'];
 			else
 				$id = null;
-
-			if($this->_userfeatures->loginclient_exists($rs['loginclient'],$id) === true)
-			{
-				$this->_set_result('userfeatures',$rs);
-				$this->_set_error('userfeatures',array('loginclient' => 'client login exists'));
-				return(false);
-			}
 		}
 
 		if(dwho_has_len($rs['agentid']) === false
@@ -1088,8 +1090,27 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		|| $rs === false)
 			return(false);
 
+		$enable_login = ($rs['enableclient'] === 1);
+		unset($rs['enableclient']);
+		$password = $rs['passwdclient'];
+		unset($rs['passwdclient']);
+		$username = $rs['loginclient'];
+		unset($rs['loginclient']);
+
 		$user_id = $this->_return['userfeatures'] = $this->_userfeatures->add($rs);
-		$user_uuid = $rs['uuid'];
+		$user_uuid = $this->_return['userfeatures_uuid'] = $rs['uuid'];
+
+		if (empty($username)) {
+			$username = $rs['email'];
+			if (empty($username)) {
+				$username = $user_uuid;
+			}
+		}
+
+		if($this->_auth_user->create($user_uuid, $username, $password, $rs['firstname'], $rs['lastname'], $rs['email'], $enable_login) === false) {
+			return(false);
+		}
+
 		$bus_msg = $this->_bus_msg_factory->new_user_created_msg($user_id, $user_uuid);
 		$this->_bus_msg_queue->add_msg($bus_msg);
 
@@ -1267,6 +1288,10 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			$this->_func_keys->delete_user_func_keys($this->_return['userfeatures']);
 		}
 
+		if(array_key_exists('userfeatures_uuid', $this->_return)) {
+			$this->_auth_user->delete($this->_return['userfeatures_uuid']);
+		}
+
 		if(isset($this->_return['voicemail'])
 			&& isset($this->_return['userfeatures'])
 			&& $this->_return['userfeatures'] !== false
@@ -1398,10 +1423,40 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		|| $rs === false)
 			return(false);
 
+		$enable_login = ($rs['enableclient'] === 1);
+		unset($rs['enableclient']);
+		$password = $rs['passwdclient'];
+		unset($rs['passwdclient']);
+		$username = $rs['loginclient'];
+		unset($rs['loginclient']);
+
 		$return = $this->_userfeatures->edit($this->_info['userfeatures']['id'],$rs);
 
 		$user_uuid = $this->_info['userfeatures']['uuid'];
 		$user_id = $this->_info['userfeatures']['id'];
+
+		if (empty($username)) {
+			$username = $rs['email'];
+			if (empty($username)) {
+				$username = $user_uuid;
+			}
+		}
+
+		if($this->_auth_user->edit($user_uuid, $username, $rs['firstname'], $rs['lastname'], $enable_login) === false) {
+			return(false);
+		}
+
+		if($enable_login) {
+			if(empty($password) === false
+				&& $this->_auth_user->edit_password($user_uuid, $password) === false) {
+				return(false);
+			}
+		}
+
+		if($this->_auth_user->edit_email($user_uuid, $rs['email']) === false) {
+			return(false);
+		}
+
 		$bus_msg = $this->_bus_msg_factory->new_user_edited_msg($user_id, $user_uuid);
 		$this->_bus_msg_queue->add_msg($bus_msg);
 
@@ -1737,6 +1792,9 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			$this->_return['userfeatures'] = $r;
 
 		if ($this->_func_key_manager->delete_template($func_key_private_template_id) === false)
+			return(false);
+
+		if($this->_auth_user->delete($user_uuid) === false)
 			return(false);
 
 		$bus_msg = $this->_bus_msg_factory->new_user_deleted_msg($user_id, $user_uuid);

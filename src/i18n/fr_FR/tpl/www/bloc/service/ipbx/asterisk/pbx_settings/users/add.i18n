@@ -148,6 +148,9 @@ Identifiant :
 ; fm_userfeatures_passwdclient
 Mot de passe :
 
+; hlp_fm_userfeatures_passwdclient
+Le mot de passe actuel est caché (champ vide ne change pas le mot de passe)
+
 ; fm_userfeatures_profileclient
 Profil :
 
