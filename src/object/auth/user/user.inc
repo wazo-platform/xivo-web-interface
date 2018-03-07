@@ -95,9 +95,11 @@ class AuthUserResource {
 	{
 		$body = array(
 			'emails' => array(
-				'address' => $email,
-				'confirmed' => true,
-				'main' => true
+				array(
+					'address' => $email,
+					'confirmed' => true,
+					'main' => true
+				)
 			)
 		);
 		$request = Request::json_put('/admin/users/'.$uuid.'/emails', $body, null, $this->_headers);
