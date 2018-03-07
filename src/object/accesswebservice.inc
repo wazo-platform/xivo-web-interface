@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2016  Avencall
+# Copyright 2006-2018 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -21,6 +21,8 @@
 dwho::load_class('dwho_network');
 
 require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'abstract','libdatastorage.inc'));
+require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'auth','client.inc'));
+require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'auth','token','token.inc'));
 
 class xivo_accesswebservice extends xivo_libdatastorage_abstract
 {
@@ -30,11 +32,23 @@ class xivo_accesswebservice extends xivo_libdatastorage_abstract
 	var $_filter		= false;
 	var $_origin		= false;
 	var $_origin_list	= false;
+	private $token_resource = null;
 
 	public function __construct()
 	{
 		$this->_load_config(dirname(__FILE__).DWHO_SEP_DIR.'accesswebservice');
 		$this->_load_dso();
+
+		if(($this->client = AuthClient::default_config()) === false) {
+			trigger_error('Invalid AUTH object',E_USER_ERROR);
+			return(false);
+		}
+		$this->client->set_backend('xivo_service');
+
+		if(($this->token_resource = new TokenResource($this->client)) === false) {
+			trigger_error('Invalid TokenResource',E_USER_ERROR);
+			return(false);
+		}
 	}
 
 	function _pg_array_parse($literal)
@@ -101,10 +115,35 @@ class xivo_accesswebservice extends xivo_libdatastorage_abstract
 		return(true);
 	}
 
+	function chk_token($login,$pass)
+	{
+		$tk = null;
+		if(isset($_SESSION['token'])) {
+			$tk = $this->token_resource->get($_SESSION['token']);
+		}
+		if(!$tk) {
+			$tk = $this->token_resource->create($login, $pass);
+		}
+		if(!$tk) {
+			return(false);
+		}
+
+		$token = $tk['data']['token'];
+		if ($token) {
+			$_SESSION['token'] = $token;
+			return(true);
+		}
+
+		return(false);
+	}
+
 	function chk_user_access($user,$passwd,$host=null)
 	{
 		if(dwho_has_len($user) === false
 		|| dwho_has_len($passwd) === false)
+			return(false);
+
+		if(($rs = $this->chk_token($user,$passwd)) === false)
 			return(false);
 
 		$where = array();

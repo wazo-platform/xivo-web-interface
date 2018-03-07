@@ -1,7 +1,7 @@
 <?php
 
 #
-# Copyright 2015-2017 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2015-2018 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -32,6 +32,11 @@ class AuthClient extends Client
 	public function get_backend()
 	{
 		return $this->auth_backend;
+	}
+
+	public function set_backend($backend)
+	{
+		$this->auth_backend = $backend;
 	}
 
 	static function default_config($raise=false) {
