@@ -93,15 +93,16 @@ class AuthUserResource {
 
 	public function edit_email($uuid, $email)
 	{
-		$body = array(
-			'emails' => array(
-				array(
-					'address' => $email,
-					'confirmed' => true,
-					'main' => true
-				)
-			)
-		);
+		$emails = array();
+		if ($email) {
+			array_push($emails, array(
+				'address' => $email,
+				'confirmed' => true,
+				'main' => true
+			));
+		}
+
+		$body = array('emails' => $emails);
 		$request = Request::json_put('/admin/users/'.$uuid.'/emails', $body, null, $this->_headers);
 		$response = $this->client->send($request);
 		if ($response->status_ok() === false) {
