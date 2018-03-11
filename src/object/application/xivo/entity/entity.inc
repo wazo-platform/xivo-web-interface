@@ -233,9 +233,11 @@ class xivo_application_xivo_object_entity extends xivo_application_xivo_object_a
 			return(false);
 		}
 
-		if($this->get_errnb() > 0
-		|| $this->add_entity() === false)
+		if($this->get_errnb() > 0 || $this->add_entity() === false) {
 			$r = false;
+
+			$this->_reverse_add();
+		}
 
 		$this->_status = '';
 
@@ -255,6 +257,14 @@ class xivo_application_xivo_object_entity extends xivo_application_xivo_object_a
 		}
 
 		return($this->_return['entity']);
+	}
+
+
+	function _reverse_add()
+	{
+		if(array_key_exists('entity', $this->_return)) {
+			$this->_entity->delete($this->_return['entity']);
+		}
 	}
 
 	function edit()
