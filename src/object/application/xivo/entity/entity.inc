@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2015  Avencall
+# Copyright 2006-2018 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,11 +19,14 @@
 #
 
 dwho_file::required(array(XIVO_PATH_OBJECT,'application','xivo.inc'),true);
+require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'auth','client.inc'));
+require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'auth','tenant','tenant.inc'));
 
 class xivo_application_xivo_object_entity extends xivo_application_xivo_object_abstract
 {
 	var $_entity	= false;
 	var $_context	= false;
+	protected $_auth_tenant = null;
 
 	function __construct(&$xobj,&$dso,$param=null,$components=true)
 	{
@@ -38,6 +41,9 @@ class xivo_application_xivo_object_entity extends xivo_application_xivo_object_a
 			return(false);
 		else if((bool) $components === true)
 			$this->load_components();
+
+		$auth_client = AuthClient::default_config();
+		$this->_auth_tenant = new AuthTenantResource($auth_client);
 
 		return(true);
 	}
@@ -243,6 +249,10 @@ class xivo_application_xivo_object_entity extends xivo_application_xivo_object_a
 			return(false);
 
 		$this->_return['entity'] = $this->_entity->add($rs);
+
+		if($this->_auth_tenant->create($rs['name']) === false) {
+			return(false);
+		}
 
 		return($this->_return['entity']);
 	}
