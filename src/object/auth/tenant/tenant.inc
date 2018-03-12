@@ -25,11 +25,9 @@ class AuthTenantResource {
 		$this->_headers[] = 'X-Auth-Token: ' . $_SESSION['token'];
 	}
 
-	public function create($name)
+	public function create($entity)
 	{
-		$body = array(
-			'name' => $name,
-		);
+		$body = $this->_entity_to_tenant($entity);
 
 		$request = Request::json_post('/tenants', $body, null, $this->_headers);
 		$response = $this->client->send($request);
@@ -39,28 +37,66 @@ class AuthTenantResource {
 		return($response->decode_or_raise());
 	}
 
-	// public function edit($uuid, $username, $firstname, $lastname, $enable_login)
-	// {
-	// 	$body = array(
-	// 		'username' => $username,
-	// 		'firstname' => $firstname,
-	// 		'lastname' => $lastname,
-	// 		'enable_login' => $enable_login,
-	// 	);
-	// 	$request = Request::json_put('/tenants/'.$uuid, $body, null, $this->_headers);
-	// 	$response = $this->client->send($request);
-	// 	if ($response->status_ok() === false) {
-	// 		return(false);
-	// 	}
-	// 	return(true);
-	// }
+	public function search($name)
+	{
+		$query = array('name' => $name);
+		$request = Request::get('/tenants', "", $query, $this->_headers);
+		$response = $this->client->send($request);
+		if($response->status_ok() === false) {
+			return(false);
+		}
+		return($response->decode_or_raise());
+	}
 
-	// public function delete($uuid)
-	// {
-	// 	$request = Request::delete('/tenants/'.$uuid, "", null, $this->_headers);
-	// 	$response = $this->client->send($request);
-	// 	return(true);
-	// }
+	public function edit($uuid, $entity)
+	{
+		$body = $this->_entity_to_tenant($entity);
+
+		$request = Request::json_put('/tenants/'.$uuid, $body, null, $this->_headers);
+		$response = $this->client->send($request);
+		if ($response->status_ok() === false) {
+			return(false);
+		}
+		return(true);
+	}
+
+	private function _entity_to_tenant($entity)
+	{
+		$body = array();
+		if(!empty($entity['name'])) {
+			$body['name'] = $entity['name'];
+		}
+		if(!empty($entity['phonenumber'])) {
+			$body['phone'] = $entity['phonenumber'];
+		}
+
+		$address = array();
+		if(!empty($entity['city'])) {
+			$address['city'] = $entity['city'];
+		}
+		if(!empty($entity['country'])) {
+			$address['country'] = $entity['country'];
+		}
+		if(!empty($entity['address1'])) {
+			$address['line_1'] = $entity['address1'];
+		}
+		if(!empty($entity['address2'])) {
+			$address['line_2'] = $entity['address2'];
+		}
+		if(!empty($entity['state'])) {
+			$address['state'] = $entity['state'];
+		}
+		if(!empty($entity['zipcode'])) {
+			$address['zip_code'] = $entity['zipcode'];
+		}
+
+		if(!empty($address)) {
+			$body['address'] = $address;
+		}
+
+		return($body);
+	}
+
 }
 
 ?>
