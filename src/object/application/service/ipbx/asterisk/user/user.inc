@@ -42,7 +42,7 @@ require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'auth', 'user', 'user.inc'));
 class xivo_application_service_asterisk_user extends xivo_application_asterisk_abstract
 {
 	protected $_dso				= null;
-	protected $_userfeatures 	= false;
+	protected $_userfeatures	= false;
 	protected $_rightcall		= false;
 	protected $_dialaction		= false;
 	protected $_queuemember		= null;
@@ -50,19 +50,19 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 	protected $_linefeatures	= false;
 	protected $_paginguser		= false;
 	protected $_line			= false;
-	protected $_cti_profile     = false;
+	protected $_cti_profile		= false;
 	protected $_appentity		= false;
 	protected $_entity			= false;
 	protected $_provdconfig		= false;
 	protected $_provddevice		= false;
-	protected $_device		 	= false;
+	protected $_device			= false;
 	protected $_sccpdevice		= false;
 	protected $_musiconhold		= array();
 	protected $_profileclientlist	= array();
 	protected $_conf			= array();
 	protected $_param			= array();
 	protected $_destination		= null;
-	protected $_schedule_path 	= false;
+	protected $_schedule_path	= false;
 	protected $_func_key_manager	= false;
 	protected $_callfilter = false;
 	protected $_callfiltermember = false;
@@ -255,7 +255,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			return false;
 		}
 
-		$features =  array('info' => array(), 'origin' => false);
+		$features = array('info' => array(), 'origin' => false);
 		foreach ($user_lines as $user_line) {
 			$line = $this->_line_manager->get_linefeatures($user_line['line_id']);
 			array_push($features['info'], $line);
@@ -319,7 +319,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		if(is_object($this->_appentity) === false)
 			return(false);
 
-		$this->_info['entity']  = $this->_appentity->get($this->_info['userfeatures']['entityid'],null,'internal');
+		$this->_info['entity'] = $this->_appentity->get($this->_info['userfeatures']['entityid'],null,'internal');
 
 		return($this->_info['entity']);
 	}
@@ -647,7 +647,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		$r['conference'] = $this->get_destination_conference();
 		$r['schedule'] = $this->get_destination_schedule();
 		$r['sounds'] = $this->_dialaction->get_sound();
-		$r['outcalls']  = $this->get_destination_outcall();
+		$r['outcalls'] = $this->get_destination_outcall();
 		$r['voicemail'] = $this->get_destination_voicemail();
 		//$r['trunk'] = $this->get_destination_trunk();
 		$r['ivr'] = $this->get_destination_ivr();
@@ -972,10 +972,10 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			|| isset($list[$qname]) === false
 			|| ($chantype = dwho_ak('chantype',$list[$qname],true)) === false
 			|| ($interface = $this->mk_interface($name,
-							     $chantype,
-							     $context,
-							     $number,
-							     $protocolname)) === false
+												 $chantype,
+												 $context,
+												 $number,
+												 $protocolname)) === false
 			|| ($typeid = $module->get_primary(array('name' => $qname))) === false) {
 				continue;
 			}
@@ -2183,9 +2183,9 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			unset($mergewith['linefeatures']);
 			$arr = $this->array_merge_recursive($mergewith,$arr);
 			if(is_array($arr['rightcall'])) {
-			    $rightcall = array();
-			    $rightcall[0] = strval($arr['rightcall'][0]['rightcallid']);
-			    $arr['rightcall'] = $rightcall;
+				$rightcall = array();
+				$rightcall[0] = strval($arr['rightcall'][0]['rightcallid']);
+				$arr['rightcall'] = $rightcall;
 			}
 		}
 
