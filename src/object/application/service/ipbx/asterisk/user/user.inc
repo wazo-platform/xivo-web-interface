@@ -38,6 +38,7 @@ require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'extension', 'extensi
 require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'facade', 'line.inc'));
 require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'auth', 'client.inc'));
 require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'auth', 'user', 'user.inc'));
+require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'auth', 'tenant', 'tenant.inc'));
 
 class xivo_application_service_asterisk_user extends xivo_application_asterisk_abstract
 {
@@ -172,6 +173,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 
 		$auth_client = AuthClient::default_config($nonraising_client);
 		$this->_auth_user = new AuthUserResource($auth_client);
+		$this->_auth_tenant = new AuthTenantResource($auth_client);
 
 		$context_dso = &$this->_service->get_module('context');
 
@@ -1021,6 +1023,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		$extension_id = null;
 
 		if($this->get_errnb() > 0
+		|| $this->add_tenant_uuid() === false
 		|| $this->add_func_key_private_tpl() === false
 		|| ($user_id = $this->add_userfeatures()) === false
 		|| $this->add_func_key_dest_user($user_id) === false
@@ -1075,6 +1078,32 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		return(true);
 	}
 
+	function add_tenant_uuid()
+	{
+		if(is_object($this->_appentity) === false) {
+			return(false);
+		}
+
+		if(($rs = $this->get_result('userfeatures')) === null
+		   || $rs === false) {
+			return(false);
+		}
+
+		if(($rs = $this->_appentity->get($rs['entityid'],null,'internal')) === false) {
+			return(false);
+		}
+
+		$name = $rs['entity']['name'];
+
+		if(($matching_tenants = $this->_auth_tenant->search($name)) === false
+		   || $matching_tenants['filtered'] == 0) {
+			return(false);
+		}
+
+		$this->_return['tenant_uuid'] = $matching_tenants['items'][0]['uuid'];
+		return(true);
+	}
+
 	function add_userfeatures()
 	{
 		if(($rs = $this->get_result('userfeatures')) === null
@@ -1087,6 +1116,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		unset($rs['passwdclient']);
 		$username = $rs['loginclient'];
 		unset($rs['loginclient']);
+		$rs['tenant_uuid'] = $this->_return['tenant_uuid'];
 
 		$user_id = $this->_return['userfeatures'] = $this->_userfeatures->add($rs);
 		$user_uuid = $this->_return['userfeatures_uuid'] = $rs['uuid'];
@@ -1099,6 +1129,11 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		}
 
 		if($this->_auth_user->create($user_uuid, $username, $password, $rs['firstname'], $rs['lastname'], $rs['email'], $enable_login) === false) {
+			return(false);
+		}
+
+		# The association should be done automatically from wazo-auth based on the Wazo-Tenant header
+		if($this->_auth_tenant->add_user($this->_return['tenant_uuid'], $user_uuid) === false) {
 			return(false);
 		}
 
