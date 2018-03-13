@@ -25,6 +25,16 @@ class AuthTenantResource {
 		$this->_headers[] = 'X-Auth-Token: ' . $_SESSION['token'];
 	}
 
+	public function add_user($tenant_uuid, $user_uuid)
+	{
+		$request = Request::put('/tenants/'.$tenant_uuid.'/users/'.$user_uuid, null, null, $this->_headers);
+		$response = $this->client->send($request);
+		if($response->status_ok() === false) {
+			return(false);
+		}
+		return(true);
+	}
+
 	public function create($entity)
 	{
 		$body = $this->_entity_to_tenant($entity);
