@@ -785,16 +785,6 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			return(false);
 		}
 
-		if (isset($arr['enableclient'])
-		&& (bool) $arr['enableclient'] === true
-		&& (dwho_has_len($arr['loginclient']) === false
-			|| dwho_has_len($arr['passwdclient']) === false))
-		{
-			dwho_report::push('error', 'cant_activate_xivoclient_without_login_and_password');
-			$err = array('loginclient' => 'empty', 'passwdclient' => 'empty');
-			$this->_set_error('userfeatures', $err);
-		}
-
 		$this->get_musiconhold();
 
 		if(isset($arr['musiconhold']) === true
