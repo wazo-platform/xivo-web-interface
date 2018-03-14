@@ -1089,19 +1089,31 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			return(false);
 		}
 
-		if(($rs = $this->_appentity->get($rs['entityid'],null,'internal')) === false) {
+		if(($this->_return['tenant_uuid'] = $this->_get_tenant_uuid($rs['entityid'])) === false) {
+			return(false);
+		}
+
+		return(true);
+	}
+
+	function _get_tenant_uuid($entityid)
+	{
+		if(is_object($this->_appentity) === false) {
+			return(false);
+		}
+
+		if(($rs = $this->_appentity->get($entityid,null,'internal')) === false) {
 			return(false);
 		}
 
 		$name = $rs['entity']['name'];
 
 		if(($matching_tenants = $this->_auth_tenant->search($name)) === false
-		   || $matching_tenants['filtered'] == 0) {
+			|| $matching_tenants['filtered'] == 0) {
 			return(false);
 		}
 
-		$this->_return['tenant_uuid'] = $matching_tenants['items'][0]['uuid'];
-		return(true);
+		return($matching_tenants['items'][0]['uuid']);
 	}
 
 	function add_userfeatures()
