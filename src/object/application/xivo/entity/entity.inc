@@ -314,18 +314,8 @@ class xivo_application_xivo_object_entity extends xivo_application_xivo_object_a
 
 		$this->_return['entity'] = $this->_entity->edit($this->_info['entity']['id'],$rs);
 
-		$matching_tenants = $this->_auth_tenant->search($rs['name']);
-		if(empty($matching_tenants['items'])) {
-			if($this->_auth_tenant->create($rs) === false) {
-				return(false);
-			}
-		} else {
-			foreach($matching_tenants['items'] as $tenant) {
-				$uuid = $tenant['uuid'];
-				if($this->_auth_tenant->edit($uuid, $rs) === false) {
-					return(false);
-				}
-			}
+		if($this->_auth_tenant->edit($this->_origin['entity']['tenant_uuid'], $rs) === false) {
+			return(false);
 		}
 
 		return($this->_return['entity']);
