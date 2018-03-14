@@ -80,6 +80,16 @@ class AuthTenantResource {
 		return(true);
 	}
 
+	public function remove_user($tenant_uuid, $user_uuid)
+	{
+		$request = Request::delete('/tenants/'.$tenant_uuid.'/users/'.$user_uuid, null, null, $this->_headers);
+		$response = $this->client->send($request);
+		if($response->status_ok() === false) {
+			return(false);
+		}
+		return(true);
+	}
+
 	private function _entity_to_tenant($entity)
 	{
 		$body = array();
