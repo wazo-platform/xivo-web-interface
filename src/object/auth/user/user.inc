@@ -36,7 +36,7 @@ class AuthUserResource {
 			'firstname' => $firstname,
 			'lastname' => $lastname,
 			'email_address' => $email,
-			'enable_login' => $enable_login,
+			'enabled' => $enable_login,
 		);
 		if (empty($password) === false) {
 			$body['password'] = $password;
@@ -65,7 +65,7 @@ class AuthUserResource {
 			'username' => $username,
 			'firstname' => $firstname,
 			'lastname' => $lastname,
-			'enable_login' => $enable_login,
+			'enabled' => $enable_login,
 		);
 		$request = Request::json_put('/users/'.$uuid, $body, null, $this->_headers);
 		$response = $this->client->send($request);
