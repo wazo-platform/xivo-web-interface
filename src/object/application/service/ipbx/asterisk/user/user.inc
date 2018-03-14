@@ -1132,11 +1132,6 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			return(false);
 		}
 
-		# The association should be done automatically from wazo-auth based on the Wazo-Tenant header
-		if($this->_auth_tenant->add_user($this->_return['tenant_uuid'], $user_uuid) === false) {
-			return(false);
-		}
-
 		$bus_msg = $this->_bus_msg_factory->new_user_created_msg($user_id, $user_uuid);
 		$this->_bus_msg_queue->add_msg($bus_msg);
 
