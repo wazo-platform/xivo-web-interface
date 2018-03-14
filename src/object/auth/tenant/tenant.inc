@@ -48,6 +48,16 @@ class AuthTenantResource {
 		return($response->decode_or_raise());
 	}
 
+	public function delete($uuid)
+	{
+		$request = Request::delete('/tenants/'.$uuid, null, null, $this->_headers);
+		$response = $this->client->send($request);
+		if($response->status_ok() === false) {
+			return(false);
+		}
+		return(true);
+	}
+
 	public function edit($uuid, $entity)
 	{
 		$body = $this->_entity_to_tenant($entity);

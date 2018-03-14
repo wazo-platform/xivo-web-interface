@@ -25,6 +25,7 @@ require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'auth','tenant','tenant.inc'))
 class xivo_application_xivo_object_entity extends xivo_application_xivo_object_abstract
 {
 	var $_entity	= false;
+	var $_tenant	= false;
 	var $_context	= false;
 	protected $_auth_tenant = null;
 
@@ -37,6 +38,8 @@ class xivo_application_xivo_object_entity extends xivo_application_xivo_object_a
 
 		$this->_dso = &$dso;
 
+		if(($this->_tenant = &$this->_xobj->get_module('tenant')) === false)
+			return(false);
 		if(($this->_entity = &$this->_xobj->get_module('entity')) === false)
 			return(false);
 		else if((bool) $components === true)
@@ -250,9 +253,18 @@ class xivo_application_xivo_object_entity extends xivo_application_xivo_object_a
 		|| $rs === false)
 			return(false);
 
-		$this->_return['entity'] = $this->_entity->add($rs);
+		if(($tenant = $this->_auth_tenant->create($rs)) === false) {
+			return(false);
+		}
 
-		if($this->_auth_tenant->create($rs) === false) {
+		$this->_return['tenant_uuid'] = $tenant['uuid'];
+
+		if($this->_tenant->add(array('uuid' => $tenant['uuid'])) === false) {
+			return(false);
+		}
+
+		$rs['tenant_uuid'] = $tenant['uuid'];
+		if(($this->_return['entity'] = $this->_entity->add($rs)) === false) {
 			return(false);
 		}
 
@@ -264,6 +276,10 @@ class xivo_application_xivo_object_entity extends xivo_application_xivo_object_a
 	{
 		if(array_key_exists('entity', $this->_return)) {
 			$this->_entity->delete($this->_return['entity']);
+		}
+
+		if(array_key_exists('tenant_uuid', $this->_return)) {
+			$this->_auth_tenant->delete($this->_return['tenant_uuid']);
 		}
 	}
 
