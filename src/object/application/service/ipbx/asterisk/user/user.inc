@@ -1085,7 +1085,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		}
 
 		if(($rs = $this->get_result('userfeatures')) === null
-		   || $rs === false) {
+			|| $rs === false) {
 			return(false);
 		}
 
@@ -1462,6 +1462,22 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		unset($rs['passwdclient']);
 		$username = $rs['loginclient'];
 		unset($rs['loginclient']);
+
+		if($this->_result['userfeatures']['entityid'] != $this->_origin['userfeatures']['entityid']) {
+			if(($tenant_uuid = $this->_get_tenant_uuid($this->_result['userfeatures']['entityid'])) === false) {
+				return(false);
+			}
+
+			$rs['tenant_uuid'] = $tenant_uuid;
+			$user_uuid = $this->_origin['userfeatures']['uuid'];
+			$old_tenant_uuid = $this->_origin['userfeatures']['tenant_uuid'];
+			if($this->_auth_tenant->add_user($tenant_uuid, $user_uuid) === false) {
+				return(false);
+			}
+			if($this->_auth_tenant->remove_user($old_tenant_uuid, $user_uuid) === false) {
+				return(false);
+			}
+		}
 
 		$return = $this->_userfeatures->edit($this->_info['userfeatures']['id'],$rs);
 
