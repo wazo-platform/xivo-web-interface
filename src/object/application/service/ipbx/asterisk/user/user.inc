@@ -204,6 +204,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 
 		$auth_user = $this->_auth_user->get($this->_info['userfeatures']['uuid']);
 		$this->_info['userfeatures']['loginclient'] = $auth_user['username'];
+		$this->_info['userfeatures']['enableclient'] = $auth_user['enabled'];
 
 		$this->_origin['userfeatures'] = $this->_userfeatures->get_origin();
 
