@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright 2006-2018 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -72,5 +72,8 @@ $array['stats_conf_xivouser'] = array();
 $array['stats_conf_xivouser']['table'] = 'stats_conf_xivouser';
 $array['stats_conf_xivouser']['primary'] = array('stats_conf_id' => '');
 
+$array['tenant'] = array();
+$array['tenant']['table'] = 'tenant';
+$array['tenant']['primary'] = array('uuid' => '');
 
 ?>

@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2015  Avencall
+# Copyright 2006-2018 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,11 +19,15 @@
 #
 
 dwho_file::required(array(XIVO_PATH_OBJECT,'application','xivo.inc'),true);
+require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'auth','client.inc'));
+require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'auth','tenant','tenant.inc'));
 
 class xivo_application_xivo_object_entity extends xivo_application_xivo_object_abstract
 {
 	var $_entity	= false;
+	var $_tenant	= false;
 	var $_context	= false;
+	protected $_auth_tenant = null;
 
 	function __construct(&$xobj,&$dso,$param=null,$components=true)
 	{
@@ -34,10 +38,15 @@ class xivo_application_xivo_object_entity extends xivo_application_xivo_object_a
 
 		$this->_dso = &$dso;
 
+		if(($this->_tenant = &$this->_xobj->get_module('tenant')) === false)
+			return(false);
 		if(($this->_entity = &$this->_xobj->get_module('entity')) === false)
 			return(false);
 		else if((bool) $components === true)
 			$this->load_components();
+
+		$auth_client = AuthClient::default_config();
+		$this->_auth_tenant = new AuthTenantResource($auth_client);
 
 		return(true);
 	}
@@ -227,9 +236,11 @@ class xivo_application_xivo_object_entity extends xivo_application_xivo_object_a
 			return(false);
 		}
 
-		if($this->get_errnb() > 0
-		|| $this->add_entity() === false)
+		if($this->get_errnb() > 0 || $this->add_entity() === false) {
 			$r = false;
+
+			$this->_reverse_add();
+		}
 
 		$this->_status = '';
 
@@ -242,9 +253,34 @@ class xivo_application_xivo_object_entity extends xivo_application_xivo_object_a
 		|| $rs === false)
 			return(false);
 
-		$this->_return['entity'] = $this->_entity->add($rs);
+		if(($tenant = $this->_auth_tenant->create($rs)) === false) {
+			return(false);
+		}
+
+		$this->_return['tenant_uuid'] = $tenant['uuid'];
+
+		if($this->_tenant->add(array('uuid' => $tenant['uuid'])) === false) {
+			return(false);
+		}
+
+		$rs['tenant_uuid'] = $tenant['uuid'];
+		if(($this->_return['entity'] = $this->_entity->add($rs)) === false) {
+			return(false);
+		}
 
 		return($this->_return['entity']);
+	}
+
+
+	function _reverse_add()
+	{
+		if(array_key_exists('entity', $this->_return)) {
+			$this->_entity->delete($this->_return['entity']);
+		}
+
+		if(array_key_exists('tenant_uuid', $this->_return)) {
+			$this->_auth_tenant->delete($this->_return['tenant_uuid']);
+		}
 	}
 
 	function edit()
@@ -277,6 +313,10 @@ class xivo_application_xivo_object_entity extends xivo_application_xivo_object_a
 		$rs['disable'] = $this->_info['entity']['disable'];
 
 		$this->_return['entity'] = $this->_entity->edit($this->_info['entity']['id'],$rs);
+
+		if($this->_auth_tenant->edit($this->_origin['entity']['tenant_uuid'], $rs) === false) {
+			return(false);
+		}
 
 		return($this->_return['entity']);
 	}
