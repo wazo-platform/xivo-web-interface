@@ -34,6 +34,9 @@ $array['element']['lastname']['default'] = '';
 $array['element']['entityid'] = array();
 $array['element']['entityid']['default'] = 0;
 
+$array['element']['tenant_uuid'] = array();
+$array['element']['tenant_uuid']['null'] = false;
+
 $array['element']['callerid'] = array();
 $array['element']['callerid']['default'] = '';
 $array['element']['callerid']['null'] = true;

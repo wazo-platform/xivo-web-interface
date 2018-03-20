@@ -38,11 +38,12 @@ require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'extension', 'extensi
 require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'confd', 'facade', 'line.inc'));
 require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'auth', 'client.inc'));
 require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'auth', 'user', 'user.inc'));
+require_once(dwho_file::joinpath(XIVO_PATH_OBJECT,'auth', 'tenant', 'tenant.inc'));
 
 class xivo_application_service_asterisk_user extends xivo_application_asterisk_abstract
 {
 	protected $_dso				= null;
-	protected $_userfeatures 	= false;
+	protected $_userfeatures	= false;
 	protected $_rightcall		= false;
 	protected $_dialaction		= false;
 	protected $_queuemember		= null;
@@ -50,19 +51,19 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 	protected $_linefeatures	= false;
 	protected $_paginguser		= false;
 	protected $_line			= false;
-	protected $_cti_profile     = false;
+	protected $_cti_profile		= false;
 	protected $_appentity		= false;
 	protected $_entity			= false;
 	protected $_provdconfig		= false;
 	protected $_provddevice		= false;
-	protected $_device		 	= false;
+	protected $_device			= false;
 	protected $_sccpdevice		= false;
 	protected $_musiconhold		= array();
 	protected $_profileclientlist	= array();
 	protected $_conf			= array();
 	protected $_param			= array();
 	protected $_destination		= null;
-	protected $_schedule_path 	= false;
+	protected $_schedule_path	= false;
 	protected $_func_key_manager	= false;
 	protected $_callfilter = false;
 	protected $_callfiltermember = false;
@@ -172,6 +173,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 
 		$auth_client = AuthClient::default_config($nonraising_client);
 		$this->_auth_user = new AuthUserResource($auth_client);
+		$this->_auth_tenant = new AuthTenantResource($auth_client);
 
 		$context_dso = &$this->_service->get_module('context');
 
@@ -255,7 +257,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			return false;
 		}
 
-		$features =  array('info' => array(), 'origin' => false);
+		$features = array('info' => array(), 'origin' => false);
 		foreach ($user_lines as $user_line) {
 			$line = $this->_line_manager->get_linefeatures($user_line['line_id']);
 			array_push($features['info'], $line);
@@ -319,7 +321,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		if(is_object($this->_appentity) === false)
 			return(false);
 
-		$this->_info['entity']  = $this->_appentity->get($this->_info['userfeatures']['entityid'],null,'internal');
+		$this->_info['entity'] = $this->_appentity->get($this->_info['userfeatures']['entityid'],null,'internal');
 
 		return($this->_info['entity']);
 	}
@@ -647,7 +649,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		$r['conference'] = $this->get_destination_conference();
 		$r['schedule'] = $this->get_destination_schedule();
 		$r['sounds'] = $this->_dialaction->get_sound();
-		$r['outcalls']  = $this->get_destination_outcall();
+		$r['outcalls'] = $this->get_destination_outcall();
 		$r['voicemail'] = $this->get_destination_voicemail();
 		//$r['trunk'] = $this->get_destination_trunk();
 		$r['ivr'] = $this->get_destination_ivr();
@@ -972,10 +974,10 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			|| isset($list[$qname]) === false
 			|| ($chantype = dwho_ak('chantype',$list[$qname],true)) === false
 			|| ($interface = $this->mk_interface($name,
-							     $chantype,
-							     $context,
-							     $number,
-							     $protocolname)) === false
+												 $chantype,
+												 $context,
+												 $number,
+												 $protocolname)) === false
 			|| ($typeid = $module->get_primary(array('name' => $qname))) === false) {
 				continue;
 			}
@@ -1021,6 +1023,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		$extension_id = null;
 
 		if($this->get_errnb() > 0
+		|| $this->add_tenant_uuid() === false
 		|| $this->add_func_key_private_tpl() === false
 		|| ($user_id = $this->add_userfeatures()) === false
 		|| $this->add_func_key_dest_user($user_id) === false
@@ -1075,6 +1078,44 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		return(true);
 	}
 
+	function add_tenant_uuid()
+	{
+		if(is_object($this->_appentity) === false) {
+			return(false);
+		}
+
+		if(($rs = $this->get_result('userfeatures')) === null
+			|| $rs === false) {
+			return(false);
+		}
+
+		if(($this->_return['tenant_uuid'] = $this->_get_tenant_uuid($rs['entityid'])) === false) {
+			return(false);
+		}
+
+		return(true);
+	}
+
+	function _get_tenant_uuid($entityid)
+	{
+		if(is_object($this->_appentity) === false) {
+			return(false);
+		}
+
+		if(($rs = $this->_appentity->get($entityid,null,'internal')) === false) {
+			return(false);
+		}
+
+		$name = $rs['entity']['name'];
+
+		if(($matching_tenants = $this->_auth_tenant->search($name)) === false
+			|| $matching_tenants['filtered'] == 0) {
+			return(false);
+		}
+
+		return($matching_tenants['items'][0]['uuid']);
+	}
+
 	function add_userfeatures()
 	{
 		if(($rs = $this->get_result('userfeatures')) === null
@@ -1087,6 +1128,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		unset($rs['passwdclient']);
 		$username = $rs['loginclient'];
 		unset($rs['loginclient']);
+		$rs['tenant_uuid'] = $this->_return['tenant_uuid'];
 
 		$user_id = $this->_return['userfeatures'] = $this->_userfeatures->add($rs);
 		$user_uuid = $this->_return['userfeatures_uuid'] = $rs['uuid'];
@@ -1420,6 +1462,22 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		unset($rs['passwdclient']);
 		$username = $rs['loginclient'];
 		unset($rs['loginclient']);
+
+		if($this->_result['userfeatures']['entityid'] != $this->_origin['userfeatures']['entityid']) {
+			if(($tenant_uuid = $this->_get_tenant_uuid($this->_result['userfeatures']['entityid'])) === false) {
+				return(false);
+			}
+
+			$rs['tenant_uuid'] = $tenant_uuid;
+			$user_uuid = $this->_origin['userfeatures']['uuid'];
+			$old_tenant_uuid = $this->_origin['userfeatures']['tenant_uuid'];
+			if($this->_auth_tenant->add_user($tenant_uuid, $user_uuid) === false) {
+				return(false);
+			}
+			if($this->_auth_tenant->remove_user($old_tenant_uuid, $user_uuid) === false) {
+				return(false);
+			}
+		}
 
 		$return = $this->_userfeatures->edit($this->_info['userfeatures']['id'],$rs);
 
@@ -2183,9 +2241,9 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			unset($mergewith['linefeatures']);
 			$arr = $this->array_merge_recursive($mergewith,$arr);
 			if(is_array($arr['rightcall'])) {
-			    $rightcall = array();
-			    $rightcall[0] = strval($arr['rightcall'][0]['rightcallid']);
-			    $arr['rightcall'] = $rightcall;
+				$rightcall = array();
+				$rightcall[0] = strval($arr['rightcall'][0]['rightcallid']);
+				$arr['rightcall'] = $rightcall;
 			}
 		}
 
