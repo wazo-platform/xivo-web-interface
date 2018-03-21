@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2015-2016 Avencall
+# Copyright (C) 2015-2018 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -28,7 +28,8 @@ class UserResource {
 	}
 
 	public function search($query=null) {
-		$request = Request::json_get("/users", "", $query);
+		$headers = array('X-Auth-Token: '. $_SESSION['token']);
+		$request = Request::json_get("/users", "", $query, $headers);
 		$response = $this->client->send($request);
 		$content = $response->decode_or_raise();
 		return $content === null ? false : $content;
