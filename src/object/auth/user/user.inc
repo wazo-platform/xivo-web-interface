@@ -28,7 +28,7 @@ class AuthUserResource {
 		$this->_headers[] = 'X-Auth-Token: ' . $_SESSION['token'];
 	}
 
-	public function create($uuid, $username, $password, $firstname, $lastname, $email, $enable_login)
+	public function create($uuid, $username, $password, $firstname, $lastname, $email, $enable_login, $tenant_uuid)
 	{
 		$body = array(
 			'uuid' => $uuid,
@@ -41,7 +41,10 @@ class AuthUserResource {
 		if (empty($password) === false) {
 			$body['password'] = $password;
 		}
-		$request = Request::json_post('/users', $body, null, $this->_headers);
+		$headers = $this->_headers;
+		array_push($headers, 'Wazo-Tenant: '.$tenant_uuid);
+
+		$request = Request::json_post('/users', $body, null, $headers);
 		$response = $this->client->send($request);
 		if($response->status_ok() === false) {
 			return(false);

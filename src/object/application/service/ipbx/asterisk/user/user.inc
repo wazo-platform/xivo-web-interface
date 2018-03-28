@@ -1140,7 +1140,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			}
 		}
 
-		if($this->_auth_user->create($user_uuid, $username, $password, $rs['firstname'], $rs['lastname'], $rs['email'], $enable_login) === false) {
+		if($this->_auth_user->create($user_uuid, $username, $password, $rs['firstname'], $rs['lastname'], $rs['email'], $enable_login, $rs['tenant_uuid']) === false) {
 			return(false);
 		}
 
