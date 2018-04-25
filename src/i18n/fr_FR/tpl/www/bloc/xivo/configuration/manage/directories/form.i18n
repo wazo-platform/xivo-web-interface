@@ -7,6 +7,15 @@ Type :
 ; fm_uri
 URI :
 
+; fm_auth_backend
+Mécanisme d'authentification :
+
+; fm_auth_host
+Nom d'hôte du serveur d'authentification :
+
+; fm_auth_port
+Port du serveur d'authentification :
+
 ; fm_ldapfilter_name
 Nom du filtre LDAP :
 
@@ -16,17 +25,26 @@ Répertoire Wazo
 ; fm_xivo_username
 Identifiant :
 
-; hlp_xivo_username
-Identifiant "service web". S'applique uniquement pour un répertoire Wazo distant.
-
 ; fm_xivo_password
 Mot de passe :
 
-; hlp_xivo_password
-Mot de passe "service web". S'applique uniquement pour un répertoire Wazo distant.
+; fm_auth_verify_certificate_select
+Verifier le certificat du server d'authentification :
+
+; fm_auth_verify_certificate_select-opt(yes)
+Oui
+
+; fm_auth_verify_certificate_select-opt(no)
+Non
+
+; fm_auth_verify_certificate_select-opt(custom)
+Personnalisé
+
+; fm_auth_custom_ca_path
+Certificat CA personnalisé du serveur d'authentification :
 
 ; fm_xivo_verify_certificate_select
-Verifier le certificat:
+Verifier le certificat du serveur de répertoires :
 
 ; fm_xivo_verify_certificate_select-opt(yes)
 Oui
@@ -38,7 +56,7 @@ Non
 Personnalisé
 
 ; fm_xivo_custom_ca_path
-Certificat CA personnalisé :
+Certificat CA personnalisé du serveur de répertoires :
 
 ; fm_dird_form
 Répertoire Dird
@@ -52,10 +70,13 @@ Nom du locataire du carnet d'addresse
 ; fm_dird_phonebook
 Carnet d'addresse :
 
+; hlp_auth_backend
+Le "backend" d'authentification utilisé pour créer un token
+
 ; hlp_dird_phonebook
 Nom du carnet d'addresse
 
-; hlp_xivo_custom_ca_path
+; hlp_custom_ca_path
 Chemin vers un fichier contenant la concaténation de certificats CA en format PEM
 
 ; fm_description
