@@ -1,7 +1,6 @@
 /*
  * XiVO Web-Interface
- * Copyright (C) 2015-2016 Avencall
- * Copyright (C) 2016 Proformatique
+ * Copyright 2015-2018 The Wazo Authors  (see the AUTHORS file)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,19 +44,26 @@ function update_directory_type_info() {
 	}
 }
 
-function update_xivo_custom_ca_path() {
-	var verify_cert = $('#it-xivo-verify-certificate-select').val();
-	if (verify_cert == 'custom') {
-		xivo_fm_enabled($('#it-xivo-custom-ca-path'));
+function enable_if_custom(element, value) {
+	if (value == 'custom') {
+		xivo_fm_enabled(element);
 	} else {
-		xivo_fm_disabled($('#it-xivo-custom-ca-path'));
+		xivo_fm_disabled(element);
 	}
+}
+
+function update_custom_ca_path() {
+	var dird_verify_cert = $('#it-xivo-verify-certificate-select').val();
+	var auth_verify_cert = $('#it-auth-verify-certificate-select').val();
+	enable_if_custom($('#it-xivo-custom-ca-path'), dird_verify_cert);
+	enable_if_custom($('#it-auth-custom-ca-path'), auth_verify_cert);
 }
 
 $(function() {
 	update_directory_type_info();
-	update_xivo_custom_ca_path();
+	update_custom_ca_path();
 
 	$('#it-type').change(update_directory_type_info);
-	$('#it-xivo-verify-certificate-select').change(update_xivo_custom_ca_path);
+	$('#it-xivo-verify-certificate-select').change(update_custom_ca_path);
+	$('#it-auth-verify-certificate-select').change(update_custom_ca_path);
 });

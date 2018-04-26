@@ -2,8 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2016  Avencall
-# Copyright (C) 2016 Proformatique
+# Copyright 2006-2018 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -80,6 +79,24 @@ function set_xivo_verify_certificate(&$data)
 	}
 }
 
+function set_auth_verify_certificate(&$data)
+{
+	global $_QR;
+	if (isset($_QR['auth_verify_certificate_select']) === false)
+		return;
+
+	if ($_QR['auth_verify_certificate_select'] === 'custom') {
+		$data['auth_verify_certificate'] = true;
+		$data['auth_custom_ca_path'] = $_QR['auth_custom_ca_path'];
+	} else if ($_QR['auth_verify_certificate_select'] === 'yes') {
+		$data['auth_verify_certificate'] = true;
+		$data['auth_custom_ca_path'] = '';
+	} else {
+		$data['auth_verify_certificate'] = false;
+		$data['auth_custom_ca_path'] = '';
+	}
+}
+
 function get_ldap_filters($app) {
 	$ldapfilter_list = array();
 	if(($ldapfilters = $app->get_ldapfilters_list()) !== false) {
@@ -116,6 +133,9 @@ switch($act)
 			$data['xivo_username'] = $_QR['xivo_username'];
 			$data['xivo_password'] = $_QR['xivo_password'];
 			$data['ldapfilter_id'] = $_QR['ldapfilter_id'];
+			$data['auth_host']     = $_QR['auth_host'];
+			$data['auth_port']     = $_QR['auth_port'];
+			$data['auth_backend']  = $_QR['auth_backend'];
 			set_xivo_verify_certificate($data);
 
 			switch($_QR['type']) {
@@ -127,6 +147,9 @@ switch($act)
 					$data['dird_tenant'] = $phonebook['entity'];
 					$data['dird_phonebook'] = $phonebook['name'];
 				}
+				break;
+			case XIVO_PHONEBOOK_TYPE_XIVO:
+				set_auth_verify_certificate($data);
 				break;
 			}
 
@@ -195,6 +218,9 @@ switch($act)
 			$data['xivo_username'] = $_QR['xivo_username'];
 			$data['xivo_password'] = $_QR['xivo_password'];
 			$data['ldapfilter_id'] = $_QR['ldapfilter_id'];
+			$data['auth_host']     = $_QR['auth_host'];
+			$data['auth_port']     = $_QR['auth_port'];
+			$data['auth_backend']  = $_QR['auth_backend'];
 			set_xivo_verify_certificate($data);
 
 			switch($_QR['type']) {
@@ -206,6 +232,9 @@ switch($act)
 					$data['dird_tenant'] = $phonebook['entity'];
 					$data['dird_phonebook'] = $phonebook['name'];
 				}
+				break;
+			case XIVO_PHONEBOOK_TYPE_XIVO:
+				set_auth_verify_certificate($data);
 				break;
 			}
 

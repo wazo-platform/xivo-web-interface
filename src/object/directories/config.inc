@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2016  Avencall
+# Copyright 2006-2018 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -42,16 +42,40 @@ $array['element']['xivo_password'] = array();
 $array['element']['xivo_password']['default'] = '';
 $array['element']['xivo_password']['null'] = true;
 
+$array['element']['auth_backend'] = array();
+$array['element']['auth_backend']['default'] = 'xivo_service';
+$array['element']['auth_backend']['null'] = true;
+
+$array['element']['auth_host'] = array();
+$array['element']['auth_host']['default'] = 'localhost';
+$array['element']['auth_host']['null'] = true;
+
+$array['element']['auth_port'] = array();
+$array['element']['auth_port']['default'] = 9497;
+$array['element']['auth_port']['null'] = true;
+
+$array['element']['auth_verify_certificate'] = array();
+$array['element']['auth_verify_certificate']['default'] = false;
+
+$array['element']['auth_verify_certificate_select'] = array();
+$array['element']['auth_verify_certificate_select']['value'] = array('yes', 'no', 'custom');
+$array['element']['auth_verify_certificate_select']['default'] = 'custom';
+$array['element']['auth_verify_certificate_select']['unset'] = true;
+
+$array['element']['auth_custom_ca_path'] = array();
+$array['element']['auth_custom_ca_path']['default'] = '/usr/share/xivo-certs/server.crt';
+$array['element']['auth_custom_ca_path']['null'] = true;
+
 $array['element']['xivo_verify_certificate'] = array();
 $array['element']['xivo_verify_certificate']['default'] = false;
 
 $array['element']['xivo_verify_certificate_select'] = array();
 $array['element']['xivo_verify_certificate_select']['value'] = array('yes', 'no', 'custom');
-$array['element']['xivo_verify_certificate_select']['default'] = 'no';
+$array['element']['xivo_verify_certificate_select']['default'] = 'custom';
 $array['element']['xivo_verify_certificate_select']['unset'] = true;
 
 $array['element']['xivo_custom_ca_path'] = array();
-$array['element']['xivo_custom_ca_path']['default'] = '';
+$array['element']['xivo_custom_ca_path']['default'] = '/usr/share/xivo-certs/server.crt';
 $array['element']['xivo_custom_ca_path']['null'] = true;
 
 $array['element']['dird_tenant'] = array();
@@ -76,6 +100,11 @@ $array['filter']['dirtype'] = array('set' => false, 'chk' => 2, 'regexp' => '/^[
 $array['filter']['description'] = array('set' => false,'chk' => 2,'maxlen' => 1000,'cast' => 'sgraph_crlf_tab','eol' => true);
 $array['filter']['xivo_username'] = array('set' => false, 'chk' => 2, 'maxlen' => 64, 'cast' => 'alnumpunct');
 $array['filter']['xivo_password'] = array('set' => false, 'chk' => 2, 'maxlen' => 64, 'cast' => 'alnumpunct');
+$array['filter']['auth_backend'] = array('set' => false, 'chk' => 2, 'maxlen' => 64, 'cast' => 'alnumpunct');
+$array['filter']['auth_host'] = array('set' => false, 'chk' => 2, 'maxlen' => 200, 'cast' => 'alnumpunct');
+$array['filter']['auth_port'] = array('cast' => 'uint','between' => array(1,65535));
+$array['filter']['auth_verify_certificate'] = array('pg_bool' => true);
+$array['filter']['auth_custom_ca_path'] = array('set' => false, 'chk' => 2, 'maxlen' => 200, 'cast' => 'alnumpunct');
 $array['filter']['xivo_verify_certificate'] = array('pg_bool' => true);
 $array['filter']['xivo_custom_ca_path'] = array('set' => false, 'chk' => 2, 'maxlen' => 200, 'cast' => 'alnumpunct');
 $array['filter']['dird_tenant'] = array('set' => false, 'chk' => 2, 'maxlen' => 64, 'cast' => 'alnumpunct');
