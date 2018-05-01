@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2015  Avencall
+# Copyright 2006-2018 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,6 +27,7 @@ $search  = strval($prefs->get('search', ''));
 $sort    = $prefs->flipflop('sort', 'fullname');
 
 $appschedule = &$ipbx->get_application('schedule');
+$appuser = &$ipbx->get_application('user');
 $modentity = &$_XOBJ->get_module('entity');
 
 $param = array();
@@ -39,7 +40,6 @@ switch($act)
 {
 	case 'add':
 	case 'edit':
-		$appuser = &$ipbx->get_application('user');
 		$appprovdconfig = &$_XOBJ->get_application('provdconfig');
 		$order = array('displayname' => SORT_ASC);
 		$list_configregistrar = $appprovdconfig->get_config_list('',$order,false,false,false,'registrar');
@@ -76,8 +76,6 @@ switch($act)
 	case 'delete':
 		$param['page'] = $page;
 
-		$appuser = &$ipbx->get_application('user');
-
 		if(isset($_QR['id']) === false || $appuser->get($_QR['id']) === false)
 			$_QRY->go($_TPL->url('service/ipbx/pbx_settings/users'),$param);
 
@@ -90,8 +88,6 @@ switch($act)
 
 		if(($values = dwho_issa_val('users',$_QR)) === false)
 			$_QRY->go($_TPL->url('service/ipbx/pbx_settings/users'),$param);
-
-		$appuser = &$ipbx->get_application('user');
 
 		$nb = count($values);
 
@@ -110,8 +106,6 @@ switch($act)
 		if(($values = dwho_issa_val('users',$_QR)) === false)
 			$_QRY->go($_TPL->url('service/ipbx/pbx_settings/users'),$param);
 
-		$appuser = &$ipbx->get_application('user',null,false);
-
 		$nb = count($values);
 
 		for($i = 0;$i < $nb;$i++)
@@ -127,8 +121,6 @@ switch($act)
 		$_QRY->go($_TPL->url('service/ipbx/pbx_settings/users'),$param);
 		break;
 	case 'import':
-		$appuser = &$ipbx->get_application('user');
-
 		if(isset($_QR['fm_send']) === true)
 		{
 			$appuser->import_csv();
@@ -138,8 +130,6 @@ switch($act)
 		$_TPL->set_var('import_file',$appuser->get_config_import_file());
 		break;
 	case 'update_import':
-		$appuser = &$ipbx->get_application('user');
-
 		if(isset($_QR['fm_send']) === true)
 		{
 			$appuser->update_csv();
@@ -149,7 +139,6 @@ switch($act)
 		$_TPL->set_var('import_file',$appuser->get_config_import_file());
 		break;
 	case 'export':
-		$appuser = &$ipbx->get_application('user');
 		$data = $appuser->export_csv();
 		$_TPL->set_var('result', $data);
 		$_TPL->display('/bloc/service/ipbx/'.$ipbx->get_name().'/pbx_settings/users/export');
@@ -159,8 +148,6 @@ switch($act)
 		$act = 'list';
 		$prevpage = $page - 1;
 		$nbbypage = XIVO_SRE_IPBX_AST_NBBYPAGE;
-
-		$appuser = &$ipbx->get_application('user');
 
 		$order = array();
 		if($sort[1] == 'fullname')
