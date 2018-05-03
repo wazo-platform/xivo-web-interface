@@ -32,12 +32,12 @@ class DirdClient extends Client
 
 		$default_dird_config = $config['dird'];
 		$ipbx_ini_config = dwho::load_init(XIVO_PATH_CONF.DWHO_SEP_DIR.'ipbx.ini');
-		if(isset($ipbx_ini_config['xivodird']) === false) {
+		if(isset($ipbx_ini_config['dird']) === false) {
 			$dird_config = $default_dird_config;
 		} else {
 			$dird_config = array_merge(
 				$default_dird_config,
-				$ipbx_ini_config['xivodird']);
+				$ipbx_ini_config['dird']);
 		}
 
 		$url = $dird_config['scheme']. "://" . $dird_config['host']
