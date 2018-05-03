@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright 2006-2018 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@ if(xivo_user::chk_acl(true) === false)
 	$_QRY->go($_TPL->url('xivo'));
 
 $sysconfd     = &$_XOBJ->get_module('sysconfd');
-$res          = $sysconfd->request_post('/services', array('xivo-dird' => 'restart'));
+$res          = $sysconfd->request_post('/services', array('wazo-dird' => 'restart'));
 
 if(isset($_SERVER['HTTP_REFERER']) === true)
 	$_QRY->go($_SERVER['HTTP_REFERER'],false);

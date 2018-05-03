@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2016  Avencall
+# Copyright 2006-2018 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -203,4 +203,4 @@ $directories = $this->get_var('directories');
 </div>
 </div>
 
-<div class="fm-paragraph fm-description"><p><?=$this->bbf('need-xivo-dird-restart');?></p></div>
+<div class="fm-paragraph fm-description"><p><?=$this->bbf('need-wazo-dird-restart');?></p></div>

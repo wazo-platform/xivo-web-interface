@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2016 Avencall
+# Copyright 2016-2018 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@ class DirdClient extends Client
 		$dir = dwho_file::joinpath(XIVO_PATH_OBJECT, 'dird', 'abstract', 'config');
 
 		if(($config = dwho_gat::get_file($dir)) === false) {
-			trigger_error("could not load default config for xivo-dird");
+			trigger_error("could not load default config for wazo-dird");
 			return(false);
 		}
 
