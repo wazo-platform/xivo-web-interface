@@ -1792,6 +1792,7 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 		|| $this->delete_rightcall() === false
 		|| $this->delete_dialaction() === false
 		|| $this->delete_callfiltermember() === false
+		|| $this->delete_pickupmember() === false
 		|| $this->delete_groupmember() === false
 		|| $this->delete_queuemember() === false
 		|| $this->delete_schedule_path() === false)
@@ -1878,6 +1879,16 @@ class xivo_application_service_asterisk_user extends xivo_application_asterisk_a
 			return(true);
 
 		return($callfiltermember->delete_member($this->_info['userfeatures']['id']));
+	}
+
+	function delete_pickupmember()
+	{
+		if(($pickupmember = &$this->_service->get_module('pickupmember')) === false)
+			return(true);
+
+		$where = array('membertype' => 'user',
+					   'memberid' => $this->_info['userfeatures']['id']);
+		return($pickupmember->delete_where($where));
 	}
 
 	function delete_schedule_path()
