@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright (C) 2006-2018 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -42,6 +42,9 @@ $array['element']['commented']['set'] = true;
 $array['element']['description'] = array();
 $array['element']['description']['default'] = '';
 
+$array['element']['tenant_uuid'] = array();
+$array['element']['tenant_uuid']['default'] = '';
+
 
 $array['filter'] = array();
 $array['filter']['name'] = array('callback' => 'xivo_service_asterisk::chk_context',
@@ -53,5 +56,6 @@ $array['filter']['displayname'] = array('cast' => 'sgraph','minlen' => 3,'maxlen
 $array['filter']['entity'] = array('regexp' => '/^[a-z0-9_\.-]+$/','maxlen' => 64);
 $array['filter']['commented'] = array('bool' => true);
 $array['filter']['description'] = array('set' => false,'chk' => 2,'maxlen' => 1000,'cast' => 'sgraph_crlf_tab','eol' => true);
+$array['filter']['tenant_uuid'] = array('set' => true, 'chk' => 2, 'maxlen' => 36, 'minlen' => 36);
 
 ?>
