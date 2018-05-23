@@ -34,6 +34,7 @@ if($search !== '')
 	$param['search'] = $search;
 
 $modcontexttype = &$ipbx->get_module('contexttype');
+$range_types = array('user', 'group', 'queue', 'meetme', 'incall');
 
 switch($act)
 {
@@ -66,30 +67,13 @@ switch($act)
 				}
 
 				if(dwho_issa('contextnumbers',$_QR) === true) {
-					if(dwho_issa('user',$_QR['contextnumbers']) === true
-						&& ($_QR['contextnumbers']['user'] = dwho_group_array('numberbeg',
-																 $_QR['contextnumbers']['user'])) === false)
-						unset($_QR['contextnumbers']['user']);
-
-					if(dwho_issa('group',$_QR['contextnumbers']) === true
-						&& ($_QR['contextnumbers']['group'] = dwho_group_array('numberbeg',
-																			  $_QR['contextnumbers']['group'])) === false)
-						unset($_QR['contextnumbers']['group']);
-
-					if(dwho_issa('queue',$_QR['contextnumbers']) === true
-						&& ($_QR['contextnumbers']['queue'] = dwho_group_array('numberbeg',
-																			  $_QR['contextnumbers']['queue'])) === false)
-						unset($_QR['contextnumbers']['queue']);
-
-					if(dwho_issa('meetme',$_QR['contextnumbers']) === true
-						&& ($_QR['contextnumbers']['meetme'] = dwho_group_array('numberbeg',
-																			   $_QR['contextnumbers']['meetme'])) === false)
-						unset($_QR['contextnumbers']['meetme']);
-
-					if(dwho_issa('incall',$_QR['contextnumbers']) === true
-						&& ($_QR['contextnumbers']['incall'] = dwho_group_array('numberbeg',
-																			   $_QR['contextnumbers']['incall'])) === false)
-						unset($_QR['contextnumbers']['incall']);
+					foreach ($range_types as $type) {
+						if(dwho_issa($type,$_QR['contextnumbers']) === true
+						   && ($_QR['contextnumbers'][$type] = dwho_group_array('numberbeg',
+																$_QR['contextnumbers'][$type])) === false) {
+							unset($_QR['contextnumbers'][$type]);
+						}
+					}
 				}
 			} else {
 				unset($_QR['contextnumbers']);
@@ -161,31 +145,14 @@ switch($act)
 				}
 
 				if(dwho_issa('contextnumbers',$_QR) === true) {
-					if(dwho_issa('user',$_QR['contextnumbers']) === true
-					&& ($_QR['contextnumbers']['user'] = dwho_group_array('numberbeg',
-											      $_QR['contextnumbers']['user'])) === false)
-						unset($_QR['contextnumbers']['user']);
-
-					if(dwho_issa('group',$_QR['contextnumbers']) === true
-					&& ($_QR['contextnumbers']['group'] = dwho_group_array('numberbeg',
-											       $_QR['contextnumbers']['group'])) === false)
-						unset($_QR['contextnumbers']['group']);
-
-					if(dwho_issa('queue',$_QR['contextnumbers']) === true
-					&& ($_QR['contextnumbers']['queue'] = dwho_group_array('numberbeg',
-											       $_QR['contextnumbers']['queue'])) === false)
-						unset($_QR['contextnumbers']['queue']);
-
-					if(dwho_issa('meetme',$_QR['contextnumbers']) === true
-					&& ($_QR['contextnumbers']['meetme'] = dwho_group_array('numberbeg',
-												$_QR['contextnumbers']['meetme'])) === false)
-						unset($_QR['contextnumbers']['meetme']);
-
-					if(dwho_issa('incall',$_QR['contextnumbers']) === true
-					&& ($_QR['contextnumbers']['incall'] = dwho_group_array('numberbeg',
-												$_QR['contextnumbers']['incall'])) === false)
-						unset($_QR['contextnumbers']['incall']);
+					foreach ($range_types as $type) {
+						if(dwho_issa($type,$_QR['contextnumbers']) === true
+						   && ($_QR['contextnumbers'][$type] = dwho_group_array('numberbeg',
+															$_QR['contextnumbers'][$type])) === false) {
+							unset($_QR['contextnumbers'][$type]);
+						}
 					}
+				}
 			} else {
 				unset($_QR['contextnumbers']);
 			}
