@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2015  Avencall
+# Copyright 2006-2018 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -850,6 +850,7 @@ class xivo_application_service_asterisk_group extends xivo_application_asterisk_
 		|| $this->delete_exten('exten') === false
 		|| $this->delete_user($this->_info['groupfeatures']['name']) === false
 		|| $this->delete_rightcall() === false
+		|| $this->delete_pickupmember() === false
 		|| $this->delete_dialaction() === false
 		|| $this->delete_callerid() === false
 		|| $this->delete_schedule_path() === false)
@@ -926,6 +927,16 @@ class xivo_application_service_asterisk_group extends xivo_application_asterisk_
 	function delete_schedule_path()
 	{
 		return $this->_schedule_path->delete_where(array('path' => 'group', 'pathid' =>	$this->_info['groupfeatures']['id']));
+	}
+
+	function delete_pickupmember()
+	{
+		if(($pickupmember = &$this->_service->get_module('pickupmember')) === false)
+			return(true);
+
+		$where = array('membertype' => 'group',
+					   'memberid' => $this->_info['groupfeatures']['id']);
+		return($pickupmember->delete_where($where));
 	}
 
 	function _reverse_delete()

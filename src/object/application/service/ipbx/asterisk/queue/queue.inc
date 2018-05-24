@@ -1034,6 +1034,7 @@ class xivo_application_service_asterisk_queue extends xivo_application_asterisk_
 		|| $this->delete_agent($this->_info['queuefeatures']['name']) === false
 		|| $this->delete_dialaction() === false
 		|| $this->delete_contextmember($this->_info['queuefeatures']['name']) === false
+		|| $this->delete_pickupmember() === false
 		|| $this->delete_callerid() === false
 		|| $this->delete_schedule_path() === false)
 		{
@@ -1092,6 +1093,16 @@ class xivo_application_service_asterisk_queue extends xivo_application_asterisk_
 	function delete_agent($name)
 	{
 		return($this->_delete_user_type('agent',$name));
+	}
+
+	function delete_pickupmember()
+	{
+		if(($pickupmember = &$this->_service->get_module('pickupmember')) === false)
+			return(true);
+
+		$where = array('membertype' => 'queue',
+					   'memberid' => $this->_info['queuefeatures']['id']);
+		return($pickupmember->delete_where($where));
 	}
 
 	function _delete_user_type($type,$name)
