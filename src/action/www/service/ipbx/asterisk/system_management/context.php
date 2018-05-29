@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2016 Avencall
+# Copyright (C) 2006-2018 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -34,6 +34,7 @@ if($search !== '')
 	$param['search'] = $search;
 
 $modcontexttype = &$ipbx->get_module('contexttype');
+$range_types = array('user', 'group', 'queue', 'meetme', 'incall');
 
 switch($act)
 {
@@ -53,37 +54,30 @@ switch($act)
 
 		if(isset($_QR['fm_send']) === true && dwho_issa('context',$_QR) === true)
 		{
-			if(dwho_issa('contextnumbers',$_QR) === true
-			&& isset($_QR['context']['entity']) === true
-			&& dwho_has_len($_QR['context']['entity']) === true)
+			if (isset($_QR['context']['entity']) === true
+				&& dwho_has_len($_QR['context']['entity']) === true)
 			{
-				if(dwho_issa('user',$_QR['contextnumbers']) === true
-				&& ($_QR['contextnumbers']['user'] = dwho_group_array('numberbeg',
-										      $_QR['contextnumbers']['user'])) === false)
-					unset($_QR['contextnumbers']['user']);
+				$entities = $appcontext->get_entities_list(null,array('displayname' => SORT_ASC));
 
-				if(dwho_issa('group',$_QR['contextnumbers']) === true
-				&& ($_QR['contextnumbers']['group'] = dwho_group_array('numberbeg',
-										       $_QR['contextnumbers']['group'])) === false)
-					unset($_QR['contextnumbers']['group']);
+				foreach($entities as $entity) {
+					if ($entity['name'] === $_QR['context']['entity']) {
+						$_QR['context']['tenant_uuid'] = $entity['tenant_uuid'];
+						break;
+					}
+				}
 
-				if(dwho_issa('queue',$_QR['contextnumbers']) === true
-				&& ($_QR['contextnumbers']['queue'] = dwho_group_array('numberbeg',
-										       $_QR['contextnumbers']['queue'])) === false)
-					unset($_QR['contextnumbers']['queue']);
-
-				if(dwho_issa('meetme',$_QR['contextnumbers']) === true
-				&& ($_QR['contextnumbers']['meetme'] = dwho_group_array('numberbeg',
-											$_QR['contextnumbers']['meetme'])) === false)
-					unset($_QR['contextnumbers']['meetme']);
-
-				if(dwho_issa('incall',$_QR['contextnumbers']) === true
-				&& ($_QR['contextnumbers']['incall'] = dwho_group_array('numberbeg',
-											$_QR['contextnumbers']['incall'])) === false)
-					unset($_QR['contextnumbers']['incall']);
-			}
-			else
+				if(dwho_issa('contextnumbers',$_QR) === true) {
+					foreach ($range_types as $type) {
+						if(dwho_issa($type,$_QR['contextnumbers']) === true
+						   && ($_QR['contextnumbers'][$type] = dwho_group_array('numberbeg',
+																$_QR['contextnumbers'][$type])) === false) {
+							unset($_QR['contextnumbers'][$type]);
+						}
+					}
+				}
+			} else {
 				unset($_QR['contextnumbers']);
+			}
 
 			if($appcontext->set_add($_QR) === false
 			|| $appcontext->add() === false)
@@ -138,37 +132,30 @@ switch($act)
 		{
 			$return = &$result;
 
-			if(dwho_issa('contextnumbers',$_QR) === true
-			&& isset($_QR['context']['entity']) === true
+			if(isset($_QR['context']['entity']) === true
 			&& dwho_has_len($_QR['context']['entity']) === true)
 			{
-				if(dwho_issa('user',$_QR['contextnumbers']) === true
-				&& ($_QR['contextnumbers']['user'] = dwho_group_array('numberbeg',
-										      $_QR['contextnumbers']['user'])) === false)
-					unset($_QR['contextnumbers']['user']);
+				$entities = $appcontext->get_entities_list(null,array('displayname' => SORT_ASC));
 
-				if(dwho_issa('group',$_QR['contextnumbers']) === true
-				&& ($_QR['contextnumbers']['group'] = dwho_group_array('numberbeg',
-										       $_QR['contextnumbers']['group'])) === false)
-					unset($_QR['contextnumbers']['group']);
+				foreach($entities as $entity) {
+					if ($entity['name'] === $_QR['context']['entity']) {
+						$_QR['context']['tenant_uuid'] = $entity['tenant_uuid'];
+						break;
+					}
+				}
 
-				if(dwho_issa('queue',$_QR['contextnumbers']) === true
-				&& ($_QR['contextnumbers']['queue'] = dwho_group_array('numberbeg',
-										       $_QR['contextnumbers']['queue'])) === false)
-					unset($_QR['contextnumbers']['queue']);
-
-				if(dwho_issa('meetme',$_QR['contextnumbers']) === true
-				&& ($_QR['contextnumbers']['meetme'] = dwho_group_array('numberbeg',
-											$_QR['contextnumbers']['meetme'])) === false)
-					unset($_QR['contextnumbers']['meetme']);
-
-				if(dwho_issa('incall',$_QR['contextnumbers']) === true
-				&& ($_QR['contextnumbers']['incall'] = dwho_group_array('numberbeg',
-											$_QR['contextnumbers']['incall'])) === false)
-					unset($_QR['contextnumbers']['incall']);
-			}
-			else
+				if(dwho_issa('contextnumbers',$_QR) === true) {
+					foreach ($range_types as $type) {
+						if(dwho_issa($type,$_QR['contextnumbers']) === true
+						   && ($_QR['contextnumbers'][$type] = dwho_group_array('numberbeg',
+															$_QR['contextnumbers'][$type])) === false) {
+							unset($_QR['contextnumbers'][$type]);
+						}
+					}
+				}
+			} else {
 				unset($_QR['contextnumbers']);
+			}
 
 			if($appcontext->set_edit($_QR) === false
 			|| $appcontext->edit() === false)
