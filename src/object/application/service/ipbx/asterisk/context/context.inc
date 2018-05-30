@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2015  Avencall
+# Copyright (C) 2006-2018 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -264,6 +264,15 @@ class xivo_application_service_asterisk_context extends xivo_application_asteris
 
 	function set_add($arr)
 	{
+		$entities = $this->get_entities_list(null, array('displayname' => SORT_ASC));
+
+		foreach($entities as $entity) {
+			if ($entity['name'] === $arr['context']['entity']) {
+				$arr['context']['tenant_uuid'] = $entity['tenant_uuid'];
+				break;
+			}
+		}
+
 		return($this->_set('add',$arr));
 	}
 
@@ -271,6 +280,15 @@ class xivo_application_service_asterisk_context extends xivo_application_asteris
 	{
 		if(empty($this->_info) === true)
 			return(false);
+
+		$entities = $this->get_entities_list(null, array('displayname' => SORT_ASC));
+
+		foreach($entities as $entity) {
+			if ($entity['name'] === $arr['context']['entity']) {
+				$arr['context']['tenant_uuid'] = $entity['tenant_uuid'];
+				break;
+			}
+		}
 
 		return($this->_set('edit',$arr));
 	}

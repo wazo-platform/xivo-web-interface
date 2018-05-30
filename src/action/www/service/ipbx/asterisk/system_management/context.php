@@ -57,15 +57,6 @@ switch($act)
 			if (isset($_QR['context']['entity']) === true
 				&& dwho_has_len($_QR['context']['entity']) === true)
 			{
-				$entities = $appcontext->get_entities_list(null,array('displayname' => SORT_ASC));
-
-				foreach($entities as $entity) {
-					if ($entity['name'] === $_QR['context']['entity']) {
-						$_QR['context']['tenant_uuid'] = $entity['tenant_uuid'];
-						break;
-					}
-				}
-
 				if(dwho_issa('contextnumbers',$_QR) === true) {
 					foreach ($range_types as $type) {
 						if(dwho_issa($type,$_QR['contextnumbers']) === true
@@ -135,15 +126,6 @@ switch($act)
 			if(isset($_QR['context']['entity']) === true
 			&& dwho_has_len($_QR['context']['entity']) === true)
 			{
-				$entities = $appcontext->get_entities_list(null,array('displayname' => SORT_ASC));
-
-				foreach($entities as $entity) {
-					if ($entity['name'] === $_QR['context']['entity']) {
-						$_QR['context']['tenant_uuid'] = $entity['tenant_uuid'];
-						break;
-					}
-				}
-
 				if(dwho_issa('contextnumbers',$_QR) === true) {
 					foreach ($range_types as $type) {
 						if(dwho_issa($type,$_QR['contextnumbers']) === true
