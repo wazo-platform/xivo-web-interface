@@ -7,6 +7,18 @@ Enable direct media:
 ; hlp_fm_sccpgeneralsettings_directmedia
 Asterisk config: directmedia
 
+; fm_sccpgeneralsettings_guest
+Allow guest connections:
+
+; hlp_fm_sccpgeneralsettings_guest
+Asterisk config: guest
+
+; fm_sccpgeneralsettings_max_guests
+Maximum number of guest connections:
+
+; hlp_fm_sccpgeneralsettings_max_guests
+Asterisk config: max_guests
+
 ; fm_sccpgeneralsettings_dialtimeout
 Dial timeout:
 

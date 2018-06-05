@@ -7,6 +7,18 @@ Activer le direct media :
 ; hlp_fm_sccpgeneralsettings_directmedia
 Config asterisk: directmedia
 
+; fm_sccpgeneralsettings_guest
+Accepter les connexions invitées :
+
+; hlp_fm_sccpgeneralsettings_guest
+Config asterisk: guest
+
+; fm_sccpgeneralsettings_max_guests
+Nombre maximum de connexions invitées :
+
+; hlp_fm_sccpgeneralsettings_max_guests
+Config asterisk: max_guests
+
 ; fm_sccpgeneralsettings_dialtimeout
 Délai d'attente de la numérotation :
 
