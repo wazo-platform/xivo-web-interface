@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2015-2016 Avencall
+# Copyright (C) 2015-2018 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -67,6 +67,7 @@ class Request {
 		if ($headers !== null) {
 			$this->headers = $headers;
 		}
+		array_push($this->headers, 'X-Auth-Token: '. $_SESSION['token']);
 	}
 
 	static public function post($url, $body, $query=null, $headers=null)
