@@ -238,6 +238,13 @@ class xivo_application_service_asterisk_group extends xivo_application_asterisk_
 
 	function set_add($arr)
 	{
+		foreach($this->get_context_list() as $context) {
+			if ($context['name'] == $arr['groupfeatures']['context']) {
+				$arr['groupfeatures']['tenant_uuid'] = $context['tenant_uuid'];
+				break;
+			}
+		}
+
 		return($this->_set('add',$arr));
 	}
 

@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2016  Avencall
+# Copyright (C) 2006-2018 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -58,6 +58,9 @@ $array['element']['preprocess_subroutine'] = array();
 $array['element']['preprocess_subroutine']['default'] = '';
 $array['element']['preprocess_subroutine']['null'] = true;
 
+$array['element']['tenant_uuid'] = array();
+$array['element']['tenant_uuid']['default'] = '';
+
 $array['filter'] = array();
 $array['filter']['number'] = array('set' => false,'chk' => 2,'regexp' => '/^[0-9\*#]+$/','maxlen' => 40);
 $array['filter']['name'] = array('regexp' => '/^(?!general$)[a-z0-9_\.-]+$/i','minlen' => 1,'maxlen' => 128);
@@ -69,5 +72,6 @@ $array['filter']['write_calling'] = array('bool' => true);
 $array['filter']['ignore_forward'] = array('bool' => true);
 $array['filter']['timeout'] = array('set' => false,'chk' => 2,'cast' => 'int');
 $array['filter']['preprocess_subroutine'] = array('set' => false,'chk' => 2,'callback' => 'xivo_service_asterisk::chk_context');
+$array['filter']['tenant_uuid'] = array('set' => true, 'chk' => 2, 'maxlen' => 36, 'minlen' => 36);
 
 ?>
