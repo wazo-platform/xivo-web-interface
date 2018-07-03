@@ -253,6 +253,7 @@ class xivo_application_service_asterisk_group extends xivo_application_asterisk_
 		if(empty($this->_info) === true)
 			return(false);
 
+		$arr['groupfeatures']['tenant_uuid'] = $this->_info['groupfeatures']['tenant_uuid'];
 		return($this->_set('edit',$arr));
 	}
 
