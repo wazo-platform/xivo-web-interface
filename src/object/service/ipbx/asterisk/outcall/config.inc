@@ -2,8 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2016  Avencall
-# Copyright (C) 2016  Proformatique Inc.
+# Copyright 2016-2018 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -49,6 +48,9 @@ $array['element']['commented']['value'] = array(0,1);
 $array['element']['commented']['default'] = 0;
 $array['element']['commented']['set'] = true;
 
+$array['element']['tenant_uuid'] = array();
+$array['element']['tenant_uuid']['default'] = '';
+
 $array['filter'] = array();
 $array['filter']['name'] = array('maxlen' => 128,'regexp' => '/^[a-z0-9_-]+$/i');
 $array['filter']['context'] = array('callback' => 'xivo_service_asterisk::chk_context');
@@ -57,5 +59,6 @@ $array['filter']['preprocess_subroutine'] = array('set' => false,'chk' => 2,'cal
 $array['filter']['description'] = array('set' => false,'chk' => 2,'maxlen' => 1000,'cast' => 'sgraph_crlf_tab','eol' => true);
 $array['filter']['hangupringtime'] = array('set' => false,'chk' => 2,'cast' => 'uint','between' => array(0,300));
 $array['filter']['commented'] = array('bool' => true);
+$array['filter']['tenant_uuid'] = array('set' => true, 'chk' => 2, 'maxlen' => 36, 'minlen' => 36);
 
 ?>
