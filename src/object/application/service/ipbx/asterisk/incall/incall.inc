@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright 2006-2016 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2006-2018 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -325,6 +325,17 @@ class xivo_application_service_asterisk_incall extends xivo_application_asterisk
 		}
 
 		$arr['commented'] = false;
+
+		if(($context_list = $this->get_context_list()) === false) {
+			return(false);
+		}
+
+		foreach($context_list as $context) {
+			if ($arr['context'] === $context['name']) {
+				$arr['tenant_uuid'] = $context['tenant_uuid'];
+				break;
+			}
+		}
 
 		if(($rs = $this->_incall->chk_values($arr)) === false)
 		{
