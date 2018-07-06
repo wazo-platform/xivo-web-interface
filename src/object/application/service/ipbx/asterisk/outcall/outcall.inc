@@ -2,8 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
-# Copyright (C) 2016  Proformatique Inc.
+# Copyright 2006-2018 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -236,6 +235,17 @@ class xivo_application_service_asterisk_outcall extends xivo_application_asteris
 		}
 
 		$arr['commented'] = false;
+
+		if(($context_list = $this->get_context_list()) === false) {
+			return(false);
+		}
+
+		foreach($context_list as $context) {
+			if($arr['context'] === $context['name']) {
+				$arr['tenant_uuid'] = $context['tenant_uuid'];
+				break;
+			}
+		}
 
 		if(isset($arr['hangupringtime']) === true
 		&& $arr['hangupringtime'] === '') {
