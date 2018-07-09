@@ -2,7 +2,8 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright 2006-2018 The Wazo Authors  (see the AUTHORS file)
+
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -65,7 +66,7 @@ abstract class xivo_confd_helpers_abstract extends xivo_confd_ressource_abstract
 		return($rs);
 	}
 
-	public function find_all($search='',$order=false,$limit=false)
+	public function find_all($search='',$order=false,$limit=false,$recurse=null)
 	{
 		$uri = $this->_build_uri();
 
@@ -89,6 +90,11 @@ abstract class xivo_confd_helpers_abstract extends xivo_confd_ressource_abstract
 		{
 			array_push($query, array('skip', $limit[0]));
 			array_push($query, array('limit', $limit[1]));
+		}
+
+		if ($recurse !== null)
+		{
+			array_push($query, array('recurse', $recurse ? 'true' : 'false'));
 		}
 
 		$rs = $this->request_get($uri, $query);
