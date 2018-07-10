@@ -1,7 +1,7 @@
 <?php
 #
 # XiVO Web-Interface
-# Copyright (C) 2013-2016  Avencall
+# Copyright 2013-2018 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -30,6 +30,7 @@ class confd_ressource_voicemail extends xivo_confd_helpers_abstract
 		parent::__construct($_RAPI, $param);
 		$this->_httpheaders[] = dwho_json::get_header();
 		$this->_httpheaders[] = 'Accept: application/json';
+		$this->_httpheaders[] = 'X-Auth-Token: '.$_SESSION['token'];
 	}
 
 	public function associate_user_voicemail($user_id, $voicemail_id)

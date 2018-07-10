@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2015  Avencall
+# Copyright 2006-2018 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -93,10 +93,10 @@ class xivo_application_service_asterisk_voicemail extends xivo_application_aster
 		}
 		return $this->map_voicemail($voicemail);
 	}
-			
+
 	function get_nb($arr=null,$disable=null)
 	{
-		$voicemails = $this->_confd->find_all();
+		$voicemails = $this->_confd->find_all('', false, false, true);
 		if($voicemails === false) {
 			dwho_report::push('error', 'Cannot get number of voicemails');
 			return(false);
@@ -129,7 +129,7 @@ class xivo_application_service_asterisk_voicemail extends xivo_application_aster
 
 	function get_voicemail_search($search='',$order=null,$limit=null)
 	{
-		$voicemails = $this->_confd->find_all($search, $order, $limit);
+		$voicemails = $this->_confd->find_all($search, $order, $limit, true);
 		if($voicemails === false) {
 			dwho_report::push('error', 'Cannot search for voicemails');
 			return(false);
