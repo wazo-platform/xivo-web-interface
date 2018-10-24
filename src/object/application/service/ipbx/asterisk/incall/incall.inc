@@ -183,6 +183,7 @@ class xivo_application_service_asterisk_incall extends xivo_application_asterisk
 				case 'application:directory':
 				case 'application:faxtomail':
 				case 'application:voicemailmain':
+				case 'application:custom':
 					list($ref['destination'],$ref['destidentity']) = explode(':',$ref['action']);
 					break;
 				case 'user':

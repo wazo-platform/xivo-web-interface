@@ -127,6 +127,9 @@ FaxToMail
 ; incall_destination-application-voicemailmain
 Voicemail consultation
 
+; incall_destination-application-custom
+Application
+
 ; incall_destination-sound
 Sound file
 

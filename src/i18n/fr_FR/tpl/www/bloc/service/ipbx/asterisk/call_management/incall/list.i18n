@@ -76,6 +76,9 @@ FaxToMail
 ; incall_destination-application-voicemailmain
 Consultation de la messagerie vocale
 
+; incall_destination-application-custom
+Application
+
 ; incall_destination-sound
 Fichier son
 
