@@ -1,5 +1,20 @@
 <?php
 
+# Copyright 2006-2018 The Wazo Authors  (see the AUTHORS file)
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 
 $array = array();
 
@@ -8,14 +23,14 @@ $array['accesswebservice']['update_keys'] = array('reload');
 
 $array['userfeatures'] = array();
 $array['userfeatures']['ctibus'] = array('xivo[user,%s,%s]');
-$array['userfeatures']['ipbx'] = array('dialplan reload', 'module reload app_queue.so', 'sip reload');
+$array['userfeatures']['ipbx'] = array('dialplan reload', 'module reload app_queue.so', 'module reload res_pjsip.so');
 
 $array['groupfeatures'] = array();
-$array['groupfeatures']['ipbx'] = array('dialplan reload', 'module reload app_queue.so', 'sip reload', 'module reload chan_sccp.so');
+$array['groupfeatures']['ipbx'] = array('dialplan reload', 'module reload app_queue.so', 'module reload res_pjsip.so', 'module reload chan_sccp.so');
 
 $array['linefeatures'] = array();
 $array['linefeatures']['ctibus'] = array('xivo[phone,%s,%s]');
-$array['linefeatures']['ipbx'] = array('module reload app_queue.so', 'dialplan reload', 'sip reload');
+$array['linefeatures']['ipbx'] = array('module reload app_queue.so', 'dialplan reload', 'module reload res_pjsip.so');
 
 $array['meetmefeatures'] = array();
 $array['meetmefeatures']['ctibus'] = array('xivo[meetme,%s,%s]');
@@ -34,15 +49,15 @@ $array['agentglobalparams'] = array();
 $array['agentglobalparams']['ctibus'] = array('xivo[cticonfig,update]');
 
 $array['general'] = array();
-$array['general']['ipbx'] = array('sip reload');
+$array['general']['ipbx'] = array('module reload res_pjsip.so');
 
 $array['queue'] = array();
-$array['queue']['ipbx'] = array('dialplan reload', 'module reload app_queue.so', 'sip reload');
+$array['queue']['ipbx'] = array('dialplan reload', 'module reload app_queue.so', 'module reload res_pjsip.so');
 
 $array['queuefeatures'] = array();
 $array['queuefeatures']['ctibus'] = array('xivo[queue,%s,%s]', 'xivo[queuemember,update]');
 $array['queuefeatures']['agentbus'] = array('queue.%s.%s');
-$array['queuefeatures']['ipbx'] = array('module reload app_queue.so', 'dialplan reload', 'sip reload', 'module reload chan_sccp.so');
+$array['queuefeatures']['ipbx'] = array('module reload app_queue.so', 'dialplan reload', 'module reload res_pjsip.so', 'module reload chan_sccp.so');
 
 $array['queueskill'] = array();
 $array['queueskill']['ipbx'] = array('module reload app_queue.so');
@@ -69,13 +84,13 @@ $array['context'] = array();
 $array['context']['ipbx'] = array('dialplan reload');
 
 $array['pickup'] = array();
-$array['pickup']['ipbx'] = array('sip reload', 'module reload chan_sccp.so');
+$array['pickup']['ipbx'] = array('module reload res_pjsip.so', 'module reload chan_sccp.so');
 
 $array['staticsip'] = array();
-$array['staticsip']['ipbx'] = array('sip reload');
+$array['staticsip']['ipbx'] = array('module reload res_pjsip.so');
 
 $array['trunksip'] = array();
-$array['trunksip']['ipbx'] = array('dialplan reload', 'sip reload');
+$array['trunksip']['ipbx'] = array('dialplan reload', 'module reload res_pjsip.so');
 
 $array['staticiax'] = array();
 $array['staticiax']['ipbx'] = array('iax2 reload');
@@ -109,7 +124,7 @@ $array['iax.conf'] = array();
 $array['iax.conf']['ipbx'] = array('iax2 reload');
 
 $array['sip.conf'] = array();
-$array['sip.conf']['ipbx'] = array('sip reload');
+$array['sip.conf']['ipbx'] = array('module reload res_pjsip.so');
 
 $array['features.conf'] = array();
 $array['features.conf']['ipbx'] = array('dialplan reload', 'module reload features', 'module reload res_parking.so');
