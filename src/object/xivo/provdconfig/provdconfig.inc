@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2016 Avencall
+# Copyright 2006-2018 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -385,11 +385,7 @@ class xivo_object_provdconfig extends xivo_object_provd_abstract
 		{
 			$appsip = &$ipbx->get_apprealstatic('sip');
 			$appgeneralsip = &$appsip->get_module('general');
-			if(($rs = $appgeneralsip->get('autocreate_prefix')) === false
-			|| isset($rs['general'], $rs['general']['var_val']) === false)
-				dwho_report::push('error', 'Can\'t get autocreate_prefix in staticsip table');
-			else
-				$autoprov['raw_config']['sip_lines'][1]['username'] = $rs['general']['var_val'];
+			$autoprov['raw_config']['sip_lines'][1]['username'] = $rs['general']['var_val'];
 		}
 
 		$autoprov['X_type'] = 'internal';
