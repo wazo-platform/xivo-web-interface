@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright 2006-2018 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -26,12 +26,6 @@ $_LDAPSVR = new xivo_ldapserver();
 $userstat = $entitystat = $serverstat = $ldapserver = array();
 $userstat['enable'] = $entitystat['enable'] = $serverstat['enable'] = $ldapserverstat['enable'] =  0;
 $userstat['disable'] = $entitystat['disable'] = $serverstat['disable'] = $ldapserverstat['disable'] = 0;
-
-if(($enableuser = $_USR->get_nb(null,true)) !== false)
-	$userstat['enable'] = $enableuser;
-
-if(($disableuser = $_USR->get_nb(null,false)) !== false)
-	$userstat['disable'] = $disableuser;
 
 if(($enableentity = $appentity->get_nb(null,false)) !== false)
 	$entitystat['enable'] = $enableentity;

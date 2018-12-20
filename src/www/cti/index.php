@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2014  Avencall
+# Copyright 2006-2018 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -25,10 +25,6 @@ if($_USR->mk_active() === false)
 
 // search leaf full path (inverse resolution)
 $leaf = trim($_SERVER['PATH_INFO'], '/');
-$tree = xivo_user_acl::get_full_tree();
-foreach($tree['service']['child']['cti']['child'] as $k => $node)
-    if(array_key_exists($leaf, $node['child']))
-        $leaf = $node['child'][$leaf]['path'];
 
 if(xivo_user::chk_acl('','',$leaf) === false)
     $_QRY->go($_TPL->url('xivo'));

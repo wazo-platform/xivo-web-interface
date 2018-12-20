@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2016  Avencall
+# Copyright 2006-2018 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -188,15 +188,12 @@ abstract class xivo_user_abstract extends xivo_libdatastorage_abstract
 
 		if($this->auth_chk($login, $passwd) === true)
 		{
-			if(($data = $this->get_by_login_pass($login,$passwd)) !== false)
-			{
-				$r = true;
-				$this->_info = &$data;
-				$this->_info['login'] = $login;
-				$this->_info['passwd'] = $passwd;
-				$infos = $this->_info;
-				dwho_logw('logon',$login,'logon');
-			}
+		    $r = true;
+		    $this->_info['login'] = $login;
+		    $this->_info['passwd'] = $passwd;
+		    $this->_info['meta'] = 'root';
+		    $infos = $this->_info;
+		    dwho_logw('logon',$login,'logon');
 		}
 
 		if(dwho_has_len($lang) === true)

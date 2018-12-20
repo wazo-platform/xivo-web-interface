@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2016  Avencall
+# Copyright 2006-2018 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -33,7 +33,6 @@ class xivo_user_admin extends xivo_user_abstract
 			trigger_error('Invalid datastorage in '.__CLASS__,E_USER_ERROR);
 
 		$this->load_by_session();
-		$this->_load_acl();
 	}
 
 	function add($arr)

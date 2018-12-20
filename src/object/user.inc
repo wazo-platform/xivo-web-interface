@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright (C) 2006-2016  Avencall
+# Copyright 2006-2018 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -171,67 +171,12 @@ class xivo_user
 
 	public static function chk_acl($category='',$subcategory='',$section='')
 	{
-		xivo::load_class('xivo_user_acl',XIVO_PATH_OBJECT.DWHO_SEP_DIR.'user','acl',false);
-
-		$section = xivo_user_acl::get_section($category,$subcategory,$section);
-
-		return(xivo_user::chk_acl_section($section));
+	        return(true);
 	}
 
 	public static function chk_acl_section($section)
 	{
-		if(isset($_SESSION['_ACL']) === false
-		|| xivo_user::is_valid() === false
-		|| dwho_issa('tree',$_SESSION['_ACL']) === false
-		|| isset($_SESSION['_ACL']['user'],
-			 $_SESSION['_ACL']['user_section']) === false
-		|| is_scalar($section) === false)
-			return(false);
-		$section = trim(preg_replace('@/+@','/',$section),'/');
-
-		$tree = $_SESSION['_ACL']['tree'];
-		$user = $_SESSION['_ACL']['user'];
-		$user_section = &$_SESSION['_ACL']['user_section'];
-
-		if(is_array($user_section) === false)
-			$user_section = array();
-		else if(isset($user_section[$section]) === true)
-			return((bool) $user_section[$section]);
-
-		$user_section[$section] = false;
-		$r = &$user_section[$section];
-
-		if($user === true)
-			$r = true;
-		else if(is_array($user) === true)
-			$r = false;
-		else
-			return(false);
-
-		$arr = explode('/',$section);
-		$nb = count($arr);
-
-		for($i = 0;$i < $nb;$i++)
-		{
-			$key = &$arr[$i];
-			$grp = $user;
-
-			if(dwho_issa($key,$tree) === false)
-				return(($r = false));
-			else if(isset($tree[$key]['value']) === true
-			&& (bool) $tree[$key]['value'] === false)
-				return(($r = false));
-			else if(is_array($user) === true
-			&& is_bool(($user = dwho_ak($key,$user,true))) === true)
-				return(($r = $user));
-			else if(isset($tree[$key]['child']) === true)
-				$tree = &$tree[$key]['child'];
-		}
-
-		if($r === false && isset($key,$grp) === true)
-			$r = dwho_ak($key,$grp,true) !== false;
-
-		return($r);
+	        return(true);
 	}
 
 	public static function logoff()
