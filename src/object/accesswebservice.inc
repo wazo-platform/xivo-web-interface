@@ -148,7 +148,6 @@ class xivo_accesswebservice extends xivo_libdatastorage_abstract
 
 		$where = array();
 		$where['user'] = $user;
-		$where['passwd'] = $passwd;
 
 		if(($rs = $this->get_all_where($where,false,false)) === false
 		|| ($nb = count($rs)) === 0)
