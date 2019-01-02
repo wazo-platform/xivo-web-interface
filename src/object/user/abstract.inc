@@ -2,7 +2,7 @@
 
 #
 # XiVO Web-Interface
-# Copyright 2006-2018 The Wazo Authors  (see the AUTHORS file)
+# Copyright 2006-2019 The Wazo Authors  (see the AUTHORS file)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -192,6 +192,7 @@ abstract class xivo_user_abstract extends xivo_libdatastorage_abstract
 		    $this->_info['login'] = $login;
 		    $this->_info['passwd'] = $passwd;
 		    $this->_info['meta'] = 'root';
+		    $this->_info['entity_id'] = 0;
 		    $infos = $this->_info;
 		    dwho_logw('logon',$login,'logon');
 		}
